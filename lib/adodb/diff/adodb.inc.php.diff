@@ -1,0 +1,5 @@
+281a282
+> 	var $numQueries = 0;
+794a796,797
+> 		$this->numQueries++;
+> 		

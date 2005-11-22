@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE locale SYSTEM "../../../../../locale/locale.dtd">
+
+<!--
+  * locale.xml
+  *
+  * Copyright (c) 2003-2005 The Public Knowledge Project
+  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
+  *
+  * Localization strings for the en_US (U.S. English) locale.
+  *
+  * $Id$
+  -->
+ 
+<locale name="en_US" full_name="U.S. English">
+	<message key="plugins.harvesters.oai.protocolName">OAI</message>
+	<message key="plugins.harvesters.oai.description">This harvester supports the Open Archives Initiative (OAI) protocol, versions 1.1 and 2.0.</message>
+	<message key="plugins.harvesters.oai.archive.form.oaiUrl">OAI Base URL</message>
+	<message key="plugins.harvesters.oai.archive.form.oaiUrlRequired">The OAI URL field is required.</message>
+	<message key="plugins.harvesters.oai.archive.form.oaiUrl.description">e.g. http://www.yourarchive.com/oai/index.php</message>
+</locale>

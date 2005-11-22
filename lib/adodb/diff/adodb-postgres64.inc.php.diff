@@ -1,0 +1,38 @@
+94,95c94,95
+< 	var $true = 'TRUE';		// string that represents TRUE for a database
+< 	var $false = 'FALSE';		// string that represents FALSE for a database
+---
+> 	var $true = '1';		// string that represents TRUE for a database
+> 	var $false = '0';		// string that represents FALSE for a database
+162a163,178
+> 	// Added 2004-06-27 by Kevin Jamieson (http://www.pkp.ubc.ca/)
+> 	// Insert_ID function that returns the actual field value instead of the OID
+> 	function PO_Insert_ID($table="", $id="") {
+> 		if (!empty($table) && !empty($id)) {
+> 			$result = @pg_exec("SELECT CURRVAL('{$table}_{$id}_seq')");
+> 			if ($result) {
+> 				$row = @pg_fetch_row($result, 0);
+> 				if (isset($row[0])) {
+> 					return $row[0];
+> 				}
+> 			}
+> 		}
+> 		
+> 		return $this->_insertid($table, $id);
+> 	}
+> 
+508a525,527
+> 			$fld->primary_key = false;
+> 			$fld->auto_increment = false;
+> 			$fld->scale = null;
+514a534
+> 			
+571c591
+< WHERE c2.relname=\'%s\' or c2.relname=lower(\'%s\')';
+---
+> WHERE (c2.relname=\'%s\' or c2.relname=lower(\'%s\'))';
+631c651,652
+< 				else $str = 'host=localhost';
+---
+> 				else $str = 'host='; // Modified 2004-07-23 by Kevin Jamieson (http://www.pkp.ubc.ca/)
+> 				// Don't specify a host if none was entered (so will connect using sockets)

@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE schema SYSTEM "dtd/xmlschema.dtd">
+
+<!--
+  * harvester2_schema.xml
+  *
+  * Copyright (c) 2005 The Public Knowledge Project
+  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
+  *
+  * Harvester2 database schema in XML.
+  *
+  * $Id$
+  -->
+
+<schema version="0.2">
+
+	<!--
+	  *
+	  * TABLE version
+	  *
+	  -->
+	<table name="versions">
+		<field name="major" type="I4">
+			<KEY/>
+			<DEFAULT VALUE="0"/>
+		</field>
+		<field name="minor" type="I4">
+			<KEY/>
+			<DEFAULT VALUE="0"/>
+		</field>
+		<field name="revision" type="I4">
+			<KEY/>
+			<DEFAULT VALUE="0"/>
+		</field>
+		<field name="build" type="I4">
+			<KEY/>
+			<DEFAULT VALUE="0"/>
+		</field>
+		<field name="date_installed" type="T">
+			<NOTNULL/>
+		</field>
+		<field name="current" type="I1">
+			<NOTNULL/>
+			<DEFAULT VALUE="0"/>
+		</field>
+		<descr>Harvester2 installation and upgrade version history.</descr>
+	</table>
+
+	<!--
+	  *
+	  * TABLE archives
+	  *
+	  -->
+	<table name="archives">
+		<field name="archive_id" type="I8">
+			<KEY/>
+			<AUTOINCREMENT/>
+		</field>
+		<field name="harvester_plugin" type="C2" size="80">
+			<NOTNULL/>
+		</field>
+		<field name="title" type="C2" size="255">
+			<NOTNULL/>
+		</field>
+		<field name="url" type="C2" size="255">
+			<NOTNULL/>
+		</field>
+		<field name="description" type="X"/>
+		<descr>Archives and basic archive settings.</descr>
+	</table>
+	
+	<!--
+	  *
+	  * TABLE sessions
+	  *
+	  -->
+	<table name="sessions">
+		<field name="session_id" type="C2" size="32">
+			<KEY/>
+		</field>
+		<field name="ip_address" type="C2" size="15">
+			<NOTNULL/>
+		</field>
+		<field name="user_agent" type="C2" size="255"/>
+		<field name="created" type="I8">
+			<NOTNULL/>
+			<DEFAULT VALUE="0"/>
+		</field>
+		<field name="last_used" type="I8">
+			<NOTNULL/>
+			<DEFAULT VALUE="0"/>
+		</field>
+		<field name="logged_in" type="I1">
+			<NOTNULL/>
+			<DEFAULT VALUE="0"/>
+		</field>
+		<field name="remember" type="I1">
+			<NOTNULL/>
+			<DEFAULT VALUE="0"/>
+		</field>
+		<field name="data" type="X">
+			<NOTNULL/>
+			<DEFAULT VALUE=""/>
+		</field>
+		<descr>Browser/user sessions and session data.</descr>
+	</table>
+
+	<!--
+	  *
+	  * TABLE plugin_settings
+	  *
+	  -->
+	<table name="plugin_settings">
+		<field name="plugin_name" type="C2" size="80">
+			<KEY/>
+			<NOTNULL/>
+		</field>
+		<field name="setting_name" type="C2" size="80">
+			<KEY/>
+			<NOTNULL/>
+		</field>
+		<field name="setting_value" type="X"/>
+		<field name="setting_type" type="C2" size="6">
+			<NOTNULL/>
+			<descr>(bool|int|float|string|object)</descr>
+		</field>
+		<descr>Site settings.</descr>
+		<index name="plugin_settings_plugin_name">
+			<col>plugin_name</col>
+		</index>
+	</table>
+	
+	<!--
+	  *
+	  * TABLE site_settings
+	  *
+	  -->
+	<table name="site_settings">
+		<field name="setting_name" type="C2" size="80">
+			<KEY/>
+			<NOTNULL/>
+		</field>
+		<field name="setting_value" type="X"/>
+		<field name="setting_type" type="C2" size="6">
+			<NOTNULL/>
+			<descr>(bool|int|float|string|object)</descr>
+		</field>
+		<descr>Site settings.</descr>
+	</table>
+	
+	<!--
+	  *
+	  * TABLE email_templates
+	  *
+	  -->
+	<table name="email_templates">
+		<field name="email_id" type="I8">
+			<KEY/>
+			<AUTOINCREMENT/>
+		</field>
+		<field name="email_key" type="C2" size="30">
+			<NOTNULL/>
+			<descr>Unique identifier for this email.</descr>
+		</field>
+		<field name="can_disable" type="I1">
+			<NOTNULL/>
+			<DEFAULT VALUE="1"/>
+		</field>
+		<field name="can_edit" type="I1">
+			<NOTNULL/>
+			<DEFAULT VALUE="1"/>
+		</field>
+		<descr>Default email templates.</descr>
+		<index name="email_templates_default_email_key">
+			<col>email_key</col>
+			<UNIQUE/>
+		</index>
+	</table>
+	
+	<!--
+	  *
+	  * TABLE email_templates_data
+	  *
+	  -->
+	<table name="email_templates_data">
+		<field name="email_key" type="C2" size="30">
+			<KEY/>
+			<descr>Unique identifier for this email.</descr>
+		</field>
+		<field name="locale" type="C2" size="5">
+			<KEY/>
+			<DEFAULT VALUE="en_US"/>
+		</field>
+		<field name="subject" type="C2" size="120">
+			<NOTNULL/>
+		</field>
+		<field name="body" type="X"/>
+		<field name="description" type="X"/>
+		<descr>Default data for email templates.</descr>
+	</table>
+	
+	<!--
+	 *
+	 * TABLE search_keyword_list
+	 *
+	 -->
+	<table name="search_keyword_list">
+		<field name="keyword_id" type="I8">
+			<KEY/>
+			<AUTOINCREMENT/>
+		</field>
+		<field name="keyword_text" type="C2" size="60">
+			<NOTNULL/>
+		</field>
+		<descr>List of all keywords.</descr>
+		<index name="search_keyword_text">
+			<col>keyword_text</col>
+			<UNIQUE/>
+		</index>
+	</table>
+	
+	<!--
+	 *
+	 * TABLE search_objects
+	 *
+	 -->
+	<table name="search_objects">
+		<field name="object_id" type="I8">
+			<KEY/>
+			<AUTOINCREMENT/>
+		</field>
+		<field name="record_id" type="I8">
+			<NOTNULL/>
+		</field>
+		<field name="field_id" type="I8">
+			<NOTNULL/>
+		</field>
+		<descr>Indexed objects.</descr>
+	</table>
+	
+	<!--
+	 *
+	 * TABLE search_object_keywords
+	 *
+	 -->
+	<table name="search_object_keywords">
+		<field name="object_id" type="I8">
+			<KEY/>
+		</field>
+		<field name="keyword_id" type="I8">
+			<NOTNULL/>
+		</field>
+		<field name="pos" type="I4">
+			<KEY/>
+			<descr>Word position of the keyword in the object.</descr>
+		</field>
+		<descr>Keyword occurrences for each indexed object.</descr>
+		<index name="search_object_keywords_keyword_id">
+			<col>keyword_id</col>
+		</index>
+	</table>
+</schema>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  * siteSettings.xml
+  *
+  * Copyright (c) 2005 The Public Knowledge Project
+  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
+  *
+  * Default site settings.
+  *
+  * $Id$
+  -->
+
+<!DOCTYPE site_settings [
+	<!ELEMENT site_settings (setting+)>
+	<!ELEMENT setting (name, value)>
+	<!ATTLIST setting type (int|string|object) #REQUIRED>
+	<!ELEMENT name (#PCDATA)>
+	<!ELEMENT value (#PCDATA | array)*>
+	<!ELEMENT element (#PCDATA | array)*>
+	<!ATTLIST element key CDATA #IMPLIED>
+	<!ELEMENT array (element+)>
+]>
+
+<site_settings>
+	<setting type="int">
+		<name>numPageLinks</name>
+		<value>10</value>
+	</setting>
+	<setting type="int">
+		<name>itemsPerPage</name>
+		<value>25</value>
+	</setting>
+	<setting type="string">
+		<name>emailSignature</name>
+		<value>{translate key="default.siteSettings.emailSignature"}</value>
+	</setting>
+	<setting type="string">
+		<name>title</name>
+		<value>{translate key="common.harvester2"}</value>
+	</setting>
+	<setting type="string">
+		<name>contact_name</name>
+		<value>{translate key="common.harvester2"}</value>
+	</setting>
+	<setting type="string">
+		<name>contact_email</name>
+		<value>{$adminEmail}</value>
+	</setting>
+	<setting type="string">
+		<name>username</name>
+		<value>{$adminUsername}</value>
+	</setting>
+	<setting type="string">
+		<name>password</name>
+		<value>{$encryptedPassword}</value>
+	</setting>
+	<setting type="string">
+		<name>intro</name>
+		<value>{translate key="default.siteIntro"}</value>
+	</setting>
+	<setting type="string">
+		<name>footer</name>
+		<value>{translate key="default.footer"}</value>
+	</setting>
+</site_settings>

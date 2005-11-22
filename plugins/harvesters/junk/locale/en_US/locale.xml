@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE locale SYSTEM "../../../../../locale/locale.dtd">
+
+<!--
+  * locale.xml
+  *
+  * Copyright (c) 2003-2005 The Public Knowledge Project
+  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
+  *
+  * Localization strings for the en_US (U.S. English) locale.
+  *
+  * $Id$
+  -->
+ 
+<locale name="en_US" full_name="U.S. English">
+	<message key="plugins.harvesters.junk.protocolName">Junk</message>
+	<message key="plugins.harvesters.junk.description">This harvester supports the Junk protocol.</message>
+
+	<message key="plugins.harvesters.junk.archive.form.junkUrl">Junk Plugin Base URL</message>
+	<message key="plugins.harvesters.junk.archive.form.junkUrlRequired">The Junk URL field is required.</message>
+	<message key="plugins.harvesters.junk.archive.form.junkUrl.description">e.g. http://www.yourarchive.com/junkPlugin/index.php</message>
+</locale>
