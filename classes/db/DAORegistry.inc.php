@@ -79,6 +79,7 @@ class DAORegistry {
 		// FIXME This function should be removed (require fully-qualified name to be passed to getDAO?)
 		switch ($name) {
 			case 'ArchiveDAO': return 'archive.ArchiveDAO';
+			case 'ArchiveSettingsDAO': return 'archive.ArchiveSettingsDAO';
 			case 'SessionDAO': return 'session.SessionDAO';
 			case 'SiteSettingsDAO': return 'site.SiteSettingsDAO';
 			case 'VersionDAO': return 'site.VersionDAO';

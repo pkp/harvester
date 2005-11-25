@@ -63,4 +63,8 @@
 		<name>footer</name>
 		<value>{translate key="default.footer"}</value>
 	</setting>
+	<setting type="string">
+		<name>defaultHarvesterPlugin</name>
+		<value>OAIHarvesterPlugin</value>
+	</setting>
 </site_settings>

@@ -26,6 +26,7 @@ class HarvesterPlugin extends Plugin {
 			HookRegistry::register('ArchiveForm::getParameterNames', array(&$this, '_getArchiveFormParameterNames'));
 			HookRegistry::register('ArchiveForm::ArchiveForm', array(&$this, '_extendArchiveFormConstructor'));
 			HookRegistry::register('ArchiveForm::initData', array(&$this, '_readAdditionalFormData'));
+			HookRegistry::register('ArchiveForm::execute', array(&$this, '_saveAdditionalFormData'));
 		}
 		return $success;
 	}
@@ -131,6 +132,20 @@ class HarvesterPlugin extends Plugin {
 
 		if ($harvesterPlugin == $this->getName() && $archive) {
 			$this->initializeArchiveForm($form, $archive);
+			return true;
+		}
+		return false;
+	}
+
+	function _saveAdditionalFormData($hookName, $args) {
+		$form =& $args[0];
+		$archive =& $args[1];
+		$harvesterPlugin =& $args[2];
+
+		if ($harvesterPlugin == $this->getName() && $archive) {
+			foreach ($this->getAdditionalArchiveFormFields() as $field) {
+				$archive->updateSetting($field, Request::getUserVar($field));
+			}
 			return true;
 		}
 		return false;

@@ -132,6 +132,31 @@
 	
 	<!--
 	  *
+	  * TABLE archive_settings
+	  *
+	  -->
+	<table name="archive_settings">
+		<field name="archive_id" type="I8">
+			<KEY/>
+			<NOTNULL/>
+		</field>
+		<field name="setting_name" type="C2" size="80">
+			<KEY/>
+			<NOTNULL/>
+		</field>
+		<field name="setting_value" type="X"/>
+		<field name="setting_type" type="C2" size="6">
+			<NOTNULL/>
+			<descr>(bool|int|float|string|object)</descr>
+		</field>
+		<descr>Site settings.</descr>
+		<index name="archive_settings_archive_id">
+			<col>archive_id</col>
+		</index>
+	</table>
+	
+	<!--
+	  *
 	  * TABLE site_settings
 	  *
 	  -->

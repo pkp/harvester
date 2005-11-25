@@ -59,17 +59,13 @@ function selectHarvester() {
 	</tr>
 
 		<tr>
-			<td class="label">{fieldLabel name="harvester" key="archive.harvester" required="true"}</td>
+			<td class="label">{fieldLabel name="harvester" key="archive.type" required="true"}</td>
 			<td><select onchange="selectHarvester()" name="harvesterPlugin" id="harvesterPlugin" size="1" class="selectMenu">
 				{foreach from=$harvesters item=harvester}
 					<option {if $harvester->getName() == $harvesterPlugin}selected="selected" {/if}value="{$harvester->getName()}">{$harvester->getProtocolDisplayName()}</option>
 				{/foreach}
 			</select></td>
 		</tr>
-		{if !$harvesterPlugin}
-			{* If a harvester plugin hasn't been chosen yet, assume one. *}
-			{assign var=harvesterPlugin value=$harvester->getName()}
-		{/if}
 
 		{call_hook name="Template::Admin::Archives::displayHarvesterForm" plugin=$harvesterPlugin}
 </table>

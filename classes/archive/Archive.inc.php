@@ -15,12 +15,15 @@
  */
 
 class Archive extends DataObject {
+	/** Archive settings DAO */
+	var $archiveSettingsDao;
 
 	/**
 	 * Constructor.
 	 */
 	function Archive() {
 		parent::DataObject();
+		$this->archiveSettingsDao =& DAORegistry::getDAO('ArchiveSettingsDAO');
 	}
 	
 	//
@@ -41,6 +44,22 @@ class Archive extends DataObject {
 	 */
 	function setTitle($title) {
 		return $this->setData('title',$title);
+	}
+
+	/**
+	 * Get name of harvester plugin
+	 * @return string
+	 */
+	 function getHarvesterPlugin() {
+	 	return $this->getData('harvesterPlugin');
+	}
+	
+	/**
+	 * Set name of harvester plugin
+	 * @param $harvesterPlugin string
+	 */
+	function setHarvesterPlugin($harvesterPlugin) {
+		return $this->setData('harvesterPlugin',$harvesterPlugin);
 	}
 
 	/**
@@ -89,6 +108,32 @@ class Archive extends DataObject {
 	 */
 	function setArchiveId($archiveId) {
 		return $this->setData('archiveId', $archiveId);
+	}
+
+	/**
+	 * Install settings from an XML file.
+	 * @param $filename
+	 */
+	function installSettings($filename, $paramArray = array()) {
+		return $this->archiveSettingsDao->installSettings($filename, $paramArray);
+	}
+
+	/**
+	 * Get a site setting.
+	 * @param $name
+	 */
+	function &getSetting($name) {
+		return $this->archiveSettingsDao->getSetting($this->getArchiveId(), $name);
+	}
+
+	/**
+	 * Update a site setting.
+	 * @param $name
+	 * @param $value
+	 * @param $type
+	 */
+	function updateSetting($name, $value, $type = null) {
+		$this->archiveSettingsDao->updateSetting($this->getArchiveId(), $name, $value, $type);
 	}
 }
 

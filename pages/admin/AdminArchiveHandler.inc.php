@@ -24,12 +24,16 @@ class AdminArchiveHandler extends AdminHandler {
 		
 		$rangeInfo = Handler::getRangeInfo('archives');
 
+		// Load the harvester plugins so we can display names.
+		$plugins =& PluginRegistry::loadCategory('harvesters');
+
 		$archiveDao = &DAORegistry::getDAO('ArchiveDAO');
 		$archives = &$archiveDao->getArchives($rangeInfo);
 		
 		$templateMgr = &TemplateManager::getManager();
 		$templateMgr->assign_by_ref('archives', $archives);
 		$templateMgr->assign('helpTopicId', 'site.siteManagement');
+		$templateMgr->assign('harvesters', $plugins);
 		$templateMgr->display('admin/archives.tpl');
 	}
 	

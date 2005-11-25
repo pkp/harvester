@@ -221,7 +221,7 @@ class Site extends DataObject {
 	 * @param $filename
 	 */
 	function installSettings($filename, $paramArray = array()) {
-		return $this->installSettings($filename, $paramArray);
+		return $this->siteSettingsDao->installSettings($filename, $paramArray);
 	}
 
 	/**

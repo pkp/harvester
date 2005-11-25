@@ -178,7 +178,7 @@ Your server currently supports mbstring: <strong>{$supportsMBString}</strong>]]>
 	<message key="archive.title">Title</message>
 	<message key="archive.url">URL</message>
 	<message key="archive.description">Description</message>
-	<message key="archive.harvester">Harvester</message>
+	<message key="archive.type">Type</message>
 
 	<!-- Site Administration -->
 	<message key="admin.siteAdmin">Site Administration</message>
