@@ -12,7 +12,7 @@
 {assign var="pageTitle" value="admin.siteSettings"}
 {include file="common/header.tpl"}
 
-<form method="post" action="{$pageUrl}/admin/saveSettings">
+<form method="post" action="{url op="saveSettings"}">
 {include file="common/formErrors.tpl"}
 
 <table class="data" width="100%">
@@ -38,7 +38,7 @@
 	</tr>
 </table>
 
-<p><input type="submit" value="{translate key="common.save"}" class="button defaultButton" /> <input type="button" value="{translate key="common.cancel"}" class="button" onclick="document.location.href='{$pageUrl}/admin'" /></p>
+<p><input type="submit" value="{translate key="common.save"}" class="button defaultButton" /> <input type="button" value="{translate key="common.cancel"}" class="button" onclick="document.location.href='{url page="admin"}'" /></p>
 
 </form>
 

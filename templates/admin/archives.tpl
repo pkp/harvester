@@ -40,7 +40,7 @@
 				&mdash;
 			{/if}
 		</td>
-		<td align="right"><a href="{$pageUrl}/admin/editArchive/{$archive->getArchiveId()}" class="action">{translate key="common.edit"}</a> <a class="action" href="{$pageUrl}/admin/deleteArchive/{$archive->getArchiveId()}" onclick="return confirm('{translate|escape:"javascript" key="admin.archives.confirmDelete"}')">{translate key="common.delete"}</a></td>
+		<td align="right"><a href="{url op="editArchive" path=$archive->getArchiveId()}" class="action">{translate key="common.edit"}</a> <a class="action" href="{url op="deleteArchive" path=$archive->getArchiveId()}" onclick="return confirm('{translate|escape:"javascript" key="admin.archives.confirmDelete"}')">{translate key="common.delete"}</a></td>
 	</tr>
 	<tr>
 		<td colspan="4" class="{if $smarty.foreach.archives.last}end{/if}separator">&nbsp;</td>
@@ -61,6 +61,6 @@
 	{/if}
 </table>
 
-<p><a href="{$pageUrl}/admin/createArchive" class="action">{translate key="admin.archives.addArchive"}</a></p>
+<p><a href="{url op="createArchive"}" class="action">{translate key="admin.archives.addArchive"}</a></p>
 
 {include file="common/footer.tpl"}

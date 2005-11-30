@@ -19,7 +19,7 @@
 	<br />
 {/if}
 
-<form name="login" action="{$pageUrl}/login/signIn" method="post">
+<form name="login" action="{url page="login" op="signIn"}" method="post">
 <input type="hidden" name="source" value="{$source|escape}" />
 <table class="data">
 <tr>

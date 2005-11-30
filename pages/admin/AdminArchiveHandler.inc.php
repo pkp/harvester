@@ -73,7 +73,7 @@ class AdminArchiveHandler extends AdminHandler {
 		
 		if ($settingsForm->validate()) {
 			$settingsForm->execute();
-			Request::redirect('admin/archives');
+			Request::redirect('admin', 'archives');
 			
 		} else {
 			parent::setupTemplate(true);
@@ -107,7 +107,7 @@ class AdminArchiveHandler extends AdminHandler {
 			}
 		}
 		
-		Request::redirect('admin/archives');
+		Request::redirect('admin', 'archives');
 	}
 	
 }

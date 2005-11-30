@@ -24,7 +24,7 @@
 
 {literal}
 function selectHarvester() {
-	document.archiveForm.action="{/literal}{$pageUrl|escape:"quotes"}/admin/editArchive{if $archiveId}/{$archiveId}{/if}{literal}#archiveForm";
+	document.archiveForm.action="{/literal}{if $archiveId}{url op="editArchive" anchor="archiveForm" path=$archiveId}{else}{url op="editArchive" anchor="archiveForm"}{/if}{literal}";
 	document.archiveForm.submit();
 }
 
@@ -33,7 +33,7 @@ function selectHarvester() {
 </script>
 
 <a name="archiveForm"/>
-<form name="archiveForm" method="post" action="{$pageUrl}/admin/updateArchive">
+<form name="archiveForm" method="post" action="{url op="updateArchive"}">
 {if $archiveId}
 <input type="hidden" name="archiveId" value="{$archiveId}" />
 {/if}
@@ -70,7 +70,7 @@ function selectHarvester() {
 		{call_hook name="Template::Admin::Archives::displayHarvesterForm" plugin=$harvesterPlugin}
 </table>
 
-<p><input type="submit" value="{translate key="common.save"}" class="button defaultButton" /> <input type="button" value="{translate key="common.cancel"}" class="button" onclick="document.location.href='{$pageUrl}/admin/archives'" /></p>
+<p><input type="submit" value="{translate key="common.save"}" class="button defaultButton" /> <input type="button" value="{translate key="common.cancel"}" class="button" onclick="document.location.href='{url op="archives"}'" /></p>
 
 </form>
 

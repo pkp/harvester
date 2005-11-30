@@ -96,7 +96,7 @@ class AdminLanguagesHandler extends AdminHandler {
 			$site->setInstalledLocales($installedLocales);
 		}
 		
-		Request::redirect('admin/languages');
+		Request::redirect('admin', 'languages');
 	}
 	
 	/**
@@ -122,7 +122,7 @@ class AdminLanguagesHandler extends AdminHandler {
 			}
 		}
 		
-		Request::redirect('admin/languages');
+		Request::redirect('admin', 'languages');
 	}
 	
 	/*
@@ -138,7 +138,7 @@ class AdminLanguagesHandler extends AdminHandler {
 			Locale::reloadLocale($locale);
 		}
 		
-		Request::redirect('admin/languages');
+		Request::redirect('admin', 'languages');
 	}
 }
 

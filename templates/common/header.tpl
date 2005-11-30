@@ -9,8 +9,8 @@
  * $Id$
  *}
 
-{if !$pageTitleTranslated}{assign_translate var="pageTitleTranslated" key=$pageTitle}{/if}
-{if $pageCrumbTitle}{assign_translate var="pageCrumbTitleTranslated" key=$pageCrumbTitle}{elseif !$pageCrumbTitleTranslated}{assign var="pageCrumbTitleTranslated" value=$pageTitleTranslated}{/if}
+{if !$pageTitleTranslated}{translate|assign:"pageTitleTranslated" key=$pageTitle}{/if}
+{if $pageCrumbTitle}{translate|assign:"pageCrumbTitleTranslated" key=$pageCrumbTitle}{elseif !$pageCrumbTitleTranslated}{assign var="pageCrumbTitleTranslated" value=$pageTitleTranslated}{/if}
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -49,25 +49,25 @@
 <div id="main">
 <div id="navbar">
 	<ul class="menu">
-		<li><a href="{$pageUrl}">{translate key="navigation.home"}</a></li>
-		<li><a href="{$pageUrl}/about">{translate key="navigation.about"}</a></li>
+		<li><a href="{url op=""}">{translate key="navigation.home"}</a></li>
+		<li><a href="{url page="about"}">{translate key="navigation.about"}</a></li>
 		{if $isUserLoggedIn}
-			<li><a href="{$pageUrl}/admin">{translate key="navigation.administration"}</a></li>
+			<li><a href="{url page="admin"}">{translate key="navigation.administration"}</a></li>
 		{else}
-			<li><a href="{$pageUrl}/login">{translate key="navigation.login"}</a></li>
+			<li><a href="{url page="login"}">{translate key="navigation.login"}</a></li>
 		{/if}
-		<li><a href="{$pageUrl}/search">{translate key="navigation.search"}</a></li>
+		<li><a href="{url page="search"}">{translate key="navigation.search"}</a></li>
 		{foreach from=$navMenuItems item=navItem}
-		<li><a href="{if $navItem.isAbsolute}{$navItem.url|escape}{else}{$pageUrl}{$navItem.url|escape}{/if}">{if $navItem.isLiteral}{$navItem.name|escape}{else}{translate key=$navItem.name}{/if}</a></li>
+		<li><a href="{if $navItem.isAbsolute}{$navItem.url|escape}{else}{url page=""}{$navItem.url|escape}{/if}">{if $navItem.isLiteral}{$navItem.name|escape}{else}{translate key=$navItem.name}{/if}</a></li>
 		{/foreach}
-		<li><a href="javascript:openHelp('{if $helpTopicId}{get_help_id key="$helpTopicId" url="true"}{else}{$pageUrl}/help{/if}')">{translate key="navigation.help"}</a></li>
+		<li><a href="javascript:openHelp('{if $helpTopicId}{get_help_id key="$helpTopicId" url="true"}{else}{url page="help"}{/if}')">{translate key="navigation.help"}</a></li>
 	</ul>
 </div>
 
 <div id="breadcrumb">
-	<a href="{$pageUrl}">{translate key="navigation.home"}</a> &gt;
+	<a href="{url page=""}">{translate key="navigation.home"}</a> &gt;
 	{foreach from=$pageHierarchy item=hierarchyLink}
-		<a href="{$pageUrl}/{$hierarchyLink[0]}" class="hierarchyLink">{if not $hierarchyLink[2]}{translate key=$hierarchyLink[1]}{else}{$hierarchyLink[1]}{/if}</a> &gt;
+		<a href="{$hierarchyLink[0]}" class="hierarchyLink">{if not $hierarchyLink[2]}{translate key=$hierarchyLink[1]}{else}{$hierarchyLink[1]}{/if}</a> &gt;
 	{/foreach}
 	<a href="{$currentUrl}" class="current">{$pageCrumbTitleTranslated}</a>
 </div>

@@ -15,6 +15,6 @@
 	<p>{$about|nl2br}</p>
 {/if}
 
-<a href="{$pageUrl}/about/harvester">{translate key="about.harvester"}</a>
+<a href="{url op="harvester"}">{translate key="about.harvester"}</a>
 
 {include file="common/footer.tpl"}

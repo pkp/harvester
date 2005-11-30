@@ -41,12 +41,12 @@ class IndexHandler extends Handler {
 		}
 		
 		if(isset($_SERVER['HTTP_REFERER'])) {
-			Request::redirect($_SERVER['HTTP_REFERER']);
+			Request::redirectUrl($_SERVER['HTTP_REFERER']);
 		}
 		
 		$source = Request::getUserVar('source');
 		if (isset($source) && !empty($source)) {
-			Request::redirect(Request::getProtocol() . '://' . Request::getServerHost() . $source, false);
+			Request::redirectUrl(Request::getProtocol() . '://' . Request::getServerHost() . $source, false);
 		}
 		
 		Request::redirect('index');		

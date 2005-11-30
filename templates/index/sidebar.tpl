@@ -16,5 +16,6 @@
 
 <div class="block">
 	<span class="blockTitle"><img src="{$publicFilesDir}/add.png" align="right" width="25" height="25"/>{translate key="sidebar.addYourArchive"}</span>
-	{translate key="sidebar.addYourArchive.description" addUrl=`$pageUrl`/add}
+	{url|assign:"addUrl" page="add"}
+	{translate key="sidebar.addYourArchive.description" addUrl=$addUrl}
 </div>

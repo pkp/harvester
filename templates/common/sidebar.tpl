@@ -16,11 +16,8 @@
 		<strong>{$loggedInUsername|escape}</strong>
 
 		<ul>
-			<li><a href="{$pageUrl}/admin">{translate key="navigation.administration"}</a></li>
-			<li><a href="{$pageUrl}/login/signOut">{translate key="navigation.logout"}</a></li>
-		{if $userSession->getSessionVar('signedInAs')}
-			<li><a href="{$pageUrl}/manager/signOutAsUser">{translate key="manager.people.signOutAsUser"}</a></li>
-		{/if}
+			<li><a href="{url page="admin"}">{translate key="navigation.administration"}</a></li>
+			<li><a href="{url page="login" op="signOut"}">{translate key="navigation.logout"}</a></li>
 		</ul>
 	</div>
 {/if}
@@ -33,7 +30,7 @@
 	<div class="block">
 		<span class="blockTitle">{translate key="common.language"}</span>
 		<form action="#">
-			<select size="1" onchange="location.href={if $languageToggleNoUser}'{$currentUrl}{if strstr($currentUrl, '?')}&{else}?{/if}setLocale='+this.options[this.selectedIndex].value{else}'{$pageUrl}/index/setLocale/'+this.options[this.selectedIndex].value+'?source={$smarty.server.REQUEST_URI|escape:"javascript"}'{/if}" class="selectMenu">{html_options options=$languageToggleLocales selected=$currentLocale}</select>
+			<select size="1" onchange="location.href={if $languageToggleNoUser}'{$currentUrl}{if strstr($currentUrl, '?')}&{else}?{/if}setLocale='+this.options[this.selectedIndex].value{else}'{url page="index" op="setLocale" path="LOCALE_NAME" source=$smarty.server.REQUEST_URI|escape:"javascript"}'.replace('LOCALE_NAME', this.options[this.selectedIndex].value){/if}" class="selectMenu">{html_options options=$languageToggleLocales selected=$currentLocale}</select>
 		</form>
 	</div>
 {/if}
@@ -42,7 +39,7 @@
 	<span class="blockTitle">{translate key="navigation.content"}</span>
 
 	<span class="blockSubtitle">{translate key="navigation.search"}</span>
-	<form method="get" action="{$pageUrl}/search/results">
+	<form method="get" action="{url page="search" op="results"}">
 		<table>
 			<tr>
 				<td><input type="text" id="query" name="query" size="15" maxlength="255" value="" class="textField" /></td>
