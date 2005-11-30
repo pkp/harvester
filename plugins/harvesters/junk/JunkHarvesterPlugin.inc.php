@@ -45,11 +45,11 @@ class JunkHarvesterPlugin extends HarvesterPlugin {
 	}
 
 	function addArchiveFormChecks(&$form) {
-		$form->addCheck(new FormValidator($form, 'junkUrl', 'required', 'plugins.harvesters.junk.archive.form.junkUrlRequired'));
+		$form->addCheck(new FormValidator($form, 'harvesterUrl', 'required', 'plugins.harvesters.junk.archive.form.harvesterUrlRequired'));
 	}
 
 	function getAdditionalArchiveFormFields() {
-		return array('junkUrl');
+		return array('harvesterUrl');
 	}
 }
 

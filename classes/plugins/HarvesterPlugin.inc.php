@@ -27,6 +27,7 @@ class HarvesterPlugin extends Plugin {
 			HookRegistry::register('ArchiveForm::ArchiveForm', array(&$this, '_extendArchiveFormConstructor'));
 			HookRegistry::register('ArchiveForm::initData', array(&$this, '_readAdditionalFormData'));
 			HookRegistry::register('ArchiveForm::execute', array(&$this, '_saveAdditionalFormData'));
+			HookRegistry::register('ArchiveForm::display', array(&$this, '_displayArchiveForm'));
 		}
 		return $success;
 	}
@@ -149,6 +150,23 @@ class HarvesterPlugin extends Plugin {
 			return true;
 		}
 		return false;
+	}
+
+	function _displayArchiveForm($hookName, $args) {
+		$form =& $args[0];
+		$templateMgr =& $args[1];
+		$harvesterPlugin =& $args[2];
+		
+		if ($harvesterPlugin == $this->getName()) {
+			$this->displayArchiveForm($form, $templateMgr);
+			return true;
+		}
+		return false;
+	}
+
+	function displayArchiveForm(&$form, &$templateMgr) {
+		// Harvester subclasses should override this call
+		// as necessary.
 	}
 }
 

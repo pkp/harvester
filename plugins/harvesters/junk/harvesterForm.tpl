@@ -10,10 +10,10 @@
  *}
 
 	<tr valign="top">
-		<td class="label">{fieldLabel name="junkUrl" key="plugins.harvesters.junk.archive.form.junkUrl" required="true"}</td>
+		<td class="label">{fieldLabel name="harvesterUrl" key="plugins.harvesters.junk.archive.form.harvesterUrl" required="true"}</td>
 		<td class="value">
-			<input type="text" id="junkUrl" name="junkUrl" value="{$junkUrl|escape}" size="40" maxlength="120" class="textField" />
+			<input type="text" id="harvesterUrl" name="harvesterUrl" value="{$harvesterUrl|escape}" size="40" maxlength="120" class="textField" />
 			<br/>
-			{translate key="plugins.harvesters.junk.archive.form.junkUrl.description"}
+			{translate key="plugins.harvesters.junk.archive.form.harvesterUrl.description"}
 		</td>
 	</tr>

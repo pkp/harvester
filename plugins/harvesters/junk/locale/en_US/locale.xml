@@ -16,7 +16,7 @@
 	<message key="plugins.harvesters.junk.protocolName">Junk</message>
 	<message key="plugins.harvesters.junk.description">This harvester supports the Junk protocol.</message>
 
-	<message key="plugins.harvesters.junk.archive.form.junkUrl">Junk Plugin Base URL</message>
-	<message key="plugins.harvesters.junk.archive.form.junkUrlRequired">The Junk URL field is required.</message>
-	<message key="plugins.harvesters.junk.archive.form.junkUrl.description">e.g. http://www.yourarchive.com/junkPlugin/index.php</message>
+	<message key="plugins.harvesters.junk.archive.form.harvesterUrl">Junk Plugin Base URL</message>
+	<message key="plugins.harvesters.junk.archive.form.harvesterUrlRequired">The Junk URL field is required.</message>
+	<message key="plugins.harvesters.junk.archive.form.harvesterUrl.description">e.g. http://www.yourarchive.com/junkPlugin/index.php</message>
 </locale>

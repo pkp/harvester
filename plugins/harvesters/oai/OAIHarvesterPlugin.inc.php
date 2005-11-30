@@ -15,6 +15,9 @@
 
 import('plugins.HarvesterPlugin');
 
+define('OAI_INDEX_METHOD_LIST_RECORDS', 0x00001);
+define('OAI_INDEX_METHOD_LIST_IDENTIFIERS', 0x00002);
+
 class OAIHarvesterPlugin extends HarvesterPlugin {
 	/**
 	 * Register the plugin.
@@ -45,11 +48,20 @@ class OAIHarvesterPlugin extends HarvesterPlugin {
 	}
 
 	function addArchiveFormChecks(&$form) {
-		$form->addCheck(new FormValidator($form, 'oaiUrl', 'required', 'plugins.harvesters.oai.archive.form.oaiUrlRequired'));
+		$form->addCheck(new FormValidator($form, 'harvesterUrl', 'required', 'plugins.harvesters.oai.archive.form.harvesterUrlRequired'));
+		$form->addCheck(new FormValidatorInSet($form, 'oaiIndexMethod', 'required', 'plugins.harvesters.oai.archive.form.oaiIndexMethodRequired', array(OAI_INDEX_METHOD_LIST_RECORDS, OAI_INDEX_METHOD_LIST_IDENTIFIERS)));
 	}
 
 	function getAdditionalArchiveFormFields() {
-		return array('oaiUrl');
+		return array('harvesterUrl', 'oaiIndexMethod');
+	}
+
+	function displayArchiveForm(&$form, &$templateMgr) {
+		parent::displayArchiveForm($form, $templateMgr);
+		$templateMgr->assign('oaiIndexMethods', array(
+			OAI_INDEX_METHOD_LIST_RECORDS => Locale::translate('plugins.harvesters.oai.archive.form.oaiIndexMethod.ListRecords'),
+			OAI_INDEX_METHOD_LIST_IDENTIFIERS => Locale::translate('plugins.harvesters.oai.archive.form.oaiIndexMethod.ListIdentifiers')
+		));
 	}
 }
 

@@ -10,10 +10,18 @@
  *}
 
 	<tr valign="top">
-		<td class="label">{fieldLabel name="oaiUrl" key="plugins.harvesters.oai.archive.form.oaiUrl" required="true"}</td>
+		<td class="label">{fieldLabel name="harvesterUrl" key="plugins.harvesters.oai.archive.form.harvesterUrl" required="true"}</td>
 		<td class="value">
-			<input type="text" id="oaiUrl" name="oaiUrl" value="{$oaiUrl|escape}" size="40" maxlength="120" class="textField" />
+			<input type="text" id="harvesterUrl" name="harvesterUrl" value="{$harvesterUrl|escape}" size="40" maxlength="120" class="textField" />
 			<br/>
-			{translate key="plugins.harvesters.oai.archive.form.oaiUrl.description"}
+			{translate key="plugins.harvesters.oai.archive.form.harvesterUrl.description"}
+		</td>
+	</tr>
+	<tr valign="top">
+		<td class="label">{fieldLabel name="oaiIndexMethod" key="plugins.harvesters.oai.archive.form.oaiIndexMethod" required="true"}</td>
+		<td class="value">
+			<select class="selectMenu" name="oaiIndexMethod" id="oaiIndexMethod">
+				{html_options options=$oaiIndexMethods selected=$oaiIndexMethod}
+			</select>
 		</td>
 	</tr>

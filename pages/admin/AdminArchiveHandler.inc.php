@@ -68,6 +68,7 @@ class AdminArchiveHandler extends AdminHandler {
 		import('admin.form.ArchiveForm');
 		
 		$settingsForm = &new ArchiveForm(Request::getUserVar('archiveId'));
+		$settingsForm->initData();
 		$settingsForm->readInputData();
 		
 		if ($settingsForm->validate()) {

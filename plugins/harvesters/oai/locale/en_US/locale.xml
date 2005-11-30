@@ -15,7 +15,11 @@
 <locale name="en_US" full_name="U.S. English">
 	<message key="plugins.harvesters.oai.protocolName">OAI</message>
 	<message key="plugins.harvesters.oai.description">This harvester supports the Open Archives Initiative (OAI) protocol, versions 1.1 and 2.0.</message>
-	<message key="plugins.harvesters.oai.archive.form.oaiUrl">OAI Base URL</message>
-	<message key="plugins.harvesters.oai.archive.form.oaiUrlRequired">The OAI URL field is required.</message>
-	<message key="plugins.harvesters.oai.archive.form.oaiUrl.description">e.g. http://www.yourarchive.com/oai/index.php</message>
+	<message key="plugins.harvesters.oai.archive.form.harvesterUrl">OAI Base URL</message>
+	<message key="plugins.harvesters.oai.archive.form.harvesterUrlRequired">The OAI URL field is required.</message>
+	<message key="plugins.harvesters.oai.archive.form.harvesterUrl.description">e.g. http://www.yourarchive.com/oai/index.php</message>
+	<message key="plugins.harvesters.oai.archive.form.oaiIndexMethod">Index Method</message>
+	<message key="plugins.harvesters.oai.archive.form.oaiIndexMethodRequired">The indexing method field is required.</message>
+	<message key="plugins.harvesters.oai.archive.form.oaiIndexMethod.ListRecords">ListRecords</message>
+	<message key="plugins.harvesters.oai.archive.form.oaiIndexMethod.ListIdentifiers">ListIdentifiers</message>
 </locale>
