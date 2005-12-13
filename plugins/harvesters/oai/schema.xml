@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE schema SYSTEM "dtd/xmlschema.dtd">
+
+<!--
+  * schema.xml
+  *
+  * Copyright (c) 2005 The Public Knowledge Project
+  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
+  *
+  * Harvester2 database schema in XML for the OAI harvester plugin.
+  *
+  * $Id$
+  -->
+
+<schema version="0.2">
+
+	<!--
+	  *
+	  * TABLE version
+	  *
+	  -->
+	<table name="oai_resumption_tokens">
+		<field name="token" type="C2" size="32">
+			<KEY/>
+		</field>
+		<field name="archive_id" type="I4">
+			<KEY/>
+		</field>
+		<field name="date_expiration" type="T">
+			<NOTNULL/>
+		</field>
+		<field name="record_offset" type="I4">
+			<NOTNULL/>
+		</field>
+		<field name="params" type="X">
+			<NOTNULL/>
+		</field>
+		<descr>OAI Resumption Tokens list</descr>
+	</table>
+</schema>
