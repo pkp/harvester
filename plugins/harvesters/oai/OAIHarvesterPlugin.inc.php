@@ -63,6 +63,21 @@ class OAIHarvesterPlugin extends HarvesterPlugin {
 			OAI_INDEX_METHOD_LIST_IDENTIFIERS => Locale::translate('plugins.harvesters.oai.archive.form.oaiIndexMethod.ListIdentifiers')
 		));
 	}
+
+	function getInstallSchemaFile() {
+		return $this->getPluginPath() . '/schema.xml';
+	}
+
+	/**
+	 * Update the metadata index.
+	 * @param $archive object
+	 */
+	function updateIndex(&$archive) {
+		$this->import('OAIHarvester');
+		$oaiHarvester =& new OAIHarvester();
+		$oaiHarvester->harvest($archive->getSetting('harvesterUrl') . '?verb=Identify');
+	}
+
 }
 
 ?>

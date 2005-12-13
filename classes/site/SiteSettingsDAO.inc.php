@@ -40,7 +40,7 @@ class SiteSettingsDAO extends DAO {
 	 * @param $name
 	 * @return mixed
 	 */
-	function &getSetting($name) {
+	function getSetting($name) {
 		$cache =& $this->_getCache();
 		return $cache->get($name);
 	}

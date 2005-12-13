@@ -92,24 +92,65 @@ class AdminArchiveHandler extends AdminHandler {
 		
 		if (isset($args) && !empty($args) && !empty($args[0])) {
 			$archiveId = $args[0];
-			if ($archiveDao->deleteArchiveById($archiveId)) {
-				// Delete archive file tree
-				// FIXME move this somewhere better.
-				import('file.FileManager');
-				$fileManager = &new FileManager();
-
-				$archivePath = Config::getVar('files', 'files_dir') . '/archives/' . $archiveId;
-				$fileManager->rmtree($archivePath);
-
-				import('file.PublicFileManager');
-				$publicFileManager = &new PublicFileManager();
-				$publicFileManager->rmtree($publicFileManager->getArchiveFilesPath($archiveId));
-			}
+			$archiveDao->deleteArchiveById($archiveId);
 		}
 		
 		Request::redirect('admin', 'archives');
 	}
 	
+	/**
+	 * Manage an archive.
+	 */
+	function manage($args) {
+		parent::validate();
+		parent::setupTemplate(true);
+		
+		$archiveDao = &DAORegistry::getDAO('ArchiveDAO');
+		
+		if (isset($args) && !empty($args) && !empty($args[0])) {
+			$archiveId = $args[0];
+			$archive =& $archiveDao->getArchive($archiveId);
+			if ($archive) {
+				$templateMgr = &TemplateManager::getManager();
+				$templateMgr->assign('numRecords', $archive->getSetting('numRecords'));
+				$templateMgr->assign('lastIndexed', $archive->getSetting('lastIndexed'));
+				$templateMgr->assign('title', $archive->getTitle());
+				$templateMgr->assign('archiveId', $archive->getArchiveId());
+				$templateMgr->display('admin/manage.tpl');
+				return;
+			}
+		}
+		Request::redirect('admin', 'archives');
+	}
+
+	/**
+	 * Update the metadata index for an archive.
+	 */
+	function updateIndex($args) {
+		parent::validate();
+		parent::setupTemplate(true);
+		
+		$archiveDao = &DAORegistry::getDAO('ArchiveDAO');
+		
+		if (isset($args) && !empty($args) && !empty($args[0])) {
+			$archiveId = $args[0];
+			$archive =& $archiveDao->getArchive($archiveId);
+			if ($archive) {
+				// Disable timeout, as this operation may take
+				// a long time.
+				set_time_limit(0);
+
+				$plugins =& PluginRegistry::loadCategory('harvesters');
+				$pluginName = $archive->getHarvesterPlugin();
+				if (isset($plugins[$pluginName])) {
+					$plugin = $plugins[$pluginName];
+					$plugin->updateIndex($archive);
+				}
+				Request::redirect('admin', 'manage', $archive->getArchiveId());
+			}
+		}
+		Request::redirect('admin', 'archives');
+	}
 }
 
 ?>

@@ -26,6 +26,7 @@
 	<message key="common.on">On</message>
 	<message key="common.off">Off</message>
 	<message key="common.edit">Edit</message>
+	<message key="common.manage">Manage</message>
 	<message key="common.error.databaseError">A database error has occurred: {$error}</message>
 	<message key="common.mailingAddress">Mailing Address</message>
 	<message key="common.save">Save</message>
@@ -184,6 +185,12 @@ Your server currently supports mbstring: <strong>{$supportsMBString}</strong>]]>
 	<message key="admin.siteAdmin">Site Administration</message>
 	<message key="admin.siteSettings">Site Settings</message>
 	<message key="admin.archives">Archives</message>
+
+	<message key="admin.archives.manage">Manage Archive</message>
+	<message key="admin.archives.manage.numRecords">Number of Papers Indexed</message>
+	<message key="admin.archives.manage.lastIndexed">Last Indexed</message>
+	<message key="admin.archives.manage.updateIndex">Update Metadata Index</message>
+	<message key="admin.archives.manage.updateIndex.confirm">Are you sure you wish to update the metadata index? This operation may take several minutes, depending on the size of the archive.</message>
 
 	<message key="admin.settings.siteTitle">Site title</message>
 	<message key="admin.settings.introduction">Introduction</message>

@@ -28,6 +28,11 @@ class SiteSettingsForm extends Form {
 		$this->addCheck(new FormValidator($this, 'title', 'required', 'admin.settings.form.titleRequired'));
 		$this->addCheck(new FormValidator($this, 'contactName', 'required', 'admin.settings.form.contactNameRequired'));
 		$this->addCheck(new FormValidator($this, 'contactEmail', 'required', 'admin.settings.form.contactEmailRequired'));
+		$this->addCheck(new FormValidator($this, 'adminUsername', 'required', 'installer.form.usernameRequired'));
+		$this->addCheck(new FormValidatorAlphaNum($this, 'adminUsername', 'required', 'installer.form.usernameAlphaNumeric'));
+		$this->addCheck(new FormValidator($this, 'adminPassword', 'required', 'installer.form.passwordRequired'));
+		$this->addCheck(new FormValidatorCustom($this, 'adminPassword', 'required', 'installer.form.passwordsDoNotMatch', create_function('$password,$form', 'return $password == $form->getData(\'adminPassword2\');'), array(&$this)));
+		
 	}
 	
 	/**
@@ -50,7 +55,8 @@ class SiteSettingsForm extends Form {
 			'intro' => $site->getIntro(),
 			'about' => $site->getAbout(),
 			'contactName' => $site->getContactName(),
-			'contactEmail' => $site->getContactEmail()
+			'contactEmail' => $site->getContactEmail(),
+			'adminUsername' => $site->getUsername()
 		);
 	}
 	
@@ -59,7 +65,7 @@ class SiteSettingsForm extends Form {
 	 */
 	function readInputData() {
 		$this->readUserVars(
-			array('title', 'intro', 'about', 'redirect', 'contactName', 'contactEmail')
+			array('title', 'intro', 'about', 'redirect', 'contactName', 'contactEmail', 'adminUsername', 'adminPassword', 'adminPassword2')
 		);
 	}
 	
@@ -74,6 +80,8 @@ class SiteSettingsForm extends Form {
 		$site->setAbout($this->getData('about'));
 		$site->setContactName($this->getData('contactName'));
 		$site->setContactEmail($this->getData('contactEmail'));
+		$site->setUsername($this->getData('adminUsername'));
+		$site->setPassword(Validation::encryptCredentials($this->getData('adminUsername'), $this->getData('adminPassword')));
 	}
 	
 }

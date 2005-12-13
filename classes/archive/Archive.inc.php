@@ -122,7 +122,7 @@ class Archive extends DataObject {
 	 * Get a site setting.
 	 * @param $name
 	 */
-	function &getSetting($name) {
+	function getSetting($name) {
 		return $this->archiveSettingsDao->getSetting($this->getArchiveId(), $name);
 	}
 

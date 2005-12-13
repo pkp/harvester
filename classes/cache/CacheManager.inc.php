@@ -14,7 +14,7 @@
  */
 
 class CacheManager {
-	function getManager() {
+	function &getManager() {
 		static $manager;
 		if (!isset($manager)) {
 			$manager =& new CacheManager();
@@ -24,10 +24,11 @@ class CacheManager {
 
 	function &getFileCache($context, $cacheId, $fallback) {
 		import('cache.FileCache');
-		return new FileCache(
+		$returner =& new FileCache(
 			$context, $cacheId, $fallback,
 			$this->getFileCachePath()
 		);
+		return $returner;
 	}
 
 	function &getCache($context, $cacheId, $fallback) {

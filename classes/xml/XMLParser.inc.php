@@ -40,7 +40,7 @@ class XMLParser {
 	/**
 	 * Parse an XML file using the specified handler.
 	 * If no handler has been specified, XMLParserDOMHandler is used by default, returning a tree structure representing the document.
-	 * @param $file string full path to the XML file
+	 * @param $file string full path or URL to the XML file
 	 * @return object actual return type depends on the handler
 	 */
 	function &parse($file) {

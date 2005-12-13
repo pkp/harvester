@@ -107,6 +107,71 @@
 
 	<!--
 	  *
+	  * TABLE fields
+	  *
+	  -->
+	<table name="fields">
+		<field name="field_id" type="I4">
+			<KEY/>
+			<AUTOINCREMENT/>
+		</field>
+		<field name="type" type="C2" size="6">
+			<NOTNULL/>
+			<descr>(bool|int|float|string|date|object)</descr>
+		</field>
+		<field name="seq" type="I4">
+			<NOTNULL/>
+		</field>
+		<field name="field_key" type="C2" size="30">
+			<NOTNULL/>
+		</field>
+		<field name="name" type="C2" size="80">
+			<NOTNULL/>
+		</field>
+		<field name="description" type="C2" size="255"/>
+		<descr>The various fields available to metadata records.</descr>
+		<index name="fields_key">
+			<col>key</col>
+			<UNIQUE/>
+		</index>
+	</table>
+
+	<!--
+	  *
+	  * TABLE records
+	  *
+	  -->
+	<table name="records">
+		<field name="record_id" type="I4">
+			<KEY/>
+			<AUTOINCREMENT/>
+		</field>
+		<field name="archive_id" type="I4">
+			<NOTNULL/>
+		</field>
+		<field name="identifier" type="C2" size="255"/>
+		<field name="datestamp" type="T"/>
+	</table>
+
+	<!--
+	  *
+	  * TABLE entries
+	  *
+	  -->
+	<table name="entries">
+		<field name="record_id" type="I4">
+			<KEY/>
+		</field>
+		<field name="field_id" type="I4">
+			<KEY/>
+		</field>
+		<field name="value" type="X">
+			<NOTNULL/>
+		</field>
+	</table>
+
+	<!--
+	  *
 	  * TABLE plugin_settings
 	  *
 	  -->

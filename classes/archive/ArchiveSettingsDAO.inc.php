@@ -45,7 +45,7 @@ class ArchiveSettingsDAO extends DAO {
 	 * @param $name
 	 * @return mixed
 	 */
-	function &getSetting($archiveId, $name) {
+	function getSetting($archiveId, $name) {
 		$cache =& $this->_getCache($archiveId);
 		return $cache->get($name);
 	}

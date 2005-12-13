@@ -17,6 +17,13 @@
 
 {include file="common/header.tpl"}
 
+{if $archiveId}
+<ul class="menu">
+	<li class="current"><a href="{url op="editArchive" path=$archiveId}">{translate key="admin.archives.editArchive"}</a></li>
+	<li><a href="{url op="manage" path=$archiveId}">{translate key="admin.archives.manage"}</a></li>
+</ul>
+{/if}
+
 <br />
 
 <script type="text/javascript">

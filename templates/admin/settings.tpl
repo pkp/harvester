@@ -28,6 +28,18 @@
 		<td class="label">{fieldLabel name="about" key="admin.settings.aboutDescription"}</td>
 		<td class="value"><textarea name="about" id="about" cols="40" rows="10" class="textArea">{$about|escape}</textarea></td>
 	</tr>
+	<tr valign="top">	
+		<td width="20%" class="label">{fieldLabel name="adminUsername" key="user.username"}</td>
+		<td width="80%" class="value"><input type="text" name="adminUsername" id="adminUsername" value="{$adminUsername|escape}" size="20" maxlength="32" class="textField" /></td>
+	</tr>
+	<tr valign="top">
+		<td class="label">{fieldLabel name="adminPassword" key="user.password"}</td>
+		<td class="value"><input type="password" name="adminPassword" id="adminPassword" value="{$adminPassword|escape}" size="20" maxlength="32" class="textField" /></td>
+	</tr>
+	<tr valign="top">
+		<td class="label">{fieldLabel name="adminPassword2" key="user.register.repeatPassword"}</td>
+		<td class="value"><input type="password" name="adminPassword2" id="adminPassword2" value="{$adminPassword2|escape}" size="20" maxlength="32" class="textField" /></td>
+	</tr>
 	<tr valign="top">
 		<td class="label">{fieldLabel name="contactName" key="admin.settings.contactName" required="true"}</td>
 		<td class="value"><input type="text" id="contactName" name="contactName" value="{$contactName|escape}" size="40" maxlength="90" class="textField" /></td>

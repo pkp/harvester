@@ -73,6 +73,9 @@ class HarvesterPlugin extends Plugin {
 		return false;
 	}
 
+	/**
+	 * This is a hook wrapper.
+	 */
 	function _extendArchiveFormConstructor($hookName, $args) {
 		$form =& $args[0];
 		$harvesterPlugin = $args[1];
@@ -84,6 +87,9 @@ class HarvesterPlugin extends Plugin {
 		return false;
 	}
 
+	/**
+	 * This is a hook wrapper.
+	 */
 	function _getArchiveFormParameterNames($hookName, $args) {
 		$form =& $args[0];
 		$parameterNames =& $args[1];
@@ -97,6 +103,11 @@ class HarvesterPlugin extends Plugin {
 		return false;
 	}
 
+	/**
+	 * This function gives harvester plugins the chance to register
+	 * form requirements for the administrator's Archive form.
+	 * @param $form object
+	 */
 	function addArchiveFormChecks(&$form) {
 		// Subclasses should add any required validators to the
 		// supplied form.
@@ -124,7 +135,8 @@ class HarvesterPlugin extends Plugin {
 	}
 
 	/**
-	 * Initialize the Archive form's fields.
+	 * Initialize the Archive form's fields. This is a hook wrapper
+	 * that calls initializeArchiveForm.
 	 */
 	function _readAdditionalFormData($hookName, $args) {
 		$form =& $args[0];
@@ -138,6 +150,11 @@ class HarvesterPlugin extends Plugin {
 		return false;
 	}
 
+	/**
+	 * This is a hook wrapper that is responsible for saving this
+	 * harvester's additional form fields for the administrator's
+	 * archive form.
+	 */
 	function _saveAdditionalFormData($hookName, $args) {
 		$form =& $args[0];
 		$archive =& $args[1];
@@ -152,6 +169,11 @@ class HarvesterPlugin extends Plugin {
 		return false;
 	}
 
+	/**
+	 * This is a hook wrapper that is responsible for calling
+	 * displayArchiveForm. Subclasses should override
+	 * displayArchiveForm as necessary.
+	 */
 	function _displayArchiveForm($hookName, $args) {
 		$form =& $args[0];
 		$templateMgr =& $args[1];
@@ -164,9 +186,23 @@ class HarvesterPlugin extends Plugin {
 		return false;
 	}
 
+	/**
+	 * This function is called when the display() function of the
+	 * administrator's archive form is called. Subclasses should
+	 * override this function as necessary.
+	 * @param $form object
+	 * @param $templateMgr object
+	 */
 	function displayArchiveForm(&$form, &$templateMgr) {
-		// Harvester subclasses should override this call
-		// as necessary.
+	}
+
+	/**
+	 * This function is called to update an archive's metadata.
+	 * It should be overridden by subclasses.
+	 * @param $archive object
+	 */
+	function updateIndex(&$archive) {
+		// Subclasses should override this method
 	}
 }
 

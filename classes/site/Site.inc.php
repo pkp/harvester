@@ -203,7 +203,7 @@ class Site extends DataObject {
 	 * @return array
 	 */
 	function getSupportedLocales() {
-		$returner =& $this->getSetting('supported_locales');
+		$returner = $this->getSetting('supported_locales');
 		if (!isset($returner)) $returner = array();
 		return $returner;
 	}
@@ -228,7 +228,7 @@ class Site extends DataObject {
 	 * Get a site setting.
 	 * @param $name
 	 */
-	function &getSetting($name) {
+	function getSetting($name) {
 		return $this->siteSettingsDao->getSetting($name);
 	}
 

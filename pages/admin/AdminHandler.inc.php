@@ -46,7 +46,7 @@ class AdminHandler extends Handler {
 		$templateMgr = &TemplateManager::getManager();
 		if ($subclass) {
 			$templateMgr->assign('pageHierarchy',
-				array(array('admin', 'admin.siteAdmin'))
+				array(array(Request::url('admin'), 'admin.siteAdmin'))
 			);
 		}
 	}
@@ -86,6 +86,11 @@ class AdminHandler extends Handler {
 		AdminArchiveHandler::editArchive($args);
 	}
 	
+	function manage($args = array()) {
+		import('pages.admin.AdminArchiveHandler');
+		AdminArchiveHandler::manage($args);
+	}
+
 	function updateArchive() {
 		import('pages.admin.AdminArchiveHandler');
 		AdminArchiveHandler::updateArchive();
@@ -96,6 +101,10 @@ class AdminHandler extends Handler {
 		AdminArchiveHandler::deleteArchive($args);
 	}
 	
+	function updateIndex($args) {
+		import('pages.admin.AdminArchiveHandler');
+		AdminArchiveHandler::updateIndex($args);
+	}
 	
 	//
 	// Languages
@@ -165,6 +174,7 @@ class AdminHandler extends Handler {
 		import('pages.admin.AdminFunctionsHandler');
 		AdminFunctionsHandler::clearDataCache();
 	}
+
 }
 
 ?>

@@ -80,6 +80,9 @@ class DAORegistry {
 		switch ($name) {
 			case 'ArchiveDAO': return 'archive.ArchiveDAO';
 			case 'ArchiveSettingsDAO': return 'archive.ArchiveSettingsDAO';
+			case 'FieldDAO': return 'field.FieldDAO';
+			case 'RecordDAO': return 'record.RecordDAO';
+			case 'EntryDAO': return 'entry.EntryDAO';
 			case 'SessionDAO': return 'session.SessionDAO';
 			case 'SiteSettingsDAO': return 'site.SiteSettingsDAO';
 			case 'VersionDAO': return 'site.VersionDAO';
