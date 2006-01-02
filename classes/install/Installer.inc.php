@@ -105,7 +105,7 @@ class Installer {
 	 * Returns true iff this is an upgrade process.
 	 */
 	function isUpgrade() {
-		die ('ABSTRACT CLASS');
+		fatalError ('ABSTRACT CLASS');
 	}
 
 	/**

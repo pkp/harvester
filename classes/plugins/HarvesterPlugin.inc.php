@@ -37,7 +37,7 @@ class HarvesterPlugin extends Plugin {
 	 * @return String
 	 */
 	function getProtocolDisplayName() {
-		die('ABSTRACT CLASS');
+		fatalError('ABSTRACT CLASS');
 	}
 
 	/**
@@ -45,14 +45,14 @@ class HarvesterPlugin extends Plugin {
 	 * the category.
 	 */
 	function getName() {
-		die('ABSTRACT CLASS');
+		fatalError('ABSTRACT CLASS');
 	}
 
 	/**
 	 * Get a description of the plugin.
 	 */
 	function getDescription() {
-		die('ABSTRACT CLASS');
+		fatalError('ABSTRACT CLASS');
 	}
 
 	/**

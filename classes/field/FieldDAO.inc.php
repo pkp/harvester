@@ -17,20 +17,53 @@
 import ('field.Field');
 
 class FieldDAO extends DAO {
+	/** @var $cachingEnabled boolean */
+	var $cachingEnabled;
+
+	/** @var $fieldsById array Cached fields by ID, when caching enabled */
+	var $fieldsById;
+
+	/** @var $fieldsByKey array Cached fields by key, when caching enabled */
+	var $fieldsByKey;
 
 	/**
 	 * Constructor.
 	 */
 	function FieldDAO() {
 		parent::DAO();
+		$this->cachingEnabled = false;
 	}
-	
+
+	/**
+	 * Enable in-memory caching of fields by key and ID. NOTE: This should
+	 * only be enabled for situations where many fields are used repeatedly
+	 * in a read-only situation. Update and insert calls WILL BE BUGGY
+	 * when enableCaching is enabled. It should be disabled immediately
+	 * after use is complete.
+	 */
+	function enableCaching() {
+		$this->fieldsById = array();
+		$this->fieldsByKey = array();
+		$this->cachingEnabled = true;
+	}
+
+	/**
+	 * Disable in-memory caching of fields by key and ID.
+	 */
+	function disableCaching() {
+		$this->cachingEnabled = false;
+		unset($this->fieldsById);
+		unset($this->fieldsByKey);
+	}
+
 	/**
 	 * Retrieve a field by ID.
 	 * @param $fieldId int
 	 * @return Field
 	 */
 	function &getFieldById($fieldId) {
+		if ($this->cachingEnabled && isset($this->fieldsById[$fieldId])) return $this->fieldsById[$fieldId];
+
 		$result = &$this->retrieve(
 			'SELECT * FROM fields WHERE field_id = ?', $fieldId
 		);
@@ -41,6 +74,12 @@ class FieldDAO extends DAO {
 		}
 		$result->Close();
 		unset($result);
+
+		if ($returner != null && $this->cachingEnabled) {
+			$this->fieldsById[$returner->getFieldId()] =& $returner;
+			$this->fieldsByKey[$returner->getFieldKey()] =& $returner;
+		}
+
 		return $returner;
 	}
 	
@@ -50,6 +89,8 @@ class FieldDAO extends DAO {
 	 * @return Field
 	 */
 	function &getFieldByKey($fieldKey) {
+		if ($this->cachingEnabled && isset($this->fieldsByKey[$fieldKey])) return $this->fieldsByKey[$fieldKey];
+
 		$result = &$this->retrieve(
 			'SELECT * FROM fields WHERE field_key = ?', $fieldKey
 		);
@@ -60,6 +101,12 @@ class FieldDAO extends DAO {
 		}
 		$result->Close();
 		unset($result);
+
+		if ($returner != null && $this->cachingEnabled) {
+			$this->fieldsById[$returner->getFieldId()] =& $returner;
+			$this->fieldsByKey[$returner->getFieldKey()] =& $returner;
+		}
+
 		return $returner;
 	}
 	
@@ -72,7 +119,7 @@ class FieldDAO extends DAO {
 		$field = &new Field();
 		$field->setFieldId($row['field_id']);
 		$field->setType($row['type']);
-		$field->setKey($row['field_key']);
+		$field->setFieldKey($row['field_key']);
 		$field->setName($row['name']);
 		$field->setDescription($row['description']);
 		$field->setSeq($row['seq']);

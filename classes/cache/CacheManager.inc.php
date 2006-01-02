@@ -52,7 +52,7 @@ class CacheManager {
 				);
 				break;
 			default:
-				die ("Unknown cache type \"$cacheType\"!\n");
+				fatalError ("Unknown cache type \"$cacheType\"!\n");
 				break;
 		}
 		return $cache;
@@ -86,7 +86,7 @@ class CacheManager {
 				// Nothing necessary.
 				break;
 			default:
-				die ("Unknown cache type \"$cacheType\"!\n");
+				fatalError ("Unknown cache type \"$cacheType\"!\n");
 		}
 	}
 }

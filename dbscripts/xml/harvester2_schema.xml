@@ -165,9 +165,7 @@
 		<field name="field_id" type="I4">
 			<KEY/>
 		</field>
-		<field name="value" type="X">
-			<NOTNULL/>
-		</field>
+		<field name="value" type="X"/>
 	</table>
 
 	<!--

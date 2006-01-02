@@ -205,5 +205,5 @@ show_stats =  Off
 ; Display a stack trace when a fatal error occurs.
 ; Note that this may expose private information and should be disabled
 ; for any production system.
-show_stacktrace = Off
+show_stacktrace = On
 

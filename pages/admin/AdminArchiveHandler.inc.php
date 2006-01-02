@@ -54,7 +54,7 @@ class AdminArchiveHandler extends AdminHandler {
 		
 		import('admin.form.ArchiveForm');
 		
-		$settingsForm = &new ArchiveForm(!isset($args) || empty($args) ? null : $args[0]);
+		$settingsForm = &new ArchiveForm(!isset($args) || empty($args) ? null : (int) $args[0]);
 		$settingsForm->initData();
 		$settingsForm->display();
 	}

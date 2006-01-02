@@ -123,7 +123,7 @@ class Plugin {
 	 * @return String name of plugin
 	 */
 	function getName() {
-		die('ABSTRACT CLASS');
+		fatalError('ABSTRACT CLASS');
 	}
 
 	function getDisplayName() {

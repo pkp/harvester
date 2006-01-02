@@ -13,49 +13,122 @@
  * $Id$
  */
 
-import('harvester.XMLHarvester');
+import('harvester.Harvester');
 
-class OAIHarvester extends XMLHarvester {
-	/** @var $notInHeader boolean */
-	var $notInHeader;
+class OAIHarvester extends Harvester {
+	/** @var $oaiUrl string */
+	var $oaiUrl;
 
-	/** @var $characterData string */
-	var $characterData;
+	/** @var $metadataFormat string */
+	var $metadataFormat;
 
-	/** @var $responseDate string */
+	/** @var $responseDate int Timestamp */
 	var $responseDate;
 
-	function startElement(&$parser, $tag, $attributes) {
-		$this->characterData = null;
-		if (!isset($notInHeader) || !$notInHeader) {
-			// Non-metadata tag starts.
+	/** @var $request string */
+	var $request;
+
+	/** @var $requestParams array */
+	var $requestParams;
+
+	function OAIHarvester($archive) {
+		parent::Harvester($archive);
+		$this->oaiUrl = $archive->getSetting('harvesterUrl');
+	}
+
+	/**
+	 * Set the metadata format.
+	 * @param $metadataFormat string
+	 */
+	function setMetadataFormat($metadataFormat) {
+		$this->metadataFormat = $metadataFormat;
+	}
+
+	/**
+	 * Get the metadata format.
+	 */
+	function getMetadataFormat() {
+		return $this->metadataFormat;
+	}
+
+	function setResponseDate($responseDate) {
+		$this->responseDate = $responseDate;
+	}
+	
+	function getResponseDate() {
+		return $this->responseDate;
+	}
+
+	function setRequest($request) {
+		$this->request = $request;
+	}
+
+	function getRequest() {
+		return $this->request;
+	}
+
+	function setRequestParams($requestParams) {
+		$this->requestParams = $requestParams;
+	}
+
+	function getRequestParams() {
+		return $this->requestParams;
+	}
+
+	function updateRecords($lastUpdateTimestamp = null) {
+		$parser =& new XMLParser();
+		$oaiXmlHandler =& new OAIXMLHandler($this);
+		$parser->setHandler($oaiXmlHandler);
+		$this->fieldDao->enableCaching();
+		$parser->parse($this->oaiUrl . '?verb=ListRecords&metadataPrefix=' . $this->getMetadataFormat());
+		$this->fieldDao->disableCaching();
+		return $this->getStatus();
+	}
+
+	/**
+	 * Return a UTC-formatted datestamp from the specified UNIX timestamp.
+	 * @param $timestamp int *nix timestamp (if not used, the current time is used)
+	 * @param $includeTime boolean include both the time and date
+	 * @return string UTC datestamp
+	 */
+	function UTCDate($timestamp = 0, $includeTime = true) {
+		$format = "Y-m-d";
+		if($includeTime) {
+			$format .= "\TH:i:s\Z";
+		}
+		
+		if($timestamp == 0) {
+			return gmdate($format);
+			
 		} else {
-			// Metadata tag starts.
+			return gmdate($format, $timestamp);
 		}
 	}
-
-	function endElement(&$parser, $tag) {
-		if (!isset($notInHeader) || !$notInHeader) {
-			// Non-metadata tag ends.
-			switch ($tag) {
-				case 'responseDate':
-					$this->responseDate = $this->characterData;
-					break;
-				case 'error':
-			}
+	
+	/**
+	 * Returns a UNIX timestamp from a UTC-formatted datestamp.
+	 * Returns null if datestamp is invalid
+	 * @param $date string UTC datestamp
+	 * @return int timestamp
+	 */
+	function UTCtoTimestamp($date, $checkGranularity = true) {
+		// FIXME Has limited range (see http://php.net/strtotime)
+		if (preg_match("/^\d\d\d\d\-\d\d\-\d\d$/", $date)) {
+			// Match date
+			$time = strtotime("$date UTC");
+			return ($time != -1) ? $time : 'invalid';
+			
+		} else if (preg_match("/^(\d\d\d\d\-\d\d\-\d\d)T(\d\d:\d\d:\d\d)Z$/", $date, $matches)) {
+			// Match datetime
+			// FIXME
+			$date = "$matches[1] $matches[2]";
+			$time = strtotime("$date UTC");
+			return ($time != -1) ? $time : 'invalid';
 		} else {
-			// Metadata tag ends.
+			return null;
 		}
-		$this->characterData = null;
 	}
-
-	function characterData(&$parser, $data) {
-		if ($this->characterData === null) {
-			$this->characterData = '';
-		}
-		$this->characterData .= $data;
-	}
-
+	
 }
 
 ?>

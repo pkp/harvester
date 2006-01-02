@@ -31,8 +31,8 @@
 		<row>
 			<field name="type">object</field>
 			<field name="seq">3</field>
-			<field name="field_key">author</field>
-			<field name="name">Author</field>
+			<field name="field_key">creator</field>
+			<field name="name">Creator</field>
 			<field name="description">This field contains the author of this resource.</field>
 		</row>
 		<row>

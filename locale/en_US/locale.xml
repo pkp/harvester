@@ -49,6 +49,8 @@
 	<message key="navigation.nextPage">&gt;&gt;</message>
 	<message key="navigation.items">{$from} - {$to} of {$total} Items</message>
 
+	<!-- Harvester messages -->
+	<message key="harvester.error.unknownMetadataField">An unknown metadata field {$name} was encountered.</message>
 	<!-- Installation Messages -->
 	<message key="installer.harvester2Installation">PKP Harvester2 Installation</message>
 	<message key="installer.harvester2Upgrade">Harvester2 Upgrade</message>
@@ -191,6 +193,7 @@ Your server currently supports mbstring: <strong>{$supportsMBString}</strong>]]>
 	<message key="admin.archives.manage.lastIndexed">Last Indexed</message>
 	<message key="admin.archives.manage.updateIndex">Update Metadata Index</message>
 	<message key="admin.archives.manage.updateIndex.confirm">Are you sure you wish to update the metadata index? This operation may take several minutes, depending on the size of the archive.</message>
+	<message key="admin.archives.confirmDelete">Are you sure you wish to delete this archive and all of its records?</message>
 
 	<message key="admin.settings.siteTitle">Site title</message>
 	<message key="admin.settings.introduction">Introduction</message>

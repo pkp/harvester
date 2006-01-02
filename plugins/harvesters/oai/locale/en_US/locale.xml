@@ -22,4 +22,6 @@
 	<message key="plugins.harvesters.oai.archive.form.oaiIndexMethodRequired">The indexing method field is required.</message>
 	<message key="plugins.harvesters.oai.archive.form.oaiIndexMethod.ListRecords">ListRecords</message>
 	<message key="plugins.harvesters.oai.archive.form.oaiIndexMethod.ListIdentifiers">ListIdentifiers</message>
+
+	<message key="plugins.harvesters.oai.errors.unknownHeaderTag">An unknown header tag was received from the server: {$tag}</message>
 </locale>

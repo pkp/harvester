@@ -73,6 +73,22 @@ class Record extends DataObject {
 	function setRecordId($recordId) {
 		return $this->setData('recordId', $recordId);
 	}
+
+	/**
+	 * Get ID of archive.
+	 * @return int
+	 */
+	function getArchiveId() {
+		return $this->getData('archiveId');
+	}
+	
+	/**
+	 * Set ID of archive.
+	 * @param $archiveId int
+	 */
+	function setArchiveId($archiveId) {
+		return $this->setData('archiveId', $archiveId);
+	}
 }
 
 ?>

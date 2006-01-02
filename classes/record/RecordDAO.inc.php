@@ -28,11 +28,83 @@ class RecordDAO extends DAO {
 	/**
 	 * Retrieve a record by ID.
 	 * @param $recordId int
+	 * @param $getEntries boolean
 	 * @return Record
 	 */
-	function &getRecord($recordId) {
+	function &getRecord($recordId, $getEntries = false) {
 		$result = &$this->retrieve(
 			'SELECT * FROM records WHERE record_id = ?', $recordId
+		);
+
+		$returner = null;
+		if ($result->RecordCount() != 0) {
+			$returner = &$this->_returnRecordFromRow($result->GetRowAssoc(false));
+		}
+		$result->Close();
+		unset($result);
+		return $returner;
+	}
+
+	function getEntries($recordId) {
+		$result = &$this->retrieve(
+			'SELECT e.*, f.type AS field_type FROM entries e, fields f WHERE f.field_id = e.field_id AND record_id = ?', $recordId
+		);
+
+		$returner = array();
+		while (!$result->EOF) {
+			$row = &$result->getRowAssoc(false);
+			$value = null;
+			switch ($row['field_type']) {
+				case 'bool':
+					$value = $row['value']?true:false;
+					break;
+				case 'int':
+				case 'float':
+				case 'string':
+				case 'date':
+					$value = $row['value'];
+					break;
+				case 'object':
+					$value = unserialize($row['value']);
+					break;
+				default:
+					fatalError('Unknown field type ' . $row['field_type']);
+					break;
+			}
+
+			$fieldId = $row['field_id'];
+			if (!empty($result[$field_id])) {
+				if (is_array($result[$field_id])) {
+					array_push($result[$field_id], $value);
+				} else {
+					$result[$field_id] = array(
+						$result[$field_id],
+						$value
+					);
+				}
+			} else {
+				$result[$field_id] = $value;
+			}
+			
+		}
+		$result->Close();
+		unset($result);
+
+		return $returner;
+	}
+
+	function deleteEntriesByRecordId($recordId) {
+		return $this->update('DELETE FROM entries WHERE record_id = ?', $recordId);
+	}
+
+	/**
+	 * Retrieve a record by record identifier. 
+	 * @param $identifer int
+	 * @return Record
+	 */
+	function &getRecordByIdentifier($identifier) {
+		$result = &$this->retrieve(
+			'SELECT * FROM records WHERE identifier = ?', $identifier
 		);
 
 		$returner = null;
@@ -59,6 +131,42 @@ class RecordDAO extends DAO {
 		HookRegistry::call('RecordDAO::_returnRecordFromRow', array(&$record, &$row));
 
 		return $record;
+	}
+
+	/**
+	 * Insert an entry for the given field of the given record, with
+	 * the supplied type and value.
+	 */
+	function insertEntry($recordId, $fieldId, $type, $value) {
+		$isDate = false;
+		switch ($type) {
+			case 'bool':
+			case 'int':
+			case 'float':
+			case 'string':
+				// Do nothing.
+				break;
+			case 'date':
+				// Special case: Handled below.`
+				$isDate = true;
+				$value = $this->datetimeToDB($value);
+				break;
+			case 'object':
+				$value = serialize($value);
+				break;
+			default:
+				fatalError("Unknown type $type!");
+				break;
+		}
+
+		if ($isDate) {
+			$this->update(
+				sprintf('INSERT INTO entries (record_id, field_id, value) VALUES (?, ?, %s)', $value),
+				array($recordId, $fieldId)
+			);
+		} else {
+			$this->update('INSERT INTO entries (record_id, field_id, value) VALUES (?, ?, ?)', array($recordId, $fieldId, $value));
+		}
 	}
 
 	/**

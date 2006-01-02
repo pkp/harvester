@@ -74,8 +74,22 @@ class OAIHarvesterPlugin extends HarvesterPlugin {
 	 */
 	function updateIndex(&$archive) {
 		$this->import('OAIHarvester');
-		$oaiHarvester =& new OAIHarvester();
-		$oaiHarvester->harvest($archive->getSetting('harvesterUrl') . '?verb=Identify');
+		$this->import('OAIXMLHandler');
+
+		// FIXME: Should specify metadata format.
+		$oaiHarvester =& new OAIHarvester($archive);
+		$oaiHarvester->setMetadataFormat('oai_dc');
+
+		$errors = array();
+		if (!$oaiHarvester->updateRecords()) {
+			foreach ($oaiHarvester->getErrors() as $error) {
+				echo "FIXME: ERROR: $error<br/>\n";
+			}
+		}
+		echo "SUCCESS: " . date('Y-m-d', $oaiHarvester->getResponseDate()) . "<br/>\n";
+		foreach ($oaiHarvester->getRequestParams() as $name => $value) {
+			echo "$name => $value<br/>\n";
+		}
 	}
 
 }

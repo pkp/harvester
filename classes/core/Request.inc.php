@@ -471,10 +471,11 @@ class Request {
 	/**
 	 * Build a URL into Harvester2.
 	 */
-	function url($page = null, $op = null, $path = null, $params = null, $anchor = null) {
+	function url($page = null, $op = null, $path = null, $params = null, $anchor = null, $escape = false) {
 		$pathInfoDisabled = !Request::isPathInfoEnabled();
 
 		$prefix = '?';
+		$amp = $escape?'&amp;':'&';
 
 		// Establish defaults for page and op
 		$defaultPage = Request::getRequestedPage();
@@ -497,10 +498,10 @@ class Request {
 		if (!empty($params)) foreach ($params as $key => $value) {
 			if (is_array($value)) foreach($value as $element) {
 				$additionalParams .= $prefix . $key . '[]=' . rawurlencode($element);
-				$prefix = '&';
+				$prefix = $amp;
 			} else {
 				$additionalParams .= $prefix . $key . '=' . rawurlencode($value);
-				$prefix = '&';
+				$prefix = $amp;
 			}
 		}
 
@@ -517,17 +518,17 @@ class Request {
 
 		$pathString = '';
 		if ($pathInfoDisabled) {
-			$baseParams = $anchor;
+			$baseParams = '';
 			if (!empty($page)) {
 				$baseParams .= $prefix . "page=$page";
-				$prefix = '&';
+				$prefix = $amp;
 				if (!empty($op)) {
-					$baseParams .= "&op=$op";
+					$baseParams .= $amp . "op=$op";
 				}
 			}
 			if (!empty($path)) {
-				$pathString = $prefix . 'path[]=' . implode('&path[]=', $path);
-				$prefix = '&';
+				$pathString = $prefix . 'path[]=' . implode($amp . 'path[]=', $path);
+				$prefix = $amp;
 			}
 		} else {
 			if (!empty($path)) $pathString = '/' . implode('/', $path);
@@ -538,10 +539,9 @@ class Request {
 					$baseParams .= "/$op";
 				}
 			}
-			$baseParams .= $anchor;
 		}
 
-		return Request::getIndexUrl() . $baseParams . $pathString . $additionalParams;
+		return Request::getIndexUrl() . $baseParams . $pathString . $additionalParams . $anchor;
 	}
 }
 

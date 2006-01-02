@@ -282,7 +282,7 @@ class TemplateManager extends Smarty {
 			}
 			
 			if ($params['url'] == "true") {
-				return Request::url('help', 'view', $translatedKey);
+				return Request::url('help', 'view', explode('/', $translatedKey));
 			} else {
 				return $translatedKey;
 			}
@@ -300,7 +300,7 @@ class TemplateManager extends Smarty {
 	function smartyHelpTopic($params, &$smarty) {
 		if (isset($params) && !empty($params)) {
 			$translatedKey = isset($params['key']) ? Help::translate($params['key']) : Help::translate('');
-			$link = Request::url('help', 'view', $translatedKey);
+			$link = Request::url('help', 'view', explode('/', $translatedKey));
 			$text = isset($params['text']) ? $params['text'] : '';
 			return "<a href=\"$link\">$text</a>";
 		}
@@ -408,21 +408,21 @@ class TemplateManager extends Smarty {
 	 * Generate a URL into OJS.
 	 */
 	function smartyUrl($params, &$smarty) {
-		$path = null;
-		$anchor = null;
-		$page = null;
-		$op = null;
-		$extraParams = array();
+		// Extract the variables named in $paramList, and remove them
+		// from the params array. Variables remaining in params will be
+		// passed along to Request::url as extra parameters.
+		$paramList = array('page', 'op', 'path', 'anchor', 'escape');
 
-		foreach ($params as $name => $value) switch ($name) {
-			case 'page': $page = $value; break;
-			case 'op': $op = $value; break;
-			case 'anchor': $anchor = $value; break;
-			case 'path': $path = $value; break;
-			default: $extraParams[$name] = $value; break;
+		foreach ($paramList as $param) {
+			if (isset($params[$param])) {
+				$$param = $params[$param];
+				unset($params[$param]);
+			} else {
+				$$param = null;
+			}
 		}
 
-		return Request::url($page, $op, $path, $extraParams, $anchor);
+		return Request::url($page, $op, $path, $params, $anchor, !isset($escape) || $escape);
 	}
 
 	/**
@@ -522,7 +522,10 @@ class TemplateManager extends Smarty {
 	 */
 	function smartyAssign($value, $varName) {
 		if (isset($varName)) {
-			$this->assign($varName, $value);
+			// NOTE: CANNOT use $this because it belongs to
+			// another object in certain versions of PHP!
+			$templateMgr =& TemplateManager::getManager();
+			$templateMgr->assign($varName, $value);
 		}
 	}
 }

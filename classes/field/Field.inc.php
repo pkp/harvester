@@ -15,15 +15,12 @@
  */
 
 class Field extends DataObject {
-	/** Field settings DAO */
-	var $fieldSettingsDao;
 
 	/**
 	 * Constructor.
 	 */
 	function Field() {
 		parent::DataObject();
-		$this->fieldSettingsDao =& DAORegistry::getDAO('FieldSettingsDAO');
 	}
 	
 	//
