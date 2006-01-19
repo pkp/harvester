@@ -11,7 +11,7 @@
 
 <div class="block">
 	<span class="blockTitle"><img src="{$publicFilesDir}/stats.png" align="right" width="25" height="25"/>{translate key="sidebar.harvesterStats"}</span>
-	{translate key="sidebar.harvesterStats.description"}
+	{translate key="sidebar.harvesterStats.description" recordCount=$recordCount archiveCount=$archiveCount}
 </div>
 
 <div class="block">

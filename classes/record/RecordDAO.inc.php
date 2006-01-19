@@ -253,6 +253,22 @@ class RecordDAO extends DAO {
 		return $this->getInsertId('records', 'record_id');
 	}
 	
+	/**
+	 * Retrieve a count of the records available.
+	 * @return int
+	 */
+	function getRecordCount() {
+		$result = &$this->retrieve('SELECT COUNT(*) AS count FROM records');
+
+		$count = 0;
+		if ($result->RecordCount() != 0) {
+			$row =& $result->GetRowAssoc(false);
+			$count = $row['count'];
+		}
+		$result->Close();
+		unset($result);
+		return $count;
+	}
 }
 
 ?>

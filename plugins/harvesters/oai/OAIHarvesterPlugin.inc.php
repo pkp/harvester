@@ -80,15 +80,15 @@ class OAIHarvesterPlugin extends HarvesterPlugin {
 		$oaiHarvester =& new OAIHarvester($archive);
 		$oaiHarvester->setMetadataFormat('oai_dc');
 
+		$templateMgr =& TemplateManager::getManager();
+
 		$errors = array();
 		if (!$oaiHarvester->updateRecords()) {
 			foreach ($oaiHarvester->getErrors() as $error) {
 				echo "FIXME: ERROR: $error<br/>\n";
 			}
-		}
-		echo "SUCCESS: " . date('Y-m-d', $oaiHarvester->getResponseDate()) . "<br/>\n";
-		foreach ($oaiHarvester->getRequestParams() as $name => $value) {
-			echo "$name => $value<br/>\n";
+		} else {
+			echo "FIXME: Should be displaying 'success' message.<br/>\n";
 		}
 	}
 

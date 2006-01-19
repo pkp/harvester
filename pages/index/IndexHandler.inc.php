@@ -23,6 +23,13 @@ class IndexHandler extends Handler {
 		$site =& Request::getSite();
 
 		$templateMgr->assign('intro', $site->getIntro());
+
+		$archiveDao =& DAORegistry::getDAO('ArchiveDAO');
+		$templateMgr->assign('archiveCount', $archiveDao->getArchiveCount());
+
+		$recordDao =& DAORegistry::getDAO('RecordDAO');
+		$templateMgr->assign('recordCount', $recordDao->getRecordCount());
+
 		$templateMgr->display('index/index.tpl');
 	}
 

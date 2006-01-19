@@ -126,5 +126,19 @@
 			<field name="name">Rights</field>
 			<field name="description">This field contains the resource's rights.</field>
 		</row>
+		<row>
+			<field name="type">string</field>
+			<field name="seq">17</field>
+			<field name="field_key">subject</field>
+			<field name="name">Subject</field>
+			<field name="description">This field contains the resource's subject keywords.</field>
+		</row>
+		<row>
+			<field name="type">string</field>
+			<field name="seq">18</field>
+			<field name="field_key">description</field>
+			<field name="name">Description</field>
+			<field name="description">This field contains a description of the resource.</field>
+		</row>
 	</table>
 </data>

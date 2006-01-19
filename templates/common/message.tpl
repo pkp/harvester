@@ -11,8 +11,9 @@
  *}
 
 {include file="common/header.tpl"}
+{if $message}{translate|assign:"messageTranslated" key=$message}{/if}
 
-<p>{translate key=$message}</p>
+<p>{$messageTranslated}</p>
 
 {if $backLink}
 <p>&#187; <a href="{$backLink}">{translate key="$backLinkLabel"}</a></p>

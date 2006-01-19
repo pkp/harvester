@@ -153,29 +153,19 @@ class OAIXMLHandler extends XMLParserHandler {
 					$archive =& $this->oaiHarvester->getArchive();
 					$record->setIdentifier($this->header['identifier']);
 					$record->setArchiveId($archive->getArchiveId());
+					$record->setDatestamp(Core::getCurrentDate());
 					$this->oaiHarvester->insertRecord($record);
 				} else {
 					// This is an old record: Delete old
 					// entires. FIXME: Indexing?
 					$this->oaiHarvester->deleteEntries($record);
 				}
+
 				$record->setDatestamp($this->header['datestamp']);
 				foreach ($this->metadata as $name => $value) {
 					$field =& $this->oaiHarvester->getFieldByKey($name);
 					$this->oaiHarvester->addEntry($record, $field, $value);
 				}
-
-				/*echo "SHOULD BE HANDLING RECORD:<br/>\n";
-				if (!empty($this->header)) {
-					echo "&nbsp;Headers:<br/>\n";
-					foreach ($this->header as $name => $value)
-						echo "&nbsp;&nbsp;$name => $value<br/>\n";
-				}
-				if (!empty($this->metadata)) {
-					echo "&nbsp;Metadata:<br/>\n";
-					foreach ($this->metadata as $name => $value)
-						echo "&nbsp;&nbsp;$name => $value<br/>\n";
-				}*/
 
 				break;
 			default:

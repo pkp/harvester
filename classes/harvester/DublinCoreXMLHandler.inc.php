@@ -38,7 +38,7 @@ class DublinCoreXMLHandler extends XMLParserHandler {
 	}
 
 	function endElement(&$parser, $tag) {
-		if ($tag == 'oai_dc:dc') {
+		if ($tag == 'oai_dc:dc' || $tag == 'dc:identifier') {
 			return;
 		}
 

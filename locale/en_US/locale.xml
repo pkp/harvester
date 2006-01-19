@@ -280,7 +280,7 @@ Your server currently supports mbstring: <strong>{$supportsMBString}</strong>]]>
 	
 	<!-- Sidebar Messages -->
 	<message key="sidebar.harvesterStats">Harvester Stats</message>
-	<message key="sidebar.harvesterStats.description"><![CDATA[Harvester2 currently has <strong>FIXME</strong> papers from <strong>FIXME</strong> archive(s) indexed.]]></message>
+	<message key="sidebar.harvesterStats.description"><![CDATA[Harvester2 currently has <strong>{$recordCount}</strong> papers from <strong>{$archiveCount}</strong> archive(s) indexed.]]></message>
 	<message key="sidebar.addYourArchive">Add Your Archive</message>
 	<message key="sidebar.addYourArchive.description"><![CDATA[<a href="{$addUrl}">Click here</a> to add your system to our index.]]></message>
 

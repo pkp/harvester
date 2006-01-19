@@ -147,6 +147,23 @@ class ArchiveDAO extends DAO {
 		return $this->getInsertId('archives', 'archive_id');
 	}
 	
+	/**
+	 * Retrieve a count of the archives available.
+	 * @return int
+	 */
+	function getArchiveCount() {
+		$result = &$this->retrieve('SELECT COUNT(*) AS count FROM archives');
+
+		$count = 0;
+		if ($result->RecordCount() != 0) {
+			$row =& $result->GetRowAssoc(false);
+			$count = $row['count'];
+		}
+		$result->Close();
+		unset($result);
+		return $count;
+	}
+	
 }
 
 ?>
