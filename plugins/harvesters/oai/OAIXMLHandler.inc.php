@@ -75,6 +75,7 @@ class OAIXMLHandler extends XMLParserHandler {
 			case 'responseDate':
 			case 'identifier':
 			case 'record':
+			case 'resumptionToken':
 			case 'datestamp':
 			case 'setSpec':
 				// Do nothing.
@@ -167,6 +168,13 @@ class OAIXMLHandler extends XMLParserHandler {
 					$this->oaiHarvester->addEntry($record, $field, $value);
 				}
 
+				break;
+			case 'resumptionToken':
+				// Received a resumption token. Fetch the next set
+				$token = $this->characterData;
+				if (!empty($token)) {
+					$this->oaiHarvester->handleResumptionToken($token);
+				}
 				break;
 			default:
 				$this->oaiHarvester->addError(Locale::translate('plugins.harvesters.oai.errors.unknownHeaderTag', array('tag' => $tag)));

@@ -31,9 +31,14 @@ class OAIHarvester extends Harvester {
 	/** @var $requestParams array */
 	var $requestParams;
 
-	function OAIHarvester($archive) {
+	/** @var $oaiXmlHandler object */
+	var $oaiXmlHandler;
+
+	function OAIHarvester(&$archive) {
 		parent::Harvester($archive);
 		$this->oaiUrl = $archive->getSetting('harvesterUrl');
+
+		$this->oaiXmlHandler =& new OAIXMLHandler($this);
 	}
 
 	/**
@@ -75,14 +80,31 @@ class OAIHarvester extends Harvester {
 		return $this->requestParams;
 	}
 
+	function getHarvestingMethod() {
+		return 'ListRecords';
+	}
+
+	function &getXmlHandler() {
+		return $this->oaiXmlHandler;
+	}
+
 	function updateRecords($lastUpdateTimestamp = null) {
-		$parser =& new XMLParser();
-		$oaiXmlHandler =& new OAIXMLHandler($this);
-		$parser->setHandler($oaiXmlHandler);
 		$this->fieldDao->enableCaching();
-		$parser->parse($this->oaiUrl . '?verb=ListRecords&metadataPrefix=' . $this->getMetadataFormat());
+
+		$parser =& new XMLParser();
+		$parser->setHandler($this->getXmlHandler());
+		$parser->parse($this->oaiUrl . '?verb=' . urlencode($this->getHarvestingMethod()) . '&metadataPrefix=' . urlencode($this->getMetadataFormat()));
 		$this->fieldDao->disableCaching();
 		return $this->getStatus();
+	}
+
+	function handleResumptionToken($token) {
+		// This is called from within e.g. updateRecords, so no
+		// further setup is required. (i.e. fieldDao will already
+		// be caching-enabled.)
+		$parser =& new XMLParser();
+		$parser->setHandler($this->getXmlHandler());
+		$parser->parse($this->oaiUrl . '?verb=' . urlencode($this->getHarvestingMethod()) . '&resumptionToken=' . urlencode($token));
 	}
 
 	/**
