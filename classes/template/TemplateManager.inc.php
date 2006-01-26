@@ -49,7 +49,7 @@ class TemplateManager extends Smarty {
 		$this->assign('indexUrl', Request::getIndexUrl());
 		$this->assign('pageUrl', Request::getPageUrl());
 		$this->assign('pagePath', '/' . Request::getRequestedPage() . (($requestedOp = Request::getRequestedOp()) == '' ? '' : '/' . $requestedOp));
-		$this->assign('currentUrl', Request::getRequestUrl());
+		$this->assign('currentUrl', Request::getCompleteUrl());
 		$this->assign('dateFormatTrunc', Config::getVar('general', 'date_format_trunc'));
 		$this->assign('dateFormatShort', Config::getVar('general', 'date_format_short'));
 		$this->assign('dateFormatLong', Config::getVar('general', 'date_format_long'));

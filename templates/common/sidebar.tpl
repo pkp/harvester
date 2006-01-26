@@ -27,12 +27,12 @@
 {/if}
 
 {if $enableLanguageToggle}
-	<div class="block">
-		<span class="blockTitle">{translate key="common.language"}</span>
-		<form action="#">
-			<select size="1" onchange="location.href={if $languageToggleNoUser}'{$currentUrl}{if strstr($currentUrl, '?')}&{else}?{/if}setLocale='+this.options[this.selectedIndex].value{else}'{url page="index" op="setLocale" path="LOCALE_NAME" source=$smarty.server.REQUEST_URI|escape:"javascript"}'.replace('LOCALE_NAME', this.options[this.selectedIndex].value){/if}" class="selectMenu">{html_options options=$languageToggleLocales selected=$currentLocale}</select>
-		</form>
-	</div>
+<div class="block">
+	<span class="blockTitle">{translate key="common.language"}</span>
+	<form action="#">
+		<select size="1" name="locale" onchange="location.href={if $languageToggleNoUser}'{$currentUrl}{if strstr($currentUrl, '?')}&{else}?{/if}setLocale='+this.options[this.selectedIndex].value{else}('{url page="index" op="setLocale" path="LOCALE_NAME" source=$smarty.server.REQUEST_URI escape="false"}'.replace('LOCALE_NAME', this.options[this.selectedIndex].value)){/if}" class="selectMenu">{html_options options=$languageToggleLocales selected=$currentLocale}</select>
+	</form>
+</div>
 {/if}
 
 <div class="block">

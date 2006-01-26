@@ -139,8 +139,9 @@ class Request {
 		static $completeUrl;
 
 		if (!isset($completeUrl)) {
-			$queryString = &$_SERVER['QUERY_STRING'];
-			$completeUrl = Request::getRequestUrl() . (!empty($queryString)?"?$queryString":'');
+			$completeUrl = Request::getRequestUrl();
+			$queryString = Request::getQueryString();
+			if (!empty($queryString)) $completeUrl .= "?$queryString";
 			HookRegistry::call('Request::getCompleteUrl', array(&$completeUrl));
 		}
 
@@ -156,7 +157,7 @@ class Request {
 		
 		if (!isset($requestUrl)) {
 			$requestUrl = Request::getProtocol() . '://' . Request::getServerHost() . Request::getRequestPath();
-			HookRegistry::call('Request::getRequestUrl', array(&$completeUrl));
+			HookRegistry::call('Request::getRequestUrl', array(&$requestUrl));
 		}
 		
 		return $requestUrl;
@@ -171,6 +172,21 @@ class Request {
                         $isPathInfoEnabled = Config::getVar('general', 'disable_path_info')?false:true;
                 }
 		return $isPathInfoEnabled;
+	}
+
+	/**
+         * Get the complete set of URL parameters to the current request.
+	 * @return string
+	 */
+	function getQueryString() {
+		static $queryString;
+
+		if (!isset($queryString)) {
+			$queryString = isset($_SERVER['QUERY_STRING'])?$_SERVER['QUERY_STRING']:'';
+			HookRegistry::call('Request::getQueryString', array(&$queryString));
+		}
+
+		return $queryString;
 	}
 
 	/**
@@ -493,18 +509,6 @@ class Request {
 		if ($op) $op = rawurlencode($op);
 		else $op = $defaultOp;
 
-		// Process additional parameters
-		$additionalParams = '';
-		if (!empty($params)) foreach ($params as $key => $value) {
-			if (is_array($value)) foreach($value as $element) {
-				$additionalParams .= $prefix . $key . '[]=' . rawurlencode($element);
-				$prefix = $amp;
-			} else {
-				$additionalParams .= $prefix . $key . '=' . rawurlencode($value);
-				$prefix = $amp;
-			}
-		}
-
 		// Process anchor
 		if (!empty($anchor)) $anchor = '#' . rawurlencode($anchor);
 		else $anchor = '';
@@ -538,6 +542,18 @@ class Request {
 				if (!empty($op)) {
 					$baseParams .= "/$op";
 				}
+			}
+		}
+
+		// Process additional parameters
+		$additionalParams = '';
+		if (!empty($params)) foreach ($params as $key => $value) {
+			if (is_array($value)) foreach($value as $element) {
+				$additionalParams .= $prefix . $key . '[]=' . rawurlencode($element);
+				$prefix = $amp;
+			} else {
+				$additionalParams .= $prefix . $key . '=' . rawurlencode($value);
+				$prefix = $amp;
 			}
 		}
 
