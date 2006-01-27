@@ -93,9 +93,9 @@ class OAIHarvester extends Harvester {
 
 		$parser =& new XMLParser();
 		$parser->setHandler($this->getXmlHandler());
-		$parser->parse($this->oaiUrl . '?verb=' . urlencode($this->getHarvestingMethod()) . '&metadataPrefix=' . urlencode($this->getMetadataFormat()));
+		$result = $parser->parse($this->oaiUrl . '?verb=' . urlencode($this->getHarvestingMethod()) . '&metadataPrefix=' . urlencode($this->getMetadataFormat()));
 		$this->fieldDao->disableCaching();
-		return $this->getStatus();
+		return $this->getStatus() && $result;
 	}
 
 	function handleResumptionToken($token) {

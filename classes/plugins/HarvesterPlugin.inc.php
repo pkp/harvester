@@ -14,6 +14,14 @@
  */
 
 class HarvesterPlugin extends Plugin {
+	/** @var $errors array */
+	var $errors;
+
+	function HarvesterPlugin() {
+		parent::Plugin();
+		$this->errors = array();
+	}
+
 	/**
 	 * Register this plugin for all the appropriate hooks.
 	 */
@@ -203,6 +211,20 @@ class HarvesterPlugin extends Plugin {
 	 */
 	function updateIndex(&$archive) {
 		// Subclasses should override this method
+	}
+
+	/**
+	 * Add an error message to this harvester plugin.
+	 */
+	function addError($error) {
+		array_push($this->errors, $error);
+	}
+
+	/**
+	 * Get the error messages associated with this plugin.
+	 */
+	function getErrors() {
+		return $this->errors;
 	}
 }
 

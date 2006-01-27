@@ -193,6 +193,13 @@ class OAIXMLHandler extends XMLParserHandler {
 		$this->characterData .= $data;
 	}
 
+	function &getResult() {
+		// Because indexing is done as the XML is parsed (for the obvious
+		// reasons -- efficiency), no actual result need be returned save
+		// a "true" to indicate that parsing was actually successful.
+		$result = true;
+		return $result;
+	}
 }
 
 ?>

@@ -135,6 +135,21 @@ class Archive extends DataObject {
 	function updateSetting($name, $value, $type = null) {
 		$this->archiveSettingsDao->updateSetting($this->getArchiveId(), $name, $value, $type);
 	}
+
+	/**
+	 * Set the last indexed date for the archive.
+	 */
+	function setLastIndexedDate($lastIndexedDate = null) {
+		$this->updateSetting('lastIndexedDate', $lastIndexedDate, 'string');
+	}
+
+	/**
+	 * Get the last indexed date.
+	 * @return string
+	 */
+	function getLastIndexedDate() {
+		return $this->getSetting('lastIndexedDate');
+	}
 }
 
 ?>

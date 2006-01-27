@@ -111,9 +111,11 @@ class AdminArchiveHandler extends AdminHandler {
 			$archiveId = $args[0];
 			$archive =& $archiveDao->getArchive($archiveId);
 			if ($archive) {
+				$recordDao =& DAORegistry::getDAO('RecordDAO');
+
 				$templateMgr = &TemplateManager::getManager();
-				$templateMgr->assign('numRecords', $archive->getSetting('numRecords'));
-				$templateMgr->assign('lastIndexed', $archive->getSetting('lastIndexed'));
+				$templateMgr->assign('numRecords', $recordDao->getRecordCount($archiveId));
+				$templateMgr->assign('lastIndexed', $archive->getLastIndexedDate());
 				$templateMgr->assign('title', $archive->getTitle());
 				$templateMgr->assign('archiveId', $archive->getArchiveId());
 				$templateMgr->display('admin/manage.tpl');
@@ -135,18 +137,56 @@ class AdminArchiveHandler extends AdminHandler {
 		if (isset($args) && !empty($args) && !empty($args[0])) {
 			$archiveId = $args[0];
 			$archive =& $archiveDao->getArchive($archiveId);
-			if ($archive) {
-				// Disable timeout, as this operation may take
-				// a long time.
-				set_time_limit(0);
+			if (!$archive) Request::redirect('admin', 'archives');
 
-				$plugins =& PluginRegistry::loadCategory('harvesters');
-				$pluginName = $archive->getHarvesterPlugin();
-				if (isset($plugins[$pluginName])) {
-					$plugin = $plugins[$pluginName];
-					$plugin->updateIndex($archive);
-				}
-				Request::redirect('admin', 'manage', $archive->getArchiveId());
+			// Disable timeout, as this operation may take
+			// a long time.
+			set_time_limit(0);
+
+			// Get the harvester for this archive
+			$plugins =& PluginRegistry::loadCategory('harvesters');
+			$pluginName = $archive->getHarvesterPlugin();
+			if (!isset($plugins[$pluginName])) Request::redirect('admin', 'manage', $archive->getArchiveId());
+			$plugin = $plugins[$pluginName];
+
+			if ($plugin->updateIndex($archive)) {
+				$recordDao =& DAORegistry::getDAO('RecordDAO');
+				$templateMgr = &TemplateManager::getManager();
+				$templateMgr->assign('messageTranslated',
+					Locale::translate('admin.archive.manage.updateIndex.success', array(
+						'recordCount' => $recordDao->getRecordCount($archiveId)
+					))
+				);
+				$templateMgr->assign('backLink', Request::url('admin', 'archives'));
+				$templateMgr->assign('backLinkLabel', 'admin.archives');
+				$templateMgr->assign('pageTitle', 'admin.archives.manage.updateIndex');
+				return $templateMgr->display('common/message.tpl');
+			} else {
+				$templateMgr = &TemplateManager::getManager();
+				$templateMgr->assign('errors', $plugin->getErrors());
+				$templateMgr->assign('archiveId', $archiveId);
+				return $templateMgr->display('admin/updateFailed.tpl');
+			}
+		}
+		Request::redirect('admin', 'archives');
+	}
+
+	/**
+	 * Flush the metadata index for an archive.
+	 */
+	function flushIndex($args) {
+		parent::validate();
+		parent::setupTemplate(true);
+		
+		$archiveDao = &DAORegistry::getDAO('ArchiveDAO');
+		
+		if (isset($args) && !empty($args) && !empty($args[0])) {
+			$archiveId = $args[0];
+			$archive =& $archiveDao->getArchive($archiveId);
+			if ($archive) {
+				$recordDao =& DAORegistry::getDAO('RecordDAO');
+				$recordDao->deleteRecordsByArchiveId($archive->getArchiveId());
+				$archive->setLastIndexedDate(null);
 			}
 		}
 		Request::redirect('admin', 'archives');

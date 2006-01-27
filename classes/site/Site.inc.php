@@ -185,7 +185,7 @@ class Site extends DataObject {
 	 * @return array
 	 */
 	function getInstalledLocales() {
-		$returner =& $this->getSetting('installed_locales');
+		$returner = $this->getSetting('installed_locales');
 		if (!isset($returner)) $returner = array();
 		return $returner;
 	}

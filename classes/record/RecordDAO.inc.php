@@ -45,6 +45,9 @@ class RecordDAO extends DAO {
 		return $returner;
 	}
 
+	/**
+	 * Get the entries for this record.
+	 */
 	function getEntries($recordId) {
 		$result = &$this->retrieve(
 			'SELECT e.*, f.type AS field_type FROM entries e, fields f WHERE f.field_id = e.field_id AND record_id = ?', $recordId
@@ -220,12 +223,23 @@ class RecordDAO extends DAO {
 	function deleteRecord(&$record) {
 		return $this->deleteRecordById($record->getRecordId());
 	}
-	
+
+	/**
+	 * Delete the records for a specified archive, INCLUDING ALL DEPENDENT ITEMS.
+	 */
+	function deleteRecordsByArchiveId($archiveId) {
+		$records =& $this->getRecordsByArchiveId($archiveId);
+		while ($record =& $records->next()) {
+			$this->deleteRecord($record);
+		}
+	}
+
 	/**
 	 * Delete a record by ID, INCLUDING ALL DEPENDENT ITEMS.
 	 * @param $recordId int
 	 */
 	function deleteRecordById($recordId) {
+		$this->deleteEntriesByRecordId($recordId);
 		return $this->update(
 			'DELETE FROM records WHERE record_id = ?', $recordId
 		);
@@ -255,10 +269,14 @@ class RecordDAO extends DAO {
 	
 	/**
 	 * Retrieve a count of the records available.
+	 * @param $archiveId Specific archive to query (optional)
 	 * @return int
 	 */
-	function getRecordCount() {
-		$result = &$this->retrieve('SELECT COUNT(*) AS count FROM records');
+	function getRecordCount($archiveId = null) {
+		$result = &$this->retrieve(
+			'SELECT COUNT(*) AS count FROM records' . (isset($archiveId)?' WHERE archive_id = ?':''),
+			isset($archiveId)?$archiveId:false
+		);
 
 		$count = 0;
 		if ($result->RecordCount() != 0) {

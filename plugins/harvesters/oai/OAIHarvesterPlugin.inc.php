@@ -82,13 +82,14 @@ class OAIHarvesterPlugin extends HarvesterPlugin {
 
 		$templateMgr =& TemplateManager::getManager();
 
-		$errors = array();
 		if (!$oaiHarvester->updateRecords()) {
 			foreach ($oaiHarvester->getErrors() as $error) {
-				echo "FIXME: ERROR: $error<br/>\n";
+				$this->addError($error);
 			}
+			return false;
 		} else {
-			echo "FIXME: Should be displaying 'success' message.<br/>\n";
+			$archive->setLastIndexedDate(Core::getCurrentDate());
+			return true;
 		}
 	}
 

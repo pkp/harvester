@@ -106,6 +106,11 @@ class AdminHandler extends Handler {
 		AdminArchiveHandler::updateIndex($args);
 	}
 	
+	function flushIndex($args) {
+		import('pages.admin.AdminArchiveHandler');
+		AdminArchiveHandler::flushIndex($args);
+	}
+	
 	//
 	// Languages
 	//
