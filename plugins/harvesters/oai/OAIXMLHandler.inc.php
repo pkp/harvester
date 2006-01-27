@@ -41,10 +41,17 @@ class OAIXMLHandler extends XMLParserHandler {
 	/** @var $delegatedParser object If set, the object that will supercede this one for parsing */
 	var $delegatedParser;
 
+	/** @var $requestParams array The request parameters
+	var requestParams;
+
+	/** @var $result mixed The result of this parsing operation */
+	var $result;
+
 	function OAIXMLHandler(&$oaiHarvester) {
 		$this->oaiHarvester =& $oaiHarvester;
 		$this->header = array();
 		$this->metadata = array();
+		$this->result = true;
 	}
 
 	function startElement(&$parser, $tag, $attributes) {
@@ -81,7 +88,7 @@ class OAIXMLHandler extends XMLParserHandler {
 				// Do nothing.
 				break;
 			case 'request':
-				$this->oaiHarvester->setRequestParams($attributes);
+				$this->requestParams = $attributes;
 				break;
 			case 'GetRecord':
 			case 'Identify':
@@ -117,8 +124,14 @@ class OAIXMLHandler extends XMLParserHandler {
 		}
 
 		switch ($tag) {
-			case 'OAI-PMH':
 			case 'header':
+				if ($this->requestParams['verb'] === 'ListIdentifiers') {
+					// Harvesting via ListIdentifiers: we need to separately request
+					// each record.
+					$this->result =& $this->oaiHarvester->updateRecord($this->header['identifier'], true);
+				}
+				break;
+			case 'OAI-PMH':
 			case 'metadata':
 				// Do nothing.
 				break;
@@ -129,7 +142,7 @@ class OAIXMLHandler extends XMLParserHandler {
 				$this->oaiHarvester->addError($this->characterData);
 				break;
 			case 'request':
-				$this->oaiHarvester->setRequest($this->characterData);
+				$this->request = $this->characterData;
 				break;
 			case 'setSpec':
 			case 'identifier':
@@ -194,11 +207,7 @@ class OAIXMLHandler extends XMLParserHandler {
 	}
 
 	function &getResult() {
-		// Because indexing is done as the XML is parsed (for the obvious
-		// reasons -- efficiency), no actual result need be returned save
-		// a "true" to indicate that parsing was actually successful.
-		$result = true;
-		return $result;
+		return $this->result;
 	}
 }
 

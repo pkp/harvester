@@ -25,20 +25,12 @@ class OAIHarvester extends Harvester {
 	/** @var $responseDate int Timestamp */
 	var $responseDate;
 
-	/** @var $request string */
-	var $request;
-
-	/** @var $requestParams array */
-	var $requestParams;
-
 	/** @var $oaiXmlHandler object */
 	var $oaiXmlHandler;
 
 	function OAIHarvester(&$archive) {
 		parent::Harvester($archive);
 		$this->oaiUrl = $archive->getSetting('harvesterUrl');
-
-		$this->oaiXmlHandler =& new OAIXMLHandler($this);
 	}
 
 	/**
@@ -64,47 +56,74 @@ class OAIHarvester extends Harvester {
 		return $this->responseDate;
 	}
 
-	function setRequest($request) {
-		$this->request = $request;
-	}
-
-	function getRequest() {
-		return $this->request;
-	}
-
-	function setRequestParams($requestParams) {
-		$this->requestParams = $requestParams;
-	}
-
-	function getRequestParams() {
-		return $this->requestParams;
-	}
-
 	function getHarvestingMethod() {
-		return 'ListRecords';
-	}
-
-	function &getXmlHandler() {
-		return $this->oaiXmlHandler;
+		$archive =& $this->getArchive();
+		$indexingMethod = $archive->getSetting('oaiIndexMethod');
+		switch ($indexingMethod) {
+			case OAI_INDEX_METHOD_LIST_RECORDS:
+				return 'ListRecords';
+			case OAI_INDEX_METHOD_LIST_IDENTIFIERS:
+				return 'ListIdentifiers';
+			default:
+				fatalError ("Unknown indexing method $indexingMethod!");
+		}
 	}
 
 	function updateRecords($lastUpdateTimestamp = null) {
 		$this->fieldDao->enableCaching();
 
 		$parser =& new XMLParser();
-		$parser->setHandler($this->getXmlHandler());
-		$result = $parser->parse($this->oaiUrl . '?verb=' . urlencode($this->getHarvestingMethod()) . '&metadataPrefix=' . urlencode($this->getMetadataFormat()));
+		$xmlHandler =& new OAIXMLHandler($this);
+
+		$parser->setHandler($xmlHandler);
+		$result =& $parser->parse($this->oaiUrl . '?verb=' . urlencode($this->getHarvestingMethod()) . '&metadataPrefix=' . urlencode($this->getMetadataFormat()));
+
+		unset($parser);
+		unset($xmlHandler);
+
 		$this->fieldDao->disableCaching();
+
 		return $this->getStatus() && $result;
+	}
+
+	/**
+	 * Update a single record by identifier.
+	 * @param $identifier string
+	 * @return object Record
+	 */
+	function &updateRecord($identifier, $cachingAlreadyEnabled = false) {
+		if (!$cachingAlreadyEnabled) $this->fieldDao->enableCaching();
+
+		$parser =& new XMLParser();
+		$xmlHandler =& new OAIXMLHandler($this);
+
+		$parser->setHandler($xmlHandler);
+		$result =& $parser->parse($this->oaiUrl . '?verb=GetRecord&identifier=' . urlencode($identifier) . '&metadataPrefix=' . urlencode($this->getMetadataFormat()));
+		unset ($parser);
+
+		unset($parser);
+		unset($xmlHandler);
+
+		if (!$cachingAlreadyEnabled) $this->fieldDao->disableCaching();
+
+		return $result;
 	}
 
 	function handleResumptionToken($token) {
 		// This is called from within e.g. updateRecords, so no
 		// further setup is required. (i.e. fieldDao will already
 		// be caching-enabled.)
+
 		$parser =& new XMLParser();
-		$parser->setHandler($this->getXmlHandler());
-		$parser->parse($this->oaiUrl . '?verb=' . urlencode($this->getHarvestingMethod()) . '&resumptionToken=' . urlencode($token));
+		$xmlHandler =& new OAIXMLHandler($this);
+
+		$parser->setHandler($xmlHandler);
+		$result =& $parser->parse($this->oaiUrl . '?verb=' . urlencode($this->getHarvestingMethod()) . '&resumptionToken=' . urlencode($token));
+
+		unset ($parser);
+		unset($xmlHandler);
+
+		return $result?true:false;
 	}
 
 	/**
