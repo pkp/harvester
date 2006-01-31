@@ -38,12 +38,21 @@ class DublinCoreXMLHandler extends XMLParserHandler {
 	}
 
 	function endElement(&$parser, $tag) {
-		if ($tag == 'oai_dc:dc' || $tag == 'dc:identifier') {
-			return;
+		switch ($tag) {
+			case 'oai_dc:dc':
+			case 'dc:identifier':
+			case 'identifier':
+			case 'dc':
+				return;
 		}
 
 		// Strip the "dc:" from the tag, and we have the field key.
-		$fieldKey = substr($tag, 3);
+		if (substr($tag, 0, 3) === 'dc:') {
+			$fieldKey = substr($tag, 3);
+		} else {
+			$fieldKey = $tag;
+		}
+
 		$field =& $this->harvester->getFieldByKey($fieldKey);
 		if (!$field) {
 			$this->harvester->addError(Locale::translate('harvester.error.unknownMetadataField', array('name' => $fieldKey)));

@@ -47,11 +47,16 @@ class OAIXMLHandler extends XMLParserHandler {
 	/** @var $result mixed The result of this parsing operation */
 	var $result;
 
-	function OAIXMLHandler(&$oaiHarvester) {
+	/** @var $verb string The OAI verb being processed */
+	var $verb;
+
+	function OAIXMLHandler(&$oaiHarvester, $verb) {
 		$this->oaiHarvester =& $oaiHarvester;
 		$this->header = array();
 		$this->metadata = array();
 		$this->result = true;
+		$this->requestParams = array();
+		$this->verb = $verb;
 	}
 
 	function startElement(&$parser, $tag, $attributes) {
@@ -85,6 +90,7 @@ class OAIXMLHandler extends XMLParserHandler {
 			case 'resumptionToken':
 			case 'datestamp':
 			case 'setSpec':
+			case 'requestURL': // (OAI 1.1)
 				// Do nothing.
 				break;
 			case 'request':
@@ -125,7 +131,7 @@ class OAIXMLHandler extends XMLParserHandler {
 
 		switch ($tag) {
 			case 'header':
-				if ($this->requestParams['verb'] === 'ListIdentifiers') {
+				if ($this->verb === 'ListIdentifiers') {
 					// Harvesting via ListIdentifiers: we need to separately request
 					// each record.
 					$this->result =& $this->oaiHarvester->updateRecord($this->header['identifier'], true);
@@ -142,6 +148,7 @@ class OAIXMLHandler extends XMLParserHandler {
 				$this->oaiHarvester->addError($this->characterData);
 				break;
 			case 'request':
+			case 'requestURL': // (OAI 1.1)
 				$this->request = $this->characterData;
 				break;
 			case 'setSpec':

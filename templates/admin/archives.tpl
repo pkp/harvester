@@ -19,10 +19,10 @@
 		<td colspan="4" class="headseparator">&nbsp;</td>
 	</tr>
 	<tr valign="top" class="heading">
-		<td width="35%">{translate key="archive.title"}</td>
+		<td width="45%">{translate key="archive.title"}</td>
 		<td width="35%">{translate key="archive.url"}</td>
-		<td width="10%">{translate key="archive.type"}</td>
-		<td width="20%" align="right">{translate key="common.action"}</td>
+		<td width="5%">{translate key="archive.type"}</td>
+		<td width="15%" align="right">{translate key="common.action"}</td>
 	</tr>
 	<tr>
 		<td colspan="4" class="headseparator">&nbsp;</td>

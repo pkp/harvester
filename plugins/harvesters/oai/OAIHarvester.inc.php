@@ -72,11 +72,12 @@ class OAIHarvester extends Harvester {
 	function updateRecords($lastUpdateTimestamp = null) {
 		$this->fieldDao->enableCaching();
 
+		$verb = $this->getHarvestingMethod();
 		$parser =& new XMLParser();
-		$xmlHandler =& new OAIXMLHandler($this);
+		$xmlHandler =& new OAIXMLHandler($this, $verb);
 
 		$parser->setHandler($xmlHandler);
-		$result =& $parser->parse($this->oaiUrl . '?verb=' . urlencode($this->getHarvestingMethod()) . '&metadataPrefix=' . urlencode($this->getMetadataFormat()));
+		$result =& $parser->parse($this->oaiUrl . "?verb=$verb&metadataPrefix=" . urlencode($this->getMetadataFormat()));
 
 		unset($parser);
 		unset($xmlHandler);
@@ -94,11 +95,12 @@ class OAIHarvester extends Harvester {
 	function &updateRecord($identifier, $cachingAlreadyEnabled = false) {
 		if (!$cachingAlreadyEnabled) $this->fieldDao->enableCaching();
 
+		$verb = 'GetRecord';
 		$parser =& new XMLParser();
-		$xmlHandler =& new OAIXMLHandler($this);
+		$xmlHandler =& new OAIXMLHandler($this, $verb);
 
 		$parser->setHandler($xmlHandler);
-		$result =& $parser->parse($this->oaiUrl . '?verb=GetRecord&identifier=' . urlencode($identifier) . '&metadataPrefix=' . urlencode($this->getMetadataFormat()));
+		$result =& $parser->parse($this->oaiUrl . "?verb=$verb&identifier=" . urlencode($identifier) . '&metadataPrefix=' . urlencode($this->getMetadataFormat()));
 		unset ($parser);
 
 		unset($parser);
@@ -114,11 +116,12 @@ class OAIHarvester extends Harvester {
 		// further setup is required. (i.e. fieldDao will already
 		// be caching-enabled.)
 
+		$verb = $this->getHarvestingMethod();
 		$parser =& new XMLParser();
-		$xmlHandler =& new OAIXMLHandler($this);
+		$xmlHandler =& new OAIXMLHandler($this, $verb);
 
 		$parser->setHandler($xmlHandler);
-		$result =& $parser->parse($this->oaiUrl . '?verb=' . urlencode($this->getHarvestingMethod()) . '&resumptionToken=' . urlencode($token));
+		$result =& $parser->parse($this->oaiUrl . "?verb=$verb&resumptionToken=" . urlencode($token));
 
 		unset ($parser);
 		unset($xmlHandler);
