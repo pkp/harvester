@@ -303,4 +303,13 @@ Your server currently supports mbstring: <strong>{$supportsMBString}</strong>]]>
 	<message key="about.harvester.description"><![CDATA[The PKP Open Archives Harvester is a free metadata indexing system developed by the Public Knowledge Project through its federally funded efforts to expand and improve access to research. The PKP OAI Harvester allows you to create a searchable index of the metadata from Open Archives Initiative-compliant archives, such as sites using Open Journal Systems or Open Conference Systems.
 	
 	The PKP OAI Harvester is currently compatible with versions 1.1 and 2.0 of the OAI Harvesting Protocol.]]></message>
+
+	<!-- Debug messages -->
+	<message key="debug.executionTime">Page generated in</message>
+	<message key="debug.databaseQueries">Number of database queries</message>
+	<message key="debug.notes">Notes:</message>
+	<message key="debug.notes.localeLoad">Loaded locale file "{$localeFile}" from XML</message>
+	<message key="debug.notes.localeListLoad">Loaded locale list "{$localeList}" from XML</message>
+	<message key="debug.notes.missingLocaleKey">Missing locale key "{$key}".</message>
+	<message key="debug.notes.schemaMapLoad">Load schema map "{$schemaMap}" from XML</message>
 </locale>

@@ -15,7 +15,7 @@
  */
 
 /* This definition is required by Smarty */
-define('SMARTY_DIR', Core::getBaseDir() . '/lib/smarty/');
+define('SMARTY_DIR', Core::getBaseDir() . DIRECTORY_SEPARATOR . 'lib' . DIRECTORY_SEPARATOR . 'smarty' . DIRECTORY_SEPARATOR);
 
 require_once('smarty/Smarty.class.php');
 
@@ -33,10 +33,10 @@ class TemplateManager extends Smarty {
 		// Set up Smarty configuration
 		$baseDir = Core::getBaseDir();
 		$cachePath = CacheManager::getFileCachePath();
-		$this->template_dir = $baseDir . '/templates/';
-		$this->compile_dir = $cachePath . '/t_compile/';
-		$this->config_dir = $cachePath . '/t_config/';
-		$this->cache_dir = $cachePath . '/t_cache/';
+		$this->template_dir = $baseDir . DIRECTORY_SEPARATOR . 'templates';
+		$this->compile_dir = $cachePath . DIRECTORY_SEPARATOR . 't_compile';
+		$this->config_dir = $cachePath . DIRECTORY_SEPARATOR . 't_config';
+		$this->cache_dir = $cachePath . DIRECTORY_SEPARATOR . 't_cache';
 		
 		// TODO: Investigate caching behaviour and if Harvester2 can take advantage of it
 		//$this->caching = true;

@@ -26,7 +26,7 @@ class JunkHarvesterPlugin extends HarvesterPlugin {
 	}
 
 	function getName() {
-		return __CLASS__;
+		return 'JunkHarvesterPlugin';
 	}
 
 	/**

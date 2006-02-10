@@ -58,9 +58,6 @@ class Request {
 	 */
 	function redirectSSL() {
 		$url = 'https://' . Request::getServerHost() . Request::getRequestPath();
-		if (HookRegistry::call('Request::redirectSSL', array(&$url))) {
-			return;
-		}
 		Request::redirectUrl($url);
 	}
 	
@@ -69,9 +66,6 @@ class Request {
 	 */
 	function redirectNonSSL() {
 		$url = 'http://' . Request::getServerHost() . Request::getRequestPath();
-		if (HookRegistry::call('Request::redirectNonSSL', array(&$url))) {
-			return;
-		}
 		Request::redirectUrl($url);
 	}	
 

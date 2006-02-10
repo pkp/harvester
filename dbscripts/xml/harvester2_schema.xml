@@ -59,6 +59,9 @@
 		<field name="harvester_plugin" type="C2" size="80">
 			<NOTNULL/>
 		</field>
+		<field name="schema_plugin" type="C2" size="80">
+			<NOTNULL/>
+		</field>
 		<field name="title" type="C2" size="255">
 			<NOTNULL/>
 		</field>

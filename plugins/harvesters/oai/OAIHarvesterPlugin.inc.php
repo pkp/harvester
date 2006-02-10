@@ -29,7 +29,7 @@ class OAIHarvesterPlugin extends HarvesterPlugin {
 	}
 
 	function getName() {
-		return __CLASS__;
+		return 'OAIHarvesterPlugin';
 	}
 
 	/**

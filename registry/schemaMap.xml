@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  * schemaMap.xml
+  *
+  * Copyright (c) 2005 The Public Knowledge Project
+  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
+  *
+  * Maps schema aliases to schemas.
+  *
+  * $Id$
+  -->
+
+<!DOCTYPE schema_map [
+	<!ELEMENT schema_map (schema+)>
+	<!ELEMENT schema (alias+)>
+		<!ATTLIST schema
+			plugin CDATA #REQUIRED>
+	<!ELEMENT alias (#PCDATA)>
+		<!ATTLIST alias
+			harvester CDATA #IMPLIED>
+]>
+
+<schema_map>
+	<schema plugin="DublinCorePlugin">
+		<alias harvester="OAIHarvesterPlugin">oai_dc</alias>
+	</schema>
+</schema_map>

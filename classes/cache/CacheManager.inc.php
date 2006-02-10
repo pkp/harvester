@@ -59,7 +59,7 @@ class CacheManager {
 	}
 
 	function getFileCachePath() {
-		return Core::getBaseDir() . '/cache';
+		return Core::getBaseDir() . DIRECTORY_SEPARATOR . 'cache';
 	}
 
 	/**
@@ -77,7 +77,7 @@ class CacheManager {
 				break;
 			case 'file':
 				$filePath = $this->getFileCachePath();
-				$files = glob("$filePath/fc-" . (isset($context)?$context . '-':'') . '*.php');
+				$files = glob($filePath . DIRECTORY_SEPARATOR . 'fc-' . (isset($context)?$context . '-':'') . '*.php');
 				foreach ($files as $file) {
 					unlink ($file);
 				}
