@@ -76,6 +76,8 @@ class OAIHarvesterPlugin extends HarvesterPlugin {
 		$this->import('OAIHarvester');
 		$this->import('OAIXMLHandler');
 
+		PluginRegistry::loadCategory('schemas');
+
 		// FIXME: Should specify metadata format.
 		$oaiHarvester =& new OAIHarvester($archive);
 		$oaiHarvester->setMetadataFormat('oai_dc');

@@ -72,16 +72,13 @@ class OAIXMLHandler extends XMLParserHandler {
 			case 'metadata':
 				// Delegate metadata processing to another parser
 				$this->depth = 0;
-				switch ($metadataFormat = $this->oaiHarvester->getMetadataFormat()) {
-					case 'oai_dc':
-						import('harvester.DublinCoreXMLHandler');
-						$this->delegatedParser =& new DublinCoreXMLHandler($this->oaiHarvester, $this->metadata);
-						break;
-					default:
-						fatalError('Unknown metadata format ' . $metadataFormat);
-						break;
+				$metadataFormat = $this->oaiHarvester->getMetadataFormat();
+				import('schema.SchemaMap');
+				$schemaPluginName = SchemaMap::getSchemaPlugin(OAIHarvesterPlugin::getName(), $metadataFormat);
+				if (!$schemaPluginName || !($schemaPlugin =& PluginRegistry::getPlugin('schemas', $schemaPluginName))) {
+					fatalError('Unknown metadata format ' . $metadataFormat);
 				}
-
+				$this->delegatedParser =& $schemaPlugin->getXMLHandler($this->oaiHarvester, $this->metadata);
 				break;
 			case 'OAI-PMH':
 			case 'responseDate':
