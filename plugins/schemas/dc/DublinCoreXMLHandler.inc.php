@@ -28,21 +28,27 @@ class DublinCoreXMLHandler extends XMLParserHandler {
 	 * @param $harvester object
 	 * @param $metadata array Reference to array to populate with metadata
 	 */
-	function DublinCoreXMLHandler(&$harvester, &$metadata) {
+	function DublinCoreXMLHandler(&$harvester) {
 		$this->harvester =& $harvester;
-		$this->metadata =& $metadata;
 	}
 
 	function startElement(&$parser, $tag, $attributes) {
 		$this->characterData = null;
+		switch ($tag) {
+			case 'dc':
+			case 'oai_dc:dc':
+				unset($this->metadata);
+				$this->metadata = array();
+				return;
+		}
 	}
 
 	function endElement(&$parser, $tag) {
 		switch ($tag) {
-			case 'oai_dc:dc':
 			case 'dc:identifier':
 			case 'identifier':
 			case 'dc':
+			case 'oai_dc:dc':
 				return;
 		}
 
@@ -73,7 +79,7 @@ class DublinCoreXMLHandler extends XMLParserHandler {
 				$this->metadata[$fieldKey] = array($this->metadata[$fieldKey], $value);
 			}
 		} else {
-			$this->metadata[$fieldKey] = $this->characterData;
+			$this->metadata[$fieldKey] = $value;
 		}
 	}
 
@@ -84,6 +90,9 @@ class DublinCoreXMLHandler extends XMLParserHandler {
 		$this->characterData .= $data;
 	}
 
+	function &getMetadata() {
+		return $this->metadata;
+	}
 }
 
 ?>

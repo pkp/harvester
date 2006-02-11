@@ -48,9 +48,9 @@ class DublinCorePlugin extends SchemaPlugin {
 		return $this->getPluginPath() . '/data.xml';
 	}
 
-	function &getXMLHandler(&$harvester, &$metadata) {
+	function &getXMLHandler(&$harvester) {
 		$this->import('DublinCoreXMLHandler');
-		$handler =& new DublinCoreXMLHandler(&$harvester, &$metadata);
+		$handler =& new DublinCoreXMLHandler(&$harvester);
 		return $handler;
 	}
 }

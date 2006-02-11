@@ -78,7 +78,10 @@ class OAIXMLHandler extends XMLParserHandler {
 				if (!$schemaPluginName || !($schemaPlugin =& PluginRegistry::getPlugin('schemas', $schemaPluginName))) {
 					fatalError('Unknown metadata format ' . $metadataFormat);
 				}
-				$this->delegatedParser =& $schemaPlugin->getXMLHandler($this->oaiHarvester, $this->metadata);
+				$this->delegatedParser =& $schemaPlugin->getXMLHandler($this->oaiHarvester);
+
+				unset($this->metadata);
+				$this->metadata = array();
 				break;
 			case 'OAI-PMH':
 			case 'responseDate':
@@ -107,10 +110,6 @@ class OAIXMLHandler extends XMLParserHandler {
 				unset($this->header);
 				$this->header = array();
 				break;
-			case 'metadata':
-				unset($this->metadata);
-				$this->metadata = array();
-				break;
 			default:
 				$this->oaiHarvester->addError(Locale::translate('plugins.harvesters.oai.errors.unknownHeaderTag', array('tag' => $tag)));
 		}
@@ -119,6 +118,7 @@ class OAIXMLHandler extends XMLParserHandler {
 	function endElement(&$parser, $tag) {
 		if (isset($this->delegatedParser)) {
 			if (--$this->depth < 0) {
+				$this->metadata =& $this->delegatedParser->getMetadata();
 				unset($this->delegatedParser);
 				$this->delegatedParser = null;
 			} else {

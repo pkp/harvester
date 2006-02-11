@@ -50,6 +50,14 @@ class SchemaPlugin extends Plugin {
 	function getDescription() {
 		fatalError('ABSTRACT CLASS');
 	}
+
+	/**
+	 * Get an XML handler for this schema.
+	 */
+	function &getXMLHandler(&$harvester) {
+		$nullVar = null;
+		return $nullVar;
+	}
 }
 
 ?>
