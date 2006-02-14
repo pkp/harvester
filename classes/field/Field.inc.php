@@ -44,67 +44,19 @@ class Field extends DataObject {
 	}
 
 	/**
-	 * Get type of field
+	 * Get schema plugin name for field
 	 * @return string
 	 */
-	 function getType() {
-	 	return $this->getData('type');
+	 function getSchemaPluginName() {
+	 	return $this->getData('schema_plugin');
 	}
 	
 	/**
-	 * Set type of field
-	 * @param $type string
+	 * Set schema plugin name for field
+	 * @param $schemaPlugin string
 	 */
-	function setType($type) {
-		return $this->setData('type',$type);
-	}
-
-	/**
-	 * Get sequence of field
-	 * @return int
-	 */
-	 function getSeq() {
-	 	return $this->getData('seq');
-	}
-	
-	/**
-	 * Set sequence of field
-	 * @param $seq int
-	 */
-	function setSeq($seq) {
-		return $this->setData('seq',$seq);
-	}
-
-	/**
-	 * Get description of field
-	 * @return string
-	 */
-	 function getDescription() {
-	 	return $this->getData('description');
-	}
-	
-	/**
-	 * Set description of field
-	 * @param $description string
-	 */
-	function setDescription($description) {
-		return $this->setData('description', $description);
-	}
-	
-	/**
-	 * Get key of field
-	 * @return string
-	 */
-	 function getFieldKey() {
-	 	return $this->getData('fieldKey');
-	}
-	
-	/**
-	 * Set key of field
-	 * @param $fieldKey string
-	 */
-	function setFieldKey($fieldKey) {
-		return $this->setData('fieldKey',$fieldKey);
+	function setSchemaPluginName($schemaPlugin) {
+		return $this->setData('schema_plugin',$schemaPlugin);
 	}
 
 	/**
@@ -121,6 +73,27 @@ class Field extends DataObject {
 	 */
 	function setFieldId($fieldId) {
 		return $this->setData('fieldId', $fieldId);
+	}
+
+	function &getSchemaPlugin() {
+		$plugins =& PluginRegistry::loadCategory('schemas');
+		$returner = null;
+		if (isset($plugins[$this->getSchemaPluginName()])) {
+			$returner =& $plugins[$this->getSchemaPluginName()];
+		}
+		return $returner;
+	}
+
+	function getDisplayName($locale = null) {
+		$plugin =& $this->getSchemaPlugin();
+		if (!$plugin) return null;
+		return $plugin->getFieldName($this->getName(), $locale);
+	}
+
+	function getDisplayDescription($locale = null) {
+		$plugin =& $this->getSchemaPlugin();
+		if (!$plugin) return null;
+		return $plugin->getFieldName($this->getName(), $locale);
 	}
 }
 

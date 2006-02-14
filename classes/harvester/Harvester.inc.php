@@ -35,8 +35,8 @@ class Harvester {
 		$this->archive =& $archive;
 	}
 
-	function &getFieldByKey($fieldKey) {
-		$returner =& $this->fieldDao->getFieldByKey($fieldKey);
+	function &getFieldByKey($fieldKey, $schemaPlugin) {
+		$returner =& $this->fieldDao->buildField($fieldKey, $schemaPlugin);
 		return $returner;
 	}
 
@@ -54,18 +54,18 @@ class Harvester {
 	}
 
 	function addEntry(&$record, &$field, $value) {
+		$index = 0;
 		if (is_array($value)) foreach ($value as $item) {
-			return $this->recordDao->insertEntry(
+			$this->recordDao->insertEntry(
 				$record->getRecordId(),
 				$field->getFieldId(),
-				$field->getType(),
-				$item
+				$item,
+				++$index
 			);
 		} else {
 			return $this->recordDao->insertEntry(
 				$record->getRecordId(),
 				$field->getFieldId(),
-				$field->getType(),
 				$value
 			);
 		}

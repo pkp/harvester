@@ -53,6 +53,38 @@ class DublinCorePlugin extends SchemaPlugin {
 		$handler =& new DublinCoreXMLHandler(&$harvester);
 		return $handler;
 	}
+
+	function getFieldList() {
+		static $fieldList;
+		if (!isset($fieldList)) {
+			$fieldList = array(
+				'abstract',
+				'title',
+				'creator',
+				'publisher',
+				'contributor',
+				'date',
+				'type',
+				'format',
+				'language',
+				'relation',
+				'coverage',
+				'rights',
+				'subject',
+				'description',
+				'source'
+			);
+		}
+		return $fieldList;
+	}
+
+	function getFieldName($fieldSymbolic, $locale = null) {
+		return Locale::translate("plugins.schemas.dc.fields.$fieldSymbolic.name", $locale);
+	}
+
+	function getFieldDescription($fieldSymbolic, $locale = null) {
+		return Locale::translate("plugins.schemas.dc.fields.$fieldSymbolic.description", $locale);
+	}
 }
 
 ?>

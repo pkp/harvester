@@ -23,37 +23,33 @@ class FieldDAO extends DAO {
 	/** @var $fieldsById array Cached fields by ID, when caching enabled */
 	var $fieldsById;
 
-	/** @var $fieldsByKey array Cached fields by key, when caching enabled */
-	var $fieldsByKey;
+	/** @var $fieldsByName array Cached fields by name, when caching enabled */
+	var $fieldsByName;
 
 	/**
 	 * Constructor.
 	 */
 	function FieldDAO() {
 		parent::DAO();
-		$this->cachingEnabled = false;
+		$this->enableCaching();
 	}
 
 	/**
-	 * Enable in-memory caching of fields by key and ID. NOTE: This should
-	 * only be enabled for situations where many fields are used repeatedly
-	 * in a read-only situation. Update and insert calls WILL BE BUGGY
-	 * when enableCaching is enabled. It should be disabled immediately
-	 * after use is complete.
+	 * Enable in-memory caching of fields by name and ID.
 	 */
 	function enableCaching() {
 		$this->fieldsById = array();
-		$this->fieldsByKey = array();
+		$this->fieldsByName = array();
 		$this->cachingEnabled = true;
 	}
 
 	/**
-	 * Disable in-memory caching of fields by key and ID.
+	 * Disable in-memory caching of fields by name and ID.
 	 */
 	function disableCaching() {
 		$this->cachingEnabled = false;
 		unset($this->fieldsById);
-		unset($this->fieldsByKey);
+		unset($this->fieldsByName);
 	}
 
 	/**
@@ -77,22 +73,23 @@ class FieldDAO extends DAO {
 
 		if ($returner != null && $this->cachingEnabled) {
 			$this->fieldsById[$returner->getFieldId()] =& $returner;
-			$this->fieldsByKey[$returner->getFieldKey()] =& $returner;
+			$this->fieldsByName[$returner->getSchemaPluginName()][$returner->getName()] =& $returner;
 		}
 
 		return $returner;
 	}
 	
 	/**
-	 * Retrieve a field by field key.
-	 * @param $key string
+	 * Retrieve a field by field name.
+	 * @param $fieldName string
+	 * @param $schemaPlugin string
 	 * @return Field
 	 */
-	function &getFieldByKey($fieldKey) {
-		if ($this->cachingEnabled && isset($this->fieldsByKey[$fieldKey])) return $this->fieldsByKey[$fieldKey];
+	function &getFieldByName($fieldName, $schemaPlugin) {
+		if ($this->cachingEnabled && isset($this->fieldsByName[$schemaPlugin]) && isset($this->fieldsByName[$schemaPlugin][$fieldName])) return $this->fieldsByName[$schemaPlugin][$fieldName];
 
 		$result = &$this->retrieve(
-			'SELECT * FROM fields WHERE field_key = ?', $fieldKey
+			'SELECT * FROM fields WHERE name = ? AND schema_plugin = ?', array($fieldName, $schemaPlugin)
 		);
 
 		$returner = null;
@@ -104,7 +101,7 @@ class FieldDAO extends DAO {
 
 		if ($returner != null && $this->cachingEnabled) {
 			$this->fieldsById[$returner->getFieldId()] =& $returner;
-			$this->fieldsByKey[$returner->getFieldKey()] =& $returner;
+			$this->fieldsByName[$returner->getSchemaPluginName()][$returner->getName()] =& $returner;
 		}
 
 		return $returner;
@@ -118,11 +115,8 @@ class FieldDAO extends DAO {
 	function &_returnFieldFromRow(&$row) {
 		$field = &new Field();
 		$field->setFieldId($row['field_id']);
-		$field->setType($row['type']);
-		$field->setFieldKey($row['field_key']);
+		$field->setSchemaPluginName($row['schema_plugin']);
 		$field->setName($row['name']);
-		$field->setDescription($row['description']);
-		$field->setSeq($row['seq']);
 		
 		HookRegistry::call('FieldDAO::_returnFieldFromRow', array(&$field, &$row));
 
@@ -136,15 +130,12 @@ class FieldDAO extends DAO {
 	function insertField(&$field) {
 		$this->update(
 			'INSERT INTO fields
-				(type, field_key, name, description, seq)
+				(name, schema_plugin)
 				VALUES
-				(?, ?, ?, ?, ?)',
+				(?, ?)',
 			array(
-				$field->getType(),
-				$field->getFieldKey(),
 				$field->getName(),
-				$field->getDescription(),
-				$field->getSeq()
+				$field->getSchemaPluginName(),
 			)
 		);
 		
@@ -160,18 +151,12 @@ class FieldDAO extends DAO {
 		return $this->update(
 			'UPDATE fields
 				SET
-					type = ?,
-					field_key = ?,
 					name = ?,
-					description = ?,
-					seq = ?
+					schema_plugin = ?
 				WHERE field_id = ?',
 			array(
-				$field->getType(),
-				$field->getFieldKey(),
 				$field->getName(),
-				$field->getDescription(),
-				$field->getSeq(),
+				$field->getSchemaPluginName(),
 				$field->getFieldId()
 			)
 		);
@@ -182,7 +167,7 @@ class FieldDAO extends DAO {
 	 * @param $field Field
 	 */
 	function deleteField(&$field) {
-		return $this->deleteFieldById($field->getFieldId());
+		$this->deleteFieldById($field->getFieldId());
 	}
 	
 	/**
@@ -190,6 +175,16 @@ class FieldDAO extends DAO {
 	 * @param $fieldId int
 	 */
 	function deleteFieldById($fieldId) {
+		if (isset($this->fieldsById[$fieldId])) {
+			unset($this->fieldsById[$fieldId]);
+		}
+		foreach ($this->fieldsByName as $schemaPlugin => $fields) {
+			foreach ($fields as $fieldName => $field) {
+				if ($field->getFieldId() == $fieldId) {
+					unset($this->fieldsByName[$schemaPlugin][$fieldName]);
+				}
+			}
+		}
 		return $this->update(
 			'DELETE FROM fields WHERE field_id = ?', $fieldId
 		);
@@ -208,7 +203,33 @@ class FieldDAO extends DAO {
 		$returner = &new DAOResultFactory($result, $this, '_returnFieldFromRow');
 		return $returner;
 	}
-	
+
+	/**
+	 * Get a field, creating it if necessary.
+	 * @param $fieldName string
+	 * @param $schemaPlugin string
+	 * @return object Field
+	 */
+	function &buildField($fieldName, $schemaPlugin) {
+		$field =& $this->getFieldByName($fieldName, $schemaPlugin);
+		if (!$field) {
+			$field =& new Field();
+			$field->setName($fieldName);
+			$field->setSchemaPluginName($schemaPlugin);
+
+			$plugin =& $field->getSchemaPlugin();
+			if (!$plugin) {
+				fatalError('Unknown schema plugin "' . $schemaPlugin . '"!');
+			}
+			if (!in_array($fieldName, $plugin->getFieldList())) {
+				fatalError('Unknown field "' . $fieldName . '" for schema plugin "' . $schemaPlugin . '"!');
+			}
+
+			$this->insertField($field);
+		}
+		return $field;
+	}
+
 	/**
 	 * Get the ID of the last inserted field.
 	 * @return int
@@ -216,7 +237,7 @@ class FieldDAO extends DAO {
 	function getInsertFieldId() {
 		return $this->getInsertId('fields', 'field_id');
 	}
-	
+
 }
 
 ?>

@@ -140,36 +140,8 @@ class RecordDAO extends DAO {
 	 * Insert an entry for the given field of the given record, with
 	 * the supplied type and value.
 	 */
-	function insertEntry($recordId, $fieldId, $type, $value) {
-		$isDate = false;
-		switch ($type) {
-			case 'bool':
-			case 'int':
-			case 'float':
-			case 'string':
-				// Do nothing.
-				break;
-			case 'date':
-				// Special case: Handled below.`
-				$isDate = true;
-				$value = $this->datetimeToDB($value);
-				break;
-			case 'object':
-				$value = serialize($value);
-				break;
-			default:
-				fatalError("Unknown type $type!");
-				break;
-		}
-
-		if ($isDate) {
-			$this->update(
-				sprintf('INSERT INTO entries (record_id, field_id, value) VALUES (?, ?, %s)', $value),
-				array($recordId, $fieldId)
-			);
-		} else {
-			$this->update('INSERT INTO entries (record_id, field_id, value) VALUES (?, ?, ?)', array($recordId, $fieldId, $value));
-		}
+	function insertEntry($recordId, $fieldId, $value, $seq = 0) {
+		$this->update('INSERT INTO entries (record_id, field_id, value, seq) VALUES (?, ?, ?, ?)', array($recordId, $fieldId, $value, $seq));
 	}
 
 	/**

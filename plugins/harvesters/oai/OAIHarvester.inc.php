@@ -92,9 +92,7 @@ class OAIHarvester extends Harvester {
 	 * @param $identifier string
 	 * @return object Record
 	 */
-	function &updateRecord($identifier, $cachingAlreadyEnabled = false) {
-		if (!$cachingAlreadyEnabled) $this->fieldDao->enableCaching();
-
+	function &updateRecord($identifier) {
 		$verb = 'GetRecord';
 		$parser =& new XMLParser();
 		$xmlHandler =& new OAIXMLHandler($this, $verb);
@@ -106,16 +104,10 @@ class OAIHarvester extends Harvester {
 		unset($parser);
 		unset($xmlHandler);
 
-		if (!$cachingAlreadyEnabled) $this->fieldDao->disableCaching();
-
 		return $result;
 	}
 
 	function handleResumptionToken($token) {
-		// This is called from within e.g. updateRecords, so no
-		// further setup is required. (i.e. fieldDao will already
-		// be caching-enabled.)
-
 		$verb = $this->getHarvestingMethod();
 		$parser =& new XMLParser();
 		$xmlHandler =& new OAIXMLHandler($this, $verb);
@@ -172,7 +164,10 @@ class OAIHarvester extends Harvester {
 			return null;
 		}
 	}
-	
+
+	function &getSchemaPlugin() {
+		return SchemaMap::getSchemaPlugin(OAIHarvesterPlugin::getName(), $this->getMetadataFormat());
+	}
 }
 
 ?>

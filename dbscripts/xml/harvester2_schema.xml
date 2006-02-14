@@ -59,9 +59,6 @@
 		<field name="harvester_plugin" type="C2" size="80">
 			<NOTNULL/>
 		</field>
-		<field name="schema_plugin" type="C2" size="80">
-			<NOTNULL/>
-		</field>
 		<field name="title" type="C2" size="255">
 			<NOTNULL/>
 		</field>
@@ -110,37 +107,6 @@
 
 	<!--
 	  *
-	  * TABLE fields
-	  *
-	  -->
-	<table name="fields">
-		<field name="field_id" type="I4">
-			<KEY/>
-			<AUTOINCREMENT/>
-		</field>
-		<field name="type" type="C2" size="6">
-			<NOTNULL/>
-			<descr>(bool|int|float|string|date|object)</descr>
-		</field>
-		<field name="seq" type="I4">
-			<NOTNULL/>
-		</field>
-		<field name="field_key" type="C2" size="30">
-			<NOTNULL/>
-		</field>
-		<field name="name" type="C2" size="80">
-			<NOTNULL/>
-		</field>
-		<field name="description" type="C2" size="255"/>
-		<descr>The various fields available to metadata records.</descr>
-		<index name="fields_key">
-			<col>key</col>
-			<UNIQUE/>
-		</index>
-	</table>
-
-	<!--
-	  *
 	  * TABLE records
 	  *
 	  -->
@@ -157,6 +123,28 @@
 	</table>
 
 	<!--
+	  * TABLE fields
+	  *
+	  -->
+	<table name="fields">
+		<field name="field_id" type="I4">
+			<KEY/>
+			<AUTOINCREMENT/>
+		</field>
+		<field name="name" type="C2" size="60">
+			<NOTNULL/>
+		</field>
+		<field name="schema_plugin" type="C2" size="60">
+			<NOTNULL/>
+		</field>
+		<index name="field_symbolic_name">
+			<col>name</col>
+			<col>schema_plugin</col>
+			<UNIQUE/>
+		</index>
+	</table>
+
+	<!--
 	  *
 	  * TABLE entries
 	  *
@@ -167,6 +155,10 @@
 		</field>
 		<field name="field_id" type="I4">
 			<KEY/>
+		</field>
+		<field name="seq" type="I4">
+			<KEY/>
+			<DEFAULT VALUE="0"/>
 		</field>
 		<field name="value" type="X"/>
 	</table>
@@ -179,11 +171,9 @@
 	<table name="plugin_settings">
 		<field name="plugin_name" type="C2" size="80">
 			<KEY/>
-			<NOTNULL/>
 		</field>
 		<field name="setting_name" type="C2" size="80">
 			<KEY/>
-			<NOTNULL/>
 		</field>
 		<field name="setting_value" type="X"/>
 		<field name="setting_type" type="C2" size="6">
@@ -204,11 +194,9 @@
 	<table name="archive_settings">
 		<field name="archive_id" type="I8">
 			<KEY/>
-			<NOTNULL/>
 		</field>
 		<field name="setting_name" type="C2" size="80">
 			<KEY/>
-			<NOTNULL/>
 		</field>
 		<field name="setting_value" type="X"/>
 		<field name="setting_type" type="C2" size="6">
@@ -229,7 +217,6 @@
 	<table name="site_settings">
 		<field name="setting_name" type="C2" size="80">
 			<KEY/>
-			<NOTNULL/>
 		</field>
 		<field name="setting_value" type="X"/>
 		<field name="setting_type" type="C2" size="6">

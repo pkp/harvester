@@ -59,27 +59,20 @@ class DublinCoreXMLHandler extends XMLParserHandler {
 			$fieldKey = $tag;
 		}
 
-		$field =& $this->harvester->getFieldByKey($fieldKey);
+		$field =& $this->harvester->getFieldByKey($fieldKey, DublinCorePlugin::getName());
 		if (!$field) {
 			$this->harvester->addError(Locale::translate('harvester.error.unknownMetadataField', array('name' => $fieldKey)));
 			return;
 		}
 		
-		switch ($field->getType()) {
-			// FIXME! Different types should be converted here!
-			default:
-				$value = $this->characterData;
-				break;
-		}
-
 		if (isset($this->metadata[$fieldKey])) {
 			if (is_array($this->metadata[$fieldKey])) {
-				array_push($this->metadata[$fieldKey], $value);
+				array_push($this->metadata[$fieldKey], $this->characterData);
 			} else {
-				$this->metadata[$fieldKey] = array($this->metadata[$fieldKey], $value);
+				$this->metadata[$fieldKey] = array($this->metadata[$fieldKey], $this->characterData);
 			}
 		} else {
-			$this->metadata[$fieldKey] = $value;
+			$this->metadata[$fieldKey] = $this->characterData;
 		}
 	}
 

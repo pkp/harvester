@@ -58,6 +58,34 @@ class SchemaPlugin extends Plugin {
 		$nullVar = null;
 		return $nullVar;
 	}
+
+	/**
+	 * Get a name for a field.
+	 * @param $fieldSymbolic string Symbolic name for the field
+	 * @param $locale string Name of locale (optional)
+	 * @return string
+	 */
+	function getFieldName($fieldSymbolic, $locale = null) {
+		return null;
+	}
+
+	/**
+	 * Get a description for a field.
+	 * @param $fieldSymbolic string Symbolic name for the field
+	 * @param $locale string Name of locale (optional)
+	 * @return string
+	 */
+	function getFieldDescription($fieldSymbolic, $locale = null) {
+		return null;
+	}
+
+	/**
+	 * Get a list of symbolic names for fields in this schema.
+	 * @return array
+	 */
+	function getFieldList() {
+		return null;
+	}
 }
 
 ?>

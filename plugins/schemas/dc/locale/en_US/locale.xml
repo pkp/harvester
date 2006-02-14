@@ -15,4 +15,34 @@
 <locale name="en_US" full_name="U.S. English">
 	<message key="plugins.schemas.dc.schemaName">Dublin Core</message>
 	<message key="plugins.schemas.dc.description">This schema supports the Dublin Core metadata format.</message>
+	<message key="plugins.schemas.dc.fields.abstract.name">Abstract</message>
+	<message key="plugins.schemas.dc.fields.abstract.description">A summary of the content of the resource.</message>
+	<message key="plugins.schemas.dc.fields.title.name">Title</message>
+	<message key="plugins.schemas.dc.fields.title.description">A name given to the resource.</message>
+	<message key="plugins.schemas.dc.fields.creator.name">Creator</message>
+	<message key="plugins.schemas.dc.fields.creator.description">An entity primarily responsible for making the content of the resource.</message>
+	<message key="plugins.schemas.dc.fields.publisher.name">Publisher</message>
+	<message key="plugins.schemas.dc.fields.publisher.description">An entity responsible for making the resource available</message>
+	<message key="plugins.schemas.dc.fields.contributor.name">Contributor</message>
+	<message key="plugins.schemas.dc.fields.contributor.description">An entity responsible for making contributions to the content of the resource.</message>
+	<message key="plugins.schemas.dc.fields.date.name">Date</message>
+	<message key="plugins.schemas.dc.fields.date.description">A date associated with an event in the life cycle of the resource.</message>
+	<message key="plugins.schemas.dc.fields.type.name">Type</message>
+	<message key="plugins.schemas.dc.fields.type.description">The nature or genre of the content of the resource.</message>
+	<message key="plugins.schemas.dc.fields.format.name">Format</message>
+	<message key="plugins.schemas.dc.fields.format.description">The physical or digital manifestation of the resource.</message>
+	<message key="plugins.schemas.dc.fields.language.name">Language</message>
+	<message key="plugins.schemas.dc.fields.language.description">A language of the intellectual content of the resource.</message>
+	<message key="plugins.schemas.dc.fields.relation.name">Relation</message>
+	<message key="plugins.schemas.dc.fields.relation.description">A reference to a related resource.</message>
+	<message key="plugins.schemas.dc.fields.coverage.name">Coverage</message>
+	<message key="plugins.schemas.dc.fields.coverage.description">The extent or scope of the content of the resource.</message>
+	<message key="plugins.schemas.dc.fields.rights.name">Rights</message>
+	<message key="plugins.schemas.dc.fields.rights.description">Information about rights held in and over the resource.</message>
+	<message key="plugins.schemas.dc.fields.subject.name">Subject</message>
+	<message key="plugins.schemas.dc.fields.subject.description">The topic of the content of the resource.</message>
+	<message key="plugins.schemas.dc.fields.description.name">Description</message>
+	<message key="plugins.schemas.dc.fields.description.description">An account of the content of the resource.</message>
+	<message key="plugins.schemas.dc.fields.source.name">Source</message>
+	<message key="plugins.schemas.dc.fields.source.description">The source of the content of the resource.</message>
 </locale>

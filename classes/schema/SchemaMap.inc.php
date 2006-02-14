@@ -74,12 +74,21 @@ class SchemaMap {
 	 * @param $schemaAlias string
 	 * @return string
 	 */
-	function getSchemaPlugin($harvesterPluginName, $schemaAlias) {
+	function getSchemaPluginName($harvesterPluginName, $schemaAlias) {
 		$schemaMap =& SchemaMap::getSchemaMap();
 		foreach ($schemaMap as $entry) {
 			if ($entry[1] === $harvesterPluginName && $entry[2] === $schemaAlias) return $entry[0];
 		}
 		return null;
+	}
+
+	function &getSchemaPlugin($harvesterPluginName, $schemaAlias) {
+		$schemaPluginName = SchemaMap::getSchemaPluginName($harvesterPluginName, $schemaAlias);
+		$plugins =& PluginRegistry::loadCategory('schemas');
+		if (isset($plugins[$schemaPluginName])) {
+			return $plugins[$schemaPluginName];
+		}
+		fatalError("Unknown schema plugin \"$schemaPluginName!\"\n");
 	}
 }
 

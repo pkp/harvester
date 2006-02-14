@@ -13,6 +13,8 @@
  * $Id$
  */
 
+import('schema.SchemaMap');
+
 class OAIXMLHandler extends XMLParserHandler {
 	/** @var $characterData string */
 	var $characterData;
@@ -73,11 +75,7 @@ class OAIXMLHandler extends XMLParserHandler {
 				// Delegate metadata processing to another parser
 				$this->depth = 0;
 				$metadataFormat = $this->oaiHarvester->getMetadataFormat();
-				import('schema.SchemaMap');
-				$schemaPluginName = SchemaMap::getSchemaPlugin(OAIHarvesterPlugin::getName(), $metadataFormat);
-				if (!$schemaPluginName || !($schemaPlugin =& PluginRegistry::getPlugin('schemas', $schemaPluginName))) {
-					fatalError('Unknown metadata format ' . $metadataFormat);
-				}
+				$schemaPlugin = SchemaMap::getSchemaPlugin(OAIHarvesterPlugin::getName(), $metadataFormat);
 				$this->delegatedParser =& $schemaPlugin->getXMLHandler($this->oaiHarvester);
 
 				unset($this->metadata);
@@ -180,8 +178,10 @@ class OAIXMLHandler extends XMLParserHandler {
 				}
 
 				$record->setDatestamp($this->header['datestamp']);
+				$schemaPlugin =& $this->oaiHarvester->getSchemaPlugin();
+				$schemaPluginName = $schemaPlugin->getName();
 				foreach ($this->metadata as $name => $value) {
-					$field =& $this->oaiHarvester->getFieldByKey($name);
+					$field =& $this->oaiHarvester->getFieldByKey($name, $schemaPluginName);
 					$this->oaiHarvester->addEntry($record, $field, $value);
 				}
 
