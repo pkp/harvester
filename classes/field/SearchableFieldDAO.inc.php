@@ -53,16 +53,14 @@ class SearchableFieldDAO extends DAO {
 	 */
 	function &_returnSearchableFieldFromRow(&$row) {
 		$searchableField = &new SearchableField();
-		$searchableField->setSearchableFieldId($row['field_id']);
-		$searchableField->setType($row['type']);
-		$searchableField->setSearchableFieldKey($row['field_key']);
+		$searchableField->setSearchableFieldId($row['searchable_field_id']);
 		$searchableField->setName($row['name']);
 		$searchableField->setDescription($row['description']);
 		$searchableField->setSeq($row['seq']);
 		
 		HookRegistry::call('SearchableFieldDAO::_returnSearchableFieldFromRow', array(&$searchableField, &$row));
 
-		return $field;
+		return $searchableField;
 	}
 
 	/**
@@ -72,12 +70,10 @@ class SearchableFieldDAO extends DAO {
 	function insertSearchableField(&$field) {
 		$this->update(
 			'INSERT INTO searchable_fields
-				(type, field_key, name, description, seq)
+				(name, description, seq)
 				VALUES
-				(?, ?, ?, ?, ?)',
+				(?, ?, ?, ?)',
 			array(
-				$field->getType(),
-				$field->getSearchableFieldKey(),
 				$field->getName(),
 				$field->getDescription(),
 				$field->getSeq()
@@ -96,15 +92,11 @@ class SearchableFieldDAO extends DAO {
 		return $this->update(
 			'UPDATE searchable_fields
 				SET
-					type = ?,
-					field_key = ?,
 					name = ?,
 					description = ?,
 					seq = ?
 				WHERE searchable_field_id = ?',
 			array(
-				$field->getType(),
-				$field->getSearchableFieldKey(),
 				$field->getName(),
 				$field->getDescription(),
 				$field->getSeq(),
@@ -137,7 +129,7 @@ class SearchableFieldDAO extends DAO {
 	 */
 	function &getSearchableFields($rangeInfo = null) {
 		$result = &$this->retrieveRange(
-			'SELECT * FROM searchable_fields',
+			'SELECT * FROM searchable_fields ORDER BY seq',
 			false, $rangeInfo
 		);
 

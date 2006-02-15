@@ -65,7 +65,11 @@ class AdminHandler extends Handler {
 		import('pages.admin.AdminSettingsHandler');
 		AdminSettingsHandler::saveSettings();
 	}
-	
+
+	function indexing() {
+		import('pages.admin.AdminIndexingHandler');
+		AdminIndexingHandler::indexing();
+	}
 	
 	//
 	// Archive Management

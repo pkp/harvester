@@ -123,6 +123,27 @@
 	</table>
 
 	<!--
+	  *
+	  * TABLE searchable_fields
+	  *
+	  -->
+	<table name="searchable_fields">
+		<field name="searchable_field_id" type="I4">
+			<KEY/>
+			<AUTOINCREMENT/>
+		</field>
+		<field name="name" type="C2" size="60">
+			<NOTNULL/>
+		</field>
+		<field name="seq" type="I4">
+			<KEY/>
+			<DEFAULT VALUE="0"/>
+		</field>
+		<field name="description" type="C2" size="255"/>
+	</table>
+
+	<!--
+	  *
 	  * TABLE fields
 	  *
 	  -->
@@ -310,7 +331,7 @@
 		<field name="record_id" type="I8">
 			<NOTNULL/>
 		</field>
-		<field name="field_id" type="I8">
+		<field name="searchable_field_id" type="I8">
 			<NOTNULL/>
 		</field>
 		<descr>Indexed objects.</descr>

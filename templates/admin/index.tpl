@@ -17,6 +17,7 @@
 <ul class="plain">
 	<li>&#187; <a href="{url op="settings"}">{translate key="admin.siteSettings"}</a></li>
 	<li>&#187; <a href="{url op="languages"}">{translate key="common.languages"}</a></li>
+	<li>&#187; <a href="{url op="indexing"}">{translate key="admin.indexing"}</a></li>
 	{call_hook name="Templates::Admin::Index::SiteManagement"}
 </ul>
 

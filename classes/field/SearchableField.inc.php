@@ -44,22 +44,6 @@ class SearchableField extends DataObject {
 	}
 
 	/**
-	 * Get type of searchable field
-	 * @return string
-	 */
-	 function getType() {
-	 	return $this->getData('type');
-	}
-	
-	/**
-	 * Set type of searchable field
-	 * @param $type string
-	 */
-	function setType($type) {
-		return $this->setData('type',$type);
-	}
-
-	/**
 	 * Get sequence of field
 	 * @return int
 	 */
@@ -92,22 +76,6 @@ class SearchableField extends DataObject {
 	}
 	
 	/**
-	 * Get key of searchable field
-	 * @return string
-	 */
-	 function getSearchableFieldKey() {
-	 	return $this->getData('fieldKey');
-	}
-	
-	/**
-	 * Set key of searchable field
-	 * @param $fieldKey string
-	 */
-	function setSearchableFieldKey($fieldKey) {
-		return $this->setData('fieldKey',$fieldKey);
-	}
-
-	/**
 	 * Get ID of searchable field.
 	 * @return int
 	 */
@@ -120,7 +88,7 @@ class SearchableField extends DataObject {
 	 * @param $searchableFieldId int
 	 */
 	function setSearchableFieldId($searchableFieldId) {
-		return $this->setData('fieldId', $searchableFieldId);
+		return $this->setData('searchableFieldId', $searchableFieldId);
 	}
 }
 
