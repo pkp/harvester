@@ -22,12 +22,11 @@ class SearchableFieldDAO extends DAO {
 	 */
 	function SearchableFieldDAO() {
 		parent::DAO();
-		$this->cachingEnabled = false;
 	}
 
 	/**
 	 * Retrieve a searchable field by ID.
-	 * @param $fieldId int
+	 * @param $searchableFieldId int
 	 * @return SearchableField
 	 */
 	function &getSearchableFieldById($searchableFieldId) {
@@ -64,24 +63,24 @@ class SearchableFieldDAO extends DAO {
 	}
 
 	/**
-	 * Insert a new field.
-	 * @param $field SearchableField
+	 * Insert a new searchable field.
+	 * @param $searchableField SearchableField
 	 */	
-	function insertSearchableField(&$field) {
+	function insertSearchableField(&$searchableField) {
 		$this->update(
 			'INSERT INTO searchable_fields
 				(name, description, seq)
 				VALUES
 				(?, ?, ?)',
 			array(
-				$field->getName(),
-				$field->getDescription(),
-				$field->getSeq()
+				$searchableField->getName(),
+				$searchableField->getDescription(),
+				$searchableField->getSeq()
 			)
 		);
 		
-		$field->setSearchableFieldId($this->getInsertSearchableFieldId());
-		return $field->getSearchableFieldId();
+		$searchableField->setSearchableFieldId($this->getInsertSearchableFieldId());
+		return $searchableField->getSearchableFieldId();
 	}
 
 	/**
@@ -111,9 +110,9 @@ class SearchableFieldDAO extends DAO {
 
 	/**
 	 * Update an existing field.
-	 * @param $field SearchableField
+	 * @param $searchableField SearchableField
 	 */
-	function updateSearchableField(&$field) {
+	function updateSearchableField(&$searchableField) {
 		return $this->update(
 			'UPDATE searchable_fields
 				SET
@@ -122,16 +121,16 @@ class SearchableFieldDAO extends DAO {
 					seq = ?
 				WHERE searchable_field_id = ?',
 			array(
-				$field->getName(),
-				$field->getDescription(),
-				$field->getSeq(),
-				$field->getSearchableFieldId()
+				$searchableField->getName(),
+				$searchableField->getDescription(),
+				$searchableField->getSeq(),
+				$searchableField->getSearchableFieldId()
 			)
 		);
 	}
 	
 	/**
-	 * Delete a field, INCLUDING ALL DEPENDENT ITEMS.
+	 * Delete a searchable field, INCLUDING ALL DEPENDENT ITEMS.
 	 * @param $searchableField SearchableField
 	 */
 	function deleteSearchableField(&$searchableField) {
@@ -163,7 +162,7 @@ class SearchableFieldDAO extends DAO {
 	}
 	
 	/**
-	 * Get the ID of the last inserted field.
+	 * Get the ID of the last inserted searchable field.
 	 * @return int
 	 */
 	function getInsertSearchableFieldId() {

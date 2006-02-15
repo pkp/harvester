@@ -144,6 +144,45 @@
 
 	<!--
 	  *
+	  * TABLE indexers
+	  *
+	  -->
+	<table name="indexers">
+		<field name="indexer_id" type="I4">
+			<KEY/>
+			<AUTOINCREMENT/>
+		</field>
+		<field name="seq" type="I4">
+			<KEY/>
+			<DEFAULT VALUE="0"/>
+		</field>
+		<field name="schema_plugin" type="C2" size="60">
+			<NOTNULL/>
+		</field>
+	</table>
+	
+	<!--
+	  *
+	  * TABLE indexer_settings
+	  *
+	  -->
+	<table name="indexer_settings">
+		<field name="indexer_id" type="I4">
+			<KEY/>
+		</field>
+		<field name="setting_name" type="C2" size="80">
+			<KEY/>
+		</field>
+		<field name="setting_value" type="X"/>
+		<field name="setting_type" type="C2" size="6">
+			<NOTNULL/>
+			<descr>(bool|int|float|string|object)</descr>
+		</field>
+		<descr>Indexer settings.</descr>
+	</table>
+
+	<!--
+	  *
 	  * TABLE fields
 	  *
 	  -->
