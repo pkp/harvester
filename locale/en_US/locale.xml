@@ -225,6 +225,11 @@ Your server currently supports mbstring: <strong>{$supportsMBString}</strong>]]>
 	<message key="admin.indexing.searchableField.description">Description</message>
 	<message key="admin.indexing.searchableFields.noneCreated">None Created</message>
 	<message key="admin.indexing.addSearchableField">Add Searchable Field</message>
+	<message key="admin.indexing.confirmDelete">Are you sure you wish to delete this searchable field?</message>
+	<message key="admin.indexing.addSearchableField">Add Searchable Field</message>
+	<message key="admin.indexing.form.nameRequired">A name is required.</message>
+	<message key="admin.indexing.form.descriptionRequired">A description is required.</message>
+	<message key="admin.indexing.editSearchableField">Edit Searchable Field</message>
 
 	<!-- Archives -->
 	<message key="admin.archives.addArchive">Add Archive</message>

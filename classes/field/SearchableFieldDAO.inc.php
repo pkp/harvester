@@ -72,7 +72,7 @@ class SearchableFieldDAO extends DAO {
 			'INSERT INTO searchable_fields
 				(name, description, seq)
 				VALUES
-				(?, ?, ?, ?)',
+				(?, ?, ?)',
 			array(
 				$field->getName(),
 				$field->getDescription(),
@@ -83,7 +83,32 @@ class SearchableFieldDAO extends DAO {
 		$field->setSearchableFieldId($this->getInsertSearchableFieldId());
 		return $field->getSearchableFieldId();
 	}
-	
+
+	/**
+	 * Sequentially renumber searchable fields in their sequence order.
+	 */
+	function resequenceSearchableFields() {
+		$result = &$this->retrieve(
+			'SELECT searchable_field_id FROM searchable_fields ORDER BY seq'
+		);
+		
+		for ($i=1; !$result->EOF; $i++) {
+			list($searchableFieldId) = $result->fields;
+			$this->update(
+				'UPDATE searchable_fields SET seq = ? WHERE searchable_field_id = ?',
+				array(
+					$i,
+					$searchableFieldId
+				)
+			);
+			
+			$result->moveNext();
+		}
+
+		$result->close();
+		unset($result);
+	}
+
 	/**
 	 * Update an existing field.
 	 * @param $field SearchableField

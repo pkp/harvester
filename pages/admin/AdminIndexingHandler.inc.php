@@ -32,7 +32,53 @@ class AdminIndexingHandler extends AdminHandler {
 		$templateMgr->assign('helpTopicId', 'site.indexing');
 		$templateMgr->display('admin/searchableFields.tpl');
 	}
+
+	function editSearchableField($args = array()) {
+		parent::validate();
+		parent::setupTemplate(true);
+
+		import('admin.form.SearchableFieldForm');
+		$searchableFieldForm =& new SearchableFieldForm(!isset($args) || empty($args) ? null : (int) $args[0]);
+		$searchableFieldForm->initData();
+		$searchableFieldForm->display();
+	}
+
+	/**
+	 * Save changes to a searchable field's settings.
+	 */
+	function updateSearchableField() {
+		parent::validate();
+		
+		import('admin.form.SearchableFieldForm');
+		
+		$searchableFieldForm = &new SearchableFieldForm(Request::getUserVar('searchableFieldId'));
+		$searchableFieldForm->initData();
+		$searchableFieldForm->readInputData();
+		
+		if ($searchableFieldForm->validate()) {
+			$searchableFieldForm->execute();
+			Request::redirect('admin', 'indexing');
+			
+		} else {
+			parent::setupTemplate(true);
+			$searchableFieldForm->display();
+		}
+	}
 	
+	function deleteSearchableField($args) {
+		parent::validate();
+
+		$searchableFieldDao =& DAORegistry::getDAO('SearchableFieldDAO');
+		if (isset($args) && !empty($args) && !empty($args[0])) {
+			$searchableFieldId = $args[0];
+			$searchableFieldDao->deleteSearchableFieldById($searchableFieldId);
+		}
+		Request::redirect('admin', 'indexing');
+	}
+
+	function createSearchableField() {
+		AdminIndexingHandler::editSearchableField();
+	}
 }
 
 ?>

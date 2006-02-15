@@ -66,9 +66,33 @@ class AdminHandler extends Handler {
 		AdminSettingsHandler::saveSettings();
 	}
 
+	//
+	// Indexing & Searching
+	//
+
 	function indexing() {
 		import('pages.admin.AdminIndexingHandler');
 		AdminIndexingHandler::indexing();
+	}
+	
+	function editSearchableField($args) {
+		import('pages.admin.AdminIndexingHandler');
+		AdminIndexingHandler::editSearchableField($args);
+	}
+	
+	function createSearchableField() {
+		import('pages.admin.AdminIndexingHandler');
+		AdminIndexingHandler::createSearchableField();
+	}
+	
+	function deleteSearchableField($args) {
+		import('pages.admin.AdminIndexingHandler');
+		AdminIndexingHandler::deleteSearchableField($args);
+	}
+	
+	function updateSearchableField($args) {
+		import('pages.admin.AdminIndexingHandler');
+		AdminIndexingHandler::updateSearchableField($args);
 	}
 	
 	//

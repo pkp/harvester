@@ -30,7 +30,7 @@
 	<tr valign="top">
 		<td>{$searchableField->getName()|escape}</td>
 		<td>{$searchableField->getDescription()|escape}</td>
-		<td align="right">{*<a href="{url op="manage" path=$archive->getArchiveId()}" class="action">{translate key="common.manage"}</a>&nbsp;|&nbsp;<a href="{url op="editArchive" path=$archive->getArchiveId()}" class="action">{translate key="common.edit"}</a>&nbsp;|&nbsp;<a class="action" href="{url op="deleteArchive" path=$archive->getArchiveId()}" onclick="return confirm('{translate|escape:"javascript" key="admin.archives.confirmDelete"}')">{translate key="common.delete"}</a>*}</td>
+		<td align="right"><a href="{url op="editSearchableField" path=$searchableField->getSearchableFieldId()}" class="action">{translate key="common.edit"}</a>&nbsp;|&nbsp;<a href="{url op="deleteSearchableField" path=$searchableField->getSearchableFieldId()}" onclick="return confirm('{translate|escape:"javascript" key="admin.indexing.confirmDelete"}')" class="action">{translate key="common.delete"}</a></td>
 	</tr>
 	<tr>
 		<td colspan="4" class="{if $smarty.foreach.searchableFields.last}end{/if}separator">&nbsp;</td>
