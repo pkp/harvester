@@ -153,12 +153,17 @@
 			<AUTOINCREMENT/>
 		</field>
 		<field name="seq" type="I4">
-			<KEY/>
 			<DEFAULT VALUE="0"/>
 		</field>
-		<field name="schema_plugin" type="C2" size="60">
+		<field name="searchable_field_id" type="I4">
 			<NOTNULL/>
 		</field>
+		<field name="indexer_plugin" type="C2" size="60">
+			<NOTNULL/>
+		</field>
+		<index name="indexer_searchable_field_id">
+			<col>searchable_field_id</col>
+		</index>
 	</table>
 	
 	<!--

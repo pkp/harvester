@@ -63,9 +63,13 @@ class SearchableFieldForm extends Form {
 	 */
 	function initData() {
 		if (isset($this->searchableField)) {
+			$indexerDao =& DAORegistry::getDAO('IndexerDAO');
+			$indexers =& $indexerDao->getIndexersBySearchableFieldId($this->searchableFieldId);
+
 			$this->_data = array(
 				'name' => $this->searchableField->getName(),
-				'description' => $this->searchableField->getDescription()
+				'description' => $this->searchableField->getDescription(),
+				'indexers' => &$indexers
 			);
 		} else {
 			$this->searchableFieldId = null;
@@ -73,21 +77,21 @@ class SearchableFieldForm extends Form {
 			);
 		}
 
+		$this->_data['indexerPlugins'] =& PluginRegistry::loadCategory('indexers');
+
 		HookRegistry::call('SearchableFieldForm::initData', array(&$this, &$this->searchableField));
 
-/*		// Allow user-submitted parameters to override the 
+		// Allow user-submitted parameters to override the 
 		// usual form values. This is useful for when users
 		// change the harvester plugin so that they don't have
 		// to re-key changes to form elements.
-		if (!empty($this->harvesterPlugin)) {
-			$parameterNames = $this->getParameterNames();
-			foreach ($parameterNames as $name) {
-				$value = Request::getUserVar($name);
-				if (!empty($value)) {
-					$this->setData($name, $value);
-				}
+		$parameterNames = $this->getParameterNames();
+		foreach ($parameterNames as $name) {
+			$value = Request::getUserVar($name);
+			if (!empty($value)) {
+				$this->setData($name, $value);
 			}
-		} */
+		}
 	}
 
 	function getParameterNames() {

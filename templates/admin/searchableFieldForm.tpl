@@ -50,16 +50,14 @@ function selectIndexer() {
 		<td class="value"><textarea name="description" id="description" cols="40" rows="10" class="textArea">{$description|escape}</textarea></td>
 	</tr>
 
-		<tr>
-			<td class="label">{fieldLabel name="harvester" key="searchableField.type" required="true"}</td>
-			<td><select onchange="selectHarvester()" name="harvesterPlugin" id="harvesterPlugin" size="1" class="selectMenu">
-				{foreach from=$harvesters item=harvester}
-					<option {if $harvester->getName() == $harvesterPlugin}selected="selected" {/if}value="{$harvester->getName()}">{$harvester->getProtocolDisplayName()}</option>
-				{/foreach}
-			</select></td>
+	{iterate from=indexers item=indexer}
+		<tr valign="top">
+			<td>{$indexer->getPluginDisplayName()}</td>
+			<td>{$indexer->displayAdminForm()}</td>
 		</tr>
+	{/iterate}
 
-		{call_hook name="Template::Admin::SearchableFields::displayHarvesterForm" plugin=$harvesterPlugin}
+	{call_hook name="Template::Admin::SearchableFields::displayHarvesterForm" plugin=$harvesterPlugin}
 </table>
 
 <p><input type="submit" value="{translate key="common.save"}" class="button defaultButton" /> <input type="button" value="{translate key="common.cancel"}" class="button" onclick="document.location.href='{url op="indexing"}'" /></p>

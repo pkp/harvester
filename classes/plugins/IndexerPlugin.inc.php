@@ -51,6 +51,9 @@ class IndexerPlugin extends Plugin {
 		fatalError('ABSTRACT CLASS');
 	}
 
+	function displayAdminForm(&$indexer) {
+		fatalError('ABSTRACT CLASS');
+	}
 }
 
 ?>
