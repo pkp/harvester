@@ -150,6 +150,26 @@ class Archive extends DataObject {
 	function getLastIndexedDate() {
 		return $this->getSetting('lastIndexedDate');
 	}
+
+	/**
+	 * Get the current record count for the archive.
+	 * @return int
+	 */
+	function getRecordCount() {
+		$count = $this->getSetting('recordCount');
+		if (!is_int($count)) return 0;
+		return $count;
+	}
+
+	/**
+	 * Update the record count for the archive.
+	 * @return int
+	 */
+	function updateRecordCount() {
+		$recordDao =& DAORegistry::getDAO('RecordDAO');
+		$count = $recordDao->getRecordCount($this->getArchiveId());
+		$this->updateSetting('recordCount', $count, 'int');
+	}
 }
 
 ?>

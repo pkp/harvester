@@ -88,11 +88,13 @@ class OAIHarvesterPlugin extends HarvesterPlugin {
 			foreach ($oaiHarvester->getErrors() as $error) {
 				$this->addError($error);
 			}
-			return false;
+			$result = false;
 		} else {
 			$archive->setLastIndexedDate(Core::getCurrentDate());
-			return true;
+			$result = true;
 		}
+		$archive->updateRecordCount();
+		return $result;
 	}
 
 }

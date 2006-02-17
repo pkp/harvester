@@ -187,6 +187,7 @@ class AdminArchiveHandler extends AdminHandler {
 				$recordDao =& DAORegistry::getDAO('RecordDAO');
 				$recordDao->deleteRecordsByArchiveId($archive->getArchiveId());
 				$archive->setLastIndexedDate(null);
+				$archive->updateRecordCount();
 			}
 		}
 		Request::redirect('admin', 'archives');

@@ -332,6 +332,10 @@ Your server currently supports mbstring: <strong>{$supportsMBString}</strong>]]>
 	<message key="search.operator.and">and</message>
 	<message key="search.operator.or">or</message>
 
+	<!-- Browse messages -->
+	<message key="browse.browseAll">All Archives</message>
+	<message key="browse.recordCount">({$count} Records)</message>
+
 	<!-- Debug messages -->
 	<message key="debug.executionTime">Page generated in</message>
 	<message key="debug.databaseQueries">Number of database queries</message>
