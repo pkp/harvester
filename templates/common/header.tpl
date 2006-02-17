@@ -57,6 +57,7 @@
 			<li><a href="{url page="login"}">{translate key="navigation.login"}</a></li>
 		{/if}
 		<li><a href="{url page="search"}">{translate key="navigation.search"}</a></li>
+		<li><a href="{url page="browse"}">{translate key="navigation.browse"}</a></li>
 		{foreach from=$navMenuItems item=navItem}
 		<li><a href="{if $navItem.isAbsolute}{$navItem.url|escape}{else}{url page=""}{$navItem.url|escape}{/if}">{if $navItem.isLiteral}{$navItem.name|escape}{else}{translate key=$navItem.name}{/if}</a></li>
 		{/foreach}

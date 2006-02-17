@@ -1,7 +1,7 @@
 <?php
 
 /**
- * SearchHandler.inc.php
+ * BrowseHandler.inc.php
  *
  * Copyright (c) 2005-2006 The Public Knowledge Project
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
@@ -13,18 +13,18 @@
  * $Id$
  */
 
-class SearchHandler extends Handler {
+class BrowseHandler extends Handler {
 
 	/**
-	 * Display site search page.
+	 * Display site admin index page.
 	 */
 	function index() {
-		SearchHandler::validate();
-		SearchHandler::setupTemplate();
+		BrowseHandler::validate();
+		BrowseHandler::setupTemplate();
 			
 		$templateMgr = &TemplateManager::getManager();
-		$templateMgr->assign('helpTopicId', 'site.search');
-		$templateMgr->display('search/index.tpl');
+		$templateMgr->assign('helpTopicId', 'site.browse');
+		$templateMgr->display('browse/index.tpl');
 	}
 	
 	/**
@@ -35,7 +35,7 @@ class SearchHandler extends Handler {
 		$templateMgr = &TemplateManager::getManager();
 		if ($subclass) {
 			$templateMgr->assign('pageHierarchy',
-				array(array(Request::url('search'), 'navigation.search'))
+				array(array(Request::url('browse'), 'navigation.browse'))
 			);
 		}
 	}
