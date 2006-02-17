@@ -3,7 +3,7 @@
 /**
  * driver.inc.php
  *
- * Copyright (c) 2005 The Public Knowledge Project
+ * Copyright (c) 2005-2006 The Public Knowledge Project
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * Core system initialization code.
