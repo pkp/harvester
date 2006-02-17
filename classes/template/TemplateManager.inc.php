@@ -118,7 +118,9 @@ class TemplateManager extends Smarty {
 			// Explicitly set the character encoding
 			// Required in case server is using Apache's AddDefaultCharset directive
 			// (which can prevent browser auto-detection of the proper character set)
-			header('Content-Type: ' . $sendContentType . '; charset=' . $charset);
+			if ($sendContentType !== null) {
+				header('Content-Type: ' . $sendContentType . '; charset=' . $charset);
+			}
 
 			// Actually display the template.
 			parent::display($template);

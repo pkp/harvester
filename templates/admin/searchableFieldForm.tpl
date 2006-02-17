@@ -50,12 +50,12 @@ function selectIndexer() {
 		<td class="value"><textarea name="description" id="description" cols="40" rows="10" class="textArea">{$description|escape}</textarea></td>
 	</tr>
 
-	{iterate from=indexers item=indexer}
+	{foreach from=$indexers item=indexer}
 		<tr valign="top">
 			<td>{$indexer->getPluginDisplayName()}</td>
 			<td>{$indexer->displayAdminForm()}</td>
 		</tr>
-	{/iterate}
+	{/foreach}
 
 	{call_hook name="Template::Admin::SearchableFields::displayHarvesterForm" plugin=$harvesterPlugin}
 </table>

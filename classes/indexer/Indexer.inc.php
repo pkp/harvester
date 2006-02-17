@@ -15,12 +15,15 @@
  */
 
 class Indexer extends DataObject {
+	/** Indexer DAO */
+	var $indexerSettingsDao;
 
 	/**
 	 * Constructor.
 	 */
 	function Indexer() {
 		parent::DataObject();
+		$this->indexerSettingsDao =& DAORegistry::getDAO('IndexerSettingsDAO');
 	}
 	
 	//
@@ -96,6 +99,32 @@ class Indexer extends DataObject {
 	function getPluginDisplayName() {
 		$plugin =& $this->getIndexerPlugin();
 		return $plugin->getDisplayName();
+	}
+
+	/**
+	 * Install settings from an XML file.
+	 * @param $filename
+	 */
+	function installSettings($filename, $paramArray = array()) {
+		return $this->indexerSettingsDao->installSettings($filename, $paramArray);
+	}
+
+	/**
+	 * Get a site setting.
+	 * @param $name
+	 */
+	function getSetting($name) {
+		return $this->indexerSettingsDao->getSetting($this->getIndexerId(), $name);
+	}
+
+	/**
+	 * Update a site setting.
+	 * @param $name
+	 * @param $value
+	 * @param $type
+	 */
+	function updateSetting($name, $value, $type = null) {
+		$this->indexerSettingsDao->updateSetting($this->getIndexerId(), $name, $value, $type);
 	}
 }
 

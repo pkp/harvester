@@ -51,7 +51,38 @@ class IndexerPlugin extends Plugin {
 		fatalError('ABSTRACT CLASS');
 	}
 
+	/**
+	 * Display the fields for the administration form for this indexer.
+	 * @param $indexer object
+	 */
 	function displayAdminForm(&$indexer) {
+		fatalError('ABSTRACT CLASS');
+	}
+
+	/**
+	 * Get an array of the names of the admin form fields for the
+	 * specified indexer.
+	 * @param $indexer object
+	 * @return array
+	 */
+	function getAdminFormFields(&$indexer) {
+		fatalError('ABSTRACT CLASS');
+	}
+
+	/**
+	 * Initialize the admin form with data for the specified indexer.
+	 * @param $indexer object
+	 * @param $form object
+	 */
+	function initAdminFormData(&$indexer, &$form) {
+		fatalError('ABSTRACT CLASS');
+	}
+
+	/**
+	 * Save the admin form fields for the specified indexer.
+	 * @param $indexer object
+	 */
+	function saveAdminForm(&$indexer) {
 		fatalError('ABSTRACT CLASS');
 	}
 }

@@ -45,7 +45,7 @@ class IndexerSettingsDAO extends DAO {
 	 * @param $name
 	 * @return mixed
 	 */
-	function &getSetting($indexerId, $name) {
+	function getSetting($indexerId, $name) {
 		$cache =& $this->_getCache($indexerId);
 		return $cache->get($name);
 	}

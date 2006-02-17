@@ -17,6 +17,8 @@ import('db.DBDataXMLParser');
 import('form.Form');
 
 class SearchableFieldForm extends Form {
+	/** Indexer DAO */
+	var $indexerDao;
 
 	/** The ID of the searchable field being edited */
 	var $searchableFieldId;
@@ -30,7 +32,9 @@ class SearchableFieldForm extends Form {
 	 */
 	function SearchableFieldForm($searchableFieldId = null) {
 		parent::Form('admin/searchableFieldForm.tpl');
-		
+
+		$this->indexerDao =& DAORegistry::getDAO('IndexerDAO');
+
 		$this->searchableFieldId = isset($searchableFieldId) ? (int) $searchableFieldId : null;
 		
 		// Validation checks for this form
@@ -54,7 +58,6 @@ class SearchableFieldForm extends Form {
 		$templateMgr = &TemplateManager::getManager();
 		$templateMgr->assign('searchableFieldId', $this->searchableFieldId);
 		$templateMgr->assign('helpTopicId', 'site.siteManagement');
-		HookRegistry::call('SearchableFieldForm::display', array(&$this, &$templateMgr));
 		parent::display();
 	}
 	
@@ -63,14 +66,20 @@ class SearchableFieldForm extends Form {
 	 */
 	function initData() {
 		if (isset($this->searchableField)) {
-			$indexerDao =& DAORegistry::getDAO('IndexerDAO');
-			$indexers =& $indexerDao->getIndexersBySearchableFieldId($this->searchableFieldId);
+			$indexers =& $this->indexerDao->getIndexersBySearchableFieldId($this->searchableFieldId);
+			$indexers = $indexers->toArray();
 
 			$this->_data = array(
 				'name' => $this->searchableField->getName(),
 				'description' => $this->searchableField->getDescription(),
 				'indexers' => &$indexers
 			);
+
+			// Give the indexers a chance to initialize the form
+			foreach ($indexers as $indexer) {
+				$indexerPlugin =& $indexer->getIndexerPlugin();
+				$indexerPlugin->initAdminFormData($indexer, $this);
+			}
 		} else {
 			$this->searchableFieldId = null;
 			$this->_data = array(
@@ -78,8 +87,6 @@ class SearchableFieldForm extends Form {
 		}
 
 		$this->_data['indexerPlugins'] =& PluginRegistry::loadCategory('indexers');
-
-		HookRegistry::call('SearchableFieldForm::initData', array(&$this, &$this->searchableField));
 
 		// Allow user-submitted parameters to override the 
 		// usual form values. This is useful for when users
@@ -96,7 +103,14 @@ class SearchableFieldForm extends Form {
 
 	function getParameterNames() {
 		$parameterNames = array('name', 'description');
-		HookRegistry::call('SearchableFieldForm::getParameterNames', array(&$this, &$parameterNames, $this->harvesterPlugin));
+
+		$indexers =& $this->indexerDao->getIndexersBySearchableFieldId($this->searchableFieldId);
+
+		// Add the form parameters for the indexers on this page
+		while ($indexer =& $indexers->next()) {
+			$indexerPlugin =& $indexer->getIndexerPlugin();
+			$parameterNames = array_merge($parameterNames, $indexerPlugin->getAdminFormFields($indexer));
+		}
 		return $parameterNames;
 	}
 
@@ -122,6 +136,13 @@ class SearchableFieldForm extends Form {
 
 		if ($this->searchableField->getSearchableFieldId() != null) {
 			$searchableFieldDao->updateSearchableField($this->searchableField);
+			$indexers =& $this->indexerDao->getIndexersBySearchableFieldId($this->searchableFieldId);
+
+			// Allow the indexers to save their parameters
+			while ($indexer =& $indexers->next()) {
+				$indexerPlugin =& $indexer->getIndexerPlugin();
+				$indexerPlugin->saveAdminForm($indexer, $this);
+			}
 		} else {
 			$this->searchableField->setSeq(9999); // KLUDGE
 			$searchableFieldId = $searchableFieldDao->insertSearchableField($this->searchableField);
