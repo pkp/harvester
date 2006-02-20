@@ -165,6 +165,10 @@ class OAIHarvester extends Harvester {
 		}
 	}
 
+	function &getSchema() {
+		return SchemaMap::getSchema(OAIHarvesterPlugin::getName(), $this->getMetadataFormat());
+	}
+
 	function &getSchemaPlugin() {
 		return SchemaMap::getSchemaPlugin(OAIHarvesterPlugin::getName(), $this->getMetadataFormat());
 	}

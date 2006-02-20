@@ -25,7 +25,7 @@ class ArchiveForm extends Form {
 	var $archive;
 
 	/** The name of the harvester being used for this archive. */
-	var $harvesterPlugin;
+	var $harvesterPluginName;
 
 	/**
 	 * Constructor.
@@ -40,22 +40,22 @@ class ArchiveForm extends Form {
 		$this->addCheck(new FormValidator($this, 'title', 'required', 'admin.archives.form.titleRequired'));
 		$this->addCheck(new FormValidator($this, 'url', 'required', 'admin.archives.form.urlRequired'));
 
-		$this->harvesterPlugin = Request::getUserVar('harvesterPlugin');
+		$this->harvesterPluginName = Request::getUserVar('harvesterPluginName');
 
 		if ($archiveId) {
 			$archiveDao =& DAORegistry::getDAO('ArchiveDAO');
 			$this->archive =& $archiveDao->getArchive($this->archiveId);
-			if (empty($this->harvesterPlugin) && $this->archive) $this->harvesterPlugin = $this->archive->getHarvesterPlugin();
+			if (empty($this->harvesterPluginName) && $this->archive) $this->harvesterPluginName = $this->archive->getHarvesterPluginName();
 		}
 
-		if (empty($this->harvesterPlugin)) {
+		if (empty($this->harvesterPluginName)) {
 			$site =& Request::getSite();
-			$this->harvesterPlugin = $site->getSetting('defaultHarvesterPlugin');
+			$this->harvesterPluginName = $site->getSetting('defaultHarvesterPlugin');
 		}
 
 		$harvesters =& PluginRegistry::loadCategory('harvesters');
 
-		HookRegistry::call('ArchiveForm::ArchiveForm', array(&$this, $this->harvesterPlugin));
+		HookRegistry::call('ArchiveForm::ArchiveForm', array(&$this, $this->harvesterPluginName));
 	}
 	
 	/**
@@ -66,7 +66,7 @@ class ArchiveForm extends Form {
 		$templateMgr->assign('archiveId', $this->archiveId);
 		$templateMgr->assign('helpTopicId', 'site.siteManagement');
 		$templateMgr->assign_by_ref('harvesters', PluginRegistry::getPlugins('harvesters'));
-		HookRegistry::call('ArchiveForm::display', array(&$this, &$templateMgr, $this->harvesterPlugin));
+		HookRegistry::call('ArchiveForm::display', array(&$this, &$templateMgr, $this->harvesterPluginName));
 		parent::display();
 	}
 	
@@ -79,22 +79,22 @@ class ArchiveForm extends Form {
 				'title' => $this->archive->getTitle(),
 				'description' => $this->archive->getDescription(),
 				'url' => $this->archive->getUrl(),
-				'harvesterPlugin' => $this->harvesterPlugin
+				'harvesterPluginName' => $this->harvesterPluginName
 			);
 		} else {
 			$this->archiveId = null;
 			$this->_data = array(
-				'harvesterPlugin' => $this->harvesterPlugin
+				'harvesterPluginName' => $this->harvesterPluginName
 			);
 		}
 
-		HookRegistry::call('ArchiveForm::initData', array(&$this, &$this->archive, $this->harvesterPlugin));
+		HookRegistry::call('ArchiveForm::initData', array(&$this, &$this->archive, $this->harvesterPluginName));
 
 		// Allow user-submitted parameters to override the 
 		// usual form values. This is useful for when users
 		// change the harvester plugin so that they don't have
 		// to re-key changes to form elements.
-		if (!empty($this->harvesterPlugin)) {
+		if (!empty($this->harvesterPluginName)) {
 			$parameterNames = $this->getParameterNames();
 			foreach ($parameterNames as $name) {
 				$value = Request::getUserVar($name);
@@ -107,7 +107,7 @@ class ArchiveForm extends Form {
 
 	function getParameterNames() {
 		$parameterNames = array('title', 'description', 'url');
-		HookRegistry::call('ArchiveForm::getParameterNames', array(&$this, &$parameterNames, $this->harvesterPlugin));
+		HookRegistry::call('ArchiveForm::getParameterNames', array(&$this, &$parameterNames, $this->harvesterPluginName));
 		return $parameterNames;
 	}
 
@@ -128,8 +128,8 @@ class ArchiveForm extends Form {
 			$this->archive = &new Archive();
 		}
 
-		$this->harvesterPlugin = Request::getUserVar('harvesterPlugin');
-		$this->archive->setHarvesterPlugin($this->harvesterPlugin);
+		$this->harvesterPluginName = Request::getUserVar('harvesterPluginName');
+		$this->archive->setHarvesterPlugin($this->harvesterPluginName);
 		$this->archive->setDescription($this->getData('description'));
 		$this->archive->setUrl($this->getData('url'));
 		$this->archive->setTitle($this->getData('title'));
@@ -140,7 +140,7 @@ class ArchiveForm extends Form {
 			$archiveId = $archiveDao->insertArchive($this->archive);
 		}
 
-		HookRegistry::call('ArchiveForm::execute', array(&$this, &$this->archive, $this->harvesterPlugin));
+		HookRegistry::call('ArchiveForm::execute', array(&$this, &$this->archive, $this->harvesterPluginName));
 	}
 	
 }

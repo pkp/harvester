@@ -50,16 +50,29 @@ class Archive extends DataObject {
 	 * Get name of harvester plugin
 	 * @return string
 	 */
-	 function getHarvesterPlugin() {
+	 function getHarvesterPluginName() {
 	 	return $this->getData('harvesterPlugin');
 	}
 	
 	/**
 	 * Set name of harvester plugin
-	 * @param $harvesterPlugin string
+	 * @param $harvesterPluginName string
 	 */
-	function setHarvesterPlugin($harvesterPlugin) {
-		return $this->setData('harvesterPlugin',$harvesterPlugin);
+	function setHarvesterPluginName($harvesterPluginName) {
+		return $this->setData('harvesterPlugin',$harvesterPluginName);
+	}
+
+	/**
+	 * Get the harvester plugin
+	 * @return object
+	 */
+	function &getHarvesterPlugin() {
+		$harvesterPluginName = $this->getHarvesterPluginName();
+		$plugins =& PluginRegistry::loadCategory('harvesters');
+		if (isset($plugins[$harvesterPluginName])) {
+			return $plugins[$harvesterPluginName];
+		}
+		fatalError("Unknown plugin \"$harvesterPluginName\"!");
 	}
 
 	/**

@@ -19,6 +19,8 @@
 {iterate from=archives item=archive}
 	{if $archive->getRecordCount() != 0}
 		<li>&#187; <a href="{url path=$archive->getArchiveId()}">{$archive->getTitle()|escape}</a> {translate key="browse.recordCount" count=$archive->getRecordCount()}</li>
+	{else}
+		<li>&#187; {$archive->getTitle()|escape} {translate key="browse.recordCount" count=$archive->getRecordCount()}</li>
 	{/if}
 {/iterate}
 {if $archives->wasEmpty()}

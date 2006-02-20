@@ -44,19 +44,19 @@ class Field extends DataObject {
 	}
 
 	/**
-	 * Get schema plugin name for field
+	 * Get schema ID for field
 	 * @return string
 	 */
-	 function getSchemaPluginName() {
-	 	return $this->getData('schema_plugin');
+	 function getSchemaId() {
+	 	return $this->getData('schemaId');
 	}
 	
 	/**
-	 * Set schema plugin name for field
-	 * @param $schemaPlugin string
+	 * Set schema ID for field
+	 * @param $schemaId string
 	 */
-	function setSchemaPluginName($schemaPlugin) {
-		return $this->setData('schema_plugin',$schemaPlugin);
+	function setSchemaId($schemaId) {
+		return $this->setData('schemaId',$schemaId);
 	}
 
 	/**
@@ -76,12 +76,9 @@ class Field extends DataObject {
 	}
 
 	function &getSchemaPlugin() {
-		$plugins =& PluginRegistry::loadCategory('schemas');
-		$returner = null;
-		if (isset($plugins[$this->getSchemaPluginName()])) {
-			$returner =& $plugins[$this->getSchemaPluginName()];
-		}
-		return $returner;
+		$schemaDao =& DAORegistry::getDAO('SchemaDAO');
+		$schema =& $schemaDao->getSchema($this->getSchemaId());
+		return $schema->getPlugin();
 	}
 
 	function getDisplayName($locale = null) {

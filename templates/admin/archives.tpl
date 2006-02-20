@@ -32,7 +32,7 @@
 		<td>{$archive->getTitle()|escape}</td>
 		<td><a href="{$archive->getUrl()|escape:"quotes"}" target="_new">{$archive->getUrl()|escape}</a></td>
 		<td>
-			{assign var=pluginName value=$archive->getHarvesterPlugin()}
+			{assign var=pluginName value=$archive->getHarvesterPluginName()}
 			{assign var=plugin value=$harvesters[$pluginName]}
 			{if $plugin}
 				{$plugin->getProtocolDisplayName()}

@@ -162,6 +162,9 @@ class OAIXMLHandler extends XMLParserHandler {
 				// Do nothing.
 				break;
 			case 'record':
+				$schema =& $this->oaiHarvester->getSchema();
+				$schemaPluginName = $schema->getPluginName();
+
 				$record =& $this->oaiHarvester->getRecordByIdentifier($this->header['identifier']);
 				if (!$record) {
 					// This is a new record.
@@ -169,6 +172,7 @@ class OAIXMLHandler extends XMLParserHandler {
 					$archive =& $this->oaiHarvester->getArchive();
 					$record->setIdentifier($this->header['identifier']);
 					$record->setArchiveId($archive->getArchiveId());
+					$record->setSchemaId($schema->getSchemaId());
 					$record->setDatestamp(Core::getCurrentDate());
 					$this->oaiHarvester->insertRecord($record);
 				} else {
@@ -178,8 +182,6 @@ class OAIXMLHandler extends XMLParserHandler {
 				}
 
 				$record->setDatestamp($this->header['datestamp']);
-				$schemaPlugin =& $this->oaiHarvester->getSchemaPlugin();
-				$schemaPluginName = $schemaPlugin->getName();
 				foreach ($this->metadata as $name => $value) {
 					$field =& $this->oaiHarvester->getFieldByKey($name, $schemaPluginName);
 					$this->oaiHarvester->addEntry($record, $field, $value);

@@ -21,22 +21,28 @@ class BrowseHandler extends Handler {
 	function index($args) {
 		BrowseHandler::validate();
 		BrowseHandler::setupTemplate();
+		$templateMgr = &TemplateManager::getManager();
 
 		$archiveDao =& DAORegistry::getDAO('ArchiveDAO');
+		$recordDao =& DAORegistry::getDAO('RecordDAO');
 
 		$archiveId = array_shift($args);
 		$archive = null;
 		if ($archiveId === 'all' || ($archive =& $archiveDao->getArchive($archiveId))) {
-			// The user has chosen an archive or opted to browse all.
+			$rangeInfo = Handler::getRangeInfo('records');
+			$sort = RECORD_SORT_DATE; // FIXME
+
+			// The user has chosen an archive or opted to browse all
+			$records =& $recordDao->getRecords($archive?$archiveId:null, $sort, $rangeInfo);
+
+			$templateMgr->assign_by_ref('records', $records);
+			$templateMgr->display('browse/records.tpl');
 		} else {
 			// List archives for the user to browse.
 			$rangeInfo = Handler::getRangeInfo('archives');
-			// Load the harvester plugins so we can display names.
-			$plugins =& PluginRegistry::loadCategory('harvesters');
 
 			$archives =& $archiveDao->getArchives($rangeInfo);
 
-			$templateMgr = &TemplateManager::getManager();
 			$templateMgr->assign('helpTopicId', 'site.browse');
 			$templateMgr->assign_by_ref('archives', $archives);
 			$templateMgr->display('browse/index.tpl');

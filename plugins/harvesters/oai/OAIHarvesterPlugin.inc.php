@@ -96,7 +96,6 @@ class OAIHarvesterPlugin extends HarvesterPlugin {
 		$archive->updateRecordCount();
 		return $result;
 	}
-
 }
 
 ?>

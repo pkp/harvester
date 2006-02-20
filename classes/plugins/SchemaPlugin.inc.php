@@ -84,7 +84,14 @@ class SchemaPlugin extends Plugin {
 	 * @return array
 	 */
 	function getFieldList() {
-		return null;
+		fatalError('ABSTRACT CLASS!');
+	}
+
+	/**
+	 * Display a record.
+	 */
+	function displayRecord(&$record) {
+		fatalError('ABSTRACT CLASS!');
 	}
 }
 

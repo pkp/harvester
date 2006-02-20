@@ -17,12 +17,15 @@
 import ('archive.Archive');
 
 class ArchiveDAO extends DAO {
+	/** Cached array of archives by ID */
+	var $archiveCache;
 
 	/**
 	 * Constructor.
 	 */
 	function ArchiveDAO() {
 		parent::DAO();
+		$this->archiveCache = array();
 	}
 	
 	/**
@@ -31,6 +34,11 @@ class ArchiveDAO extends DAO {
 	 * @return Archive
 	 */
 	function &getArchive($archiveId) {
+		// First check the in-memory archive cache
+		if (isset($this->archiveCache[$archiveId])) {
+			return $this->archiveCache[$archiveId];
+		}
+
 		$result = &$this->retrieve(
 			'SELECT * FROM archives WHERE archive_id = ?', $archiveId
 		);
@@ -41,6 +49,10 @@ class ArchiveDAO extends DAO {
 		}
 		$result->Close();
 		unset($result);
+
+		// Cache this archive.
+		$this->archiveCache[$archiveId] =& $returner;
+
 		return $returner;
 	}
 	
@@ -55,7 +67,7 @@ class ArchiveDAO extends DAO {
 		$archive->setTitle($row['title']);
 		$archive->setDescription($row['description']);
 		$archive->setUrl($row['url']);
-		$archive->setHarvesterPlugin($row['harvester_plugin']);
+		$archive->setHarvesterPluginName($row['harvester_plugin']);
 		
 		HookRegistry::call('ArchiveDAO::_returnArchiveFromRow', array(&$archive, &$row));
 
@@ -76,11 +88,16 @@ class ArchiveDAO extends DAO {
 				$archive->getTitle(),
 				$archive->getDescription(),
 				$archive->getUrl(),
-				$archive->getHarvesterPlugin()
+				$archive->getHarvesterPluginName()
 			)
 		);
-		
-		$archive->setArchiveId($this->getInsertArchiveId());
+
+		$archiveId = $this->getInsertArchiveId();
+		$archive->setArchiveId($archiveId);
+
+		// Cache this archive.
+		$this->archiveCache[$archiveId] =& $returner;
+
 		return $archive->getArchiveId();
 	}
 	
@@ -101,7 +118,7 @@ class ArchiveDAO extends DAO {
 				$archive->getTitle(),
 				$archive->getDescription(),
 				$archive->getUrl(),
-				$archive->getHarvesterPlugin(),
+				$archive->getHarvesterPluginName(),
 				$archive->getArchiveId()
 			)
 		);
@@ -120,6 +137,11 @@ class ArchiveDAO extends DAO {
 	 * @param $archiveId int
 	 */
 	function deleteArchiveById($archiveId) {
+		// Clear the archive from cache if applicable.
+		if (isset($this->archiveCache[$archiveId])) {
+			unset($this->archiveCache[$archiveId]);
+		}
+
 		return $this->update(
 			'DELETE FROM archives WHERE archive_id = ?', $archiveId
 		);

@@ -90,6 +90,12 @@ class SchemaMap {
 		}
 		fatalError("Unknown schema plugin \"$schemaPluginName!\"\n");
 	}
+
+	function &getSchema($harvesterPluginName, $schemaAlias) {
+		$schemaPluginName = SchemaMap::getSchemaPluginName($harvesterPluginName, $schemaAlias);
+		$schemaDao =& DAORegistry::getDAO('SchemaDAO');
+		return $schemaDao->buildSchema($schemaPluginName);
+	}
 }
 
 class SchemaMapHandler extends XMLParserHandler {

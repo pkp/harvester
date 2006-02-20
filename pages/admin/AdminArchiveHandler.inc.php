@@ -66,14 +66,16 @@ class AdminArchiveHandler extends AdminHandler {
 		parent::validate();
 		
 		import('admin.form.ArchiveForm');
-		
-		$settingsForm = &new ArchiveForm(Request::getUserVar('archiveId'));
+
+		$archiveId = (int) Request::getUserVar('archiveId');
+
+		$settingsForm = &new ArchiveForm($archiveId);
 		$settingsForm->initData();
 		$settingsForm->readInputData();
 		
 		if ($settingsForm->validate()) {
 			$settingsForm->execute();
-			Request::redirect('admin', 'archives');
+			Request::redirect('admin', 'manage', $archiveId);
 			
 		} else {
 			parent::setupTemplate(true);
@@ -90,7 +92,7 @@ class AdminArchiveHandler extends AdminHandler {
 		
 		$archiveDao = &DAORegistry::getDAO('ArchiveDAO');
 		
-		if (isset($args) && !empty($args) && !empty($args[0])) {
+		if (isset($args) && isset($args[0])) {
 			$archiveId = $args[0];
 			$archiveDao->deleteArchiveById($archiveId);
 		}
@@ -107,7 +109,7 @@ class AdminArchiveHandler extends AdminHandler {
 		
 		$archiveDao = &DAORegistry::getDAO('ArchiveDAO');
 		
-		if (isset($args) && !empty($args) && !empty($args[0])) {
+		if (isset($args) && isset($args[0])) {
 			$archiveId = $args[0];
 			$archive =& $archiveDao->getArchive($archiveId);
 			if ($archive) {
@@ -134,8 +136,8 @@ class AdminArchiveHandler extends AdminHandler {
 		
 		$archiveDao = &DAORegistry::getDAO('ArchiveDAO');
 		
-		if (isset($args) && !empty($args) && !empty($args[0])) {
-			$archiveId = $args[0];
+		if (isset($args) && isset($args[0])) {
+			$archiveId = (int) $args[0];
 			$archive =& $archiveDao->getArchive($archiveId);
 			if (!$archive) Request::redirect('admin', 'archives');
 
@@ -145,7 +147,7 @@ class AdminArchiveHandler extends AdminHandler {
 
 			// Get the harvester for this archive
 			$plugins =& PluginRegistry::loadCategory('harvesters');
-			$pluginName = $archive->getHarvesterPlugin();
+			$pluginName = $archive->getHarvesterPluginName();
 			if (!isset($plugins[$pluginName])) Request::redirect('admin', 'manage', $archive->getArchiveId());
 			$plugin = $plugins[$pluginName];
 
@@ -167,6 +169,7 @@ class AdminArchiveHandler extends AdminHandler {
 				$templateMgr->assign('archiveId', $archiveId);
 				return $templateMgr->display('admin/updateFailed.tpl');
 			}
+			Request::redirect('admin', 'manage', $archiveId);
 		}
 		Request::redirect('admin', 'archives');
 	}
@@ -180,8 +183,8 @@ class AdminArchiveHandler extends AdminHandler {
 		
 		$archiveDao = &DAORegistry::getDAO('ArchiveDAO');
 		
-		if (isset($args) && !empty($args) && !empty($args[0])) {
-			$archiveId = $args[0];
+		if (isset($args) && isset($args[0])) {
+			$archiveId = (int) $args[0];
 			$archive =& $archiveDao->getArchive($archiveId);
 			if ($archive) {
 				$recordDao =& DAORegistry::getDAO('RecordDAO');
@@ -189,6 +192,7 @@ class AdminArchiveHandler extends AdminHandler {
 				$archive->setLastIndexedDate(null);
 				$archive->updateRecordCount();
 			}
+			Request::redirect('admin', 'manage', $archiveId);
 		}
 		Request::redirect('admin', 'archives');
 	}

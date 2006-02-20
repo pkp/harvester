@@ -118,6 +118,9 @@
 		<field name="archive_id" type="I4">
 			<NOTNULL/>
 		</field>
+		<field name="schema_plugin_id" type="I4">
+			<NOTNULL/>
+		</field>
 		<field name="identifier" type="C2" size="255"/>
 		<field name="datestamp" type="T"/>
 	</table>
@@ -199,11 +202,30 @@
 		<field name="name" type="C2" size="60">
 			<NOTNULL/>
 		</field>
-		<field name="schema_plugin" type="C2" size="60">
+		<field name="schema_plugin_id" type="I4">
 			<NOTNULL/>
 		</field>
 		<index name="field_symbolic_name">
 			<col>name</col>
+			<col>schema_plugin_id</col>
+			<UNIQUE/>
+		</index>
+	</table>
+
+	<!--
+	  *
+	  * TABLE schemas
+	  *
+	  -->
+	<table name="schema_plugins">
+		<field name="schema_plugin_id" type="I4">
+			<KEY/>
+			<AUTOINCREMENT/>
+		</field>
+		<field name="schema_plugin" type="C2" size="60">
+			<NOTNULL/>
+		</field>
+		<index name="schema_plugin_name">
 			<col>schema_plugin</col>
 			<UNIQUE/>
 		</index>

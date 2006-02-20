@@ -75,6 +75,22 @@ class Record extends DataObject {
 	}
 
 	/**
+	 * Get ID of this record's schema.
+	 * @return int
+	 */
+	function getSchemaId() {
+		return $this->getData('schemaId');
+	}
+	
+	/**
+	 * Set ID of this record's schema.
+	 * @param $recordId int
+	 */
+	function setSchemaId($schemaId) {
+		return $this->setData('schemaId', $schemaId);
+	}
+
+	/**
 	 * Get ID of archive.
 	 * @return int
 	 */
@@ -88,6 +104,22 @@ class Record extends DataObject {
 	 */
 	function setArchiveId($archiveId) {
 		return $this->setData('archiveId', $archiveId);
+	}
+
+	/**
+	 * Get the archive for this record.
+	 * @return object
+	 */
+	function &getArchive() {
+		$archiveDao =& DAORegistry::getDAO('ArchiveDAO');
+		return $archiveDao->getArchive($this->getArchiveId());
+	}
+
+	function display() {
+		$schemaDao =& DAORegistry::getDAO('SchemaDAO');
+		$schema =& $schemaDao->getSchema($this->getSchemaId());
+		$plugin =& $schema->getPlugin();
+		$plugin->displayRecord($this);
 	}
 }
 

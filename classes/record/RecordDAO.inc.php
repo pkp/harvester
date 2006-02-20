@@ -16,6 +16,9 @@
 
 import ('record.Record');
 
+define('RECORD_SORT_NONE', 0x000001);
+define('RECORD_SORT_DATE', 0x000002);
+
 class RecordDAO extends DAO {
 
 	/**
@@ -128,6 +131,7 @@ class RecordDAO extends DAO {
 		$record = &new Record();
 		$record->setRecordId($row['record_id']);
 		$record->setArchiveId($row['archive_id']);
+		$record->setSchemaId($row['schema_plugin_id']);
 		$record->setIdentifier($row['identifier']);
 		$record->setDatestamp($row['datestamp']);
 		
@@ -151,13 +155,14 @@ class RecordDAO extends DAO {
 	function insertRecord(&$record) {
 		$this->update(
 			sprintf('INSERT INTO records
-				(archive_id, identifier, datestamp)
+				(archive_id, schema_plugin_id, identifier, datestamp)
 				VALUES
-				(?, ?, %s)',
+				(?, ?, ?, %s)',
 				$this->datetimeToDB($record->getDatestamp())
 			),
 			array(
 				$record->getArchiveId(),
+				$record->getSchemaId(),
 				$record->getIdentifier()
 			)
 		);
@@ -175,6 +180,7 @@ class RecordDAO extends DAO {
 			sprintf('UPDATE records
 				SET
 					archive_id = ?,
+					schema_id = ?,
 					identifier = ?,
 					datestamp = %s
 				WHERE record_id = ?',
@@ -182,6 +188,7 @@ class RecordDAO extends DAO {
 			),
 			array(
 				$record->getArchiveId(),
+				$record->getSchemaId(),
 				$record->getIdentifier(),
 				$record->getRecordId()
 			)
@@ -200,7 +207,7 @@ class RecordDAO extends DAO {
 	 * Delete the records for a specified archive, INCLUDING ALL DEPENDENT ITEMS.
 	 */
 	function deleteRecordsByArchiveId($archiveId) {
-		$records =& $this->getRecordsByArchiveId($archiveId);
+		$records =& $this->getRecords($archiveId);
 		while ($record =& $records->next()) {
 			$this->deleteRecord($record);
 		}
@@ -221,10 +228,26 @@ class RecordDAO extends DAO {
 	 * Retrieve all records in an archive.
 	 * @return DAOResultFactory containing matching records
 	 */
-	function &getRecordsByArchiveId($archiveId, $rangeInfo = null) {
+	function &getRecords($archiveId = null, $sort = RECORD_SORT_NONE, $rangeInfo = null) {
+		$params = null;
+		if (isset($archiveId)) $params = $archiveId;
+
+		switch ($sort) {
+			case RECORD_SORT_NONE:
+				$sort = '';
+				break;
+			case RECORD_SORT_DATE:
+				$sort = 'ORDER BY datestamp DESC ';
+				break;
+			default:
+				fatalError("Unknown sort order $sort!");
+		}
+
 		$result = &$this->retrieveRange(
-			'SELECT * FROM records WHERE archive_id = ?',
-			$archiveId, $rangeInfo
+			'SELECT * FROM records ' .
+			(isset($archiveId)? 'WHERE archive_id = ? ':'') .
+			$sort,
+			$params, $rangeInfo
 		);
 
 		$returner = &new DAOResultFactory($result, $this, '_returnRecordFromRow');

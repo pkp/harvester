@@ -23,8 +23,8 @@ class FieldDAO extends DAO {
 	/** @var $fieldsById array Cached fields by ID, when caching enabled */
 	var $fieldsById;
 
-	/** @var $fieldsByName array Cached fields by name, when caching enabled */
-	var $fieldsByName;
+	/** @var $fieldsBySchemaName array Cached fields by schema name, when caching enabled */
+	var $fieldsBySchemaName;
 
 	/**
 	 * Constructor.
@@ -39,7 +39,7 @@ class FieldDAO extends DAO {
 	 */
 	function enableCaching() {
 		$this->fieldsById = array();
-		$this->fieldsByName = array();
+		$this->fieldsBySchemaName = array();
 		$this->cachingEnabled = true;
 	}
 
@@ -49,7 +49,7 @@ class FieldDAO extends DAO {
 	function disableCaching() {
 		$this->cachingEnabled = false;
 		unset($this->fieldsById);
-		unset($this->fieldsByName);
+		unset($this->fieldsBySchemaName);
 	}
 
 	/**
@@ -61,19 +61,22 @@ class FieldDAO extends DAO {
 		if ($this->cachingEnabled && isset($this->fieldsById[$fieldId])) return $this->fieldsById[$fieldId];
 
 		$result = &$this->retrieve(
-			'SELECT * FROM fields WHERE field_id = ?', $fieldId
+			'SELECT f.*, s.schema_plugin AS schema_plugin_name FROM fields f, schema_plugins s WHERE f.schema_plugin_id = s.schema_plugin_id AND field_id = ?', $fieldId
 		);
 
 		$returner = null;
+		$pluginName = null;
 		if ($result->RecordCount() != 0) {
-			$returner = &$this->_returnFieldFromRow($result->GetRowAssoc(false));
+			$row = $result->GetRowAssoc(false);
+			$returner = &$this->_returnFieldFromRow($row);
+			$pluginName = $row['schema_plugin_name'];
 		}
 		$result->Close();
 		unset($result);
 
 		if ($returner != null && $this->cachingEnabled) {
 			$this->fieldsById[$returner->getFieldId()] =& $returner;
-			$this->fieldsByName[$returner->getSchemaPluginName()][$returner->getName()] =& $returner;
+			$this->fieldsBySchemaName[$pluginName][$returner->getName()] =& $returner;
 		}
 
 		return $returner;
@@ -82,14 +85,14 @@ class FieldDAO extends DAO {
 	/**
 	 * Retrieve a field by field name.
 	 * @param $fieldName string
-	 * @param $schemaPlugin string
+	 * @param $schemaPluginName string
 	 * @return Field
 	 */
-	function &getFieldByName($fieldName, $schemaPlugin) {
-		if ($this->cachingEnabled && isset($this->fieldsByName[$schemaPlugin]) && isset($this->fieldsByName[$schemaPlugin][$fieldName])) return $this->fieldsByName[$schemaPlugin][$fieldName];
+	function &getFieldByName($fieldName, $schemaPluginName) {
+		if ($this->cachingEnabled && isset($this->fieldsBySchemaName[$schemaPluginName]) && isset($this->fieldsBySchemaName[$schemaPluginName][$fieldName])) return $this->fieldsBySchemaName[$schemaPluginName][$fieldName];
 
 		$result = &$this->retrieve(
-			'SELECT * FROM fields WHERE name = ? AND schema_plugin = ?', array($fieldName, $schemaPlugin)
+			'SELECT f.*, s.schema_plugin FROM fields f, schema_plugins s WHERE f.name = ? AND f.schema_plugin_id = s.schema_plugin_id AND s.schema_plugin = ?', array($fieldName, $schemaPluginName)
 		);
 
 		$returner = null;
@@ -101,7 +104,7 @@ class FieldDAO extends DAO {
 
 		if ($returner != null && $this->cachingEnabled) {
 			$this->fieldsById[$returner->getFieldId()] =& $returner;
-			$this->fieldsByName[$returner->getSchemaPluginName()][$returner->getName()] =& $returner;
+			$this->fieldsBySchemaName[$schemaPluginName][$returner->getName()] =& $returner;
 		}
 
 		return $returner;
@@ -115,7 +118,7 @@ class FieldDAO extends DAO {
 	function &_returnFieldFromRow(&$row) {
 		$field = &new Field();
 		$field->setFieldId($row['field_id']);
-		$field->setSchemaPluginName($row['schema_plugin']);
+		$field->setSchemaId($row['schema_plugin_id']);
 		$field->setName($row['name']);
 		
 		HookRegistry::call('FieldDAO::_returnFieldFromRow', array(&$field, &$row));
@@ -130,12 +133,12 @@ class FieldDAO extends DAO {
 	function insertField(&$field) {
 		$this->update(
 			'INSERT INTO fields
-				(name, schema_plugin)
+				(name, schema_plugin_id)
 				VALUES
 				(?, ?)',
 			array(
 				$field->getName(),
-				$field->getSchemaPluginName(),
+				$field->getSchemaId(),
 			)
 		);
 		
@@ -152,11 +155,11 @@ class FieldDAO extends DAO {
 			'UPDATE fields
 				SET
 					name = ?,
-					schema_plugin = ?
+					schema_plugin_id = ?
 				WHERE field_id = ?',
 			array(
 				$field->getName(),
-				$field->getSchemaPluginName(),
+				$field->getSchemaId(),
 				$field->getFieldId()
 			)
 		);
@@ -178,10 +181,10 @@ class FieldDAO extends DAO {
 		if (isset($this->fieldsById[$fieldId])) {
 			unset($this->fieldsById[$fieldId]);
 		}
-		foreach ($this->fieldsByName as $schemaPlugin => $fields) {
+		foreach ($this->fieldsBySchemaName as $schemaPluginName => $fields) {
 			foreach ($fields as $fieldName => $field) {
 				if ($field->getFieldId() == $fieldId) {
-					unset($this->fieldsByName[$schemaPlugin][$fieldName]);
+					unset($this->fieldsBySchemaName[$schemaPluginName][$fieldName]);
 				}
 			}
 		}
@@ -210,12 +213,15 @@ class FieldDAO extends DAO {
 	 * @param $schemaPlugin string
 	 * @return object Field
 	 */
-	function &buildField($fieldName, $schemaPlugin) {
-		$field =& $this->getFieldByName($fieldName, $schemaPlugin);
+	function &buildField($fieldName, $schemaPluginName) {
+		$field =& $this->getFieldByName($fieldName, $schemaPluginName);
 		if (!$field) {
+			$schemaDao =& DAORegistry::getDAO('SchemaDAO');
+			$schema =& $schemaDao->buildSchema($schemaPluginName);
+
 			$field =& new Field();
 			$field->setName($fieldName);
-			$field->setSchemaPluginName($schemaPlugin);
+			$field->setSchemaId($schema->getSchemaId());
 
 			$plugin =& $field->getSchemaPlugin();
 			if (!$plugin) {
