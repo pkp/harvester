@@ -45,8 +45,6 @@ class DublinCoreXMLHandler extends XMLParserHandler {
 
 	function endElement(&$parser, $tag) {
 		switch ($tag) {
-			case 'dc:identifier':
-			case 'identifier':
 			case 'dc':
 			case 'oai_dc:dc':
 				return;

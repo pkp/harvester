@@ -31,10 +31,9 @@ class RecordDAO extends DAO {
 	/**
 	 * Retrieve a record by ID.
 	 * @param $recordId int
-	 * @param $getEntries boolean
 	 * @return Record
 	 */
-	function &getRecord($recordId, $getEntries = false) {
+	function &getRecord($recordId) {
 		$result = &$this->retrieve(
 			'SELECT * FROM records WHERE record_id = ?', $recordId
 		);
@@ -53,45 +52,27 @@ class RecordDAO extends DAO {
 	 */
 	function getEntries($recordId) {
 		$result = &$this->retrieve(
-			'SELECT e.*, f.type AS field_type FROM entries e, fields f WHERE f.field_id = e.field_id AND record_id = ?', $recordId
+			'SELECT e.*, f.name AS field_name FROM entries e, fields f WHERE f.field_id = e.field_id AND record_id = ?', $recordId
 		);
 
 		$returner = array();
 		while (!$result->EOF) {
 			$row = &$result->getRowAssoc(false);
-			$value = null;
-			switch ($row['field_type']) {
-				case 'bool':
-					$value = $row['value']?true:false;
-					break;
-				case 'int':
-				case 'float':
-				case 'string':
-				case 'date':
-					$value = $row['value'];
-					break;
-				case 'object':
-					$value = unserialize($row['value']);
-					break;
-				default:
-					fatalError('Unknown field type ' . $row['field_type']);
-					break;
-			}
 
-			$fieldId = $row['field_id'];
-			if (!empty($result[$field_id])) {
-				if (is_array($result[$field_id])) {
-					array_push($result[$field_id], $value);
+			$fieldName = $row['field_name'];
+			if (!empty($result[$fieldName])) {
+				if (is_array($result[$fieldName])) {
+					array_push($returner[$fieldName], $row['value']);
 				} else {
-					$result[$field_id] = array(
-						$result[$field_id],
-						$value
+					$returner[$fieldName] = array(
+						$returner[$fieldName],
+						$row['value']
 					);
 				}
 			} else {
-				$result[$field_id] = $value;
+				$returner[$fieldName] = $row['value'];
 			}
-			
+			$result->MoveNext();
 		}
 		$result->Close();
 		unset($result);

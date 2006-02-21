@@ -58,6 +58,7 @@ class DublinCorePlugin extends SchemaPlugin {
 		static $fieldList;
 		if (!isset($fieldList)) {
 			$fieldList = array(
+				'identifier',
 				'abstract',
 				'title',
 				'creator',
@@ -84,13 +85,6 @@ class DublinCorePlugin extends SchemaPlugin {
 
 	function getFieldDescription($fieldSymbolic, $locale = null) {
 		return Locale::translate("plugins.schemas.dc.fields.$fieldSymbolic.description", $locale);
-	}
-
-	/**
-	 * Display a record.
-	 */
-	function displayRecord(&$record) {
-		echo "--- FIXME: SHOULD BE DISPLAYING A RECORD: " . $record->getRecordId() . " ---<br/>\n";
 	}
 }
 

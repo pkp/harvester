@@ -17,7 +17,7 @@
 <ul class="plain">
 {iterate from=records item=record}
 	{$record->getArchive()|assign:"archive"}
-	<li>&#187; {$record->display()}</li>
+	<li>&#187; {$record->displaySummary()}</li>
 {/iterate}
 </ul>
 	{page_info iterator=$records}&nbsp;&nbsp;&nbsp;&nbsp;{page_links name="records" iterator=$records}

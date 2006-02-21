@@ -111,6 +111,18 @@ input.defaultButton {
 	font-weight: bold;
 }
 
+/**
+ * Basic record layout styles
+ */
+.title {
+	color: #18605A;
+	font-weight: bold
+}
+
+.recordContents {
+	padding-left: 1em;
+	padding-bottom: 1em;
+}
 
 /**
  * Main layout elements

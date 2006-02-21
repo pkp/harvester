@@ -115,11 +115,23 @@ class Record extends DataObject {
 		return $archiveDao->getArchive($this->getArchiveId());
 	}
 
+	function displaySummary() {
+		$schemaDao =& DAORegistry::getDAO('SchemaDAO');
+		$schema =& $schemaDao->getSchema($this->getSchemaId());
+		$plugin =& $schema->getPlugin();
+		$plugin->displayRecordSummary($this);
+	}
+
 	function display() {
 		$schemaDao =& DAORegistry::getDAO('SchemaDAO');
 		$schema =& $schemaDao->getSchema($this->getSchemaId());
 		$plugin =& $schema->getPlugin();
 		$plugin->displayRecord($this);
+	}
+
+	function getEntries() {
+		$recordDao =& DAORegistry::getDAO('RecordDAO');
+		return $recordDao->getEntries($this->getRecordId());
 	}
 }
 

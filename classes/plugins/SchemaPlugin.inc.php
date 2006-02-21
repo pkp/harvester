@@ -88,10 +88,23 @@ class SchemaPlugin extends Plugin {
 	}
 
 	/**
+	 * Display a record summary.
+	 */
+	function displayRecordSummary(&$record) {
+		$templateMgr =& TemplateManager::getManager();
+		$templateMgr->assign_by_ref('record', $record);
+		$templateMgr->assign('entries', $record->getEntries());
+		$templateMgr->display($this->getTemplatePath() . 'summary.tpl', null);
+	}
+
+	/**
 	 * Display a record.
 	 */
 	function displayRecord(&$record) {
-		fatalError('ABSTRACT CLASS!');
+		$templateMgr =& TemplateManager::getManager();
+		$templateMgr->assign_by_ref('record', $record);
+		$templateMgr->assign('entries', $record->getEntries());
+		$templateMgr->display($this->getTemplatePath() . 'record.tpl', null);
 	}
 }
 
