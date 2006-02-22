@@ -17,6 +17,8 @@
 	<message key="plugins.schemas.dc.description">This schema supports the Dublin Core metadata format.</message>
 	<message key="plugins.schemas.dc.fields.abstract.name">Abstract</message>
 	<message key="plugins.schemas.dc.fields.abstract.description">A summary of the content of the resource.</message>
+	<message key="plugins.schemas.dc.fields.identifier.name">Identifier</message>
+	<message key="plugins.schemas.dc.fields.identifier.description">The Dublin Core element that is an unambiguous reference to the resource within a given context. Recommended best practice is to identify the resource by means of a string or number conforming to a formal identification system.</message>
 	<message key="plugins.schemas.dc.fields.title.name">Title</message>
 	<message key="plugins.schemas.dc.fields.title.description">A name given to the resource.</message>
 	<message key="plugins.schemas.dc.fields.creator.name">Creator</message>

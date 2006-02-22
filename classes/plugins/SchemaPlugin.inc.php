@@ -103,8 +103,19 @@ class SchemaPlugin extends Plugin {
 	function displayRecord(&$record) {
 		$templateMgr =& TemplateManager::getManager();
 		$templateMgr->assign_by_ref('record', $record);
+		$templateMgr->assign_by_ref('archive', $record->getArchive());
 		$templateMgr->assign('entries', $record->getEntries());
 		$templateMgr->display($this->getTemplatePath() . 'record.tpl', null);
+	}
+
+	/**
+	 * Get a URL for the supplied record, if available; null otherwise.
+	 * @param $record object
+	 * @param $entries array
+	 * @return string
+	 */
+	function getUrl(&$record, $entries) {
+		return null;
 	}
 }
 

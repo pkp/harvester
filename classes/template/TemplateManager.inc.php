@@ -523,13 +523,14 @@ class TemplateManager extends Smarty {
 	/**
 	 * Assign a value to a template variable.
 	 */
-	function smartyAssign($value, $varName) {
+	function smartyAssign($value, $varName, $passThru = false) {
 		if (isset($varName)) {
 			// NOTE: CANNOT use $this because it belongs to
 			// another object in certain versions of PHP!
 			$templateMgr =& TemplateManager::getManager();
 			$templateMgr->assign($varName, $value);
 		}
+		if ($passThru) return $value;
 	}
 }
 

@@ -86,6 +86,20 @@ class DublinCorePlugin extends SchemaPlugin {
 	function getFieldDescription($fieldSymbolic, $locale = null) {
 		return Locale::translate("plugins.schemas.dc.fields.$fieldSymbolic.description", $locale);
 	}
+
+	/**
+	 * Get a URL for the supplied record, if available; null otherwise.
+	 * @param $record object
+	 * @param $entries array
+	 * @return string
+	 */
+	function getUrl(&$record, $entries) {
+		$returner = null;
+		if (isset($entries['identifier']) && preg_match('/^[a-z]+:\/\//', $entries['identifier'])) {
+			$returner = $entries['identifier'];
+		}
+		return $returner;
+	}
 }
 
 ?>

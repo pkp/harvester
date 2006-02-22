@@ -20,7 +20,6 @@ class BrowseHandler extends Handler {
 	 */
 	function index($args) {
 		BrowseHandler::validate();
-		BrowseHandler::setupTemplate();
 		$templateMgr = &TemplateManager::getManager();
 
 		$archiveDao =& DAORegistry::getDAO('ArchiveDAO');
@@ -29,6 +28,8 @@ class BrowseHandler extends Handler {
 		$archiveId = array_shift($args);
 		$archive = null;
 		if ($archiveId === 'all' || ($archive =& $archiveDao->getArchive($archiveId))) {
+			BrowseHandler::setupTemplate($archive, true);
+
 			$rangeInfo = Handler::getRangeInfo('records');
 			$sort = RECORD_SORT_DATE; // FIXME
 
@@ -38,6 +39,8 @@ class BrowseHandler extends Handler {
 			$templateMgr->assign_by_ref('records', $records);
 			$templateMgr->display('browse/records.tpl');
 		} else {
+			BrowseHandler::setupTemplate($archive);
+
 			// List archives for the user to browse.
 			$rangeInfo = Handler::getRangeInfo('archives');
 
@@ -48,18 +51,22 @@ class BrowseHandler extends Handler {
 			$templateMgr->display('browse/index.tpl');
 		}
 	}
-	
+
 	/**
 	 * Setup common template variables.
-	 * @param $subclass boolean set to true if caller is below this handler in the hierarchy
+	 * @param $archive object optional
+	 * @param $isSubclass boolean optional
 	 */
-	function setupTemplate($subclass = false) {
+	function setupTemplate(&$archive, $isSubclass = null) {
 		$templateMgr = &TemplateManager::getManager();
-		if ($subclass) {
-			$templateMgr->assign('pageHierarchy',
-				array(array(Request::url('browse'), 'navigation.browse'))
-			);
+		$hierarchy = array();
+		if ($isSubclass) {
+			$hierarchy[] = array(Request::url('browse'), 'navigation.browse');
 		}
+		if ($archive) {
+			$hierarchy[] = array(Request::url('browse', 'index', $archive->getArchiveId()), $archive->getTitle(), true);
+		}
+		$templateMgr->assign('pageHierarchy', $hierarchy);
 	}
 }
 

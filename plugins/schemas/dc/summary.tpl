@@ -9,9 +9,9 @@
  * $Id$
  *}
 
-<span class="title">{$entries.title|escape}</span><br />
+<span class="title">{$entries.title|escape|truncate:90|default:"&mdash"}</span><br />
 <div class="recordContents">
-	{if $entries.creator}{if is_array($entries.creator)}{foreach from=$entries.creator item=creator}FIXME: IT'S AN ARRAY{/foreach}{else}<span class="author">{$entries.creator|escape}</span>{/if}<br />{/if}
+	{if $entries.creator}<span class="author">{if is_array($entries.creator)}{foreach from=$entries.creator name="creators" item=creator}{$creator|escape|default:"&mdash;"}{if !$smarty.foreach.creators.last}</span><br /><span class="author">{/if}{/foreach}{else}{$entries.creator|escape|default:"&mdash;"}{/if}</span><br/>{/if}
 	{$record->getDatestamp()|date_format:$dateFormatShort}<br />
-	<a href="{url page="viewRecord" path=$record->getRecordId()}" class="action">{translate key="browse.viewRecord"}</a>{if $entries.identifier}&nbsp;|&nbsp;<a href="{$entries.identifier}" class="action">{translate key="browse.viewOriginal"}</a>{/if}
+	<a href="{url page="record" op="view" path=$record->getRecordId()}" class="action">{translate key="browse.viewRecord"}</a>{if $record->getUrl($entries)|assign:"recordUrl":true}&nbsp;|&nbsp;<a href="{$recordUrl}" class="action">{translate key="browse.viewOriginal"}</a>{/if}
 </div>

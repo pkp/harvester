@@ -133,6 +133,13 @@ class Record extends DataObject {
 		$recordDao =& DAORegistry::getDAO('RecordDAO');
 		return $recordDao->getEntries($this->getRecordId());
 	}
+
+	function getUrl($entries) {
+		$schemaDao =& DAORegistry::getDAO('SchemaDAO');
+		$schema =& $schemaDao->getSchema($this->getSchemaId());
+		$plugin =& $schema->getPlugin();
+		return $plugin->getUrl($this, $entries);
+	}
 }
 
 ?>

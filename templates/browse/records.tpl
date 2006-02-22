@@ -9,7 +9,7 @@
  * $Id$
  *}
 
-{assign var="pageTitle" value="navigation.browse"}
+{assign var="pageTitle" value="record.records"}
 {include file="common/header.tpl"}
 
 <br />

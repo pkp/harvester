@@ -60,8 +60,8 @@ class RecordDAO extends DAO {
 			$row = &$result->getRowAssoc(false);
 
 			$fieldName = $row['field_name'];
-			if (!empty($result[$fieldName])) {
-				if (is_array($result[$fieldName])) {
+			if (!empty($returner[$fieldName])) {
+				if (is_array($returner[$fieldName])) {
 					array_push($returner[$fieldName], $row['value']);
 				} else {
 					$returner[$fieldName] = array(
