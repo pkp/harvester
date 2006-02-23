@@ -13,7 +13,7 @@
   -->
 
 <data>
-	<table name="email_templates_data">
-		<field_default name="locale">en_US</field_default>
+	<!--table name="email_templates_data">
+		<field_default name="locale">en_US</field_default-->
 
 </data>
