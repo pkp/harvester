@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE locale SYSTEM "../../../../../locale/locale.dtd">
+
+<!--
+  * locale.xml
+  *
+  * Copyright (c) 2005-2006 The Public Knowledge Project
+  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
+  *
+  * Localization strings for the en_US (U.S. English) locale.
+  *
+  * $Id$
+  -->
+ 
+<locale name="en_US" full_name="U.S. English">
+	<message key="plugins.schemas.test.schemaName">Test Schema</message>
+	<message key="plugins.schemas.test.description">This schema is for testing purposes only.</message>
+	<message key="plugins.schemas.test.fields.fieldOne.name">Test field one</message>
+	<message key="plugins.schemas.test.fields.fieldOne.description">Test field one</message>
+	<message key="plugins.schemas.test.fields.fieldTwo.name">Test field two</message>
+	<message key="plugins.schemas.test.fields.fieldTwo.description">Test field two</message>
+	<message key="plugins.schemas.test.fields.fieldThree.name">Test field three</message>
+	<message key="plugins.schemas.test.fields.fieldThree.description">Test field three</message>
+</locale>
