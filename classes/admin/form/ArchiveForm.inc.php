@@ -129,7 +129,7 @@ class ArchiveForm extends Form {
 		}
 
 		$this->harvesterPluginName = Request::getUserVar('harvesterPluginName');
-		$this->archive->setHarvesterPlugin($this->harvesterPluginName);
+		$this->archive->setHarvesterPluginName($this->harvesterPluginName);
 		$this->archive->setDescription($this->getData('description'));
 		$this->archive->setUrl($this->getData('url'));
 		$this->archive->setTitle($this->getData('title'));

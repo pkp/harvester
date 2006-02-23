@@ -126,7 +126,7 @@ class RecordDAO extends DAO {
 	 * the supplied type and value.
 	 */
 	function insertEntry($recordId, $fieldId, $value, $seq = 0) {
-		$this->update('INSERT INTO entries (record_id, field_id, value, seq) VALUES (?, ?, ?, ?)', array($recordId, $fieldId, $value, $seq));
+		$this->update('INSERT INTO entries (record_id, raw_field_id, value, seq) VALUES (?, ?, ?, ?)', array($recordId, $fieldId, $value, $seq));
 	}
 
 	/**

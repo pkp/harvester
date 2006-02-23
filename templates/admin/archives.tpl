@@ -30,7 +30,7 @@
 	{iterate from=archives item=archive}
 	<tr valign="top">
 		<td>{$archive->getTitle()|escape}</td>
-		<td><a href="{$archive->getUrl()|escape:"quotes"}" target="_new">{$archive->getUrl()|escape}</a></td>
+		<td><a href="{$archive->getUrl()|escape}" target="_new">{$archive->getUrl()|escape|truncate:40}</a></td>
 		<td>
 			{assign var=pluginName value=$archive->getHarvesterPluginName()}
 			{assign var=plugin value=$harvesters[$pluginName]}
