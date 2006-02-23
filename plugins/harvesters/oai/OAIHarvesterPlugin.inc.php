@@ -64,10 +64,6 @@ class OAIHarvesterPlugin extends HarvesterPlugin {
 		));
 	}
 
-	function getInstallSchemaFile() {
-		return $this->getPluginPath() . '/schema.xml';
-	}
-
 	/**
 	 * Update the metadata index.
 	 * @param $archive object

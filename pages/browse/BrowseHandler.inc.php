@@ -37,6 +37,7 @@ class BrowseHandler extends Handler {
 			$records =& $recordDao->getRecords($archive?$archiveId:null, $sort, $rangeInfo);
 
 			$templateMgr->assign_by_ref('records', $records);
+			$templateMgr->assign_by_ref('archive', $archive);
 			$templateMgr->display('browse/records.tpl');
 		} else {
 			BrowseHandler::setupTemplate($archive);

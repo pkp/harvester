@@ -52,7 +52,7 @@ class RecordDAO extends DAO {
 	 */
 	function getEntries($recordId) {
 		$result = &$this->retrieve(
-			'SELECT e.*, f.name AS field_name FROM entries e, fields f WHERE f.field_id = e.field_id AND record_id = ?', $recordId
+			'SELECT e.*, f.name AS field_name FROM entries e, raw_fields f WHERE f.raw_field_id = e.raw_field_id AND record_id = ?', $recordId
 		);
 
 		$returner = array();

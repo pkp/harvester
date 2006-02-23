@@ -23,7 +23,7 @@
 <!--
 
 {literal}
-function selectIndexer() {
+function addNewIndexer() {
 	document.searchableFieldForm.action="{/literal}{if $searchableFieldId}{url op="editSearchableField" anchor="searchableFieldForm" path=$searchableFieldId escape=false}{else}{url op="editSearchableField" anchor="searchableFieldForm" escape=false}{/if}{literal}";
 	document.searchableFieldForm.submit();
 }
@@ -40,7 +40,7 @@ function selectIndexer() {
 
 {include file="common/formErrors.tpl"}
 
-<table class="data" width="100%">
+<table class="listing" width="100%">
 	<tr valign="top">
 		<td width="20%" class="label">{fieldLabel name="name" key="admin.indexing.searchableField.name" required="true"}</td>
 		<td width="80%" class="value"><input type="text" id="name" name="name" value="{$name|escape}" size="40" maxlength="120" class="textField" /></td>
@@ -50,12 +50,40 @@ function selectIndexer() {
 		<td class="value"><textarea name="description" id="description" cols="40" rows="10" class="textArea">{$description|escape}</textarea></td>
 	</tr>
 
-	{foreach from=$indexers item=indexer}
+	<tr>
+		<td colspan="2" class="headseparator">&nbsp;</td>
+	</tr>
+
+	{foreach from=$indexers item=indexer name="indexers"}
 		<tr valign="top">
 			<td>{$indexer->getPluginDisplayName()}</td>
 			<td>{$indexer->displayAdminForm()}</td>
 		</tr>
+		<tr>
+			<td colspan="2" class="{if $smarty.foreach.indexers.last}end{/if}separator">&nbsp;</td>
+		</tr>
 	{/foreach}
+
+	<tr valign="top">
+		<td>{translate key="admin.indexing.addIndexer}</td>
+		<td>
+			{if $newIndexerPluginName && $indexerPlugins[$newIndexerPluginName]|assign:"newIndexerPlugin":"true"}
+				{$newIndexerPlugin->displayEmptyAdminForm()}
+			{else}
+				<select name="newIndexerPluginName" class="selectMenu" cols="30">
+					<option value=""></option>
+					{foreach from=$indexerPlugins item=plugin}
+						<option value="{$plugin->getName()|escape}">{$plugin->getDisplayName()|escape}</option>
+					{/foreach}
+				</select>&nbsp;&nbsp;<input type="button" class="button" onclick="addNewIndexer()" value="{translate key="common.add"}"/>
+			{/if}
+
+		</td>
+	</tr>
+
+	<tr>
+		<td colspan="2" class="endseparator">&nbsp;</td>
+	</tr>
 
 	{call_hook name="Template::Admin::SearchableFields::displayHarvesterForm" plugin=$harvesterPlugin}
 </table>

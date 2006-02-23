@@ -52,8 +52,16 @@ class IndexerPlugin extends Plugin {
 	}
 
 	/**
+	 * Display the fields for the administration form for a new indexer.
+	 */
+	function displayEmptyAdminForm() {
+		$nullVar = null;
+		$this->displayAdminForm($nullVar);
+	}
+
+	/**
 	 * Display the fields for the administration form for this indexer.
-	 * @param $indexer object
+	 * @param $indexer object optional (null indicates new indexer)
 	 */
 	function displayAdminForm(&$indexer) {
 		fatalError('ABSTRACT CLASS');

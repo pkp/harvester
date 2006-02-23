@@ -55,9 +55,13 @@ class SearchableFieldForm extends Form {
 	 * Display the form.
 	 */
 	function display() {
+		$indexerPlugins =& PluginRegistry::loadCategory('indexers');
+
 		$templateMgr = &TemplateManager::getManager();
 		$templateMgr->assign('searchableFieldId', $this->searchableFieldId);
 		$templateMgr->assign('helpTopicId', 'site.siteManagement');
+		$templateMgr->assign('newIndexerPluginName', Request::getUserVar('newIndexerPluginName'));
+		$templateMgr->assign_by_ref('indexerPlugins', $indexerPlugins);
 		parent::display();
 	}
 	

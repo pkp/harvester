@@ -24,6 +24,7 @@
 	<message key="common.yes">Yes</message>
 	<message key="common.no">No</message>
 	<message key="common.on">On</message>
+	<message key="common.add">Add</message>
 	<message key="common.off">Off</message>
 	<message key="common.edit">Edit</message>
 	<message key="common.manage">Manage</message>
@@ -231,6 +232,7 @@ Your server currently supports mbstring: <strong>{$supportsMBString}</strong>]]>
 	<message key="admin.indexing.form.nameRequired">A name is required.</message>
 	<message key="admin.indexing.form.descriptionRequired">A description is required.</message>
 	<message key="admin.indexing.editSearchableField">Edit Searchable Field</message>
+	<message key="admin.indexing.addIndexer">Add Indexer</message>
 
 	<!-- Archives -->
 	<message key="admin.archives.addArchive">Add Archive</message>

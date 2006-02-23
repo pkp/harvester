@@ -61,7 +61,7 @@ class FieldDAO extends DAO {
 		if ($this->cachingEnabled && isset($this->fieldsById[$fieldId])) return $this->fieldsById[$fieldId];
 
 		$result = &$this->retrieve(
-			'SELECT f.*, s.schema_plugin AS schema_plugin_name FROM fields f, schema_plugins s WHERE f.schema_plugin_id = s.schema_plugin_id AND field_id = ?', $fieldId
+			'SELECT f.*, s.schema_plugin AS schema_plugin_name FROM raw_fields f, schema_plugins s WHERE f.schema_plugin_id = s.schema_plugin_id AND raw_field_id = ?', $fieldId
 		);
 
 		$returner = null;
@@ -92,7 +92,7 @@ class FieldDAO extends DAO {
 		if ($this->cachingEnabled && isset($this->fieldsBySchemaName[$schemaPluginName]) && isset($this->fieldsBySchemaName[$schemaPluginName][$fieldName])) return $this->fieldsBySchemaName[$schemaPluginName][$fieldName];
 
 		$result = &$this->retrieve(
-			'SELECT f.*, s.schema_plugin FROM fields f, schema_plugins s WHERE f.name = ? AND f.schema_plugin_id = s.schema_plugin_id AND s.schema_plugin = ?', array($fieldName, $schemaPluginName)
+			'SELECT f.*, s.schema_plugin FROM raw_fields f, schema_plugins s WHERE f.name = ? AND f.schema_plugin_id = s.schema_plugin_id AND s.schema_plugin = ?', array($fieldName, $schemaPluginName)
 		);
 
 		$returner = null;
@@ -117,7 +117,7 @@ class FieldDAO extends DAO {
 	 */
 	function &_returnFieldFromRow(&$row) {
 		$field = &new Field();
-		$field->setFieldId($row['field_id']);
+		$field->setFieldId($row['raw_field_id']);
 		$field->setSchemaId($row['schema_plugin_id']);
 		$field->setName($row['name']);
 		
@@ -132,7 +132,7 @@ class FieldDAO extends DAO {
 	 */	
 	function insertField(&$field) {
 		$this->update(
-			'INSERT INTO fields
+			'INSERT INTO raw_fields
 				(name, schema_plugin_id)
 				VALUES
 				(?, ?)',
@@ -152,11 +152,11 @@ class FieldDAO extends DAO {
 	 */
 	function updateField(&$field) {
 		return $this->update(
-			'UPDATE fields
+			'UPDATE raw_fields
 				SET
 					name = ?,
 					schema_plugin_id = ?
-				WHERE field_id = ?',
+				WHERE raw_field_id = ?',
 			array(
 				$field->getName(),
 				$field->getSchemaId(),
@@ -189,7 +189,7 @@ class FieldDAO extends DAO {
 			}
 		}
 		return $this->update(
-			'DELETE FROM fields WHERE field_id = ?', $fieldId
+			'DELETE FROM raw_fields WHERE field_id = ?', $fieldId
 		);
 	}
 	
@@ -199,7 +199,7 @@ class FieldDAO extends DAO {
 	 */
 	function &getFields($rangeInfo = null) {
 		$result = &$this->retrieveRange(
-			'SELECT * FROM fields',
+			'SELECT * FROM raw_fields',
 			false, $rangeInfo
 		);
 
@@ -241,7 +241,7 @@ class FieldDAO extends DAO {
 	 * @return int
 	 */
 	function getInsertFieldId() {
-		return $this->getInsertId('fields', 'field_id');
+		return $this->getInsertId('raw_fields', 'raw_field_id');
 	}
 
 }

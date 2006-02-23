@@ -194,8 +194,8 @@
 	  * TABLE fields
 	  *
 	  -->
-	<table name="fields">
-		<field name="field_id" type="I4">
+	<table name="raw_fields">
+		<field name="raw_field_id" type="I4">
 			<KEY/>
 			<AUTOINCREMENT/>
 		</field>
@@ -205,7 +205,7 @@
 		<field name="schema_plugin_id" type="I4">
 			<NOTNULL/>
 		</field>
-		<index name="field_symbolic_name">
+		<index name="raw_field_symbolic_name">
 			<col>name</col>
 			<col>schema_plugin_id</col>
 			<UNIQUE/>
@@ -240,7 +240,7 @@
 		<field name="record_id" type="I4">
 			<KEY/>
 		</field>
-		<field name="field_id" type="I4">
+		<field name="raw_field_id" type="I4">
 			<KEY/>
 		</field>
 		<field name="seq" type="I4">

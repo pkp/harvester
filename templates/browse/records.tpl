@@ -12,6 +12,7 @@
 {assign var="pageTitle" value="record.records"}
 {include file="common/header.tpl"}
 
+{if $archive}<h3>{$archive->getTitle()|escape}</h3>{/if}
 <br />
 
 <ul class="plain">

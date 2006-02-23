@@ -40,14 +40,19 @@ class TestIndexerPlugin extends IndexerPlugin {
 		return Locale::translate('plugins.indexers.test.description');
 	}
 
+	/**
+	 * Display the admin form for this indexer (or for a new indexer if
+	 * $indexer is null)
+	 */
 	function displayAdminForm(&$indexer) {
-		$indexerId = $indexer->getIndexerId();
+		$indexerId = $indexer?$indexer->getIndexerId():null;
 
 		$templateMgr =& TemplateManager::getManager();
 		$templateMgr->assign('indexerId', $indexerId);
 
 		foreach ($this->getAdminFormFields($indexer) as $field) switch ($field) {
 			case "indexer-$indexerId-text":
+			case "indexer-new-text":
 				$templateMgr->assign('testIndexerText', $templateMgr->get_template_vars($field));
 				break;
 			default:
@@ -57,7 +62,7 @@ class TestIndexerPlugin extends IndexerPlugin {
 	}
 
 	function getAdminFormFields(&$indexer) {
-		$indexerId = $indexer->getIndexerId();
+		$indexerId = $indexer?$indexer->getIndexerId():'new';
 		return array(
 			"indexer-$indexerId-text"
 		);
