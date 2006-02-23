@@ -1,25 +1,25 @@
 <?php
 
 /**
- * SearchableField.inc.php
+ * Crosswalk.inc.php
  *
  * Copyright (c) 2005-2006 The Public Knowledge Project
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @package field
  *
- * SearchableField class.
+ * Crosswalk class.
  * Describes basic field properties.
  *
  * $Id$
  */
 
-class SearchableField extends DataObject {
+class Crosswalk extends DataObject {
 
 	/**
 	 * Constructor.
 	 */
-	function SearchableField() {
+	function Crosswalk() {
 		parent::DataObject();
 	}
 	
@@ -28,7 +28,7 @@ class SearchableField extends DataObject {
 	//
 	
 	/**
-	 * Get name of searchable field
+	 * Get name of crosswalk
 	 * @return string
 	 */
 	 function getName() {
@@ -36,7 +36,7 @@ class SearchableField extends DataObject {
 	}
 	
 	/**
-	 * Set name of searchable field
+	 * Set name of crosswalk
 	 * @param $name string
 	 */
 	function setName($name) {
@@ -76,19 +76,19 @@ class SearchableField extends DataObject {
 	}
 	
 	/**
-	 * Get ID of searchable field.
+	 * Get ID of crosswalk.
 	 * @return int
 	 */
-	function getSearchableFieldId() {
-		return $this->getData('searchableFieldId');
+	function getCrosswalkId() {
+		return $this->getData('crosswalkId');
 	}
 	
 	/**
-	 * Set ID of searchable field.
-	 * @param $searchableFieldId int
+	 * Set ID of crosswalk.
+	 * @param $crosswalkId int
 	 */
-	function setSearchableFieldId($searchableFieldId) {
-		return $this->setData('searchableFieldId', $searchableFieldId);
+	function setCrosswalkId($crosswalkId) {
+		return $this->setData('crosswalkId', $crosswalkId);
 	}
 }
 

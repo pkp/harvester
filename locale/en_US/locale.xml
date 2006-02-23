@@ -189,7 +189,7 @@ Your server currently supports mbstring: <strong>{$supportsMBString}</strong>]]>
 	<message key="admin.siteAdmin">Site Administration</message>
 	<message key="admin.siteSettings">Site Settings</message>
 	<message key="admin.archives">Archives</message>
-	<message key="admin.indexing">Searching &amp; Indexing</message>
+	<message key="admin.crosswalks">Crosswalks</message>
 
 	<message key="admin.archives.manage">Manage Archive</message>
 	<message key="admin.archives.manage.numRecords">Number of Papers Indexed</message>
@@ -222,17 +222,19 @@ Your server currently supports mbstring: <strong>{$supportsMBString}</strong>]]>
 	<message key="admin.confirmClearTemplateCache">Are you sure you want to clear the cache of compiled templates?</message>
 	<message key="admin.systemInformation">System Information</message>
 
-	<!-- Searching & Indexing -->
-	<message key="admin.indexing.searchableField.name">Name</message>
-	<message key="admin.indexing.searchableField.description">Description</message>
-	<message key="admin.indexing.searchableFields.noneCreated">None Created</message>
-	<message key="admin.indexing.addSearchableField">Add Searchable Field</message>
-	<message key="admin.indexing.confirmDelete">Are you sure you wish to delete this searchable field?</message>
-	<message key="admin.indexing.addSearchableField">Add Searchable Field</message>
-	<message key="admin.indexing.form.nameRequired">A name is required.</message>
-	<message key="admin.indexing.form.descriptionRequired">A description is required.</message>
-	<message key="admin.indexing.editSearchableField">Edit Searchable Field</message>
-	<message key="admin.indexing.addIndexer">Add Indexer</message>
+	<!-- Crosswalks -->
+	<message key="admin.crosswalks.crosswalk.name">Name</message>
+	<message key="admin.crosswalks.crosswalk.description">Description</message>
+	<message key="admin.crosswalks.crosswalks.noneCreated">None Created</message>
+	<message key="admin.crosswalks.addCrosswalk">Add Crosswalk</message>
+	<message key="admin.crosswalks.confirmDelete">Are you sure you wish to delete this crosswalk?</message>
+	<message key="admin.crosswalks.addCrosswalk">Add Crosswalk</message>
+	<message key="admin.crosswalks.form.nameRequired">A name is required.</message>
+	<message key="admin.crosswalks.form.descriptionRequired">A description is required.</message>
+	<message key="admin.crosswalks.editCrosswalk">Edit Crosswalk</message>
+	<message key="admin.crosswalks.addIndexer">Add Indexer</message>
+	<message key="admin.crosswalks.schemaFilter">Schema Filter</message>
+	<message key="admin.crosswalks.schemaFilter.all">All Schemas</message>
 
 	<!-- Archives -->
 	<message key="admin.archives.addArchive">Add Archive</message>

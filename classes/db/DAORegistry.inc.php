@@ -86,7 +86,7 @@ class DAORegistry {
 			case 'IndexerSettingsDAO': return 'indexer.IndexerSettingsDAO';
 			case 'RecordDAO': return 'record.RecordDAO';
 			case 'SchemaDAO': return 'schema.SchemaDAO';
-			case 'SearchableFieldDAO': return 'field.SearchableFieldDAO';
+			case 'CrosswalkDAO': return 'field.CrosswalkDAO';
 			case 'SessionDAO': return 'session.SessionDAO';
 			case 'SiteSettingsDAO': return 'site.SiteSettingsDAO';
 			case 'VersionDAO': return 'site.VersionDAO';

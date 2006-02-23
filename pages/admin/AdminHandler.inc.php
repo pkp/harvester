@@ -67,32 +67,32 @@ class AdminHandler extends Handler {
 	}
 
 	//
-	// Indexing & Searching
+	// Crosswalks
 	//
 
-	function indexing() {
-		import('pages.admin.AdminIndexingHandler');
-		AdminIndexingHandler::indexing();
+	function crosswalks() {
+		import('pages.admin.AdminCrosswalkHandler');
+		AdminCrosswalkHandler::crosswalks();
 	}
 	
-	function editSearchableField($args) {
-		import('pages.admin.AdminIndexingHandler');
-		AdminIndexingHandler::editSearchableField($args);
+	function editCrosswalk($args) {
+		import('pages.admin.AdminCrosswalkHandler');
+		AdminCrosswalkHandler::editCrosswalk($args);
 	}
 	
-	function createSearchableField() {
-		import('pages.admin.AdminIndexingHandler');
-		AdminIndexingHandler::createSearchableField();
+	function createCrosswalk() {
+		import('pages.admin.AdminCrosswalkHandler');
+		AdminCrosswalkHandler::createCrosswalk();
 	}
 	
-	function deleteSearchableField($args) {
-		import('pages.admin.AdminIndexingHandler');
-		AdminIndexingHandler::deleteSearchableField($args);
+	function deleteCrosswalk($args) {
+		import('pages.admin.AdminCrosswalkHandler');
+		AdminCrosswalkHandler::deleteCrosswalk($args);
 	}
 	
-	function updateSearchableField($args) {
-		import('pages.admin.AdminIndexingHandler');
-		AdminIndexingHandler::updateSearchableField($args);
+	function updateCrosswalk($args) {
+		import('pages.admin.AdminCrosswalkHandler');
+		AdminCrosswalkHandler::updateCrosswalk($args);
 	}
 	
 	//

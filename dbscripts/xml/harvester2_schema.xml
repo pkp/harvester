@@ -127,11 +127,11 @@
 
 	<!--
 	  *
-	  * TABLE searchable_fields
+	  * TABLE crosswalks
 	  *
 	  -->
-	<table name="searchable_fields">
-		<field name="searchable_field_id" type="I4">
+	<table name="crosswalks">
+		<field name="crosswalk_id" type="I4">
 			<KEY/>
 			<AUTOINCREMENT/>
 		</field>
@@ -158,14 +158,14 @@
 		<field name="seq" type="I4">
 			<DEFAULT VALUE="0"/>
 		</field>
-		<field name="searchable_field_id" type="I4">
+		<field name="crosswalk_id" type="I4">
 			<NOTNULL/>
 		</field>
 		<field name="indexer_plugin" type="C2" size="60">
 			<NOTNULL/>
 		</field>
-		<index name="indexer_searchable_field_id">
-			<col>searchable_field_id</col>
+		<index name="indexer_crosswalk_id">
+			<col>crosswalk_id</col>
 		</index>
 	</table>
 	
@@ -397,7 +397,7 @@
 		<field name="record_id" type="I8">
 			<NOTNULL/>
 		</field>
-		<field name="searchable_field_id" type="I8">
+		<field name="crosswalk_id" type="I8">
 			<NOTNULL/>
 		</field>
 		<descr>Indexed objects.</descr>

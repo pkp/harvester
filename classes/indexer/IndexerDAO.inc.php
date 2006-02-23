@@ -144,13 +144,13 @@ class IndexerDAO extends DAO {
 	}
 	
 	/**
-	 * Retrieve all indexers for a searchable field.
-	 * @return DAOResultFactory containing matching searchable fields
+	 * Retrieve all indexers for a crosswalk.
+	 * @return DAOResultFactory containing matching crosswalks
 	 */
-	function &getIndexersBySearchableFieldId($searchableFieldId, $rangeInfo = null) {
+	function &getIndexersByCrosswalkId($crosswalkId, $rangeInfo = null) {
 		$result = &$this->retrieveRange(
-			'SELECT * FROM indexers WHERE searchable_field_id = ? ORDER BY seq',
-			$searchableFieldId, $rangeInfo
+			'SELECT * FROM indexers WHERE crosswalk_id = ? ORDER BY seq',
+			$crosswalkId, $rangeInfo
 		);
 
 		$returner = &new DAOResultFactory($result, $this, '_returnIndexerFromRow');
