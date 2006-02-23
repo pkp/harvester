@@ -16,21 +16,6 @@
 {/if}
 {include file="common/header.tpl"}
 
-<script type="text/javascript">
-<!--
-
-{literal}
-
-function chooseSchemaPluginName() {
-	document.crosswalkForm.action="{/literal}{if $crosswalkId}{url op="editCrosswalk" anchor="crosswalkForm" path=$crosswalkId escape=false}{else}{url op="editCrosswalk" anchor="crosswalkForm" escape=false}{/if}{literal}";
-	document.crosswalkForm.submit();
-}
-
-{/literal}
-
-// -->
-</script>
-
 <br />
 
 <a name="crosswalkForm"/>
@@ -55,48 +40,27 @@ function chooseSchemaPluginName() {
 		<td colspan="2" class="headseparator">&nbsp;</td>
 	</tr>
 
-	<tr valign="top">
-		<td colspan="2">
-			{translate key="admin.crosswalks.schemaFilter"}&nbsp;&nbsp;<select name="schemaPluginName" onchange="chooseSchemaPluginName()" class="selectMenu">
-				<option value="">{translate key="admin.crosswalks.schemaFilter.all"}</option>
-				{foreach from=$schemaPlugins item=schemaPlugin}
-					<option {if $schemaPluginName==$schemaPlugin->getName()}selected="selected" {/if}value="{$schemaPlugin->getName()|escape}">{$schemaPlugin->getSchemaDisplayName()|escape}</option>
-				{/foreach}
-			</select>
-		</td>
-	</tr>
-
-	<tr>
-		<td colspan="2" class="headseparator">&nbsp;</td>
-	</tr>
-
-	{if $schemaPluginName && $schemaPlugins[$schemaPluginName]|assign:"schemaPlugin":true}
+	{foreach from=$schemaPlugins item=schemaPlugin name="schemaPlugins"}
 		<tr valign="top">
 			<td>{$schemaPlugin->getSchemaDisplayName()}</td>
 			<td>
 				{foreach from=$schemaPlugin->getFieldList() item=field}
-					<input type="checkbox" class="checkbox" name="{$schemaPlugin->getName()|escape}-{$field|escape}" value=""/>&nbsp;{$schemaPlugin->getFieldName($field)|escape}<br/>
+					{* Determine whether this field is already chosen *}
+					{assign var=isFieldChosen value=0}
+					{foreach from=$fields item=chosenField}
+						{assign var=thisSchemaPlugin value=$chosenField->getSchemaPlugin()}
+						{if $thisSchemaPlugin->getName() == $schemaPlugin->getName() && $field == $chosenField->getName()}
+							{assign var=isFieldChosen value=1}
+						{/if}
+					{/foreach}
+					<input type="checkbox" {if $isFieldChosen}checked="checked" {/if}class="checkbox" name="{$schemaPlugin->getName()|escape}-{$field|escape}" value="1"/>&nbsp;<strong>{$schemaPlugin->getFieldName($field)|escape}</strong>:&nbsp;{$schemaPlugin->getFieldDescription($field)|escape}<br/>
 				{/foreach}
 			</td>
 		</tr>
 		<tr>
-			<td colspan="2" class="endseparator">&nbsp;</td>
+			<td colspan="2" class="{if $smarty.foreach.schemaPlugins.last}end{/if}separator">&nbsp;</td>
 		</tr>
-	{else}
-		{foreach from=$schemaPlugins item=schemaPlugin name="schemaPlugins"}
-			<tr valign="top">
-				<td>{$schemaPlugin->getSchemaDisplayName()}</td>
-				<td>
-					{foreach from=$schemaPlugin->getFieldList() item=field}
-						<input type="checkbox" class="checkbox" name="{$schemaPlugin->getName()|escape}-{$field|escape}" value=""/>&nbsp;{$schemaPlugin->getFieldName($field)|escape}<br/>
-					{/foreach}
-				</td>
-			</tr>
-			<tr>
-				<td colspan="2" class="{if $smarty.foreach.schemaPlugins.last}end{/if}separator">&nbsp;</td>
-			</tr>
-		{/foreach}
-	{/if}
+	{/foreach}
 
 	{call_hook name="Template::Admin::Crosswalks::displayHarvesterForm" plugin=$harvesterPlugin}
 </table>

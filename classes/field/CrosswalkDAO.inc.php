@@ -142,6 +142,7 @@ class CrosswalkDAO extends DAO {
 	 * @param $crosswalkId int
 	 */
 	function deleteCrosswalkById($crosswalkId) {
+		$this->deleteCrosswalkFieldsByCrosswalkId($crosswalkId);
 		return $this->update(
 			'DELETE FROM crosswalks WHERE crosswalk_id = ?', $crosswalkId
 		);
@@ -167,6 +168,42 @@ class CrosswalkDAO extends DAO {
 	 */
 	function getInsertCrosswalkId() {
 		return $this->getInsertId('crosswalks', 'crosswalk_id');
+	}
+	
+	/**
+	 * Retrieve all field IDs for a crosswalk.
+	 * @return DAOResultFactory containing matching crosswalks
+	 */
+	function &getFieldsByCrosswalkId($crosswalkId, $rangeInfo = null) {
+		$fieldDao =& DAORegistry::getDAO('FieldDAO');
+
+		$result = &$this->retrieveRange(
+			'SELECT f.* FROM raw_fields f, crosswalk_fields c WHERE f.raw_field_id = c.raw_field_id AND c.crosswalk_id = ?',
+			$crosswalkId, $rangeInfo
+		);
+
+		$returner = &new DAOResultFactory($result, $fieldDao, '_returnFieldFromRow');
+		return $returner;
+	}
+	
+	/**
+	 * Delete crosswalk fields by crosswalk ID, INCLUDING ALL DEPENDENT ITEMS.
+	 * @param $crosswalkId int
+	 */
+	function deleteCrosswalkFieldsByCrosswalkId($crosswalkId) {
+		return $this->update(
+			'DELETE FROM crosswalk_fields WHERE crosswalk_id = ?', $crosswalkId
+		);
+	}
+	
+	/**
+	 * Delete crosswalk fields by crosswalk ID, INCLUDING ALL DEPENDENT ITEMS.
+	 * @param $crosswalkId int
+	 */
+	function insertCrosswalkField($crosswalkId, $fieldId) {
+		return $this->update(
+			'INSERT INTO crosswalk_fields(crosswalk_id, raw_field_id) VALUES (?, ?)', array($crosswalkId, $fieldId)
+		);
 	}
 	
 }

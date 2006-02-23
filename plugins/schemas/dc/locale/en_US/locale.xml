@@ -18,7 +18,7 @@
 	<message key="plugins.schemas.dc.fields.abstract.name">Abstract</message>
 	<message key="plugins.schemas.dc.fields.abstract.description">A summary of the content of the resource.</message>
 	<message key="plugins.schemas.dc.fields.identifier.name">Identifier</message>
-	<message key="plugins.schemas.dc.fields.identifier.description">The Dublin Core element that is an unambiguous reference to the resource within a given context. Recommended best practice is to identify the resource by means of a string or number conforming to a formal identification system.</message>
+	<message key="plugins.schemas.dc.fields.identifier.description">An unambiguous reference to the resource.</message>
 	<message key="plugins.schemas.dc.fields.title.name">Title</message>
 	<message key="plugins.schemas.dc.fields.title.description">A name given to the resource.</message>
 	<message key="plugins.schemas.dc.fields.creator.name">Creator</message>
@@ -26,7 +26,7 @@
 	<message key="plugins.schemas.dc.fields.publisher.name">Publisher</message>
 	<message key="plugins.schemas.dc.fields.publisher.description">An entity responsible for making the resource available</message>
 	<message key="plugins.schemas.dc.fields.contributor.name">Contributor</message>
-	<message key="plugins.schemas.dc.fields.contributor.description">An entity responsible for making contributions to the content of the resource.</message>
+	<message key="plugins.schemas.dc.fields.contributor.description">An entity responsible for contributing to the resource's content.</message>
 	<message key="plugins.schemas.dc.fields.date.name">Date</message>
 	<message key="plugins.schemas.dc.fields.date.description">A date associated with an event in the life cycle of the resource.</message>
 	<message key="plugins.schemas.dc.fields.type.name">Type</message>

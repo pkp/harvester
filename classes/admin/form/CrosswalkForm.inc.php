@@ -56,7 +56,6 @@ class CrosswalkForm extends Form {
 		$templateMgr->assign('crosswalkId', $this->crosswalkId);
 		$templateMgr->assign('helpTopicId', 'site.siteManagement');
 		$templateMgr->assign_by_ref('schemaPlugins', $schemaPlugins);
-		$templateMgr->assign_by_ref('schemaPluginName', Request::getUserVar('schemaPluginName'));
 		parent::display();
 	}
 	
@@ -65,9 +64,13 @@ class CrosswalkForm extends Form {
 	 */
 	function initData() {
 		if (isset($this->crosswalk)) {
+			$fields =& $this->crosswalk->getFields();
+			$fields =& $fields->toArray();
+
 			$this->_data = array(
 				'name' => $this->crosswalk->getName(),
-				'description' => $this->crosswalk->getDescription()
+				'description' => $this->crosswalk->getDescription(),
+				'fields' => &$fields
 			);
 		} else {
 			$this->crosswalkId = null;
@@ -118,6 +121,21 @@ class CrosswalkForm extends Form {
 			$this->crosswalk->setSeq(9999); // KLUDGE
 			$crosswalkId = $crosswalkDao->insertCrosswalk($this->crosswalk);
 			$crosswalkDao->resequenceCrosswalks();
+		}
+
+		$schemaPlugins =& PluginRegistry::loadCategory('schemas');
+		$crosswalkDao->deleteCrosswalkFieldsByCrosswalkId($this->crosswalk->getCrosswalkId());
+		$fieldDao =& DAORegistry::getDAO('FieldDAO');
+		foreach ($schemaPlugins as $schemaPluginName => $schemaPlugin) {
+			foreach ($schemaPlugin->getFieldList() as $fieldName) {
+				if (Request::getUserVar("$schemaPluginName-$fieldName")) {
+					$field =& $fieldDao->buildField($fieldName, $schemaPluginName);
+					$crosswalkDao->insertCrosswalkField(
+						$this->crosswalk->getCrosswalkId(),
+						$field->getFieldId()
+					);
+				}
+			}
 		}
 
 		HookRegistry::call('CrosswalkForm::execute', array(&$this, &$this->crosswalk));

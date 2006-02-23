@@ -147,6 +147,20 @@
 
 	<!--
 	  *
+	  * TABLE crosswalk_fields
+	  *
+	  -->
+	<table name="crosswalk_fields">
+		<field name="crosswalk_id" type="I4">
+			<KEY/>
+		</field>
+		<field name="raw_field_id" type="I4">
+			<KEY/>
+		</field>
+	</table>
+
+	<!--
+	  *
 	  * TABLE indexers
 	  *
 	  -->
