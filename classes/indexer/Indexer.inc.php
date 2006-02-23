@@ -34,7 +34,7 @@ class Indexer extends DataObject {
 	 * Get name of indexer plugin
 	 * @return string
 	 */
-	 function getIndexerPluginName() {
+	function getIndexerPluginName() {
 	 	return $this->getData('indexerPluginName');
 	}
 	

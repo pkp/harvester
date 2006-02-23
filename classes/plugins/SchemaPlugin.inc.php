@@ -117,6 +117,13 @@ class SchemaPlugin extends Plugin {
 	function getUrl(&$record, $entries) {
 		return null;
 	}
+
+	/**
+	 * Get an indexer for the specified field
+	 */
+	function &getIndexer($fieldId) {
+		fatalError('ABSTRACT CLASS!');
+	}
 }
 
 ?>

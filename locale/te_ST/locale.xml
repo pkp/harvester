@@ -4,7 +4,7 @@
 <!--
   * locale.xml
   *
-  * Copyright (c) 2003-2004 The Public Knowledge Project
+  * Copyright (c) 2005-2006 The Public Knowledge Project
   * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
   *
   * Localization strings for the te_ST (Test Loçale) locale.
@@ -23,8 +23,10 @@
 	<message key="common.yes">Ýèþ</message>
 	<message key="common.no">Ñó</message>
 	<message key="common.on">Òñ</message>
+	<message key="common.add">Æðð</message>
 	<message key="common.off">Òff</message>
 	<message key="common.edit">Éðît</message>
+	<message key="common.manage">Måñågè</message>
 	<message key="common.error.databaseError">Æ ðåtåbåþè èrrór håþ óççürrèð: {$error}</message>
 	<message key="common.mailingAddress">Måîlîñg Æððrèþþ</message>
 	<message key="common.save">ßåvè</message>
@@ -35,6 +37,7 @@
 	<message key="navigation.help">Hèlp</message>
 	<message key="navigation.about">Æbóüt</message>
 	<message key="navigation.search">ßèårçh</message>
+	<message key="navigation.browse">Brówþè</message>
 	<message key="navigation.login">Lóg Îñ</message>
 	<message key="navigation.content">Çóñtèñt</message>
 	<message key="navigation.loggedInAs">Ýóü årè lóggèð îñ åþ...</message>
@@ -43,6 +46,7 @@
 	<message key="navigation.previousPage"><![CDATA[<<]]></message>
 	<message key="navigation.nextPage"><![CDATA[>>]]></message>
 	<message key="navigation.items">{$from} - {$to} óf {$total} Îtèmþ</message>
+	<message key="harvester.error.unknownMetadataField">Æñ üñkñówñ mètåðåtå fîèlð {$name} wåþ èñçóüñtèrèð.</message>
 	<message key="installer.harvester2Installation">PKP Hårvèþtèr2 Îñþtållåtîóñ</message>
 	<message key="installer.harvester2Upgrade">Hårvèþtèr2 Üpgråðè</message>
 	<message key="installer.installationInstructions"><![CDATA[<h4>PKP Hårvèþtèr2 Vèrþîóñ {$version}</h4>
@@ -164,11 +168,23 @@ Your server currently supports mbstring: <strong>{$supportsMBString}</strong>]]>
 	<message key="form.errorsOccurred">Érrórþ óççürrèð próçèþþîñg thîþ fórm</message>
 	<message key="archive.title">Tîtlè</message>
 	<message key="archive.url">ÜRL</message>
-	<message key="archive.oaiUrl">ÒÆÎ Båþè ÜRL</message>
 	<message key="archive.description">Ðèþçrîptîóñ</message>
+	<message key="archive.type">Týpè</message>
 	<message key="admin.siteAdmin">ßîtè Æðmîñîþtråtîóñ</message>
 	<message key="admin.siteSettings">ßîtè ßèttîñgþ</message>
 	<message key="admin.archives">Ærçhîvèþ</message>
+	<message key="admin.indexing">ßèårçhîñg &amp; Îñðèxîñg</message>
+	<message key="admin.archives.manage">Måñågè Ærçhîvè</message>
+	<message key="admin.archives.manage.numRecords">Ñümbèr óf Påpèrþ Îñðèxèð</message>
+	<message key="admin.archives.manage.lastIndexed">Låþt Îñðèxèð</message>
+	<message key="admin.archives.manage.updateIndex">Üpðåtè Mètåðåtå Îñðèx</message>
+	<message key="admin.archives.manage.flush">Flüþh Mètåðåtå</message>
+	<message key="admin.archives.manage.updateIndex.confirm">Ærè ýóü þürè ýóü wîþh tó üpðåtè thè mètåðåtå îñðèx? Thîþ ópèråtîóñ måý tåkè þèvèrål mîñütèþ, ðèpèñðîñg óñ thè þîzè óf thè årçhîvè.</message>
+	<message key="admin.archives.confirmDelete">Ærè ýóü þürè ýóü wîþh tó ðèlètè thîþ årçhîvè åñð åll óf îtþ rèçórðþ?</message>
+	<message key="admin.archive.manage.updateIndex.success">Thè mètåðåtå îñðèx håþ bèèñ üpðåtèð. {$recordCount} rèçórðþ wèrè îñðèxèð.</message>
+	<message key="admin.archive.manage.updateIndex.failure">Thè mètåðåtå îñðèx çóülð ñót bè üpðåtèð. Thè fóllówîñg èrrór(þ) óççürrèð:</message>
+	<message key="admin.archive.manage.updateIndex.return">Rètürñ tó måñågèmèñt</message>
+	<message key="admin.archive.manage.updateIndex.failure.generic">Æñ üñkñówñ èrrór óççürrèð.</message>
 	<message key="admin.settings.siteTitle">ßîtè tîtlè</message>
 	<message key="admin.settings.introduction">Îñtróðüçtîóñ</message>
 	<message key="admin.settings.aboutDescription">Æbóüt thè ßîtè ðèþçrîptîóñ</message>
@@ -186,15 +202,22 @@ Your server currently supports mbstring: <strong>{$supportsMBString}</strong>]]>
 	<message key="admin.clearDataCache">Çlèår Ðåtå Çåçhèþ</message>
 	<message key="admin.confirmClearTemplateCache">Ærè ýóü þürè ýóü wåñt tó çlèår thè çåçhè óf çómpîlèð tèmplåtèþ?</message>
 	<message key="admin.systemInformation">ßýþtèm Îñfórmåtîóñ</message>
+	<message key="admin.indexing.searchableField.name">Ñåmè</message>
+	<message key="admin.indexing.searchableField.description">Ðèþçrîptîóñ</message>
+	<message key="admin.indexing.searchableFields.noneCreated">Ñóñè Çrèåtèð</message>
+	<message key="admin.indexing.addSearchableField">Æðð ßèårçhåblè Fîèlð</message>
+	<message key="admin.indexing.confirmDelete">Ærè ýóü þürè ýóü wîþh tó ðèlètè thîþ þèårçhåblè fîèlð?</message>
+	<message key="admin.indexing.form.nameRequired">Æ ñåmè îþ rèqüîrèð.</message>
+	<message key="admin.indexing.form.descriptionRequired">Æ ðèþçrîptîóñ îþ rèqüîrèð.</message>
+	<message key="admin.indexing.editSearchableField">Éðît ßèårçhåblè Fîèlð</message>
+	<message key="admin.indexing.addIndexer">Æðð Îñðèxèr</message>
 	<message key="admin.archives.addArchive">Æðð Ærçhîvè</message>
 	<message key="admin.archives.editArchive">Éðît Ærçhîvè</message>
 	<message key="admin.archives.manageArchives">Måñågè Ærçhîvèþ</message>
 	<message key="admin.archives.noneCreated">Ñóñè Çrèåtèð</message>
 	<message key="admin.archives.form.titleRequired">Æ tîtlè îþ rèqüîrèð.</message>
 	<message key="admin.archives.form.urlRequired">Thè ÜRL fîèlð îþ rèqüîrèð.</message>
-	<message key="admin.archives.form.oaiUrlRequired">Thè ÒÆÎ ÜRL fîèlð îþ rèqüîrèð.</message>
 	<message key="admin.archives.form.url.description">è.g. http://www.ýóürårçhîvè.çóm</message>
-	<message key="admin.archives.form.oaiUrl.description">è.g. http://www.ýóürårçhîvè.çóm/óåî/îñðèx.php</message>
 	<message key="admin.languages.languageSettings">Låñgüågè ßèttîñgþ</message>
 	<message key="admin.languages.installLanguages">Îñþtåll Låñgüågèþ</message>
 	<message key="admin.languages.primaryLocaleInstructions">Thîþ wîll bè thè ðèfåült låñgüågè fór thè þîtè.</message>
@@ -247,7 +270,7 @@ Your server currently supports mbstring: <strong>{$supportsMBString}</strong>]]>
 	<message key="admin.version.downloadPatch">Ðówñlóåð Påtçh</message>
 	<message key="admin.version.moreInfo">Mórè Îñfórmåtîóñ</message>
 	<message key="sidebar.harvesterStats">Hårvèþtèr ßtåtþ</message>
-	<message key="sidebar.harvesterStats.description"><![CDATA[Hårvèþtèr2 çürrèñtlý håþ <strong>FÎXMÉ</strong> påpèrþ fróm <strong>FÎXMÉ</strong> årçhîvè(þ) îñðèxèð.]]></message>
+	<message key="sidebar.harvesterStats.description"><![CDATA[Hårvèþtèr2 çürrèñtlý håþ <strong>{$recordCount}</strong> påpèrþ fróm <strong>{$archiveCount}</strong> årçhîvè(þ) îñðèxèð.]]></message>
 	<message key="sidebar.addYourArchive">Æðð Ýóür Ærçhîvè</message>
 	<message key="sidebar.addYourArchive.description"><![CDATA[<a href="{$addUrl}">Çlîçk hèrè</a> tó åðð ýóür þýþtèm tó óür îñðèx.]]></message>
 	<message key="default.siteIntro"><![CDATA[<strong>Wèlçómè tó thè Püblîç Kñówlèðgè Prójèçt'þ mètåðåtå årçhîvè...</strong>
@@ -256,9 +279,37 @@ Your server currently supports mbstring: <strong>{$supportsMBString}</strong>]]>
 	<message key="default.emailSignature">________________________________________________________________________
 	Hårvèþtèr2
 	{$indexUrl}</message>
-	<message key="default.footer"><![CDATA[&amp;çópý; 2005 <a href="http://pkp.sfu.ca/harvester2">Püblîç Kñówlèðgè Prójèçt</a>]]></message>
+	<message key="default.footer"><![CDATA[&amp;çópý; 2005-2006 <a href="http://pkp.sfu.ca/harvester2">Püblîç Kñówlèðgè Prójèçt</a>]]></message>
 	<message key="about.harvester">Æbóüt thè Hårvèþtèr</message>
 	<message key="about.harvester.description">Thè PKP Òpèñ Ærçhîvèþ Hårvèþtèr îþ å frèè mètåðåtå îñðèxîñg þýþtèm ðèvèlópèð bý thè Püblîç Kñówlèðgè Prójèçt thróügh îtþ fèðèrållý füñðèð èffórtþ tó èxpåñð åñð împróvè åççèþþ tó rèþèårçh. Thè PKP ÒÆÎ Hårvèþtèr ållówþ ýóü tó çrèåtè å þèårçhåblè îñðèx óf thè mètåðåtå fróm Òpèñ Ærçhîvèþ Îñîtîåtîvè-çómplîåñt årçhîvèþ, þüçh åþ þîtèþ üþîñg Òpèñ Jóürñål ßýþtèmþ ór Òpèñ Çóñfèrèñçè ßýþtèmþ.
 	
 	Thè PKP ÒÆÎ Hårvèþtèr îþ çürrèñtlý çómpåtîblè wîth vèrþîóñþ 1.1 åñð 2.0 óf thè ÒÆÎ Hårvèþtîñg Prótóçól.</message>
+	<message key="search.syntaxInstructions"><![CDATA[ßèårçh tîpþ: <ul>
+<li>ßèårçh tèrmþ årè çåþè-îñþèñþîtîvè</li>
+<li>Çómmóñ wórðþ årè îgñórèð</li>
+<li>Bý ðèfåült óñlý èñtrîèþ çóñtåîñîñg <i>åll</i> tèrmþ îñ thè qüèrý årè rètürñèð (î.è., <i>ÆÑÐ</i> îþ împlîèð)</li>
+<li>Çómbîñè mültîplè wórðþ wîth <i>ÒR</i> tó fîñð årtîçlèþ çóñtåîñîñg èîthèr tèrm; è.g., <i>èðüçåtîóñ ÒR rèþèårçh</i></li>
+<li>Üþè pårèñthèþèþ tó çrèåtè mórè çómplèx qüèrîèþ; è.g., <i>årçhîvè ((jóürñål ÒR çóñfèrèñçè) ÑÒT thèþèþ)</i></li>
+<li>ßèårçh fór åñ èxåçt phråþè bý püttîñg ît îñ qüótèþ; è.g., <i>"ópèñ åççèþþ püblîþhîñg"</i></li>
+<li>Éxçlüðè å wórð bý prèfîxîñg ît wîth <b>-</b> ór <i>ÑÒT</i>; è.g. <i>óñlîñè -pólîtîçþ</i> ór <i>óñlîñè ÑÒT pólîtîçþ</i></li>
+<li>Üþè <b>*</b> îñ å tèrm åþ å wîlðçårð tó måtçh åñý þèqüèñçè óf çhåråçtèrþ; è.g., <i>þóçî* mórålîtý</i> wóülð måtçh ðóçümèñtþ çóñtåîñîñg "þóçîólógîçål" ór "þóçîètål"</li>
+</ul>]]></message>
+	<message key="search.operator.not">ñót</message>
+	<message key="search.operator.and">åñð</message>
+	<message key="search.operator.or">ór</message>
+	<message key="browse.browseAll">Æll Ærçhîvèþ</message>
+	<message key="browse.recordCount">({$count} Rèçórðþ)</message>
+	<message key="browse.viewRecord">Vîèw Rèçórð</message>
+	<message key="browse.viewOriginal">Vîèw Òrîgîñål</message>
+	<message key="record.viewRecord">Rèçórð Ðètåîlþ</message>
+	<message key="record.field">Fîèlð</message>
+	<message key="record.value">Vålüè</message>
+	<message key="record.records">Rèçórðþ</message>
+	<message key="debug.executionTime">Pågè gèñèråtèð îñ</message>
+	<message key="debug.databaseQueries">Ñümbèr óf ðåtåbåþè qüèrîèþ</message>
+	<message key="debug.notes">Ñótèþ:</message>
+	<message key="debug.notes.localeLoad">Lóåðèð lóçålè fîlè "{$localeFile}" fróm XML</message>
+	<message key="debug.notes.localeListLoad">Lóåðèð lóçålè lîþt "{$localeList}" fróm XML</message>
+	<message key="debug.notes.missingLocaleKey">Mîþþîñg lóçålè kèý "{$key}".</message>
+	<message key="debug.notes.schemaMapLoad">Lóåð þçhèmå måp "{$schemaMap}" fróm XML</message>
 </locale>
