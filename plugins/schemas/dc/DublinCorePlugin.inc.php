@@ -44,10 +44,6 @@ class DublinCorePlugin extends SchemaPlugin {
 		return Locale::translate('plugins.schemas.dc.description');
 	}
 
-	function getInstallDataFile() {
-		return $this->getPluginPath() . '/data.xml';
-	}
-
 	function &getXMLHandler(&$harvester) {
 		$this->import('DublinCoreXMLHandler');
 		$handler =& new DublinCoreXMLHandler(&$harvester);
