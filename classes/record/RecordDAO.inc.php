@@ -161,7 +161,7 @@ class RecordDAO extends DAO {
 			sprintf('UPDATE records
 				SET
 					archive_id = ?,
-					schema_id = ?,
+					schema_plugin_id = ?,
 					identifier = ?,
 					datestamp = %s
 				WHERE record_id = ?',
@@ -199,6 +199,8 @@ class RecordDAO extends DAO {
 	 * @param $recordId int
 	 */
 	function deleteRecordById($recordId) {
+		$searchDao =& DAORegistry::getDAO('SearchDAO');
+		$searchDao->deleteRecordObjects($recordId);
 		$this->deleteEntriesByRecordId($recordId);
 		return $this->update(
 			'DELETE FROM records WHERE record_id = ?', $recordId

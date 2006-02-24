@@ -45,14 +45,6 @@ class Harvester {
 		return $returner;
 	}
 
-	function insertRecord(&$record) {
-		return $this->recordDao->insertRecord($record);
-	}
-
-	function deleteEntries(&$record) {
-		return $this->recordDao->deleteEntriesByRecordId($record->getRecordId());
-	}
-
 	function addEntry(&$record, &$field, $value) {
 		$index = 0;
 		if (is_array($value)) foreach ($value as $item) {

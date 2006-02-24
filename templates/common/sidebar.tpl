@@ -45,12 +45,6 @@
 				<td><input type="text" id="query" name="query" size="15" maxlength="255" value="" class="textField" /></td>
 			</tr>
 			<tr>
-				<td><select name="searchField" size="1" class="selectMenu">
-					<option value="FIXME">FIXME</option>
-					{html_options_translate options=$articleSearchByOptions}
-				</select></td>
-			</tr>
-			<tr>
 				<td><input type="submit" value="{translate key="common.search"}" class="button" /></td>
 			</tr>
 		</table>

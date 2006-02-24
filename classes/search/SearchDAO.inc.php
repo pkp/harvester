@@ -131,7 +131,7 @@ class SearchDAO extends DAO {
 	 * @param $fieldId int
 	 * @return int the object ID
 	 */
-	function insertObject($articleId, $fieldId) {
+	function insertObject($recordId, $fieldId) {
 		$result = &$this->retrieve(
 			'SELECT object_id FROM search_objects WHERE record_id = ? AND raw_field_id = ?', array($recordId, $fieldId));
 		if ($result->RecordCount() == 0) {

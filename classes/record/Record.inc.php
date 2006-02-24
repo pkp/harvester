@@ -116,16 +116,12 @@ class Record extends DataObject {
 	}
 
 	function displaySummary() {
-		$schemaDao =& DAORegistry::getDAO('SchemaDAO');
-		$schema =& $schemaDao->getSchema($this->getSchemaId());
-		$plugin =& $schema->getPlugin();
+		$plugin =& $this->getSchemaPlugin();
 		$plugin->displayRecordSummary($this);
 	}
 
 	function display() {
-		$schemaDao =& DAORegistry::getDAO('SchemaDAO');
-		$schema =& $schemaDao->getSchema($this->getSchemaId());
-		$plugin =& $schema->getPlugin();
+		$plugin =& $this->getSchemaPlugin();
 		$plugin->displayRecord($this);
 	}
 
@@ -135,10 +131,14 @@ class Record extends DataObject {
 	}
 
 	function getUrl($entries) {
+		$plugin =& $this->getSchemaPlugin();
+		return $plugin->getUrl($this, $entries);
+	}
+
+	function &getSchemaPlugin() {
 		$schemaDao =& DAORegistry::getDAO('SchemaDAO');
 		$schema =& $schemaDao->getSchema($this->getSchemaId());
-		$plugin =& $schema->getPlugin();
-		return $plugin->getUrl($this, $entries);
+		return $schema->getPlugin();
 	}
 }
 

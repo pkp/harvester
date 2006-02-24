@@ -227,9 +227,9 @@ class Search {
 	 */
 	function &retrieveResults(&$keywords, $rangeInfo = null) {
 		// Fetch all the results from all the keywords into one array
-		// (mergedResults), where mergedResults[article_id]
+		// (mergedResults), where mergedResults[record_id]
 		// = sum of all the occurences for all keywords associated with
-		// that article ID.
+		// that record ID.
 		// resultCount contains the sum of result counts for all keywords.
 		$mergedResults = &Search::_getMergedArray($keywords, $resultCount);
 

@@ -124,6 +124,18 @@ class SchemaPlugin extends Plugin {
 	function &getIndexer($fieldId) {
 		fatalError('ABSTRACT CLASS!');
 	}
+
+	/**
+	 * Index the given field.
+	 */
+	function indexRecord(&$record, $entries) {
+		$fieldDao =& DAORegistry::getDAO('FieldDAO');
+		foreach ($entries as $fieldName => $value) {
+			$field =& $fieldDao->buildField($fieldName, $this->getName());
+			SearchIndex::updateTextIndex($record->getRecordId(), $field->getFieldId(), $value);
+			unset($field);
+		}
+	}
 }
 
 ?>

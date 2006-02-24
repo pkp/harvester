@@ -41,11 +41,11 @@ class SearchIndex {
 	 * @param $fieldId int
 	 * @param $text string
 	 */
-	function updateTextIndex($text, $assocId = null) {
-			$searchDao = &DAORegistry::getDAO('SearchDAO');
-			$objectId = $searchDao->insertObject($recordId, $fieldId);
-			$position = 0;
-			SearchIndex::indexObjectKeywords($objectId, $text, $position);
+	function updateTextIndex($recordId, $fieldId, $text) {
+		$searchDao = &DAORegistry::getDAO('SearchDAO');
+		$objectId = $searchDao->insertObject($recordId, $fieldId);
+		$position = 0;
+		SearchIndex::indexObjectKeywords($objectId, $text, $position);
 	}
 	
 	/**
@@ -112,11 +112,17 @@ class SearchIndex {
 	
 	/**
 	 * Index record metadata.
-	 * @param $article Article
+	 * @param $record Article
+	 * @param $entries array
 	 */
-	function indexRecord(&$record) {
-		fatalError('Indexing not implemented yet!');
-		// SearchIndex::updateTextIndex($articleId, ARTICLE_SEARCH_AUTHOR, $authorText);
+	function indexRecord(&$record, $entries = null) {
+		$fieldDao =& DAORegistry::getDAO('FieldDAO');
+		$schemaPlugin =& $record->getSchemaPlugin();
+		if (!$entries) {
+			$recordDao =& DAORegistry::getDAO('RecordDAO');
+			$entries = $recordDao->getEntries($record->getRecordId());
+		}
+		$schemaPlugin->indexRecord($record, $entries);
 	}
 	
 	/**

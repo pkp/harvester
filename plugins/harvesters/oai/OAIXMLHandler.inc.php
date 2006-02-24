@@ -52,6 +52,9 @@ class OAIXMLHandler extends XMLParserHandler {
 	/** @var $verb string The OAI verb being processed */
 	var $verb;
 
+	/** @var $recordDao object */
+	var $recordDao;
+
 	function OAIXMLHandler(&$oaiHarvester, $verb) {
 		$this->oaiHarvester =& $oaiHarvester;
 		$this->header = array();
@@ -59,6 +62,7 @@ class OAIXMLHandler extends XMLParserHandler {
 		$this->result = true;
 		$this->requestParams = array();
 		$this->verb = $verb;
+		$this->recordDao =& DAORegistry::getDAO('RecordDAO');
 	}
 
 	function startElement(&$parser, $tag, $attributes) {
@@ -173,19 +177,23 @@ class OAIXMLHandler extends XMLParserHandler {
 					$record->setIdentifier($this->header['identifier']);
 					$record->setArchiveId($archive->getArchiveId());
 					$record->setSchemaId($schema->getSchemaId());
-					$record->setDatestamp(Core::getCurrentDate());
-					$this->oaiHarvester->insertRecord($record);
+					$record->setDatestamp($this->header['datestamp']);
+					$this->recordDao->insertRecord($record);
 				} else {
-					// This is an old record: Delete old
-					// entires. FIXME: Indexing?
-					$this->oaiHarvester->deleteEntries($record);
+					// This is an old record: Delete old entries
+					$this->recordDao->deleteEntriesByRecordId($record->getRecordId());
+					$record->setDatestamp($this->header['datestamp']);
+					$this->recordDao->updateRecord($record);
 				}
 
-				$record->setDatestamp($this->header['datestamp']);
 				foreach ($this->metadata as $name => $value) {
 					$field =& $this->oaiHarvester->getFieldByKey($name, $schemaPluginName);
 					$this->oaiHarvester->addEntry($record, $field, $value);
 				}
+
+				// Update the index for this record
+				import('search.SearchIndex');
+				SearchIndex::indexRecord($record);
 
 				break;
 			case 'resumptionToken':

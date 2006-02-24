@@ -337,6 +337,9 @@ Your server currently supports mbstring: <strong>{$supportsMBString}</strong>]]>
 	<message key="search.operator.and">and</message>
 	<message key="search.operator.or">or</message>
 
+	<message key="search.searchResults">Search Results</message>
+	<message key="search.noKeyworderror">No search terms were entered. You must enter at least one search term.</message>
+
 	<!-- Browse messages -->
 	<message key="browse.browseAll">All Archives</message>
 	<message key="browse.recordCount">({$count} Records)</message>
