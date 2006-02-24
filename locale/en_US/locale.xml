@@ -339,6 +339,7 @@ Your server currently supports mbstring: <strong>{$supportsMBString}</strong>]]>
 
 	<message key="search.searchResults">Search Results</message>
 	<message key="search.noKeyworderror">No search terms were entered. You must enter at least one search term.</message>
+	<message key="search.noResults">No Results</message>
 
 	<!-- Browse messages -->
 	<message key="browse.browseAll">All Archives</message>

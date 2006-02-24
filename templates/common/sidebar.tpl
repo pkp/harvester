@@ -42,7 +42,7 @@
 	<form method="get" action="{url page="search" op="results"}">
 		<table>
 			<tr>
-				<td><input type="text" id="query" name="query" size="15" maxlength="255" value="" class="textField" /></td>
+				<td><input type="text" id="query" name="query" size="15" maxlength="255" value="{$query|escape}" class="textField" /></td>
 			</tr>
 			<tr>
 				<td><input type="submit" value="{translate key="common.search"}" class="button" /></td>

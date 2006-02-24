@@ -39,29 +39,17 @@ function ensureKeyword() {
 {else}
 {/if}
 
-<table width="100%" class="listing">
-<tr><td colspan="2" class="headseparator">&nbsp;</td></tr>
-<tr class="heading" valign="bottom">
-	<td width="40%">FIXME</td>
-	<td width="60%">FIXME</td>
-</tr>
-<tr><td colspan="2" class="headseparator">&nbsp;</td></tr>
-
+<ul class="plain">
 {iterate from=results item=record}
 	{$record->displaySummary()}
 {/iterate}
 {if $results->wasEmpty()}
-<tr>
-<td colspan="2" class="nodata">{translate key="search.noResults"}</td>
-</tr>
-<tr><td colspan="2" class="endseparator">&nbsp;</td></tr>
+	<li>&#187; {translate key="search.noResults"}</li>
+	</ul>
 {else}
-	<tr>
-		<td align="left">{page_info iterator=$results}</td>
-		<td align="right">{page_links iterator=$results name="search" query=$basicQuery searchField=$searchField}</td>
-	</tr>
+	</ul>
+	{page_info iterator=$results}&nbsp;&nbsp;&nbsp;&nbsp;{page_links iterator=$results name="search" query=$query}
 {/if}
-</table>
 
 <p>{translate key="search.syntaxInstructions"}</p>
 

@@ -37,7 +37,7 @@ class SearchHandler extends Handler {
 		$rangeInfo = Handler::getRangeInfo('search');
 
 		$keywords = array('FIXME' => Search::parseQuery(Request::getUserVar('query')));
-		$results = &Search::retrieveResults($keywords, null, null, $rangeInfo);
+		$results = &Search::retrieveResults($keywords, $rangeInfo);
 
 		$templateMgr = &TemplateManager::getManager();
 		$templateMgr->assign('helpTopicId', 'site.search');

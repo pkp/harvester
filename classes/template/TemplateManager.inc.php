@@ -356,7 +356,7 @@ class TemplateManager extends Smarty {
 	 * {page_info from=$myIterator}
 	 */
 	function smartyPageInfo($params, &$smarty) {
-		$iterator = $params['iterator'];
+		$iterator =& $params['iterator'];
 
 		$itemsPerPage = $smarty->get_template_vars('itemsPerPage');
 		if (!is_numeric($itemsPerPage)) $itemsPerPage=25;
@@ -441,7 +441,7 @@ class TemplateManager extends Smarty {
 	 * Pages requiring POST parameters WILL NOT work properly.
 	 */
 	function smartyPageLinks($params, &$smarty) {
-		$iterator = $params['iterator'];
+		$iterator =& $params['iterator'];
 
 		$numPageLinks = $smarty->get_template_vars('numPageLinks');
 		if (!is_numeric($numPageLinks)) $numPageLinks=10;
