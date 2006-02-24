@@ -12,7 +12,7 @@
 {assign var="pageTitle" value="admin.crosswalks"}
 {include file="common/header.tpl"}
 
-<br />
+<p>{translate key="admin.crosswalks.description"}</p>
 
 <table width="100%" class="listing">
 	<tr>
@@ -28,8 +28,8 @@
 	</tr>
 	{iterate from=crosswalks item=crosswalk}
 	<tr valign="top">
-		<td>{$crosswalk->getName()|escape}</td>
-		<td>{$crosswalk->getDescription()|escape}</td>
+		<td>{$crosswalk->getCrosswalkName()|escape}</td>
+		<td>{$crosswalk->getCrosswalkDescription()|escape}</td>
 		<td align="right"><a href="{url op="editCrosswalk" path=$crosswalk->getCrosswalkId()}" class="action">{translate key="common.edit"}</a>&nbsp;|&nbsp;<a href="{url op="deleteCrosswalk" path=$crosswalk->getCrosswalkId()}" onclick="return confirm('{translate|escape:"javascript" key="admin.crosswalks.confirmDelete"}')" class="action">{translate key="common.delete"}</a></td>
 	</tr>
 	<tr>

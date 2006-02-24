@@ -411,7 +411,7 @@
 		<field name="record_id" type="I8">
 			<NOTNULL/>
 		</field>
-		<field name="crosswalk_id" type="I8">
+		<field name="raw_field_id" type="I8">
 			<NOTNULL/>
 		</field>
 		<descr>Indexed objects.</descr>

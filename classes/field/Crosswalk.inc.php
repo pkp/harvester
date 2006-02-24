@@ -44,6 +44,15 @@ class Crosswalk extends DataObject {
 	}
 
 	/**
+	 * Get localized name of crosswalk
+	 * @return string
+	 */
+	function getCrosswalkName() {
+	 	// FIXME: Localize.
+	 	return $this->getName();
+	}
+	
+	/**
 	 * Get sequence of field
 	 * @return int
 	 */
@@ -73,6 +82,15 @@ class Crosswalk extends DataObject {
 	 */
 	function setDescription($description) {
 		return $this->setData('description', $description);
+	}
+	
+	/**
+	 * Get localized description of crosswalk
+	 * @return string
+	 */
+	function getCrosswalkDescription() {
+	 	// FIXME: Localize.
+	 	return $this->getDescription();
 	}
 	
 	/**
