@@ -180,6 +180,7 @@ Your server currently supports mbstring: <strong>{$supportsMBString}</strong>]]>
 	<message key="form.errorsOccurred">Errors occurred processing this form</message>
 
 	<!-- Archive entity messages -->
+	<message key="archive.archives">Archives</message>
 	<message key="archive.title">Title</message>
 	<message key="archive.url">URL</message>
 	<message key="archive.description">Description</message>
@@ -336,10 +337,13 @@ Your server currently supports mbstring: <strong>{$supportsMBString}</strong>]]>
 	<message key="search.operator.not">not</message>
 	<message key="search.operator.and">and</message>
 	<message key="search.operator.or">or</message>
+	<message key="search.allFields">All Fields</message>
 
 	<message key="search.searchResults">Search Results</message>
 	<message key="search.noKeyworderror">No search terms were entered. You must enter at least one search term.</message>
 	<message key="search.noResults">No Results</message>
+	<message key="search.reviseSearch">Revise Search</message>
+	<message key="search.allArchives">All Archives</message>
 
 	<!-- Browse messages -->
 	<message key="browse.browseAll">All Archives</message>

@@ -228,7 +228,7 @@ class TemplateManager extends Smarty {
 			$params['values'] = array_map(array('Locale', 'translate'), $params['values']);
 		}
 		
-		require_once($this->_get_plugin_filepath('function','html_options'));
+		require_once($smarty->_get_plugin_filepath('function','html_options'));
 		return smarty_function_html_options($params, $smarty);
 	}
 
@@ -321,7 +321,7 @@ class TemplateManager extends Smarty {
 			if (isset($params['name'])) {
 				// build image tag with standarized size of 16x16
 				$disabled = (isset($params['disabled']) && !empty($params['disabled']));
-				$iconHtml = '<img src="' . $this->get_template_vars('baseUrl') . '/templates/images/icons/';			
+				$iconHtml = '<img src="' . $smarty->get_template_vars('baseUrl') . '/templates/images/icons/';			
 				$iconHtml .= $params['name'] . ($disabled ? '_disabled' : '') . '.gif" width="16" height="14" border="0" alt="';
 				
 				// if alt parameter specified use it, otherwise use localization version
@@ -398,11 +398,11 @@ class TemplateManager extends Smarty {
 	 */
 	function smartyGetDebugInfo($params, &$smarty) {
 		if (Config::getVar('debug', 'show_stats')) {
-			$this->assign('enableDebugStats', true);
-			$this->assign('debugExecutionTime', Core::microtime() - Registry::get('system.debug.startTime'));
+			$smarty->assign('enableDebugStats', true);
+			$smarty->assign('debugExecutionTime', Core::microtime() - Registry::get('system.debug.startTime'));
 			$dbconn = &DBConnection::getInstance();
-			$this->assign('debugNumDatabaseQueries', $dbconn->getNumQueries());
-			$this->assign_by_ref('debugNotes', Registry::get('system.debug.notes'));
+			$smarty->assign('debugNumDatabaseQueries', $dbconn->getNumQueries());
+			$smarty->assign_by_ref('debugNotes', Registry::get('system.debug.notes'));
 		}
 
 	}
@@ -436,12 +436,12 @@ class TemplateManager extends Smarty {
 	 * 	name="nameMustMatchGetRangeInfoCall"
 	 * 	iterator=$myIterator
 	 * }
-	 * This function works correctly IFF the current URL
-	 * contains enough information to display the page correctly;
-	 * Pages requiring POST parameters WILL NOT work properly.
 	 */
 	function smartyPageLinks($params, &$smarty) {
 		$iterator =& $params['iterator'];
+		$name = $params['name'];
+		unset($params['iterator']);
+		unset($params['name']);
 
 		$numPageLinks = $smarty->get_template_vars('numPageLinks');
 		if (!is_numeric($numPageLinks)) $numPageLinks=10;
@@ -451,27 +451,32 @@ class TemplateManager extends Smarty {
 		$itemTotal = $iterator->getCount();
 
 		$pageBase = max($page - floor($numPageLinks / 2), 1);
-		$paramName = $params['name'] . 'Page';
+		$paramName = $name . 'Page';
 
 		if ($pageCount<=1) return '';
 
 		$value = '';
 
 		if ($page>1) {
-			$value .= '<a href="' . $this->_makePageUrl(Request::getCompleteUrl(), $paramName, 1) . '">&lt;&lt;</a>&nbsp;';
-			$value .= '<a href="' . $this->_makePageUrl(Request::getCompleteUrl(), $paramName, $page - 1) . '">&lt;</a>&nbsp;';
+			$params[$paramName] = 1;
+			$value .= '<a href="' . Request::url(null, null, Request::getRequestedArgs(), $params) . '">&lt;&lt;</a>&nbsp;';
+			$params[$paramName] = $page - 1;
+			$value .= '<a href="' . Request::url(null, null, Request::getRequestedArgs(), $params) . '">&lt;</a>&nbsp;';
 		}
 
 		for ($i=$pageBase; $i<min($pageBase+$numPageLinks, $pageCount+1); $i++) {
 			if ($i == $page) {
 				$value .= "<b>$i</b>&nbsp;";
 			} else {
-				$value .= '<a href="' . $this->_makePageUrl(Request::getCompleteUrl(), $paramName, $i) . '">' . $i . '</a>&nbsp;';
+				$params[$paramName] = $i;
+				$value .= '<a href="' . Request::url(null, null, Request::getRequestedArgs(), $params) . '">' . $i . '</a>&nbsp;';
 			}
 		}
 		if ($page < $pageCount) {
-			$value .= '<a href="' . $this->_makePageUrl(Request::getCompleteUrl(), $paramName, $page + 1) . '">&gt;</a>&nbsp;';
-			$value .= '<a href="' . $this->_makePageUrl(Request::getCompleteUrl(), $paramName, $pageCount) . '">&gt;&gt;</a>&nbsp;';
+			$params[$paramName] = $page + 1;
+			$value .= '<a href="' . Request::url(null, null, Request::getRequestedArgs(), $params) . '">&gt;</a>&nbsp;';
+			$params[$paramName] = $pageCount;
+			$value .= '<a href="' . Request::url(null, null, Request::getRequestedArgs(), $params) . '">&gt;&gt;</a>&nbsp;';
 		}
 
 		return $value;

@@ -58,9 +58,13 @@ class SearchDAO extends DAO {
 	/**
 	 * Retrieve the top results for a phrases with the given
 	 * limit (default 500 results).
+	 * @param $phrase string
+	 * @param $archiveIds array of IDs
+	 * @param $limit int optional
+	 * @param $cacheHours int optional
 	 * @return array of results (associative arrays)
 	 */
-	function &getPhraseResults($phrase, $limit = 500, $cacheHours = 24) {
+	function &getPhraseResults($phrase, $archiveIds, $limit = 500, $cacheHours = 24) {
 		if (empty($phrase)) {
 			$results = false;
 			$returner = &new DBRowIterator($results);
@@ -83,14 +87,31 @@ class SearchDAO extends DAO {
 			$params[] = $phrase[$i];
 		}
 
+		$archiveLimitSql = '';
+		if (is_array($archiveIds)) foreach ($archiveIds as $archiveId) {
+			if ($archiveId == (int) $archiveId) {
+				if (empty($archiveLimitSql)) {
+					$archiveLimitSql .= ' AND (';
+				} else {
+					$archiveLimitSql .= ' OR ';
+				}
+				$archiveLimitSql .= 'r.archive_id = ?';
+				$params[] = $archiveId;
+			}
+			if (!empty($archiveLimitSql)) {
+				$archiveLimitSql .= ')';
+			}
+		}
+
 		$result = &$this->retrieveCached(
 			'SELECT
 				o.record_id AS record_id,
 				o.raw_field_id AS raw_field_id,
 				COUNT(*) AS count
 			FROM
-				search_objects o NATURAL JOIN ' . $sqlFrom . '
-			WHERE ' . $sqlWhere . '
+				records r, search_objects o NATURAL JOIN ' . $sqlFrom . '
+			WHERE ' . $sqlWhere . $archiveLimitSql . '
+				AND r.record_id = o.record_id
 			GROUP BY o.record_id
 			ORDER BY count DESC
 			LIMIT ' . $limit,

@@ -84,7 +84,7 @@ class Search {
 	 * See implementation of retrieveResults for a description of this
 	 * function.
 	 */
-	function &_getMergedArray(&$keywords, &$resultCount) {
+	function &_getMergedArray(&$keywords, $archiveIds, &$resultCount) {
 		$resultsPerKeyword = Config::getVar('search', 'results_per_keyword');
 		$resultCacheHours = Config::getVar('search', 'result_cache_hours');
 		if (!is_numeric($resultsPerKeyword)) $resultsPerKeyword = 100;
@@ -99,7 +99,7 @@ class Search {
 			if (!empty($keyword['-']))
 				$mergedKeywords['-'][] = array('type' => $type, '+' => array(), '' => $keyword['-'], '-' => array());
 		}
-		$mergedResults = &Search::_getMergedKeywordResults($mergedKeywords, $resultsPerKeyword, $resultCacheHours);
+		$mergedResults = &Search::_getMergedKeywordResults($mergedKeywords, $archiveIds, $resultsPerKeyword, $resultCacheHours);
 		
 		$resultCount = count($mergedResults);
 		return $mergedResults;
@@ -108,7 +108,7 @@ class Search {
 	/**
 	 * Recursive helper for _getMergedArray.
 	 */
-	function &_getMergedKeywordResults(&$keyword, $resultsPerKeyword, $resultCacheHours) {
+	function &_getMergedKeywordResults(&$keyword, $archiveIds, $resultsPerKeyword, $resultCacheHours) {
 		$mergedResults = null;
 		
 		if (isset($keyword['type'])) {
@@ -116,7 +116,7 @@ class Search {
 		}
 		
 		foreach ($keyword['+'] as $phrase) {
-			$results = &Search::_getMergedPhraseResults($phrase, $resultsPerKeyword, $resultCacheHours);
+			$results = &Search::_getMergedPhraseResults($phrase, $archiveIds, $resultsPerKeyword, $resultCacheHours);
 			if ($mergedResults == null) {
 				$mergedResults = $results;
 			} else {
@@ -136,7 +136,7 @@ class Search {
 		
 		if (!empty($mergedResults) || empty($keyword['+'])) {
 			foreach ($keyword[''] as $phrase) {
-				$results = &Search::_getMergedPhraseResults($phrase, $resultsPerKeyword, $resultCacheHours);
+				$results = &Search::_getMergedPhraseResults($phrase, $archiveIds, $resultsPerKeyword, $resultCacheHours);
 				foreach ($results as $recordId => $count) {
 					if (isset($mergedResults[$recordId])) {
 						$mergedResults[$recordId] += $count;
@@ -147,7 +147,7 @@ class Search {
 			}
 			
 			foreach ($keyword['-'] as $phrase) {
-				$results = &Search::_getMergedPhraseResults($phrase, $resultsPerKeyword, $resultCacheHours);
+				$results = &Search::_getMergedPhraseResults($phrase, $archiveIds, $resultsPerKeyword, $resultCacheHours);
 				foreach ($results as $recordId => $count) {
 					if (isset($mergedResults[$recordId])) {
 						unset($mergedResults[$recordId]);
@@ -162,9 +162,9 @@ class Search {
 	/**
 	 * Recursive helper for _getMergedArray.
 	 */
-	function &_getMergedPhraseResults(&$phrase, $resultsPerKeyword, $resultCacheHours) {
+	function &_getMergedPhraseResults(&$phrase, $archiveIds, $resultsPerKeyword, $resultCacheHours) {
 		if (isset($phrase['+'])) {
-			$mergedResults = &Search::_getMergedKeywordResults($phrase, $resultsPerKeyword, $resultCacheHours);
+			$mergedResults = &Search::_getMergedKeywordResults($phrase, $archiveIds, $resultsPerKeyword, $resultCacheHours);
 			return $mergedResults;
 		}
 		
@@ -172,6 +172,7 @@ class Search {
 		$searchDao = &DAORegistry::getDAO('SearchDAO');
 		$results = &$searchDao->getPhraseResults(
 			$phrase,
+			$archiveIds,
 			$resultsPerKeyword,
 			$resultCacheHours
 		);
@@ -223,15 +224,16 @@ class Search {
 	 * Keywords are supplied in an array of the following format:
 	 * $keywords[field] = array('John', 'Doe');
 	 * @param $keywords array List of keywords
+	 * @param $archiveIds Array of archive IDs to include (optional)
 	 * @param $rangeInfo Information on the range of results to return
 	 */
-	function &retrieveResults(&$keywords, $rangeInfo = null) {
+	function &retrieveResults(&$keywords, $archiveIds, $rangeInfo = null) {
 		// Fetch all the results from all the keywords into one array
 		// (mergedResults), where mergedResults[record_id]
 		// = sum of all the occurences for all keywords associated with
 		// that record ID.
 		// resultCount contains the sum of result counts for all keywords.
-		$mergedResults = &Search::_getMergedArray($keywords, $resultCount);
+		$mergedResults = &Search::_getMergedArray($keywords, $archiveIds, $resultCount);
 
 		// Convert mergedResults into an array (frequencyIndicator =>
 		// $recordId).

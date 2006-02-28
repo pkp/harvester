@@ -30,13 +30,16 @@ function ensureKeyword() {
 
 <br/>
 
-{if $basicQuery}
-	<form method="post" name="search" action="{url op="results"}">
-		<input type="text" size="40" maxlength="255" class="textField" name="query" value="{$query|escape}"/>&nbsp;&nbsp;
-		<input type="submit" class="button defaultButton" onclick="ensureKeyword();" value="{translate key="common.search"}"/>
+{if $isAdvanced}
+	<form method="post" name="revise" action="{url op="index"}">
+		<input type="hidden" name="query" value="{$query|escape}"/>
+		{if is_array($archiveIds)}
+			{foreach from=$archiveIds item=archiveId}
+				<input type="hidden" name="archiveIds[]" value="{$archiveId|escape}" />
+			{/foreach}
+		{/if}
 	</form>
-	<br />
-{else}
+	<a href="javascript:document.revise.submit()" class="action">{translate key="search.reviseSearch"}</a><br />&nbsp;
 {/if}
 
 <ul class="plain">
@@ -48,7 +51,7 @@ function ensureKeyword() {
 	</ul>
 {else}
 	</ul>
-	{page_info iterator=$results}&nbsp;&nbsp;&nbsp;&nbsp;{page_links iterator=$results name="search" query=$query}
+	{page_info iterator=$results}&nbsp;&nbsp;&nbsp;&nbsp;{page_links iterator=$results name="search" query=$query archiveIds=$archiveIds isAdvanced=$isAdvanced}
 {/if}
 
 <p>{translate key="search.syntaxInstructions"}</p>
