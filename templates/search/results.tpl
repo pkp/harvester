@@ -33,6 +33,7 @@ function ensureKeyword() {
 {if $isAdvanced}
 	<form method="post" name="revise" action="{url op="index"}">
 		<input type="hidden" name="query" value="{$query|escape}"/>
+		<input type="hidden" name="showSpecificFields" value="{$showSpecificFields|escape}"/>
 		{if is_array($archiveIds)}
 			{foreach from=$archiveIds item=archiveId}
 				<input type="hidden" name="archiveIds[]" value="{$archiveId|escape}" />
@@ -51,7 +52,7 @@ function ensureKeyword() {
 	</ul>
 {else}
 	</ul>
-	{page_info iterator=$results}&nbsp;&nbsp;&nbsp;&nbsp;{page_links iterator=$results name="search" query=$query archiveIds=$archiveIds isAdvanced=$isAdvanced}
+	{page_info iterator=$results}&nbsp;&nbsp;&nbsp;&nbsp;{page_links iterator=$results name="search" query=$query archiveIds=$archiveIds isAdvanced=$isAdvanced showSpecificFields=$showSpecificFields}
 {/if}
 
 <p>{translate key="search.syntaxInstructions"}</p>

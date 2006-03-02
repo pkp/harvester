@@ -228,7 +228,7 @@ class FieldDAO extends DAO {
 				fatalError('Unknown schema plugin "' . $schemaPlugin . '"!');
 			}
 			if (!in_array($fieldName, $plugin->getFieldList())) {
-				fatalError('Unknown field "' . $fieldName . '" for schema plugin "' . $schemaPlugin . '"!');
+				fatalError('Unknown field "' . $fieldName . '" for schema plugin "' . $schemaPluginName . '"!');
 			}
 
 			$this->insertField($field);

@@ -79,7 +79,8 @@ class ArchiveForm extends Form {
 				'title' => $this->archive->getTitle(),
 				'description' => $this->archive->getDescription(),
 				'url' => $this->archive->getUrl(),
-				'harvesterPluginName' => $this->harvesterPluginName
+				'harvesterPluginName' => $this->harvesterPluginName,
+				'archive' => $this->archive
 			);
 		} else {
 			$this->archiveId = null;

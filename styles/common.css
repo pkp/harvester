@@ -101,6 +101,13 @@ input.button {
 	font-size: 1em;
 }
 
+input.flashingButton {
+	padding-left: 0.5em;
+	padding-right: 0.5em;
+	background-color: #18605A;
+	font-size: 1em;
+}
+
 input.defaultButton {
 	background-color: #18605A;
 	color: #FFF;

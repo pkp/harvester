@@ -25,3 +25,11 @@
 			</select>
 		</td>
 	</tr>
+	<tr valign="top">
+		<td class="label">{fieldLabel name="metadataFormat" key="plugins.harvesters.oai.archive.form.metadataFormat" required="true"}</td>
+		<td class="value">
+			<select class="selectMenu" name="metadataFormat" id="metadataFormat">
+				{html_options options=$metadataFormats selected=$metadataFormat}
+			</select>&nbsp;<input type="button" class="button" value="{translate key="common.refresh"}" onclick="selectHarvester()"/>
+		</td>
+	</tr>

@@ -262,6 +262,7 @@
 			<DEFAULT VALUE="0"/>
 		</field>
 		<field name="value" type="X"/>
+		<field name="attributes" type="X"/>
 	</table>
 
 	<!--

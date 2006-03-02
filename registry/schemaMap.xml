@@ -25,4 +25,10 @@
 	<schema plugin="DublinCorePlugin">
 		<alias harvester="OAIHarvesterPlugin">oai_dc</alias>
 	</schema>
+	<schema plugin="MarcPlugin">
+		<alias harvester="OAIHarvesterPlugin">oai_marc</alias>
+	</schema>
+	<schema plugin="Rfc1807Plugin">
+		<alias harvester="OAIHarvesterPlugin">oai_rfc1807</alias>
+	</schema>
 </schema_map>

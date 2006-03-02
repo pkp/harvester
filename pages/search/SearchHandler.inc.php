@@ -31,6 +31,7 @@ class SearchHandler extends Handler {
 		// Assign prior values, if supplied, to form fields
 		$templateMgr->assign('query', Request::getUserVar('query'));
 		$templateMgr->assign('archiveIds', Request::getUserVar('archiveIds'));
+		$templateMgr->assign('showSpecificFields', Request::getUserVar('showSpecificFields'));
 
 		$templateMgr->display('search/index.tpl');
 	}
@@ -64,6 +65,7 @@ class SearchHandler extends Handler {
 
 		// Give the results page access to the search parameters
 		$templateMgr->assign('isAdvanced', Request::getUserVar('isAdvanced'));
+		$templateMgr->assign('showSpecificFields', Request::getUserVar('showSpecificFields'));
 		$templateMgr->assign('query', $query);
 		$templateMgr->assign('archiveIds', Request::getUserVar('archiveIds'));
 

@@ -93,6 +93,9 @@ class SchemaMap {
 
 	function &getSchema($harvesterPluginName, $schemaAlias) {
 		$schemaPluginName = SchemaMap::getSchemaPluginName($harvesterPluginName, $schemaAlias);
+		if (empty($schemaPluginName)) {
+			fatalError("Unknown schema alias \"$schemaAlias\"!");
+		}
 		$schemaDao =& DAORegistry::getDAO('SchemaDAO');
 		return $schemaDao->buildSchema($schemaPluginName);
 	}

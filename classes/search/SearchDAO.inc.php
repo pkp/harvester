@@ -98,9 +98,9 @@ class SearchDAO extends DAO {
 				$archiveLimitSql .= 'r.archive_id = ?';
 				$params[] = $archiveId;
 			}
-			if (!empty($archiveLimitSql)) {
-				$archiveLimitSql .= ')';
-			}
+		}
+		if (!empty($archiveLimitSql)) {
+			$archiveLimitSql .= ')';
 		}
 
 		$result = &$this->retrieveCached(

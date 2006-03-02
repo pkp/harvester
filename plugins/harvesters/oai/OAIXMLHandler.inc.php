@@ -59,7 +59,16 @@ class OAIXMLHandler extends XMLParserHandler {
 		$this->oaiHarvester =& $oaiHarvester;
 		$this->header = array();
 		$this->metadata = array();
-		$this->result = true;
+
+		switch ($verb) {
+			case 'ListMetadataFormats':
+				$this->result = array();
+				break;
+			default:
+				$this->result = true;
+				break;
+		}
+
 		$this->requestParams = array();
 		$this->verb = $verb;
 		$this->recordDao =& DAORegistry::getDAO('RecordDAO');
@@ -93,6 +102,10 @@ class OAIXMLHandler extends XMLParserHandler {
 			case 'datestamp':
 			case 'setSpec':
 			case 'requestURL': // (OAI 1.1)
+			case 'metadataFormat':
+			case 'metadataPrefix':
+			case 'schema':
+			case 'metadataNamespace':
 				// Do nothing.
 				break;
 			case 'request':
@@ -106,7 +119,6 @@ class OAIXMLHandler extends XMLParserHandler {
 			case 'ListSets':
 				$this->responseType = $tag;
 				$this->notInHeader = true;
-				break;
 				break;
 			case 'header':
 				unset($this->header);
@@ -163,7 +175,15 @@ class OAIXMLHandler extends XMLParserHandler {
 			case 'ListMetadataFormats':
 			case 'ListRecords':
 			case 'ListSets':
+			case 'metadataFormat':
+			case 'schema':
+			case 'metadataNamespace':
 				// Do nothing.
+				break;
+			case 'metadataPrefix':
+				if ($this->verb == 'ListMetadataFormats') {
+					$this->result[] = $this->characterData;
+				}
 				break;
 			case 'record':
 				$schema =& $this->oaiHarvester->getSchema();

@@ -60,7 +60,8 @@ class FileWrapper {
 	 * @return boolean
 	 */
 	function open($mode = 'r') {
-		$this->fp = fopen($this->url, $mode);
+		$this->fp = null;
+		@$this->fp = fopen($this->url, $mode);
 		return $this->fp;
 	}
 	

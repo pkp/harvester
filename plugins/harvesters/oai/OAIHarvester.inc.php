@@ -38,14 +38,37 @@ class OAIHarvester extends Harvester {
 	 * @param $metadataFormat string
 	 */
 	function setMetadataFormat($metadataFormat) {
-		$this->metadataFormat = $metadataFormat;
+		$archive =& $this->getArchive();
+		$archive->updateSetting('metadataFormat', $metadataFormat);
 	}
 
 	/**
 	 * Get the metadata format.
 	 */
 	function getMetadataFormat() {
-		return $this->metadataFormat;
+		$archive =& $this->getArchive();
+		$metadataFormat = $archive->getSetting('metadataFormat');
+		if (empty($metadataFormat)) $metadataFormat = 'oai_dc';
+		return $metadataFormat;
+	}
+
+	/**
+	 * Get a list of supported metadata formats for this archive.a
+	 * This is a static method.
+	 * @return array
+	 */
+	function getMetadataFormats($harvesterUrl) {
+		$parser =& new XMLParser();
+		$xmlHandler =& new OAIXMLHandler($this, 'ListMetadataFormats');
+
+		$parser->setHandler($xmlHandler);
+		$result =& $parser->parse($harvesterUrl . '?verb=ListMetadataFormats');
+
+		unset($parser);
+		unset($xmlHandler);
+		
+		if (empty($result)) return array('oai_dc');
+		return $result;
 	}
 
 	function setResponseDate($responseDate) {

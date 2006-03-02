@@ -50,18 +50,46 @@ class OAIHarvesterPlugin extends HarvesterPlugin {
 	function addArchiveFormChecks(&$form) {
 		$form->addCheck(new FormValidator($form, 'harvesterUrl', 'required', 'plugins.harvesters.oai.archive.form.harvesterUrlRequired'));
 		$form->addCheck(new FormValidatorInSet($form, 'oaiIndexMethod', 'required', 'plugins.harvesters.oai.archive.form.oaiIndexMethodRequired', array(OAI_INDEX_METHOD_LIST_RECORDS, OAI_INDEX_METHOD_LIST_IDENTIFIERS)));
+		$form->addCheck(new FormValidator($form, 'metadataFormat', 'required', 'plugins.harvesters.oai.archive.form.metadataFormatRequired'));
 	}
 
 	function getAdditionalArchiveFormFields() {
-		return array('harvesterUrl', 'oaiIndexMethod');
+		return array('harvesterUrl', 'oaiIndexMethod', 'metadataFormat');
 	}
 
 	function displayArchiveForm(&$form, &$templateMgr) {
+		$this->import('OAIHarvester');
+		$this->import('OAIXMLHandler');
+
 		parent::displayArchiveForm($form, $templateMgr);
 		$templateMgr->assign('oaiIndexMethods', array(
 			OAI_INDEX_METHOD_LIST_RECORDS => Locale::translate('plugins.harvesters.oai.archive.form.oaiIndexMethod.ListRecords'),
 			OAI_INDEX_METHOD_LIST_IDENTIFIERS => Locale::translate('plugins.harvesters.oai.archive.form.oaiIndexMethod.ListIdentifiers')
 		));
+
+		// Build a list of supported metadata formats.
+		import('schema.SchemaMap');
+		$plugins =& PluginRegistry::loadCategory('schemas');
+		$archive =& $form->_data['archive'];
+		$oaiHarvester =& new OAIHarvester($archive);
+		$metadataFormats = $oaiHarvester->getMetadataFormats($form->getData('harvesterUrl'));
+		$supportedFormats = array();
+		foreach ($metadataFormats as $format) {
+			if (($pluginName = SchemaMap::getSchemaPluginName($this->getName(), $format)) && isset($plugins[$pluginName])) {
+				$plugin =& $plugins[$pluginName];
+				$supportedFormats[$format] = $plugin->getSchemaDisplayName();
+				unset($plugin);
+			}
+		}
+		$templateMgr->assign('metadataFormats', $supportedFormats);
+	}
+
+	/**
+	 * Get the list of metadata formats supported by this archive
+	 * (if available)
+	 * @return array
+	 */
+	function getMetadataFormats($harvesterUrl) {
 	}
 
 	/**
@@ -74,10 +102,7 @@ class OAIHarvesterPlugin extends HarvesterPlugin {
 
 		PluginRegistry::loadCategory('schemas');
 
-		// FIXME: Should specify metadata format.
 		$oaiHarvester =& new OAIHarvester($archive);
-		$oaiHarvester->setMetadataFormat('oai_dc');
-
 		$templateMgr =& TemplateManager::getManager();
 
 		if (!$oaiHarvester->updateRecords()) {

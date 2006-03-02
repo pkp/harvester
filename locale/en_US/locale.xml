@@ -20,6 +20,7 @@
 	<message key="common.notApplicable">Not Applicable</message>
 	<message key="common.harvester2">Harvester2</message>
 	<message key="common.search">Search</message>
+	<message key="common.refresh">Refresh</message>
 	<message key="common.delete">Delete</message>
 	<message key="common.yes">Yes</message>
 	<message key="common.no">No</message>
@@ -344,6 +345,8 @@ Your server currently supports mbstring: <strong>{$supportsMBString}</strong>]]>
 	<message key="search.noResults">No Results</message>
 	<message key="search.reviseSearch">Revise Search</message>
 	<message key="search.allArchives">All Archives</message>
+	<message key="search.showSpecificFields">Show Archive-Specific Fields</message>
+	<message key="search.hideSpecificFields">Hide Archive-Specific Fields</message>
 
 	<!-- Browse messages -->
 	<message key="browse.browseAll">All Archives</message>
