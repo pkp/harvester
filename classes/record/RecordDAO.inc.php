@@ -232,7 +232,7 @@ class RecordDAO extends DAO {
 	 * @return DAOResultFactory containing matching records
 	 */
 	function &getRecords($archiveId = null, $sort = RECORD_SORT_NONE, $rangeInfo = null) {
-		$params = null;
+		$params = false;
 		if (isset($archiveId)) $params = $archiveId;
 
 		switch ($sort) {

@@ -143,6 +143,7 @@ class SearchIndex {
 
 		$recordDao =& DAORegistry::getDAO('RecordDAO');
 		$records = &$recordDao->getRecords();
+		$numIndexed = 0;
 		while (!$records->eof()) {
 			$record =& $records->next();
 			SearchIndex::indexRecord($record);
