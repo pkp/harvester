@@ -62,7 +62,8 @@ class OAIHarvester extends Harvester {
 		$xmlHandler =& new OAIXMLHandler($this, 'ListMetadataFormats');
 
 		$parser->setHandler($xmlHandler);
-		$result =& $parser->parse($harvesterUrl . '?verb=ListMetadataFormats');
+		$result = null;
+		@$result =& $parser->parse($harvesterUrl . '?verb=ListMetadataFormats');
 
 		unset($parser);
 		unset($xmlHandler);

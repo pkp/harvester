@@ -52,25 +52,26 @@ class RecordDAO extends DAO {
 	 */
 	function getEntries($recordId) {
 		$result = &$this->retrieve(
-			'SELECT e.*, f.name AS field_name FROM entries e, raw_fields f WHERE f.raw_field_id = e.raw_field_id AND record_id = ?', $recordId
+			'SELECT e.*, f.name AS field_name, a.name AS attribute_name, a.value AS attribute_value FROM raw_fields f, entries e LEFT JOIN entry_attributes a ON a.entry_id = e.entry_id WHERE f.raw_field_id = e.raw_field_id AND e.record_id = ? ORDER BY e.entry_id ASC', $recordId
 		);
+
+		$entryId = null;
 
 		$returner = array();
 		while (!$result->EOF) {
 			$row = &$result->getRowAssoc(false);
 
-			$fieldName = $row['field_name'];
-			if (!empty($returner[$fieldName])) {
-				if (is_array($returner[$fieldName])) {
-					array_push($returner[$fieldName], $row['value']);
-				} else {
-					$returner[$fieldName] = array(
-						$returner[$fieldName],
-						$row['value']
-					);
-				}
-			} else {
-				$returner[$fieldName] = $row['value'];
+			if ($entryId != $row['entry_id']) {
+				$entryId = $row['entry_id'];
+
+				$fieldName = $row['field_name'];
+				$returner[$fieldName][$entryId] = array(
+					'attributes' => array(),
+					'value' => $row['value']
+				);
+			}
+			if (!empty($row['attribute_name'])) {
+				$returner[$row['field_name']][$row['entry_id']]['attributes'][$row['attribute_name']] = $row['attribute_value'];
 			}
 			$result->MoveNext();
 		}
@@ -81,6 +82,7 @@ class RecordDAO extends DAO {
 	}
 
 	function deleteEntriesByRecordId($recordId) {
+		$this->update('DELETE FROM entry_attributes USING entries, entry_attributes WHERE entries.record_id = ? AND entry_attributes.entry_id = entries.entry_id', $recordId);
 		return $this->update('DELETE FROM entries WHERE record_id = ?', $recordId);
 	}
 
@@ -124,9 +126,27 @@ class RecordDAO extends DAO {
 	/**
 	 * Insert an entry for the given field of the given record, with
 	 * the supplied type and value.
+	 * @param $recordId int
+	 * @param $fieldId int
+	 * @param $value string
+	 * @param $attributes array optional
+	 * @return int ID of inserted entry
 	 */
-	function insertEntry($recordId, $fieldId, $value, $seq = 0) {
-		$this->update('INSERT INTO entries (record_id, raw_field_id, value, seq) VALUES (?, ?, ?, ?)', array($recordId, $fieldId, $value, $seq));
+	function insertEntry($recordId, $fieldId, $value, $attributes = array()) {
+		$this->update('INSERT INTO entries (record_id, raw_field_id, value) VALUES (?, ?, ?)', array($recordId, $fieldId, $value));
+		$entryId = $this->getInsertId('entries', 'entry_id');
+		foreach ($attributes as $name => $value) {
+			$this->insertEntryAttribute($entryId, $name, $value);
+		}
+	}
+
+	/**
+	 * Insert an entry attribute.
+	 * @param $entryId int
+	 * @param $value string
+	 */
+	function insertEntryAttribute($entryId, $name, $value) {
+		$this->update('INSERT INTO entry_attributes (entry_id, name, value) VALUES (?, ?, ?)', array($entryId, $name, $value));
 	}
 
 	/**

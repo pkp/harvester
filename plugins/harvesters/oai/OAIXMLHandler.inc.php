@@ -37,9 +37,6 @@ class OAIXMLHandler extends XMLParserHandler {
 	/** @var $header array */
 	var $header;
 
-	/** @var $metadata array */
-	var $metadata;
-
 	/** @var $delegatedParser object If set, the object that will supercede this one for parsing */
 	var $delegatedParser;
 
@@ -58,7 +55,6 @@ class OAIXMLHandler extends XMLParserHandler {
 	function OAIXMLHandler(&$oaiHarvester, $verb) {
 		$this->oaiHarvester =& $oaiHarvester;
 		$this->header = array();
-		$this->metadata = array();
 
 		switch ($verb) {
 			case 'ListMetadataFormats':
@@ -90,9 +86,6 @@ class OAIXMLHandler extends XMLParserHandler {
 				$metadataFormat = $this->oaiHarvester->getMetadataFormat();
 				$schemaPlugin = SchemaMap::getSchemaPlugin(OAIHarvesterPlugin::getName(), $metadataFormat);
 				$this->delegatedParser =& $schemaPlugin->getXMLHandler($this->oaiHarvester);
-
-				unset($this->metadata);
-				$this->metadata = array();
 				break;
 			case 'OAI-PMH':
 			case 'responseDate':
@@ -132,7 +125,6 @@ class OAIXMLHandler extends XMLParserHandler {
 	function endElement(&$parser, $tag) {
 		if (isset($this->delegatedParser)) {
 			if (--$this->depth < 0) {
-				$this->metadata =& $this->delegatedParser->getMetadata();
 				unset($this->delegatedParser);
 				$this->delegatedParser = null;
 			} else {
@@ -142,6 +134,28 @@ class OAIXMLHandler extends XMLParserHandler {
 
 		switch ($tag) {
 			case 'header':
+				$schema =& $this->oaiHarvester->getSchema();
+				$record =& $this->oaiHarvester->getRecordByIdentifier($this->header['identifier']);
+				if (!$record) {
+					// This is a new record.
+					$record =& new Record();
+					$archive =& $this->oaiHarvester->getArchive();
+					$record->setIdentifier($this->header['identifier']);
+					$record->setArchiveId($archive->getArchiveId());
+					$record->setSchemaId($schema->getSchemaId());
+					$record->setDatestamp($this->header['datestamp']);
+					$this->recordDao->insertRecord($record);
+				} else {
+					// This is an old record: Delete old entries and indexing
+					$searchDao =& DAORegistry::getDAO('SearchDAO');
+					$searchDao->deleteRecordObjects($record->getRecordId());
+					$this->recordDao->deleteEntriesByRecordId($record->getRecordId());
+					$record->setDatestamp($this->header['datestamp']);
+					$this->recordDao->updateRecord($record);
+				}
+
+				$this->oaiHarvester->setRecord($record);
+
 				if ($this->verb === 'ListIdentifiers') {
 					// Harvesting via ListIdentifiers: we need to separately request
 					// each record.
@@ -186,35 +200,10 @@ class OAIXMLHandler extends XMLParserHandler {
 				}
 				break;
 			case 'record':
-				$schema =& $this->oaiHarvester->getSchema();
-				$schemaPluginName = $schema->getPluginName();
-
-				$record =& $this->oaiHarvester->getRecordByIdentifier($this->header['identifier']);
-				if (!$record) {
-					// This is a new record.
-					$record =& new Record();
-					$archive =& $this->oaiHarvester->getArchive();
-					$record->setIdentifier($this->header['identifier']);
-					$record->setArchiveId($archive->getArchiveId());
-					$record->setSchemaId($schema->getSchemaId());
-					$record->setDatestamp($this->header['datestamp']);
-					$this->recordDao->insertRecord($record);
-				} else {
-					// This is an old record: Delete old entries
-					$this->recordDao->deleteEntriesByRecordId($record->getRecordId());
-					$record->setDatestamp($this->header['datestamp']);
-					$this->recordDao->updateRecord($record);
-				}
-
-				foreach ($this->metadata as $name => $value) {
-					$field =& $this->oaiHarvester->getFieldByKey($name, $schemaPluginName);
-					$this->oaiHarvester->addEntry($record, $field, $value);
-				}
-
 				// Update the index for this record
 				import('search.SearchIndex');
+				$record =& $this->oaiHarvester->getRecord();
 				SearchIndex::indexRecord($record);
-
 				break;
 			case 'resumptionToken':
 				// Received a resumption token. Fetch the next set
@@ -240,6 +229,11 @@ class OAIXMLHandler extends XMLParserHandler {
 		$this->characterData .= $data;
 	}
 
+	/**
+	 * Some request types will store a result in the $this->result
+	 * variable; it can be fetched using this function.
+	 * @return mixed
+	 */
 	function &getResult() {
 		return $this->result;
 	}

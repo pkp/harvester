@@ -14,6 +14,9 @@
  */
 
 class Harvester {
+	/** @var $record object The current record being harvested */
+	var $record;
+
 	/** @var $errors array */
 	var $errors;
 
@@ -45,22 +48,14 @@ class Harvester {
 		return $returner;
 	}
 
-	function addEntry(&$record, &$field, $value) {
-		$index = 0;
-		if (is_array($value)) foreach ($value as $item) {
-			$this->recordDao->insertEntry(
-				$record->getRecordId(),
-				$field->getFieldId(),
-				$item,
-				++$index
-			);
-		} else {
-			return $this->recordDao->insertEntry(
-				$record->getRecordId(),
-				$field->getFieldId(),
-				$value
-			);
-		}
+	function insertEntry(&$field, $value, $attributes = array()) {
+		$record =& $this->getRecord();
+		$this->recordDao->insertEntry(
+			$record->getRecordId(),
+			$field->getFieldId(),
+			$value,
+			$attributes
+		);
 	}
 
 	/**
@@ -100,6 +95,15 @@ class Harvester {
 	 */
 	function updateRecords(&$recordHandler, $lastUpdateTimestamp) {
 		fatalError ('ABSTRACT CLASS');
+	}
+
+	function setRecord(&$record) {
+		unset($this->record);
+		$this->record =& $record;
+	}
+
+	function &getRecord() {
+		return $this->record;
 	}
 }
 

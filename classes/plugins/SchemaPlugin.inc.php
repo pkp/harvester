@@ -130,10 +130,12 @@ class SchemaPlugin extends Plugin {
 	 */
 	function indexRecord(&$record, $entries) {
 		$fieldDao =& DAORegistry::getDAO('FieldDAO');
-		foreach ($entries as $fieldName => $value) {
-			$field =& $fieldDao->buildField($fieldName, $this->getName());
-			SearchIndex::updateTextIndex($record->getRecordId(), $field->getFieldId(), $value);
-			unset($field);
+		foreach ($entries as $fieldName => $entry) {
+			foreach ($entry as $entryId => $info) {
+				$field =& $fieldDao->buildField($fieldName, $this->getName());
+				SearchIndex::updateTextIndex($record->getRecordId(), $field->getFieldId(), $info['value']);
+				unset($field);
+			}
 		}
 	}
 }

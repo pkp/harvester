@@ -66,6 +66,7 @@ class SearchIndex {
 	 */
 	function &filterKeywords($text, $allowWildcards = false) {
 		$minLength = Config::getVar('search', 'min_word_length');
+		$maxLength = Config::getVar('search', 'max_word_length');
 		$stopwords = &SearchIndex::loadStopwords();
 		
 		// Remove punctuation
@@ -87,6 +88,7 @@ class SearchIndex {
 		$keywords = array();
 		foreach ($words as $k) {
 			if (!isset($stopwords[$k]) && String::strlen($k) >= $minLength && !is_numeric($k)) {
+				$k = substr($k, 0, $maxLength);
 				$keywords[] = String::substr($k, 0, SEARCH_KEYWORD_MAX_LENGTH);
 			}
 		}

@@ -176,7 +176,7 @@ class SearchDAO extends DAO {
 	}
 	
 	/**
-	 * Index an occurrence of a keyword in an object.s
+	 * Index an occurrence of a keyword in an object.
 	 * @param $objectId int
 	 * @param $keyword string
 	 * @param $position int

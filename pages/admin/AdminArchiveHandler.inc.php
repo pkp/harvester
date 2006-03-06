@@ -19,8 +19,8 @@ class AdminArchiveHandler extends AdminHandler {
 	 * Display a list of the archives hosted on the site.
 	 */
 	function archives() {
-		parent::validate();
-		parent::setupTemplate(true);
+		AdminArchiveHandler::validate();
+		AdminArchiveHandler::setupTemplate();
 		
 		$rangeInfo = Handler::getRangeInfo('archives');
 
@@ -49,8 +49,8 @@ class AdminArchiveHandler extends AdminHandler {
 	 * @param $args array optional, if set the first parameter is the ID of the archive to edit
 	 */
 	function editArchive($args = array()) {
-		parent::validate();
-		parent::setupTemplate(true);
+		AdminArchiveHandler::validate();
+		AdminArchiveHandler::setupTemplate(true);
 		
 		import('admin.form.ArchiveForm');
 		
@@ -63,7 +63,7 @@ class AdminArchiveHandler extends AdminHandler {
 	 * Save changes to a archive's settings.
 	 */
 	function updateArchive() {
-		parent::validate();
+		AdminArchiveHandler::validate();
 		
 		import('admin.form.ArchiveForm');
 
@@ -78,7 +78,7 @@ class AdminArchiveHandler extends AdminHandler {
 			Request::redirect('admin', 'manage', $archiveId);
 			
 		} else {
-			parent::setupTemplate(true);
+			AdminArchiveHandler::setupTemplate(true);
 			$settingsForm->display();
 		}
 	}
@@ -88,7 +88,7 @@ class AdminArchiveHandler extends AdminHandler {
 	 * @param $args array first parameter is the ID of the archive to delete
 	 */
 	function deleteArchive($args) {
-		parent::validate();
+		AdminArchiveHandler::validate();
 		
 		$archiveDao = &DAORegistry::getDAO('ArchiveDAO');
 		
@@ -104,15 +104,16 @@ class AdminArchiveHandler extends AdminHandler {
 	 * Manage an archive.
 	 */
 	function manage($args) {
-		parent::validate();
-		parent::setupTemplate(true);
+		AdminArchiveHandler::validate();
+		AdminArchiveHandler::setupTemplate(true);
 		
 		$archiveDao = &DAORegistry::getDAO('ArchiveDAO');
-		
+
 		if (isset($args) && isset($args[0])) {
 			$archiveId = $args[0];
 			$archive =& $archiveDao->getArchive($archiveId);
 			if ($archive) {
+				$plugins =& PluginRegistry::loadCategory('harvesters');
 				$recordDao =& DAORegistry::getDAO('RecordDAO');
 
 				$templateMgr = &TemplateManager::getManager();
@@ -120,6 +121,7 @@ class AdminArchiveHandler extends AdminHandler {
 				$templateMgr->assign('lastIndexed', $archive->getLastIndexedDate());
 				$templateMgr->assign('title', $archive->getTitle());
 				$templateMgr->assign('archiveId', $archive->getArchiveId());
+				$templateMgr->assign_by_ref('archive', $archive);
 				$templateMgr->display('admin/manage.tpl');
 				return;
 			}
@@ -131,8 +133,8 @@ class AdminArchiveHandler extends AdminHandler {
 	 * Update the metadata index for an archive.
 	 */
 	function updateIndex($args) {
-		parent::validate();
-		parent::setupTemplate(true);
+		AdminArchiveHandler::validate();
+		AdminArchiveHandler::setupTemplate(true);
 		
 		$archiveDao = &DAORegistry::getDAO('ArchiveDAO');
 		
@@ -178,8 +180,8 @@ class AdminArchiveHandler extends AdminHandler {
 	 * Flush the metadata index for an archive.
 	 */
 	function flushIndex($args) {
-		parent::validate();
-		parent::setupTemplate(true);
+		AdminArchiveHandler::validate();
+		AdminArchiveHandler::setupTemplate(true);
 		
 		$archiveDao = &DAORegistry::getDAO('ArchiveDAO');
 		
@@ -195,6 +197,21 @@ class AdminArchiveHandler extends AdminHandler {
 			Request::redirect('admin', 'manage', $archiveId);
 		}
 		Request::redirect('admin', 'archives');
+	}
+
+	/**
+	 * Setup common template variables.
+	 * @param $subclass boolean set to true if caller is below this handler in the hierarchy
+	 */
+	function setupTemplate($subclass = false) {
+		$templateMgr = &TemplateManager::getManager();
+		$pageHierarchy = array(
+			array(Request::url('admin'), 'admin.siteAdmin')
+		);
+		if ($subclass) {
+			$pageHierarchy[] = array(Request::url('admin', 'archives'), 'admin.archives');
+		}
+		$templateMgr->assign('pageHierarchy', $pageHierarchy);
 	}
 }
 

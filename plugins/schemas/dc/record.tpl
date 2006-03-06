@@ -12,7 +12,7 @@
 {assign var="pageTitle" value="record.viewRecord"}
 {include file="common/header.tpl"}
 
-<h3>{$entries.title|escape}</h3>
+<h3>{$entries.title.value|escape}</h3>
 <h4>{$archive->getTitle()|escape}</h4>
 
 <table width="100%" class="listing">
@@ -26,17 +26,13 @@
 	<tr>
 		<td colspan="3" class="headseparator">&nbsp;</td>
 	</tr>
-	{foreach from=$entries item=value key=name}
+	{foreach from=$entries item=entry key=name}
 		<tr valign="top">
 			<td>{translate key="plugins.schemas.dc.fields.$name.name"}</td>
 			<td>
-				{if is_array($value)}
-					{foreach from=$value item=element}
-						{$element|escape|default:"&mdash;"}<br/>
-					{/foreach}
-				{else}
-					{$value|escape|default:"&mdash;"}<br/>
-				{/if}
+				{foreach from=$entry item=value}
+					{$value.value|escape|default:"&mdash;"}<br/>
+				{/foreach}
 			</td>
 		</tr>
 		<tr>

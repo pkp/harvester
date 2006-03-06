@@ -90,11 +90,12 @@ class DublinCorePlugin extends SchemaPlugin {
 	 * @return string
 	 */
 	function getUrl(&$record, $entries) {
-		$returner = null;
-		if (isset($entries['identifier']) && preg_match('/^[a-z]+:\/\//', $entries['identifier'])) {
-			$returner = $entries['identifier'];
+		foreach ($entries['identifier'] as $entry) {
+			if (preg_match('/^[a-z]+:\/\//', $entry['value'])) {
+				return $entry['value'];
+			}
 		}
-		return $returner;
+		return null;
 	}
 }
 

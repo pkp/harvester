@@ -251,18 +251,56 @@
 	  *
 	  -->
 	<table name="entries">
-		<field name="record_id" type="I4">
+		<field name="entry_id" type="I4">
 			<KEY/>
+			<AUTOINCREMENT/>
+		</field>
+		<field name="record_id" type="I4">
+			<NOTNULL/>
 		</field>
 		<field name="raw_field_id" type="I4">
-			<KEY/>
-		</field>
-		<field name="seq" type="I4">
-			<KEY/>
-			<DEFAULT VALUE="0"/>
+			<NOTNULL/>
 		</field>
 		<field name="value" type="X"/>
-		<field name="attributes" type="X"/>
+		<index name="entry_unique_index">
+			<col>record_id</col>
+			<col>raw_field_id</col>
+		</index>
+	</table>
+
+	<!--
+	  *
+	  * TABLE date_entries
+	  *
+	  -->
+	<table name="date_entries">
+		<field name="record_id" type="I4">
+			<NOTNULL/>
+		</field>
+		<field name="raw_field_id" type="I4">
+			<NOTNULL/>
+		</field>
+		<field name="value" type="T"/>
+		<index name="entry_unique_index">
+			<col>record_id</col>
+			<col>raw_field_id</col>
+			<UNIQUE/>
+		</index>
+	</table>
+
+	<!--
+	  *
+	  * TABLE entry_attributes
+	  *
+	  -->
+	<table name="entry_attributes">
+		<field name="entry_id" type="I4">
+			<KEY/>
+		</field>
+		<field name="name" type="C2" size="40">
+			<KEY/>
+		</field>
+		<field name="value" type="X"/>
 	</table>
 
 	<!--

@@ -17,9 +17,6 @@ class MarcXMLHandler extends XMLParserHandler {
 	/** @var $harvester object */
 	var $harvester;
 
-	/** @var $metadata array */
-	var $metadata;
-
 	/** @var $characterData string */
 	var $characterData;
 
@@ -31,7 +28,6 @@ class MarcXMLHandler extends XMLParserHandler {
 	/**
 	 * Constructor
 	 * @param $harvester object
-	 * @param $metadata array Reference to array to populate with metadata
 	 */
 	function MarcXMLHandler(&$harvester) {
 		$this->harvester =& $harvester;
@@ -42,17 +38,17 @@ class MarcXMLHandler extends XMLParserHandler {
 		switch ($tag) {
 			case 'marc':
 			case 'oai_marc:marc':
-				unset($this->metadata);
-				$this->metadata = array();
 				return;
 			case 'varfield':
 			case 'fixfield':
 				$this->id = isset($attributes['id'])?$attributes['id']:null;
 				$this->i1 = isset($attributes['i1'])?$attributes['i1']:null;
 				$this->i2 = isset($attributes['i2'])?$attributes['i2']:null;
+				$this->label = null;
 				break;
 			case 'subfield':
 				$this->label = isset($attributes['label'])?$attributes['label']:null;
+				break;
 		}
 	}
 
@@ -60,39 +56,30 @@ class MarcXMLHandler extends XMLParserHandler {
 		switch ($tag) {
 			case 'marc':
 			case 'oai_marc:marc':
+			case 'subfield':
 				return;
 		}
 
 		$data = trim($this->characterData);
 		if (empty($data)) return;
 
-		// Strip the "marc:" from the tag, and we have the field key.
-		if (substr($tag, 0, 5) === 'marc:') {
-			$fieldKey = substr($tag, 5);
-		} else {
-			$fieldKey = $tag;
-		}
-
 		$id = trim($this->id);
 		$i1 = trim($this->i1);
 		$i2 = trim($this->i2);
-
+		$label = trim($this->label);
 		$field =& $this->harvester->getFieldByKey($id, MarcPlugin::getName());
 		if (!$field) {
 			$this->harvester->addError(Locale::translate('harvester.error.unknownMetadataField', array('name' => $fieldKey)));
 			return;
 		}
 
-		if (isset($this->metadata[$id])) {
-			if (is_array($this->metadata[$id])) {
-				array_push($this->metadata[$id], $data);
-			} else {
-				$this->metadata[$id] = array($this->metadata[$id], $data);
-			}
-		} else {
-			$this->metadata[$id] = $data;
-		}
+		// Store the attributes i1, i2, and label, if set
+		$attributes = array();
+		if ($i1 != '') $attributes['i1'] = $i1;
+		if ($i2 != '') $attributes['i2'] = $i2;
+		if ($label != '') $attributes['label'] = $label;
 
+		$this->harvester->insertEntry($field, $this->characterData, $attributes);
 		$this->characterData = null;
 	}
 
@@ -101,10 +88,6 @@ class MarcXMLHandler extends XMLParserHandler {
 			$this->characterData = '';
 		}
 		$this->characterData .= $data;
-	}
-
-	function &getMetadata() {
-		return $this->metadata;
 	}
 }
 

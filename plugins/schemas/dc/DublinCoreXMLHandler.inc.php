@@ -17,19 +17,16 @@ class DublinCoreXMLHandler extends XMLParserHandler {
 	/** @var $harvester object */
 	var $harvester;
 
-	/** @var $metadata array */
-	var $metadata;
-
 	/** @var $characterData string */
 	var $characterData;
 
 	/**
 	 * Constructor
 	 * @param $harvester object
-	 * @param $metadata array Reference to array to populate with metadata
 	 */
 	function DublinCoreXMLHandler(&$harvester) {
 		$this->harvester =& $harvester;
+		$this->recordDao =& DAORegistry::getDAO('RecordDAO');
 	}
 
 	function startElement(&$parser, $tag, $attributes) {
@@ -37,8 +34,6 @@ class DublinCoreXMLHandler extends XMLParserHandler {
 		switch ($tag) {
 			case 'dc':
 			case 'oai_dc:dc':
-				unset($this->metadata);
-				$this->metadata = array();
 				return;
 		}
 	}
@@ -62,16 +57,8 @@ class DublinCoreXMLHandler extends XMLParserHandler {
 			$this->harvester->addError(Locale::translate('harvester.error.unknownMetadataField', array('name' => $fieldKey)));
 			return;
 		}
-		
-		if (isset($this->metadata[$fieldKey])) {
-			if (is_array($this->metadata[$fieldKey])) {
-				array_push($this->metadata[$fieldKey], $this->characterData);
-			} else {
-				$this->metadata[$fieldKey] = array($this->metadata[$fieldKey], $this->characterData);
-			}
-		} else {
-			$this->metadata[$fieldKey] = $this->characterData;
-		}
+
+		$this->harvester->insertEntry($field, $this->characterData);
 	}
 
 	function characterData(&$parser, $data) {
@@ -79,10 +66,6 @@ class DublinCoreXMLHandler extends XMLParserHandler {
 			$this->characterData = '';
 		}
 		$this->characterData .= $data;
-	}
-
-	function &getMetadata() {
-		return $this->metadata;
 	}
 }
 

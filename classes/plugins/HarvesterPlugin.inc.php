@@ -36,6 +36,7 @@ class HarvesterPlugin extends Plugin {
 			HookRegistry::register('ArchiveForm::initData', array(&$this, '_readAdditionalFormData'));
 			HookRegistry::register('ArchiveForm::execute', array(&$this, '_saveAdditionalFormData'));
 			HookRegistry::register('ArchiveForm::display', array(&$this, '_displayArchiveForm'));
+			HookRegistry::register('Template::Admin::Archives::manage', array(&$this, '_displayManagementInfo'));
 		}
 		return $success;
 	}
@@ -195,6 +196,23 @@ class HarvesterPlugin extends Plugin {
 	}
 
 	/**
+	 * This is a hook wrapper that is responsible for calling
+	 * displayArchiveForm. Subclasses should override
+	 * displayArchiveForm as necessary.
+	 */
+	function _displayManagementInfo($hookName, $args) {
+		$params =& $args[0];
+		$smarty =& $args[1];
+		$output =& $args[2];
+
+		if ($params['plugin'] == $this->getName()) {
+			$output = $this->displayManagementInfo($smarty);
+			return true;
+		}
+		return false;
+	}
+
+	/**
 	 * This function is called when the display() function of the
 	 * administrator's archive form is called. Subclasses should
 	 * override this function as necessary.
@@ -202,6 +220,14 @@ class HarvesterPlugin extends Plugin {
 	 * @param $templateMgr object
 	 */
 	function displayArchiveForm(&$form, &$templateMgr) {
+	}
+
+	/**
+	 * This function is called when displaying the management
+	 * page for an archive to give the harvester plugin a chance
+	 * to display statistics about the archive.
+	 */
+	function displayManagementInfo(&$smarty) {
 	}
 
 	/**
