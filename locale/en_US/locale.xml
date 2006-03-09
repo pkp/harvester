@@ -345,8 +345,6 @@ Your server currently supports mbstring: <strong>{$supportsMBString}</strong>]]>
 	<message key="search.noResults">No Results</message>
 	<message key="search.reviseSearch">Revise Search</message>
 	<message key="search.allArchives">All Archives</message>
-	<message key="search.showSpecificFields">Show Archive-Specific Fields</message>
-	<message key="search.hideSpecificFields">Hide Archive-Specific Fields</message>
 
 	<!-- Browse messages -->
 	<message key="browse.browseAll">All Archives</message>

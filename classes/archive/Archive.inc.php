@@ -183,6 +183,20 @@ class Archive extends DataObject {
 		$count = $recordDao->getRecordCount($this->getArchiveId());
 		$this->updateSetting('recordCount', $count, 'int');
 	}
+
+	/**
+	 * Get the schema plugin name for this archive.
+	 */
+	function getSchemaPluginName() {
+		return $this->getSetting('schemaPluginName');
+	}
+
+	/**
+	 * Set the schema plugin name for this archive.
+	 */
+	function setSchemaPluginName($schemaPluginName) {
+		$this->updateSetting('schemaPluginName', $schemaPluginName, 'string');
+	}
 }
 
 ?>

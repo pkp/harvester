@@ -91,15 +91,18 @@ class Search {
 		if (!is_numeric($resultCacheHours)) $resultCacheHours = 24;
 		
 		$mergedKeywords = array('+' => array(), '' => array(), '-' => array());
-		foreach ($keywords as $type => $keyword) {
-			if (!empty($keyword['+']))
-				$mergedKeywords['+'][] = array('type' => $type, '+' => $keyword['+'], '' => array(), '-' => array());
-			if (!empty($keyword['']))
-				$mergedKeywords[''][] = array('type' => $type, '+' => array(), '' => $keyword[''], '-' => array());
-			if (!empty($keyword['-']))
-				$mergedKeywords['-'][] = array('type' => $type, '+' => array(), '' => $keyword['-'], '-' => array());
+		foreach ($keywords as $type => $condition) {
+			if ($type == 'all') $condition = array($condition);
+			foreach ($condition as $id => $keyword) {
+				if (!empty($keyword['+']))
+					$mergedKeywords['+'][] = array('type' => $type, '+' => $keyword['+'], '' => array(), '-' => array(), 'id' => $id);
+				if (!empty($keyword['']))
+					$mergedKeywords[''][] = array('type' => $type, '+' => array(), '' => $keyword[''], '-' => array(), 'id' => $id);
+				if (!empty($keyword['-']))
+					$mergedKeywords['-'][] = array('type' => $type, '+' => array(), '' => $keyword['-'], '-' => array(), 'id' => $id);
+			}
 		}
-		$mergedResults = &Search::_getMergedKeywordResults($mergedKeywords, $archiveIds, $resultsPerKeyword, $resultCacheHours);
+		$mergedResults = &Search::_getMergedKeywordResults($mergedKeywords, $archiveIds, null, null, $resultsPerKeyword, $resultCacheHours);
 		
 		$resultCount = count($mergedResults);
 		return $mergedResults;
@@ -108,15 +111,19 @@ class Search {
 	/**
 	 * Recursive helper for _getMergedArray.
 	 */
-	function &_getMergedKeywordResults(&$keyword, $archiveIds, $resultsPerKeyword, $resultCacheHours) {
+	function &_getMergedKeywordResults(&$keyword, $archiveIds, $type, $id, $resultsPerKeyword, $resultCacheHours) {
 		$mergedResults = null;
 		
 		if (isset($keyword['type'])) {
 			$type = $keyword['type'];
 		}
-		
+
+		if (isset($keyword['id'])) {
+			$id = $keyword['id'];
+		}
+
 		foreach ($keyword['+'] as $phrase) {
-			$results = &Search::_getMergedPhraseResults($phrase, $archiveIds, $resultsPerKeyword, $resultCacheHours);
+			$results = &Search::_getMergedPhraseResults($phrase, $archiveIds, $type, $id, $resultsPerKeyword, $resultCacheHours);
 			if ($mergedResults == null) {
 				$mergedResults = $results;
 			} else {
@@ -136,7 +143,7 @@ class Search {
 		
 		if (!empty($mergedResults) || empty($keyword['+'])) {
 			foreach ($keyword[''] as $phrase) {
-				$results = &Search::_getMergedPhraseResults($phrase, $archiveIds, $resultsPerKeyword, $resultCacheHours);
+				$results = &Search::_getMergedPhraseResults($phrase, $archiveIds, $type, $id, $resultsPerKeyword, $resultCacheHours);
 				foreach ($results as $recordId => $count) {
 					if (isset($mergedResults[$recordId])) {
 						$mergedResults[$recordId] += $count;
@@ -147,7 +154,7 @@ class Search {
 			}
 			
 			foreach ($keyword['-'] as $phrase) {
-				$results = &Search::_getMergedPhraseResults($phrase, $archiveIds, $resultsPerKeyword, $resultCacheHours);
+				$results = &Search::_getMergedPhraseResults($phrase, $archiveIds, $type, $id, $resultsPerKeyword, $resultCacheHours);
 				foreach ($results as $recordId => $count) {
 					if (isset($mergedResults[$recordId])) {
 						unset($mergedResults[$recordId]);
@@ -162,9 +169,9 @@ class Search {
 	/**
 	 * Recursive helper for _getMergedArray.
 	 */
-	function &_getMergedPhraseResults(&$phrase, $archiveIds, $resultsPerKeyword, $resultCacheHours) {
+	function &_getMergedPhraseResults(&$phrase, $archiveIds, $type, $id, $resultsPerKeyword, $resultCacheHours) {
 		if (isset($phrase['+'])) {
-			$mergedResults = &Search::_getMergedKeywordResults($phrase, $archiveIds, $resultsPerKeyword, $resultCacheHours);
+			$mergedResults = &Search::_getMergedKeywordResults($phrase, $archiveIds, $type, $id, $resultsPerKeyword, $resultCacheHours);
 			return $mergedResults;
 		}
 		
@@ -173,6 +180,8 @@ class Search {
 		$results = &$searchDao->getPhraseResults(
 			$phrase,
 			$archiveIds,
+			$type,
+			$id,
 			$resultsPerKeyword,
 			$resultCacheHours
 		);
@@ -222,7 +231,9 @@ class Search {
 	 * Return an array of search results matching the supplied
 	 * keyword IDs in decreasing order of match quality.
 	 * Keywords are supplied in an array of the following format:
-	 * $keywords[field] = array('John', 'Doe');
+	 * $keywords['all'] = array('John', 'Doe');
+	 * $keywords['fields'][$fieldId] = array('John', 'Doe');
+	 * $keywords['crosswalks'][$crosswalkId] = array('John', 'Doe');
 	 * @param $keywords array List of keywords
 	 * @param $archiveIds Array of archive IDs to include (optional)
 	 * @param $rangeInfo Information on the range of results to return

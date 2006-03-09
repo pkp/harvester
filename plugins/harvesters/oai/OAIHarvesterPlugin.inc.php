@@ -50,11 +50,10 @@ class OAIHarvesterPlugin extends HarvesterPlugin {
 	function addArchiveFormChecks(&$form) {
 		$form->addCheck(new FormValidator($form, 'harvesterUrl', 'required', 'plugins.harvesters.oai.archive.form.harvesterUrlRequired'));
 		$form->addCheck(new FormValidatorInSet($form, 'oaiIndexMethod', 'required', 'plugins.harvesters.oai.archive.form.oaiIndexMethodRequired', array(OAI_INDEX_METHOD_LIST_RECORDS, OAI_INDEX_METHOD_LIST_IDENTIFIERS)));
-		$form->addCheck(new FormValidator($form, 'metadataFormat', 'required', 'plugins.harvesters.oai.archive.form.metadataFormatRequired'));
 	}
 
 	function getAdditionalArchiveFormFields() {
-		return array('harvesterUrl', 'oaiIndexMethod', 'metadataFormat');
+		return array('harvesterUrl', 'oaiIndexMethod');
 	}
 
 	function displayArchiveForm(&$form, &$templateMgr) {
@@ -77,19 +76,16 @@ class OAIHarvesterPlugin extends HarvesterPlugin {
 		foreach ($metadataFormats as $format) {
 			if (($pluginName = SchemaMap::getSchemaPluginName($this->getName(), $format)) && isset($plugins[$pluginName])) {
 				$plugin =& $plugins[$pluginName];
-				$supportedFormats[$format] = $plugin->getSchemaDisplayName();
+				$supportedFormats[$pluginName] = $plugin->getSchemaDisplayName();
 				unset($plugin);
 			}
 		}
+		$templateMgr->assign('metadataFormat', $archive->getSchemaPluginName());
 		$templateMgr->assign('metadataFormats', $supportedFormats);
 	}
 
-	/**
-	 * Get the list of metadata formats supported by this archive
-	 * (if available)
-	 * @return array
-	 */
-	function getMetadataFormats($harvesterUrl) {
+	function executeArchiveForm(&$form, &$archive) {
+		$archive->setSchemaPluginName(Request::getUserVar('metadataFormat'));
 	}
 
 	/**

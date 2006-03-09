@@ -60,17 +60,19 @@ class SearchDAO extends DAO {
 	 * limit (default 500 results).
 	 * @param $phrase string
 	 * @param $archiveIds array of IDs
+	 * @param $type string,
+	 * @param $id int,
 	 * @param $limit int optional
 	 * @param $cacheHours int optional
 	 * @return array of results (associative arrays)
 	 */
-	function &getPhraseResults($phrase, $archiveIds, $limit = 500, $cacheHours = 24) {
+	function &getPhraseResults($phrase, $archiveIds, $type, $id, $limit = 500, $cacheHours = 24) {
 		if (empty($phrase)) {
 			$results = false;
 			$returner = &new DBRowIterator($results);
 			return $returner;
 		}
-		
+
 		$sqlFrom = '';
 		$sqlWhere = '';
 		
@@ -79,12 +81,29 @@ class SearchDAO extends DAO {
 				$sqlFrom .= ', ';
 				$sqlWhere .= ' AND ';
 			}
+
 			$sqlFrom .= 'search_object_keywords o'.$i.' NATURAL JOIN search_keyword_list k'.$i;
 			if (strstr($phrase[$i], '%') === false) $sqlWhere .= 'k'.$i.'.keyword_text = ?';
 			else $sqlWhere .= 'k'.$i.'.keyword_text LIKE ?';
 			if ($i > 0) $sqlWhere .= ' AND o0.object_id = o'.$i.'.object_id AND o0.pos+'.$i.' = o'.$i.'.pos';
-			
 			$params[] = $phrase[$i];
+
+		}
+
+		switch ($type) {
+			case 'field':
+				$sqlWhere .= ' AND o.raw_field_id = ?';
+				$params[] = $id;
+				break;
+			case 'crosswalk':
+				$sqlFrom .= ', crosswalk_fields cf';
+				$sqlWhere .= ' AND cf.raw_field_id = o.raw_field_id AND cf.crosswalk_id = ?';
+				$params[] = $id;
+				break;
+			case 'all':
+				break;
+			default:
+				fatalError("Unknown search condition type \"$type!\"");
 		}
 
 		$archiveLimitSql = '';

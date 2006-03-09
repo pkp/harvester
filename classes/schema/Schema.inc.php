@@ -28,22 +28,6 @@ class Schema extends DataObject {
 	//
 	
 	/**
-	 * Get name of schema
-	 * @return string
-	 */
-	 function getName() {
-	 	return $this->getData('name');
-	}
-	
-	/**
-	 * Set name of schema
-	 * @param $name string
-	 */
-	function setName($name) {
-		return $this->setData('name',$name);
-	}
-
-	/**
 	 * Get schema plugin name for schema
 	 * @return string
 	 */

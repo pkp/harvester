@@ -205,7 +205,33 @@ class CrosswalkDAO extends DAO {
 			'INSERT INTO crosswalk_fields(crosswalk_id, raw_field_id) VALUES (?, ?)', array($crosswalkId, $fieldId)
 		);
 	}
-	
+
+	/**
+	 * Fetch a list of crosswalks that can be searched
+	 * on the set of schemas provided.
+	 * @param $schemas array
+	 * @return array
+	 */
+	function &getCrosswalksForSchemas($schemas) {
+		$params = array();
+		$schemaTableList = '';
+		$schemaWhereList = '';
+		$schemaIndex = 0;
+		foreach ($schemas as $schema) {
+			$schemaTableList .= ", raw_fields f$schemaIndex, crosswalk_fields cf$schemaIndex";
+			if (!empty($schemaWhereList)) $schemaWhereList .= ' AND ';
+			$schemaWhereList .= "f$schemaIndex.schema_plugin_id = ? AND f$schemaIndex.raw_field_id = cf$schemaIndex.raw_field_id AND cf$schemaIndex.crosswalk_id = c.crosswalk_id";
+			array_push($params, $schema->getSchemaId());
+			$schemaIndex++;
+		}
+		$result = &$this->retrieveRange(
+			'SELECT DISTINCT c.* FROM crosswalks c' . $schemaTableList . ' WHERE ' . $schemaWhereList . ' ORDER BY c.seq',
+			$params
+		);
+
+		$returner = &new DAOResultFactory($result, $this, '_returnCrosswalkFromRow');
+		return $returner;
+	}
 }
 
 ?>

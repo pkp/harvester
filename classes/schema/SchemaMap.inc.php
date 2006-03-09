@@ -82,6 +82,21 @@ class SchemaMap {
 		return null;
 	}
 
+	/**
+	 * Given a harvester plugin name and a schema plugin name, determine
+	 * the appropriate schema alias.
+	 * @param $harvesterPluginName string
+	 * @param $schemaPluginName string
+	 * @return string
+	 */
+	function getSchemaAlias($harvesterPluginName, $schemaPluginName) {
+		$schemaMap =& SchemaMap::getSchemaMap();
+		foreach ($schemaMap as $entry) {
+			if ($entry[1] === $harvesterPluginName && $entry[0] === $schemaPluginName) return $entry[2];
+		}
+		return null;
+	}
+
 	function &getSchemaPlugin($harvesterPluginName, $schemaAlias) {
 		$schemaPluginName = SchemaMap::getSchemaPluginName($harvesterPluginName, $schemaAlias);
 		$plugins =& PluginRegistry::loadCategory('schemas');

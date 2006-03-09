@@ -194,13 +194,13 @@ class FieldDAO extends DAO {
 	}
 	
 	/**
-	 * Retrieve all fields.
+	 * Retrieve all fields, optionally by schema.
 	 * @return DAOResultFactory containing matching fields
 	 */
-	function &getFields($rangeInfo = null) {
+	function &getFields($schemaId = null, $rangeInfo = null) {
 		$result = &$this->retrieveRange(
-			'SELECT * FROM raw_fields',
-			false, $rangeInfo
+			'SELECT * FROM raw_fields' . (isset($schemaId)?' WHERE schema_plugin_id = ?':''),
+			isset($schemaId)?$schemaId:false, $rangeInfo
 		);
 
 		$returner = &new DAOResultFactory($result, $this, '_returnFieldFromRow');

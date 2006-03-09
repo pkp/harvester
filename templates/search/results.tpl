@@ -33,12 +33,21 @@ function ensureKeyword() {
 {if $isAdvanced}
 	<form method="post" name="revise" action="{url op="index"}">
 		<input type="hidden" name="query" value="{$query|escape}"/>
-		<input type="hidden" name="showSpecificFields" value="{$showSpecificFields|escape}"/>
 		{if is_array($archiveIds)}
 			{foreach from=$archiveIds item=archiveId}
 				<input type="hidden" name="archiveIds[]" value="{$archiveId|escape}" />
 			{/foreach}
 		{/if}
+		{foreach from=$crosswalks item=crosswalk}
+			{assign var=crosswalkId value=$crosswalk->getCrosswalkId()}
+			{assign var=crosswalkValueVar value=crosswalk-$crosswalkId}
+			<input type="hidden" name="crosswalk-{$crosswalkId}" value="{$crosswalkValueVar|get_value|escape}" />
+		{/foreach}
+		{foreach from=$fields item=field}
+			{assign var=fieldId value=$field->getFieldId()}
+			{assign var=fieldValueVar value=field-$fieldId}
+			<input type="hidden" name="field-{$fieldId}" value="{$fieldValueVar|get_value|escape}" />
+		{/foreach}
 	</form>
 	<a href="javascript:document.revise.submit()" class="action">{translate key="search.reviseSearch"}</a><br />&nbsp;
 {/if}
@@ -52,7 +61,7 @@ function ensureKeyword() {
 	</ul>
 {else}
 	</ul>
-	{page_info iterator=$results}&nbsp;&nbsp;&nbsp;&nbsp;{page_links iterator=$results name="search" query=$query archiveIds=$archiveIds isAdvanced=$isAdvanced showSpecificFields=$showSpecificFields}
+	{page_info iterator=$results}&nbsp;&nbsp;&nbsp;&nbsp;{page_links iterator=$results name="search" query=$query archiveIds=$archiveIds isAdvanced=$isAdvanced}
 {/if}
 
 <p>{translate key="search.syntaxInstructions"}</p>

@@ -39,7 +39,9 @@ class OAIHarvester extends Harvester {
 	 */
 	function setMetadataFormat($metadataFormat) {
 		$archive =& $this->getArchive();
-		$archive->updateSetting('metadataFormat', $metadataFormat);
+		$archive->setSchemaPluginName(
+			SchemaMap::getSchemaPluginName(OAIHarvesterPlugin::getName(), $metadataFormat)
+		);
 	}
 
 	/**
@@ -47,9 +49,12 @@ class OAIHarvester extends Harvester {
 	 */
 	function getMetadataFormat() {
 		$archive =& $this->getArchive();
-		$metadataFormat = $archive->getSetting('metadataFormat');
-		if (empty($metadataFormat)) $metadataFormat = 'oai_dc';
-		return $metadataFormat;
+		$schemaPluginName = $archive->getSchemaPluginName();
+		if (
+			empty($schemaPluginName) ||
+			($alias = SchemaMap::getSchemaAlias(OAIHarvesterPlugin::getName(), $schemaPluginName))
+		) return 'oai_dc';
+		return $alias;
 	}
 
 	/**

@@ -78,7 +78,11 @@ class Field extends DataObject {
 	function &getSchemaPlugin() {
 		$schemaDao =& DAORegistry::getDAO('SchemaDAO');
 		$schema =& $schemaDao->getSchema($this->getSchemaId());
-		return $schema->getPlugin();
+		$plugin =& $schema->getPlugin();
+		if (!$plugin) {
+			fatalError('Unknown schema plugin ' . $this->getSchemaId() . ' for field ' . $this->getName() . '!');
+		}
+		return $plugin;
 	}
 
 	function getDisplayName($locale = null) {

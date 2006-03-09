@@ -173,6 +173,7 @@ class HarvesterPlugin extends Plugin {
 			foreach ($this->getAdditionalArchiveFormFields() as $field) {
 				$archive->updateSetting($field, Request::getUserVar($field));
 			}
+			$this->executeArchiveForm(&$form, &$archive);
 			return true;
 		}
 		return false;
@@ -220,6 +221,16 @@ class HarvesterPlugin extends Plugin {
 	 * @param $templateMgr object
 	 */
 	function displayArchiveForm(&$form, &$templateMgr) {
+	}
+
+	/**
+	 * This function is called when the execute() function of the
+	 * administrator's archive form is called. Subclasses should
+	 * override this function as necessary.
+	 * @param $form object
+	 * @param $archive object
+	 */
+	function executeArchiveForm(&$form, &$archive) {
 	}
 
 	/**
