@@ -52,10 +52,20 @@ class CrosswalkForm extends Form {
 	function display() {
 		$schemaPlugins =& PluginRegistry::loadCategory('schemas');
 
+		// Filter the list of schema plugins, if necessary.
+		$schemaPluginName = Request::getUserVar('schemaPluginName');
+		if (!empty($schemaPluginName) && isset($schemaPlugins[$schemaPluginName])) {
+			$filteredPlugins = array($schemaPluginName => $schemaPlugins[$schemaPluginName]);
+		} else {
+			$filteredPlugins =& $schemaPlugins;
+		}
+
 		$templateMgr = &TemplateManager::getManager();
 		$templateMgr->assign('crosswalkId', $this->crosswalkId);
 		$templateMgr->assign('helpTopicId', 'site.siteManagement');
+		$templateMgr->assign('schemaPluginName', $schemaPluginName);
 		$templateMgr->assign_by_ref('schemaPlugins', $schemaPlugins);
+		$templateMgr->assign_by_ref('filteredPlugins', $filteredPlugins);
 		parent::display();
 	}
 	
@@ -117,6 +127,7 @@ class CrosswalkForm extends Form {
 
 		if ($this->crosswalk->getCrosswalkId() != null) {
 			$crosswalkDao->updateCrosswalk($this->crosswalk);
+			$crosswalkId = $this->crosswalk->getCrosswalkId();
 		} else {
 			$this->crosswalk->setSeq(9999); // KLUDGE
 			$crosswalkId = $crosswalkDao->insertCrosswalk($this->crosswalk);
@@ -124,16 +135,27 @@ class CrosswalkForm extends Form {
 		}
 
 		$schemaPlugins =& PluginRegistry::loadCategory('schemas');
-		$crosswalkDao->deleteCrosswalkFieldsByCrosswalkId($this->crosswalk->getCrosswalkId());
 		$fieldDao =& DAORegistry::getDAO('FieldDAO');
+
+		$oldFields =& $crosswalkDao->getFieldsByCrosswalkId($crosswalkId);
+		$oldFields = $oldFields->toArray();
+
+		$crosswalkDao->deleteCrosswalkFieldsByCrosswalkId($crosswalkId);
 		foreach ($schemaPlugins as $schemaPluginName => $schemaPlugin) {
 			foreach ($schemaPlugin->getFieldList() as $fieldName) {
-				if (Request::getUserVar("$schemaPluginName-$fieldName")) {
-					$field =& $fieldDao->buildField($fieldName, $schemaPluginName);
-					$crosswalkDao->insertCrosswalkField(
-						$this->crosswalk->getCrosswalkId(),
-						$field->getFieldId()
-					);
+				$isChecked = Request::getUserVar("$schemaPluginName-$fieldName");
+				$isDisplayed = Request::getUserVar("$schemaPluginName-$fieldName-displayed");
+
+				$field =& $fieldDao->buildField($fieldName, $schemaPluginName);
+				foreach ($oldFields as $oldField) {
+					if ($oldField->getFieldId() == $field->getFieldId() && !$isDisplayed) {
+						// This field was previously selected but wasn't displayed
+						// on the page -- make sure it's maintained.
+						$crosswalkDao->insertCrosswalkField($crosswalkId, $field->getFieldId());
+					}
+				}
+				if ($isChecked && $isDisplayed) {
+					$crosswalkDao->insertCrosswalkField($crosswalkId, $field->getFieldId());
 				}
 			}
 		}

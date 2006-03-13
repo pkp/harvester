@@ -33,12 +33,12 @@ class AdminCrosswalkHandler extends AdminHandler {
 		$templateMgr->display('admin/crosswalks.tpl');
 	}
 
-	function editCrosswalk($args = array()) {
+	function editCrosswalk() {
 		parent::validate();
 		parent::setupTemplate(true);
 
 		import('admin.form.CrosswalkForm');
-		$crosswalkForm =& new CrosswalkForm(!isset($args) || empty($args) ? null : (int) $args[0]);
+		$crosswalkForm =& new CrosswalkForm(Request::getUserVar('crosswalkId'));
 		$crosswalkForm->initData();
 		$crosswalkForm->display();
 	}

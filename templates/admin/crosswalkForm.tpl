@@ -16,6 +16,19 @@
 {/if}
 {include file="common/header.tpl"}
 
+<script type="text/javascript">
+{literal}
+<!--
+function chooseSchemaPlugin(name) {
+{/literal}
+	document.crosswalkForm.action='{url schemaPluginName=SCHEMA_PLUGIN_NAME}'.replace('SCHEMA_PLUGIN_NAME', name);
+	document.crosswalkForm.submit();
+{literal}
+}
+-->
+{/literal}
+</script>
+
 <br />
 
 <a name="crosswalkForm"/>
@@ -40,7 +53,7 @@
 		<td colspan="2" class="headseparator">&nbsp;</td>
 	</tr>
 
-	{foreach from=$schemaPlugins item=schemaPlugin name="schemaPlugins"}
+	{foreach from=$filteredPlugins item=schemaPlugin name="schemaPlugins"}
 		<tr valign="top">
 			<td>{$schemaPlugin->getSchemaDisplayName()}</td>
 			<td>
@@ -53,6 +66,7 @@
 							{assign var=isFieldChosen value=1}
 						{/if}
 					{/foreach}
+					<input type="hidden" name="{$schemaPlugin->getName()|escape}-{$field|escape}-displayed" value="1"/>
 					<input type="checkbox" {if $isFieldChosen}checked="checked" {/if}class="checkbox" name="{$schemaPlugin->getName()|escape}-{$field|escape}" value="1"/>&nbsp;<strong>{$schemaPlugin->getFieldName($field)|escape}</strong>:&nbsp;{$schemaPlugin->getFieldDescription($field)|escape}<br/>
 				{/foreach}
 			</td>
@@ -64,6 +78,13 @@
 
 	{call_hook name="Template::Admin::Crosswalks::displayHarvesterForm" plugin=$harvesterPlugin}
 </table>
+
+<label for="schemaPluginName">{translate key="admin.crosswalks.schemaFilter"}:</label> <select id="schemaPluginName" name="schemaPluginName" class="selectMenu" onchange="chooseSchemaPlugin(this.options[this.selectedIndex].value)">
+	<option value="">{translate key="admin.crosswalks.schemaFilter.all"}</option>
+	{foreach from=$schemaPlugins item=schemaPlugin}
+		<option {if $schemaPlugin->getName() == $schemaPluginName}selected {/if}value="{$schemaPlugin->getName()|escape}">{$schemaPlugin->getSchemaDisplayName()}</option>
+	{/foreach}
+</select>
 
 <p><input type="submit" value="{translate key="common.save"}" class="button defaultButton" /> <input type="button" value="{translate key="common.cancel"}" class="button" onclick="document.location.href='{url op="crosswalks"}'" /></p>
 

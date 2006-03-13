@@ -30,7 +30,7 @@
 	<tr valign="top">
 		<td>{$crosswalk->getCrosswalkName()|escape}</td>
 		<td>{$crosswalk->getCrosswalkDescription()|escape}</td>
-		<td align="right"><a href="{url op="editCrosswalk" path=$crosswalk->getCrosswalkId()}" class="action">{translate key="common.edit"}</a>&nbsp;|&nbsp;<a href="{url op="deleteCrosswalk" path=$crosswalk->getCrosswalkId()}" onclick="return confirm('{translate|escape:"javascript" key="admin.crosswalks.confirmDelete"}')" class="action">{translate key="common.delete"}</a></td>
+		<td align="right"><a href="{url op="editCrosswalk" crosswalkId=$crosswalk->getCrosswalkId()}" class="action">{translate key="common.edit"}</a>&nbsp;|&nbsp;<a href="{url op="deleteCrosswalk" path=$crosswalk->getCrosswalkId()}" onclick="return confirm('{translate|escape:"javascript" key="admin.crosswalks.confirmDelete"}')" class="action">{translate key="common.delete"}</a></td>
 	</tr>
 	<tr>
 		<td colspan="4" class="{if $smarty.foreach.crosswalks.last}end{/if}separator">&nbsp;</td>
