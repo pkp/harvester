@@ -99,6 +99,7 @@ class OAIXMLHandler extends XMLParserHandler {
 			case 'metadataPrefix':
 			case 'schema':
 			case 'metadataNamespace':
+			case 'error':
 				// Do nothing.
 				break;
 			case 'request':

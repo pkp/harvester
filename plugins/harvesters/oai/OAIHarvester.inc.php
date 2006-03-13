@@ -30,7 +30,7 @@ class OAIHarvester extends Harvester {
 
 	function OAIHarvester(&$archive) {
 		parent::Harvester($archive);
-		$this->oaiUrl = $archive->getSetting('harvesterUrl');
+		if ($archive) $this->oaiUrl = $archive->getSetting('harvesterUrl');
 	}
 
 	/**
@@ -68,7 +68,9 @@ class OAIHarvester extends Harvester {
 
 		$parser->setHandler($xmlHandler);
 		$result = null;
-		@$result =& $parser->parse($harvesterUrl . '?verb=ListMetadataFormats');
+		@$result =& $parser->parse($this->addParameters($harvesterUrl, array(
+			'verb' => 'ListMetadataFormats'
+		)));
 
 		unset($parser);
 		unset($xmlHandler);
@@ -106,7 +108,10 @@ class OAIHarvester extends Harvester {
 		$xmlHandler =& new OAIXMLHandler($this, $verb);
 
 		$parser->setHandler($xmlHandler);
-		$result =& $parser->parse($this->oaiUrl . "?verb=$verb&metadataPrefix=" . urlencode($this->getMetadataFormat()));
+		$result =& $parser->parse($this->addParameters($this->oaiUrl, array(
+			'verb' => $verb,
+			'metadataPrefix' => $this->getMetadataFormat()
+		)));
 
 		unset($parser);
 		unset($xmlHandler);
@@ -127,7 +132,11 @@ class OAIHarvester extends Harvester {
 		$xmlHandler =& new OAIXMLHandler($this, $verb);
 
 		$parser->setHandler($xmlHandler);
-		$result =& $parser->parse($this->oaiUrl . "?verb=$verb&identifier=" . urlencode($identifier) . '&metadataPrefix=' . urlencode($this->getMetadataFormat()));
+		$result =& $parser->parse($this->addParameters($this->oaiUrl, array(
+			'verb' => $verb,
+			'identifier' => $identifier,
+			'metadataPrefix' => $this->getMetadataFormat()
+		)));
 		unset ($parser);
 
 		unset($parser);
@@ -142,7 +151,10 @@ class OAIHarvester extends Harvester {
 		$xmlHandler =& new OAIXMLHandler($this, $verb);
 
 		$parser->setHandler($xmlHandler);
-		$result =& $parser->parse($this->oaiUrl . "?verb=$verb&resumptionToken=" . urlencode($token));
+		$result =& $parser->parse($this->addParameters($this->oaiUrl, array(
+			'verb' => $verb,
+			'resumptionToken' => $token
+		)));
 
 		unset ($parser);
 		unset($xmlHandler);
@@ -200,6 +212,19 @@ class OAIHarvester extends Harvester {
 
 	function &getSchemaPlugin() {
 		return SchemaMap::getSchemaPlugin(OAIHarvesterPlugin::getName(), $this->getMetadataFormat());
+	}
+
+	function addParameters($url, $params) {
+		if (strpos($url, '?') !== false && !empty($params)) {
+			$separator = '&';
+		} else {
+			$separator = '?';
+		}
+		foreach ($params as $name => $value) {
+			$url .= $separator . urlencode($name) . '=' . urlencode($value);
+			$separator = '&';
+		}
+		return $url;
 	}
 }
 

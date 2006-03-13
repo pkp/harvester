@@ -80,7 +80,7 @@ class OAIHarvesterPlugin extends HarvesterPlugin {
 				unset($plugin);
 			}
 		}
-		$templateMgr->assign('metadataFormat', $archive->getSchemaPluginName());
+		if ($archive) $templateMgr->assign('metadataFormat', $archive->getSchemaPluginName());
 		$templateMgr->assign('metadataFormats', $supportedFormats);
 	}
 
