@@ -131,11 +131,12 @@ class ModsPlugin extends SchemaPlugin {
 	 * @return string
 	 */
 	function getUrl(&$record, $entries) {
-		$returner = null;
-		if (isset($entries['identifier']) && preg_match('/^[a-z]+:\/\//', $entries['identifier'])) {
-			$returner = $entries['identifier'];
+		if (is_array($entries['url'])) foreach ($entries['url'] as $entry) {
+			if (preg_match('/^[a-z]+:\/\//', $entry['value'])) {
+				return $entry['value'];
+			}
 		}
-		return $returner;
+		return null;
 	}
 }
 
