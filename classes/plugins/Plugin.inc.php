@@ -94,11 +94,15 @@ class Plugin {
 		}
 
 		if (!isset($pluginLocales[$locale])) {
-			$pluginLocales[$locale] =& Locale::loadLocale($locale, $this->getPluginPath() . "/locale/$locale/locale.xml");
+			$pluginLocales[$locale] =& Locale::loadLocale($locale, $this->getLocaleFilename($locale));
 			$cache->setEntireCache($pluginLocales[$locale]);
 		}
 
 		return isset($pluginLocales[$locale][$id])?$pluginLocales[$locale][$id]:null;
+	}
+
+	function getLocaleFilename($locale) {
+		return ($this->getPluginPath() . "/locale/$locale/locale.xml");
 	}
 
 	function loadLocale($hookName, $params) {

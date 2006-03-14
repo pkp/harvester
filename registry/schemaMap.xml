@@ -27,8 +27,12 @@
 	</schema>
 	<schema plugin="MarcPlugin">
 		<alias harvester="OAIHarvesterPlugin">oai_marc</alias>
+		<alias harvester="OAIHarvesterPlugin">marcxml</alias>
 	</schema>
 	<schema plugin="Rfc1807Plugin">
 		<alias harvester="OAIHarvesterPlugin">oai_rfc1807</alias>
+	</schema>
+	<schema plugin="ModsPlugin">
+		<alias harvester="OAIHarvesterPlugin">mods</alias>
 	</schema>
 </schema_map>

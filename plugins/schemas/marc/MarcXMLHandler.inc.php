@@ -38,16 +38,22 @@ class MarcXMLHandler extends XMLParserHandler {
 		switch ($tag) {
 			case 'marc':
 			case 'oai_marc:marc':
+			case 'mx:record':
+			case 'mx:leader':
 				return;
 			case 'varfield':
 			case 'fixfield':
-				$this->id = isset($attributes['id'])?$attributes['id']:null;
-				$this->i1 = isset($attributes['i1'])?$attributes['i1']:null;
-				$this->i2 = isset($attributes['i2'])?$attributes['i2']:null;
+			case 'mx:fixfield':
+			case 'mx:controlfield':
+			case 'mx:datafield':
+				$this->id = isset($attributes['id'])?$attributes['id']:(isset($attributes['tag'])?$attributes['tag']:null);
+				$this->i1 = isset($attributes['i1'])?$attributes['i1']:(isset($attributes['ind1'])?$attributes['ind1']:null);
+				$this->i2 = isset($attributes['i2'])?$attributes['i2']:(isset($attributes['ind2'])?$attributes['ind2']:null);
 				$this->label = null;
 				break;
 			case 'subfield':
-				$this->label = isset($attributes['label'])?$attributes['label']:null;
+			case 'mx:subfield':
+				$this->label = isset($attributes['label'])?$attributes['label']:(isset($attributes['code'])?$attributes['code']:null);
 				break;
 		}
 	}
@@ -57,6 +63,9 @@ class MarcXMLHandler extends XMLParserHandler {
 			case 'marc':
 			case 'oai_marc:marc':
 			case 'subfield':
+			case 'mx:record':
+			case 'mx:subfield':
+			case 'mx:leader':
 				return;
 		}
 

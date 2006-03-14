@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE locale SYSTEM "../../../../../locale/locale.dtd">
+
+<!--
+  * locale.xml
+  *
+  * Copyright (c) 2005-2006 The Public Knowledge Project
+  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
+  *
+  * Localization strings for the en_US (U.S. English) locale.
+  *
+  * $Id$
+  -->
+ 
+<locale name="en_US" full_name="U.S. English">
+	<message key="plugins.schemas.mods.schemaName">MODS</message>
+	<message key="plugins.schemas.mods.description">This schema supports the MODS metadata format.</message>
+	<message key="plugins.schemas.mods.fields.identifier.name">Identifier</message>
+	<message key="plugins.schemas.mods.fields.identifier.description">A unique standard number or code that distinctively identifies a resource</message>
+	<message key="plugins.schemas.mods.fields.title.name">Title</message>
+	<message key="plugins.schemas.mods.fields.title.description">A word, phrase, character, or group of characters that constitutes the chief title of a resource</message>
+	<message key="plugins.schemas.mods.fields.subTitle.name">Subtitle</message>
+	<message key="plugins.schemas.mods.fields.subTitle.description">A word, phrase, character, or group of characters that contains the remainder of the title information after the title proper</message>
+	<message key="plugins.schemas.mods.fields.partNumber.name">Part Number</message>
+	<message key="plugins.schemas.mods.fields.partNumber.description">Used for a part or section number of a title</message>
+	<message key="plugins.schemas.mods.fields.namePart.name">Name Part</message>
+	<message key="plugins.schemas.mods.fields.namePart.description">Includes each part of the name that is parsed</message>
+	<message key="plugins.schemas.mods.fields.partName.name">Part Name</message>
+	<message key="plugins.schemas.mods.fields.partName.description">Used for a part or section name of a title</message>
+	<message key="plugins.schemas.mods.fields.nonSort.name">Non-Sorting Title</message>
+	<message key="plugins.schemas.mods.fields.nonSort.description">Begin and end tags surround the nonfiling text which should not be regarded in sorting</message>
+	<message key="plugins.schemas.mods.fields.displayForm.name">Display Form</message>
+	<message key="plugins.schemas.mods.fields.displayForm.description">Unstructured form of a name</message>
+	<message key="plugins.schemas.mods.fields.affiliation.name">Affiliation</message>
+	<message key="plugins.schemas.mods.fields.affiliation.description">The name of an organization, institution, etc. with which the entity recorded was associated at the time that the resource was created</message>
+	<message key="plugins.schemas.mods.fields.role.name">Role</message>
+	<message key="plugins.schemas.mods.fields.role.description">A term(s) that designates the relationship (role) of the entity recorded in name in relation to the resource</message>
+	<message key="plugins.schemas.mods.fields.roleTerm.name">Role Term</message>
+	<message key="plugins.schemas.mods.fields.roleTerm.description">Contains the textual or coded form of a relator/role</message>
+	<message key="plugins.schemas.mods.fields.typeOfResource.name">Type Of Resource</message>
+	<message key="plugins.schemas.mods.fields.typeOfResource.description">A term that specifies the characteristics and general type of content of the resource</message>
+	<message key="plugins.schemas.mods.fields.genre.name">Genre</message>
+	<message key="plugins.schemas.mods.fields.genre.description">A term(s) that designates a category characterizing a particular style, form, or content, such as artistic, musical, literary composition, etc.</message>
+	<message key="plugins.schemas.mods.fields.placeTerm.name">Place Term</message>
+	<message key="plugins.schemas.mods.fields.placeTerm.description">Used to express place in a textual or coded form</message>
+	<message key="plugins.schemas.mods.fields.publisher.name">Publisher</message>
+	<message key="plugins.schemas.mods.fields.publisher.description">The name of the entity that published, printed, distributed, released, issued, or produced the resource</message>
+	<message key="plugins.schemas.mods.fields.edition.name">Edition</message>
+	<message key="plugins.schemas.mods.fields.edition.description">Information identifying the edition or version to which the resource belongs</message>
+	<message key="plugins.schemas.mods.fields.issuance.name">Issuance</message>
+	<message key="plugins.schemas.mods.fields.issuance.description">A term that designates how the resource is issued</message>
+	<message key="plugins.schemas.mods.fields.frequency.name">Frequency</message>
+	<message key="plugins.schemas.mods.fields.frequency.description">A statement of publication frequency in a textual form</message>
+	<message key="plugins.schemas.mods.fields.languageTerm.name">Language Term</message>
+	<message key="plugins.schemas.mods.fields.languageTerm.description">Contains the language(s) of the content of the resource</message>
+	<message key="plugins.schemas.mods.fields.form.name">Form</message>
+	<message key="plugins.schemas.mods.fields.form.description">A designation of a particular physical presentation of a resource</message>
+	<message key="plugins.schemas.mods.fields.reformattingQuality.name">Reformatting Quality</message>
+	<message key="plugins.schemas.mods.fields.reformattingQuality.description">A term that indicates an overall assessment of the physical quality of an electronic resource in relation to its intended use</message>
+	<message key="plugins.schemas.mods.fields.internetMediaType.name">Internet Media Type</message>
+	<message key="plugins.schemas.mods.fields.internetMediaType.description">An identification of the electronic format type, or the data representation of the resource</message>
+	<message key="plugins.schemas.mods.fields.extent.name">Extent</message>
+	<message key="plugins.schemas.mods.fields.extent.description">A statement of the number and specific material of the units of the resource that express physical extent</message>
+	<message key="plugins.schemas.mods.fields.digitalOrigin.name">Digital Origin</message>
+	<message key="plugins.schemas.mods.fields.digitalOrigin.description">A designation of the source of a digital file important to its creation, use and management</message>
+	<message key="plugins.schemas.mods.fields.physicalDescriptionNote.name">Physical Description Note</message>
+	<message key="plugins.schemas.mods.fields.physicalDescriptionNote.description">General textual information about the physical description of a resource</message>
+	<message key="plugins.schemas.mods.fields.abstract.name">Abstract</message>
+	<message key="plugins.schemas.mods.fields.abstract.description">A summary of the content of the resource</message>
+	<message key="plugins.schemas.mods.fields.tableOfContents.name">Table Of Contents</message>
+	<message key="plugins.schemas.mods.fields.tableOfContents.description">A description of the contents of a resource</message>
+	<message key="plugins.schemas.mods.fields.targetAudience.name">Target Audience</message>
+	<message key="plugins.schemas.mods.fields.targetAudience.description">A description of the intellectual level of the audience for which the resource is intended</message>
+	<message key="plugins.schemas.mods.fields.topic.name">Topic</message>
+	<message key="plugins.schemas.mods.fields.topic.description">Used as the tag for any topical subjects that are not appropriate in the geographic, temporal, title info, or name fields</message>
+	<message key="plugins.schemas.mods.fields.geographic.name">Geographic</message>
+	<message key="plugins.schemas.mods.fields.geographic.description">Used for geographic subject terms that are not parsed as hierarchical geographics</message>
+	<message key="plugins.schemas.mods.fields.temporal.name">Temporal</message>
+	<message key="plugins.schemas.mods.fields.temporal.description">Used for chronological subject terms or temporal coverage</message>
+	<message key="plugins.schemas.mods.fields.geographicCode.name">Geographic Code</message>
+	<message key="plugins.schemas.mods.fields.geographicCode.description">Includes a geographic area code associated with a resource</message>
+	<message key="plugins.schemas.mods.fields.continent.name">Continent</message>
+	<message key="plugins.schemas.mods.fields.continent.description">Includes Asia, Africa, Europe, North America, South America</message>
+	<message key="plugins.schemas.mods.fields.country.name">Country</message>
+	<message key="plugins.schemas.mods.fields.country.description">Includes a country, i.e. a political entity considered a country</message>
+	<message key="plugins.schemas.mods.fields.province.name">Province</message>
+	<message key="plugins.schemas.mods.fields.province.description">Includes first order political divisions called provinces within a country, e.g. Canada</message>
+	<message key="plugins.schemas.mods.fields.region.name">Region</message>
+	<message key="plugins.schemas.mods.fields.region.description">Includes regions that have status as a jurisdiction, usually incorporating more than one first level jurisdiction</message>
+	<message key="plugins.schemas.mods.fields.state.name">State</message>
+	<message key="plugins.schemas.mods.fields.state.description">Includes first order political divisions called states within a country, e.g. in U.S., Argentina, Italy. Use also for France département</message>
+	<message key="plugins.schemas.mods.fields.territory.name">Territory</message>
+	<message key="plugins.schemas.mods.fields.territory.description">A geographical area belonging to or under the jurisdiction of a governmental authority</message>
+	<message key="plugins.schemas.mods.fields.county.name">County</message>
+	<message key="plugins.schemas.mods.fields.county.description">Includes the largest local administrative unit in various countries, e.g. England</message>
+	<message key="plugins.schemas.mods.fields.city.name">City</message>
+	<message key="plugins.schemas.mods.fields.city.description">Use for an inhabited place incorporated as a city, town, etc.</message>
+	<message key="plugins.schemas.mods.fields.island.name">Island</message>
+	<message key="plugins.schemas.mods.fields.island.description">Use for a tract of land surrounded by water and smaller than a continent but is not itself a separate country</message>
+	<message key="plugins.schemas.mods.fields.area.name">Area</message>
+	<message key="plugins.schemas.mods.fields.area.description">Use for a non-jurisdictional geographic entity</message>
+	<message key="plugins.schemas.mods.fields.scale.name">Scale</message>
+	<message key="plugins.schemas.mods.fields.scale.description">Provides a statement of scale</message>
+	<message key="plugins.schemas.mods.fields.projection.name">Projection</message>
+	<message key="plugins.schemas.mods.fields.projection.description">Provides a statement of projection</message>
+	<message key="plugins.schemas.mods.fields.coordinates.name">Coordinates</message>
+	<message key="plugins.schemas.mods.fields.coordinates.description">Contains a statement of coordinates covered by the resource</message>
+	<message key="plugins.schemas.mods.fields.occupation.name">Occupation</message>
+	<message key="plugins.schemas.mods.fields.occupation.description">Includes a term that is descriptive of the occupation reflected in the contents of the described materials</message>
+	<message key="plugins.schemas.mods.fields.classification.name">Classification</message>
+	<message key="plugins.schemas.mods.fields.classification.description">A designation applied to a resource that indicates the subject by applying a formal system of coding and organizing resources according to subject areas</message>
+	<message key="plugins.schemas.mods.fields.physicalLocation.name">Physical Location</message>
+	<message key="plugins.schemas.mods.fields.physicalLocation.description">The institution or repository holding the resource or from which it is available</message>
+	<message key="plugins.schemas.mods.fields.url.name">URL</message>
+	<message key="plugins.schemas.mods.fields.url.description">The Uniform Resource Location from which the resource is available</message>
+	<message key="plugins.schemas.mods.fields.accessCondition.name">Access Condition</message>
+	<message key="plugins.schemas.mods.fields.accessCondition.description">Information about restrictions imposed on access to a resource</message>
+	<message key="plugins.schemas.mods.fields.extension.name">Extension</message>
+	<message key="plugins.schemas.mods.fields.extension.description">Used to provide for additional information not covered by MODS</message>
+	<message key="plugins.schemas.mods.fields.recordContentSource.name">Record Content Source</message>
+	<message key="plugins.schemas.mods.fields.recordContentSource.description">The code or name of the organization that either created or modified the original record</message>
+	<message key="plugins.schemas.mods.fields.recordIdentifier.name">Record Identifier</message>
+	<message key="plugins.schemas.mods.fields.recordIdentifier.description">Contains the system control number assigned by the organization creating, using, or distributing the record</message>
+	<message key="plugins.schemas.mods.fields.recordOrigin.name">Record Origin</message>
+	<message key="plugins.schemas.mods.fields.recordOrigin.description">Intended to show the origin, or provenance of the MODS record</message>
+	<message key="plugins.schemas.mods.fields.languageOfCataloging.name">Language Of Cataloging</message>
+	<message key="plugins.schemas.mods.fields.languageOfCataloging.description">Applies to the language of cataloging in a record</message>
+	<message key="plugins.schemas.mods.fields.note.name">Note</message>
+	<message key="plugins.schemas.mods.fields.note.description">General textual information relating to a resource</message>
+</locale>

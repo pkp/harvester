@@ -52,8 +52,10 @@ class OAIHarvester extends Harvester {
 		$schemaPluginName = $archive->getSchemaPluginName();
 		if (
 			empty($schemaPluginName) ||
-			($alias = SchemaMap::getSchemaAlias(OAIHarvesterPlugin::getName(), $schemaPluginName))
-		) return 'oai_dc';
+			($alias = SchemaMap::getSchemaAlias(OAIHarvesterPlugin::getName(), $schemaPluginName))==''
+		) {
+			return 'oai_dc';
+		}
 		return $alias;
 	}
 
