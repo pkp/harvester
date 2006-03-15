@@ -9,18 +9,12 @@
  * $Id$
  *}
 
-{* Title *}
-{assign var=notFirstTitle value=0}
-{foreach from=$entries.title item=entry}
-	{* Find the first non-empty title *}
-	{if !$notFirstTitle && !empty($entry.value)}
-		{assign var=notFirstTitle value=1}
-		<span class="title">{$entry.value|escape|truncate:90|default:"&mdash"}</span><br />
-	{/if}
-{/foreach}
+<span class="title">{$title.title|escape|truncate:90|default:"&mdash"}</span><br />
 
 <div class="recordContents">
-	{foreach from=$entries.creator item=creator}<span class="author">{$creator.value|escape|default:"&mdash;"}</span><br />{/foreach}
+	{foreach from=$authors key=nameAssocId item=author}
+		<span class="author">{if $author.nonSort}{$author.nonSort|escape}{/if}{$author.namePart|escape|default:"&mdash;"}{if $author.roleText} ({$author.roleText|escape}){elseif $author.roleCode}({$author.roleCode|escape}){/if}{if $author.affiliation}; {$author.affiliation|escape}{/if}</span><br />
+	{/foreach}
 	{$record->getDatestamp()|date_format:$dateFormatShort}<br />
-	<a href="{url page="record" op="view" path=$record->getRecordId()}" class="action">{translate key="browse.viewRecord"}</a>{if $record->getUrl($entries)|assign:"recordUrl":true}&nbsp;|&nbsp;<a href="{$recordUrl}" class="action">{translate key="browse.viewOriginal"}</a>{/if}
+	<a href="{url page="record" op="view" path=$record->getRecordId()}" class="action">{translate key="browse.viewRecord"}</a>{if $url}&nbsp;|&nbsp;<a href="{$url}" class="action">{translate key="browse.viewOriginal"}</a>{/if}
 </div>

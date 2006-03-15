@@ -138,6 +138,7 @@ class RecordDAO extends DAO {
 		foreach ($attributes as $name => $value) {
 			$this->insertEntryAttribute($entryId, $name, $value);
 		}
+		return $entryId;
 	}
 
 	/**

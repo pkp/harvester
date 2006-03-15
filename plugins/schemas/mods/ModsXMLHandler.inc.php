@@ -26,6 +26,12 @@ class ModsXMLHandler extends XMLParserHandler {
 	/** @var $attributes array */
 	var $attributes;
 
+	/** @var $nameAssocId int */
+	var $nameAssocId;
+
+	/** @var $titleAssocId int */
+	var $titleAssocId;
+
 	/** @var $inPhysicalDescription boolean */
 	var $inPhysicalDescription;
 
@@ -58,6 +64,12 @@ class ModsXMLHandler extends XMLParserHandler {
 			case 'note':
 				if ($this->inPhysicalDescription) $tag = 'physicalDescriptionNote';
 				break;
+			case 'name':
+				unset($this->nameAssocId);
+				break;
+			case 'titleInfo':
+				unset($this->titleAssocId);
+				break;
 		}
 		$this->attributes[$tag] = $attributes;
 	}
@@ -76,17 +88,38 @@ class ModsXMLHandler extends XMLParserHandler {
 		}
 
 		switch ($tag) {
+			case 'namePart':
+			case 'affiliation':
+			case 'roleTerm':
+			case 'description':
+				// For subelements of the "name" tag, group them with an attribute
+				if (isset($this->nameAssocId)) $this->attributes[$tag]['nameAssocId'] = $this->nameAssocId;
+				else unset($this->attributes[$tag]['nameAssocId']);
+				$field =& $this->harvester->getFieldByKey($tag, ModsPlugin::getName());
+				$entryId = $this->harvester->insertEntry($field, $this->characterData, $this->attributes[$tag]);
+				if (!isset($this->nameAssocId)) {
+					$recordDao =& DAORegistry::getDAO('RecordDAO');
+					$recordDao->insertEntryAttribute($entryId, 'nameAssocId', $entryId);
+					$this->nameAssocId = $entryId;
+				}
+				break;
 			case 'title':
 			case 'subTitle':
 			case 'partNumber':
 			case 'partName':
 			case 'nonSort':
-			case 'namePart':
+				// For subelements of the "titleInfo" tag, group them with an attribute
+				if (isset($this->titleAssocId)) $this->attributes[$tag]['titleAssocId'] = $this->titleAssocId;
+				else unset($this->attributes[$tag]['titleAssocId']);
+				$field =& $this->harvester->getFieldByKey($tag, ModsPlugin::getName());
+				$entryId = $this->harvester->insertEntry($field, $this->characterData, $this->attributes[$tag]);
+				if (!isset($this->titleAssocId)) {
+					$recordDao =& DAORegistry::getDAO('RecordDAO');
+					$recordDao->insertEntryAttribute($entryId, 'titleAssocId', $entryId);
+					$this->titleAssocId = $entryId;
+				}
+				break;
 			case 'displayForm':
-			case 'affiliation':
-			case 'role':
-			case 'roleTerm':
-			case 'description':
 			case 'typeOfResource':
 			case 'genre':
 			case 'placeTerm':
@@ -138,7 +171,6 @@ class ModsXMLHandler extends XMLParserHandler {
 				$field =& $this->harvester->getFieldByKey($tagName, ModsPlugin::getName());
 				$entryId = $this->harvester->insertEntry($field, $this->characterData, $this->attributes[$tagName]);
 				break;
-			case 'name':
 			case 'dateIssued':
 			case 'dateCreated':
 			case 'dateCaptured':
@@ -161,6 +193,8 @@ class ModsXMLHandler extends XMLParserHandler {
 			case 'location':
 			case 'recordInfo':
 			case 'subject':
+			case 'role':
+			case 'name':
 				// Do nothing.
 				break;
 			case 'physicalDescription':

@@ -91,8 +91,9 @@ class OAIHarvesterPlugin extends HarvesterPlugin {
 	/**
 	 * Update the metadata index.
 	 * @param $archive object
+	 * @param $callback mixed
 	 */
-	function updateIndex(&$archive) {
+	function updateIndex(&$archive, $callback = null) {
 		$this->import('OAIHarvester');
 		$this->import('OAIXMLHandler');
 
@@ -101,7 +102,7 @@ class OAIHarvesterPlugin extends HarvesterPlugin {
 		$oaiHarvester =& new OAIHarvester($archive);
 		$templateMgr =& TemplateManager::getManager();
 
-		if (!$oaiHarvester->updateRecords()) {
+		if (!$oaiHarvester->updateRecords($callback)) {
 			foreach ($oaiHarvester->getErrors() as $error) {
 				$this->addError($error);
 			}

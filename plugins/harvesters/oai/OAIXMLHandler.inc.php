@@ -16,6 +16,12 @@
 import('schema.SchemaMap');
 
 class OAIXMLHandler extends XMLParserHandler {
+	/** @var $callback mixed */
+	var $callback;
+
+	/** @var $recordCount int */
+	var $recordCount;
+
 	/** @var $characterData string */
 	var $characterData;
 
@@ -52,9 +58,11 @@ class OAIXMLHandler extends XMLParserHandler {
 	/** @var $recordDao object */
 	var $recordDao;
 
-	function OAIXMLHandler(&$oaiHarvester, $verb) {
+	function OAIXMLHandler(&$oaiHarvester, $verb, $callback = null) {
 		$this->oaiHarvester =& $oaiHarvester;
 		$this->header = array();
+		$this->callback =& $callback;
+		$this->recordCount = 0;
 
 		switch ($verb) {
 			case 'ListMetadataFormats':
@@ -160,8 +168,13 @@ class OAIXMLHandler extends XMLParserHandler {
 				if ($this->verb === 'ListIdentifiers') {
 					// Harvesting via ListIdentifiers: we need to separately request
 					// each record.
-					$this->result =& $this->oaiHarvester->updateRecord($this->header['identifier'], true);
+					$this->result =& $this->oaiHarvester->updateRecord($this->header['identifier'], $this->callback);
 				}
+
+				if ($this->callback && ++$this->recordCount % 50 == 0) {
+					call_user_func($this->callback, $this->recordCount . " records indexed.");
+				}
+
 				break;
 			case 'OAI-PMH':
 			case 'metadata':
@@ -210,7 +223,7 @@ class OAIXMLHandler extends XMLParserHandler {
 				// Received a resumption token. Fetch the next set
 				$token = $this->characterData;
 				if (!empty($token)) {
-					$this->oaiHarvester->handleResumptionToken($token);
+					$this->oaiHarvester->handleResumptionToken($token, $this->callback);
 				}
 				break;
 			default:

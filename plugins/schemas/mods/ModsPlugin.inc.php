@@ -124,6 +124,66 @@ class ModsPlugin extends SchemaPlugin {
 		return Locale::translate("plugins.schemas.mods.fields.$fieldSymbolic.description", $locale);
 	}
 
+	function getAuthorsAndTitle($entries) {
+		$authors = array();
+		$title = array();
+
+		foreach ($entries as $name => $entry) {
+			foreach ($entry as $entryId => $item) {
+				if (isset($item['attributes']['nameAssocId'])) {
+					$nameAssocId = $item['attributes']['nameAssocId'];
+					switch ($name) {
+						case 'roleTerm':
+							switch ($item['attributes']['type']) {
+								case 'text': $name = 'roleText'; break;
+								case 'code': $name = 'roleCode'; break;
+							}
+							break;
+					}
+					$authors[$nameAssocId][$name] = $item['value'];
+				} elseif (isset($item['attributes']['titleAssocId'])) {
+					// Assume the first entry is definitive
+					if (!isset($title[$name])) $title[$name] = $item['value'];
+				}
+			}
+		}
+		return array($authors, $title);
+	}
+
+	/**
+	 * Display a record summary.
+	 */
+	function displayRecordSummary(&$record) {
+		$templateMgr =& TemplateManager::getManager();
+		$templateMgr->assign_by_ref('record', $record);
+
+		$entries = $record->getEntries();
+		list($authors, $title) = $this->getAuthorsAndTitle($entries);
+
+		$templateMgr->assign('title', $title);
+		$templateMgr->assign('authors', $authors);
+		$templateMgr->assign('url', $this->getUrl($record, $entries));
+
+		$templateMgr->display($this->getTemplatePath() . 'summary.tpl', null);
+	}
+
+	/**
+	 * Display a record.
+	 */
+	function displayRecord(&$record) {
+		$templateMgr =& TemplateManager::getManager();
+
+		$entries = $record->getEntries();
+		list($authors, $title) = $this->getAuthorsAndTitle($entries);
+
+		$templateMgr->assign_by_ref('record', $record);
+		$templateMgr->assign_by_ref('archive', $record->getArchive());
+		$templateMgr->assign('title', $title);
+		$templateMgr->assign('authors', $authors);
+		$templateMgr->assign('entries', $entries);
+		$templateMgr->display($this->getTemplatePath() . 'record.tpl', null);
+	}
+
 	/**
 	 * Get a URL for the supplied record, if available; null otherwise.
 	 * @param $record object

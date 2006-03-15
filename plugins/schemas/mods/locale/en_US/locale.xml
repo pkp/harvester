@@ -33,6 +33,7 @@
 	<message key="plugins.schemas.mods.fields.displayForm.description">Unstructured form of a name</message>
 	<message key="plugins.schemas.mods.fields.affiliation.name">Affiliation</message>
 	<message key="plugins.schemas.mods.fields.affiliation.description">The name of an organization, institution, etc. with which the entity recorded was associated at the time that the resource was created</message>
+	<message key="plugins.schemas.mods.fields.name.name">Name</message>
 	<message key="plugins.schemas.mods.fields.role.name">Role</message>
 	<message key="plugins.schemas.mods.fields.role.description">A term(s) that designates the relationship (role) of the entity recorded in name in relation to the resource</message>
 	<message key="plugins.schemas.mods.fields.roleTerm.name">Role Term</message>
