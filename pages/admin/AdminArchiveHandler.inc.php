@@ -114,10 +114,8 @@ class AdminArchiveHandler extends AdminHandler {
 			$archive =& $archiveDao->getArchive($archiveId);
 			if ($archive) {
 				$plugins =& PluginRegistry::loadCategory('harvesters');
-				$recordDao =& DAORegistry::getDAO('RecordDAO');
-
 				$templateMgr = &TemplateManager::getManager();
-				$templateMgr->assign('numRecords', $recordDao->getRecordCount($archiveId));
+				$templateMgr->assign('numRecords', $archive->updateRecordCount());
 				$templateMgr->assign('lastIndexed', $archive->getLastIndexedDate());
 				$templateMgr->assign('title', $archive->getTitle());
 				$templateMgr->assign('archiveId', $archive->getArchiveId());

@@ -21,6 +21,7 @@
 	<message key="common.harvester2">Harvester2</message>
 	<message key="common.search">Search</message>
 	<message key="common.refresh">Refresh</message>
+	<message key="common.close">Close</message>
 	<message key="common.delete">Delete</message>
 	<message key="common.yes">Yes</message>
 	<message key="common.no">No</message>
@@ -365,4 +366,19 @@ Your server currently supports mbstring: <strong>{$supportsMBString}</strong>]]>
 	<message key="debug.notes.localeListLoad">Loaded locale list "{$localeList}" from XML</message>
 	<message key="debug.notes.missingLocaleKey">Missing locale key "{$key}".</message>
 	<message key="debug.notes.schemaMapLoad">Load schema map "{$schemaMap}" from XML</message>
+
+	<!-- Help messages -->
+	<message key="help.help">Help</message>
+	<message key="help.harvesterHelp">Harvester2 Help</message>
+	<message key="help.toc">Table of Contents</message>	
+	<message key="help.searchResults">Search Results</message>
+	<message key="help.matchesFound">{$matches} matches found</message>
+	<message key="help.noMatchingTopics">No matching help topics were found.</message>
+	<message key="help.helpIndex">Help Index</message>
+	<message key="help.contents">Contents</message>
+	<message key="help.upALevel">Up a Level</message>	
+	<message key="help.relatedTopics">Related Topics</message>
+	<message key="help.search">Search Help</message>
+	<message key="help.searchFor">Search help topics for</message>
+	<message key="help.searchResultsFor">Results for</message>
 </locale>

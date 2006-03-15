@@ -52,13 +52,28 @@ class harvest extends CommandLineTool {
 			$recordDao->deleteRecordsByArchiveId($archive->getArchiveId());
 			echo $recordCount . " records deleted.\n";
 
+			$fetchStartTime = time();
+
 			echo "Fetching records...\n";
 			$plugins =& PluginRegistry::loadCategory('harvesters');
 			$pluginName = $archive->getHarvesterPluginName();
-			if (!isset($plugins[$pluginName])) Request::redirect('admin', 'manage', $archive->getArchiveId());
+			if (!isset($plugins[$pluginName])) {
+				echo "Unknown harvester plugin \"$pluginName\"!\n";
+				return false;
+			}
+
 			$plugin = $plugins[$pluginName];
 			$plugin->updateIndex($archive, array(&$this, 'statusCallback'));
-			echo 'Finished; ' . $recordDao->getRecordCount($archive->getArchiveId()) . " record indexed.\n";
+
+			$fetchEndTime = time();
+			$timeElapsed = $fetchEndTime - $fetchStartTime;
+			$recordCount = $recordDao->getRecordCount($archive->getArchiveId());
+			if ($timeElapsed > 0) $recordsPerSecond = $recordCount / $timeElapsed;
+			else $recordsPerSecond = 0;
+			$recordsPerSecond = number_format($recordsPerSecond, 2);
+
+			echo "Finished; $recordCount records indexed in $timeElapsed seconds ($recordsPerSecond records per second).\n";
+			return true;
 		} else {
 			// No archive was specified or the specified ID was invalid.
 			// Display a list of archives.
@@ -70,6 +85,7 @@ class harvest extends CommandLineTool {
 				echo $archive->getArchiveId() . ': ' . $archive->getTitle() . "\n";
 				unset($archive);
 			}
+			return false;
 		}
 	}
 

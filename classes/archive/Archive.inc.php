@@ -182,6 +182,7 @@ class Archive extends DataObject {
 		$recordDao =& DAORegistry::getDAO('RecordDAO');
 		$count = $recordDao->getRecordCount($this->getArchiveId());
 		$this->updateSetting('recordCount', $count, 'int');
+		return $count;
 	}
 
 	/**
