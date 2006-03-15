@@ -148,10 +148,10 @@ class OAIHarvester extends Harvester {
 		return $result;
 	}
 
-	function handleResumptionToken($token, $callback = null) {
+	function handleResumptionToken($token, $callback = null, $recordOffset = 0) {
 		$verb = $this->getHarvestingMethod();
 		$parser =& new XMLParser();
-		$xmlHandler =& new OAIXMLHandler($this, $verb, $callback);
+		$xmlHandler =& new OAIXMLHandler($this, $verb, $callback, $recordOffset);
 
 		if ($callback) call_user_func($callback, "Handling resumption token \"$token\"");
 

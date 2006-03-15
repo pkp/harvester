@@ -58,11 +58,11 @@ class OAIXMLHandler extends XMLParserHandler {
 	/** @var $recordDao object */
 	var $recordDao;
 
-	function OAIXMLHandler(&$oaiHarvester, $verb, $callback = null) {
+	function OAIXMLHandler(&$oaiHarvester, $verb, $callback = null, $recordOffset = 0) {
 		$this->oaiHarvester =& $oaiHarvester;
 		$this->header = array();
 		$this->callback =& $callback;
-		$this->recordCount = 0;
+		$this->recordCount = $recordOffset;
 
 		switch ($verb) {
 			case 'ListMetadataFormats':
@@ -223,7 +223,7 @@ class OAIXMLHandler extends XMLParserHandler {
 				// Received a resumption token. Fetch the next set
 				$token = $this->characterData;
 				if (!empty($token)) {
-					$this->oaiHarvester->handleResumptionToken($token, $this->callback);
+					$this->oaiHarvester->handleResumptionToken($token, $this->callback, $this->recordCount);
 				}
 				break;
 			default:

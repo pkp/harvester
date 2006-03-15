@@ -58,7 +58,7 @@ class harvest extends CommandLineTool {
 			if (!isset($plugins[$pluginName])) Request::redirect('admin', 'manage', $archive->getArchiveId());
 			$plugin = $plugins[$pluginName];
 			$plugin->updateIndex($archive, array(&$this, 'statusCallback'));
-
+			echo 'Finished; ' . $recordDao->getRecordCount($archive->getArchiveId()) . " record indexed.\n";
 		} else {
 			// No archive was specified or the specified ID was invalid.
 			// Display a list of archives.
