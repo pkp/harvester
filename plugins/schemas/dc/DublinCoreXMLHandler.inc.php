@@ -46,8 +46,8 @@ class DublinCoreXMLHandler extends XMLParserHandler {
 		}
 
 		// Strip the "dc:" from the tag, and we have the field key.
-		if (substr($tag, 0, 3) === 'dc:') {
-			$fieldKey = substr($tag, 3);
+		if (String::substr($tag, 0, 3) === 'dc:') {
+			$fieldKey = String::substr($tag, 3);
 		} else {
 			$fieldKey = $tag;
 		}

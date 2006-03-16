@@ -103,14 +103,12 @@ class SearchHandler extends Handler {
 
 		// Determine the list of schemas that must be supported by the search form
 		$archiveIds = Request::getUserVar('archiveIds');
-		$isAllSelected = false;
 		$archiveDao =& DAORegistry::getDAO('ArchiveDAO');
 		$schemaList = array();
+
+		$isAllSelected = !is_array($archiveIds) || empty($archiveIds) || in_array('all', $archiveIds);
+
 		if (is_array($archiveIds)) foreach ($archiveIds as $archiveId) {
-			if ($archiveId === 'all') {
-				$isAllSelected = true;
-				break;
-			}
 			$archive =& $archiveDao->getArchive((int) $archiveId);
 			if ($archive && ($schemaPluginName = $archive->getSchemaPluginName()) != '') {
 				array_push($schemaList, $schemaPluginName);

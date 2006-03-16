@@ -50,7 +50,8 @@ class Harvester {
 
 	function insertEntry(&$field, $value, $attributes = array()) {
 		$record =& $this->getRecord();
-		if ($record) return $this->recordDao->insertEntry(
+		if (!$record) return null;
+		return $this->recordDao->insertEntry(
 			$record->getRecordId(),
 			$field->getFieldId(),
 			$value,

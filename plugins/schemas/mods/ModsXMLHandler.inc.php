@@ -51,8 +51,8 @@ class ModsXMLHandler extends XMLParserHandler {
 	function startElement(&$parser, $tag, $attributes) {
 		$this->characterData = null;
 
-		if (substr($tag, 0, 5) === 'mods:') {
-			$tag = substr($tag, 5);
+		if (String::substr($tag, 0, 5) === 'mods:') {
+			$tag = String::substr($tag, 5);
 		}
 		switch ($tag) {
 			case 'physicalDescription':
@@ -76,8 +76,8 @@ class ModsXMLHandler extends XMLParserHandler {
 
 	function endElement(&$parser, $tag) {
 		// Strip the "mods:" from the tag, and we have the field key.
-		if (substr($tag, 0, 5) === 'mods:') {
-			$tag = substr($tag, 5);
+		if (String::substr($tag, 0, 5) === 'mods:') {
+			$tag = String::substr($tag, 5);
 		}
 
 		if ($this->inRelatedItem) {
@@ -97,7 +97,7 @@ class ModsXMLHandler extends XMLParserHandler {
 				else unset($this->attributes[$tag]['nameAssocId']);
 				$field =& $this->harvester->getFieldByKey($tag, ModsPlugin::getName());
 				$entryId = $this->harvester->insertEntry($field, $this->characterData, $this->attributes[$tag]);
-				if (!isset($this->nameAssocId)) {
+				if ($entryId !== null && !isset($this->nameAssocId)) {
 					$recordDao =& DAORegistry::getDAO('RecordDAO');
 					$recordDao->insertEntryAttribute($entryId, 'nameAssocId', $entryId);
 					$this->nameAssocId = $entryId;
@@ -113,7 +113,7 @@ class ModsXMLHandler extends XMLParserHandler {
 				else unset($this->attributes[$tag]['titleAssocId']);
 				$field =& $this->harvester->getFieldByKey($tag, ModsPlugin::getName());
 				$entryId = $this->harvester->insertEntry($field, $this->characterData, $this->attributes[$tag]);
-				if (!isset($this->titleAssocId)) {
+				if ($entryId && !isset($this->titleAssocId)) {
 					$recordDao =& DAORegistry::getDAO('RecordDAO');
 					$recordDao->insertEntryAttribute($entryId, 'titleAssocId', $entryId);
 					$this->titleAssocId = $entryId;

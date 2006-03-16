@@ -15,9 +15,6 @@
 
 define('SEARCH_STOPWORDS_FILE', 'registry/stopwords.txt');
 
-// Words are truncated to at most this length
-define('SEARCH_KEYWORD_MAX_LENGTH', 40);
-
 class SearchIndex {
 	
 	/**
@@ -88,8 +85,7 @@ class SearchIndex {
 		$keywords = array();
 		foreach ($words as $k) {
 			if (!isset($stopwords[$k]) && String::strlen($k) >= $minLength && !is_numeric($k)) {
-				$k = substr($k, 0, $maxLength);
-				$keywords[] = String::substr($k, 0, SEARCH_KEYWORD_MAX_LENGTH);
+				$keywords[] = String::substr($k, 0, $maxLength);
 			}
 		}
 		return $keywords;
