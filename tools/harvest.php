@@ -19,6 +19,9 @@ class harvest extends CommandLineTool {
 	/** @var $archive object */
 	var $archive;
 
+	/** @var $params array */
+	var $params;
+
 	function harvest($argv = array()) {
 		parent::CommandLineTool($argv);
 
@@ -27,6 +30,24 @@ class harvest extends CommandLineTool {
 		$archiveId = (int) array_shift($argv);
 		$archiveDao =& DAORegistry::getDAO('ArchiveDAO');
 		$this->archive =& $archiveDao->getArchive($archiveId);
+
+		// Set the various flags for the parser, if supported.
+		$this->params = array();
+
+		foreach ($argv as $arg) switch ($arg) {
+			case 'verbose':
+				$this->params['callback'] = array(&$this, 'statusCallback');
+				break;
+			default:
+				if (($i = strpos($arg, '=')) !== false) {
+					// Treat the parameter like a name=value pair
+					$this->params[substr($arg, 0, $i-1)] = substr($arg, $i+1);
+				} else {
+					// Treat the parameter like a boolean.
+					$this->params[$arg] = true;
+				}
+				break;
+		}
 	}
 
 	/**
@@ -34,8 +55,15 @@ class harvest extends CommandLineTool {
 	 */
 	function usage() {
 		echo "Script to harvest an archive\n"
-			. "Usage: {$this->scriptName} [archive ID]\n"
-			. "If no archive ID is specified, a list will be displayed.\n";
+			. "Usage: {$this->scriptName} [archive ID] [flags]\n"
+			. "If no archive ID is specified, a list will be displayed.\n"
+			. "Flags include:\n"
+			. "\tverbose: Display status information during the harvest.\n"
+			. "\tflush: Flush the contents of the archive before harvesting.\n"
+			. "\tusage: Display additional usage information for the particular archive\n"
+			. "\tskipIndexing: Skip flushing and creation of search indexing\n"
+			. "Additional flags for each harvester can be listed using:\n"
+			. "\t{$this->scriptName} [archive ID] usage\n";
 	}
 	
 	/**
@@ -45,25 +73,39 @@ class harvest extends CommandLineTool {
 		if ($this->archive) {
 			$recordDao =& DAORegistry::getDAO('RecordDAO');
 			$archive =& $this->archive;
-			
-			echo 'Selected archive: ' . $archive->getTitle() . "\n";
-			$recordCount = $recordDao->getRecordCount($archive->getArchiveId());
-			echo 'Flushing metadata index for archive... ';
-			$recordDao->deleteRecordsByArchiveId($archive->getArchiveId());
-			echo $recordCount . " records deleted.\n";
 
-			$fetchStartTime = time();
-
-			echo "Fetching records...\n";
+			// Get the archive plugin
 			$plugins =& PluginRegistry::loadCategory('harvesters');
 			$pluginName = $archive->getHarvesterPluginName();
 			if (!isset($plugins[$pluginName])) {
 				echo "Unknown harvester plugin \"$pluginName\"!\n";
 				return false;
 			}
-
 			$plugin = $plugins[$pluginName];
-			$plugin->updateIndex($archive, array(&$this, 'statusCallback'));
+
+			if (isset($this->params['usage'])) {
+				$this->usage();
+				$plugin->describeOptions();
+				return true;
+			}
+			
+			echo 'Selected archive: ' . $archive->getTitle() . "\n";
+			$recordCount = $recordDao->getRecordCount($archive->getArchiveId());
+			if (isset($this->params['flush'])) {
+				echo 'Flushing metadata index for archive... ';
+				$recordDao->deleteRecordsByArchiveId(
+					$archive->getArchiveId(),
+					!isset($this->params['skipIndexing'])
+				);
+				echo $recordCount . " records deleted.\n";
+			} else {
+				echo "Not flushing an existing $recordCount records.\n";
+			}
+
+			$fetchStartTime = time();
+
+			echo "Fetching records...\n";
+			$plugin->updateIndex($archive, $this->params);
 
 			$fetchEndTime = time();
 			$timeElapsed = $fetchEndTime - $fetchStartTime;
@@ -73,6 +115,13 @@ class harvest extends CommandLineTool {
 			$recordsPerSecond = number_format($recordsPerSecond, 2);
 
 			echo "Finished; $recordCount records indexed in $timeElapsed seconds ($recordsPerSecond records per second).\n";
+			if ($errors = $plugin->getErrors()) {
+				echo "Errors/Warnings:\n";
+				foreach ($errors as $error) {
+					echo "\t$error\n";
+				}
+				return false;
+			}
 			return true;
 		} else {
 			// No archive was specified or the specified ID was invalid.

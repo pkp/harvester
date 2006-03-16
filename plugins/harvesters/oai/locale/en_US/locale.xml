@@ -26,4 +26,8 @@
 	<message key="plugins.harvesters.oai.archive.form.oaiIndexMethod.ListIdentifiers">ListIdentifiers</message>
 
 	<message key="plugins.harvesters.oai.errors.unknownHeaderTag">An unknown header tag was received from the server: {$tag}</message>
+
+	<message key="plugins.harvesters.oai.toolUsage"><![CDATA[The following additional flags are available for the OAI Harvester:
+	skipExistingEntries: When set, existing records will not be updated
+]]></message>
 </locale>

@@ -218,10 +218,13 @@ class RecordDAO extends DAO {
 	/**
 	 * Delete a record by ID, INCLUDING ALL DEPENDENT ITEMS.
 	 * @param $recordId int
+	 * @param $includeIndexing boolean Whether or not to delete indexing info, true by default
 	 */
-	function deleteRecordById($recordId) {
-		$searchDao =& DAORegistry::getDAO('SearchDAO');
-		$searchDao->deleteRecordObjects($recordId);
+	function deleteRecordById($recordId, $includeIndexing = true) {
+		if ($includeIndexing) {
+			$searchDao =& DAORegistry::getDAO('SearchDAO');
+			$searchDao->deleteRecordObjects($recordId);
+		}
 		$this->deleteEntriesByRecordId($recordId);
 		return $this->update(
 			'DELETE FROM records WHERE record_id = ?', $recordId

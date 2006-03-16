@@ -245,9 +245,9 @@ class HarvesterPlugin extends Plugin {
 	 * This function is called to update an archive's metadata.
 	 * It should be overridden by subclasses.
 	 * @param $archive object
-	 * @param $callback mixed Callback to execute every 100 records
+	 * @param $params array Additional parameters to harvester
 	 */
-	function updateIndex(&$archive, $callback = null) {
+	function updateIndex(&$archive, $params = array()) {
 		// Subclasses should override this method
 	}
 
@@ -263,6 +263,13 @@ class HarvesterPlugin extends Plugin {
 	 */
 	function getErrors() {
 		return $this->errors;
+	}
+
+	/**
+	 * Describe the harvester's options for the command-line tool.
+	 */
+	function describeOptions() {
+		fatalError('ABSTRACT CLASS');
 	}
 }
 

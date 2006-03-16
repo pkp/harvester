@@ -102,12 +102,12 @@ class OAIHarvester extends Harvester {
 		}
 	}
 
-	function updateRecords($callback) {
+	function updateRecords($params = array()) {
 		$this->fieldDao->enableCaching();
 
 		$verb = $this->getHarvestingMethod();
 		$parser =& new XMLParser();
-		$xmlHandler =& new OAIXMLHandler($this, $verb, $callback);
+		$xmlHandler =& new OAIXMLHandler($this, $verb, $params);
 
 		$parser->setHandler($xmlHandler);
 		$result =& $parser->parse($this->addParameters($this->oaiUrl, array(
@@ -126,13 +126,13 @@ class OAIHarvester extends Harvester {
 	/**
 	 * Update a single record by identifier.
 	 * @param $identifier string
-	 * @param $callback mixed
+	 * @param $params array
 	 * @return object Record
 	 */
-	function &updateRecord($identifier, $callback) {
+	function &updateRecord($identifier, $params = array()) {
 		$verb = 'GetRecord';
 		$parser =& new XMLParser();
-		$xmlHandler =& new OAIXMLHandler($this, $verb, $callback);
+		$xmlHandler =& new OAIXMLHandler($this, $verb, $params);
 
 		$parser->setHandler($xmlHandler);
 		$result =& $parser->parse($this->addParameters($this->oaiUrl, array(
@@ -148,12 +148,14 @@ class OAIHarvester extends Harvester {
 		return $result;
 	}
 
-	function handleResumptionToken($token, $callback = null, $recordOffset = 0) {
+	function handleResumptionToken($token, $params = array(), $recordOffset = 0) {
 		$verb = $this->getHarvestingMethod();
 		$parser =& new XMLParser();
-		$xmlHandler =& new OAIXMLHandler($this, $verb, $callback, $recordOffset);
+		$xmlHandler =& new OAIXMLHandler($this, $verb, $params, $recordOffset);
 
-		if ($callback) call_user_func($callback, "Handling resumption token \"$token\"");
+		if (isset($params['callback'])) {
+			call_user_func($params['callback'], "Handling resumption token \"$token\"");
+		}
 
 		$parser->setHandler($xmlHandler);
 		$result =& $parser->parse($this->addParameters($this->oaiUrl, array(

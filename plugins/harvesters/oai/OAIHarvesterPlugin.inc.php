@@ -91,9 +91,9 @@ class OAIHarvesterPlugin extends HarvesterPlugin {
 	/**
 	 * Update the metadata index.
 	 * @param $archive object
-	 * @param $callback mixed
+	 * @param $params array
 	 */
-	function updateIndex(&$archive, $callback = null) {
+	function updateIndex(&$archive, $params = array()) {
 		$this->import('OAIHarvester');
 		$this->import('OAIXMLHandler');
 
@@ -102,7 +102,7 @@ class OAIHarvesterPlugin extends HarvesterPlugin {
 		$oaiHarvester =& new OAIHarvester($archive);
 		$templateMgr =& TemplateManager::getManager();
 
-		if (!$oaiHarvester->updateRecords($callback)) {
+		if (!$oaiHarvester->updateRecords($params)) {
 			foreach ($oaiHarvester->getErrors() as $error) {
 				$this->addError($error);
 			}
@@ -114,6 +114,15 @@ class OAIHarvesterPlugin extends HarvesterPlugin {
 		$archive->updateRecordCount();
 		return $result;
 	}
+
+	/**
+	 * Describe the options for the command-line harvesting tool.
+	 * @return String
+	 */
+	function describeOptions() {
+		echo Locale::translate('plugins.harvesters.oai.toolUsage') . "\n";
+	}
+
 }
 
 ?>

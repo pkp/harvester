@@ -16,8 +16,8 @@
 import('schema.SchemaMap');
 
 class OAIXMLHandler extends XMLParserHandler {
-	/** @var $callback mixed */
-	var $callback;
+	/** @var $params array */
+	var $params;
 
 	/** @var $recordCount int */
 	var $recordCount;
@@ -58,10 +58,10 @@ class OAIXMLHandler extends XMLParserHandler {
 	/** @var $recordDao object */
 	var $recordDao;
 
-	function OAIXMLHandler(&$oaiHarvester, $verb, $callback = null, $recordOffset = 0) {
+	function OAIXMLHandler(&$oaiHarvester, $verb, $params = array(), $recordOffset = 0) {
 		$this->oaiHarvester =& $oaiHarvester;
 		$this->header = array();
-		$this->callback =& $callback;
+		$this->params =& $params;
 		$this->recordCount = $recordOffset;
 
 		switch ($verb) {
@@ -155,12 +155,19 @@ class OAIXMLHandler extends XMLParserHandler {
 					$record->setDatestamp($this->header['datestamp']);
 					$this->recordDao->insertRecord($record);
 				} else {
-					// This is an old record: Delete old entries and indexing
-					$searchDao =& DAORegistry::getDAO('SearchDAO');
-					$searchDao->deleteRecordObjects($record->getRecordId());
-					$this->recordDao->deleteEntriesByRecordId($record->getRecordId());
-					$record->setDatestamp($this->header['datestamp']);
-					$this->recordDao->updateRecord($record);
+					if (isset($this->params['skipExistingEntries'])) {
+						// Make sure the record isn't overwritten
+						unset($record);
+					} else {
+						// This is an old record: Delete old entries and indexing
+						if (!isset($this->params['skipIndexing'])) {
+							$searchDao =& DAORegistry::getDAO('SearchDAO');
+							$searchDao->deleteRecordObjects($record->getRecordId());
+						}
+						$this->recordDao->deleteEntriesByRecordId($record->getRecordId());
+						$record->setDatestamp($this->header['datestamp']);
+						$this->recordDao->updateRecord($record);
+					}
 				}
 
 				$this->oaiHarvester->setRecord($record);
@@ -168,11 +175,11 @@ class OAIXMLHandler extends XMLParserHandler {
 				if ($this->verb === 'ListIdentifiers') {
 					// Harvesting via ListIdentifiers: we need to separately request
 					// each record.
-					$this->result =& $this->oaiHarvester->updateRecord($this->header['identifier'], $this->callback);
+					$this->result =& $this->oaiHarvester->updateRecord($this->header['identifier'], $this->params);
 				}
 
-				if ($this->callback && ++$this->recordCount % 50 == 0) {
-					call_user_func($this->callback, $this->recordCount . " records indexed.");
+				if (isset($this->params['callback']) && ++$this->recordCount % 50 == 0) {
+					call_user_func($this->params['callback'], $this->recordCount . " records indexed.");
 				}
 
 				break;
@@ -214,16 +221,18 @@ class OAIXMLHandler extends XMLParserHandler {
 				}
 				break;
 			case 'record':
-				// Update the index for this record
-				import('search.SearchIndex');
-				$record =& $this->oaiHarvester->getRecord();
-				SearchIndex::indexRecord($record);
+				if (!isset($this->params['skipIndexing'])) {
+					// Update the index for this record
+					import('search.SearchIndex');
+					$record =& $this->oaiHarvester->getRecord();
+					if ($record) SearchIndex::indexRecord($record);
+				}
 				break;
 			case 'resumptionToken':
 				// Received a resumption token. Fetch the next set
 				$token = $this->characterData;
 				if (!empty($token)) {
-					$this->oaiHarvester->handleResumptionToken($token, $this->callback, $this->recordCount);
+					$this->oaiHarvester->handleResumptionToken($token, $this->params, $this->recordCount);
 				}
 				break;
 			default:
