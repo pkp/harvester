@@ -197,7 +197,7 @@ class CrosswalkDAO extends DAO {
 	}
 	
 	/**
-	 * Delete crosswalk fields by crosswalk ID, INCLUDING ALL DEPENDENT ITEMS.
+	 * Insert fields for a crosswalk.
 	 * @param $crosswalkId int
 	 */
 	function insertCrosswalkField($crosswalkId, $fieldId) {
@@ -232,6 +232,78 @@ class CrosswalkDAO extends DAO {
 		$returner = &new DAOResultFactory($result, $this, '_returnCrosswalkFromRow');
 		return $returner;
 	}
+
+	/**
+	 * Used internally by installCrosswalks to perform variable and translation replacements.
+	 * @param $rawInput string contains text including variable and/or translate replacements.
+	 * @param $paramArray array contains variables for replacement
+	 * @returns string
+	 */
+	function _performReplacement($rawInput, $paramArray = array()) {
+		$value = preg_replace_callback('{{translate key="([^"]+)"}}', '_installer_crosswalk_regexp_callback', $rawInput);
+		foreach ($paramArray as $pKey => $pValue) {
+			$value = str_replace('{$' . $pKey . '}', $pValue, $value);
+		}
+		return $value;
+	}
+
+	/**
+	 * Install crosswalks from an XML file.
+	 * @param $filename string Name of XML file to parse and install
+	 * @param $paramArray array Optional parameters for variable replacement in crosswalks
+	 */
+	function installSettings($filename, $paramArray = array()) {
+		$xmlParser = &new XMLParser();
+		$tree = $xmlParser->parse($filename);
+
+		if (!$tree) {
+			$xmlParser->destroy();
+			return false;
+		}
+
+		$schemaDao =& DAORegistry::getDAO('SchemaDAO');
+		$fieldDao =& DAORegistry::getDAO('FieldDAO');
+
+		foreach ($tree->getChildren() as $crosswalkNode) {
+			$nameNode = &$crosswalkNode->getChildByName('name');
+			$descriptionNode = &$crosswalkNode->getChildByName('description');
+
+			if (isset($nameNode) && isset($descriptionNode)) {
+				$name = $this->_performReplacement($nameNode->getValue());
+				$description = $this->_performReplacement($descriptionNode->getValue());
+
+				$crosswalk =& new Crosswalk();
+				$crosswalk->setName($name);
+				$crosswalk->setDescription($description);
+				$crosswalk->setSeq(99999); // KLUDGE
+				$this->insertCrosswalk($crosswalk);
+				$this->resequenceCrosswalks();
+
+				foreach ($crosswalkNode->getChildren() as $node) if ($node->getName() == 'field') {
+					$schemaPluginName = $node->getAttribute('schema');
+					$fieldName = $node->getAttribute('name');
+
+					$schema =& $schemaDao->buildSchema($schemaPluginName);
+					$field =& $fieldDao->buildField($fieldName, $schemaPluginName);
+
+					$this->insertCrosswalkField($crosswalk->getCrosswalkId(), $field->getFieldId());
+					unset($schema);
+					unset($field);
+				}
+				unset($crosswalk);
+			}
+		}
+
+		$xmlParser->destroy();
+
+	}
+}
+
+/**
+ * Used internally by crosswalk installation code to perform translation function.
+ */
+function _installer_crosswalk_regexp_callback($matches) {
+	return Locale::translate($matches[1]);
 }
 
 ?>

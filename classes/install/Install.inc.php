@@ -171,6 +171,9 @@ class Install extends Installer {
 				'adminEmail' => $this->getParam('adminEmail'),
 				'encryptedPassword' => Validation::encryptCredentials($this->getParam('adminUsername'), $this->getParam('adminPassword'), $this->getParam('encryption'))
 			));
+
+			$crosswalkDao =& DAORegistry::getDAO('CrosswalkDAO');
+			$crosswalkDao->installSettings('registry/crosswalks.xml');
 		}
 		
 		return true;

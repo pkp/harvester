@@ -56,6 +56,4 @@ require('includes/driver.inc.php');
 initSystem();
 handleRequest();
 
-import('schema.SchemaMap');
-SchemaMap::getSchemaMap();
 ?>
