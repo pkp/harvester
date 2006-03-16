@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  * crosswalks.xml
+  *
+  * Copyright (c) 2005-2006 The Public Knowledge Project
+  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
+  *
+  * Default crosswalks.
+  *
+  * $Id$
+  -->
+
+<!DOCTYPE crosswalks [
+	<!ELEMENT crosswalks (crosswalk+)>
+	<!ELEMENT crosswalk (name, description, field+)>
+	<!ELEMENT name (#PCDATA)>
+	<!ELEMENT description (#PCDATA)>
+	<!ELEMENT field EMPTY>
+	<!ATTLIST field 
+		schema CDATA #REQUIRED
+		name CDATA #REQUIRED>
+]>
+
+<crosswalks>
+	<crosswalk>
+		<name>Author Crosswalk</name>
+		<description>This crosswalk associates the creator / author fields from various schemas.</description>
+		<field schema="DublinCorePlugin" name="creator"/>
+		<field schema="MarcPlugin" name="720"/>
+		<field schema="ModsPlugin" name="namePart"/>
+	</crosswalk>
+</crosswalks>
