@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE toc SYSTEM "../../../toc.dtd">
+
+<!--
+  * 000000.xml
+  *
+  * Copyright (c) 2003-2005 The Public Knowledge Project
+  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
+  *
+  * Main table of contents for help. 
+  *
+  * $Id$
+  -->
+
+<toc id="index/toc/000000" locale="en_US" title="Harvester Help" parent_topic="index/topic/000000">
+	<topic id="index/topic/000000" title="Introduction to Harvester2" />
+</toc>
