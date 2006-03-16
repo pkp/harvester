@@ -79,6 +79,22 @@ class AdminCrosswalkHandler extends AdminHandler {
 	function createCrosswalk() {
 		AdminCrosswalkHandler::editCrosswalk();
 	}
+
+	/**
+	 * Reset crosswalks to the installation default.
+	 */
+	function resetCrosswalks() {
+		parent::validate();
+
+		$crosswalkDao =& DAORegistry::getDAO('CrosswalkDAO');
+		$crosswalks =& $crosswalkDao->getCrosswalks();
+		while ($crosswalk =& $crosswalks->next()) {
+			$crosswalkDao->deleteCrosswalk($crosswalk);
+			unset($crosswalk);
+		}
+		$crosswalkDao->installCrosswalks('registry/crosswalks.xml');
+		Request::redirect('admin', 'crosswalks');
+	}
 }
 
 ?>

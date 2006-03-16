@@ -173,7 +173,7 @@ class Install extends Installer {
 			));
 
 			$crosswalkDao =& DAORegistry::getDAO('CrosswalkDAO');
-			$crosswalkDao->installSettings('registry/crosswalks.xml');
+			$crosswalkDao->installCrosswalks('registry/crosswalks.xml');
 		}
 		
 		return true;

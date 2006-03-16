@@ -85,6 +85,11 @@ class AdminHandler extends Handler {
 		AdminCrosswalkHandler::createCrosswalk();
 	}
 	
+	function resetCrosswalks() {
+		import('pages.admin.AdminCrosswalkHandler');
+		AdminCrosswalkHandler::resetCrosswalks();
+	}
+	
 	function deleteCrosswalk($args) {
 		import('pages.admin.AdminCrosswalkHandler');
 		AdminCrosswalkHandler::deleteCrosswalk($args);

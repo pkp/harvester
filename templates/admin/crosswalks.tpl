@@ -51,6 +51,6 @@
 	{/if}
 </table>
 
-<p><a href="{url op="createCrosswalk"}" class="action">{translate key="admin.crosswalks.addCrosswalk"}</a></p>
+<p><a href="{url op="createCrosswalk"}" class="action">{translate key="admin.crosswalks.addCrosswalk"}</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="#" class="action" onclick="confirmAction('{url op="resetCrosswalks"}', '{translate key="admin.crosswalks.confirmReset"}')">{translate key="admin.crosswalks.reset"}</a></p>
 
 {include file="common/footer.tpl"}

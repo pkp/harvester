@@ -24,7 +24,25 @@
 
 <crosswalks>
 	<crosswalk>
-		<name>Author Crosswalk</name>
+		<name>Title</name>
+		<description>This crosswalk associates the title fields from various schemas.</description>
+		<field schema="DublinCorePlugin" name="title"/>
+		<field schema="MarcPlugin" name="130"/>
+		<field schema="MarcPlugin" name="210"/>
+		<field schema="MarcPlugin" name="222"/>
+		<field schema="MarcPlugin" name="240"/>
+		<field schema="MarcPlugin" name="242"/>
+		<field schema="MarcPlugin" name="243"/>
+		<field schema="MarcPlugin" name="246"/>
+		<field schema="MarcPlugin" name="247"/>
+		<field schema="ModsPlugin" name="title"/>
+		<field schema="ModsPlugin" name="subTitle"/>
+		<field schema="ModsPlugin" name="partName"/>
+		<field schema="ModsPlugin" name="nonSort"/>
+		<field schema="ModsPlugin" name="displayForm"/>
+	</crosswalk>
+	<crosswalk>
+		<name>Author</name>
 		<description>This crosswalk associates the creator / author fields from various schemas.</description>
 		<field schema="DublinCorePlugin" name="creator"/>
 		<field schema="MarcPlugin" name="720"/>

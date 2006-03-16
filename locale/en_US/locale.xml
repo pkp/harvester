@@ -230,6 +230,8 @@ Your server currently supports mbstring: <strong>{$supportsMBString}</strong>]]>
 	<message key="admin.crosswalks.crosswalk.description">Description</message>
 	<message key="admin.crosswalks.crosswalks.noneCreated">None Created</message>
 	<message key="admin.crosswalks.addCrosswalk">Add Crosswalk</message>
+	<message key="admin.crosswalks.reset">Reset To Defaults</message>
+	<message key="admin.crosswalks.confirmReset">Are you sure you wish to reset crosswalks to defaults?</message>
 	<message key="admin.crosswalks.confirmDelete">Are you sure you wish to delete this crosswalk?</message>
 	<message key="admin.crosswalks.addCrosswalk">Add Crosswalk</message>
 	<message key="admin.crosswalks.form.nameRequired">A name is required.</message>

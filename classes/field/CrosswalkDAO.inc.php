@@ -252,7 +252,7 @@ class CrosswalkDAO extends DAO {
 	 * @param $filename string Name of XML file to parse and install
 	 * @param $paramArray array Optional parameters for variable replacement in crosswalks
 	 */
-	function installSettings($filename, $paramArray = array()) {
+	function installCrosswalks($filename, $paramArray = array()) {
 		$xmlParser = &new XMLParser();
 		$tree = $xmlParser->parse($filename);
 
