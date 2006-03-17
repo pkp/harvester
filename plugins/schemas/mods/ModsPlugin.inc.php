@@ -69,7 +69,15 @@ class ModsPlugin extends SchemaPlugin {
 				'genre',
 				'placeTerm',
 				'publisher',
-				// dateIssued, dateCreated, dateCaptured, dateValid, dateModified, copyrightDate, dateOther, recordCreationDate, recordChangeDate
+				'dateIssued',
+				'dateCreated',
+				'dateCaptured',
+				'dateValid',
+				'dateModified',
+				'copyrightDate',
+				'dateOther',
+				'recordCreationDate',
+				'recordChangeDate',
 				'edition',
 				'issuance',
 				'frequency',
@@ -197,6 +205,25 @@ class ModsPlugin extends SchemaPlugin {
 			}
 		}
 		return null;
+	}
+
+	function getFieldType($name) {
+		switch ($name) {
+			case 'dateIssued':
+			case 'dateCreated':
+			case 'dateCaptured':
+			case 'dateValid':
+			case 'dateModified':
+			case 'copyrightDate':
+			case 'dateOther':
+			case 'recordCreationDate':
+			case 'recordChangeDate':
+				return FIELD_TYPE_DATE;
+				break;
+			default:
+				return FIELD_TYPE_STRING;
+				break;
+		}
 	}
 }
 

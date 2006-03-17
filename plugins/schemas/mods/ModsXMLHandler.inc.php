@@ -124,6 +124,15 @@ class ModsXMLHandler extends XMLParserHandler {
 			case 'genre':
 			case 'placeTerm':
 			case 'publisher':
+			case 'dateIssued':
+			case 'dateCreated':
+			case 'dateCaptured':
+			case 'dateValid':
+			case 'dateModified':
+			case 'copyrightDate':
+			case 'dateOther':
+			case 'recordCreationDate':
+			case 'recordChangeDate':
 			case 'edition':
 			case 'issuance':
 			case 'frequency':
@@ -170,17 +179,6 @@ class ModsXMLHandler extends XMLParserHandler {
 				$tagName = $this->inPhysicalDescription?'physicalDescriptionNote':'note';
 				$field =& $this->harvester->getFieldByKey($tagName, ModsPlugin::getName());
 				$entryId = $this->harvester->insertEntry($field, $this->characterData, $this->attributes[$tagName]);
-				break;
-			case 'dateIssued':
-			case 'dateCreated':
-			case 'dateCaptured':
-			case 'dateValid':
-			case 'dateModified':
-			case 'copyrightDate':
-			case 'dateOther':
-			case 'recordCreationDate':
-			case 'recordChangeDate':
-				// FIXME;
 				break;
 			case 'mods':
 			case 'titleInfo':

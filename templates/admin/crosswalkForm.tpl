@@ -71,6 +71,7 @@ function refreshForm() {
 			<td>{$schemaPlugin->getSchemaDisplayName()}</td>
 			<td>
 				{foreach from=$schemaPlugin->getFieldList() item=field}
+					{if $schemaPlugin->getFieldType($field) == $crosswalkType}
 					{* Determine whether this field is already chosen *}
 					{assign var=isFieldChosen value=0}
 					{foreach from=$fields item=chosenField}
@@ -81,6 +82,7 @@ function refreshForm() {
 					{/foreach}
 					<input type="hidden" name="{$schemaPlugin->getName()|escape}-{$field|escape}-displayed" value="1"/>
 					<input type="checkbox" {if $isFieldChosen}checked="checked" {/if}class="checkbox" name="{$schemaPlugin->getName()|escape}-{$field|escape}" value="1"/>&nbsp;<strong>{$schemaPlugin->getFieldName($field)|escape}</strong>:&nbsp;{$schemaPlugin->getFieldDescription($field)|escape}<br/>
+					{/if}
 				{/foreach}
 			</td>
 		</tr>

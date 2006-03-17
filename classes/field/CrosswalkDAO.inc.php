@@ -70,7 +70,7 @@ class CrosswalkDAO extends DAO {
 	function insertCrosswalk(&$crosswalk) {
 		$this->update(
 			'INSERT INTO crosswalks
-				(name, description, seq)
+				(name, description, seq, type)
 				VALUES
 				(?, ?, ?, ?)',
 			array(
@@ -269,7 +269,7 @@ class CrosswalkDAO extends DAO {
 		$fieldDao =& DAORegistry::getDAO('FieldDAO');
 
 		foreach ($tree->getChildren() as $crosswalkNode) {
-			$type = &$crosswalkNode->getAttribute('type');
+			$type = $crosswalkNode->getAttribute('type');
 			$nameNode = &$crosswalkNode->getChildByName('name');
 			$descriptionNode = &$crosswalkNode->getChildByName('description');
 
@@ -282,8 +282,13 @@ class CrosswalkDAO extends DAO {
 				$crosswalk->setDescription($description);
 				$crosswalk->setSeq(99999); // KLUDGE
 				switch($type) {
-					case 'text': $crosswalk->setType(FIELD_TYPE_STRING); break;
-					case 'date': $crosswalk->setType(FIELD_TYPE_DATE); break;
+					case 'date':
+						$crosswalk->setType(FIELD_TYPE_DATE);
+						break;
+					case 'text':
+					default:
+						$crosswalk->setType(FIELD_TYPE_STRING);
+						break;
 				}
 				$this->insertCrosswalk($crosswalk);
 				$this->resequenceCrosswalks();

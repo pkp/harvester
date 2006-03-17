@@ -14,6 +14,7 @@
 <!DOCTYPE crosswalks [
 	<!ELEMENT crosswalks (crosswalk+)>
 	<!ELEMENT crosswalk (name, description, field+)>
+	<!ATTLIST crosswalk type (text | string) #IMPLIED>
 	<!ELEMENT name (#PCDATA)>
 	<!ELEMENT description (#PCDATA)>
 	<!ELEMENT field EMPTY>
@@ -23,7 +24,7 @@
 ]>
 
 <crosswalks>
-	<crosswalk>
+	<crosswalk type="text">
 		<name>Title</name>
 		<description>This crosswalk associates the title fields from various schemas.</description>
 		<field schema="DublinCorePlugin" name="title"/>
@@ -33,6 +34,7 @@
 		<field schema="MarcPlugin" name="240"/>
 		<field schema="MarcPlugin" name="242"/>
 		<field schema="MarcPlugin" name="243"/>
+		<field schema="MarcPlugin" name="245"/>
 		<field schema="MarcPlugin" name="246"/>
 		<field schema="MarcPlugin" name="247"/>
 		<field schema="ModsPlugin" name="title"/>
@@ -41,11 +43,18 @@
 		<field schema="ModsPlugin" name="nonSort"/>
 		<field schema="ModsPlugin" name="displayForm"/>
 	</crosswalk>
-	<crosswalk>
+	<crosswalk type="text">
 		<name>Author</name>
 		<description>This crosswalk associates the creator / author fields from various schemas.</description>
 		<field schema="DublinCorePlugin" name="creator"/>
 		<field schema="MarcPlugin" name="720"/>
+		<field schema="ModsPlugin" name="namePart"/>
+	</crosswalk>
+	<crosswalk type="date">
+		<name>Date</name>
+		<description>This crosswalk associates the date published fields from various schemas.</description>
+		<field schema="DublinCorePlugin" name="date"/>
+		<field schema="MarcPlugin" name="033"/>
 		<field schema="ModsPlugin" name="namePart"/>
 	</crosswalk>
 </crosswalks>

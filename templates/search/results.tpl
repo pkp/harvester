@@ -45,8 +45,15 @@ function ensureKeyword() {
 		{/foreach}
 		{foreach from=$fields item=field}
 			{assign var=fieldId value=$field->getFieldId()}
-			{assign var=fieldValueVar value=field-$fieldId}
-			<input type="hidden" name="field-{$fieldId}" value="{$fieldValueVar|get_value|escape}" />
+			{if $field->getFieldType() == FIELD_TYPE_DATE}
+				{assign var=fieldValueVar value=field-$fieldId-from}
+				<input type="hidden" name="{$fieldValueVar}" value="{$fieldValueVar|get_value|escape}" />
+				{assign var=fieldValueVar value=field-$fieldId-to}
+				<input type="hidden" name="{$fieldValueVar}" value="{$fieldValueVar|get_value|escape}" />
+			{else}
+				{assign var=fieldValueVar value=field-$fieldId}
+				<input type="hidden" name="{$fieldValueVar}" value="{$fieldValueVar|get_value|escape}" />
+			{/if}
 		{/foreach}
 	</form>
 	<a href="javascript:document.revise.submit()" class="action">{translate key="search.reviseSearch"}</a><br />&nbsp;

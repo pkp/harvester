@@ -55,24 +55,52 @@ class SearchHandler extends Handler {
 		$keywords = array(
 			'all' => Search::parseQuery($query),
 			'crosswalk' => array(),
-			'field' => array()
+			'field' => array(),
+			'date-from' => array(),
+			'date-to' => array()
+		);
+		$dates = array(
+			'field' => array(),
+			'crosswalk' => array()
 		);
 
-		if (is_array($fields)) foreach ($fields as $field) {
-			$value = Request::getUserVar('field-' . $field->getFieldId());
-			if (!empty($value)) {
-				$keywords['field'][$field->getFieldId()] = Search::parseQuery($value);
-			}
+		if (is_array($fields)) foreach ($fields as $field) switch ($field->getFieldType()) {
+			case FIELD_TYPE_DATE:
+				$varName = 'field-' . $field->getFieldId();
+				$dateFromName = "$varName-from";
+				$dateToName = "$varName-to";
+
+				$dateFrom = Request::getUserDateVar($dateFromName, 1, 1);
+				$dateTo = Request::getUserDateVar($dateToName, 32, 12, null, 23, 59, 59);
+				$dates['field'][$field->getFieldId()] = array($dateFrom, $dateTo);
+				break;
+			case FIELD_TYPE_STRING:
+			default:
+				$value = Request::getUserVar('field-' . $field->getFieldId());
+				if (!empty($value)) {
+					$keywords['field'][$field->getFieldId()] = Search::parseQuery($value);
+				}
 		}
 
-		if (is_array($crosswalks)) foreach ($crosswalks as $crosswalk) {
-			$value = Request::getUserVar('crosswalk-' . $crosswalk->getCrosswalkId());
-			if (!empty($value)) {
-				$keywords['crosswalk'][$crosswalk->getCrosswalkId()] = Search::parseQuery($value);
-			}
+		if (is_array($crosswalks)) foreach ($crosswalks as $crosswalk) switch ($crosswalk->getType()) {
+			case FIELD_TYPE_DATE:
+				$varName = 'crosswalk-' . $crosswalk->getCrosswalkId();
+				$dateFromName = "$varName-from";
+				$dateToName = "$varName-to";
+
+				$dateFrom = Request::getUserDateVar($dateFromName, 1, 1);
+				$dateTo = Request::getUserDateVar($dateToName, 32, 12, null, 23, 59, 59);
+				$dates['crosswalk'][$crosswalk->getCrosswalkId()] = array($dateFrom, $dateTo);
+				break;
+			case FIELD_TYPE_STRING:
+			default:
+				$value = Request::getUserVar('crosswalk-' . $crosswalk->getCrosswalkId());
+				if (!empty($value)) {
+					$keywords['crosswalk'][$crosswalk->getCrosswalkId()] = Search::parseQuery($value);
+				}
 		}
 
-		$results = &Search::retrieveResults($keywords, $archiveIds, $rangeInfo);
+		$results = &Search::retrieveResults($keywords, $dates, $archiveIds, $rangeInfo);
 
 		$templateMgr = &TemplateManager::getManager();
 		$templateMgr->assign('helpTopicId', 'site.search');
@@ -108,7 +136,7 @@ class SearchHandler extends Handler {
 
 		$isAllSelected = !is_array($archiveIds) || empty($archiveIds) || in_array('all', $archiveIds);
 
-		if (is_array($archiveIds)) foreach ($archiveIds as $archiveId) {
+		if (!$isAllSelected) foreach ($archiveIds as $archiveId) {
 			$archive =& $archiveDao->getArchive((int) $archiveId);
 			if ($archive && ($schemaPluginName = $archive->getSchemaPluginName()) != '') {
 				array_push($schemaList, $schemaPluginName);
@@ -136,9 +164,25 @@ class SearchHandler extends Handler {
 			$fieldDao =& DAORegistry::getDAO('FieldDAO');
 			$fields =& $fieldDao->getFields($schema->getSchemaId());
 			$fields =& $fields->toArray();
-			foreach ($fields as $field) {
-				$varName = 'field-' . $field->getFieldId();
-				$templateMgr->assign($varName, Request::getUserVar($varName));
+			foreach ($fields as $field) switch ($field->getFieldType()) {
+				case FIELD_TYPE_DATE:
+					$varName = 'field-' . $field->getFieldId();
+					$dateFromName = "$varName-from";
+					$dateToName = "$varName-to";
+
+					$dateFrom = Request::getUserDateVar($dateFromName, 1, 1);
+					if (empty($dateFrom)) $dateFrom = Request::getUserVar($dateFromName);
+					$templateMgr->assign($dateFromName, $dateFrom);
+
+					$dateTo = Request::getUserDateVar($dateToName, 32, 12, null, 23, 59, 59);
+					if (empty($dateTo)) $dateTo = Request::getUserVar($dateToName);
+					$templateMgr->assign($dateToName, $dateTo);
+					break;
+				case FIELD_TYPE_STRING:
+				default:
+					$varName = 'field-' . $field->getFieldId();
+					$templateMgr->assign($varName, Request::getUserVar($varName));
+					break;
 			}
 			$templateMgr->assign_by_ref('fields', $fields);
 			$crosswalks = null; // Won't be using crosswalks

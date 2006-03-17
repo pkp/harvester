@@ -36,6 +36,8 @@
 	<message key="common.cancel">Cancel</message>
 	<message key="common.requiredField">* Denotes required field</message>
 	<message key="common.action">Action</message>
+	<message key="common.from">From</message>
+	<message key="common.until">Until</message>
 
 	<!-- Navigation Messages -->
 	<message key="navigation.home">Home</message>
@@ -347,7 +349,7 @@ Your server currently supports mbstring: <strong>{$supportsMBString}</strong>]]>
 	<message key="search.allFields">All Fields</message>
 
 	<message key="search.searchResults">Search Results</message>
-	<message key="search.noKeyworderror">No search terms were entered. You must enter at least one search term.</message>
+	<message key="search.noKeywordError">No search terms were entered. You must enter at least one search term.</message>
 	<message key="search.noResults">No Results</message>
 	<message key="search.reviseSearch">Revise Search</message>
 	<message key="search.allArchives">All Archives</message>

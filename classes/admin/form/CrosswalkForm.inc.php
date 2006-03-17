@@ -15,6 +15,7 @@
 
 import('db.DBDataXMLParser');
 import('form.Form');
+import('field.Field'); // Bring in FIELD_TYPE_...
 
 class CrosswalkForm extends Form {
 	/** The ID of the crosswalk being edited */
@@ -147,21 +148,27 @@ class CrosswalkForm extends Form {
 		$oldFields =& $crosswalkDao->getFieldsByCrosswalkId($crosswalkId);
 		$oldFields = $oldFields->toArray();
 
+		// Save the fields selected for this crosswalk.
 		$crosswalkDao->deleteCrosswalkFieldsByCrosswalkId($crosswalkId);
 		foreach ($schemaPlugins as $schemaPluginName => $schemaPlugin) {
 			foreach ($schemaPlugin->getFieldList() as $fieldName) {
 				$isChecked = Request::getUserVar("$schemaPluginName-$fieldName");
 				$isDisplayed = Request::getUserVar("$schemaPluginName-$fieldName-displayed");
+				$fieldType = $schemaPlugin->getFieldType($fieldName);
 
 				$field =& $fieldDao->buildField($fieldName, $schemaPluginName);
 				foreach ($oldFields as $oldField) {
-					if ($oldField->getFieldId() == $field->getFieldId() && !$isDisplayed) {
+					if (
+						$oldField->getFieldId() == $field->getFieldId() &&
+						!$isDisplayed &&
+						$fieldType == $this->crosswalk->getType()
+					) {
 						// This field was previously selected but wasn't displayed
 						// on the page -- make sure it's maintained.
 						$crosswalkDao->insertCrosswalkField($crosswalkId, $field->getFieldId());
 					}
 				}
-				if ($isChecked && $isDisplayed) {
+				if ($isChecked && $isDisplayed && $fieldType == $this->crosswalk->getType()) {
 					$crosswalkDao->insertCrosswalkField($crosswalkId, $field->getFieldId());
 				}
 			}

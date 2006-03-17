@@ -66,7 +66,7 @@ class SearchDAO extends DAO {
 	 * @param $cacheHours int optional
 	 * @return array of results (associative arrays)
 	 */
-	function &getPhraseResults($phrase, $archiveIds, $type, $id, $limit = 500, $cacheHours = 24) {
+	function &getPhraseResults($phrase, $dates, $archiveIds, $type, $id, $limit = 500, $cacheHours = 24) {
 		if (empty($phrase)) {
 			$results = false;
 			$returner = &new DBRowIterator($results);
@@ -76,7 +76,7 @@ class SearchDAO extends DAO {
 		$sqlFrom = '';
 		$sqlWhere = '';
 		
-		for ($i = 0, $count = count($phrase); $i < $count; $i++) {
+		if (is_array($phrase)) for ($i = 0, $count = count($phrase); $i < $count; $i++) {
 			if (!empty($sqlFrom)) {
 				$sqlFrom .= ', ';
 				$sqlWhere .= ' AND ';
@@ -106,6 +106,32 @@ class SearchDAO extends DAO {
 				fatalError("Unknown search condition type \"$type!\"");
 		}
 
+		// Add the date restrictions to the query
+		$i=0;
+		foreach ($dates as $dateType => $typeEntry) {
+			foreach ($typeEntry as $id => $entry) {
+				if (!empty($entry[0]) || !empty($entry[1])) {
+					$sqlFrom .= ", search_objects do$i";
+					$sqlWhere .= ' AND o.record_id = do' . $i . '.record_id';
+					if (!empty($entry[0])) $sqlWhere .= " AND do$i.object_time >= " . $this->dateToDB($entry[0]);
+					if (!empty($entry[1])) $sqlWhere .= " AND do$i.object_time <= " . $this->dateToDB($entry[1]);
+					switch ($dateType) {
+						case 'field':
+							$sqlWhere .= " AND do$i.raw_field_id = ?";
+							$params[] = $id;
+							break;
+						case 'crosswalk':
+							$sqlFrom .= ", crosswalk_fields dcf$i";
+							$sqlWhere .= ' AND dcf' . $i . '.raw_field_id = do' . $i . '.raw_field_id AND dcf' . $i . '.crosswalk_id = ?';
+							$params[] = $id;
+							break;
+						default:
+							fatalError("Unknown date restriction type \"$dateType\"!");
+					}
+					$i++;
+				}
+			}
+		}
 		$archiveLimitSql = '';
 		if (is_array($archiveIds)) foreach ($archiveIds as $archiveId) {
 			if ($archiveId == (int) $archiveId) {
