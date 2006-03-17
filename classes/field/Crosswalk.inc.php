@@ -14,6 +14,9 @@
  * $Id$
  */
 
+// Bring in FIELD_TYPE_...
+import('field.Field');
+
 class Crosswalk extends DataObject {
 
 	/**
@@ -41,6 +44,22 @@ class Crosswalk extends DataObject {
 	 */
 	function setName($name) {
 		return $this->setData('name',$name);
+	}
+
+	/**
+	 * Get type of crosswalk
+	 * @return int FIELD_TYPE_...
+	 */
+	 function getType() {
+	 	return $this->getData('type');
+	}
+	
+	/**
+	 * Set type of crosswalk
+	 * @param $type int FIELD_TYPE_...
+	 */
+	function setType($type) {
+		return $this->setData('type',$type);
 	}
 
 	/**

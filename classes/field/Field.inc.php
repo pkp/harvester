@@ -14,6 +14,9 @@
  * $Id$
  */
 
+define('FIELD_TYPE_STRING',	0x00000001);
+define('FIELD_TYPE_DATE',	0x00000002);
+
 class Field extends DataObject {
 
 	/**
@@ -83,6 +86,14 @@ class Field extends DataObject {
 			fatalError('Unknown schema plugin ' . $this->getSchemaId() . ' for field ' . $this->getName() . '!');
 		}
 		return $plugin;
+	}
+
+	/**
+	 * Get the type of the field -- FIELD_TYPE_STRING, etc.
+	 */
+	function getFieldType() {
+		$schemaPlugin =& $this->getSchemaPlugin();
+		return $schemaPlugin->getFieldType($this->getName());
 	}
 
 	function getDisplayName($locale = null) {

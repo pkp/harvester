@@ -138,6 +138,7 @@
 		<field name="name" type="C2" size="60">
 			<NOTNULL/>
 		</field>
+		<field name="type" type="I4"/>
 		<field name="seq" type="I4">
 			<KEY/>
 			<DEFAULT VALUE="0"/>
@@ -453,7 +454,11 @@
 		<field name="raw_field_id" type="I8">
 			<NOTNULL/>
 		</field>
+		<field name="object_time" type="T"/>
 		<descr>Indexed objects.</descr>
+		<index name="search_object_time">
+			<col>object_time</col>
+		</index>
 	</table>
 	
 	<!--

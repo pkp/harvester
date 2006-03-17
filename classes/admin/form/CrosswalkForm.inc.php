@@ -64,6 +64,10 @@ class CrosswalkForm extends Form {
 		$templateMgr->assign('crosswalkId', $this->crosswalkId);
 		$templateMgr->assign('helpTopicId', 'site.siteManagement');
 		$templateMgr->assign('schemaPluginName', $schemaPluginName);
+		$templateMgr->assign('crosswalkTypes', array(
+			FIELD_TYPE_STRING => 'admin.crosswalks.crosswalk.type.string',
+			FIELD_TYPE_DATE => 'admin.crosswalks.crosswalk.type.date'
+		));
 		$templateMgr->assign_by_ref('schemaPlugins', $schemaPlugins);
 		$templateMgr->assign_by_ref('filteredPlugins', $filteredPlugins);
 		parent::display();
@@ -80,11 +84,13 @@ class CrosswalkForm extends Form {
 			$this->_data = array(
 				'name' => $this->crosswalk->getName(),
 				'description' => $this->crosswalk->getDescription(),
-				'fields' => &$fields
+				'fields' => &$fields,
+				'crosswalkType' => $this->crosswalk->getType()
 			);
 		} else {
 			$this->crosswalkId = null;
 			$this->_data = array(
+				'crosswalkType' => FIELD_TYPE_STRING
 			);
 		}
 
@@ -102,7 +108,7 @@ class CrosswalkForm extends Form {
 	}
 
 	function getParameterNames() {
-		return array('name', 'description');
+		return array('name', 'description', 'crosswalkType');
 	}
 
 	/**
@@ -124,6 +130,7 @@ class CrosswalkForm extends Form {
 
 		$this->crosswalk->setName($this->getData('name'));
 		$this->crosswalk->setDescription($this->getData('description'));
+		$this->crosswalk->setType($this->getData('crosswalkType'));
 
 		if ($this->crosswalk->getCrosswalkId() != null) {
 			$crosswalkDao->updateCrosswalk($this->crosswalk);

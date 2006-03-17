@@ -19,9 +19,9 @@
 <script type="text/javascript">
 {literal}
 <!--
-function chooseSchemaPlugin(name) {
+function refreshForm() {
 {/literal}
-	document.crosswalkForm.action='{url schemaPluginName=SCHEMA_PLUGIN_NAME}'.replace('SCHEMA_PLUGIN_NAME', name);
+	document.crosswalkForm.action='{url}';
 	document.crosswalkForm.submit();
 {literal}
 }
@@ -47,6 +47,19 @@ function chooseSchemaPlugin(name) {
 	<tr valign="top">
 		<td class="label">{fieldLabel name="description" key="admin.crosswalks.crosswalk.description" required="true"}</td>
 		<td class="value"><textarea name="description" id="description" cols="40" rows="10" class="textArea">{$description|escape}</textarea></td>
+	</tr>
+
+	<tr>
+		<td colspan="2" class="separator">&nbsp;</td>
+	</tr>
+
+	<tr valign="top">
+		<td class="label">{translate key="admin.crosswalks.crosswalk.type"}</td>
+		<td class="value">
+			{foreach from=$crosswalkTypes item=typeName key=typeId}
+				<input {if $crosswalkType == $typeId}checked {/if}onclick="refreshForm()" name="crosswalkType" type="radio" value="{$typeId}">&nbsp;&nbsp;{translate key=$typeName}<br />
+			{/foreach}
+		</td>
 	</tr>
 
 	<tr>
@@ -79,7 +92,7 @@ function chooseSchemaPlugin(name) {
 	{call_hook name="Template::Admin::Crosswalks::displayHarvesterForm" plugin=$harvesterPlugin}
 </table>
 
-<label for="schemaPluginName">{translate key="admin.crosswalks.schemaFilter"}:</label> <select id="schemaPluginName" name="schemaPluginName" class="selectMenu" onchange="chooseSchemaPlugin(this.options[this.selectedIndex].value)">
+<label for="schemaPluginName">{translate key="admin.crosswalks.schemaFilter"}:</label> <select id="schemaPluginName" name="schemaPluginName" class="selectMenu" onchange="refreshForm()">
 	<option value="">{translate key="admin.crosswalks.schemaFilter.all"}</option>
 	{foreach from=$schemaPlugins item=schemaPlugin}
 		<option {if $schemaPlugin->getName() == $schemaPluginName}selected {/if}value="{$schemaPlugin->getName()|escape}">{$schemaPlugin->getSchemaDisplayName()}</option>

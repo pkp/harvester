@@ -97,6 +97,15 @@ class DublinCorePlugin extends SchemaPlugin {
 		}
 		return null;
 	}
+
+	function getFieldType($fieldName) {
+		switch ($fieldName) {
+			case 'date':
+				return FIELD_TYPE_DATE;
+			default:
+				return FIELD_TYPE_STRING;
+		}
+	}
 }
 
 ?>

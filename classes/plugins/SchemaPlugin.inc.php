@@ -13,6 +13,8 @@
  * $Id$
  */
 
+import('field.Field');
+
 class SchemaPlugin extends Plugin {
 	function SchemaPlugin() {
 		parent::Plugin();
@@ -126,17 +128,46 @@ class SchemaPlugin extends Plugin {
 	}
 
 	/**
-	 * Index the given field.
+	 * Get the field type for the specified field.
+	 * Child classes should probably override this.
+	 */
+	function getFieldType($fieldId) {
+		// The default type for all fields is string.
+		return FIELD_TYPE_STRING;
+	}
+
+	/**
+	 * Index the given record.
 	 */
 	function indexRecord(&$record, $entries) {
 		$fieldDao =& DAORegistry::getDAO('FieldDAO');
+		$schemaPlugin =& $record->getSchemaPlugin();
 		foreach ($entries as $fieldName => $entry) {
+			$fieldType = $this->getFieldType($fieldName);
 			foreach ($entry as $entryId => $info) {
 				$field =& $fieldDao->buildField($fieldName, $this->getName());
-				SearchIndex::updateTextIndex($record->getRecordId(), $field->getFieldId(), $info['value']);
+				switch ($fieldType) {
+					case FIELD_TYPE_STRING:
+						SearchIndex::updateTextIndex($record->getRecordId(), $field->getFieldId(), $info['value']);
+						break;
+					case FIELD_TYPE_DATE:
+						$date = $schemaPlugin->parseDate($fieldName, $info['value']);
+						if ($date !== null) SearchIndex::updateDateIndex($record->getRecordId(), $field->getFieldId(), $date);
+						break;
+				}
 				unset($field);
 			}
 		}
+	}
+
+	/**
+	 * Parse a date into a value suitable for indexing.
+	 * @return int timestamp, or null on failure
+	 */
+	function parseDate($fieldName, $value) {
+		$date = strtotime($value);
+		if ($date === false || $date === -1) return null;
+		return date('Y-m-d H:i:s', $date);
 	}
 }
 

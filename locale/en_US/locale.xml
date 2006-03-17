@@ -228,6 +228,9 @@ Your server currently supports mbstring: <strong>{$supportsMBString}</strong>]]>
 	<!-- Crosswalks -->
 	<message key="admin.crosswalks.crosswalk.name">Name</message>
 	<message key="admin.crosswalks.crosswalk.description">Description</message>
+	<message key="admin.crosswalks.crosswalk.type">Type</message>
+	<message key="admin.crosswalks.crosswalk.type.string">Text</message>
+	<message key="admin.crosswalks.crosswalk.type.date">Date</message>
 	<message key="admin.crosswalks.crosswalks.noneCreated">None Created</message>
 	<message key="admin.crosswalks.addCrosswalk">Add Crosswalk</message>
 	<message key="admin.crosswalks.reset">Reset To Defaults</message>

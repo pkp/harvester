@@ -44,7 +44,18 @@ class SearchIndex {
 		$position = 0;
 		SearchIndex::indexObjectKeywords($objectId, $text, $position);
 	}
-	
+
+	/**
+	 * Add an item to the date index.
+	 * @param $recordId int
+	 * @param $fieldId int
+	 * @param $date string
+	 */
+	function updateDateIndex($recordId, $fieldId, $date) {
+		$searchDao =& DAORegistry::getDAO('SearchDAO');
+		$objectId = $searchDao->insertObject($recordId, $fieldId, $date);
+	}
+
 	/**
 	 * Delete keywords from the search index.
 	 * @param $recordId int

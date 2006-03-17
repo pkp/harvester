@@ -167,17 +167,25 @@ class SearchDAO extends DAO {
 	
 	/**
 	 * Add a record object to the index (if already exists, indexed keywords are cleared).
+	 * Each search object can contain a single date entry; this is an optimization to
+	 * prevent having a separate indexed table to contain dates. If a date is specified
+	 * here, the object will be guaranteed to have that date regardless of whether it was
+	 * created or already existed.
 	 * @param $recordId int
 	 * @param $fieldId int
+	 * @param $date string optional
 	 * @return int the object ID
 	 */
-	function insertObject($recordId, $fieldId) {
+	function insertObject($recordId, $fieldId, $date = null) {
 		$result = &$this->retrieve(
 			'SELECT object_id FROM search_objects WHERE record_id = ? AND raw_field_id = ?', array($recordId, $fieldId));
 		if ($result->RecordCount() == 0) {
 			$this->update(
-				'INSERT INTO search_objects (record_id, raw_field_id) VALUES (?, ?)',
-				array($recordId, $fieldId)
+				'INSERT INTO search_objects (record_id, raw_field_id, object_time) VALUES (?, ?, ' . $this->dateToDB($date) . ')',
+				array(
+					$recordId,
+					$fieldId
+				)
 			);
 			$objectId = $this->getInsertId('search_objects', 'object_id');
 			
@@ -185,6 +193,11 @@ class SearchDAO extends DAO {
 			$objectId = $result->fields[0];
 			$this->update(
 				'DELETE FROM search_object_keywords WHERE object_id = ?',
+				$objectId
+			);
+			// Make sure the date is accurate
+			$this->update(
+				'UPDATE search_objects SET object_time = ' . $this->dateToDB($date) . ' WHERE object_id = ?',
 				$objectId
 			);
 		}
