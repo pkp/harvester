@@ -227,6 +227,18 @@ class ModsPlugin extends SchemaPlugin {
 				break;
 		}
 	}
+
+	/**
+	 * Parse a date into a value suitable for indexing.
+	 * @return int timestamp or string date, or null on failure
+	 */
+	function parseDate($fieldName, $value, $attributes = null) {
+		if (String::strlen($value) == 4 && is_numeric($value)) {
+			// It's a year by itself e.g. 1942; make it 1942-01-01
+			$value .= '-01-01';
+		}
+		return parent::parseDate($fieldName, $value, $attributes);
+	}
 }
 
 ?>

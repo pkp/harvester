@@ -176,7 +176,7 @@ class SchemaPlugin extends Plugin {
 
 	/**
 	 * Parse a date into a value suitable for indexing.
-	 * @return int timestamp, or null on failure
+	 * @return int timestamp or string date, or null on failure
 	 */
 	function parseDate($fieldName, $value, $attributes = null) {
 		$date = strtotime($value);
