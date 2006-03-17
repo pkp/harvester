@@ -71,7 +71,9 @@ function refreshForm() {
 			<td>{$schemaPlugin->getSchemaDisplayName()}</td>
 			<td>
 				{foreach from=$schemaPlugin->getFieldList() item=field}
-					{if $schemaPlugin->getFieldType($field) == $crosswalkType}
+					{assign var=fieldType value=$schemaPlugin->getFieldType($field)}
+					{assign var=isFieldMixedType value=$schemaPlugin->isFieldMixedType($field)}
+					{if $fieldType == $crosswalkType || $isFieldMixedType}
 					{* Determine whether this field is already chosen *}
 					{assign var=isFieldChosen value=0}
 					{foreach from=$fields item=chosenField}

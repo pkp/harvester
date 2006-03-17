@@ -101,10 +101,10 @@ class FileWrapper {
 	 * @return FileWrapper
 	 */
 	function &wrapper($url) {
+		$info = parse_url($url);
 		if (ini_get('allow_url_fopen')) {
 			$wrapper = &new FileWrapper($url, $info);
 		} else {
-			$info = parse_url($url);
 			switch (@$info['scheme']) {
 				case 'http':
 					$wrapper = &new HTTPFileWrapper($url, $info);

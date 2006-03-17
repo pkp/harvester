@@ -52,9 +52,9 @@
 	</crosswalk>
 	<crosswalk type="date">
 		<name>Date</name>
-		<description>This crosswalk associates the date published fields from various schemas.</description>
+		<description>This crosswalk associates a generic date, generally creation, from the various schemas.</description>
 		<field schema="DublinCorePlugin" name="date"/>
-		<field schema="MarcPlugin" name="033"/>
-		<field schema="ModsPlugin" name="namePart"/>
+		<field schema="MarcPlugin" name="260"/>
+		<field schema="ModsPlugin" name="dateCreated"/>
 	</crosswalk>
 </crosswalks>

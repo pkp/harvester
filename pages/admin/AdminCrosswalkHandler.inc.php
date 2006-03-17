@@ -20,7 +20,7 @@ class AdminCrosswalkHandler extends AdminHandler {
 	 */
 	function crosswalks() {
 		parent::validate();
-		parent::setupTemplate(true);
+		AdminCrosswalkHandler::setupTemplate(false);
 		
 		$rangeInfo = Handler::getRangeInfo('crosswalks');
 
@@ -35,7 +35,7 @@ class AdminCrosswalkHandler extends AdminHandler {
 
 	function editCrosswalk() {
 		parent::validate();
-		parent::setupTemplate(true);
+		AdminCrosswalkHandler::setupTemplate(true);
 
 		import('admin.form.CrosswalkForm');
 		$crosswalkForm =& new CrosswalkForm(Request::getUserVar('crosswalkId'));
@@ -60,7 +60,7 @@ class AdminCrosswalkHandler extends AdminHandler {
 			Request::redirect('admin', 'crosswalks');
 			
 		} else {
-			parent::setupTemplate(true);
+			AdminCrosswalkHandler::setupTemplate(true);
 			$crosswalkForm->display();
 		}
 	}
@@ -94,6 +94,23 @@ class AdminCrosswalkHandler extends AdminHandler {
 		}
 		$crosswalkDao->installCrosswalks('registry/crosswalks.xml');
 		Request::redirect('admin', 'crosswalks');
+	}
+
+	/**
+	 * Setup common template variables.
+	 * @param $subclass boolean set to true if caller is below this handler in the hierarchy
+	 */
+	function setupTemplate($subclass = false) {
+		$templateMgr = &TemplateManager::getManager();
+		$pageHierarchy = array(array(
+			Request::url('admin'), 'admin.siteAdmin'
+		));
+		if ($subclass) {
+			$pageHierarchy[] = array(
+				Request::url('admin', 'crosswalks'), 'admin.crosswalks'
+			);
+		}
+		$templateMgr->assign('pageHierarchy', $pageHierarchy);
 	}
 }
 

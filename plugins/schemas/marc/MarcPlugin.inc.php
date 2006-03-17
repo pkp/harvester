@@ -89,6 +89,58 @@ class MarcPlugin extends SchemaPlugin {
 		}
 		return $returner;
 	}
+
+	function getFieldType($name) {
+		switch ($name) {
+			case '005':
+			case '008':
+			case '260':
+				return FIELD_TYPE_DATE;
+			default:
+				return FIELD_TYPE_STRING;
+		}
+	}
+
+	function parseDate($fieldName, $value, $attributes = null) {
+		switch ($fieldName) {
+			case '005': // YYYYMMDDHHMMSS.0 Date and time of latest transaction
+				if (String::strlen($value) < 14) return null;
+				$year = String::substr($value, 0, 4);
+				$month = String::substr($value, 4, 2);
+				$day = String::substr($value, 6, 2);
+				$hour = String::substr($value, 8, 2);
+				$minute = String::substr($value, 10, 2);
+				$second = String::substr($value, 12);
+
+				// Make sure the values fetched are all numeric
+				foreach (array('year', 'month', 'day', 'hour', 'minute', 'second') as $var) {
+					if (!is_numeric($$var)) return null;
+				}
+				return mktime($hour, $minute, $second, $month, $day, $year);
+			case '008': // YYMMDD[junk] Date entered on file
+				$date = String::substr($value, 0, 6);
+				$date = strtotime($date);
+				if ($date !== -1 && $date !== false) return $date;
+				break;
+			case '260':
+				if (isset($attributes['label']) && $attributes['label'] == 'c') {
+					$date = strtotime($value);
+					if ($date !== -1 && $date !== false) return $date;
+				}
+				break;
+		}
+		return null;
+	}
+
+	function isFieldMixedType($name) {
+		switch ($name) {
+			case '008': // Date entered on file
+			case '260': // Copyright date (?)
+				return true;
+			default:
+				return false;
+		}
+	}
 }
 
 ?>

@@ -79,7 +79,7 @@ function handleArchiveSelect() {
 		{/if}
 	{/foreach}
 	{foreach from=$fields item=field}
-		{assign var=fieldType value=$field->getFieldType()}
+		{assign var=fieldType value=$field->getType()}
 		{assign var=fieldId value=$field->getFieldId()}
 		{if $fieldType == FIELD_TYPE_DATE}
 			{assign var=fieldValueFromVar value=field-$fieldId-from}

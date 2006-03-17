@@ -50,10 +50,15 @@ class SearchIndex {
 	 * @param $recordId int
 	 * @param $fieldId int
 	 * @param $date string
+	 * @param $text string optional -- if set, index the text value as well
 	 */
-	function updateDateIndex($recordId, $fieldId, $date) {
+	function updateDateIndex($recordId, $fieldId, $date, $text = null) {
 		$searchDao =& DAORegistry::getDAO('SearchDAO');
 		$objectId = $searchDao->insertObject($recordId, $fieldId, $date);
+		if (!empty($text)) {
+			$position = 0;
+			SearchIndex::indexObjectKeywords($objectId, $text, $position);
+		}
 	}
 
 	/**
@@ -155,9 +160,13 @@ class SearchIndex {
 			$record =& $records->next();
 			SearchIndex::indexRecord($record);
 			$numIndexed++;
+			if ($log && $numIndexed % 100 == 0) {
+				echo "$numIndexed records indexed...\r";
+			}
+			unset($record);
 		}
 		
-		if ($log) echo $numIndexed, " records indexed\n";
+		if ($log) echo "\n" . $numIndexed, " records indexed\n";
 	}
 	
 }

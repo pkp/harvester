@@ -151,7 +151,9 @@ class ModsPlugin extends SchemaPlugin {
 					$authors[$nameAssocId][$name] = $item['value'];
 				} elseif (isset($item['attributes']['titleAssocId'])) {
 					// Assume the first entry is definitive
-					if (!isset($title[$name])) $title[$name] = $item['value'];
+					if (!isset($title[$name])) {
+						$title[$name] = $item['value'];
+					}
 				}
 			}
 		}

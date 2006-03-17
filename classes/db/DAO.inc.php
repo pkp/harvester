@@ -84,7 +84,6 @@ class DAO {
 		}
 
 		$this->setCacheDir();
-
 		$result = &$this->_dataSource->CacheExecute($secsToCache, $sql, $params !== false && !is_array($params) ? array($params) : $params);
 		if ($this->_dataSource->errorNo()) {
 			// FIXME Handle errors more elegantly.

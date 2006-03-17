@@ -140,7 +140,7 @@ class upgradeTool extends CommandLineTool {
 				exit(0);
 			}
 			
-			$out = fopen($outFile, 'w');
+			$out = fopen($outFile, 'wb');
 			if (!$out) {
 				printf("Failed to open %s for writing\n", $outFile);
 				exit(1);
@@ -210,13 +210,13 @@ class upgradeTool extends CommandLineTool {
 			exit(0);
 		}
 		
-		$out = fopen($outFile, 'w');
+		$out = fopen($outFile, 'wb');
 		if (!$out) {
 			printf("Failed to open %s for writing\n", $outFile);
 			exit(1);
 		}
 		
-		$in = fopen($download, 'r');
+		$in = fopen($download, 'rb');
 		if (!$in) {
 			printf("Failed to open %s for reading\n", $download);
 			fclose($out);

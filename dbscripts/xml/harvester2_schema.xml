@@ -456,7 +456,8 @@
 		</field>
 		<field name="object_time" type="T"/>
 		<descr>Indexed objects.</descr>
-		<index name="search_object_time">
+		<index name="search_object_record_time">
+			<col>record_id</col>
 			<col>object_time</col>
 		</index>
 	</table>

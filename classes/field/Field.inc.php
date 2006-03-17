@@ -91,9 +91,17 @@ class Field extends DataObject {
 	/**
 	 * Get the type of the field -- FIELD_TYPE_STRING, etc.
 	 */
-	function getFieldType() {
+	function getType() {
 		$schemaPlugin =& $this->getSchemaPlugin();
 		return $schemaPlugin->getFieldType($this->getName());
+	}
+
+	/**
+	 * Is the field of mixed type (i.e. has both dates and strings indexed)?
+	 */
+	function isMixedType() {
+		$schemaPlugin =& $this->getSchemaPlugin();
+		return $schemaPlugin->isFieldMixedType($this->getName());
 	}
 
 	function getDisplayName($locale = null) {

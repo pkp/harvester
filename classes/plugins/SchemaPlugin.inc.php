@@ -137,6 +137,13 @@ class SchemaPlugin extends Plugin {
 	}
 
 	/**
+	 * Determine whether a field is mixed type (i.e. has a date indexed and text too)
+	 */
+	function isFieldMixedType($fieldId) {
+		return false; // Default to single-use
+	}
+
+	/**
 	 * Index the given record.
 	 */
 	function indexRecord(&$record, $entries) {
@@ -148,11 +155,18 @@ class SchemaPlugin extends Plugin {
 				$field =& $fieldDao->buildField($fieldName, $this->getName());
 				switch ($fieldType) {
 					case FIELD_TYPE_STRING:
-						SearchIndex::updateTextIndex($record->getRecordId(), $field->getFieldId(), $info['value']);
+						SearchIndex::updateTextIndex($record->getRecordId(), $field->getFieldId(), $info['value'], $info['attributes']);
 						break;
 					case FIELD_TYPE_DATE:
-						$date = $schemaPlugin->parseDate($fieldName, $info['value']);
-						if ($date !== null) SearchIndex::updateDateIndex($record->getRecordId(), $field->getFieldId(), $date);
+						$date = $schemaPlugin->parseDate($fieldName, $info['value'], $info['attributes']);
+						$isMixedType = $schemaPlugin->isFieldMixedType($fieldName);
+						if ($date !== null) SearchIndex::updateDateIndex(
+							$record->getRecordId(),
+							$field->getFieldId(),
+							$date,
+							$isMixedType?$info['value']:null,
+							$info['attributes']
+						);
 						break;
 				}
 				unset($field);
@@ -164,7 +178,7 @@ class SchemaPlugin extends Plugin {
 	 * Parse a date into a value suitable for indexing.
 	 * @return int timestamp, or null on failure
 	 */
-	function parseDate($fieldName, $value) {
+	function parseDate($fieldName, $value, $attributes = null) {
 		$date = strtotime($value);
 		if ($date === false || $date === -1) return null;
 		return date('Y-m-d H:i:s', $date);

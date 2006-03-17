@@ -155,13 +155,14 @@ class CrosswalkForm extends Form {
 				$isChecked = Request::getUserVar("$schemaPluginName-$fieldName");
 				$isDisplayed = Request::getUserVar("$schemaPluginName-$fieldName-displayed");
 				$fieldType = $schemaPlugin->getFieldType($fieldName);
+				$isFieldMixedType = $schemaPlugin->isFieldMixedType($fieldName);
 
 				$field =& $fieldDao->buildField($fieldName, $schemaPluginName);
 				foreach ($oldFields as $oldField) {
 					if (
 						$oldField->getFieldId() == $field->getFieldId() &&
 						!$isDisplayed &&
-						$fieldType == $this->crosswalk->getType()
+						($fieldType == $this->crosswalk->getType() || $isFieldMixedType)
 					) {
 						// This field was previously selected but wasn't displayed
 						// on the page -- make sure it's maintained.
