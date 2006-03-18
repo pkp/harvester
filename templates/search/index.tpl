@@ -68,13 +68,13 @@ function handleArchiveSelect() {
 			</tr>
 			<tr valign="top">
 				<td class="value">{translate key="common.until"}</td>
-				<td class="value" colspan="2">{html_select_date prefix="crosswalk-$crosswalkId-to" time=$crosswalkValueToVar|get_value|default:"--" all_extra="class=\"selectMenu\"" year_empty="" month_empty="" day_empty="" start_year="1900" end_year="+10"}</td>
+				<td class="value">{html_select_date prefix="crosswalk-$crosswalkId-to" time=$crosswalkValueToVar|get_value|default:"--" all_extra="class=\"selectMenu\"" year_empty="" month_empty="" day_empty="" start_year="1900" end_year="+10"}</td>
 			</tr>
 		{else}
 			{assign var=crosswalkValueVar value=crosswalk-$crosswalkId}
 			<tr valign="top">
-				<td colspan="2" class="label">{$crosswalk->getName()|escape}</td>
-				<td class="value"><input type="text" id="crosswalk-{$crosswalkId}" name="crosswalk-{$crosswalkId}" size="40" maxlength="255" value="{$crosswalkValueVar|get_value|escape}" class="textField" /></td>
+				<td class="label">{$crosswalk->getName()|escape}</td>
+				<td colspan="2" class="value"><input type="text" id="crosswalk-{$crosswalkId}" name="crosswalk-{$crosswalkId}" size="40" maxlength="255" value="{$crosswalkValueVar|get_value|escape}" class="textField" /></td>
 			</tr>
 		{/if}
 	{/foreach}
