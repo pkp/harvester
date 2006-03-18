@@ -148,7 +148,11 @@ class ModsPlugin extends SchemaPlugin {
 							}
 							break;
 					}
-					$authors[$nameAssocId][$name] = $item['value'];
+					if (isset($authors[$nameAssocId][$name])) {
+						$authors[$nameAssocId][$name] .= '; ' . $item['value'];
+					} else {
+						$authors[$nameAssocId][$name] = $item['value'];
+					}
 				} elseif (isset($item['attributes']['titleAssocId'])) {
 					// Assume the first entry is definitive
 					if (!isset($title[$name])) {
