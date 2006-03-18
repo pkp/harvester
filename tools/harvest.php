@@ -127,11 +127,13 @@ class harvest extends CommandLineTool {
 			// No archive was specified or the specified ID was invalid.
 			// Display a list of archives.
 			$archiveDao =& DAORegistry::getDAO('ArchiveDAO');
+			$recordDao =& DAORegistry::getDAO('RecordDAO');
 			$archives =& $archiveDao->getArchives();
 			echo "Archive List\n";
 			echo "------------\n";
 			while ($archive =& $archives->next()) {
-				echo $archive->getArchiveId() . ': ' . $archive->getTitle() . "\n";
+				$recordCount = $recordDao->getRecordCount($archive->getArchiveId());
+				echo $archive->getArchiveId() . ': ' . $archive->getTitle() . " ($recordCount records)\n";
 				unset($archive);
 			}
 			return false;
