@@ -10,6 +10,7 @@
  *}
 
 {assign var="pageTitle" value="navigation.browse"}
+{assign var="helpTopicId" value="index.browse"}
 {include file="common/header.tpl"}
 
 <br />

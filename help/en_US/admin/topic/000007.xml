@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic SYSTEM "../../../topic.dtd">
+
+<!--
+  * 000007.xml
+  *
+  * Copyright (c) 2005-2006 The Public Knowledge Project
+  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
+  *
+  * Manage Archive Help Page 
+  *
+  * $Id$
+  -->
+
+<topic id="admin/topic/000007" locale="en_US" title="Manage Archive" toc="admin/toc/000000" key="admin.manage">
+	<section>
+		<![CDATA[<p>The Manage Archive page is available from the "Manage Archives" list by choosing "Manage" next to one of the archives listed. This page allows the Administrator to view information about the last harvest and the number of records indexed, and additionally to flush and re-harvest records in this archive.</p><p>It is recommended that large archives be harvested using the command-line tool (tools/harvest.php), as browsers will often time-out while waiting for a harvest to complete.</p>]]>
+	</section>
+</topic>

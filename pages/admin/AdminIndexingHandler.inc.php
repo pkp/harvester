@@ -29,7 +29,6 @@ class AdminIndexingHandler extends AdminHandler {
 		
 		$templateMgr = &TemplateManager::getManager();
 		$templateMgr->assign_by_ref('searchableFields', $searchableFields);
-		$templateMgr->assign('helpTopicId', 'site.indexing');
 		$templateMgr->display('admin/searchableFields.tpl');
 	}
 

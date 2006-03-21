@@ -63,7 +63,6 @@ class CrosswalkForm extends Form {
 
 		$templateMgr = &TemplateManager::getManager();
 		$templateMgr->assign('crosswalkId', $this->crosswalkId);
-		$templateMgr->assign('helpTopicId', 'site.siteManagement');
 		$templateMgr->assign('schemaPluginName', $schemaPluginName);
 		$templateMgr->assign('crosswalkTypes', array(
 			FIELD_TYPE_STRING => 'admin.crosswalks.crosswalk.type.string',

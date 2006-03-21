@@ -64,7 +64,6 @@ class ArchiveForm extends Form {
 	function display() {
 		$templateMgr = &TemplateManager::getManager();
 		$templateMgr->assign('archiveId', $this->archiveId);
-		$templateMgr->assign('helpTopicId', 'site.siteManagement');
 		$templateMgr->assign_by_ref('harvesters', PluginRegistry::getPlugins('harvesters'));
 		HookRegistry::call('ArchiveForm::display', array(&$this, &$templateMgr, $this->harvesterPluginName));
 		parent::display();

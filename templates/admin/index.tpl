@@ -10,6 +10,7 @@
  *}
 
 {assign var="pageTitle" value="admin.siteAdmin"}
+{assign var="helpTopicId" value="admin.index"}
 {include file="common/header.tpl"}
 
 <h3>{translate key="admin.siteManagement"}</h3>

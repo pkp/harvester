@@ -11,6 +11,7 @@
 
 {assign var="pageTitle" value="admin.archives.manage"}
 
+{assign var="helpTopicId" value="admin.manage"}
 {include file="common/header.tpl"}
 
 <ul class="menu">

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic SYSTEM "../../../topic.dtd">
+
+<!--
+  * 000006.xml
+  *
+  * Copyright (c) 2005-2006 The Public Knowledge Project
+  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
+  *
+  * Archive Editing Help Page 
+  *
+  * $Id$
+  -->
+
+<topic id="admin/topic/000006" locale="en_US" title="Archive Administration" toc="admin/toc/000000" key="admin.archiveForm">
+	<section>
+		<![CDATA[<p>When creating a new archive or editing an existing archive, the Administrator will be presented with a form where the critical information about a repository can be entered. This includes title, description, a site URL, harvester type, and several additional fields depending on the harvester being used.</p>
+		<p>When using the Open Archives Initiative (OAI) Harvester, the following additional fields are available:
+		<ul>
+		<li><strong>OAI Base URL</strong>: This is the base URL that will be used to harvest OAI information. This URL is generally provided by the application generating the OAI data, such as the Public Knowledge Project's <a href="http://pkp.sfu.ca/ojs" target="_new">Open Journal Systems</a> application.</li>
+		<li><strong>Index Method</strong>: The administrator can choose whether to harvest an OAI repository using the ListRecords or ListIdentifiers methods. ListRecords will generally be faster, but ListIdentifiers may be useful in some cases with repositories that are not 100% compatible. See <a href="http://www.openarchives.org" target="_new">www.openarchives.org</a> for more information.</li>
+		<li><strong>Metadata Format</strong>: Many OAI-compliant applications can deliver metadata in a number of metadata formats, such as Dublin Core, MARC, and MODS. Once the administrator has entered the OAI Base URL, a list of supported metadata formats can be fetched using the "Refresh" button. Any metadata format supported by both the OAI data source and the Harvester2 will be listed. (When changing metadata formats, the archive's metadata must be flushed and re-harvested using the Manage function or the command-line tool.)</li>
+		</ul></p>]]>
+	</section>
+</topic>

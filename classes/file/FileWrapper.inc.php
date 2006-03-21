@@ -102,15 +102,23 @@ class FileWrapper {
 	 */
 	function &wrapper($url) {
 		$info = parse_url($url);
-		if (ini_get('allow_url_fopen')) {
+		if (ini_get('allow_url_fopen') && Config::getVar('general', 'allow_url_fopen')) {
 			$wrapper = &new FileWrapper($url, $info);
 		} else {
+			static $version;
+			if (!isset($version)) {
+				$versionDao =& DAORegistry::getDAO('VersionDAO');
+				$version =& $versionDao->getCurrentVersion();
+			}
+
 			switch (@$info['scheme']) {
 				case 'http':
 					$wrapper = &new HTTPFileWrapper($url, $info);
+					$wrapper->addHeader('User-Agent', 'PKPHarvester/' . $version->getVersionString());
 					break;
 				case 'https':
 					$wrapper = &new HTTPSFileWrapper($url, $info);
+					$wrapper->addHeader('User-Agent', 'PKPHarvester/' . $version->getVersionString());
 					break;
 				case 'ftp':
 					$wrapper = &new FTPFileWrapper($url, $info);
@@ -164,16 +172,17 @@ class HTTPFileWrapper extends FileWrapper {
 		$host = isset($this->info['host']) ? $this->info['host'] : $this->defaultHost;
 		$port = isset($this->info['port']) ? (int)$this->info['port'] : $this->defaultPort;
 		$path = isset($this->info['path']) ? $this->info['path'] : $this->defaultPath;
+		if (isset($this->info['query'])) $path .= '?' . $this->info['query'];
 		
 		if (!($this->fp = fsockopen($host, $port, $errno, $errstr)))
 			return false;
 
 		$additionalHeadersString = '';
-		foreach ($this->headers as $name => $value) {
+		if (is_array($this->headers)) foreach ($this->headers as $name => $value) {
 			$additionalHeadersString .= "$name: $value\r\n";
 		}
 
-		$request = "GET $path HTTP/1.1\r\n" .
+		$request = "GET $path HTTP/1.0\r\n" .
 			"Host: $host\r\n" .
 			$additionalHeadersString .
 			"Connection: Close\r\n\r\n";

@@ -32,7 +32,6 @@ class AdminArchiveHandler extends AdminHandler {
 		
 		$templateMgr = &TemplateManager::getManager();
 		$templateMgr->assign_by_ref('archives', $archives);
-		$templateMgr->assign('helpTopicId', 'site.siteManagement');
 		$templateMgr->assign('harvesters', $plugins);
 		$templateMgr->display('admin/archives.tpl');
 	}

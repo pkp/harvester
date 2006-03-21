@@ -14,6 +14,7 @@
 {else}
 	{assign var="pageTitle" value="admin.crosswalks.addCrosswalk"}
 {/if}
+{assign var="helpTopicId" value="admin.crosswalkForm"}
 {include file="common/header.tpl"}
 
 <script type="text/javascript">

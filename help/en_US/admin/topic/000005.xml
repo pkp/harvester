@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic SYSTEM "../../../topic.dtd">
+
+<!--
+  * 000005.xml
+  *
+  * Copyright (c) 2005-2006 The Public Knowledge Project
+  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
+  *
+  * Archives List Help Page 
+  *
+  * $Id$
+  -->
+
+<topic id="admin/topic/000005" locale="en_US" title="Archives" toc="admin/toc/000000" key="admin.archives">
+	<section>
+		<![CDATA[<p>The PKP Harvester2 is capable of indexing multiple repositories in a number of metadata formats. Each repository is listed under the "Manage Archives" page, along with a number of options for management.</p>
+		<p>Any Existing archive can be edited using the "Edit" link beside its name. Likewise, new archives can be created using the "Add Archive" link at the bottom of the page. See {help_topic key="admin.archiveForm" text="Archive Administration"} for information about this form.</p>
+		<p>Once an archive has been created and its harvesting information has been entered, you can use the "Manage" link to access record information and perform various management functions on the archive. See {help_topic key="admin.manage" text="Manage Archive"} for more information.</p>]]>
+	</section>
+</topic>

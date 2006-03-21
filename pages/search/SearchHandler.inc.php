@@ -23,7 +23,6 @@ class SearchHandler extends Handler {
 		SearchHandler::setupTemplate();
 			
 		$templateMgr = &TemplateManager::getManager();
-		$templateMgr->assign('helpTopicId', 'site.search');
 
 		$archiveDao =& DAORegistry::getDAO('ArchiveDAO');
 		$templateMgr->assign('archives', $archiveDao->getArchives());
@@ -103,7 +102,6 @@ class SearchHandler extends Handler {
 		$results = &Search::retrieveResults($keywords, $dates, $archiveIds, $rangeInfo);
 
 		$templateMgr = &TemplateManager::getManager();
-		$templateMgr->assign('helpTopicId', 'site.search');
 
 		// Give the results page access to the search parameters
 		$templateMgr->assign('isAdvanced', Request::getUserVar('isAdvanced'));

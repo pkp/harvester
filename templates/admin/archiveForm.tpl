@@ -15,6 +15,7 @@
 	{assign var="pageTitle" value="admin.archives.addArchive"}
 {/if}
 
+{assign var="helpTopicId" value="admin.archiveForm"}
 {include file="common/header.tpl"}
 
 {if $archiveId}

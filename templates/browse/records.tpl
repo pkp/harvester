@@ -10,6 +10,7 @@
  *}
 
 {assign var="pageTitle" value="record.records"}
+{assign var="helpTopicId" value="index.browse"}
 {include file="common/header.tpl"}
 
 {if $archive}<h3>{$archive->getTitle()|escape}</h3>{/if}

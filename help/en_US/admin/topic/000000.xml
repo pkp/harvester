@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic SYSTEM "../../../topic.dtd">
+
+<!--
+  * 000000.xml
+  *
+  * Copyright (c) 2005-2006 The Public Knowledge Project
+  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
+  *
+  * Admin Help Page 
+  *
+  * $Id$
+  -->
+
+<topic id="admin/topic/000000" locale="en_US" title="Administration" toc="admin/toc/000000" key="admin.index">
+	<section>
+		<![CDATA[<p>Welcome to PKP Harvester2 Administration. Using the Administration tools, the Administrator can configure the system, add, delete, and manage archives, and configure crosswalks. These features are described in depth in the next sections.</p>
+		<p>Several useful functions not documented elsewhere are available on the Administration page:
+		<ul>
+		<li><strong>Expire User Sessions</strong>: Invalidates all sessions, forcing the administrator to log in again.</li>
+		<li><strong>Clear Data Caches</strong>: Destroys all cached data, including search caches and locale data caches.</li>
+		<li><strong>Clear Template Cache</strong>: Destroys all compiled templates, forcing a re-compile upon next use.</li>
+		</ul></p>]]>
+	</section>
+</topic>

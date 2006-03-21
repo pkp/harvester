@@ -53,7 +53,6 @@ class AdminFunctionsHandler extends AdminHandler {
 			$latestVersionInfo['patch'] = VersionCheck::getPatch($latestVersionInfo);
 			$templateMgr->assign_by_ref('latestVersionInfo', $latestVersionInfo);
 		}
-		$templateMgr->assign('helpTopicId', 'site.administrativeFunctions');
 		$templateMgr->display('admin/systemInfo.tpl');
 	}
 	
@@ -71,7 +70,6 @@ class AdminFunctionsHandler extends AdminHandler {
 		
 		$templateMgr = &TemplateManager::getManager();
 		$templateMgr->assign_by_ref('configData', $configData);
-		$templateMgr->assign('helpTopicId', 'site.administrativeFunctions');
 		$templateMgr->display('admin/systemConfig.tpl');
 	}
 	
@@ -126,7 +124,6 @@ class AdminFunctionsHandler extends AdminHandler {
 			$templateMgr->assign('writeConfigFailed', $writeConfigFailed);
 			$templateMgr->assign('displayConfigContents', $displayConfigContents);
 			$templateMgr->assign('configFileContents', $configFileContents);
-			$templateMgr->assign('helpTopicId', 'site.administrativeFunctions');
 			$templateMgr->display('admin/systemConfigUpdated.tpl');
 		}
 	}

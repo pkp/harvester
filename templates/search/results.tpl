@@ -10,7 +10,7 @@
  *}
 
 {assign var=pageTitle value="search.searchResults"}
-
+{assign var="helpTopicId" value="index.search"}
 {include file="common/header.tpl"}
 
 <script type="text/javascript">

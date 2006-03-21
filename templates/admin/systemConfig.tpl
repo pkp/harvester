@@ -10,6 +10,7 @@
  *}
 
 {assign var="pageTitle" value="admin.systemConfiguration"}
+{assign var="helpTopicId" value="admin.systemConfiguration"}
 {include file="common/header.tpl"}
 
 <form method="post" action="{url op="saveSystemConfig"}">

@@ -11,6 +11,7 @@
 
 {assign var="pageTitle" value="admin.archives.manage.updateIndex"}
 
+{assign var="helpTopicId" value="admin.manage"}
 {include file="common/header.tpl"}
 
 <p>{translate key="admin.archive.manage.updateIndex.failure"}</p>

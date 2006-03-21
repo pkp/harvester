@@ -47,7 +47,6 @@ class BrowseHandler extends Handler {
 
 			$archives =& $archiveDao->getArchives($rangeInfo);
 
-			$templateMgr->assign('helpTopicId', 'site.browse');
 			$templateMgr->assign_by_ref('archives', $archives);
 			$templateMgr->display('browse/index.tpl');
 		}

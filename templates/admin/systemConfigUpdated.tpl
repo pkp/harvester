@@ -12,6 +12,7 @@
 
 {assign var="pageTitle" value="admin.systemConfiguration"}
 {url|assign:"currentUrl" op="editSystemConfig"}
+{assign var="helpTopicId" value="admin.systemConfiguration"}
 {include file="common/header.tpl"}
 
 <br/>

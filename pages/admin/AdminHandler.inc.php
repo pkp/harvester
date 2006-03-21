@@ -23,7 +23,6 @@ class AdminHandler extends Handler {
 		AdminHandler::setupTemplate();
 			
 		$templateMgr = &TemplateManager::getManager();
-		$templateMgr->assign('helpTopicId', 'site.index');
 		$templateMgr->display('admin/index.tpl');
 	}
 	

@@ -29,7 +29,6 @@ class AdminCrosswalkHandler extends AdminHandler {
 		
 		$templateMgr = &TemplateManager::getManager();
 		$templateMgr->assign_by_ref('crosswalks', $crosswalks);
-		$templateMgr->assign('helpTopicId', 'site.crosswalks');
 		$templateMgr->display('admin/crosswalks.tpl');
 	}
 

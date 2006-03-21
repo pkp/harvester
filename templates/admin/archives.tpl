@@ -10,6 +10,7 @@
  *}
 
 {assign var="pageTitle" value="admin.archives"}
+{assign var="helpTopicId" value="admin.archives"}
 {include file="common/header.tpl"}
 
 <br />

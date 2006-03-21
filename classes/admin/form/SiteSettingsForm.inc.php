@@ -36,15 +36,6 @@ class SiteSettingsForm extends Form {
 	}
 	
 	/**
-	 * Display the form.
-	 */
-	function display() {
-		$templateMgr = &TemplateManager::getManager();
-		$templateMgr->assign('helpTopicId', 'site.siteManagement');
-		parent::display();
-	}
-	
-	/**
 	 * Initialize form data from current settings.
 	 */
 	function initData() {

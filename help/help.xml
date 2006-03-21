@@ -13,5 +13,22 @@
   -->
 <help>
 	<!-- Index -->
-	<topic key="index.index" id="index/topic/000000"></topic>
+	<topic key="index.index" id="index/topic/000000"/>
+	<topic key="index.search" id="index/topic/000001"/>
+	<topic key="index.browse" id="index/topic/000002"/>
+
+	<!-- Administration -->
+	<topic key="admin.index" id="admin/topic/000000"/>
+	<topic key="admin.siteSettings" id="admin/topic/000001"/>
+	<topic key="admin.languages" id="admin/topic/000002"/>
+
+	<topic key="admin.systemConfiguration" id="admin/topic/000003"/>
+	<topic key="admin.systemInformation" id="admin/topic/000004"/>
+
+	<topic key="admin.archives" id="admin/topic/000005"/>
+	<topic key="admin.archiveForm" id="admin/topic/000006"/>
+	<topic key="admin.manage" id="admin/topic/000007"/>
+
+	<topic key="admin.crosswalks" id="admin/topic/000008"/>
+	<topic key="admin.crosswalkForm" id="admin/topic/000009"/>
 </help>

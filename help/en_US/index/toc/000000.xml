@@ -14,4 +14,7 @@
 
 <toc id="index/toc/000000" locale="en_US" title="Harvester Help" parent_topic="index/topic/000000">
 	<topic id="index/topic/000000" title="Introduction to Harvester2" />
+	<topic id="index/topic/000001" title="Searching" />
+	<topic id="index/topic/000002" title="Browsing" />
+	<topic id="admin/topic/000000" title="Administration" />
 </toc>

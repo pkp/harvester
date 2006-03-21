@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic SYSTEM "../../../topic.dtd">
+
+<!--
+  * 000003.xml
+  *
+  * Copyright (c) 2005-2006 The Public Knowledge Project
+  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
+  *
+  * System Configuration Help Page 
+  *
+  * $Id$
+  -->
+
+<topic id="admin/topic/000003" locale="en_US" title="System Configuration" toc="admin/toc/000000" key="admin.systemConfiguration">
+	<section>
+		<![CDATA[<p>The Harvester2 Configuration page can be reached from the System Information page by following the "Edit" link under Harvester2 Configuration. This feature allows the Administrator to edit the Harvester2 configuration file, config.inc.php, using a web-based form. Entering the wrong values may render the Harvester2 installation inoperable; this feature is recommended for use only by advanced users.</p><p>More information on the configuration file can be found in the documents distributed with the Harvester2 installation. See config.TEMPLATE.inc.php and docs/README for more information.]]>
+	</section>
+</topic>

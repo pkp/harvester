@@ -16,10 +16,7 @@
 class IndexHandler extends Handler {
 	function index($args) {
 		parent::validate();
-
 		$templateMgr = &TemplateManager::getManager();
-		$templateMgr->assign('helpTopicId', 'user.home');
-
 		$site =& Request::getSite();
 
 		$templateMgr->assign('intro', $site->getIntro());

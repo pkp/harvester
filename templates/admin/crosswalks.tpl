@@ -10,6 +10,7 @@
  *}
 
 {assign var="pageTitle" value="admin.crosswalks"}
+{assign var="helpTopicId" value="admin.crosswalks"}
 {include file="common/header.tpl"}
 
 <p>{translate key="admin.crosswalks.description"}</p>

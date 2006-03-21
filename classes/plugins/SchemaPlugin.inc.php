@@ -183,6 +183,7 @@ class SchemaPlugin extends Plugin {
 	 * @return int timestamp or string date, or null on failure
 	 */
 	function parseDate($fieldName, $value, $attributes = null) {
+		if (empty($value)) return null;
 		$date = strtotime($value);
 		if ($date === false || $date === -1) return null;
 		return date('Y-m-d H:i:s', $date);
