@@ -37,11 +37,12 @@ class SearchIndex {
 	 * @param $recordId int
 	 * @param $fieldId int
 	 * @param $text string
+	 * @param $flush boolean Whether or not to flush entries for an existing object
 	 */
-	function updateTextIndex($recordId, $fieldId, $text) {
+	function updateTextIndex($recordId, $fieldId, $text, $flush = true) {
 		$searchDao = &DAORegistry::getDAO('SearchDAO');
-		$objectId = $searchDao->insertObject($recordId, $fieldId);
 		$position = 0;
+		$objectId = $searchDao->insertObject($recordId, $fieldId, $position, null, $flush);
 		SearchIndex::indexObjectKeywords($objectId, $text, $position);
 	}
 
@@ -51,12 +52,13 @@ class SearchIndex {
 	 * @param $fieldId int
 	 * @param $date string
 	 * @param $text string optional -- if set, index the text value as well
+	 * @param $flush boolean Whether or not to flush entries for an existing object
 	 */
-	function updateDateIndex($recordId, $fieldId, $date, $text = null) {
+	function updateDateIndex($recordId, $fieldId, $date, $text = null, $flush = true) {
 		$searchDao =& DAORegistry::getDAO('SearchDAO');
-		$objectId = $searchDao->insertObject($recordId, $fieldId, $date);
+		$position = 0;
+		$objectId = $searchDao->insertObject($recordId, $fieldId, $position, $date, $flush);
 		if (!empty($text)) {
-			$position = 0;
 			SearchIndex::indexObjectKeywords($objectId, $text, $position);
 		}
 	}

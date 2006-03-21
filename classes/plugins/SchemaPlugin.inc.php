@@ -147,6 +147,9 @@ class SchemaPlugin extends Plugin {
 	 * Index the given record.
 	 */
 	function indexRecord(&$record, $entries) {
+		$searchDao =& DAORegistry::getDAO('SearchDAO');
+		$searchDao->deleteRecordObjects($record->getRecordId());
+
 		$fieldDao =& DAORegistry::getDAO('FieldDAO');
 		$schemaPlugin =& $record->getSchemaPlugin();
 		foreach ($entries as $fieldName => $entry) {
@@ -155,7 +158,7 @@ class SchemaPlugin extends Plugin {
 				$field =& $fieldDao->buildField($fieldName, $this->getName());
 				switch ($fieldType) {
 					case FIELD_TYPE_STRING:
-						SearchIndex::updateTextIndex($record->getRecordId(), $field->getFieldId(), $info['value'], $info['attributes']);
+						SearchIndex::updateTextIndex($record->getRecordId(), $field->getFieldId(), $info['value'], false);
 						break;
 					case FIELD_TYPE_DATE:
 						$date = $schemaPlugin->parseDate($fieldName, $info['value'], $info['attributes']);
@@ -165,8 +168,9 @@ class SchemaPlugin extends Plugin {
 							$field->getFieldId(),
 							$date,
 							$isMixedType?$info['value']:null,
-							$info['attributes']
+							false
 						);
+						else SearchIndex::updateTextIndex($record->getRecordId(), $field->getFieldId(), $info['value'], $info['attributes'], false);
 						break;
 				}
 				unset($field);

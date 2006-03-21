@@ -199,12 +199,14 @@ class SearchDAO extends DAO {
 	 * created or already existed.
 	 * @param $recordId int
 	 * @param $fieldId int
+	 * @param $pos int Reference to int to receive the starting position for insert
 	 * @param $date string optional
+	 * @param $flush boolean Whether or not to flush values of an existing object
 	 * @return int the object ID
 	 */
-	function insertObject($recordId, $fieldId, $date = null) {
+	function insertObject($recordId, $fieldId, &$pos, $date = null, $flush = true) {
 		$result = &$this->retrieve(
-			'SELECT object_id FROM search_objects WHERE record_id = ? AND raw_field_id = ?', array($recordId, $fieldId));
+			'SELECT o.object_id, COALESCE(max(k.pos), 0) AS pos FROM search_objects o LEFT JOIN search_object_keywords k ON (k.object_id = o.object_id) WHERE o.record_id = ? AND o.raw_field_id = ? GROUP BY o.object_id', array($recordId, $fieldId));
 		if ($result->RecordCount() == 0) {
 			$this->update(
 				'INSERT INTO search_objects (record_id, raw_field_id, object_time) VALUES (?, ?, ' . $this->dateToDB($date) . ')',
@@ -214,13 +216,20 @@ class SearchDAO extends DAO {
 				)
 			);
 			$objectId = $this->getInsertId('search_objects', 'object_id');
-			
+			$pos = 0;
 		} else {
 			$objectId = $result->fields[0];
-			$this->update(
-				'DELETE FROM search_object_keywords WHERE object_id = ?',
-				$objectId
-			);
+			if ($flush) {
+				$this->update(
+					'DELETE FROM search_object_keywords WHERE object_id = ?',
+					$objectId
+				);
+				$pos = 0;
+			} else {
+				// Start positions after a gap after the last entry
+				$pos = $result->fields[1] + 2;
+			}
+
 			// Make sure the date is accurate
 			$this->update(
 				'UPDATE search_objects SET object_time = ' . $this->dateToDB($date) . ' WHERE object_id = ?',
