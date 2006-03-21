@@ -56,6 +56,12 @@ datetime_format_long = "%B %e, %Y - %I:%M %p"
 ; variable.
 disable_path_info = Off
 
+; Use fopen(...) for URL-based reads. Modern versions of dspace
+; will not accept requests using fopen, as it does not provide a
+; User Agent, so this option is disabled by default. If this feature
+; is disabled by PHP's configuration, this setting will be ignored.
+allow_url_fopen = Off
+
 
 ;;;;;;;;;;;;;;;;;;;;;
 ; Database Settings ;
