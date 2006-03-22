@@ -13,12 +13,26 @@
 {assign var="helpTopicId" value="index.browse"}
 {include file="common/header.tpl"}
 
-{if $archive}<h3>{$archive->getTitle()|escape}</h3>{/if}
-<br />
+{if $archive}
+	{assign var=archiveId value=$archive->getArchiveId()}
+	<h3>{$archive->getTitle()|escape}</h3>
+{else}
+	{assign var=archiveId value="all"}
+{/if}
+
+{if $sortableCrosswalks}
+	{translate key="browse.sortBy"}:
+	{iterate from=sortableCrosswalks item=crosswalk}{if $notFirstCrosswalk}&nbsp;|&nbsp;{/if}{if $sortId == $crosswalk->getCrosswalkId()}{assign var=matchedSort value=1}<strong>{else}<a href="{url path=$archiveId sortId=$crosswalk->getCrosswalkId()}" class="action">{/if}{$crosswalk->getName()|escape}{if $sortId == $crosswalk->getCrosswalkId()}</strong>{else}</a>{/if}{assign var=notFirstCrosswalk value=1}{/iterate}{if $notFirstCrosswalk}&nbsp;|&nbsp;{/if}{if !$matchedSort}<strong>{else}<a href="{url path=$archiveId sortId="none"}" class="action">{/if}{translate key="browse.sortBy.none"}{if !$matchedSort}</strong>{else}</a>{/if}
+{/if}
+{if $sortableFields}
+	{translate key="browse.sortBy"}:
+	{foreach from=$sortableFields item=field}{if $notFirstField}&nbsp;|&nbsp;{/if}{if $sortId == $field->getFieldId()}{assign var=matchedSort value=1}<strong>{else}<a href="{url path=$archiveId sortId=$field->getFieldId()}" class="action">{/if}{$field->getDisplayName()|escape}{if $sortId == $field->getFieldId()}</strong>{else}</a>{/if}{assign var=notFirstField value=1}{/foreach}{if $notFirstField}&nbsp;|&nbsp;{/if}{if !$matchedSort}<strong>{else}<a href="{url path=$archiveId sortId="none"}" class="action">{/if}{translate key="browse.sortBy.none"}{if !$matchedSort}</strong>{else}</a>{/if}
+{/if}
+
+<br />&nbsp;
 
 <ul class="plain">
 {iterate from=records item=record}
-	{$record->getArchive()|assign:"archive"}
 	<li>&#187; {$record->displaySummary()}</li>
 {/iterate}
 </ul>

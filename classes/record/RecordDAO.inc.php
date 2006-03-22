@@ -233,28 +233,74 @@ class RecordDAO extends DAO {
 	
 	/**
 	 * Retrieve all records in an archive.
+	 * @param $archiveId int ID of archive to browse; null to return all.
+	 * @param $sort array List of IDs to sort by; if archive specified, they're field IDs.
+	 *                    Otherwise they are crosswalk IDs.
+	 * @param $rangeInfo object optional
 	 * @return DAOResultFactory containing matching records
 	 */
-	function &getRecords($archiveId = null, $sort = RECORD_SORT_NONE, $rangeInfo = null) {
-		$params = false;
-		if (isset($archiveId)) $params = $archiveId;
+	function &getRecords($archiveId = null, $sort = array(), $rangeInfo = null) {
+		$params = array();
 
-		switch ($sort) {
-			case RECORD_SORT_NONE:
-				$sort = '';
-				break;
-			case RECORD_SORT_DATE:
-				$sort = 'ORDER BY datestamp DESC ';
-				break;
-			default:
-				fatalError("Unknown sort order $sort!");
+		$fieldDao =& DAORegistry::getDAO('FieldDAO');
+		$crosswalkDao =& DAORegistry::getDAO('CrosswalkDAO');
+
+		$sortJoins = '';
+		$sortOrders = array();
+		$i = 0;
+		if ($archiveId) foreach ($sort as $id) {
+			// Sort using the provided field IDs
+
+			if (!($field =& $fieldDao->getFieldById($id))) continue;
+			if (!($schemaPlugin =& $field->getSchemaPlugin())) continue;
+			if (!in_array($field->getName(), $schemaPlugin->getSortFields())) continue;
+			switch ($schemaPlugin->getFieldType($field->getName())) {
+				case FIELD_TYPE_DATE:
+					$sortJoins .= ' LEFT JOIN search_objects o' . $i . ' ON (o' . $i . '.record_id = r.record_id AND o' . $i . '.raw_field_id = ?)';
+					$params[] = (int) $id;
+					$sortOrders[] = 'o' . $i . '.object_time';
+					break;
+				case FIELD_TYPE_STRING:
+				default:
+					$sortJoins .= ' LEFT JOIN entries e' . $i . ' ON (e' . $i . '.record_id = r.record_id AND e' . $i . '.raw_field_id = ?)';
+					$params[] = (int) $id;
+					$sortOrders[] = 'e' . $i . '.value';
+					break;
+			}
+			
+			$i++;
+			unset($schemaPlugin);
+			unset($field);
+		} else foreach ($sort as $id) {
+			// Sort using the provided crosswalk IDs
+			if (!($crosswalk =& $crosswalkDao->getCrosswalkById($id))) continue;
+			if (!$crosswalk->getSortable()) continue;
+			switch ($crosswalk->getType()) {
+				case FIELD_TYPE_DATE:
+					$sortJoins .= ' LEFT JOIN search_objects o' . $i . ' ON (o' . $i . '.record_id = r.record_id) LEFT JOIN crosswalk_fields cf' . $i . ' ON (cf' . $i . '.raw_field_id = o' . $i . '.raw_field_id AND cf' . $i . '.crosswalk_id = ?)';
+					$params[] = (int) $id;
+					$sortOrders[] = 'o' . $i . '.object_time';
+					break;
+				case FIELD_TYPE_STRING:
+				default:
+					$sortJoins .= ' LEFT JOIN entries e' . $i . ' ON (e' . $i . '.record_id = r.record_id) LEFT JOIN crosswalk_fields cf' . $i . ' ON (cf' . $i . '.raw_field_id = e' . $i . '.raw_field_id AND cf' . $i . '.crosswalk_id = ?)';
+					$params[] = (int) $id;
+					$sortOrders[] = 'e' . $i . '.value';
+					break;
+			}
+
+			$i++;
+			unset($crosswalk);
 		}
 
+		if (isset($archiveId)) $params[] = $archiveId;
+
 		$result = &$this->retrieveRange(
-			'SELECT * FROM records ' .
-			(isset($archiveId)? 'WHERE archive_id = ? ':'') .
-			$sort,
-			$params, $rangeInfo
+			'SELECT DISTINCT r.* FROM records r' . $sortJoins .
+			(isset($archiveId)? ' WHERE archive_id = ? ':'') .
+			(empty($sortOrders)?'':' ORDER BY ' . join(', ', $sortOrders)),
+			empty($params)?false:(count($params)==1?array_shift($params):$params),
+			$rangeInfo
 		);
 
 		$returner = &new DAOResultFactory($result, $this, '_returnRecordFromRow');

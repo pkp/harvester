@@ -31,10 +31,30 @@ class BrowseHandler extends Handler {
 			BrowseHandler::setupTemplate($archive, true);
 
 			$rangeInfo = Handler::getRangeInfo('records');
-			$sort = RECORD_SORT_DATE; // FIXME
+			$sortId = Request::getUserVar('sortId');
+			$templateMgr->assign('sortId', $sortId);
 
 			// The user has chosen an archive or opted to browse all
-			$records =& $recordDao->getRecords($archive?$archiveId:null, $sort, $rangeInfo);
+			$records =& $recordDao->getRecords(
+				$archive?$archiveId:null, 
+				empty($sortId)?array():array($sortId), 
+				$rangeInfo
+			);
+
+			if ($archive) {
+				$fieldDao =& DAORegistry::getDAO('FieldDAO');
+				$schemaPlugin =& $archive->getSchemaPlugin();
+				$sortableFieldNames = $schemaPlugin->getSortFields();
+				$sortableFields = array();
+				foreach ($sortableFieldNames as $name) {
+					$sortableFields[] =& $fieldDao->buildField($name, $schemaPlugin->getName());
+				}
+				$templateMgr->assign('sortableFields', $sortableFields);
+			} else {
+				$crosswalkDao =& DAORegistry::getDAO('CrosswalkDAO');
+				$sortableCrosswalks =& $crosswalkDao->getSortableCrosswalks();
+				$templateMgr->assign_by_ref('sortableCrosswalks', $sortableCrosswalks);
+			}
 
 			$templateMgr->assign_by_ref('records', $records);
 			$templateMgr->assign_by_ref('archive', $archive);

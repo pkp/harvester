@@ -193,6 +193,19 @@ class Archive extends DataObject {
 	}
 
 	/**
+	 * Get the schema plugin name for this archive.
+	 */
+	function &getSchemaPlugin() {
+		$plugins =& PluginRegistry::loadCategory('schemas');
+		$schemaPluginName = $this->getSchemaPluginName();
+		$returner = null;
+		if (isset($plugins[$schemaPluginName])) {
+			$returner =& $plugins[$schemaPluginName];
+		}
+		return $returner;
+	}
+
+	/**
 	 * Set the schema plugin name for this archive.
 	 */
 	function setSchemaPluginName($schemaPluginName) {

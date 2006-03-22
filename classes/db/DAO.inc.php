@@ -134,7 +134,7 @@ class DAO {
 				return $value;
 			}
 		}
-		
+
 		if (isset($dbResultRange) && $dbResultRange->isValid()) {
 			$result = &$this->_dataSource->PageExecute($sql, $dbResultRange->getCount(), $dbResultRange->getPage(), $params);
 			if ($this->_dataSource->errorNo()) {

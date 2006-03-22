@@ -75,6 +75,14 @@ class DublinCorePlugin extends SchemaPlugin {
 		return $fieldList;
 	}
 
+	/**
+	 * Get a list of the fields that can be used to sort in the browse list.
+	 * @return array
+	 */
+	function getSortFields() {
+		return array('title', 'date');
+	}
+
 	function getFieldName($fieldSymbolic, $locale = null) {
 		return Locale::translate("plugins.schemas.dc.fields.$fieldSymbolic.name", $locale);
 	}

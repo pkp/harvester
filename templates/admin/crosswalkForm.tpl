@@ -60,6 +60,7 @@ function refreshForm() {
 			{foreach from=$crosswalkTypes item=typeName key=typeId}
 				<input {if $crosswalkType == $typeId}checked {/if}onclick="refreshForm()" name="crosswalkType" type="radio" value="{$typeId}">&nbsp;&nbsp;{translate key=$typeName}<br />
 			{/foreach}
+			<input type="checkbox"{if $sortable} checked="checked"{/if} name="sortable"/><label for="sortable">{translate key="admin.crosswalks.crosswalk.sortableDescription"}</label>
 		</td>
 	</tr>
 

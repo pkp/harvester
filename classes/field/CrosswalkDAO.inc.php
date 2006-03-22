@@ -57,6 +57,7 @@ class CrosswalkDAO extends DAO {
 		$crosswalk->setDescription($row['description']);
 		$crosswalk->setSeq($row['seq']);
 		$crosswalk->setType($row['type']);
+		$crosswalk->setSortable($row['sortable']);
 		
 		HookRegistry::call('CrosswalkDAO::_returnCrosswalkFromRow', array(&$crosswalk, &$row));
 
@@ -70,14 +71,15 @@ class CrosswalkDAO extends DAO {
 	function insertCrosswalk(&$crosswalk) {
 		$this->update(
 			'INSERT INTO crosswalks
-				(name, description, seq, type)
+				(name, description, seq, type, sortable)
 				VALUES
-				(?, ?, ?, ?)',
+				(?, ?, ?, ?, ?)',
 			array(
 				$crosswalk->getName(),
 				$crosswalk->getDescription(),
 				$crosswalk->getSeq(),
-				$crosswalk->getType()
+				$crosswalk->getType(),
+				$crosswalk->getSortable()?true:false
 			)
 		);
 		
@@ -121,13 +123,15 @@ class CrosswalkDAO extends DAO {
 					name = ?,
 					description = ?,
 					seq = ?,
-					type = ?
+					type = ?,
+					sortable = ?
 				WHERE crosswalk_id = ?',
 			array(
 				$crosswalk->getName(),
 				$crosswalk->getDescription(),
 				$crosswalk->getSeq(),
 				$crosswalk->getType(),
+				$crosswalk->getSortable()?true:false,
 				$crosswalk->getCrosswalkId()
 			)
 		);
@@ -159,6 +163,20 @@ class CrosswalkDAO extends DAO {
 	function &getCrosswalks($rangeInfo = null) {
 		$result = &$this->retrieveRange(
 			'SELECT * FROM crosswalks ORDER BY seq',
+			false, $rangeInfo
+		);
+
+		$returner = &new DAOResultFactory($result, $this, '_returnCrosswalkFromRow');
+		return $returner;
+	}
+	
+	/**
+	 * Retrieve all sortable crosswalks.
+	 * @return DAOResultFactory containing matching crosswalks
+	 */
+	function &getSortableCrosswalks($rangeInfo = null) {
+		$result = &$this->retrieveRange(
+			'SELECT * FROM crosswalks WHERE sortable = 1 ORDER BY seq',
 			false, $rangeInfo
 		);
 
@@ -270,6 +288,7 @@ class CrosswalkDAO extends DAO {
 
 		foreach ($tree->getChildren() as $crosswalkNode) {
 			$type = $crosswalkNode->getAttribute('type');
+			$sortable = $crosswalkNode->getAttribute('sortable') == 'true';
 			$nameNode = &$crosswalkNode->getChildByName('name');
 			$descriptionNode = &$crosswalkNode->getChildByName('description');
 
@@ -280,6 +299,7 @@ class CrosswalkDAO extends DAO {
 				$crosswalk =& new Crosswalk();
 				$crosswalk->setName($name);
 				$crosswalk->setDescription($description);
+				$crosswalk->setSortable($sortable);
 				$crosswalk->setSeq(99999); // KLUDGE
 				switch($type) {
 					case 'date':

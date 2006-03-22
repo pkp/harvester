@@ -138,7 +138,13 @@
 		<field name="name" type="C2" size="60">
 			<NOTNULL/>
 		</field>
-		<field name="type" type="I4"/>
+		<field name="type" type="I4">
+			<NOTNULL/>
+		</field>
+		<field name="sortable" type="I4">
+			<NOTNULL/>
+			<DEFAULT VALUE="0"/>
+		</field>
 		<field name="seq" type="I4">
 			<KEY/>
 			<DEFAULT VALUE="0"/>

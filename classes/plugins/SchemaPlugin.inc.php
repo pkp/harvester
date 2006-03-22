@@ -90,6 +90,14 @@ class SchemaPlugin extends Plugin {
 	}
 
 	/**
+	 * Get a list of the fields that can be used to sort in the browse list.
+	 * @return array
+	 */
+	function getSortFields() {
+		return array();
+	}
+
+	/**
 	 * Display a record summary.
 	 */
 	function displayRecordSummary(&$record) {

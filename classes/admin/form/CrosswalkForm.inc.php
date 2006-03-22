@@ -84,13 +84,15 @@ class CrosswalkForm extends Form {
 			$this->_data = array(
 				'name' => $this->crosswalk->getName(),
 				'description' => $this->crosswalk->getDescription(),
+				'sortable' => $this->crosswalk->getSortable(),
 				'fields' => &$fields,
 				'crosswalkType' => $this->crosswalk->getType()
 			);
 		} else {
 			$this->crosswalkId = null;
 			$this->_data = array(
-				'crosswalkType' => FIELD_TYPE_STRING
+				'crosswalkType' => FIELD_TYPE_STRING,
+				'sortable' => false
 			);
 		}
 
@@ -108,7 +110,7 @@ class CrosswalkForm extends Form {
 	}
 
 	function getParameterNames() {
-		return array('name', 'description', 'crosswalkType');
+		return array('name', 'description', 'crosswalkType', 'sortable');
 	}
 
 	/**
@@ -131,6 +133,7 @@ class CrosswalkForm extends Form {
 		$this->crosswalk->setName($this->getData('name'));
 		$this->crosswalk->setDescription($this->getData('description'));
 		$this->crosswalk->setType($this->getData('crosswalkType'));
+		$this->crosswalk->setSortable($this->getData('sortable'));
 
 		if ($this->crosswalk->getCrosswalkId() != null) {
 			$crosswalkDao->updateCrosswalk($this->crosswalk);
