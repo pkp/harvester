@@ -730,12 +730,12 @@ class dbIndex extends dbObject {
 			return NULL;
 		}
 		
-		// eliminate any columns that aren't in the table
+		/* // eliminate any columns that aren't in the table -- REMOVED BY ALEC for partial indexes
 		foreach( $this->columns as $id => $col ) {
 			if( !isset( $this->parent->fields[$id] ) ) {
 				unset( $this->columns[$id] );
 			}
-		}
+		} */
 		
 		return $xmls->dict->CreateIndexSQL( $this->name, $this->parent->name, $this->columns, $this->opts );
 	}

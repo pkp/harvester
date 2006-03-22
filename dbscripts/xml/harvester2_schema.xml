@@ -273,25 +273,9 @@
 			<col>record_id</col>
 			<col>raw_field_id</col>
 		</index>
-	</table>
-
-	<!--
-	  *
-	  * TABLE date_entries
-	  *
-	  -->
-	<table name="date_entries">
-		<field name="record_id" type="I4">
-			<NOTNULL/>
-		</field>
-		<field name="raw_field_id" type="I4">
-			<NOTNULL/>
-		</field>
-		<field name="value" type="T"/>
-		<index name="entry_unique_index">
-			<col>record_id</col>
+		<index name="entry_value">
+			<col>value(20)</col>
 			<col>raw_field_id</col>
-			<UNIQUE/>
 		</index>
 	</table>
 
