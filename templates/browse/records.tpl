@@ -36,6 +36,6 @@
 	<li>&#187; {$record->displaySummary()}</li>
 {/iterate}
 </ul>
-	{page_info iterator=$records}&nbsp;&nbsp;&nbsp;&nbsp;{page_links name="records" iterator=$records}
+	{page_info iterator=$records}&nbsp;&nbsp;&nbsp;&nbsp;{page_links name="records" sortId=$sortId iterator=$records}
 
 {include file="common/footer.tpl"}
