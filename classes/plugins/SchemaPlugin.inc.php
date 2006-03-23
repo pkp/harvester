@@ -196,6 +196,26 @@ class SchemaPlugin extends Plugin {
 		if ($date === false || $date === -1) return null;
 		return date('Y-m-d H:i:s', $date);
 	}
+
+	/**
+	 * Get the "importance" of this field. This is used to display subsets of the complete
+	 * field list of a schema by importance.
+	 * @param $name string
+	 * @return int
+	 */
+	function getFieldImportance($name) {
+		// By default, all fields are of maximum importance.
+		return 0;
+	}
+
+	/**
+	 * Get a list of field importance levels supported by this plugin, in .
+	 * @return array
+	 */
+	function getSupportedFieldImportance() {
+		// Default: Just maximum importance.
+		return array(0);
+	}
 }
 
 ?>

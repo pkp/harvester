@@ -141,6 +141,37 @@ class MarcPlugin extends SchemaPlugin {
 				return false;
 		}
 	}
+
+	/**
+	 * Get the "importance" of this field. This is used to display subsets of the complete
+	 * field list of a schema by importance.
+	 * @param $name string
+	 * @return int
+	 */
+	function getFieldImportance($name) {
+		switch ($name) {
+			case '245':
+			case '720':
+			case '653':
+			case '520':
+			case '260':
+			case '655':
+			case '856':
+			case '786':
+			case '546':
+				return 1;
+			default:
+				return 0;
+		}
+	}
+
+	/**
+	 * Get a list of field importance levels supported by this plugin, in .
+	 * @return array
+	 */
+	function getSupportedFieldImportance() {
+		return array(0, 1);
+	}
 }
 
 ?>

@@ -12,7 +12,7 @@
   * $Id$
   -->
 
-<topic id="admin/topic/000000" locale="en_US" title="Administration" toc="admin/toc/000000" key="admin.index">
+<topic id="admin/topic/000000" locale="en_US" title="Administration" toc="index/toc/000000" key="admin.index" subtoc="admin/toc/000000">
 	<section>
 		<![CDATA[<p>Welcome to PKP Harvester2 Administration. Using the Administration tools, the Administrator can configure the system, add, delete, and manage archives, and configure crosswalks. These features are described in depth in the next sections.</p>
 		<p>Several useful functions not documented elsewhere are available on the Administration page:

@@ -32,6 +32,7 @@ function ensureKeyword() {
 
 {if $isAdvanced}
 	<form method="post" name="revise" action="{url op="index"}">
+		<input type="hidden" name="importance" value="{$importance|escape}"/>
 		<input type="hidden" name="query" value="{$query|escape}"/>
 		{if is_array($archiveIds)}
 			{foreach from=$archiveIds item=archiveId}

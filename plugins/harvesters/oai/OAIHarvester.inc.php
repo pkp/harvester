@@ -60,7 +60,7 @@ class OAIHarvester extends Harvester {
 	}
 
 	/**
-	 * Get a list of supported metadata formats for this archive.a
+	 * Get a list of supported metadata formats for this archive.
 	 * This is a static method.
 	 * @return array
 	 */
@@ -78,6 +78,28 @@ class OAIHarvester extends Harvester {
 		unset($xmlHandler);
 		
 		if (empty($result)) return array('oai_dc');
+		return $result;
+	}
+
+	/**
+	 * Get a list of available sets for this archive.
+	 * This is a static method.
+	 * @return array
+	 */
+	function getSets($harvesterUrl) {
+		$parser =& new XMLParser();
+		$xmlHandler =& new OAIXMLHandler($this, 'ListSets');
+
+		$parser->setHandler($xmlHandler);
+		$result = null;
+		@$result =& $parser->parse($this->addParameters($harvesterUrl, array(
+			'verb' => 'ListSets'
+		)));
+
+		unset($parser);
+		unset($xmlHandler);
+		
+		if (empty($result)) return array();
 		return $result;
 	}
 

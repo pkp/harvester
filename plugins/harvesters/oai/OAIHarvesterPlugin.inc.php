@@ -123,6 +123,20 @@ class OAIHarvesterPlugin extends HarvesterPlugin {
 		echo Locale::translate('plugins.harvesters.oai.toolUsage') . "\n";
 	}
 
+	function displayManagementInfo(&$smarty) {
+		$archive =& $smarty->get_template_vars('archive');
+		$this->import('OAIHarvester');
+		$this->import('OAIXMLHandler');
+
+		$oaiHarvester =& new OAIHarvester($archive);
+		$availableSets = $oaiHarvester->getSets($archive->getSetting('harvesterUrl'));
+		$selectedSets = array();
+
+		$smarty->assign('selectedSets', $selectedSets);
+		$smarty->assign('availableSets', $availableSets);
+
+		return $smarty->fetch($this->getTemplatePath() . '/management.tpl');
+	}
 }
 
 ?>

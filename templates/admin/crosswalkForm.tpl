@@ -65,6 +65,22 @@ function refreshForm() {
 	</tr>
 
 	<tr>
+		<td colspan="2" class="separator">&nbsp;</td>
+	</tr>
+
+	<tr valign="top">
+		<td class="label"><label for="schemaPluginName">{translate key="admin.crosswalks.schemaFilter"}</label></td>
+		<td class="value">
+			<select id="schemaPluginName" name="schemaPluginName" class="selectMenu" onchange="refreshForm()">
+				<option value="">{translate key="admin.crosswalks.schemaFilter.all"}</option>
+				{foreach from=$schemaPlugins item=schemaPlugin}
+					<option {if $schemaPlugin->getName() == $schemaPluginName}selected {/if}value="{$schemaPlugin->getName()|escape}">{$schemaPlugin->getSchemaDisplayName()}</option>
+				{/foreach}
+			</select>
+		</td>
+	</tr>
+
+	<tr>
 		<td colspan="2" class="headseparator">&nbsp;</td>
 	</tr>
 
@@ -97,13 +113,6 @@ function refreshForm() {
 
 	{call_hook name="Template::Admin::Crosswalks::displayHarvesterForm" plugin=$harvesterPlugin}
 </table>
-
-<label for="schemaPluginName">{translate key="admin.crosswalks.schemaFilter"}:</label> <select id="schemaPluginName" name="schemaPluginName" class="selectMenu" onchange="refreshForm()">
-	<option value="">{translate key="admin.crosswalks.schemaFilter.all"}</option>
-	{foreach from=$schemaPlugins item=schemaPlugin}
-		<option {if $schemaPlugin->getName() == $schemaPluginName}selected {/if}value="{$schemaPlugin->getName()|escape}">{$schemaPlugin->getSchemaDisplayName()}</option>
-	{/foreach}
-</select>
 
 <p><input type="submit" value="{translate key="common.save"}" class="button defaultButton" /> <input type="button" value="{translate key="common.cancel"}" class="button" onclick="document.location.href='{url op="crosswalks"}'" /></p>
 

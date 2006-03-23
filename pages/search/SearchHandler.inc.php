@@ -105,8 +105,8 @@ class SearchHandler extends Handler {
 
 		// Give the results page access to the search parameters
 		$templateMgr->assign('isAdvanced', Request::getUserVar('isAdvanced'));
-		$templateMgr->assign('query', $query);
 		$templateMgr->assign('archiveIds', Request::getUserVar('archiveIds'));
+		$templateMgr->assign('importance', Request::getUserVar('importance')); // Field importance
 
 		$templateMgr->assign_by_ref('results', $results);
 		$templateMgr->display('search/results.tpl');
@@ -183,6 +183,19 @@ class SearchHandler extends Handler {
 					break;
 			}
 			$templateMgr->assign_by_ref('fields', $fields);
+
+			// Determine field importance display parameters.
+			$schemaPlugin =& $schema->getPlugin();
+			$importance = Request::getUserVar('importance');
+			$importanceLevels = $schemaPlugin->getSupportedFieldImportance();
+			if (!is_numeric($importance)) $importance = $importanceLevels[count($importanceLevels)-1];
+			if (($importanceKey = array_search($importance, $importanceLevels)) !== false) {
+				$templateMgr->assign('lessImportance', $importanceKey==0?null:$importanceLevels[$importanceKey-1]);
+				$templateMgr->assign('moreImportance', $importanceKey==count($importanceLevels)-1?null:$importanceLevels[$importanceKey+1]);
+				$templateMgr->assign('importance', $importance);
+			}
+			else $templateMgr->assign('importance', array_shift($importanceLevels));
+
 			$crosswalks = null; // Won't be using crosswalks
 		} elseif (count($schemaList)>1) {
 			// Multiple schema are being searched; use crosswalks.

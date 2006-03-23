@@ -66,6 +66,7 @@ class OAIXMLHandler extends XMLParserHandler {
 
 		switch ($verb) {
 			case 'ListMetadataFormats':
+			case 'ListSets':
 				$this->result = array();
 				break;
 			default:
@@ -101,13 +102,16 @@ class OAIXMLHandler extends XMLParserHandler {
 			case 'record':
 			case 'resumptionToken':
 			case 'datestamp':
-			case 'setSpec':
 			case 'requestURL': // (OAI 1.1)
 			case 'metadataFormat':
 			case 'metadataPrefix':
 			case 'schema':
 			case 'metadataNamespace':
 			case 'error':
+			case 'set':
+			case 'setName':
+			case 'setSpec':
+			case 'setDescription':
 				// Do nothing.
 				break;
 			case 'request':
@@ -198,6 +202,8 @@ class OAIXMLHandler extends XMLParserHandler {
 				$this->request = $this->characterData;
 				break;
 			case 'setSpec':
+			case 'setName':
+			case 'setDescription':
 			case 'identifier':
 				$this->header[$tag] = $this->characterData;
 				break;
@@ -214,6 +220,11 @@ class OAIXMLHandler extends XMLParserHandler {
 			case 'schema':
 			case 'metadataNamespace':
 				// Do nothing.
+				break;
+			case 'set':
+				if ($this->verb == 'ListSets') {
+					$this->result[$this->header['setSpec']] = $this->header['setName'];
+				}
 				break;
 			case 'metadataPrefix':
 				if ($this->verb == 'ListMetadataFormats') {

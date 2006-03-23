@@ -13,11 +13,6 @@
 {assign var="helpTopicId" value="index.search"}
 {include file="common/header.tpl"}
 
-<form action="#" name="blinkInfo">
-	<input type="hidden" names="blinksRemaining" value="0"/>
-	<input type="hidden" names="isBlinking" value="0"/>
-</form>
-
 <script type="text/javascript">
 {literal}
 <!--
@@ -25,6 +20,14 @@ function handleArchiveSelect() {
 	// Specific fields are currently displayed; the field set should be
 	// updated.
 	document.search.action = "{/literal}{url op="search" escape="false"}{literal}";
+	document.search.submit();
+	return true;
+}
+
+function handleImportanceChange(newImportance) {
+	// Specific fields are currently displayed; the field set should be
+	// updated.
+	document.search.action = "{/literal}{url op="search" importance=NEW_IMPORTANCE escape="false"}{literal}".replace("NEW_IMPORTANCE", newImportance);
 	document.search.submit();
 	return true;
 }
@@ -56,6 +59,18 @@ function handleArchiveSelect() {
 			{/iterate}
 		</select><br />
 	</td>
+</tr>
+
+{if $lessImportance!==null || $moreImportance!==null}
+	<tr valign="top">
+		<td class="label">&nbsp;</td>
+		<td colspan="2" class="value">
+			<input type="button" {if $moreImportance===null}disabled="disabled" {/if}class="button" onclick="handleImportanceChange('{$moreImportance|escape}')" value="{translate key="search.fields.less"}"/>
+			<input type="button" {if $lessImportance===null}disabled="disabled" {/if}class="button" onclick="handleImportanceChange('{$lessImportance|escape}')" value="{translate key="search.fields.more"}"/>
+		</td>
+	</tr>
+{/if}
+
 	{foreach from=$crosswalks item=crosswalk}
 		{assign var=crosswalkType value=$crosswalk->getType()}
 		{assign var=crosswalkId value=$crosswalk->getCrosswalkId()}
@@ -82,7 +97,9 @@ function handleArchiveSelect() {
 	{foreach from=$fields item=field}
 		{assign var=fieldType value=$field->getType()}
 		{assign var=fieldId value=$field->getFieldId()}
-		{if $fieldType == FIELD_TYPE_DATE}
+		{if $importance !== null && $field->getImportance() < $importance}
+			{* This field isn't important enough. Don't display it. *}
+		{elseif $fieldType == FIELD_TYPE_DATE}
 			{assign var=fieldValueFromVar value=field-$fieldId-from}
 			{assign var=fieldValueToVar value=field-$fieldId-to}
 			<tr valign="top">
@@ -104,7 +121,6 @@ function handleArchiveSelect() {
 			</tr>
 		{/if}
 	{/foreach}
-</tr>
 </table>
 
 <p><input type="submit" value="{translate key="common.search"}" class="button defaultButton" /></p>
