@@ -203,7 +203,7 @@ class SearchHandler extends Handler {
 			$crosswalks =& $crosswalkDao->getCrosswalksForSchemas($schemaList);
 			$crosswalks =& $crosswalks->toArray();
 			foreach ($crosswalks as $crosswalk) switch ($crosswalk->getType()) {
-				case FIELD_TYPE_STRING:
+				case FIELD_TYPE_DATE:
 					$varName = 'crosswalk-' . $crosswalk->getCrosswalkId();
 					$dateFromName = "$varName-from";
 					$dateToName = "$varName-to";
@@ -216,6 +216,7 @@ class SearchHandler extends Handler {
 					if (empty($dateTo)) $dateTo = Request::getUserVar($dateToName);
 					$templateMgr->assign($dateToName, $dateTo);
 					break;
+				case FIELD_TYPE_STRING:
 				default:
 					$varName = 'crosswalk-' . $crosswalk->getCrosswalkId();
 					$templateMgr->assign($varName, Request::getUserVar($varName));
