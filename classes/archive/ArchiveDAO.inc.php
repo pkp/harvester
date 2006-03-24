@@ -57,6 +57,29 @@ class ArchiveDAO extends DAO {
 	}
 	
 	/**
+	 * Retrieve a archive by public archive ID.
+	 * @param $publicArchiveId string
+	 * @return Archive
+	 */
+	function &getArchiveByPublicArchiveId($publicArchiveId) {
+		$result = &$this->retrieve(
+			'SELECT * FROM archives WHERE public_archive_id = ?', $publicArchiveId
+		);
+
+		$returner = null;
+		if ($result->RecordCount() != 0) {
+			$returner = &$this->_returnArchiveFromRow($result->GetRowAssoc(false));
+		}
+		$result->Close();
+		unset($result);
+
+		// Cache this archive.
+		if ($returner) $this->archiveCache[$returner->getArchiveId()] =& $returner;
+
+		return $returner;
+	}
+
+	/**
 	 * Internal function to return a Archive object from a row.
 	 * @param $row array
 	 * @return Archive
@@ -64,6 +87,7 @@ class ArchiveDAO extends DAO {
 	function &_returnArchiveFromRow(&$row) {
 		$archive = &new Archive();
 		$archive->setArchiveId($row['archive_id']);
+		$archive->setPublicArchiveId($row['public_archive_id']);
 		$archive->setTitle($row['title']);
 		$archive->setDescription($row['description']);
 		$archive->setUrl($row['url']);
@@ -81,10 +105,11 @@ class ArchiveDAO extends DAO {
 	function insertArchive(&$archive) {
 		$this->update(
 			'INSERT INTO archives
-				(title, description, url, harvester_plugin)
+				(public_archive_id, title, description, url, harvester_plugin)
 				VALUES
-				(?, ?, ?, ?)',
+				(?, ?, ?, ?, ?)',
 			array(
+				$archive->getPublicArchiveId(),
 				$archive->getTitle(),
 				$archive->getDescription(),
 				$archive->getUrl(),
@@ -109,12 +134,14 @@ class ArchiveDAO extends DAO {
 		return $this->update(
 			'UPDATE archives
 				SET
+					public_archive_id = ?,
 					title = ?,
 					description = ?,
 					url = ?,
 					harvester_plugin = ?
 				WHERE archive_id = ?',
 			array(
+				$archive->getPublicArchiveId(),
 				$archive->getTitle(),
 				$archive->getDescription(),
 				$archive->getUrl(),
@@ -185,7 +212,18 @@ class ArchiveDAO extends DAO {
 		unset($result);
 		return $count;
 	}
-	
+
+	/**
+	 * Determine whether or not an archive exists with the supplied public archive ID
+	 * @param $publicArchiveId string
+	 * @param $excludeArchiveId int optional
+	 * @return boolean
+	 */
+	function archiveExistsByPublicArchiveId($publicArchiveId, $excludeArchiveId = null) {
+		$archive =& $this->getArchiveByPublicArchiveId($publicArchiveId);
+		if ($archive && $archive->getArchiveId() != $excludeArchiveId) return true;
+		return false;
+	}
 }
 
 ?>

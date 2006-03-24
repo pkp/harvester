@@ -188,6 +188,7 @@ Your server currently supports mbstring: <strong>{$supportsMBString}</strong>]]>
 	<message key="archive.archives">Archives</message>
 	<message key="archive.title">Title</message>
 	<message key="archive.url">URL</message>
+	<message key="archive.publicArchiveId">Public ID</message>
 	<message key="archive.description">Description</message>
 	<message key="archive.type">Type</message>
 
@@ -256,7 +257,9 @@ Your server currently supports mbstring: <strong>{$supportsMBString}</strong>]]>
 	<message key="admin.archives.noneCreated">None Created</message>
 	<message key="admin.archives.form.titleRequired">A title is required.</message>
 	<message key="admin.archives.form.urlRequired">The URL field is required.</message>
+	<message key="admin.archives.form.publicArchiveIdExists">Another archive already exists with the specified public archive ID. Please choose another.</message>
 	<message key="admin.archives.form.url.description">e.g. http://www.yourarchive.com</message>
+	<message key="admin.archives.form.publicArchiveId.description">This unique identifier can be used in URL-based searches to identify this archive.</message>
 	
 	<!-- Languages -->
 	<message key="admin.languages.languageSettings">Language Settings</message>

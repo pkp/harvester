@@ -59,6 +59,7 @@
 		<field name="harvester_plugin" type="C2" size="80">
 			<NOTNULL/>
 		</field>
+		<field name="public_archive_id" type="C2" size="40"/>
 		<field name="title" type="C2" size="255">
 			<NOTNULL/>
 		</field>
@@ -66,6 +67,9 @@
 			<NOTNULL/>
 		</field>
 		<field name="description" type="X"/>
+		<index name="archive_public_id">
+			<col>public_archive_id</col>
+		</index>
 		<descr>Archives and basic archive settings.</descr>
 	</table>
 	

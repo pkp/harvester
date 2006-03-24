@@ -47,6 +47,22 @@ class Archive extends DataObject {
 	}
 
 	/**
+	 * Get public ID of archive
+	 * @return string
+	 */
+	 function getPublicArchiveId() {
+	 	return $this->getData('publicArchiveId');
+	}
+	
+	/**
+	 * Set public ID of archive
+	 * @param $title string
+	 */
+	function setPublicArchiveId($publicArchiveId) {
+		return $this->setData('publicArchiveId',$publicArchiveId);
+	}
+
+	/**
 	 * Get name of harvester plugin
 	 * @return string
 	 */

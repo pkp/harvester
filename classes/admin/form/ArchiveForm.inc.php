@@ -76,6 +76,7 @@ class ArchiveForm extends Form {
 		if (isset($this->archive)) {
 			$this->_data = array(
 				'title' => $this->archive->getTitle(),
+				'publicArchiveId' => $this->archive->getPublicArchiveId(),
 				'description' => $this->archive->getDescription(),
 				'url' => $this->archive->getUrl(),
 				'harvesterPluginName' => $this->harvesterPluginName,
@@ -107,6 +108,7 @@ class ArchiveForm extends Form {
 
 	function getParameterNames() {
 		$parameterNames = array('title', 'description', 'url');
+		if (Validation::isLoggedIn()) $parameterNames[] = 'publicArchiveId';
 		HookRegistry::call('ArchiveForm::getParameterNames', array(&$this, &$parameterNames, $this->harvesterPluginName));
 		return $parameterNames;
 	}
@@ -118,6 +120,19 @@ class ArchiveForm extends Form {
 		$this->readUserVars($this->getParameterNames());
 	}
 	
+	function validate() {
+		if (Validation::isLoggedIn()) {
+			// Check to ensure that the public ID, if specified, is unique
+			$publicArchiveId = $this->getData('publicArchiveId');
+			$archiveDao =& DAORegistry::getDAO('ArchiveDAO');
+			if ($publicArchiveId != '' && $archiveDao->archiveExistsByPublicArchiveId($publicArchiveId, $this->archiveId)) {
+				$this->addError('publicArchiveId', 'admin.archives.form.publicArchiveIdExists');
+				$this->addErrorField('publicArchiveId');
+			}
+		}
+		return parent::validate();
+	}
+
 	/**
 	 * Save archive settings.
 	 */
@@ -133,6 +148,9 @@ class ArchiveForm extends Form {
 		$this->archive->setDescription($this->getData('description'));
 		$this->archive->setUrl($this->getData('url'));
 		$this->archive->setTitle($this->getData('title'));
+		if (Validation::isLoggedIn()) {
+			$this->archive->setPublicArchiveId($this->getData('publicArchiveId'));
+		}
 
 		if ($this->archive->getArchiveId() != null) {
 			$archiveDao->updateArchive($this->archive);

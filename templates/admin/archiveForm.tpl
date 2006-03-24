@@ -10,12 +10,16 @@
  *}
 
 {if $archiveId}
+	{assign var="helpTopicId" value="admin.archiveForm"}
 	{assign var="pageTitle" value="admin.archives.editArchive"}
-{else}
+{elseif $isUserLoggedIn}
+	{assign var="helpTopicId" value="admin.archiveForm"}
 	{assign var="pageTitle" value="admin.archives.addArchive"}
+{else}
+	{assign var="helpTopicId" value="index.addArchive"}
+	{assign var="pageTitle" value="navigation.addArchive"}
 {/if}
 
-{assign var="helpTopicId" value="admin.archiveForm"}
 {include file="common/header.tpl"}
 
 {if $archiveId}
@@ -66,16 +70,27 @@ function selectHarvester() {
 		</td>
 	</tr>
 
-		<tr>
-			<td class="label">{fieldLabel name="harvester" key="archive.type" required="true"}</td>
-			<td><select onchange="selectHarvester()" name="harvesterPluginName" id="harvesterPluginName" size="1" class="selectMenu">
-				{foreach from=$harvesters item=harvester}
-					<option {if $harvester->getName() == $harvesterPluginName}selected="selected" {/if}value="{$harvester->getName()}">{$harvester->getProtocolDisplayName()}</option>
-				{/foreach}
-			</select></td>
+	{if $isUserLoggedIn}{* Only administrators are allowed to enter public archive IDs *}
+		<tr valign="top">
+			<td class="label">{fieldLabel name="url" key="archive.publicArchiveId"}</td>
+			<td class="value">
+				<input type="text" id="publicArchiveId" name="publicArchiveId" value="{$publicArchiveId|escape}" size="20" maxlength="40" class="textField" />
+				<br/>
+				{translate key="admin.archives.form.publicArchiveId.description"}
+			</td>
 		</tr>
+	{/if}
 
-		{call_hook name="Template::Admin::Archives::displayHarvesterForm" plugin=$harvesterPluginName}
+	<tr>
+		<td class="label">{fieldLabel name="harvesterPluginName" key="archive.type" required="true"}</td>
+		<td><select onchange="selectHarvester()" name="harvesterPluginName" id="harvesterPluginName" size="1" class="selectMenu">
+			{foreach from=$harvesters item=harvester}
+				<option {if $harvester->getName() == $harvesterPluginName}selected="selected" {/if}value="{$harvester->getName()}">{$harvester->getProtocolDisplayName()}</option>
+			{/foreach}
+		</select></td>
+	</tr>
+
+	{call_hook name="Template::Admin::Archives::displayHarvesterForm" plugin=$harvesterPluginName}
 </table>
 
 <p><input type="submit" value="{translate key="common.save"}" class="button defaultButton" /> <input type="button" value="{translate key="common.cancel"}" class="button" onclick="document.location.href='{url op="archives"}'" /></p>

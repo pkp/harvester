@@ -16,6 +16,7 @@
 	<topic key="index.index" id="index/topic/000000"/>
 	<topic key="index.search" id="index/topic/000001"/>
 	<topic key="index.browse" id="index/topic/000002"/>
+	<topic key="index.addArchive" id="index/topic/000003"/>
 
 	<!-- Administration -->
 	<topic key="admin.index" id="admin/topic/000000"/>
