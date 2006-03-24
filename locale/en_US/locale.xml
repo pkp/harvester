@@ -203,7 +203,7 @@ Your server currently supports mbstring: <strong>{$supportsMBString}</strong>]]>
 	<message key="admin.archives.manage.flush">Flush Metadata</message>
 	<message key="admin.archives.manage.updateIndex.confirm">Are you sure you wish to update the metadata index? This operation may take several minutes, depending on the size of the archive.</message>
 	<message key="admin.archives.confirmDelete">Are you sure you wish to delete this archive and all of its records?</message>
-	<message key="admin.archive.manage.updateIndex.success">The metadata index has been updated. {$recordCount} records were indexed.</message>
+	<message key="admin.archive.manage.updateIndex.success">The metadata index has been updated. {$recordCount} records are currently indexed.</message>
 	<message key="admin.archive.manage.updateIndex.failure">The metadata index could not be updated. The following error(s) occurred:</message>
 	<message key="admin.archive.manage.updateIndex.return">Return to management</message>
 	<message key="admin.archive.manage.updateIndex.failure.generic">An unknown error occurred.</message>
