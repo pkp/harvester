@@ -22,6 +22,7 @@
 	<message key="plugins.harvesters.oai.archive.form.metadataFormat">Metadata Format</message>
 	<message key="plugins.harvesters.oai.archive.form.sets">Sets</message>
 	<message key="plugins.harvesters.oai.archive.form.allSets">All Sets</message>
+	<message key="plugins.harvesters.oai.archive.form.dates">Record Dates</message>
 	<message key="plugins.harvesters.oai.archive.form.oaiIndexMethodRequired">The indexing method field is required.</message>
 	<message key="plugins.harvesters.oai.archive.form.metadataFormatRequired">The metadata format field is required.</message>
 	<message key="plugins.harvesters.oai.archive.form.oaiIndexMethod.ListRecords">ListRecords</message>

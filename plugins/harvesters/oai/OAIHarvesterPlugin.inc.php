@@ -123,8 +123,9 @@ class OAIHarvesterPlugin extends HarvesterPlugin {
 		echo Locale::translate('plugins.harvesters.oai.toolUsage') . "\n";
 	}
 
-	function displayManagementInfo(&$smarty) {
-		$archive =& $smarty->get_template_vars('archive');
+	function displayManagementPage(&$archive) {
+		$templateMgr =& TemplateManager::getManager();
+
 		$this->import('OAIHarvester');
 		$this->import('OAIXMLHandler');
 
@@ -132,10 +133,16 @@ class OAIHarvesterPlugin extends HarvesterPlugin {
 		$availableSets = $oaiHarvester->getSets($archive->getSetting('harvesterUrl'));
 		$selectedSets = array();
 
-		$smarty->assign('selectedSets', $selectedSets);
-		$smarty->assign('availableSets', $availableSets);
+		$templateMgr->assign('selectedSets', $selectedSets);
+		$templateMgr->assign('availableSets', $availableSets);
 
-		return $smarty->fetch($this->getTemplatePath() . '/management.tpl');
+		$templateMgr->assign('numRecords', $archive->updateRecordCount());
+		$templateMgr->assign('lastIndexed', $archive->getLastIndexedDate());
+		$templateMgr->assign('title', $archive->getTitle());
+		$templateMgr->assign('archiveId', $archive->getArchiveId());
+		$templateMgr->assign_by_ref('archive', $archive);
+
+		$templateMgr->display($this->getTemplatePath() . '/management.tpl');
 	}
 }
 

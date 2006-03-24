@@ -36,7 +36,6 @@ class HarvesterPlugin extends Plugin {
 			HookRegistry::register('ArchiveForm::initData', array(&$this, '_readAdditionalFormData'));
 			HookRegistry::register('ArchiveForm::execute', array(&$this, '_saveAdditionalFormData'));
 			HookRegistry::register('ArchiveForm::display', array(&$this, '_displayArchiveForm'));
-			HookRegistry::register('Template::Admin::Archives::manage', array(&$this, '_displayManagementInfo'));
 		}
 		return $success;
 	}
@@ -197,23 +196,6 @@ class HarvesterPlugin extends Plugin {
 	}
 
 	/**
-	 * This is a hook wrapper that is responsible for calling
-	 * displayArchiveForm. Subclasses should override
-	 * displayArchiveForm as necessary.
-	 */
-	function _displayManagementInfo($hookName, $args) {
-		$params =& $args[0];
-		$smarty =& $args[1];
-		$output =& $args[2];
-
-		if ($params['plugin'] == $this->getName()) {
-			$output = $this->displayManagementInfo($smarty);
-			return true;
-		}
-		return false;
-	}
-
-	/**
 	 * This function is called when the display() function of the
 	 * administrator's archive form is called. Subclasses should
 	 * override this function as necessary.
@@ -238,7 +220,7 @@ class HarvesterPlugin extends Plugin {
 	 * page for an archive to give the harvester plugin a chance
 	 * to display statistics about the archive.
 	 */
-	function displayManagementInfo(&$smarty) {
+	function displayManagementPage(&$archive) {
 	}
 
 	/**
@@ -263,6 +245,27 @@ class HarvesterPlugin extends Plugin {
 	 */
 	function getErrors() {
 		return $this->errors;
+	}
+
+	/**
+	 * Get the harvest update parameters from the Request object.
+	 * @param $archive object
+	 * @return array
+	 */
+	function readUpdateParams(&$archive) {
+		$this->import('OAIHarvester');
+
+		$returner = array();
+		$sets = Request::getUserVar('set');
+		if (is_array($sets) && !empty($sets) && !in_array('', $sets)) {
+			$returner['set'] = join(':', $sets);
+		}
+		$dateFrom = Request::getUserDateVar('from', 1, 1);
+		$dateTo = Request::getUserDateVar('until', 32, 12, null, 23, 59, 59);
+		if (!empty($dateFrom)) $returner['from'] = OAIHarvester::UTCDate($dateFrom);
+		if (!empty($dateTo)) $returner['until'] = OAIHarvester::UTCDate($dateTo);
+
+		return $returner;
 	}
 
 	/**

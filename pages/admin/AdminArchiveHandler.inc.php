@@ -112,14 +112,17 @@ class AdminArchiveHandler extends AdminHandler {
 			$archiveId = $args[0];
 			$archive =& $archiveDao->getArchive($archiveId);
 			if ($archive) {
-				$plugins =& PluginRegistry::loadCategory('harvesters');
+				$harvesterPlugin =& $archive->getHarvesterPlugin();
+				$harvesterPlugin->displayManagementPage($archive);
+
+				/* $plugins =& PluginRegistry::loadCategory('harvesters');
 				$templateMgr = &TemplateManager::getManager();
 				$templateMgr->assign('numRecords', $archive->updateRecordCount());
 				$templateMgr->assign('lastIndexed', $archive->getLastIndexedDate());
 				$templateMgr->assign('title', $archive->getTitle());
 				$templateMgr->assign('archiveId', $archive->getArchiveId());
 				$templateMgr->assign_by_ref('archive', $archive);
-				$templateMgr->display('admin/manage.tpl');
+				$templateMgr->display('admin/manage.tpl'); */
 				return;
 			}
 		}
@@ -149,8 +152,9 @@ class AdminArchiveHandler extends AdminHandler {
 			$pluginName = $archive->getHarvesterPluginName();
 			if (!isset($plugins[$pluginName])) Request::redirect('admin', 'manage', $archive->getArchiveId());
 			$plugin = $plugins[$pluginName];
+			$params = $plugin->readUpdateParams($archive);
 
-			if ($plugin->updateIndex($archive)) {
+			if ($plugin->updateIndex($archive, $params)) {
 				$recordDao =& DAORegistry::getDAO('RecordDAO');
 				$templateMgr = &TemplateManager::getManager();
 				$templateMgr->assign('messageTranslated',

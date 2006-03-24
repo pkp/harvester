@@ -132,10 +132,17 @@ class OAIHarvester extends Harvester {
 		$xmlHandler =& new OAIXMLHandler($this, $verb, $params);
 
 		$parser->setHandler($xmlHandler);
-		$result =& $parser->parse($this->addParameters($this->oaiUrl, array(
+
+		$harvestingParameters = array(
 			'verb' => $verb,
 			'metadataPrefix' => $this->getMetadataFormat()
-		)));
+		);
+
+		foreach (array('set', 'from', 'until') as $name) {
+			if (isset($params[$name])) $harvestingParameters[$name] = $params[$name];
+		}
+
+		$result =& $parser->parse($this->addParameters($this->oaiUrl, $harvestingParameters));
 
 		unset($parser);
 		unset($xmlHandler);
