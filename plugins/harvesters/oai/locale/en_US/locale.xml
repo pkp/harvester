@@ -17,6 +17,7 @@
 	<message key="plugins.harvesters.oai.description">This harvester supports the Open Archives Initiative (OAI) protocol, versions 1.1 and 2.0.</message>
 	<message key="plugins.harvesters.oai.archive.form.harvesterUrl">OAI Base URL</message>
 	<message key="plugins.harvesters.oai.archive.form.harvesterUrlRequired">The OAI URL field is required.</message>
+	<message key="plugins.harvester.oai.archive.form.harvesterUrlInvalid">The specified OAI URL is not valid. Please check the URL and try again.</message>
 	<message key="plugins.harvesters.oai.archive.form.harvesterUrl.description">e.g. http://www.yourarchive.com/oai/index.php</message>
 	<message key="plugins.harvesters.oai.archive.form.oaiIndexMethod">Index Method</message>
 	<message key="plugins.harvesters.oai.archive.form.metadataFormat">Metadata Format</message>

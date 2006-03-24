@@ -48,8 +48,13 @@ class OAIHarvesterPlugin extends HarvesterPlugin {
 	}
 
 	function addArchiveFormChecks(&$form) {
+		$this->import('OAIHarvester');
+		$this->import('OAIXMLHandler');
+		$oaiHarvester =& new OAIHarvester($this->archive);
+
 		$form->addCheck(new FormValidator($form, 'harvesterUrl', 'required', 'plugins.harvesters.oai.archive.form.harvesterUrlRequired'));
 		$form->addCheck(new FormValidatorInSet($form, 'oaiIndexMethod', 'required', 'plugins.harvesters.oai.archive.form.oaiIndexMethodRequired', array(OAI_INDEX_METHOD_LIST_RECORDS, OAI_INDEX_METHOD_LIST_IDENTIFIERS)));
+		$form->addCheck(new FormValidatorCustom($form, 'harvesterUrl', 'required', 'plugins.harvester.oai.archive.form.harvesterUrlInvalid', array(&$oaiHarvester, 'validateHarvesterURL')));
 	}
 
 	function getAdditionalArchiveFormFields() {

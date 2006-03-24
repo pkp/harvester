@@ -67,6 +67,7 @@ class OAIXMLHandler extends XMLParserHandler {
 		switch ($verb) {
 			case 'ListMetadataFormats':
 			case 'ListSets':
+			case 'Identify':
 				$this->result = array();
 				break;
 			default:
@@ -112,6 +113,20 @@ class OAIXMLHandler extends XMLParserHandler {
 			case 'setName':
 			case 'setSpec':
 			case 'setDescription':
+			case 'repositoryName':
+			case 'baseUrl':
+			case 'protocolVersion':
+			case 'adminEmail':
+			case 'earliestDatestamp':
+			case 'deletedRecord':
+			case 'granularity':
+			case 'compression':
+			case 'description':
+			case 'oai-identifier':
+			case 'scheme':
+			case 'repositoryIdentifier':
+			case 'delimiter':
+			case 'sampleIdentifier':
 				// Do nothing.
 				break;
 			case 'request':
@@ -210,8 +225,8 @@ class OAIXMLHandler extends XMLParserHandler {
 			case 'datestamp':
 				$this->header[$tag] = $this->oaiHarvester->UTCtoTimestamp($this->characterData);
 				break;
-			case 'GetRecord':
 			case 'Identify':
+			case 'GetRecord':
 			case 'ListIdentifiers':
 			case 'ListMetadataFormats':
 			case 'ListRecords':
@@ -245,6 +260,22 @@ class OAIXMLHandler extends XMLParserHandler {
 				if (!empty($token)) {
 					$this->oaiHarvester->handleResumptionToken($token, $this->params, $this->recordCount);
 				}
+				break;
+			case 'repositoryName':
+			case 'baseUrl':
+			case 'protocolVersion':
+			case 'adminEmail':
+			case 'earliestDatestamp':
+			case 'deletedRecord':
+			case 'granularity':
+			case 'compression':
+			case 'description':
+			case 'oai-identifier':
+			case 'scheme':
+			case 'repositoryIdentifier':
+			case 'delimiter':
+			case 'sampleIdentifier':
+				if ($this->verb == 'Identify') $this->result[$tag] = $this->characterData;
 				break;
 			default:
 				$this->oaiHarvester->addError(Locale::translate('plugins.harvesters.oai.errors.unknownHeaderTag', array('tag' => $tag)));

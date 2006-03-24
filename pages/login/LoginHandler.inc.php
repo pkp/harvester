@@ -36,6 +36,7 @@ class LoginHandler extends Handler {
 		$templateMgr = &TemplateManager::getManager();
 		$templateMgr->assign('username', $session->getSessionVar('username'));
 		$templateMgr->assign('remember', Request::getUserVar('remember'));
+		$templateMgr->assign('source', Request::getUserVar('source'));
 		$templateMgr->assign('showRemember', Config::getVar('general', 'session_lifetime') > 0);
 		$templateMgr->display('login/login.tpl');
 	}
@@ -60,7 +61,12 @@ class LoginHandler extends Handler {
 				// Redirect back to HTTP if forcing SSL for login only
 				Request::redirectNonSSL();
 			} else {
-	 			Request::redirect('admin');
+				$source = Request::getUserVar('source');
+				if (isset($source) && !empty($source)) {
+					Request::redirectUrl(Request::getProtocol() . '://' . Request::getServerHost() . $source, false);
+				} else {
+	 				Request::redirect('admin');
+	 			}
 			}
 		} else {
 			$sessionManager = &SessionManager::getManager();

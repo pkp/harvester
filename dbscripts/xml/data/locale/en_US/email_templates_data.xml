@@ -22,27 +22,10 @@
 		  *
 		  -->
 		<row>
-			<field name="email_key">PASSWORD_RESET_CONFIRM</field>
-			<field name="subject">Password Reset Confirmation</field>
-			<field name="body">We have received a request to reset your password for the {$siteTitle} web site.
-
-If you did not make this request, please ignore this email and your password will not be changed. If you wish to reset your password, click on the below URL.
-
-Reset my password: {$url}
-
-{$principalContactSignature}</field>
-			<field name="description">This email is sent to a registered user when they indicate that they have forgotten their password or are unable to login. It provides a URL they can follow to reset their password.</field>
-		</row>
-		<row>
-			<field name="email_key">PASSWORD_RESET</field>
-			<field name="subject">Password Reset</field>
-			<field name="body">Your password has been successfully reset for use with the {$siteTitle} web site. Please retain this username and password, as it is necessary for all work with the journal.
-
-Your username: {$username}
-Your new password: {$password}
-
-{$principalContactSignature}</field>
-			<field name="description">This email is sent to a registered user when they have successfully reset their password following the process described in the PASSWORD_RESET_CONFIRM email.</field>
+			<field name="email_key">NEW_ARCHIVE_NOTIFY</field>
+			<field name="subject">Archive Added: {$archiveTitle}</field>
+			<field name="body">A new archive, "{$archiveTitle}", has been submitted for addition to {$siteTitle}. To index this archive, log in at {$loginUrl} or use the command-line harvester tool.</field>
+			<field name="description">This email is sent to the site administrator to notify them about a new archive submission that needs to be indexed.</field>
 		</row>
 	</table>
 </data>

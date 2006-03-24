@@ -141,6 +141,22 @@ class ArchiveForm extends Form {
 		}
 
 		HookRegistry::call('ArchiveForm::execute', array(&$this, &$this->archive, $this->harvesterPluginName));
+
+		if (!Validation::isLoggedIn()) {
+			// Send an email notifying the administrator of the new archive.
+			import('mail.MailTemplate');
+			$email =& new MailTemplate('NEW_ARCHIVE_NOTIFY');
+			if ($email->isEnabled()) {
+				$site =& Request::getSite();
+				$email->assignParams(array(
+					'archiveTitle' => $this->getData('title'),
+					'siteTitle' => $site->getTitle(),
+					'loginUrl' => Request::url('admin', 'manage', $this->archive->getArchiveId())
+				));
+				$email->addRecipient($site->getContactEmail(), $site->getContactName());
+				$email->send();
+			}
+		}
 	}
 	
 }

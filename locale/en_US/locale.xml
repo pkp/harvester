@@ -50,6 +50,7 @@
 	<message key="navigation.loggedInAs">You are logged in as...</message>
 	<message key="navigation.administration">Administration</message>
 	<message key="navigation.logout">Log Out</message>
+	<message key="navigation.addArchive">Add Archive</message>
 
 	<message key="navigation.previousPage">&lt;&lt;</message>
 	<message key="navigation.nextPage">&gt;&gt;</message>

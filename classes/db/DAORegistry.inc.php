@@ -82,6 +82,7 @@ class DAORegistry {
 			case 'ArchiveSettingsDAO': return 'archive.ArchiveSettingsDAO';
 			case 'CrosswalkDAO': return 'field.CrosswalkDAO';
 			case 'EntryDAO': return 'entry.EntryDAO';
+			case 'EmailTemplateDAO': return 'mail.EmailTemplateDAO';
 			case 'FieldDAO': return 'field.FieldDAO';
 			case 'HelpTocDAO': return 'help.HelpTocDAO';
 			case 'HelpTopicDAO': return 'help.HelpTopicDAO';

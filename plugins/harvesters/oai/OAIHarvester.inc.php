@@ -81,6 +81,23 @@ class OAIHarvester extends Harvester {
 		return $result;
 	}
 
+	function validateHarvesterURL($harvesterUrl) {
+		$parser =& new XMLParser();
+		$xmlHandler =& new OAIXMLHandler($this, 'Identify');
+
+		$parser->setHandler($xmlHandler);
+		$result = null;
+		@$result =& $parser->parse($this->addParameters($harvesterUrl, array(
+			'verb' => 'Identify'
+		)));
+
+		unset($parser);
+		unset($xmlHandler);
+
+		if (is_array($result) && !empty($result['repositoryName'])) return true;
+		return false;
+	}
+
 	/**
 	 * Get a list of available sets for this archive.
 	 * This is a static method.

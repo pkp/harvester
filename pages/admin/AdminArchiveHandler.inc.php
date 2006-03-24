@@ -53,9 +53,9 @@ class AdminArchiveHandler extends AdminHandler {
 		
 		import('admin.form.ArchiveForm');
 		
-		$settingsForm = &new ArchiveForm(!isset($args) || empty($args) ? null : (int) $args[0]);
-		$settingsForm->initData();
-		$settingsForm->display();
+		$archiveForm = &new ArchiveForm(!isset($args) || empty($args) ? null : (int) $args[0]);
+		$archiveForm->initData();
+		$archiveForm->display();
 	}
 	
 	/**
@@ -68,17 +68,17 @@ class AdminArchiveHandler extends AdminHandler {
 
 		$archiveId = (int) Request::getUserVar('archiveId');
 
-		$settingsForm = &new ArchiveForm($archiveId);
-		$settingsForm->initData();
-		$settingsForm->readInputData();
+		$archiveForm = &new ArchiveForm($archiveId);
+		$archiveForm->initData();
+		$archiveForm->readInputData();
 		
-		if ($settingsForm->validate()) {
-			$settingsForm->execute();
+		if ($archiveForm->validate()) {
+			$archiveForm->execute();
 			Request::redirect('admin', 'manage', $archiveId);
 			
 		} else {
 			AdminArchiveHandler::setupTemplate(true);
-			$settingsForm->display();
+			$archiveForm->display();
 		}
 	}
 	
