@@ -46,6 +46,27 @@ class CrosswalkDAO extends DAO {
 	}
 	
 	/**
+	 * Retrieve a crosswalk by a public crosswalk ID.
+	 * @param $publicCrosswalkId string
+	 * @return Crosswalk
+	 */
+	function &getCrosswalkByPublicCrosswalkId($publicCrosswalkId) {
+
+		$result = &$this->retrieve(
+			'SELECT * FROM crosswalks WHERE public_crosswalk_id = ?', $publicCrosswalkId
+		);
+
+		$returner = null;
+		if ($result->RecordCount() != 0) {
+			$returner = &$this->_returnCrosswalkFromRow($result->GetRowAssoc(false));
+		}
+		$result->Close();
+		unset($result);
+
+		return $returner;
+	}
+	
+	/**
 	 * Internal function to return a Crosswalk object from a row.
 	 * @param $row array
 	 * @return Crosswalk
@@ -53,6 +74,7 @@ class CrosswalkDAO extends DAO {
 	function &_returnCrosswalkFromRow(&$row) {
 		$crosswalk = &new Crosswalk();
 		$crosswalk->setCrosswalkId($row['crosswalk_id']);
+		$crosswalk->setPublicCrosswalkId($row['public_crosswalk_id']);
 		$crosswalk->setName($row['name']);
 		$crosswalk->setDescription($row['description']);
 		$crosswalk->setSeq($row['seq']);
@@ -71,11 +93,12 @@ class CrosswalkDAO extends DAO {
 	function insertCrosswalk(&$crosswalk) {
 		$this->update(
 			'INSERT INTO crosswalks
-				(name, description, seq, type, sortable)
+				(name, public_crosswalk_id, description, seq, type, sortable)
 				VALUES
-				(?, ?, ?, ?, ?)',
+				(?, ?, ?, ?, ?, ?)',
 			array(
 				$crosswalk->getName(),
+				$crosswalk->getPublicCrosswalkId(),
 				$crosswalk->getDescription(),
 				$crosswalk->getSeq(),
 				$crosswalk->getType(),
@@ -121,6 +144,7 @@ class CrosswalkDAO extends DAO {
 			'UPDATE crosswalks
 				SET
 					name = ?,
+					public_crosswalk_id = ?,
 					description = ?,
 					seq = ?,
 					type = ?,
@@ -128,6 +152,7 @@ class CrosswalkDAO extends DAO {
 				WHERE crosswalk_id = ?',
 			array(
 				$crosswalk->getName(),
+				$crosswalk->getPublicCrosswalkId(),
 				$crosswalk->getDescription(),
 				$crosswalk->getSeq(),
 				$crosswalk->getType(),
@@ -289,6 +314,7 @@ class CrosswalkDAO extends DAO {
 		foreach ($tree->getChildren() as $crosswalkNode) {
 			$type = $crosswalkNode->getAttribute('type');
 			$sortable = $crosswalkNode->getAttribute('sortable') == 'true';
+			$publicId = $crosswalkNode->getAttribute('public_id');
 			$nameNode = &$crosswalkNode->getChildByName('name');
 			$descriptionNode = &$crosswalkNode->getChildByName('description');
 
@@ -298,6 +324,7 @@ class CrosswalkDAO extends DAO {
 
 				$crosswalk =& new Crosswalk();
 				$crosswalk->setName($name);
+				$crosswalk->setPublicCrosswalkId($publicId);
 				$crosswalk->setDescription($description);
 				$crosswalk->setSortable($sortable);
 				$crosswalk->setSeq(99999); // KLUDGE
@@ -330,6 +357,18 @@ class CrosswalkDAO extends DAO {
 
 		$xmlParser->destroy();
 
+	}
+
+	/**
+	 * Determine whether or not a crosswalk exists with the supplied public crosswalk ID
+	 * @param $publicCrosswalkId string
+	 * @param $excludeCrosswalkId int optional
+	 * @return boolean
+	 */
+	function crosswalkExistsByPublicCrosswalkId($publicCrosswalkId, $excludeCrosswalkId = null) {
+		$archive =& $this->getCrosswalkByPublicCrosswalkId($publicCrosswalkId);
+		if ($archive && $archive->getCrosswalkId() != $excludeCrosswalkId) return true;
+		return false;
 	}
 }
 

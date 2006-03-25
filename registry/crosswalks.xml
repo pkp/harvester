@@ -15,8 +15,9 @@
 	<!ELEMENT crosswalks (crosswalk+)>
 	<!ELEMENT crosswalk (name, description, field+)>
 	<!ATTLIST crosswalk
-		type (text | string) #IMPLIED
-		sortable (true | false) #IMPLIED>
+		type (text | string | date) #IMPLIED
+		sortable (true | false) #IMPLIED
+		public_id CDATA #IMPLIED>
 	<!ELEMENT name (#PCDATA)>
 	<!ELEMENT description (#PCDATA)>
 	<!ELEMENT field EMPTY>
@@ -26,7 +27,7 @@
 ]>
 
 <crosswalks>
-	<crosswalk type="text" sortable="true">
+	<crosswalk type="text" sortable="true" public_id="title">
 		<name>Title</name>
 		<description>This crosswalk associates the title fields from various schemas.</description>
 		<field schema="DublinCorePlugin" name="title"/>
@@ -45,14 +46,14 @@
 		<field schema="ModsPlugin" name="nonSort"/>
 		<field schema="ModsPlugin" name="displayForm"/>
 	</crosswalk>
-	<crosswalk type="text" sortable="false">
+	<crosswalk type="text" sortable="false" public_id="author">
 		<name>Author</name>
 		<description>This crosswalk associates the creator / author fields from various schemas.</description>
 		<field schema="DublinCorePlugin" name="creator"/>
 		<field schema="MarcPlugin" name="720"/>
 		<field schema="ModsPlugin" name="namePart"/>
 	</crosswalk>
-	<crosswalk type="date" sortable="true">
+	<crosswalk type="date" sortable="true" public_id="date">
 		<name>Date</name>
 		<description>This crosswalk associates a generic date, generally creation, from the various schemas.</description>
 		<field schema="DublinCorePlugin" name="date"/>

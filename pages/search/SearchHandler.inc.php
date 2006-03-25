@@ -35,19 +35,9 @@ class SearchHandler extends Handler {
 	 */
 	function results($args) {
 		SearchHandler::validate();
-		list($crosswalks, $fields) = SearchHandler::setupTemplate();
+		list($crosswalks, $fields, $archives) = SearchHandler::setupTemplate();
 		import('search.Search');
 		$rangeInfo = Handler::getRangeInfo('search');
-
-		// Get the archives we're searching.
-		$archiveIds = Request::getUserVar('archiveIds');
-		if (!is_array($archiveIds)) {
-			if (empty($archiveIds)) $archiveIds = null;
-			else $archiveIds = array($archiveIds);
-		}
-		if ($archiveIds !== null && in_array('all', $archiveIds)) {
-			$archiveIds = null;
-		}
 
 		$query = Request::getUserVar('query');
 
@@ -99,13 +89,95 @@ class SearchHandler extends Handler {
 				}
 		}
 
+		$archiveIds = array();
+		if (empty($archiveIds)) $archiveIds = null;
+		foreach ($archives as $archive) {
+			$archiveIds[] = $archive->getArchiveId();
+		}
+
 		$results = &Search::retrieveResults($keywords, $dates, $archiveIds, $rangeInfo);
 
 		$templateMgr = &TemplateManager::getManager();
 
 		// Give the results page access to the search parameters
 		$templateMgr->assign('isAdvanced', Request::getUserVar('isAdvanced'));
-		$templateMgr->assign('archiveIds', Request::getUserVar('archiveIds'));
+		$templateMgr->assign('importance', Request::getUserVar('importance')); // Field importance
+
+		$templateMgr->assign_by_ref('results', $results);
+		$templateMgr->display('search/results.tpl');
+	}
+
+	/**
+	 * Display search results from a URL-based search.
+	 */
+	function byUrl($args) {
+		SearchHandler::validate();
+		list($crosswalks, $fields, $archives) = SearchHandler::setupTemplate();
+		import('search.Search');
+		$rangeInfo = Handler::getRangeInfo('search');
+
+		$query = Request::getUserVar('query');
+
+		$keywords = array(
+			'all' => Search::parseQuery($query),
+			'crosswalk' => array(),
+			'field' => array(),
+			'date-from' => array(),
+			'date-to' => array()
+		);
+		$dates = array(
+			'field' => array(),
+			'crosswalk' => array()
+		);
+
+		if (is_array($fields)) foreach ($fields as $field) switch ($field->getType()) {
+			case FIELD_TYPE_DATE:
+				$varName = $field->getName();
+				$dateFromName = "$varName-from";
+				$dateToName = "$varName-to";
+
+				$dateFrom = Request::getUserVar($dateFromName);
+				$dateTo = Request::getUserVar($dateToName);
+				$dates['field'][$field->getFieldId()] = array($dateFrom, $dateTo);
+				if (!$field->isMixedType()) break;
+			case FIELD_TYPE_STRING:
+			default:
+				$value = Request::getUserVar($field->getName());
+				if (!empty($value)) {
+					$keywords['field'][$field->getFieldId()] = Search::parseQuery($value);
+				}
+		}
+
+		if (is_array($crosswalks)) foreach ($crosswalks as $crosswalk) switch ($crosswalk->getType()) {
+			case FIELD_TYPE_DATE:
+				$varName = $crosswalk->getPublicCrosswalkId();
+				$dateFromName = "$varName-from";
+				$dateToName = "$varName-to";
+
+				$dateFrom = Request::getUserVar($dateFromName);
+				$dateTo = Request::getUserVar($dateToName);
+				$dates['crosswalk'][$crosswalk->getCrosswalkId()] = array($dateFrom, $dateTo);
+				break;
+			case FIELD_TYPE_STRING:
+			default:
+				$value = Request::getUserVar($crosswalk->getPublicCrosswalkId());
+				if (!empty($value)) {
+					$keywords['crosswalk'][$crosswalk->getCrosswalkId()] = Search::parseQuery($value);
+				}
+		}
+
+		$archiveIds = array();
+		if (empty($archives)) $archiveIds = null;
+		foreach ($archives as $archive) {
+			$archiveIds[] = $archive->getArchiveId();
+		}
+
+		$results = &Search::retrieveResults($keywords, $dates, $archiveIds, $rangeInfo);
+
+		$templateMgr = &TemplateManager::getManager();
+
+		// Give the results page access to the search parameters
+		$templateMgr->assign('isAdvanced', Request::getUserVar('isAdvanced'));
 		$templateMgr->assign('importance', Request::getUserVar('importance')); // Field importance
 
 		$templateMgr->assign_by_ref('results', $results);
@@ -128,22 +200,36 @@ class SearchHandler extends Handler {
 		$templateMgr->assign('query', Request::getUserVar('query'));
 
 		// Determine the list of schemas that must be supported by the search form
+		$publicArchiveIds = Request::getUserVar('archive');
+		if (!is_array($publicArchiveIds) && !empty($publicArchiveIds)) $publicArchiveIds = array($publicArchiveIds);
 		$archiveIds = Request::getUserVar('archiveIds');
 		$archiveDao =& DAORegistry::getDAO('ArchiveDAO');
 		$schemaList = array();
+		$archives = array();
 
-		$isAllSelected = !is_array($archiveIds) || empty($archiveIds) || in_array('all', $archiveIds);
+		$isAllSelected = (!is_array($archiveIds) || empty($archiveIds) || in_array('all', $archiveIds)) && empty($publicArchiveIds);
 
-		if (!$isAllSelected) foreach ($archiveIds as $archiveId) {
-			$archive =& $archiveDao->getArchive((int) $archiveId);
-			if ($archive && ($schemaPluginName = $archive->getSchemaPluginName()) != '') {
-				array_push($schemaList, $schemaPluginName);
+		if (!$isAllSelected) {
+			if (is_array($archiveIds)) foreach ($archiveIds as $archiveId) {
+				$archive =& $archiveDao->getArchive((int) $archiveId);
+				if ($archive && ($schemaPluginName = $archive->getSchemaPluginName()) != '') {
+					array_push($schemaList, $schemaPluginName);
+				}
+				$archives[] =& $archive;
+				unset($archive);
 			}
-			unset($archive);
-		}
-		if ($isAllSelected) {
+			if (is_array($publicArchiveIds)) foreach ($publicArchiveIds as $publicArchiveId) {
+				$archive =& $archiveDao->getArchiveByPublicArchiveId($publicArchiveId);
+				if ($archive && ($schemaPluginName = $archive->getSchemaPluginName()) != '') {
+					array_push($schemaList, $schemaPluginName);
+				}
+				$archives[] =& $archive;
+				unset($archive);
+			}
+		} else {
 			$archives =& $archiveDao->getArchives();
-			while ($archive =& $archives->next()) {
+			$archives =& $archives->toArray();
+			foreach ($archives as $archive) {
 				if ($archive->getRecordCount() > 0 && ($schemaPluginName = $archive->getSchemaPluginName()) != '') {
 					array_push($schemaList, $schemaPluginName);
 				}
@@ -230,7 +316,7 @@ class SearchHandler extends Handler {
 
 		$templateMgr->assign('archiveIds', Request::getUserVar('archiveIds'));
 
-		return array($crosswalks, $fields);
+		return array($crosswalks, $fields, $archives);
 	}
 }
 

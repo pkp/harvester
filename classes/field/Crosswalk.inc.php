@@ -47,6 +47,22 @@ class Crosswalk extends DataObject {
 	}
 
 	/**
+	 * Get public ID of crosswalk
+	 * @return string
+	 */
+	 function getPublicCrosswalkId() {
+	 	return $this->getData('publicCrosswalkId');
+	}
+	
+	/**
+	 * Set public ID of crosswalk
+	 * @param $publicCrosswalkId string
+	 */
+	function setPublicCrosswalkId($publicCrosswalkId) {
+		return $this->setData('publicCrosswalkId',$publicCrosswalkId);
+	}
+
+	/**
 	 * Get type of crosswalk
 	 * @return int FIELD_TYPE_...
 	 */

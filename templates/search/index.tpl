@@ -19,7 +19,7 @@
 function handleArchiveSelect() {
 	// Specific fields are currently displayed; the field set should be
 	// updated.
-	document.search.action = "{/literal}{url op="search" escape="false"}{literal}";
+	document.search.action = "{/literal}{url page="search" escape="false"}{literal}";
 	document.search.submit();
 	return true;
 }

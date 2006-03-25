@@ -56,7 +56,7 @@ class Archive extends DataObject {
 	
 	/**
 	 * Set public ID of archive
-	 * @param $title string
+	 * @param $publicArchiveId string
 	 */
 	function setPublicArchiveId($publicArchiveId) {
 		return $this->setData('publicArchiveId',$publicArchiveId);

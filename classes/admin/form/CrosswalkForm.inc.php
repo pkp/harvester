@@ -83,6 +83,7 @@ class CrosswalkForm extends Form {
 
 			$this->_data = array(
 				'name' => $this->crosswalk->getName(),
+				'publicCrosswalkId' => $this->crosswalk->getPublicCrosswalkId(),
 				'description' => $this->crosswalk->getDescription(),
 				'sortable' => $this->crosswalk->getSortable(),
 				'fields' => &$fields,
@@ -110,7 +111,7 @@ class CrosswalkForm extends Form {
 	}
 
 	function getParameterNames() {
-		return array('name', 'description', 'crosswalkType', 'sortable');
+		return array('name', 'description', 'crosswalkType', 'sortable', 'publicCrosswalkId');
 	}
 
 	/**
@@ -120,6 +121,17 @@ class CrosswalkForm extends Form {
 		$this->readUserVars($this->getParameterNames());
 	}
 	
+	function validate() {
+		// Check to ensure that the public ID, if specified, is unique
+		$publicCrosswalkId = $this->getData('publicCrosswalkId');
+		$crosswalkDao =& DAORegistry::getDAO('CrosswalkDAO');
+		if ($publicCrosswalkId != '' && $crosswalkDao->crosswalkExistsByPublicCrosswalkId($publicCrosswalkId, $this->crosswalkId)) {
+			$this->addError('publicCrosswalkId', 'admin.crosswalks.form.publicCrosswalkIdExists');
+			$this->addErrorField('publicCrosswalkId');
+		}
+		return parent::validate();
+	}
+
 	/**
 	 * Save crosswalk settings.
 	 */
@@ -131,6 +143,7 @@ class CrosswalkForm extends Form {
 		}
 
 		$this->crosswalk->setName($this->getData('name'));
+		$this->crosswalk->setPublicCrosswalkId($this->getData('publicCrosswalkId'));
 		$this->crosswalk->setDescription($this->getData('description'));
 		$this->crosswalk->setType($this->getData('crosswalkType'));
 		$this->crosswalk->setSortable($this->getData('sortable'));

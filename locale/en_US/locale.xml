@@ -231,6 +231,7 @@ Your server currently supports mbstring: <strong>{$supportsMBString}</strong>]]>
 
 	<!-- Crosswalks -->
 	<message key="admin.crosswalks.crosswalk.name">Name</message>
+	<message key="admin.crosswalks.crosswalk.publicCrosswalkId">Public Crosswalk ID</message>
 	<message key="admin.crosswalks.crosswalk.description">Description</message>
 	<message key="admin.crosswalks.crosswalk.sortableDescription">Allow users to sort records using this crosswalk when browsing records</message>
 	<message key="admin.crosswalks.crosswalk.type">Type</message>
@@ -244,6 +245,8 @@ Your server currently supports mbstring: <strong>{$supportsMBString}</strong>]]>
 	<message key="admin.crosswalks.addCrosswalk">Add Crosswalk</message>
 	<message key="admin.crosswalks.form.nameRequired">A name is required.</message>
 	<message key="admin.crosswalks.form.descriptionRequired">A description is required.</message>
+	<message key="admin.crosswalks.form.publicCrosswalkIdExists">A crosswalk with the specified public crosswalk ID already exists. Please choose another and try again.</message>
+	<message key="admin.crosswalks.form.publicCrosswalkId.description">When specified, the public crosswalk ID can be used in URL-based searches.</message>
 	<message key="admin.crosswalks.editCrosswalk">Edit Crosswalk</message>
 	<message key="admin.crosswalks.addIndexer">Add Indexer</message>
 	<message key="admin.crosswalks.schemaFilter">Schema Filter</message>

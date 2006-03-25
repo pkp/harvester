@@ -55,6 +55,19 @@ function refreshForm() {
 	</tr>
 
 	<tr valign="top">
+		<td class="label">{fieldLabel name="url" key="admin.crosswalks.crosswalk.publicCrosswalkId"}</td>
+		<td class="value">
+			<input type="text" id="publicCrosswalkId" name="publicCrosswalkId" value="{$publicCrosswalkId|escape}" size="20" maxlength="40" class="textField" />
+			<br/>
+			{translate key="admin.crosswalks.form.publicCrosswalkId.description"}
+		</td>
+	</tr>
+
+	<tr>
+		<td colspan="2" class="separator">&nbsp;</td>
+	</tr>
+
+	<tr valign="top">
 		<td class="label">{translate key="admin.crosswalks.crosswalk.type"}</td>
 		<td class="value">
 			{foreach from=$crosswalkTypes item=typeName key=typeId}

@@ -375,9 +375,9 @@ class Request {
 	 */
 	function getUserVar($key) {
 		static $vars;
-		
+
 		if (!isset($vars)) {
-			$vars = array_merge($_GET, $_POST);
+			$vars = $_GET + $_POST;
 		}
 		
 		if (isset($vars[$key])) {

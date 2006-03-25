@@ -139,6 +139,7 @@
 			<KEY/>
 			<AUTOINCREMENT/>
 		</field>
+		<field name="public_crosswalk_id" type="C2" size="40"/>
 		<field name="name" type="C2" size="60">
 			<NOTNULL/>
 		</field>
