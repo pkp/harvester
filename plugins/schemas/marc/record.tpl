@@ -15,6 +15,8 @@
 <h3>{foreach from=$entries.245 item=entry}{$entry.value|escape}{/foreach}</h3>
 <h4>{$archive->getTitle()|escape}</h4>
 
+<a href="{url page="browse" op="archiveInfo" path=$archive->getArchiveId()}" class="action">{translate key="browse.archiveInfo"}</a><br/>&nbsp;
+
 <table width="100%" class="listing">
 	<tr>
 		<td colspan="3" class="headseparator">&nbsp;</td>
@@ -26,7 +28,7 @@
 	<tr>
 		<td colspan="3" class="headseparator">&nbsp;</td>
 	</tr>
-	{foreach from=$entries item=entry key=name}
+	{foreach from=$entries item=entry key=name name=entries}
 		<tr valign="top">
 			<td>{translate key="plugins.schemas.marc.fields.$name.name"}</td>
 			<td>
@@ -34,13 +36,9 @@
 			</td>
 		</tr>
 		<tr>
-			<td colspan="3" class="{if $smarty.foreach.searchableFields.last}end{/if}separator">&nbsp;</td>
+			<td colspan="3" class="{if $smarty.foreach.entries.last}end{/if}separator">&nbsp;</td>
 		</tr>
 	{/foreach}
 </table>
-
-<br />
-
-<a href="{url page="browse" op="archiveInfo" path=$archive->getArchiveId()}" class="action">{translate key="browse.archiveInfo"}</a>
 
 {include file="common/footer.tpl"}

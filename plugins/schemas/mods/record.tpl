@@ -15,6 +15,8 @@
 <h3>{$entries.title.value|escape}</h3>
 <h4>{$archive->getTitle()|escape}</h4>
 
+<a href="{url page="browse" op="archiveInfo" path=$archive->getArchiveId()}" class="action">{translate key="browse.archiveInfo"}</a><br/>&nbsp;
+
 <table width="100%" class="listing">
 	<tr>
 		<td colspan="3" class="headseparator">&nbsp;</td>
@@ -72,9 +74,5 @@
 		{/if}
 	{/foreach}
 </table>
-
-<br />
-
-<a href="{url page="browse" op="archiveInfo" path=$archive->getArchiveId()}" class="action">{translate key="browse.archiveInfo"}</a>
 
 {include file="common/footer.tpl"}
