@@ -1,0 +1,58 @@
+<?php
+
+/**
+ * PreprocessorPlugin.inc.php
+ *
+ * Copyright (c) 2005-2006 The Public Knowledge Project
+ * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
+ *
+ * @package plugins
+ *
+ * Abstract class for preprocessor plugins
+ *
+ * $Id$
+ */
+
+class PreprocessorPlugin extends Plugin {
+	function PreprocessorPlugin() {
+		parent::Plugin();
+	}
+
+	function register($category, $path) {
+		$result = parent::register($category, $path);
+		if ($result) {
+			HookRegistry::register('Harvester::insertEntry', array(&$this, '_preprocessEntry'));
+		}
+		return $result;
+	}
+
+	function _preprocessEntry($hookName, &$args) {
+		$archive =& $args[0];
+		$record =& $args[1];
+		$field =& $args[2];
+		$value =& $args[3];
+		$attributes =& $args[4];
+		return $this->preprocessEntry($archive, $record, $field, $value, $attributes);
+	}
+
+	/**
+	 * Get the symbolic name of this plugin. Should be unique within
+	 * the category.
+	 */
+	function getName() {
+		fatalError('ABSTRACT CLASS');
+	}
+
+	/**
+	 * Get a description of the plugin.
+	 */
+	function getDescription() {
+		fatalError('ABSTRACT CLASS');
+	}
+
+	function preprocessEntry(&$archive, &$record, &$field, &$value, &$attributes) {
+		fatalError('ABSTRACT CLASS');
+	}
+}
+
+?>

@@ -26,6 +26,8 @@ class SchemaPlugin extends Plugin {
 	function register($category, $path) {
 		$success = parent::register($category, $path);
 		if ($success) {
+			// Make sure postprocessors are loaded.
+			PluginRegistry::loadCategory('postprocessors');
 		}
 		return $success;
 	}
@@ -129,13 +131,6 @@ class SchemaPlugin extends Plugin {
 	}
 
 	/**
-	 * Get an indexer for the specified field
-	 */
-	function &getIndexer($fieldId) {
-		fatalError('ABSTRACT CLASS!');
-	}
-
-	/**
 	 * Get the field type for the specified field.
 	 * Child classes should probably override this.
 	 */
@@ -154,7 +149,7 @@ class SchemaPlugin extends Plugin {
 	/**
 	 * Index the given record.
 	 */
-	function indexRecord(&$record, $entries) {
+	function indexRecord(&$archive, &$record, $entries) {
 		$searchDao =& DAORegistry::getDAO('SearchDAO');
 		$searchDao->deleteRecordObjects($record->getRecordId());
 
@@ -164,6 +159,7 @@ class SchemaPlugin extends Plugin {
 			$fieldType = $this->getFieldType($fieldName);
 			foreach ($entry as $entryId => $info) {
 				$field =& $fieldDao->buildField($fieldName, $this->getName());
+				if (HookRegistry::call('SchemaPlugin::indexRecord', array(&$archive, &$record, &$field, &$info['value'], &$info['attributes']))) return true;
 				switch ($fieldType) {
 					case FIELD_TYPE_STRING:
 						SearchIndex::updateTextIndex($record->getRecordId(), $field->getFieldId(), $info['value'], false);

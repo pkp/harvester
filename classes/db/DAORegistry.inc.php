@@ -86,8 +86,6 @@ class DAORegistry {
 			case 'FieldDAO': return 'field.FieldDAO';
 			case 'HelpTocDAO': return 'help.HelpTocDAO';
 			case 'HelpTopicDAO': return 'help.HelpTopicDAO';
-			case 'IndexerDAO': return 'indexer.IndexerDAO';
-			case 'IndexerSettingsDAO': return 'indexer.IndexerSettingsDAO';
 			case 'RecordDAO': return 'record.RecordDAO';
 			case 'SchemaDAO': return 'schema.SchemaDAO';
 			case 'SearchDAO': return 'search.SearchDAO';

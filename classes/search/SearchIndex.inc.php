@@ -131,14 +131,14 @@ class SearchIndex {
 	 * @param $record Article
 	 * @param $entries array
 	 */
-	function indexRecord(&$record, $entries = null) {
+	function indexRecord(&$archive, &$record, $entries = null) {
 		$fieldDao =& DAORegistry::getDAO('FieldDAO');
 		$schemaPlugin =& $record->getSchemaPlugin();
 		if (!$entries) {
 			$recordDao =& DAORegistry::getDAO('RecordDAO');
 			$entries = $recordDao->getEntries($record->getRecordId());
 		}
-		$schemaPlugin->indexRecord($record, $entries);
+		$schemaPlugin->indexRecord($archive, $record, $entries);
 	}
 	
 	/**
@@ -160,7 +160,11 @@ class SearchIndex {
 		$numIndexed = 0;
 		while (!$records->eof()) {
 			$record =& $records->next();
-			SearchIndex::indexRecord($record);
+			if (!isset($archive) || $archive->getArchiveId() !== $record->getArchiveId()) {
+				unset($archive);
+				$archive =& $record->getArchive();
+			}
+			SearchIndex::indexRecord($archive, $record);
 			$numIndexed++;
 			if ($log && $numIndexed % 100 == 0) {
 				echo "$numIndexed records indexed...\r";

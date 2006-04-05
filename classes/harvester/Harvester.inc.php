@@ -36,6 +36,9 @@ class Harvester {
 		$this->recordDao =& DAORegistry::getDAO('RecordDAO');
 
 		$this->archive =& $archive;
+
+		// Make sure preprocessors are loaded.
+		PluginRegistry::loadCategory('preprocessors');
 	}
 
 	function &getFieldByKey($fieldKey, $schemaPlugin) {
@@ -50,7 +53,11 @@ class Harvester {
 
 	function insertEntry(&$field, $value, $attributes = array()) {
 		$record =& $this->getRecord();
+		$archive =& $this->getArchive();
 		if (!$record) return null;
+
+		if (HookRegistry::call('Harvester::insertEntry', array(&$archive, &$record, &$field, &$value, &$attributes))) return true;
+
 		return $this->recordDao->insertEntry(
 			$record->getRecordId(),
 			$field->getFieldId(),

@@ -248,7 +248,6 @@ Your server currently supports mbstring: <strong>{$supportsMBString}</strong>]]>
 	<message key="admin.crosswalks.form.publicCrosswalkIdExists">A crosswalk with the specified public crosswalk ID already exists. Please choose another and try again.</message>
 	<message key="admin.crosswalks.form.publicCrosswalkId.description">When specified, the public crosswalk ID can be used in URL-based searches.</message>
 	<message key="admin.crosswalks.editCrosswalk">Edit Crosswalk</message>
-	<message key="admin.crosswalks.addIndexer">Add Indexer</message>
 	<message key="admin.crosswalks.schemaFilter">Schema Filter</message>
 	<message key="admin.crosswalks.schemaFilter.all">All Schemas</message>
 	<message key="admin.crosswalks.description">Crosswalks are used to identify similar fields in different metadata schema so that cross-schema searches can be performed.</message>

@@ -251,7 +251,8 @@ class OAIXMLHandler extends XMLParserHandler {
 					// Update the index for this record
 					import('search.SearchIndex');
 					$record =& $this->oaiHarvester->getRecord();
-					if ($record) SearchIndex::indexRecord($record);
+					$archive =& $this->oaiHarvester->getArchive();
+					if ($record) SearchIndex::indexRecord($archive, $record);
 				}
 				break;
 			case 'resumptionToken':
