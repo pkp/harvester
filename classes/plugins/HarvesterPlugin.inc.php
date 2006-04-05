@@ -36,6 +36,7 @@ class HarvesterPlugin extends Plugin {
 			HookRegistry::register('ArchiveForm::initData', array(&$this, '_readAdditionalFormData'));
 			HookRegistry::register('ArchiveForm::execute', array(&$this, '_saveAdditionalFormData'));
 			HookRegistry::register('ArchiveForm::display', array(&$this, '_displayArchiveForm'));
+			HookRegistry::register('Template::Browse::ArchiveInfo::DisplayExtendedArchiveInfo', array(&$this, '_displayExtendedArchiveInfo'));
 		}
 		return $success;
 	}
@@ -106,6 +107,23 @@ class HarvesterPlugin extends Plugin {
 		if ($harvesterPlugin == $this->getName()) {
 			$additionalFieldNames = $this->getAdditionalArchiveFormFields();
 			$parameterNames = array_merge($parameterNames, $additionalFieldNames);
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * Get the extended archive information for this harvester.
+	 * This is a wrapper around the displayExtendedArchiveInfo function.
+	 */
+	function _displayExtendedArchiveInfo($hookName, $args) {
+		$params =& $args[0];
+		$smarty =& $args[1];
+		$output =& $args[2];
+
+		$archive =& $params['archive'];
+		if ($archive->getHarvesterPluginName() == $this->getName()) {
+			$output = $this->displayExtendedArchiveInfo($archive);
 			return true;
 		}
 		return false;
@@ -193,6 +211,17 @@ class HarvesterPlugin extends Plugin {
 			return true;
 		}
 		return false;
+	}
+
+	/**
+	 * Display additional archive information. This information is made
+	 * publicly accessible and should not be "private" information about
+	 * the archive.
+	 */
+	function displayExtendedArchiveInfo(&$archive) {
+		$templateMgr =& TemplateManager::getManager();
+		$templateMgr->assign_by_ref('archive', $archive);
+		return $templateMgr->fetch($this->getTemplatePath() . 'archiveInfo.tpl', null);
 	}
 
 	/**

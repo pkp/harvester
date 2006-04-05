@@ -187,10 +187,12 @@ Your server currently supports mbstring: <strong>{$supportsMBString}</strong>]]>
 	<!-- Archive entity messages -->
 	<message key="archive.archives">Archives</message>
 	<message key="archive.title">Title</message>
+	<message key="archive.recordCount">Record Count</message>
 	<message key="archive.url">URL</message>
 	<message key="archive.publicArchiveId">Public ID</message>
 	<message key="archive.description">Description</message>
 	<message key="archive.type">Type</message>
+	<message key="archive.lastIndexed">Last Indexed</message>
 
 	<!-- Site Administration -->
 	<message key="admin.siteAdmin">Site Administration</message>
@@ -200,7 +202,6 @@ Your server currently supports mbstring: <strong>{$supportsMBString}</strong>]]>
 
 	<message key="admin.archives.manage">Manage Archive</message>
 	<message key="admin.archives.manage.numRecords">Number of Papers Indexed</message>
-	<message key="admin.archives.manage.lastIndexed">Last Indexed</message>
 	<message key="admin.archives.manage.updateIndex">Update Metadata Index</message>
 	<message key="admin.archives.manage.flush">Flush Metadata</message>
 	<message key="admin.archives.manage.updateIndex.confirm">Are you sure you wish to update the metadata index? This operation may take several minutes, depending on the size of the archive.</message>
@@ -370,6 +371,8 @@ Your server currently supports mbstring: <strong>{$supportsMBString}</strong>]]>
 	<message key="browse.viewOriginal">View Original</message>
 	<message key="browse.sortBy">Sort By</message>
 	<message key="browse.sortBy.none">None</message>
+	<message key="browse.archiveInfo">Archive Info</message>
+	<message key="browse.browseRecords">Browse Records</message>
 
 	<message key="record.viewRecord">Record Details</message>
 	<message key="record.field">Field</message>

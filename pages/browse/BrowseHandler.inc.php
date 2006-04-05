@@ -14,9 +14,8 @@
  */
 
 class BrowseHandler extends Handler {
-
 	/**
-	 * Display site admin index page.
+	 * Display record list or archive list.
 	 */
 	function index($args) {
 		BrowseHandler::validate();
@@ -69,6 +68,28 @@ class BrowseHandler extends Handler {
 
 			$templateMgr->assign_by_ref('archives', $archives);
 			$templateMgr->display('browse/index.tpl');
+		}
+	}
+
+	/**
+	 * Display archive info.
+	 */
+	function archiveInfo($args) {
+		BrowseHandler::validate();
+		$templateMgr = &TemplateManager::getManager();
+
+		$archiveDao =& DAORegistry::getDAO('ArchiveDAO');
+
+		$archiveId = array_shift($args);
+		$archive = null;
+		if (($archive =& $archiveDao->getArchive($archiveId))) {
+			PluginRegistry::loadCategory('harvesters');
+			BrowseHandler::setupTemplate($archive, true);
+
+			$templateMgr->assign_by_ref('archive', $archive);
+			$templateMgr->display('browse/archiveInfo.tpl');
+		} else {
+			Request::redirect('browse');
 		}
 	}
 

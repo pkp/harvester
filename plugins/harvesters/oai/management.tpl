@@ -29,11 +29,11 @@
 		<td width="80%" colspan="2" class="value">{$title|escape}</td>
 	</tr>
 	<tr valign="top">
-		<td width="20%" class="label">{translate key="admin.archives.manage.numRecords"}</td>
+		<td width="20%" class="label">{translate key="archive.recordCount"}</td>
 		<td width="80%" colspan="2" class="value">{$numRecords|default:"&mdash;"}</td>
 	</tr>
 	<tr valign="top">
-		<td width="20%" class="label">{translate key="admin.archives.manage.lastIndexed"}</td>
+		<td width="20%" class="label">{translate key="archive.lastIndexed"}</td>
 		<td width="80%" colspan="2" class="value">{$lastIndexed|date_format:$dateFormatShort|default:"&mdash;"}</td>
 	</tr>
 	<tr valign="top"><td colspan="3" class="headseparator">&nbsp;</td></tr>

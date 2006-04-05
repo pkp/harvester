@@ -16,6 +16,7 @@
 {if $archive}
 	{assign var=archiveId value=$archive->getArchiveId()}
 	<h3>{$archive->getTitle()|escape}</h3>
+	<p><a class="action" href="{url op=archiveInfo path=$archive->getArchiveId()}">{translate key="browse.archiveInfo"}</a></p>
 {else}
 	{assign var=archiveId value="all"}
 {/if}
