@@ -9,6 +9,9 @@
  * $Id$
  *}
 
+{* Make the quick search form limit itself to this archive by default *}
+{if $archive}{assign var="theseArchiveIds" value=$archive->getArchiveId()|to_array}{/if}
+
 {assign var="pageTitle" value="record.records"}
 {assign var="helpTopicId" value="index.browse"}
 {include file="common/header.tpl"}

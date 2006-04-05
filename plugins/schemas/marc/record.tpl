@@ -39,4 +39,8 @@
 	{/foreach}
 </table>
 
+<br />
+
+<a href="{url page="browse" op="archiveInfo" path=$archive->getArchiveId()}" class="action">{translate key="browse.archiveInfo"}</a>
+
 {include file="common/footer.tpl"}

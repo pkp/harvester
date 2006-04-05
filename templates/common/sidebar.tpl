@@ -44,6 +44,14 @@
 			<tr>
 				<td><input type="text" id="query" name="query" size="15" maxlength="255" value="{$query|escape}" class="textField" /></td>
 			</tr>
+			{if $theseArchiveIds}
+				<tr>
+					<td><input type="checkbox" name="archiveIds[]" value="all" />&nbsp;{translate key="search.inAllArchives"}</td>
+				</tr>
+				{foreach from=$theseArchiveIds item=archiveId}
+					<input type="hidden" name="archiveIds[]" value="{$archiveId|escape}"/>
+				{/foreach}
+			{/if}
 			<tr>
 				<td><input type="submit" value="{translate key="common.search"}" class="button" /></td>
 			</tr>

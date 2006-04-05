@@ -46,6 +46,7 @@ class RecordHandler extends Handler {
 			$hierarchy[] = array(Request::url('browse', 'index', $archive->getArchiveId()), $archive->getTitle(), true);
 		}
 		$templateMgr->assign('pageHierarchy', $hierarchy);
+		$templateMgr->assign('theseArchiveIds', array($archive->getArchiveId()));
 	}
 }
 

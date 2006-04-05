@@ -9,6 +9,9 @@
  * $Id$
  *}
 
+{* Make this archive known to the quick search sidebar *}
+{assign var="theseArchiveIds" value=$archive->getArchiveId()|to_array}
+
 {assign var="pageTitle" value="browse.archiveInfo"}
 {assign var="helpTopicId" value="index.browse"}
 {include file="common/header.tpl"}

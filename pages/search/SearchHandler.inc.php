@@ -214,9 +214,9 @@ class SearchHandler extends Handler {
 				$archive =& $archiveDao->getArchive((int) $archiveId);
 				if ($archive && ($schemaPluginName = $archive->getSchemaPluginName()) != '') {
 					array_push($schemaList, $schemaPluginName);
+					$archives[] =& $archive;
+					unset($archive);
 				}
-				$archives[] =& $archive;
-				unset($archive);
 			}
 			if (is_array($publicArchiveIds)) foreach ($publicArchiveIds as $publicArchiveId) {
 				$archive =& $archiveDao->getArchiveByPublicArchiveId($publicArchiveId);
