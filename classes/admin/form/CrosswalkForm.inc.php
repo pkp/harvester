@@ -66,6 +66,7 @@ class CrosswalkForm extends Form {
 		$templateMgr->assign('schemaPluginName', $schemaPluginName);
 		$templateMgr->assign('crosswalkTypes', array(
 			FIELD_TYPE_STRING => 'admin.crosswalks.crosswalk.type.string',
+			FIELD_TYPE_SELECT => 'admin.crosswalks.crosswalk.type.select',
 			FIELD_TYPE_DATE => 'admin.crosswalks.crosswalk.type.date'
 		));
 		$templateMgr->assign_by_ref('schemaPlugins', $schemaPlugins);

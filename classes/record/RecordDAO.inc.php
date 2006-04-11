@@ -261,6 +261,7 @@ class RecordDAO extends DAO {
 					$sortOrders[] = 'o' . $i . '.object_time';
 					break;
 				case FIELD_TYPE_STRING:
+				case FIELD_TYPE_SELECT:
 				default:
 					$sortJoins .= ' LEFT JOIN entries e' . $i . ' ON (e' . $i . '.record_id = r.record_id AND e' . $i . '.raw_field_id = ?)';
 					// $sortJoins .= ' LEFT JOIN search_objects o' . $i . ' ON (o' . $i . '.record_id = r.record_id AND o' . $i . '.raw_field_id = ?) LEFT JOIN search_object_keywords ok' . $i . ' ON (ok' . $i . '.object_id = o' . $i . '.object_id AND ok' . $i . '.pos = 0) LEFT JOIN search_keyword_list k' . $i . ' ON (k' . $i . '.keyword_id = ok' . $i . '.keyword_id)';
@@ -284,6 +285,7 @@ class RecordDAO extends DAO {
 					$sortOrders[] = 'o' . $i . '.object_time';
 					break;
 				case FIELD_TYPE_STRING:
+				case FIELD_TYPE_SELECT:
 				default:
 					$sortJoins .= ' LEFT JOIN entries e' . $i . ' ON (e' . $i . '.record_id = r.record_id) LEFT JOIN crosswalk_fields cf' . $i . ' ON (cf' . $i . '.raw_field_id = e' . $i . '.raw_field_id AND cf' . $i . '.crosswalk_id = ?)';
 					// $sortJoins .= ' LEFT JOIN (search_objects o' . $i . ', crosswalk_fields cf' . $i . ') ON (o' . $i . '.record_id = r.record_id AND o' . $i . '.raw_field_id = cf' . $i . '.raw_field_id AND cf' . $i . '.crosswalk_id = ?) LEFT JOIN search_object_keywords ok' . $i . ' ON (ok' . $i . '.object_id = o' . $i . '.object_id AND ok' . $i . '.pos = 0) LEFT JOIN search_keyword_list k' . $i . ' ON (k' . $i . '.keyword_id = ok' . $i . '.keyword_id)';
@@ -339,6 +341,73 @@ class RecordDAO extends DAO {
 		unset($result);
 		return $count;
 	}
+
+	/**
+	 * Enumerate a list of entry options for the given field and archive IDs
+	 * @param $fieldId int
+	 * @param $archiveIds array optional
+	 */
+	function getFieldOptions($fieldId, $archiveIds = null) {
+		$sql = 'SELECT DISTINCT value FROM entries WHERE raw_field_id = ?';
+		if (!empty($archiveIds)) {
+			$sql .= ' AND (archive_id = ?';
+			$params = array($fieldId, array_shift($archiveIds));
+			foreach ($archiveIds as $archiveId) {
+				$sql .= ' OR archive_id = ?';
+				$params[] = $archiveId;
+			}
+			$sql .= ')';
+		} else {
+			$params[] = $fieldId;
+		}
+
+		$result = &$this->retrieveCached($sql, $params, 60 * 60 * 24);
+
+		$returner = array();
+		while (!$result->EOF) {
+			$row = &$result->getRowAssoc(false);
+			$returner[] = $row['value'];
+			$result->MoveNext();
+		}
+		$result->Close();
+		unset($result);
+
+		return $returner;
+	}
+
+	/**
+	 * Enumerate a list of entry options for the given field and crosswalk IDs
+	 * @param $crosswalkId int
+	 * @param $archiveIds array optional
+	 */
+	function getCrosswalkOptions($crosswalkId, $archiveIds = null) {
+		$sql = 'SELECT DISTINCT e.value FROM crosswalk_fields cf, entries e WHERE cf.crosswalk_id = ? AND cf.raw_field_id = e.raw_field_id';
+		if (!empty($archiveIds)) {
+			$sql .= ' AND (e.archive_id = ?';
+			$params = array($fieldId, array_shift($archiveIds));
+			foreach ($archiveIds as $archiveId) {
+				$sql .= ' OR e.archive_id = ?';
+				$params[] = $archiveId;
+			}
+			$sql .= ')';
+		} else {
+			$params[] = $crosswalkId;
+		}
+
+		$result = &$this->retrieveCached($sql, $params, 60 * 60 * 24);
+
+		$returner = array();
+		while (!$result->EOF) {
+			$row = &$result->getRowAssoc(false);
+			$returner[] = $row['value'];
+			$result->MoveNext();
+		}
+		$result->Close();
+		unset($result);
+
+		return $returner;
+	}
+
 }
 
 ?>

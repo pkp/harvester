@@ -16,6 +16,7 @@
 
 define('FIELD_TYPE_STRING',	0x00000001);
 define('FIELD_TYPE_DATE',	0x00000002);
+define('FIELD_TYPE_SELECT',	0x00000003);
 
 class Field extends DataObject {
 

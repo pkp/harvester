@@ -20,12 +20,27 @@ class SearchHandler extends Handler {
 	 */
 	function index() {
 		SearchHandler::validate();
-		SearchHandler::setupTemplate();
+		list($crosswalks, $fields, $archives) = SearchHandler::setupTemplate();
 			
 		$templateMgr = &TemplateManager::getManager();
 
 		$archiveDao =& DAORegistry::getDAO('ArchiveDAO');
 		$templateMgr->assign('archives', $archiveDao->getArchives());
+
+		// Populate the select options for fields and crosswalks
+		$recordDao =& DAORegistry::getDAO('RecordDAO');
+
+		if (is_array($fields)) foreach ($fields as $field) switch ($field->getType()) {
+			case FIELD_TYPE_SELECT:
+				$templateMgr->assign('field-options-' . $field->getFieldId(), $recordDao->getFieldOptions($field->getFieldId()));
+				break;
+		}
+
+		if (is_array($crosswalks)) foreach ($crosswalks as $crosswalk) switch ($crosswalk->getType()) {
+			case FIELD_TYPE_SELECT:
+				$templateMgr->assign('crosswalk-options-' . $crosswalk->getCrosswalkId(), $recordDao->getCrosswalkOptions($crosswalk->getCrosswalkId()));
+				break;
+		}
 
 		$templateMgr->display('search/index.tpl');
 	}
@@ -64,11 +79,13 @@ class SearchHandler extends Handler {
 				$dates['field'][$field->getFieldId()] = array($dateFrom, $dateTo);
 				if (!$field->isMixedType()) break;
 			case FIELD_TYPE_STRING:
-			default:
+			case FIELD_TYPE_SELECT:
 				$value = Request::getUserVar('field-' . $field->getFieldId());
 				if (!empty($value)) {
+					if (is_array($value)) $value = '"' . implode('" OR "', $value) . '"';
 					$keywords['field'][$field->getFieldId()] = Search::parseQuery($value);
 				}
+				break;
 		}
 
 		if (is_array($crosswalks)) foreach ($crosswalks as $crosswalk) switch ($crosswalk->getType()) {
@@ -81,10 +98,12 @@ class SearchHandler extends Handler {
 				$dateTo = Request::getUserDateVar($dateToName, 32, 12, null, 23, 59, 59);
 				$dates['crosswalk'][$crosswalk->getCrosswalkId()] = array($dateFrom, $dateTo);
 				break;
+			case FIELD_TYPE_SELECT:
 			case FIELD_TYPE_STRING:
 			default:
 				$value = Request::getUserVar('crosswalk-' . $crosswalk->getCrosswalkId());
 				if (!empty($value)) {
+					if (is_array($value)) $value = '"' . implode('" OR "', $value) . '"';
 					$keywords['crosswalk'][$crosswalk->getCrosswalkId()] = Search::parseQuery($value);
 				}
 		}
@@ -94,7 +113,6 @@ class SearchHandler extends Handler {
 		foreach ($archives as $archive) {
 			$archiveIds[] = $archive->getArchiveId();
 		}
-
 		$results = &Search::retrieveResults($keywords, $dates, $archiveIds, $rangeInfo);
 
 		$templateMgr = &TemplateManager::getManager();
@@ -141,11 +159,13 @@ class SearchHandler extends Handler {
 				$dates['field'][$field->getFieldId()] = array($dateFrom, $dateTo);
 				if (!$field->isMixedType()) break;
 			case FIELD_TYPE_STRING:
-			default:
+			case FIELD_TYPE_SELECT:
 				$value = Request::getUserVar($field->getName());
 				if (!empty($value)) {
+					if (is_array($value)) $value = '"' . implode('" OR "', $value) . '"';
 					$keywords['field'][$field->getFieldId()] = Search::parseQuery($value);
 				}
+				break;
 		}
 
 		if (is_array($crosswalks)) foreach ($crosswalks as $crosswalk) switch ($crosswalk->getType()) {
@@ -158,10 +178,11 @@ class SearchHandler extends Handler {
 				$dateTo = Request::getUserVar($dateToName);
 				$dates['crosswalk'][$crosswalk->getCrosswalkId()] = array($dateFrom, $dateTo);
 				break;
+			case FIELD_TYPE_SELECT:
 			case FIELD_TYPE_STRING:
-			default:
 				$value = Request::getUserVar($crosswalk->getPublicCrosswalkId());
 				if (!empty($value)) {
+					if (is_array($value)) $value = '"' . implode('" OR "', $value) . '"';
 					$keywords['crosswalk'][$crosswalk->getCrosswalkId()] = Search::parseQuery($value);
 				}
 		}
@@ -262,8 +283,8 @@ class SearchHandler extends Handler {
 					if (empty($dateTo)) $dateTo = Request::getUserVar($dateToName);
 					$templateMgr->assign($dateToName, $dateTo);
 					if (!$field->isMixedType()) break;
+				case FIELD_TYPE_SELECT:
 				case FIELD_TYPE_STRING:
-				default:
 					$varName = 'field-' . $field->getFieldId();
 					$templateMgr->assign($varName, Request::getUserVar($varName));
 					break;
@@ -302,6 +323,7 @@ class SearchHandler extends Handler {
 					if (empty($dateTo)) $dateTo = Request::getUserVar($dateToName);
 					$templateMgr->assign($dateToName, $dateTo);
 					break;
+				case FIELD_TYPE_SELECT:
 				case FIELD_TYPE_STRING:
 				default:
 					$varName = 'crosswalk-' . $crosswalk->getCrosswalkId();

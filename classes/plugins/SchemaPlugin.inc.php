@@ -162,6 +162,7 @@ class SchemaPlugin extends Plugin {
 				if (HookRegistry::call('SchemaPlugin::indexRecord', array(&$archive, &$record, &$field, &$info['value'], &$info['attributes']))) return true;
 				switch ($fieldType) {
 					case FIELD_TYPE_STRING:
+					case FIELD_TYPE_SELECT:
 						SearchIndex::updateTextIndex($record->getRecordId(), $field->getFieldId(), $info['value'], false);
 						break;
 					case FIELD_TYPE_DATE:

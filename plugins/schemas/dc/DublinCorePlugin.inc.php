@@ -110,6 +110,8 @@ class DublinCorePlugin extends SchemaPlugin {
 		switch ($fieldName) {
 			case 'date':
 				return FIELD_TYPE_DATE;
+			case 'language':
+				return FIELD_TYPE_SELECT;
 			default:
 				return FIELD_TYPE_STRING;
 		}

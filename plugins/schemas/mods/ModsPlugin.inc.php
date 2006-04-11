@@ -225,10 +225,10 @@ class ModsPlugin extends SchemaPlugin {
 			case 'recordCreationDate':
 			case 'recordChangeDate':
 				return FIELD_TYPE_DATE;
-				break;
+			case 'languageTerm':
+				return FIELD_TYPE_SELECT;
 			default:
 				return FIELD_TYPE_STRING;
-				break;
 		}
 	}
 

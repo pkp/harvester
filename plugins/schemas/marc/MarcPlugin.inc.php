@@ -96,6 +96,8 @@ class MarcPlugin extends SchemaPlugin {
 			case '008':
 			case '260':
 				return FIELD_TYPE_DATE;
+			case '041':
+				return FIELD_TYPE_SELECT;
 			default:
 				return FIELD_TYPE_STRING;
 		}

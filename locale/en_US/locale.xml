@@ -237,6 +237,7 @@ Your server currently supports mbstring: <strong>{$supportsMBString}</strong>]]>
 	<message key="admin.crosswalks.crosswalk.sortableDescription">Allow users to sort records using this crosswalk when browsing records</message>
 	<message key="admin.crosswalks.crosswalk.type">Type</message>
 	<message key="admin.crosswalks.crosswalk.type.string">Text</message>
+	<message key="admin.crosswalks.crosswalk.type.select">Select</message>
 	<message key="admin.crosswalks.crosswalk.type.date">Date</message>
 	<message key="admin.crosswalks.crosswalks.noneCreated">None Created</message>
 	<message key="admin.crosswalks.addCrosswalk">Add Crosswalk</message>
@@ -354,6 +355,7 @@ Your server currently supports mbstring: <strong>{$supportsMBString}</strong>]]>
 	<message key="search.operator.not">not</message>
 	<message key="search.operator.and">and</message>
 	<message key="search.operator.or">or</message>
+	<message key="search.select.none">(None)</message>
 	<message key="search.allFields">All Fields</message>
 
 	<message key="search.fields.more">More Fields</message>

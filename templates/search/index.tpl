@@ -86,7 +86,23 @@ function handleImportanceChange(newImportance) {
 				<td class="value">{translate key="common.until"}</td>
 				<td class="value">{html_select_date prefix="crosswalk-$crosswalkId-to" time=$crosswalkValueToVar|get_value|default:"--" all_extra="class=\"selectMenu\"" year_empty="" month_empty="" day_empty="" start_year="1900" end_year="+10"}</td>
 			</tr>
-		{else}
+		{elseif $crosswalkType == FIELD_TYPE_SELECT}
+			{assign var=crosswalkValueVar value=crosswalk-$crosswalkId}
+			{assign var=crosswalkValues value=$crosswalkValueVar|get_value}
+			{assign var=crosswalkOptionsVar value=crosswalk-options-$crosswalkId}
+			{assign var=crosswalkOptions value=$crosswalkOptionsVar|get_value}
+			<tr valign="top">
+				<td class="label">{$crosswalk->getName()|escape}</td>
+				<td colspan="2" class="value">
+					<select id="crosswalk-{$crosswalkId}" name="crosswalk-{$crosswalkId}[]" multiple class="selectMenu">
+						<option value="">{translate key="search.select.none"}</option>
+						{foreach from=$crosswalkOptions item=option}{if !empty($option)}
+							<option value="{$option|escape}" {if (is_array($crosswalkValues) && in_array($option, $crosswalkValues)) || ($crosswalkValues == $option)}selected="selected" {/if}>{$option|escape}</option>
+						{/if}{/foreach}
+					</select>
+				</td>
+			
+		{else}{* FIELD_TYPE_TEXT *}
 			{assign var=crosswalkValueVar value=crosswalk-$crosswalkId}
 			<tr valign="top">
 				<td class="label">{$crosswalk->getName()|escape}</td>
@@ -111,6 +127,22 @@ function handleImportanceChange(newImportance) {
 				<td class="value">{translate key="common.until"}</td>
 				<td class="value"{html_select_date prefix="field-$fieldId-to" time=$fieldValueToVar|get_value|default:"--" all_extra="class=\"selectMenu\"" year_empty="" month_empty="" day_empty="" start_year="1900" end_year="+10"}</td>
 			</tr>
+		{elseif $fieldType == FIELD_TYPE_SELECT}
+			{assign var=fieldValueVar value=field-$fieldId}
+			{assign var=fieldValues value=$fieldValueVar|get_value}
+			{assign var=fieldOptionsVar value=field-options-$fieldId}
+			{assign var=fieldOptions value=$fieldOptionsVar|get_value}
+			<tr valign="top">
+				<td class="label">{$field->getDisplayName()|escape}</td>
+				<td colspan="2" class="value">
+					<select id="field-{$fieldId}" name="field-{$fieldId}[]" multiple class="selectMenu">
+						<option value="">{translate key="search.select.none"}</option>
+						{foreach from=$fieldOptions item=option}{if !empty($option)}
+							<option value="{$option|escape}" {if (is_array($fieldValues) && in_array($option, $fieldValues)) || ($fieldValues == $option)}selected="selected" {/if}>{$option|escape}</option>
+						{/if}{/foreach}
+					</select>
+				</td>
+			
 		{else}
 			<tr valign="top">
 				<td class="label">{$field->getDisplayName()|escape}</td>

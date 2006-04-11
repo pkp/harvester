@@ -332,10 +332,15 @@ class CrosswalkDAO extends DAO {
 					case 'date':
 						$crosswalk->setType(FIELD_TYPE_DATE);
 						break;
+					case 'select':
+						$crosswalk->setType(FIELD_TYPE_SELECT);
+						break;
 					case 'text':
-					default:
+					case 'string':
 						$crosswalk->setType(FIELD_TYPE_STRING);
 						break;
+					default:
+						fatalError('Unknown field type "' . $type . '"!');
 				}
 				$this->insertCrosswalk($crosswalk);
 				$this->resequenceCrosswalks();
