@@ -95,8 +95,10 @@ class PluginRegistry {
 	function getCategories() {
 		return array(
 			'generic',
-			'auth',
-			'importexport'
+			'harvesters',
+			'preprocessors',
+			'postprocessors',
+			'schemas'
 		);
 	}
 }

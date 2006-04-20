@@ -199,6 +199,7 @@ Your server currently supports mbstring: <strong>{$supportsMBString}</strong>]]>
 	<message key="admin.siteSettings">Site Settings</message>
 	<message key="admin.archives">Archives</message>
 	<message key="admin.crosswalks">Crosswalks</message>
+	<message key="admin.plugins">Plugins</message>
 
 	<message key="admin.archives.manage">Manage Archive</message>
 	<message key="admin.archives.manage.numRecords">Number of Papers Indexed</message>
@@ -405,4 +406,16 @@ Your server currently supports mbstring: <strong>{$supportsMBString}</strong>]]>
 	<message key="help.search">Search Help</message>
 	<message key="help.searchFor">Search help topics for</message>
 	<message key="help.searchResultsFor">Results for</message>
+
+	<!-- Plugin categories and descriptions -->
+	<message key="plugins.categories.generic">Generic Plugins</message>
+	<message key="plugins.categories.generic.description">This category contains general-purpose plugins that are not better suited to other categories.</message>
+	<message key="plugins.categories.harvesters">Harvester Plugins</message>
+	<message key="plugins.categories.harvesters.description">This category contains plugins that implement various harvesting protocols such as OAI.</message>
+	<message key="plugins.categories.preprocessors">Preprocessor Plugins</message>
+	<message key="plugins.categories.preprocessors.description">This category contains plugins that process harvested data before it is added to the Harvester2 repository in its native metadata format.</message>
+	<message key="plugins.categories.postprocessors">Postprocessor Plugins</message>
+	<message key="plugins.categories.postprocessors.description">This category contains plugins that process harvested data after it has been added to the Harvester2 repository in its native metadata format but before it is indexed for searching.</message>
+	<message key="plugins.categories.schemas">Schema Plugins</message>
+	<message key="plugins.categories.schemas.description">This category contains plugins that implement various metadata formats.</message>
 </locale>

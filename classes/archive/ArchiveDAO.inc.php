@@ -160,7 +160,7 @@ class ArchiveDAO extends DAO {
 	}
 	
 	/**
-	 * Delete a archive by ID, INCLUDING ALL DEPENDENT ITEMS.
+	 * Delete an archive by ID, INCLUDING ALL DEPENDENT ITEMS.
 	 * @param $archiveId int
 	 */
 	function deleteArchiveById($archiveId) {
@@ -168,6 +168,8 @@ class ArchiveDAO extends DAO {
 		if (isset($this->archiveCache[$archiveId])) {
 			unset($this->archiveCache[$archiveId]);
 		}
+
+		// FIXME: Should delete dependent items here
 
 		return $this->update(
 			'DELETE FROM archives WHERE archive_id = ?', $archiveId

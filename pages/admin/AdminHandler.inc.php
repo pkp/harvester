@@ -212,6 +212,20 @@ class AdminHandler extends Handler {
 		AdminFunctionsHandler::clearDataCache();
 	}
 
+	//
+	// Plugin Management
+	//
+
+	function plugins($args) {
+		import('pages.admin.PluginHandler');
+		PluginHandler::plugins($args);
+	}
+
+	function plugin($args) {
+		import('pages.admin.PluginHandler');
+		PluginHandler::plugin($args);
+	}
+
 }
 
 ?>
