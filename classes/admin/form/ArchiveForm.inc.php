@@ -156,6 +156,11 @@ class ArchiveForm extends Form {
 			$archiveDao->updateArchive($this->archive);
 		} else {
 			$archiveId = $archiveDao->insertArchive($this->archive);
+			
+			// Include the current default set of reading tools.
+			import('rt.harvester2.HarvesterRTAdmin');
+			$rtAdmin =& new HarvesterRTADmin($archiveId);
+			$rtAdmin->restoreVersions(false);
 		}
 
 		HookRegistry::call('ArchiveForm::execute', array(&$this, &$this->archive, $this->harvesterPluginName));

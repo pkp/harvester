@@ -39,6 +39,7 @@
 	<message key="common.from">From</message>
 	<message key="common.until">Until</message>
 	<message key="common.none">None</message>
+	<message key="common.default">Default</message>
 
 	<!-- Navigation Messages -->
 	<message key="navigation.home">Home</message>

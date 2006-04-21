@@ -36,11 +36,11 @@ class HarvesterRTAdmin extends RTAdmin {
 		import('rt.RTXMLParser');
 		$parser = &new RTXMLParser();
 
-		if ($deleteBeforeLoad) $this->dao->deleteVersionsById($this->journalId);
+		if ($deleteBeforeLoad) $this->dao->deleteVersionsByArchiveId($this->archiveId);
 
 		$versions = $parser->parseAll(RT_DIRECTORY . '/' . Locale::getLocale()); // FIXME?
 		foreach ($versions as $version) {
-			$this->dao->insertVersion($this->journalId, $version);
+			$this->dao->insertVersion($this->archiveId, $version);
 		}
 	}
 
