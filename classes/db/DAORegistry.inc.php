@@ -87,6 +87,7 @@ class DAORegistry {
 			case 'HelpTocDAO': return 'help.HelpTocDAO';
 			case 'HelpTopicDAO': return 'help.HelpTopicDAO';
 			case 'RecordDAO': return 'record.RecordDAO';
+			case 'RTDAO': return 'rt.harvester2.RTDAO';
 			case 'SchemaDAO': return 'schema.SchemaDAO';
 			case 'SearchDAO': return 'search.SearchDAO';
 			case 'SessionDAO': return 'session.SessionDAO';
