@@ -13,6 +13,8 @@
  * $Id$
  */
 
+import('rt.RTStruct');
+
 class RTDAO extends DAO {
 	//
 	// RT Versions

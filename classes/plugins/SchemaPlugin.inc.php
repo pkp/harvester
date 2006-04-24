@@ -114,9 +114,27 @@ class SchemaPlugin extends Plugin {
 	 */
 	function displayRecord(&$record) {
 		$templateMgr =& TemplateManager::getManager();
+
+		$archive =& $record->getArchive();
+		$templateMgr->assign_by_ref('archive', $archive);
 		$templateMgr->assign_by_ref('record', $record);
-		$templateMgr->assign_by_ref('archive', $record->getArchive());
 		$templateMgr->assign('entries', $record->getEntries());
+
+		// Get the Reading Tools, if any.
+		$rtDao =& DAORegistry::getDAO('RTDAO');
+		$versionId = $archive->getSetting('rtVersionId');
+		$version =& $rtDao->getVersion($versionId, $archive->getArchiveId());
+		if ($version === null) { // Fall back on the site default
+			$site =& Request::getSite();
+			$versionId = $site->getSetting('rtVersionId');
+			$version =& $rtDao->getVersion($versionId, null);
+		}
+
+		if ($version) {
+			$templateMgr->assign('sidebarTemplate', 'rt/rt.tpl');
+			$templateMgr->assign_by_ref('version', $version);
+		}
+
 		$templateMgr->display($this->getTemplatePath() . 'record.tpl', null);
 	}
 

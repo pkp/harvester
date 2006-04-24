@@ -24,12 +24,12 @@ class DAO {
 	 * Initialize the database connection.
 	 */
 	function DAO($dataSource = null, $callHooks = true) {
-		if ($callHooks === true) {
+		if ($callHooks === true && checkPhpVersion('4.3.0')) {
 			$trace = debug_backtrace();
 			// Call hooks based on the calling entity, assuming
 			// this method is only called by a subclass. Results
 			// in hook calls named e.g. "SessionDAO::Constructor"
-			if (HookRegistry::call($trace[1]['class'] . '::Constructor', array(&$sql, &$params, &$dbResultRange))) {
+			if (HookRegistry::call($trace[1]['class'] . '::Constructor', array(&$this, &$dataSource))) {
 				return;
 			}
 		}
@@ -48,11 +48,12 @@ class DAO {
 	 * @return ADORecordSet
 	 */
 	function &retrieve($sql, $params = false, $callHooks = true) {
-		if ($callHooks === true) {
+		if ($callHooks === true && checkPhpVersion('4.3.0')) {
 			$trace = debug_backtrace();
 			// Call hooks based on the calling entity, assuming
 			// this method is only called by a subclass. Results
 			// in hook calls named e.g. "SessionDAO::getSession"
+			$value = null;
 			if (HookRegistry::call($trace[1]['class'] . '::' . $trace[1]['function'], array(&$sql, &$params, &$value))) {
 				return $value;
 			}
@@ -73,11 +74,12 @@ class DAO {
 	 * @return ADORecordSet
 	 */
 	function &retrieveCached($sql, $params = false, $secsToCache = 3600, $callHooks = true) {
-		if ($callHooks === true) {
+		if ($callHooks === true && checkPhpVersion('4.3.0')) {
 			$trace = debug_backtrace();
 			// Call hooks based on the calling entity, assuming
 			// this method is only called by a subclass. Results
 			// in hook calls named e.g. "SessionDAO::getSession"
+			$value = null;
 			if (HookRegistry::call($trace[1]['class'] . '::' . $trace[1]['function'], array(&$sql, &$params, &$secsToCache, &$value))) {
 				return $value;
 			}
@@ -101,12 +103,13 @@ class DAO {
 	 * @return ADORecordSet
 	 */
 	function &retrieveLimit($sql, $params = false, $numRows = false, $offset = false, $callHooks = true) {
-		if ($callHooks === true) {
+		if ($callHooks === true && checkPhpVersion('4.3.0')) {
 			$trace = debug_backtrace();
 			// Call hooks based on the calling entity, assuming
 			// this method is only called by a subclass. Results
 			// in hook calls named e.g. "SessionDAO::getSession"
-			if (HookRegistry::call($trace[1]['class'] . '::' . $trace[1]['function'], array(&$sql, &$params, &$numRows, &$offset))) {
+			$value = null;
+			if (HookRegistry::call($trace[1]['class'] . '::' . $trace[1]['function'], array(&$sql, &$params, &$numRows, &$offset, &$value))) {
 				return $value;
 			}
 		}
@@ -125,12 +128,13 @@ class DAO {
 	 * @param $dbResultRange object the DBResultRange object describing the desired range
 	 */
 	function &retrieveRange($sql, $params = false, $dbResultRange = null, $callHooks = true) {
-		if ($callHooks === true) {
+		if ($callHooks === true && checkPhpVersion('4.3.0')) {
 			$trace = debug_backtrace();
 			// Call hooks based on the calling entity, assuming
 			// this method is only called by a subclass. Results
 			// in hook calls named e.g. "SessionDAO::getSession"
-			if (HookRegistry::call($trace[1]['class'] . '::' . $trace[1]['function'], array(&$sql, &$params, &$dbResultRange))) {
+			$value = null;
+			if (HookRegistry::call($trace[1]['class'] . '::' . $trace[1]['function'], array(&$sql, &$params, &$dbResultRange, &$value))) {
 				return $value;
 			}
 		}
@@ -154,11 +158,12 @@ class DAO {
 	 * @return boolean
 	 */
 	function update($sql, $params = false, $callHooks = true) {
-		if ($callHooks === true) {
+		if ($callHooks === true && checkPhpVersion('4.3.0')) {
 			$trace = debug_backtrace();
 			// Call hooks based on the calling entity, assuming
 			// this method is only called by a subclass. Results
 			// in hook calls named e.g. "SessionDAO::updateSession"
+			$value = null;
 			if (HookRegistry::call($trace[1]['class'] . '::' . $trace[1]['function'], array(&$sql, &$params, &$value))) {
 				return $value;
 			}

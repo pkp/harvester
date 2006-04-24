@@ -123,8 +123,6 @@ function refreshForm() {
 			<td colspan="2" class="{if $smarty.foreach.schemaPlugins.last}end{/if}separator">&nbsp;</td>
 		</tr>
 	{/foreach}
-
-	{call_hook name="Template::Admin::Crosswalks::displayHarvesterForm" plugin=$harvesterPlugin}
 </table>
 
 <p><input type="submit" value="{translate key="common.save"}" class="button defaultButton" /> <input type="button" value="{translate key="common.cancel"}" class="button" onclick="document.location.href='{url op="crosswalks"}'" /></p>

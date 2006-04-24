@@ -21,7 +21,7 @@
 	<li>&#187; <a href="{url op="crosswalks"}">{translate key="admin.crosswalks"}</a></li>
 	<li>&#187; <a href="{url op="plugins"}">{translate key="admin.plugins"}</a></li>
 	<li>&#187; <a href="{url page="rtadmin"}">{translate key="admin.rtAdmin"}</a></li>
-	{call_hook name="Templates::Admin::Index::SiteManagement"}
+	{call_hook name="Template::Admin::Index::SiteManagement"}
 </ul>
 
 <h3>{translate key="admin.archives"}</h3>
@@ -38,7 +38,7 @@
 	<li>&#187; <a href="{url op="expireSessions"}" onclick="return confirm('{translate|escape:"javascript" key="admin.confirmExpireSessions"}')">{translate key="admin.expireSessions"}</a></li>
 	<li>&#187; <a href="{url op="clearDataCache"}">{translate key="admin.clearDataCache"}</a></li>
 	<li>&#187; <a href="{url op="clearTemplateCache"}" onclick="return confirm('{translate|escape:"javascript" key="admin.confirmClearTemplateCache"}')">{translate key="admin.clearTemplateCache"}</a></li>
-	{call_hook name="Templates::Admin::Index::AdminFunctions"}
+	{call_hook name="Template::Admin::Index::AdminFunctions"}
 </ul>
 
 {include file="common/footer.tpl"}
