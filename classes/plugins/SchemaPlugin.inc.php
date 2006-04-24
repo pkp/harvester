@@ -109,6 +109,31 @@ class SchemaPlugin extends Plugin {
 		$templateMgr->display($this->getTemplatePath() . 'summary.tpl', null);
 	}
 
+	function getRtVersion(&$archive) {
+		// Get the Reading Tools, if any.
+		$rtDao =& DAORegistry::getDAO('RTDAO');
+		$versionId = $archive->getSetting('rtVersionId');
+		$version =& $rtDao->getVersion($versionId, $archive->getArchiveId());
+		$defineTermsContextId = null;
+
+		if ($version === null) { // Fall back on the site default
+			$site =& Request::getSite();
+			$versionId = $site->getSetting('rtVersionId');
+			$version =& $rtDao->getVersion($versionId, null);
+		}
+
+		if ($version) {
+			// Determine the "Define Terms" context ID.
+			foreach ($version->getContexts() as $context) {
+				if ($context->getDefineTerms()) {
+					$defineTermsContextId = $context->getContextId();
+					break;
+				}
+			}
+		}
+		return array(&$version, $defineTermsContextId);
+	}
+
 	/**
 	 * Display a record.
 	 */
@@ -120,27 +145,12 @@ class SchemaPlugin extends Plugin {
 		$templateMgr->assign_by_ref('record', $record);
 		$templateMgr->assign('entries', $record->getEntries());
 
-		// Get the Reading Tools, if any.
-		$rtDao =& DAORegistry::getDAO('RTDAO');
-		$versionId = $archive->getSetting('rtVersionId');
-		$version =& $rtDao->getVersion($versionId, $archive->getArchiveId());
-		if ($version === null) { // Fall back on the site default
-			$site =& Request::getSite();
-			$versionId = $site->getSetting('rtVersionId');
-			$version =& $rtDao->getVersion($versionId, null);
-		}
+		list($version, $defineTermsContextId) = $this->getRtVersion($archive);
 
 		if ($version) {
 			$templateMgr->assign('sidebarTemplate', 'rt/rt.tpl');
 			$templateMgr->assign_by_ref('version', $version);
-
-			// Determine the "Define Terms" context ID.
-			foreach ($version->getContexts() as $context) {
-				if ($context->getDefineTerms()) {
-					$templateMgr->assign('defineTermsContextId', $context->getContextId());
-					break;
-				}
-			}
+			$templateMgr->assign('defineTermsContextId', $defineTermsContextId);
 		}
 
 		$templateMgr->display($this->getTemplatePath() . 'record.tpl', null);

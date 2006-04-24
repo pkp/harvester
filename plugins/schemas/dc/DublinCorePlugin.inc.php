@@ -126,7 +126,7 @@ class DublinCorePlugin extends SchemaPlugin {
 	 * Get the title for the supplied record, if available; null otherwise.
 	 * @param $record object
 	 * @param $entries array
-	 * @return array
+	 * @return string
 	 */
 	function getTitle(&$record, $entries = null) {
 		if ($entries === null) $entries = $record->getEntries();

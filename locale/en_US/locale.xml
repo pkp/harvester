@@ -507,7 +507,6 @@ Validation may fail on search URLs that require posted form data.]]></message>
 	<message key="rt.context.description">Description</message>
 	<message key="rt.context.order">Order</message>
 
-	<message key="rt.thisArchive">Find items in this archive</message>
 	<message key="rt.search">Search</message>
 	<message key="rt.searches">Searches</message>
 	<message key="rt.search.title">Title</message>

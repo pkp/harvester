@@ -33,19 +33,5 @@
 {/foreach}
 </ul>
 
-<br />
-
-<span class="rtSubtitle">{translate key="rt.thisArchive"}</span>
-<form method="post" action="{url page="search" op="results" archiveIds=$archive->getArchiveId()|to_array}" target="_parent">
-<table>
-<tr>
-	<td><input type="text" id="query" name="query" size="15" maxlength="255" value="" class="textField" /></td>
-</tr>
-<tr>
-	<td><input type="submit" value="{translate key="common.search"}" class="button" /></td>
-</tr>
-</table>
-</form>
-
 </div>
 {/if}

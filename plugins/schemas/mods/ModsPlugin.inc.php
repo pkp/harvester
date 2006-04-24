@@ -165,6 +165,30 @@ class ModsPlugin extends SchemaPlugin {
 	}
 
 	/**
+	 * Get the authors for the supplied record, if available; null otherwise
+	 * @param $record object
+	 * @param $entries array
+	 * @return array
+	 */
+	function getAuthors(&$record, $entries = null) {
+		if ($entries === null) $entries = $record->getEntries();
+		list($authors, $title) = $this->getAuthorsAndtitle($entries);
+		return $authors;
+	}
+
+	/**
+	 * Get the title for the supplied record, if available; null otherwise.
+	 * @param $record object
+	 * @param $entries array
+	 * @return string
+	 */
+	function getTitle(&$record, $entries = null) {
+		if ($entries === null) $entries = $record->getEntries();
+		list($authors, $title) = $this->getAuthorsAndtitle($entries);
+		return $title;
+	}
+
+	/**
 	 * Display a record summary.
 	 */
 	function displayRecordSummary(&$record) {
@@ -189,9 +213,17 @@ class ModsPlugin extends SchemaPlugin {
 
 		$entries = $record->getEntries();
 		list($authors, $title) = $this->getAuthorsAndTitle($entries);
+		$archive =& $record->getArchive();
+
+		list($version, $defineTermsContextId) = $this->getRtVersion($archive);
+		if ($version) {
+			$templateMgr->assign('sidebarTemplate', 'rt/rt.tpl');
+			$templateMgr->assign_by_ref('version', $version);
+			$templateMgr->assign('defineTermsContextId', $defineTermsContextId);
+		}
 
 		$templateMgr->assign_by_ref('record', $record);
-		$templateMgr->assign_by_ref('archive', $record->getArchive());
+		$templateMgr->assign_by_ref('archive', $archive);
 		$templateMgr->assign('title', $title);
 		$templateMgr->assign('authors', $authors);
 		$templateMgr->assign('entries', $entries);
