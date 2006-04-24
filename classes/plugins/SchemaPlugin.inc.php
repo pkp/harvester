@@ -133,6 +133,14 @@ class SchemaPlugin extends Plugin {
 		if ($version) {
 			$templateMgr->assign('sidebarTemplate', 'rt/rt.tpl');
 			$templateMgr->assign_by_ref('version', $version);
+
+			// Determine the "Define Terms" context ID.
+			foreach ($version->getContexts() as $context) {
+				if ($context->getDefineTerms()) {
+					$templateMgr->assign('defineTermsContextId', $context->getContextId());
+					break;
+				}
+			}
 		}
 
 		$templateMgr->display($this->getTemplatePath() . 'record.tpl', null);
@@ -144,8 +152,38 @@ class SchemaPlugin extends Plugin {
 	 * @param $entries array
 	 * @return string
 	 */
-	function getUrl(&$record, $entries) {
+	function getUrl(&$record, $entries = null) {
 		return null;
+	}
+
+	/**
+	 * Get the title for the supplied record, if available; null otherwise.
+	 * @param $record object
+	 * @param $entries array
+	 * @return string
+	 */
+	function getTitle(&$record, $entries = null) {
+		return null;
+	}
+
+	/**
+	 * Get the authors for the supplied record, if available; null otherwise
+	 * @param $record object
+	 * @param $entries array
+	 * @return array
+	 */
+	function getAuthors(&$record, $entries = null) {
+		return null;
+	}
+
+	/**
+	 * Get the author string for the supplied record, if available; null otherwise.
+	 * @param $record object
+	 * @param $entries array
+	 * @return string
+	 */
+	function getAuthorString(&$record, $entries = null) {
+		return (join('; ', $this->getAuthors($record, $entries)));
 	}
 
 	/**

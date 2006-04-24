@@ -9,9 +9,9 @@
  * $Id$
  *}
 
-<span class="title">{foreach from=$entries.245 item=value}{$value.value|escape|truncate:90|default:"&mdash"}{/foreach}</span><br />
+<span class="title">{$record->getTitle()|escape|truncate:90|default:"&mdash"}</span><br />
 <div class="recordContents">
-	{if $entries.720}<span class="author">{foreach from=$entries.720 name="creators" item=creator}{$creator.value|escape|default:"&mdash;"}{if !$smarty.foreach.creators.last}</span><br /><span class="author">{/if}{/foreach}</span><br/>{/if}
+	<span class="author">{foreach from=$record->getAuthors() name="creators" item=creator}{$creator|escape|default:"&mdash;"}{if !$smarty.foreach.creators.last}</span><br /><span class="author">{/if}{/foreach}</span><br/>
 	{$record->getDatestamp()|date_format:$dateFormatShort}<br />
 	<a href="{url page="record" op="view" path=$record->getRecordId()}" class="action">{translate key="browse.viewRecord"}</a>{if $record->getUrl($entries)|assign:"recordUrl":true}&nbsp;|&nbsp;<a href="{$recordUrl}" class="action">{translate key="browse.viewOriginal"}</a>{/if}
 </div>

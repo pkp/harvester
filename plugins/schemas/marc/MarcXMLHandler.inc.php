@@ -35,7 +35,7 @@ class MarcXMLHandler extends XMLParserHandler {
 
 	function startElement(&$parser, $tag, $attributes) {
 		$this->characterData = null;
-		switch ($tag) {
+		switch (strtolower($tag)) {
 			case 'marc':
 			case 'oai_marc:marc':
 			case 'mx:record':
@@ -43,12 +43,15 @@ class MarcXMLHandler extends XMLParserHandler {
 				return;
 			case 'varfield':
 			case 'fixfield':
+			case 'datafield':
+			case 'controlfield':
+			case 'mx:varfield':
 			case 'mx:fixfield':
-			case 'mx:controlfield':
 			case 'mx:datafield':
-				$this->id = isset($attributes['id'])?$attributes['id']:(isset($attributes['tag'])?$attributes['tag']:null);
-				$this->i1 = isset($attributes['i1'])?$attributes['i1']:(isset($attributes['ind1'])?$attributes['ind1']:null);
-				$this->i2 = isset($attributes['i2'])?$attributes['i2']:(isset($attributes['ind2'])?$attributes['ind2']:null);
+			case 'mx:controlfield':
+				$this->id = !empty($attributes['id'])?$attributes['id']:(!empty($attributes['tag'])?$attributes['tag']:null);
+				$this->i1 = !empty($attributes['i1'])?$attributes['i1']:(!empty($attributes['ind1'])?$attributes['ind1']:null);
+				$this->i2 = !empty($attributes['i2'])?$attributes['i2']:(!empty($attributes['ind2'])?$attributes['ind2']:null);
 				$this->label = null;
 				break;
 			case 'subfield':
@@ -59,7 +62,7 @@ class MarcXMLHandler extends XMLParserHandler {
 	}
 
 	function endElement(&$parser, $tag) {
-		switch ($tag) {
+		switch (strtolower($tag)) {
 			case 'marc':
 			case 'oai_marc:marc':
 			case 'subfield':
@@ -67,17 +70,22 @@ class MarcXMLHandler extends XMLParserHandler {
 			case 'mx:subfield':
 			case 'mx:leader':
 				return;
+			case 'leader':
+				$id = $tag;
+				break;
+			default:
+				$id = trim($this->id);
+				break;
 		}
 
 		$data = trim($this->characterData);
 		if (empty($data)) return;
 
-		$id = trim($this->id);
 		$i1 = trim($this->i1);
 		$i2 = trim($this->i2);
 		$label = trim($this->label);
 		$field =& $this->harvester->getFieldByKey($id, MarcPlugin::getName());
-		if (!$field) {
+		if (!$field) {echo "BAD: ELEMENT: $tag ($id/$i1/$i2/$label)<br/>\n";
 			$this->harvester->addError(Locale::translate('harvester.error.unknownMetadataField', array('name' => $id)));
 			return;
 		}

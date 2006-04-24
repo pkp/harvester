@@ -140,6 +140,21 @@ class Record extends DataObject {
 		$schema =& $schemaDao->getSchema($this->getSchemaId());
 		return $schema->getPlugin();
 	}
+
+	function getTitle($entries = null) {
+		$plugin =& $this->getSchemaPlugin();
+		return $plugin->getTitle($this, $entries);
+	}
+
+	function getAuthors($entries = null) {
+		$plugin =& $this->getSchemaPlugin();
+		return $plugin->getAuthors($this, $entries);
+	}
+
+	function getAuthorString($entries = null) {
+		$plugin =& $this->getSchemaPlugin();
+		return $plugin->getAuthorString($this, $entries);
+	}
 }
 
 ?>

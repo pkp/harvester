@@ -94,16 +94,47 @@ class DublinCorePlugin extends SchemaPlugin {
 	/**
 	 * Get a URL for the supplied record, if available; null otherwise.
 	 * @param $record object
-	 * @param $entries array
+	 * @param $entries array optional
 	 * @return string
 	 */
-	function getUrl(&$record, $entries) {
+	function getUrl(&$record, $entries = null) {
+		if ($entries === null) $entries = $record->getEntries();
 		if (is_array($entries['identifier'])) foreach ($entries['identifier'] as $entry) {
 			if (preg_match('/^[a-z]+:\/\//', $entry['value'])) {
 				return $entry['value'];
 			}
 		}
 		return null;
+	}
+
+	/**
+	 * Get the authors for the supplied record, if available; null otherwise
+	 * @param $record object
+	 * @param $entries array
+	 * @return array
+	 */
+	function getAuthors(&$record, $entries = null) {
+		if ($entries === null) $entries = $record->getEntries();
+		$returner = array();
+		if (is_array($entries['creator'])) foreach ($entries['creator'] as $entry) {
+			$returner[] = $entry['value'];
+		}
+		return $returner;
+	}
+
+	/**
+	 * Get the title for the supplied record, if available; null otherwise.
+	 * @param $record object
+	 * @param $entries array
+	 * @return array
+	 */
+	function getTitle(&$record, $entries = null) {
+		if ($entries === null) $entries = $record->getEntries();
+		$returner = null;
+		if (is_array($entries['title'])) foreach ($entries['title'] as $entry) {
+			return $entry['value'];
+		}
+		return $returner;
 	}
 
 	function getFieldType($fieldName) {
