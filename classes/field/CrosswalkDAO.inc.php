@@ -246,10 +246,12 @@ class CrosswalkDAO extends DAO {
 	/**
 	 * Insert fields for a crosswalk.
 	 * @param $crosswalkId int
+	 * @param $fieldId int
+	 * @param $sortable boolean optional
 	 */
-	function insertCrosswalkField($crosswalkId, $fieldId) {
+	function insertCrosswalkField($crosswalkId, $fieldId, $sortable = false) {
 		return $this->update(
-			'INSERT INTO crosswalk_fields(crosswalk_id, raw_field_id) VALUES (?, ?)', array($crosswalkId, $fieldId)
+			'INSERT INTO crosswalk_fields(crosswalk_id, raw_field_id, sortable) VALUES (?, ?, ?)', array($crosswalkId, $fieldId, $sortable?1:0)
 		);
 	}
 
@@ -348,11 +350,12 @@ class CrosswalkDAO extends DAO {
 				foreach ($crosswalkNode->getChildren() as $node) if ($node->getName() == 'field') {
 					$schemaPluginName = $node->getAttribute('schema');
 					$fieldName = $node->getAttribute('name');
+					$sortableField = $node->getAttribute('sortable') == 'true';
 
 					$schema =& $schemaDao->buildSchema($schemaPluginName);
 					$field =& $fieldDao->buildField($fieldName, $schemaPluginName);
 
-					$this->insertCrosswalkField($crosswalk->getCrosswalkId(), $field->getFieldId());
+					$this->insertCrosswalkField($crosswalk->getCrosswalkId(), $field->getFieldId(), $sortableField);
 					unset($schema);
 					unset($field);
 				}
