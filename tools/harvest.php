@@ -16,6 +16,9 @@
 require(dirname(__FILE__) . '/includes/cliTool.inc.php');
 
 class harvest extends CommandLineTool {
+	/** @var $firstParam mixed */
+	var $firstParam;
+
 	/** @var $archive object */
 	var $archive;
 
@@ -27,9 +30,9 @@ class harvest extends CommandLineTool {
 
 		array_shift($argv); // Clear the tool name from argv
 
-		$archiveId = (int) array_shift($argv);
+		$this->firstParam = array_shift($argv);
 		$archiveDao =& DAORegistry::getDAO('ArchiveDAO');
-		$this->archive =& $archiveDao->getArchive($archiveId);
+		$this->archive =& $archiveDao->getArchive((int) $this->firstParam);
 
 		// Set the various flags for the parser, if supported.
 		$this->params = array();
@@ -56,7 +59,7 @@ class harvest extends CommandLineTool {
 	function usage() {
 		echo "Script to harvest an archive\n"
 			. "Usage: {$this->scriptName} [archive ID] [flags]\n"
-			. "If no archive ID is specified, a list will be displayed.\n"
+			. "If the specified archive ID is \"list\", a list will be displayed.\n"
 			. "Flags include:\n"
 			. "\tverbose: Display status information during the harvest.\n"
 			. "\tflush: Flush the contents of the archive before harvesting.\n"
@@ -124,6 +127,11 @@ class harvest extends CommandLineTool {
 			}
 			return true;
 		} else {
+			if ($this->firstParam == '' || $this->firstParam === 'help') {
+				$this->usage();
+				return true;
+			}
+
 			// No archive was specified or the specified ID was invalid.
 			// Display a list of archives.
 			$archiveDao =& DAORegistry::getDAO('ArchiveDAO');
