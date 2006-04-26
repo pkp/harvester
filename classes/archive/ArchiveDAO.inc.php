@@ -169,7 +169,8 @@ class ArchiveDAO extends DAO {
 			unset($this->archiveCache[$archiveId]);
 		}
 
-		// FIXME: Should delete dependent items here
+		$recordDao =& DAORegistry::getDAO('RecordDAO');
+		$recordDao->deleteRecordsByArchiveId($archiveId);
 
 		return $this->update(
 			'DELETE FROM archives WHERE archive_id = ?', $archiveId
