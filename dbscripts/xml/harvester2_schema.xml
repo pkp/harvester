@@ -169,6 +169,10 @@
 		<field name="raw_field_id" type="I4">
 			<KEY/>
 		</field>
+		<field name="sortable" type="I4">
+			<NOTNULL/>
+			<DEFAULT VALUE="0"/>
+		</field>
 	</table>
 
 	<!--

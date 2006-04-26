@@ -259,6 +259,9 @@ Your server currently supports mbstring: <strong>{$supportsMBString}</strong>]]>
 	<message key="admin.crosswalks.editCrosswalk">Edit Crosswalk</message>
 	<message key="admin.crosswalks.schemaFilter">Schema Filter</message>
 	<message key="admin.crosswalks.schemaFilter.all">All Schemas</message>
+	<message key="admin.crosswalks.schema">Schema</message>
+	<message key="admin.crosswalks.sort">Sort</message>
+	<message key="admin.crosswalks.search">Search</message>
 	<message key="admin.crosswalks.description">Crosswalks are used to identify similar fields in different metadata schema so that cross-schema searches can be performed.</message>
 
 	<!-- Archives -->

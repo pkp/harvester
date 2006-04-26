@@ -248,23 +248,42 @@ class RecordDAO extends DAO {
 		$sortJoins = '';
 		$sortOrders = array();
 		$i = 0;
-		if ($archiveId) foreach ($sort as $id) {
-			// Sort using the provided field IDs
 
+		$fields = array();
+		if ($archiveId) foreach ($sort as $id) {
+			// An archive was specified; the IDs given as sort
+			// orders will be field IDs.
 			if (!($field =& $fieldDao->getFieldById($id))) continue;
 			if (!($schemaPlugin =& $field->getSchemaPlugin())) continue;
 			if (!in_array($field->getName(), $schemaPlugin->getSortFields())) continue;
+			$fields[] =& $field;
+			unset($field);
+		} else foreach ($sort as $id) {
+			// No archive was specified; the IDs given as sort
+			// orders will be crosswalk IDs.
+			$fieldIds = $crosswalkDao->getSortableFieldIds($id);
+			foreach ($fieldIds as $fieldId) {
+				if (!($field =& $fieldDao->getFieldById($fieldId))) continue;
+				$fields[] =& $field;
+				unset($field);
+			}
+		}
+
+		foreach ($fields as $field) {
+			// Sort using the provided field IDs
+			$schemaPlugin =& $field->getSchemaPlugin();
+
 			switch ($schemaPlugin->getFieldType($field->getName())) {
 				case FIELD_TYPE_DATE:
 					$sortJoins .= ' LEFT JOIN search_objects o' . $i . ' ON (o' . $i . '.record_id = r.record_id AND o' . $i . '.raw_field_id = ?)';
-					$params[] = (int) $id;
+					$params[] = $field->getFieldId();
 					$sortOrders[] = 'o' . $i . '.object_time';
 					break;
 				case FIELD_TYPE_STRING:
 				case FIELD_TYPE_SELECT:
 				default:
 					$sortJoins .= ' LEFT JOIN entries e' . $i . ' ON (e' . $i . '.record_id = r.record_id AND e' . $i . '.raw_field_id = ?)';
-					$params[] = (int) $id;
+					$params[] = $field->getFieldId();
 					$sortOrders[] = 'e' . $i . '.value';
 					break;
 			}
@@ -272,27 +291,6 @@ class RecordDAO extends DAO {
 			$i++;
 			unset($schemaPlugin);
 			unset($field);
-		} else foreach ($sort as $id) {
-			// Sort using the provided crosswalk IDs
-			if (!($crosswalk =& $crosswalkDao->getCrosswalkById($id))) continue;
-			if (!$crosswalk->getSortable()) continue;
-			switch ($crosswalk->getType()) {
-				case FIELD_TYPE_DATE:
-					$sortJoins .= ' LEFT JOIN search_objects o' . $i . ' ON (o' . $i . '.record_id = r.record_id) LEFT JOIN crosswalk_fields cf' . $i . ' ON (cf' . $i . '.raw_field_id = o' . $i . '.raw_field_id AND cf' . $i . '.crosswalk_id = ?)';
-					$params[] = (int) $id;
-					$sortOrders[] = 'o' . $i . '.object_time';
-					break;
-				case FIELD_TYPE_STRING:
-				case FIELD_TYPE_SELECT:
-				default:
-					$sortJoins .= ' LEFT JOIN entries e' . $i . ' ON (e' . $i . '.record_id = r.record_id) LEFT JOIN crosswalk_fields cf' . $i . ' ON (cf' . $i . '.raw_field_id = e' . $i . '.raw_field_id AND cf' . $i . '.crosswalk_id = ?)';
-					$params[] = (int) $id;
-					$sortOrders[] = 'e' . $i . '.value';
-					break;
-			}
-
-			$i++;
-			unset($crosswalk);
 		}
 
 		if (isset($archiveId)) $params[] = $archiveId;
@@ -300,7 +298,7 @@ class RecordDAO extends DAO {
 		$result = &$this->retrieveRange(
 			'SELECT DISTINCT r.* FROM records r' . $sortJoins .
 			(isset($archiveId)? ' WHERE archive_id = ? ':'') .
-			(empty($sortOrders)?'':' ORDER BY ' . join(', ', $sortOrders)),
+			(empty($sortOrders)?'':(' ORDER BY COALESCE(' . join(', ', $sortOrders)) . ')'),
 			empty($params)?false:(count($params)==1?array_shift($params):$params),
 			$rangeInfo
 		);

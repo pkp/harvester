@@ -99,6 +99,12 @@ class SchemaPlugin extends Plugin {
 		return array();
 	}
 
+	function getFieldId($fieldName) {
+		$fieldDao =& DAORegistry::getDAO('FieldDAO');
+		$field =& $fieldDao->buildField($fieldName, $this->getName());
+		return $field->getFieldId();
+	}
+
 	/**
 	 * Display a record summary.
 	 */

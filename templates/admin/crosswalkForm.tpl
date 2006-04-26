@@ -34,6 +34,7 @@ function refreshForm() {
 
 <a name="crosswalkForm"/>
 <form name="crosswalkForm" method="post" action="{url op="updateCrosswalk"}">
+<input type="hidden" name="overrideSortable" value="1"/>
 {if $crosswalkId}
 <input type="hidden" name="crosswalkId" value="{$crosswalkId}" />
 {/if}
@@ -43,20 +44,20 @@ function refreshForm() {
 <table class="listing" width="100%">
 	<tr valign="top">
 		<td width="20%" class="label">{fieldLabel name="name" key="admin.crosswalks.crosswalk.name" required="true"}</td>
-		<td width="80%" class="value"><input type="text" id="name" name="name" value="{$name|escape}" size="40" maxlength="120" class="textField" /></td>
+		<td colspan="{if $sortable}3{else}2{/if}" width="80%" class="value"><input type="text" id="name" name="name" value="{$name|escape}" size="40" maxlength="120" class="textField" /></td>
 	</tr>
 	<tr valign="top">
 		<td class="label">{fieldLabel name="description" key="admin.crosswalks.crosswalk.description" required="true"}</td>
-		<td class="value"><textarea name="description" id="description" cols="40" rows="10" class="textArea">{$description|escape}</textarea></td>
+		<td colspan="{if $sortable}3{else}2{/if}" class="value"><textarea name="description" id="description" cols="40" rows="10" class="textArea">{$description|escape}</textarea></td>
 	</tr>
 
 	<tr>
-		<td colspan="2" class="separator">&nbsp;</td>
+		<td colspan="{if $sortable}4{else}3{/if}" class="separator">&nbsp;</td>
 	</tr>
 
 	<tr valign="top">
 		<td class="label">{fieldLabel name="url" key="admin.crosswalks.crosswalk.publicCrosswalkId"}</td>
-		<td class="value">
+		<td colspan="{if $sortable}3{else}2{/if}" class="value">
 			<input type="text" id="publicCrosswalkId" name="publicCrosswalkId" value="{$publicCrosswalkId|escape}" size="20" maxlength="40" class="textField" />
 			<br/>
 			{translate key="admin.crosswalks.form.publicCrosswalkId.description"}
@@ -64,26 +65,26 @@ function refreshForm() {
 	</tr>
 
 	<tr>
-		<td colspan="2" class="separator">&nbsp;</td>
+		<td colspan="{if $sortable}4{else}3{/if}" class="separator">&nbsp;</td>
 	</tr>
 
 	<tr valign="top">
 		<td class="label">{translate key="admin.crosswalks.crosswalk.type"}</td>
-		<td class="value">
+		<td colspan="{if $sortable}3{else}2{/if}" class="value">
 			{foreach from=$crosswalkTypes item=typeName key=typeId}
 				<input {if $crosswalkType == $typeId}checked {/if}onclick="refreshForm()" name="crosswalkType" type="radio" value="{$typeId}">&nbsp;&nbsp;{translate key=$typeName}<br />
 			{/foreach}
-			<input type="checkbox"{if $sortable} checked="checked"{/if} name="sortable"/><label for="sortable">{translate key="admin.crosswalks.crosswalk.sortableDescription"}</label>
+			<input id="sortable" type="checkbox"{if $sortable} checked="checked"{/if} onclick="refreshForm()" name="sortable"/><label for="sortable">{translate key="admin.crosswalks.crosswalk.sortableDescription"}</label>
 		</td>
 	</tr>
 
 	<tr>
-		<td colspan="2" class="separator">&nbsp;</td>
+		<td colspan="{if $sortable}4{else}3{/if}" class="separator">&nbsp;</td>
 	</tr>
 
 	<tr valign="top">
 		<td class="label"><label for="schemaPluginName">{translate key="admin.crosswalks.schemaFilter"}</label></td>
-		<td class="value">
+		<td colspan="{if $sortable}3{else}2{/if}" class="value">
 			<select id="schemaPluginName" name="schemaPluginName" class="selectMenu" onchange="refreshForm()">
 				<option value="">{translate key="admin.crosswalks.schemaFilter.all"}</option>
 				{foreach from=$schemaPlugins item=schemaPlugin}
@@ -94,33 +95,59 @@ function refreshForm() {
 	</tr>
 
 	<tr>
-		<td colspan="2" class="headseparator">&nbsp;</td>
+		<td colspan="{if $sortable}4{else}3{/if}" class="headseparator">&nbsp;</td>
+	</tr>
+
+	<tr>
+		<td class="label"><strong>{translate key="admin.crosswalks.schema"}</strong></td>
+		{if $sortable}<td class="label"><strong>{translate key="admin.crosswalks.sort"}</strong></td>{/if}
+		<td class="label"><strong>{translate key="admin.crosswalks.search"}</strong></td>
+		<td class="label"><strong>{translate key="record.field"}</strong></td>
+	</tr>
+	<tr>
+		<td colspan="{if $sortable}4{else}3{/if}" class="separator">&nbsp;</td>
 	</tr>
 
 	{foreach from=$filteredPlugins item=schemaPlugin name="schemaPlugins"}
-		<tr valign="top">
-			<td>{$schemaPlugin->getSchemaDisplayName()}</td>
-			<td>
-				{foreach from=$schemaPlugin->getFieldList() item=field}
-					{assign var=fieldType value=$schemaPlugin->getFieldType($field)}
-					{assign var=isFieldMixedType value=$schemaPlugin->isFieldMixedType($field)}
-					{if $fieldType == $crosswalkType || $isFieldMixedType}
-					{* Determine whether this field is already chosen *}
-					{assign var=isFieldChosen value=0}
-					{foreach from=$fields item=chosenField}
-						{assign var=thisSchemaPlugin value=$chosenField->getSchemaPlugin()}
-						{if $thisSchemaPlugin->getName() == $schemaPlugin->getName() && $field == $chosenField->getName()}
-							{assign var=isFieldChosen value=1}
-						{/if}
-					{/foreach}
-					<input type="hidden" name="{$schemaPlugin->getName()|escape}-{$field|escape}-displayed" value="1"/>
-					<input type="checkbox" {if $isFieldChosen}checked="checked" {/if}class="checkbox" name="{$schemaPlugin->getName()|escape}-{$field|escape}" value="1"/>&nbsp;<strong>{$schemaPlugin->getFieldName($field)|escape}</strong>:&nbsp;{$schemaPlugin->getFieldDescription($field)|escape}<br/>
+		{assign var=fieldList value=$schemaPlugin->getFieldList()}
+		{assign var=firstField value="1"}
+		{foreach from=$fieldList item=field}
+			{assign var=fieldType value=$schemaPlugin->getFieldType($field)}
+			{assign var=fieldId value=$schemaPlugin->getFieldId($field)}
+			{assign var=isFieldMixedType value=$schemaPlugin->isFieldMixedType($field)}
+			{if $fieldType == $crosswalkType || $isFieldMixedType}
+				<tr valign="top">
+					{if $firstField}
+						<td>{$schemaPlugin->getSchemaDisplayName()}</td>
+						{assign var=firstField value="0"}
+					{else}
+						<td>&nbsp;</td>
 					{/if}
-				{/foreach}
-			</td>
-		</tr>
+					{if $sortable}
+						<td align="center" width="5%">
+							<input type="radio" {if is_array($sortableFieldIds) && in_array($fieldId, $sortableFieldIds)}checked {/if}name="{$schemaPlugin->getName()|escape}-sort" value="{$field|escape}" />
+						</td>
+					{/if}
+					<td width="5%" align="center">
+						{* Determine whether this field is already chosen *}
+						{assign var=isFieldChosen value=0}
+						{foreach from=$fields item=chosenField}
+							{assign var=thisSchemaPlugin value=$chosenField->getSchemaPlugin()}
+							{if $thisSchemaPlugin->getName() == $schemaPlugin->getName() && $field == $chosenField->getName()}
+								{assign var=isFieldChosen value=1}
+							{/if}
+						{/foreach}
+						<input type="hidden" name="{$schemaPlugin->getName()|escape}-{$field|escape}-displayed" value="1"/>
+						<input type="checkbox" {if $isFieldChosen}checked="checked" {/if}class="checkbox" name="{$schemaPlugin->getName()|escape}-{$field|escape}" value="1"/>
+					</td>
+					<td class="value">
+						<strong>{$schemaPlugin->getFieldName($field)|escape}</strong>:&nbsp;{$schemaPlugin->getFieldDescription($field)|escape}<br/>
+					</td>
+				</tr>
+			{/if}
+		{/foreach}
 		<tr>
-			<td colspan="2" class="{if $smarty.foreach.schemaPlugins.last}end{/if}separator">&nbsp;</td>
+			<td colspan="{if $sortable}4{else}3{/if}" class="{if $smarty.foreach.schemaPlugins.last}end{/if}separator">&nbsp;</td>
 		</tr>
 	{/foreach}
 </table>

@@ -365,6 +365,69 @@ class CrosswalkDAO extends DAO {
 	}
 
 	/**
+	 * Set all fields to non-sortable for the given crosswalk and
+	 * schema plugin name or, if no plugin is specified, for all schemas.
+	 * If a schema plugin and field name are specified, sorting is enabled
+	 * for the combination.
+	 * @param $crosswalkId int
+	 * @param $schemaPluginName string optional
+	 * @param $fieldName string optional
+	 */
+	function resetSortField($crosswalkId, $schemaPluginName = null, $fieldName = null) {
+		// If no schema plugin name is specified, reset all.
+		if ($schemaPluginName === null) {
+			return $this->update(
+				'UPDATE crosswalk_fields SET sortable = 0 WHERE crosswalk_id = ?',
+				array($crosswalkId)
+			);
+		}
+		
+		$fieldDao =& DAORegistry::getDAO('FieldDAO');
+		$plugins =& PluginRegistry::loadCategory('schemas');
+		if (!isset($plugins[$schemaPluginName])) {
+			die("Unknown schema plugin \"$schemaPluginName\"!");
+		}
+		$plugin =& $plugins[$schemaPluginName];
+		foreach ($plugin->getFieldList() as $thisFieldName) {
+			$field =& $fieldDao->buildField($thisFieldName, $schemaPluginName);
+			$this->update(
+				'UPDATE crosswalk_fields SET sortable = ? WHERE raw_field_id = ? AND crosswalk_id = ?',
+				array(
+					$thisFieldName === $fieldName?1:0,
+					$field->getFieldId(),
+					$crosswalkId
+				)
+			);
+			
+			unset($field);
+		}
+
+		return true;
+	}
+
+	/**
+	 * Get the list of sortable field IDs for a crosswalk.
+	 */
+	function getSortableFieldIds($crosswalkId) {
+		$result = &$this->retrieve(
+			'SELECT raw_field_id FROM crosswalk_fields WHERE crosswalk_id = ? AND sortable = 1',
+			array((int) $crosswalkId)
+		);
+		
+		$returner = array();
+		for ($i=1; !$result->EOF; $i++) {
+			list($fieldId) = $result->fields;
+			$returner[] = $fieldId;
+			
+			$result->moveNext();
+		}
+
+		$result->close();
+		unset($result);
+		return $returner;
+	}
+
+	/**
 	 * Determine whether or not a crosswalk exists with the supplied public crosswalk ID
 	 * @param $publicCrosswalkId string
 	 * @param $excludeCrosswalkId int optional

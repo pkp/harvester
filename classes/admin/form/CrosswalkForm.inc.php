@@ -71,6 +71,12 @@ class CrosswalkForm extends Form {
 		));
 		$templateMgr->assign_by_ref('schemaPlugins', $schemaPlugins);
 		$templateMgr->assign_by_ref('filteredPlugins', $filteredPlugins);
+
+		if ($this->crosswalkId) {
+			$crosswalkDao =& DAORegistry::getDAO('CrosswalkDAO');
+			$templateMgr->assign('sortableFieldIds', $crosswalkDao->getSortableFieldIds($this->crosswalkId));
+		}
+		
 		parent::display();
 	}
 	
@@ -108,6 +114,14 @@ class CrosswalkForm extends Form {
 			if (!empty($value)) {
 				$this->setData($name, $value);
 			}
+		}
+
+		// This is a work-around to ensure that the state of
+		// the "sortable" checkbox is maintained when refreshing
+		// the form. (The above override code does not apply because
+		// when the checkbox isn't checked no value is sent at all.)
+		if (Request::getUserVar('overrideSortable')) {
+			$this->setData('sortable', Request::getUserVar('sortable'));
 		}
 	}
 
@@ -147,7 +161,12 @@ class CrosswalkForm extends Form {
 		$this->crosswalk->setPublicCrosswalkId($this->getData('publicCrosswalkId'));
 		$this->crosswalk->setDescription($this->getData('description'));
 		$this->crosswalk->setType($this->getData('crosswalkType'));
-		$this->crosswalk->setSortable($this->getData('sortable'));
+		
+		$sortable = $this->getData('sortable');
+		$this->crosswalk->setSortable($sortable);
+		if (!$sortable) {
+			$crosswalkDao->resetSortField($this->crosswalk->getCrosswalkId());
+		}
 
 		if ($this->crosswalk->getCrosswalkId() != null) {
 			$crosswalkDao->updateCrosswalk($this->crosswalk);
@@ -170,6 +189,8 @@ class CrosswalkForm extends Form {
 			foreach ($schemaPlugin->getFieldList() as $fieldName) {
 				$isChecked = Request::getUserVar("$schemaPluginName-$fieldName");
 				$isDisplayed = Request::getUserVar("$schemaPluginName-$fieldName-displayed");
+				$isDisplayed = Request::getUserVar("$schemaPluginName-$fieldName-displayed");
+				$isSortField = Request::getUserVar("$schemaPluginName-sort") == $fieldName;
 				$fieldType = $schemaPlugin->getFieldType($fieldName);
 				$isFieldMixedType = $schemaPlugin->isFieldMixedType($fieldName);
 
@@ -187,6 +208,9 @@ class CrosswalkForm extends Form {
 				}
 				if ($isChecked && $isDisplayed && $fieldType == $this->crosswalk->getType()) {
 					$crosswalkDao->insertCrosswalkField($crosswalkId, $field->getFieldId());
+				}
+				if ($isSortField && $isDisplayed && $fieldType == $this->crosswalk->getType()) {
+					$crosswalkDao->resetSortField($crosswalkId, $schemaPluginName, $fieldName);
 				}
 			}
 		}
