@@ -206,10 +206,10 @@ class CrosswalkForm extends Form {
 						$crosswalkDao->insertCrosswalkField($crosswalkId, $field->getFieldId());
 					}
 				}
-				if ($isChecked && $isDisplayed && $fieldType == $this->crosswalk->getType()) {
+				if ($isChecked && $isDisplayed && ($fieldType !== FIELD_TYPE_DATE || $fieldType == $this->crosswalk->getType())) {
 					$crosswalkDao->insertCrosswalkField($crosswalkId, $field->getFieldId());
 				}
-				if ($isSortField && $isDisplayed && $fieldType == $this->crosswalk->getType()) {
+				if ($isSortField && $isDisplayed && ($fieldType !== FIELD_TYPE_DATE || $fieldType == $this->crosswalk->getType())) {
 					$crosswalkDao->resetSortField($crosswalkId, $schemaPluginName, $fieldName);
 				}
 			}
