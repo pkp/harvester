@@ -115,7 +115,7 @@ function refreshForm() {
 			{assign var=fieldType value=$schemaPlugin->getFieldType($field)}
 			{assign var=fieldId value=$schemaPlugin->getFieldId($field)}
 			{assign var=isFieldMixedType value=$schemaPlugin->isFieldMixedType($field)}
-			{if $fieldType == $crosswalkType || $isFieldMixedType}
+			{if ($fieldType !== FIELD_TYPE_DATE || $fieldType == $crosswalkType) || $isFieldMixedType}
 				<tr valign="top">
 					{if $firstField}
 						<td>{$schemaPlugin->getSchemaDisplayName()}</td>
