@@ -94,7 +94,7 @@ function handleImportanceChange(newImportance) {
 			<tr valign="top">
 				<td class="label">{$crosswalk->getName()|escape}</td>
 				<td colspan="2" class="value">
-					<select id="crosswalk-{$crosswalkId}" name="crosswalk-{$crosswalkId}[]" multiple class="selectMenu">
+					<select id="crosswalk-{$crosswalkId}" name="crosswalk-{$crosswalkId}[]" multiple class="selectMenu" size="8">
 						<option value="">{translate key="search.select.none"}</option>
 						{foreach from=$crosswalkOptions item=option}{if !empty($option)}
 							<option value="{$option|escape}" {if (is_array($crosswalkValues) && in_array($option, $crosswalkValues)) || ($crosswalkValues == $option)}selected="selected" {/if}>{$option|escape}</option>
