@@ -154,11 +154,9 @@ class OAIHarvester extends Harvester {
 			'verb' => $verb,
 			'metadataPrefix' => $this->getMetadataFormat()
 		);
-
 		foreach (array('set', 'from', 'until') as $name) {
 			if (isset($params[$name])) $harvestingParameters[$name] = $params[$name];
 		}
-
 		$result =& $parser->parse($this->addParameters($this->oaiUrl, $harvestingParameters));
 
 		unset($parser);

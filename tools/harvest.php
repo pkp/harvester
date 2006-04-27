@@ -44,7 +44,7 @@ class harvest extends CommandLineTool {
 			default:
 				if (($i = strpos($arg, '=')) !== false) {
 					// Treat the parameter like a name=value pair
-					$this->params[substr($arg, 0, $i-1)] = substr($arg, $i+1);
+					$this->params[substr($arg, 0, $i)] = substr($arg, $i+1);
 				} else {
 					// Treat the parameter like a boolean.
 					$this->params[$arg] = true;

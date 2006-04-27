@@ -33,5 +33,8 @@
 
 	<message key="plugins.harvesters.oai.toolUsage"><![CDATA[The following additional flags are available for the OAI Harvester:
 	skipExistingEntries: When set, existing records will not be updated
+	from=MMMM-DD-YY: Harvest records at least as new as the specified date
+	until=MMMM-DD-YY: Harvest records at least as old as the specified date
+	set=setName: Harvest records from the set named setName
 ]]></message>
 </locale>
