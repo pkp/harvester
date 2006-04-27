@@ -111,7 +111,7 @@ class SearchHandler extends Handler {
 		$archiveIds = array();
 		if (empty($archiveIds)) $archiveIds = null;
 		foreach ($archives as $archive) {
-			$archiveIds[] = $archive->getArchiveId();
+			if (is_object($archive)) $archiveIds[] = $archive->getArchiveId();
 		}
 		$results = &Search::retrieveResults($keywords, $dates, $archiveIds, $rangeInfo);
 
