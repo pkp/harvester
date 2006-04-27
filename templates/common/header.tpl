@@ -53,8 +53,6 @@
 		<li><a href="{url page="about"}">{translate key="navigation.about"}</a></li>
 		{if $isUserLoggedIn}
 			<li><a href="{url page="admin"}">{translate key="navigation.administration"}</a></li>
-		{else}
-			<li><a href="{url page="login"}">{translate key="navigation.login"}</a></li>
 		{/if}
 		<li><a href="{url page="search"}">{translate key="navigation.search"}</a></li>
 		<li><a href="{url page="browse"}">{translate key="navigation.browse"}</a></li>
