@@ -97,7 +97,7 @@ function handleImportanceChange(newImportance) {
 					<select id="crosswalk-{$crosswalkId}" name="crosswalk-{$crosswalkId}[]" multiple class="selectMenu" size="5">
 						<option value="">{translate key="search.select.none"}</option>
 						{foreach from=$crosswalkOptions item=option}{if !empty($option)}
-							<option value="{$option|escape}" {if (is_array($crosswalkValues) && in_array($option, $crosswalkValues)) || ($crosswalkValues == $option)}selected="selected" {/if}>{$option|escape}</option>
+							<option value="{$option|escape}" {if (is_array($crosswalkValues) && in_array($option, $crosswalkValues)) || ($crosswalkValues == $option)}selected="selected" {/if}>{$option|escape|truncate:80:"..."}</option>
 						{/if}{/foreach}
 					</select>
 				</td>

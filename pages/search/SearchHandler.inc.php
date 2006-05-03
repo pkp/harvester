@@ -38,7 +38,7 @@ class SearchHandler extends Handler {
 
 		if (is_array($crosswalks)) foreach ($crosswalks as $crosswalk) switch ($crosswalk->getType()) {
 			case FIELD_TYPE_SELECT:
-				$templateMgr->assign('crosswalk-options-' . $crosswalk->getCrosswalkId(), $recordDao->getCrosswalkOptions($crosswalk->getCrosswalkId()));
+				$templateMgr->assign('crosswalk-options-' . $crosswalk->getCrosswalkId(), $recordDao->getCrosswalkOptions($crosswalk->getCrosswalkId(), $fieldIds));
 				break;
 		}
 

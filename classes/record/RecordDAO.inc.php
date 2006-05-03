@@ -256,12 +256,12 @@ class RecordDAO extends DAO {
 					($schemaPlugin =& $field->getSchemaPlugin()) &&
 					in_array($field->getName(), $schemaPlugin->getSortFields())
 				) $fieldIds = array($sort);
-				$isDate = $field->getFieldType() === FIELD_TYPE_DATE;
+				$isDate = $field->getFieldType() == FIELD_TYPE_DATE;
 				unset($field);
 			} else {
 				$crosswalk =& $crosswalkDao->getCrosswalkById($sort);
 				$fieldIds = $crosswalkDao->getSortableFieldIds($sort);
-				$isDate = $crosswalk && $crosswalk->getType() === FIELD_TYPE_DATE;
+				$isDate = $crosswalk && ($crosswalk->getType() == FIELD_TYPE_DATE);
 			}
 
 			if (!empty($fieldIds)) {
@@ -282,7 +282,7 @@ class RecordDAO extends DAO {
 						$params[] = $fieldId;
 					}
 					$sortJoin .= '))';
-					$orderBy = 'o.object_time';
+					$orderBy = 'o.object_time DESC';
 				}
 			}
 		}
@@ -370,7 +370,7 @@ class RecordDAO extends DAO {
 	 */
 	function getCrosswalkOptions($crosswalkId, $archiveIds = null) {
 		$sql = 'SELECT DISTINCT e.value FROM crosswalk_fields cf, entries e WHERE cf.crosswalk_id = ? AND cf.raw_field_id = e.raw_field_id';
-		if (!empty($archiveIds)) {
+		if (!is_array($archiveIds)) {
 			$sql .= ' AND (e.archive_id = ?';
 			$params = array($fieldId, array_shift($archiveIds));
 			foreach ($archiveIds as $archiveId) {
