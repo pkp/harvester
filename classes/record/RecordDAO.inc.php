@@ -342,7 +342,7 @@ class RecordDAO extends DAO {
 			$params = array($fieldId, array_shift($archiveIds));
 			foreach ($archiveIds as $archiveId) {
 				$sql .= ' OR archive_id = ?';
-				$params[] = $archiveId;
+				$params[] = (int) $archiveId;
 			}
 			$sql .= ')';
 		} else {
@@ -369,12 +369,12 @@ class RecordDAO extends DAO {
 	 * @param $archiveIds array optional
 	 */
 	function getCrosswalkOptions($crosswalkId, $archiveIds = null) {
-		$sql = 'SELECT DISTINCT e.value FROM crosswalk_fields cf, entries e WHERE cf.crosswalk_id = ? AND cf.raw_field_id = e.raw_field_id';
+		$sql = 'SELECT DISTINCT e.value FROM crosswalk_fields cf, entries e, records r WHERE cf.crosswalk_id = ? AND cf.raw_field_id = e.raw_field_id AND r.record_id = e.record_id';
 		if (!is_array($archiveIds)) {
-			$sql .= ' AND (e.archive_id = ?';
-			$params = array($fieldId, array_shift($archiveIds));
+			$sql .= ' AND (r.archive_id = ?';
+			$params = array($crosswalkId, array_shift($archiveIds));
 			foreach ($archiveIds as $archiveId) {
-				$sql .= ' OR e.archive_id = ?';
+				$sql .= ' OR r.archive_id = ?';
 				$params[] = $archiveId;
 			}
 			$sql .= ')';
