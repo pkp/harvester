@@ -154,9 +154,10 @@ class ModsPlugin extends SchemaPlugin {
 						$authors[$nameAssocId][$name] = $item['value'];
 					}
 				} elseif (isset($item['attributes']['titleAssocId'])) {
-					// Assume the first entry is definitive
 					if (!isset($title[$name])) {
 						$title[$name] = $item['value'];
+					} else {
+						$title[$name] .= "\n" . $item['value'];
 					}
 				}
 			}
@@ -172,7 +173,7 @@ class ModsPlugin extends SchemaPlugin {
 	 */
 	function getAuthors(&$record, $entries = null) {
 		if ($entries === null) $entries = $record->getEntries();
-		list($authors, $title) = $this->getAuthorsAndtitle($entries);
+		list($authors, $title) = $this->getAuthorsAndTitle($entries);
 		return $authors;
 	}
 
@@ -184,7 +185,7 @@ class ModsPlugin extends SchemaPlugin {
 	 */
 	function getTitle(&$record, $entries = null) {
 		if ($entries === null) $entries = $record->getEntries();
-		list($authors, $title) = $this->getAuthorsAndtitle($entries);
+		list($authors, $title) = $this->getAuthorsAndTitle($entries);
 		return $title;
 	}
 

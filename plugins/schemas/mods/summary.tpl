@@ -9,7 +9,7 @@
  * $Id$
  *}
 
-<span class="title">{$title.title|escape|truncate:90|default:"&mdash"}</span><br />
+<span class="title">{$title.title|escape|replace:"\n":"; "|truncate:90|default:"&mdash"}</span><br />
 
 <div class="recordContents">
 	{foreach from=$authors key=nameAssocId item=author}

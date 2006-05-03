@@ -234,71 +234,65 @@ class RecordDAO extends DAO {
 	/**
 	 * Retrieve all records in an archive.
 	 * @param $archiveId int ID of archive to browse; null to return all.
-	 * @param $sort array List of IDs to sort by; if archive specified, they're field IDs.
-	 *                    Otherwise they are crosswalk IDs.
+	 * @param $sort array ID to sort by; if archive specified, use field ID;
+	 *                    Otherwise use crosswalk ID.
 	 * @param $rangeInfo object optional
 	 * @return DAOResultFactory containing matching records
 	 */
-	function &getRecords($archiveId = null, $sort = array(), $rangeInfo = null) {
+	function &getRecords($archiveId = null, $sort = null, $rangeInfo = null) {
 		$params = array();
 
 		$fieldDao =& DAORegistry::getDAO('FieldDAO');
 		$crosswalkDao =& DAORegistry::getDAO('CrosswalkDAO');
 
-		$sortJoins = '';
-		$sortOrders = array();
-		$i = 0;
+		$sortJoin = '';
+		$orderBy = '';
 
-		$fields = array();
-		if ($archiveId) foreach ($sort as $id) {
-			// An archive was specified; the IDs given as sort
-			// orders will be field IDs.
-			if (!($field =& $fieldDao->getFieldById($id))) continue;
-			if (!($schemaPlugin =& $field->getSchemaPlugin())) continue;
-			if (!in_array($field->getName(), $schemaPlugin->getSortFields())) continue;
-			$fields[] =& $field;
-			unset($field);
-		} else foreach ($sort as $id) {
-			// No archive was specified; the IDs given as sort
-			// orders will be crosswalk IDs.
-			$fieldIds = $crosswalkDao->getSortableFieldIds($id);
-			foreach ($fieldIds as $fieldId) {
-				if (!($field =& $fieldDao->getFieldById($fieldId))) continue;
-				$fields[] =& $field;
+		if ($sort !== null) {
+			if ($archiveId !== null) {
+				$field =& $fieldDao->getFieldById($sort);
+				if (
+					$field &&
+					($schemaPlugin =& $field->getSchemaPlugin()) &&
+					in_array($field->getName(), $schemaPlugin->getSortFields())
+				) $fieldIds = array($sort);
+				$isDate = $field->getFieldType() === FIELD_TYPE_DATE;
 				unset($field);
+			} else {
+				$crosswalk =& $crosswalkDao->getCrosswalkById($sort);
+				$fieldIds = $crosswalkDao->getSortableFieldIds($sort);
+				$isDate = $crosswalk && $crosswalk->getType() === FIELD_TYPE_DATE;
 			}
-		}
 
-		foreach ($fields as $field) {
-			// Sort using the provided field IDs
-			$schemaPlugin =& $field->getSchemaPlugin();
-
-			switch ($schemaPlugin->getFieldType($field->getName())) {
-				case FIELD_TYPE_DATE:
-					$sortJoins .= ' LEFT JOIN search_objects o' . $i . ' ON (o' . $i . '.record_id = r.record_id AND o' . $i . '.raw_field_id = ?)';
-					$params[] = $field->getFieldId();
-					$sortOrders[] = 'o' . $i . '.object_time';
-					break;
-				case FIELD_TYPE_STRING:
-				case FIELD_TYPE_SELECT:
-				default:
-					$sortJoins .= ' LEFT JOIN entries e' . $i . ' ON (e' . $i . '.record_id = r.record_id AND e' . $i . '.raw_field_id = ?)';
-					$params[] = $field->getFieldId();
-					$sortOrders[] = 'e' . $i . '.value';
-					break;
+			if (!empty($fieldIds)) {
+				if (!$isDate) {
+					$sortJoin = ' LEFT JOIN entries e ON (e.record_id = r.record_id AND (e.raw_field_id = ?';
+					$params[] = array_shift($fieldIds);
+					foreach ($fieldIds as $fieldId) {
+						$sortJoin .= ' OR e.raw_field_id = ?';
+						$params[] = $fieldId;
+					}
+					$sortJoin .= '))';
+					$orderBy = 'e.value';
+				} else {
+					$sortJoin = ' LEFT JOIN search_objects o ON (o.record_id = r.record_id AND (o.raw_field_id = ?';
+					$params[] = array_shift($fieldIds);
+					foreach ($fieldIds as $fieldId) {
+						$sortJoin .= ' OR o.raw_field_id = ?';
+						$params[] = $fieldId;
+					}
+					$sortJoin .= '))';
+					$orderBy = 'o.object_time';
+				}
 			}
-			
-			$i++;
-			unset($schemaPlugin);
-			unset($field);
 		}
 
 		if (isset($archiveId)) $params[] = $archiveId;
 
 		$result = &$this->retrieveRange(
-			'SELECT DISTINCT r.* FROM records r' . $sortJoins .
+			'SELECT DISTINCT r.* FROM records r' . $sortJoin .
 			(isset($archiveId)? ' WHERE archive_id = ? ':'') .
-			(empty($sortOrders)?'':(' ORDER BY COALESCE(' . join(', ', $sortOrders)) . ')'),
+			(empty($orderBy)?'':" ORDER BY $orderBy"),
 			empty($params)?false:(count($params)==1?array_shift($params):$params),
 			$rangeInfo
 		);

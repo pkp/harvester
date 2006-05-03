@@ -12,7 +12,7 @@
 {assign var="pageTitle" value="record.viewRecord"}
 {include file="common/header.tpl"}
 
-<h3>{$entries.title.value|escape}</h3>
+<h3>{$entries.title.value|escape|nl2br}</h3>
 <h4>{$archive->getTitle()|escape}</h4>
 
 <a href="{url page="browse" op="archiveInfo" path=$archive->getArchiveId()}" class="action">{translate key="browse.archiveInfo"}</a><br/>&nbsp;
@@ -32,7 +32,7 @@
 	<tr valign="top">
 		<td>{translate key="plugins.schemas.mods.fields.title.name"}</td>
 		<td>
-			{$title.title|escape|default:"&mdash;"}<br/>
+			{$title.title|escape|nl2br|default:"&mdash;"}<br/>
 		</td>
 	</tr>
 	<tr>

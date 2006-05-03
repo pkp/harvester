@@ -36,7 +36,7 @@ class BrowseHandler extends Handler {
 			// The user has chosen an archive or opted to browse all
 			$records =& $recordDao->getRecords(
 				$archive?$archiveId:null, 
-				empty($sortId)?array():array($sortId), 
+				empty($sortId)?null:$sortId, 
 				$rangeInfo
 			);
 
