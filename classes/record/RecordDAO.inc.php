@@ -337,16 +337,15 @@ class RecordDAO extends DAO {
 	 */
 	function getFieldOptions($fieldId, $archiveIds = null) {
 		$sql = 'SELECT DISTINCT value FROM entries WHERE raw_field_id = ?';
+		$params = array($fieldId);
 		if (!empty($archiveIds)) {
 			$sql .= ' AND (archive_id = ?';
-			$params = array($fieldId, array_shift($archiveIds));
+			$params[] = array_shift($archiveIds);
 			foreach ($archiveIds as $archiveId) {
 				$sql .= ' OR archive_id = ?';
 				$params[] = (int) $archiveId;
 			}
 			$sql .= ')';
-		} else {
-			$params[] = $fieldId;
 		}
 
 		$result = &$this->retrieveCached($sql, $params, 60 * 60 * 24);
@@ -370,16 +369,15 @@ class RecordDAO extends DAO {
 	 */
 	function getCrosswalkOptions($crosswalkId, $archiveIds = null) {
 		$sql = 'SELECT DISTINCT e.value FROM crosswalk_fields cf, entries e, records r WHERE cf.crosswalk_id = ? AND cf.raw_field_id = e.raw_field_id AND r.record_id = e.record_id';
-		if (!is_array($archiveIds)) {
+		$params = array($crosswalkId);
+		if (is_array($archiveIds)) {
 			$sql .= ' AND (r.archive_id = ?';
-			$params = array($crosswalkId, array_shift($archiveIds));
+			$params[] = array_shift($archiveIds);
 			foreach ($archiveIds as $archiveId) {
 				$sql .= ' OR r.archive_id = ?';
 				$params[] = $archiveId;
 			}
 			$sql .= ')';
-		} else {
-			$params[] = $crosswalkId;
 		}
 
 		$result = &$this->retrieveCached($sql, $params, 60 * 60 * 24);

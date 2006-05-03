@@ -55,7 +55,7 @@ function handleImportanceChange(newImportance) {
 			{/if}
 			<option {if $searchAll}selected {/if}value="all">{translate key="search.allArchives"}</option>
 			{iterate from=archives item=archive}
-				<option {if !$searchAll && ((is_array($archiveIds) && in_array($archive->getArchiveId(), $archiveIds)) || (!is_array($archiveIds) && $archiveIds == $archive->getArchiveId()))}selected {/if}value="{$archive->getArchiveId()}">{$archive->getTitle()|escape}</option>
+				<option {if !$searchAll && ((is_array($archiveIds) && in_array($archive->getArchiveId(), $archiveIds)) || (!is_array($archiveIds) && $archiveIds == $archive->getArchiveId()))}selected {/if}value="{$archive->getArchiveId()}">{$archive->getTitle()|escape|truncate:90:"..."}</option>
 			{/iterate}
 		</select><br />
 	</td>
