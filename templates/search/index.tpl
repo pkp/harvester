@@ -55,7 +55,7 @@ function handleImportanceChange(newImportance) {
 			{/if}
 			<option {if $searchAll}selected {/if}value="all">{translate key="search.allArchives"}</option>
 			{iterate from=archives item=archive}
-				<option {if !$searchAll && ((is_array($archiveIds) && in_array($archive->getArchiveId(), $archiveIds)) || (!is_array($archiveIds) && $archiveIds == $archive->getArchiveId()))}selected {/if}value="{$archive->getArchiveId()}">{$archive->getTitle()|escape|truncate:90:"..."}</option>
+				<option {if !$searchAll && ((is_array($archiveIds) && in_array($archive->getArchiveId(), $archiveIds)) || (!is_array($archiveIds) && $archiveIds == $archive->getArchiveId()))}selected {/if}value="{$archive->getArchiveId()}">{$archive->getTitle()|escape|truncate:80:"..."}</option>
 			{/iterate}
 		</select><br />
 	</td>
@@ -135,10 +135,10 @@ function handleImportanceChange(newImportance) {
 			<tr valign="top">
 				<td class="label">{$field->getDisplayName()|escape}</td>
 				<td colspan="2" class="value">
-					<select id="field-{$fieldId}" name="field-{$fieldId}[]" multiple class="selectMenu">
+					<select id="field-{$fieldId}" name="field-{$fieldId}[]" multiple class="selectMenu" size="5">
 						<option value="">{translate key="search.select.none"}</option>
 						{foreach from=$fieldOptions item=option}{if !empty($option)}
-							<option value="{$option|escape}" {if (is_array($fieldValues) && in_array($option, $fieldValues)) || ($fieldValues == $option)}selected="selected" {/if}>{$option|escape}</option>
+							<option value="{$option|escape}" {if (is_array($fieldValues) && in_array($option, $fieldValues)) || ($fieldValues == $option)}selected="selected" {/if}>{$option|escape|truncate:80:"..."}</option>
 						{/if}{/foreach}
 					</select>
 				</td>

@@ -336,13 +336,13 @@ class RecordDAO extends DAO {
 	 * @param $archiveIds array optional
 	 */
 	function getFieldOptions($fieldId, $archiveIds = null) {
-		$sql = 'SELECT DISTINCT value FROM entries WHERE raw_field_id = ?';
+		$sql = 'SELECT DISTINCT value FROM entries e, records r WHERE e.raw_field_id = ? AND r.record_id = e.record_id';
 		$params = array($fieldId);
 		if (!empty($archiveIds)) {
-			$sql .= ' AND (archive_id = ?';
+			$sql .= ' AND (r.archive_id = ?';
 			$params[] = array_shift($archiveIds);
 			foreach ($archiveIds as $archiveId) {
-				$sql .= ' OR archive_id = ?';
+				$sql .= ' OR r.archive_id = ?';
 				$params[] = (int) $archiveId;
 			}
 			$sql .= ')';

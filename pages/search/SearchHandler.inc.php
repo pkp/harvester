@@ -29,18 +29,18 @@ class SearchHandler extends Handler {
 
 		// Populate the select options for fields and crosswalks
 		$recordDao =& DAORegistry::getDAO('RecordDAO');
+		$archiveIds = Request::getUserVar('archiveIds');
+		if (empty($archiveIds)) $archiveIds = null;
+		elseif (!is_array($archiveIds)) $archiveIds = array($archiveIds);
 
 		if (is_array($fields)) foreach ($fields as $field) switch ($field->getType()) {
 			case FIELD_TYPE_SELECT:
-				$templateMgr->assign('field-options-' . $field->getFieldId(), $recordDao->getFieldOptions($field->getFieldId()));
+				$templateMgr->assign('field-options-' . $field->getFieldId(), $recordDao->getFieldOptions($field->getFieldId(), $archiveIds));
 				break;
 		}
 
 		if (is_array($crosswalks)) foreach ($crosswalks as $crosswalk) switch ($crosswalk->getType()) {
 			case FIELD_TYPE_SELECT:
-				$archiveIds = Request::getUserVar('archiveIds');
-				if (empty($archiveIds)) $archiveIds = null;
-				elseif (!is_array($archiveIds)) $archiveIds = array($archiveIds);
 				$templateMgr->assign('crosswalk-options-' . $crosswalk->getCrosswalkId(), $recordDao->getCrosswalkOptions($crosswalk->getCrosswalkId(), $archiveIds));
 				break;
 		}
