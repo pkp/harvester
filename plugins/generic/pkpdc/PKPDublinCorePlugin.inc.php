@@ -144,6 +144,9 @@ class PKPDublinCorePlugin extends Plugin {
 		return false; // Otherwise, allow regular handling
 	}
 
+	/**
+	 * Add the OJS version selector to the archive form.
+	 */
 	function _displayHarvesterForm($hookName, $args) {
 		$params =& $args[0];
 		$smarty =& $args[1];
@@ -156,6 +159,9 @@ class PKPDublinCorePlugin extends Plugin {
 		return false;
 	}
 
+	/**
+	 * Add the field for the OJS version selector to the archive form.
+	 */
 	function _getArchiveFormParameterNames($hookName, $args) {
 		$form =& $args[0];
 		$parameterNames =& $args[1];
@@ -166,6 +172,9 @@ class PKPDublinCorePlugin extends Plugin {
 		return false;
 	}
 
+	/**
+	 * Read the current OJS version selector into the form, if necessary
+	 */
 	function _readAdditionalFormData($hookName, $args) {
 		$form =& $args[0];
 		$archive =& $args[1];
@@ -176,6 +185,9 @@ class PKPDublinCorePlugin extends Plugin {
 		return false;
 	}
 
+	/**
+	 * Save any new value for the OJS version selector
+	 */
 	function _saveAdditionalFormData($hookName, $args) {
 		$form =& $args[0];
 		$archive =& $args[1];
