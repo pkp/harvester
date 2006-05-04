@@ -86,6 +86,7 @@ class DAORegistry {
 			case 'FieldDAO': return 'field.FieldDAO';
 			case 'HelpTocDAO': return 'help.HelpTocDAO';
 			case 'HelpTopicDAO': return 'help.HelpTopicDAO';
+			case 'PluginSettingsDAO': return 'plugins.PluginSettingsDAO';
 			case 'RecordDAO': return 'record.RecordDAO';
 			case 'RTDAO': return 'rt.harvester2.RTDAO';
 			case 'SchemaDAO': return 'schema.SchemaDAO';

@@ -77,7 +77,6 @@ class HarvesterPlugin extends Plugin {
 		if (isset($params['plugin']) && $params['plugin'] == $this->getName()) {
 			$this->addLocaleData();
 			$output .= $smarty->fetch($this->getTemplatePath() . '/harvesterForm.tpl');
-			return true;
 		}
 		return false;
 	}
@@ -91,7 +90,6 @@ class HarvesterPlugin extends Plugin {
 
 		if ($harvesterPlugin == $this->getName()) {
 			$this->addArchiveFormChecks($form);
-			return true;
 		}
 		return false;
 	}
@@ -107,7 +105,6 @@ class HarvesterPlugin extends Plugin {
 		if ($harvesterPlugin == $this->getName()) {
 			$additionalFieldNames = $this->getAdditionalArchiveFormFields();
 			$parameterNames = array_merge($parameterNames, $additionalFieldNames);
-			return true;
 		}
 		return false;
 	}
@@ -124,7 +121,6 @@ class HarvesterPlugin extends Plugin {
 		$archive =& $params['archive'];
 		if ($archive->getHarvesterPluginName() == $this->getName()) {
 			$output = $this->displayExtendedArchiveInfo($archive);
-			return true;
 		}
 		return false;
 	}
@@ -171,7 +167,6 @@ class HarvesterPlugin extends Plugin {
 
 		if ($harvesterPlugin == $this->getName() && $archive) {
 			$this->initializeArchiveForm($form, $archive);
-			return true;
 		}
 		return false;
 	}
@@ -191,7 +186,6 @@ class HarvesterPlugin extends Plugin {
 				$archive->updateSetting($field, Request::getUserVar($field));
 			}
 			$this->executeArchiveForm(&$form, &$archive);
-			return true;
 		}
 		return false;
 	}
@@ -208,7 +202,6 @@ class HarvesterPlugin extends Plugin {
 		
 		if ($harvesterPlugin == $this->getName()) {
 			$this->displayArchiveForm($form, $templateMgr);
-			return true;
 		}
 		return false;
 	}

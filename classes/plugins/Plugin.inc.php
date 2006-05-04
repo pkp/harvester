@@ -150,7 +150,7 @@ class Plugin {
 		require_once($this->getPluginPath() . '/' . str_replace('.', '/', $class) . '.inc.php');
 	}
 
-	function &getSetting($name) {
+	function getSetting($name) {
 		$pluginSettingsDao =& DAORegistry::getDAO('PluginSettingsDAO');
 		return $pluginSettingsDao->getSetting($this->getName(), $name);
 	}

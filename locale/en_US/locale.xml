@@ -40,6 +40,8 @@
 	<message key="common.until">Until</message>
 	<message key="common.none">None</message>
 	<message key="common.default">Default</message>
+	<message key="common.enable">Enable</message>
+	<message key="common.disable">Disable</message>
 
 	<!-- Navigation Messages -->
 	<message key="navigation.home">Home</message>

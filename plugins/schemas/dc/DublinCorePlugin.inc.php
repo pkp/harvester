@@ -72,6 +72,7 @@ class DublinCorePlugin extends SchemaPlugin {
 				'source'
 			);
 		}
+		HookRegistry::call('DublinCorePlugin::getFieldList', array(&$this, &$fieldList));
 		return $fieldList;
 	}
 
@@ -80,7 +81,9 @@ class DublinCorePlugin extends SchemaPlugin {
 	 * @return array
 	 */
 	function getSortFields() {
-		return array('title', 'date');
+		$returner = array('title', 'date');
+		HookRegistry::call('DublinCorePlugin::getSortFields', array(&$this, &$returner));
+		return $returner;
 	}
 
 	function getFieldName($fieldSymbolic, $locale = null) {
@@ -140,12 +143,14 @@ class DublinCorePlugin extends SchemaPlugin {
 	function getFieldType($fieldName) {
 		switch ($fieldName) {
 			case 'date':
-				return FIELD_TYPE_DATE;
+				$returner = FIELD_TYPE_DATE;
 			case 'language':
-				return FIELD_TYPE_SELECT;
+				$returner = FIELD_TYPE_SELECT;
 			default:
-				return FIELD_TYPE_STRING;
+				$returner = FIELD_TYPE_STRING;
 		}
+		HookRegistry::call('DublinCorePlugin::getFieldType', array(&$this, $fieldName, &$returner));
+		return $returner;
 	}
 }
 
