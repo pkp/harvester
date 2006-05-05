@@ -1,12 +1,13 @@
 <?php
 
 /**
- * AdminArchiveHandler.inc.php
+ * @file AdminArchiveHandler.inc.php
  *
  * Copyright (c) 2005-2006 Alec Smecher and John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @package pages.admin
+ * @class AdminArchiveHandler
  *
  * Handle requests for archive management in site administration. 
  *

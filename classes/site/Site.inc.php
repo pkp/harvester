@@ -1,12 +1,13 @@
 <?php
 
 /**
- * Site.inc.php
+ * @file Site.inc.php
  *
  * Copyright (c) 2005-2006 Alec Smecher and John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @package site
+ * @class Site
  *
  * Site class.
  * Describes system-wide site properties.

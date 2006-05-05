@@ -1,12 +1,13 @@
 <?php
 
 /**
- * VirtualArrayIterator.inc.php
+ * @file VirtualArrayIterator.inc.php
  *
  * Copyright (c) 2005-2006 Alec Smecher and John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
- * @package db
+ * @package core
+ * @class VirtualArrayIterator
  *
  * Provides paging and iteration for "virtual" arrays -- arrays for which only
  * the current "page" is available, but are much bigger in entirety.

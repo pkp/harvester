@@ -1,14 +1,14 @@
 <?php
 
 /**
- * index.php
+ * @file plugins/harvesters/oai/index.php
  *
  * Copyright (c) 2005-2006 Alec Smecher and John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
- * @package plugins
- *
  * Wrapper for OAI harvester plugin.
+ *
+ * @package plugins.harvesters.oai
  *
  * $Id$
  */

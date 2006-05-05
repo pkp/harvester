@@ -67,10 +67,10 @@
 			<NOTNULL/>
 		</field>
 		<field name="description" type="X"/>
+		<descr>Archives and basic archive settings.</descr>
 		<index name="archive_public_id">
 			<col>public_archive_id</col>
 		</index>
-		<descr>Archives and basic archive settings.</descr>
 	</table>
 	
 	<!--

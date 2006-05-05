@@ -1,12 +1,13 @@
 <?php
 
 /**
- * ItemIterator.inc.php
+ * @file ItemIterator.inc.php
  *
  * Copyright (c) 2005-2006 Alec Smecher and John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
- * @package db
+ * @package core
+ * @class ItemIterator
  *
  * Generic iterator class; needs to be overloaded by subclasses
  * providing specific implementations.

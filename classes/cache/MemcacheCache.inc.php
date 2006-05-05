@@ -1,12 +1,13 @@
 <?php
 
 /**
- * MemcacheCache.inc.php
+ * @file MemcacheCache.inc.php
  *
  * Copyright (c) 2005-2006 Alec Smecher and John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @package cache
+ * @class MemcacheCache
  *
  * Provides caching based on Memcache.
  *
@@ -19,9 +20,15 @@ import('cache.GenericCache');
 // WARNING: This cache MUST be loaded in batch, or else many cache
 // misses will result.
 
-// Pseudotypes used to represent false and null values in the cache
+/**
+ * Pseudotype used to represent false values in the cache
+ */
 class memcache_false {
 }
+
+/**
+ * Pseudotype used to represent null values in the cache
+ */
 class memcache_null {
 }
 

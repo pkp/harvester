@@ -1,15 +1,15 @@
 <?php
 
 /**
- * EmailTemplate.inc.php
+ * @file EmailTemplate.inc.php
  *
  * Copyright (c) 2005-2006 Alec Smecher and John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
- * @package mail
+ * BaseEmailTemplate, EmailTemplate classes implemented here; these
+ * describe basic email template properties.
  *
- * EmailTemplate class.
- * Describes basic email template properties.
+ * @package mail
  *
  * $Id$
  */
@@ -108,7 +108,7 @@ class EmailTemplate extends BaseEmailTemplate {
 	/**
 	 * Constructor.
 	 */
-	function LocaleEmailTemplate() {
+	function EmailTemplate() {
 		parent::BaseEmailTemplate();
 		$this->localeData = array();
 	}

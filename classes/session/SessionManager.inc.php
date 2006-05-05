@@ -1,12 +1,13 @@
 <?php
 
 /**
- * SessionManager.inc.php
+ * @file SessionManager.inc.php
  *
  * Copyright (c) 2005-2006 Alec Smecher and John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @package session
+ * @class SessionManager
  *
  * Class for handling sessions.
  * Implements PHP methods for a custom session storage handler (see http://php.net/session).

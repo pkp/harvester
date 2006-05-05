@@ -1,12 +1,13 @@
 <?php
 
 /**
- * PostprocessorPlugin.inc.php
+ * @file PostprocessorPlugin.inc.php
  *
  * Copyright (c) 2005-2006 Alec Smecher and John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @package plugins
+ * @class PostprocessorPlugin
  *
  * Abstract class for preprocessor plugins; these are invoked after an
  * entry is stored but before it is indexed.

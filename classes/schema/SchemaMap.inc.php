@@ -1,12 +1,13 @@
 <?php
 
 /**
- * SchemaMap.inc.php
+ * @file SchemaMap.inc.php
  *
  * Copyright (c) 2005-2006 Alec Smecher and John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @package schemas
+ * @class SchemaMap
  *
  * Provides methods for accessing the schema map.
  *
@@ -116,6 +117,9 @@ class SchemaMap {
 	}
 }
 
+/**
+ * Handle XML parsing events for the SchemaMap class.
+ */
 class SchemaMapHandler extends XMLParserHandler {
 	var $result;
 	var $currentSchemaPlugin;

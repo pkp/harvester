@@ -1,12 +1,13 @@
 <?php
 
 /**
- * install.php
+ * @file install.php
  *
  * Copyright (c) 2005-2006 Alec Smecher and John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @package tools
+ * @class installTool
  *
  * CLI tool for installing Harvester2.
  *

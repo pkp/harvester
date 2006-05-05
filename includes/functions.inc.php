@@ -1,13 +1,15 @@
 <?php
 
 /**
- * functions.inc.php
+ * @file functions.inc.php
  *
  * Copyright (c) 2005-2006 Alec Smecher and John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * Contains definitions for common functions used system-wide.
  * Any frequently-used functions that cannot be put into an appropriate class should be added here.
+ *
+ * @package includes
  *
  * $Id$
  */

@@ -1,12 +1,13 @@
 <?php
 
 /**
- * XMLCustomWriter.inc.php
+ * @file XMLCustomWriter.inc.php
  *
  * Copyright (c) 2005-2006 Alec Smecher and John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @package xml
+ * @class XMLCustomWriter
  *
  * Wrapper class for writing XML documents using PHP 4.x or 5.x
  *

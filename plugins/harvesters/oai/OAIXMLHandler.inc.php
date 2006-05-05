@@ -1,12 +1,13 @@
 <?php
 
 /**
- * OAIXMLHandler.inc.php
+ * @file OAIXMLHandler.inc.php
  *
  * Copyright (c) 2005-2006 Alec Smecher and John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
- * @package plugins
+ * @package plugins.harvesters.oai
+ * @class OAIXMLHandler
  *
  * OAI XML parser
  *

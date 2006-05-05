@@ -1,12 +1,13 @@
 <?php
 
 /**
- * Archive.inc.php
+ * @file Archive.inc.php
  *
  * Copyright (c) 2005-2006 Alec Smecher and John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @package archive
+ * @class Archive
  *
  * Archive class.
  * Describes basic archive properties.

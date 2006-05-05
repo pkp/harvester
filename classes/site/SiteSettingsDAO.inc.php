@@ -1,12 +1,13 @@
 <?php
 
 /**
- * SiteSettingsDAO.inc.php
+ * @file SiteSettingsDAO.inc.php
  *
  * Copyright (c) 2005-2006 Alec Smecher and John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @package site
+ * @class SiteSettingsDAO
  *
  * Class for Site Settings DAO.
  * Operations for retrieving and modifying site settings.

@@ -1,14 +1,14 @@
 <?php
 
 /**
- * RTStruct.inc.php
+ * @file RTStruct.inc.php
  *
  * Copyright (c) 2005-2006 Alec Smecher and John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
- * @package rt
- *
  * Data structures associated with the Reading Tools component.
+ *
+ * @package rt
  *
  * $Id$
  */
