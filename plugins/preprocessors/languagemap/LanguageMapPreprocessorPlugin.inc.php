@@ -29,8 +29,9 @@ class LanguageMapPreprocessorPlugin extends PreprocessorPlugin {
 	 */
 	function register($category, $path) {
 		$success = parent::register($category, $path);
-		$this->languageCrosswalkFieldIds = array();
-		if ($success) {
+		$this->languageCrosswalkFieldIds = null;
+		if ($success && $this->isEnabled()) {
+			$this->languageCrosswalkFieldIds = array();
 			$crosswalkDao =& DAORegistry::getDAO('CrosswalkDAO');
 			$languageCrosswalk =& $crosswalkDao->getCrosswalkByPublicCrosswalkId('language');
 			if ($languageCrosswalk) {
@@ -45,14 +46,14 @@ class LanguageMapPreprocessorPlugin extends PreprocessorPlugin {
 		return $success;
 	}
 
-	function &_getCache() {
+	function &_getMapCache() {
 		static $cache;
 		if (!isset($cache)) {
 			import('cache.CacheManager');
 			$cacheManager =& CacheManager::getManager();
 			$cache =& $cacheManager->getFileCache(
 				$this->getName(), 'mapping',
-				array(&$this, '_cacheMiss')
+				array(&$this, '_mapCacheMiss')
 			);
 
 			// Check to see if the cache is outdated.
@@ -64,7 +65,7 @@ class LanguageMapPreprocessorPlugin extends PreprocessorPlugin {
 		return $cache;
 	}
 
-	function _cacheMiss(&$cache, $id) {
+	function _mapCacheMiss(&$cache, $id) {
 		static $mappings;
 		if (!isset($mappings)) {
 			// Load the mapping list.
@@ -82,9 +83,8 @@ class LanguageMapPreprocessorPlugin extends PreprocessorPlugin {
 	}
 
 	function mapLanguage($value) {
-		$cache =& $this->_getCache();
-		if ($newValue = $cache->get($value)) {
-			echo "MAPPING $value TO $newValue<br/>\n";
+		$cache =& $this->_getMapCache();
+		if ($newValue = $cache->get(String::strtolower(trim($value)))) {
 			return $newValue;
 		}
 		return $value;
@@ -109,10 +109,35 @@ class LanguageMapPreprocessorPlugin extends PreprocessorPlugin {
 	}
 
 	function preprocessEntry(&$archive, &$record, &$field, &$value, &$attributes) {
-		if (in_array($field->getFieldId(), $this->languageCrosswalkFieldIds)) {
+		if (is_array($this->languageCrosswalkFieldIds) && in_array($field->getFieldId(), $this->languageCrosswalkFieldIds)) {
 			$value = $this->mapLanguage($value);
 		}
 		return false;
+	}
+
+	function getManagementVerbs() {
+		if ($this->isEnabled()) return array(
+			array('disable', Locale::translate('common.disable'))
+		);
+		else return array(
+			array('enable', Locale::translate('common.enable'))
+		);
+	}
+
+	function manage($verb, $params) {
+		switch ($verb) {
+			case 'enable':
+				$this->updateSetting('enabled', true);
+				break;
+			case 'disable':
+				$this->updateSetting('enabled', false);
+				break;
+		}
+		Request::redirect('admin', 'plugins');
+	}
+
+	function isEnabled() {
+		return $this->getSetting('enabled');
 	}
 }
 
