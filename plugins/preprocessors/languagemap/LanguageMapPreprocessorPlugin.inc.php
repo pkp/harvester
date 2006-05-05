@@ -26,11 +26,16 @@ class LanguageMapPreprocessorPlugin extends PreprocessorPlugin {
 
 	/**
 	 * Register the plugin.
+	 * @param $category string
+	 * @param $path string
 	 */
 	function register($category, $path) {
 		$success = parent::register($category, $path);
 		$this->languageCrosswalkFieldIds = null;
 		if ($success && $this->isEnabled()) {
+			// Fetch the list of field IDs that the language
+			// crosswalk uses; we will map all languages mentioned
+			// in these fields.
 			$this->languageCrosswalkFieldIds = array();
 			$crosswalkDao =& DAORegistry::getDAO('CrosswalkDAO');
 			$languageCrosswalk =& $crosswalkDao->getCrosswalkByPublicCrosswalkId('language');
@@ -46,6 +51,11 @@ class LanguageMapPreprocessorPlugin extends PreprocessorPlugin {
 		return $success;
 	}
 
+	/**
+	 * Language mappings are cached using the file cache system.
+	 * _getMapCache returns the cache object responsible for this.
+	 * @return object
+	 */
 	function &_getMapCache() {
 		static $cache;
 		if (!isset($cache)) {
@@ -65,6 +75,12 @@ class LanguageMapPreprocessorPlugin extends PreprocessorPlugin {
 		return $cache;
 	}
 
+	/**
+	 * This function is called when the cache cannot be loaded;
+	 * in this case, re-generate the cache from XML.
+	 * @param $cache object
+	 * @param $id string (fixed to "mapping")
+	 */
 	function _mapCacheMiss(&$cache, $id) {
 		static $mappings;
 		if (!isset($mappings)) {
@@ -82,6 +98,13 @@ class LanguageMapPreprocessorPlugin extends PreprocessorPlugin {
 		return null;
 	}
 
+	/**
+	 * If $value is found in the mapping, return the mapped value; otherwise
+	 * return $value untouched. The comparison ignores case and white-
+	 * space.
+	 * @param $value string
+	 * @return string
+	 */
 	function mapLanguage($value) {
 		$cache =& $this->_getMapCache();
 		if ($newValue = $cache->get(String::strtolower(trim($value)))) {
@@ -90,6 +113,9 @@ class LanguageMapPreprocessorPlugin extends PreprocessorPlugin {
 		return $value;
 	}
 
+	/**
+	 * Return the unique name of this plugin.
+	 */
 	function getName() {
 		return 'LanguageMapPreprocessorPlugin';
 	}
@@ -108,6 +134,16 @@ class LanguageMapPreprocessorPlugin extends PreprocessorPlugin {
 		return Locale::translate('plugins.preprocessors.languagemap.description');
 	}
 
+	/**
+	 * This callback implements the actual map and is called before an
+	 * entry is inserted.
+	 * @param $archive object
+	 * @param $record object
+	 * @param $field object
+	 * @param $value string
+	 * @param $attributes array
+	 * @return boolean
+	 */
 	function preprocessEntry(&$archive, &$record, &$field, &$value, &$attributes) {
 		if (is_array($this->languageCrosswalkFieldIds) && in_array($field->getFieldId(), $this->languageCrosswalkFieldIds)) {
 			$value = $this->mapLanguage($value);
@@ -115,6 +151,11 @@ class LanguageMapPreprocessorPlugin extends PreprocessorPlugin {
 		return false;
 	}
 
+	/**
+	 * Return the set of management verbs supported by this plugin for the
+	 * administration interface.
+	 * @return array
+	 */
 	function getManagementVerbs() {
 		if ($this->isEnabled()) return array(
 			array('disable', Locale::translate('common.disable'))
@@ -124,6 +165,11 @@ class LanguageMapPreprocessorPlugin extends PreprocessorPlugin {
 		);
 	}
 
+	/**
+	 * Perform a management function on this plugin.
+	 * @param $verb string
+	 * @param $params array
+	 */
 	function manage($verb, $params) {
 		switch ($verb) {
 			case 'enable':
@@ -136,6 +182,10 @@ class LanguageMapPreprocessorPlugin extends PreprocessorPlugin {
 		Request::redirect('admin', 'plugins');
 	}
 
+	/**
+	 * Determine whether or not this plugin is currently enabled.
+	 * @return boolean
+	 */
 	function isEnabled() {
 		return $this->getSetting('enabled');
 	}
