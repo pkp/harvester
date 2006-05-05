@@ -1,7 +1,7 @@
 {**
  * formErrors.tpl
  *
- * Copyright (c) 2003-2004 The Public Knowledge Project
+ * Copyright (c) 2005-2006 Alec Smecher and John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * List errors that occurred during form processing.

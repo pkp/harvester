@@ -3,7 +3,7 @@
 #
 # buildpkg.sh
 #
-# Copyright (c) 2005 The Public Knowledge Project
+# Copyright (c) 2005-2006 Alec Smecher and John Willinsky
 # Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
 #
 # Script to create a Harvester2 package for distribution.

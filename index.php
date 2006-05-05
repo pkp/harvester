@@ -3,10 +3,11 @@
 /**
  * index.php
  *
- * Copyright (c) 2005-2006 The Public Knowledge Project
+ * Copyright (c) 2005-2006 Alec Smecher and John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
- * Front controller for Harvester2 site. Loads required files and dispatches requests to the appropriate handler. 
+ * Front controller for Harvester2 site. Loads required files and dispatches
+ * requests to the appropriate handler. 
  *
  * $Id$
  */
