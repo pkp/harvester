@@ -1,0 +1,9 @@
+Harvester2 2.0.0 Release Notes
+CVS tag: harvester-2_0_0-0
+Release date: May 5, 2006
+=================================
+
+
+This is the initial release of Harvester2, a complete rewrite of the Public
+Knowledge Project's Metadata Harvester version 1.x based on the OJS (Open
+Journal Systems) 2.x codebase. See docs/README for more information.
