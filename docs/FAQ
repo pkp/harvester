@@ -1,0 +1,202 @@
+Frequently Asked Questions
+--------------------------
+
+This document contains frequently asked questions about Harvester2, primarily
+dealing with common technical and support questions. For information about using
+or interacting with the OJS journal management system, consult the system's
+built-in help.
+
+
+=================
+General Questions
+=================
+
+   1) Who can I contact for support?
+
+A: A support forum is available at <http://pkp.sfu.ca/support/forum/>.  Bugs or
+   feature requests can be reported at <http://pkp.sfu.ca/bugzilla/>.  Although
+   the forum is the preferred method of contact, email inquiries regarding
+   Harvester2 can be sent to <pkp-support@sfu.ca>.
+   
+   Although we will try our best to help you and fix any bugs found in the
+   system, please note that Harvester2 comes with no warranty or guarantee of
+   support.
+
+   -----------------------------------------------------------------------------
+   
+   2) Can I modify the Harvester2 code?
+   
+A: As Harvester2 is an open source program, you are free to make any code
+   changes that you like. We welcome any code submissions or patches to be
+   posted on the Development Forum at <http://pkp.sfu.ca/support/forum/> if
+   you think your changes may be beneficial to other users.
+
+   Please note that if you plan on redistributing Harvester2 (either in original
+   or a modified form), you must do so according to the terms of the GNU General
+   Public License v2. See docs/COPYING for the complete terms of this license.
+
+
+
+===================================
+Server Configuration and Management
+===================================
+
+   1) Will Harvester2 work with PHP as a CGI instead of as an Apache module?
+
+A: Harvester2 is known to work reasonably well with PHP as a CGI using Apache's
+   mod_actions. Since there are a number of different ways to configure Apache
+   to use the CGI version of PHP (e.g., through FastCGI, etc.), your mileage may
+   vary with other deployments (feedback is welcomed).
+
+   On PHP 4 it may be necessary to add "cgi.fix_pathinfo = 1" to the server's
+   php.ini to avoid fatal "No input file specified" errors. This parameter is
+   enabled by default on PHP 5.
+   
+   Harvester2 may not function correctly if the base OJS directory is located
+   outside of the virtual host's DocumentRoot directory (e.g., when using
+   mod_alias or mod_userdir). This is due to a bug/feature in the method PHP
+   uses to determine the SCRIPT_NAME environment variable by stripping the
+   DOCUMENT_ROOT from SCRIPT_FILENAME.
+
+   -----------------------------------------------------------------------------
+
+   2) Will Harvester2 work correctly in PHP's "safe mode"?
+
+A: Harvester2 is known to work reasonably well with PHP's safe mode restrictions
+   (including open_basedir) enabled. Testing has not been extensive, so there
+   may be unknown issues, in particular with very restrictive configurations
+   that disable PHP functions relied on by Harvester2 (feedback is welcomed).
+
+   -----------------------------------------------------------------------------
+
+   3) Will Harvester2 work in a Microsoft IIS environment, or on other
+      non-Apache web servers?
+
+A: While Harvester 2.x has not been tested on Microsoft IIS servers, it is based
+   on the Open Journal Systems 2.x codebase, which has been tested on Microsoft
+   Windows Server 2003 with IIS 6.0 on PHP 5.x. Additional standard environments
+   should also be supported; we welcome feedback from users who have
+   successfully installed and used OJS in other server environments.
+
+   -----------------------------------------------------------------------------
+
+   4) How can I create a backup of a Harvester2 site?
+
+A: It is recommended that a Harvester2 system be periodically backed up to
+   guard against a failure in Harvester2 or the server software or hardware that
+   could result in data loss.
+   
+   To properly backup a Harvester2 system, the following should be backed up:
+     - The database, using the tools provided by your DBMS (e.g.,
+       mysqldump for MySQL, pg_dump for PostgreSQL)
+     - The base Harvester2 directory
+       
+   This backup procedure can be easily integrated into any automated backup
+   mechanism.
+
+   -----------------------------------------------------------------------------
+
+   5) How can I move an existing Harvester2 installation to a different server?
+
+A: To move a Harvester2 system from one server to another, you will need to:
+
+   - Copy the database data, and import it into the new server (e.g., using the
+     command-line tools provided by the DBMS)
+   - Copy the base Harvester2 directory and non-public files directory
+   - Update config.inc.php with any changed settings for the new server
+     (typically, the base URL, database authentication/access, email, and files
+     settings will differ between servers)
+
+
+
+=======================
+Common Technical Issues
+=======================
+
+   1) When I try to access my Harvester2 site this error message is displayed:
+      "Warning: Smarty error: problem creating directory '/./templates' in
+      ./lib/smarty/Smarty.class.php"
+
+A: This can occur if a higher level directory has execute permission but not
+   read permission. In these situations, the __FILE__ value in an included file
+   appears to be relative to the location of the including file. This issue can
+   be resolved by ensuring all parent directories are both readable and
+   executable.
+
+   See also this PHP bug report: <http://bugs.php.net/bug.php?id=16231>.
+
+   -----------------------------------------------------------------------------
+
+   3) Emails sent out by the system are never received.
+
+A: By default, Harvester2 sends mail through PHP's built-in mail() facility.
+
+   On Windows PHP needs to be configured to send email through a SMTP server
+   (running either on the same machine or on another machine).
+   
+   On other platforms such as Linux and Mac OS X, PHP will sent mail using the
+   local sendmail client, so a local MTA such as Sendmail or Postfix must be
+   running and configured to allow outgoing mail.
+   
+   See <http://www.php.net/mail> for more details on configuring PHP's mail
+   functionality.
+   
+   Harvester2 can also be configured to use an SMTP server as specified in
+   config.inc.php, either with or without authentication.
+
+   -----------------------------------------------------------------------------
+
+   4) I am using Apache 2.0.x, and Harvester2 pages fail to load, producing an
+      error like "File does not exist: .../index.php/index/...".
+
+A: With some versions or configurations of Apache 2.0.x, it may be necessarily
+   to explicitly enable the AcceptPathInfo directive in your Apache
+   configuration file.
+   
+   See http://httpd.apache.org/docs-2.0/mod/core.html for more information about
+   this directive.
+
+   -----------------------------------------------------------------------------
+
+   5) Harvester2 installation fails with the MySQL error "Client does not
+      support authentication protocol requested by server; consider upgrading
+      MySQL client".
+
+A: This problem is caused by a change in the MySQL authentication protocol in
+   MySQL 4.1, and can occur if your system is using an older MySQL client
+   library with a newer MySQL server.
+
+   See http://dev.mysql.com/doc/mysql/en/Old_client.html for suggested
+   approaches to resolve this issue.
+
+   -----------------------------------------------------------------------------
+
+   6) "Warning: ini_set(): A session is active. You cannot change the session
+       module's ini settings at this time" messages appear when I load
+       Harvester2.
+
+A: Check if session.auto_start is enabled in your php.ini configuration.
+   Harvester2 requires this setting to be disabled, which is the default
+   behaviour in current versions of PHP.
+
+   -----------------------------------------------------------------------------
+
+   7) The installation form loads successfully, but after clicking the button
+       to install, a blank page appears and the database was not created.
+
+A: This may indicate that your server does not have the selected PHP database
+   module installed and enabled (this can be verified by looking at the output
+   of phpinfo() to see if the required database support exists -- see
+   http://php.net/phpinfo).
+   
+   The Harvester2 installer lists database drivers for which the required PHP
+   extension does not appear to be loaded in brackets (e.g., "[MySQL]").
+   
+   Most Linux distributions offer a separate package that can be installed for
+   each supported PHP database module -- e.g., php4-mysql or php-mysql (for
+   MySQL support), or php4-pgsql or php-pgsql (for PostgreSQL support).
+   
+   Note also that even with the module installed it may be necessary to modify
+   your php.ini configuration to load the module, by adding "extension=mysql.so"
+   or "extension=pgsql.so", for example.
+
