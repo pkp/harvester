@@ -29,23 +29,17 @@ PREFIX=harvester
 BUILD=$PREFIX-$VERSION
 TMPDIR=`mktemp -d $PREFIX.XXXXXX` || exit 1
 
-EXCLUDE="dbscripts/xml/data/locale/en_US/sample.xml		\
-dbscripts/xml/data/locale/te_ST					\
-dbscripts/xml/data/sample.xml					\
+EXCLUDE="dbscripts/xml/data/locale/te_ST			\
 docs/dev							\
 lib/adodb/CHANGED_FILES						\
 lib/adodb/diff							\
 lib/smarty/CHANGED_FILES					\
 lib/smarty/diff							\
 locale/te_ST							\
-cache/*.php							\
 plugins/harvesters/junk						\
 tools/buildpkg.sh						\
 tools/cvs2cl.pl							\
-tools/genLocaleReport.sh					\
-tools/genTestLocale.php						\
-tools/test"
-
+tools/genTestLocale.php"
 
 cd $TMPDIR
 
