@@ -111,24 +111,24 @@ class RTAdminHandler extends Handler {
 
 		$rtDao = &DAORegistry::getDAO('RTDAO');
 
-		$versionId = isset($args[0])?$args[0]:0;
+		$versionId = (int) array_shift($args);
+		$archiveId = array_shift($args);
 
-		$version = $rtDao->getVersion($versionId, $journalId);
+		$version = $rtDao->getVersion($versionId, $archiveId);
 
 		if ($version) {
 			// Validate the URLs for a single version
 			$versions = array(&$version);
 			$versions = &new ArrayItemIterator($versions, 1, 1);
 		} else {
-			// Validate all URLs for this journal
-			$versions = $rtDao->getVersions($journalId);
+			// Validate all URLs for this archive
+			$versions = $rtDao->getVersions($archiveId);
 		}
 
 		RTAdminHandler::setupTemplate(true, $archiveId, $version);
 		$templateMgr = &TemplateManager::getManager();
 		$templateMgr->register_modifier('validate_url', 'smarty_rtadmin_validate_url');
 		$templateMgr->assign_by_ref('versions', $versions);
-		$templateMgr->assign('helpTopicId', 'journal.managementPages.readingTools');
 		$templateMgr->display('rtadmin/validate.tpl');
 	}
 

@@ -31,7 +31,7 @@
 
 <h3>{translate key="rt.admin.management"}</h3>
 <ul class="plain">
-	<li>&#187; <a href="{url op="validateUrls"}">{translate key="rt.admin.validateUrls"}</a></li>
+	<li>&#187; <a href="{url op="validateUrls" path="all"|to_array:$archiveId}">{translate key="rt.admin.validateUrls"}</a></li>
 </ul>
 
 {include file="common/footer.tpl"}
