@@ -33,6 +33,7 @@ class PKPDublinCorePlugin extends Plugin {
 	 * Register the plugin.
 	 */
 	function register($category, $path) {
+		if (!Config::getVar('general', 'installed')) return false;
 		$success = parent::register($category, $path);
 		if ($success) {
 			$this->addLocaleData();

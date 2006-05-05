@@ -57,9 +57,9 @@
 	<crosswalk type="date" sortable="true" public_id="date">
 		<name>Date</name>
 		<description>This crosswalk associates a generic date, generally creation, from the various schemas.</description>
-		<field schema="DublinCorePlugin" name="date"/>
-		<field schema="MarcPlugin" name="260"/>
-		<field schema="ModsPlugin" name="dateCreated"/>
+		<field schema="DublinCorePlugin" name="date" sortable="true"/>
+		<field schema="MarcPlugin" name="260" sortable="true"/>
+		<field schema="ModsPlugin" name="dateCreated" sortable="true"/>
 	</crosswalk>
 	<crosswalk type="select" public_id="language">
 		<name>Language</name>

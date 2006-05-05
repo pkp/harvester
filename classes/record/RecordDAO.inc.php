@@ -257,7 +257,7 @@ class RecordDAO extends DAO {
 					($schemaPlugin =& $field->getSchemaPlugin()) &&
 					in_array($field->getName(), $schemaPlugin->getSortFields())
 				) $fieldIds = array($sort);
-				$isDate = $field->getFieldType() == FIELD_TYPE_DATE;
+				$isDate = $field->getType() == FIELD_TYPE_DATE;
 				unset($field);
 			} else {
 				$crosswalk =& $crosswalkDao->getCrosswalkById($sort);

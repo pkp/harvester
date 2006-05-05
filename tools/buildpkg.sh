@@ -51,6 +51,8 @@ cd $BUILD
 
 echo -n "Preparing package ... "
 cp config.TEMPLATE.inc.php config.inc.php
+mkdir cache/t_cache
+mkdir plugins/postprocessors
 find . -name .cvsignore -exec rm {} \;
 rm -r $EXCLUDE
 echo "Done"

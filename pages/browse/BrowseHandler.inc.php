@@ -32,12 +32,13 @@ class BrowseHandler extends Handler {
 
 			$rangeInfo = Handler::getRangeInfo('records');
 			$sortId = Request::getUserVar('sortId');
+			if ($sortId === 'none' || empty($sortId)) $sortId = null;
 			$templateMgr->assign('sortId', $sortId);
 
 			// The user has chosen an archive or opted to browse all
 			$records =& $recordDao->getRecords(
 				$archive?$archiveId:null, 
-				empty($sortId)?null:$sortId, 
+				$sortId, 
 				$rangeInfo
 			);
 

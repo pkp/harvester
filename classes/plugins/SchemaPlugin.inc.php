@@ -160,7 +160,7 @@ class SchemaPlugin extends Plugin {
 			$templateMgr->assign('defineTermsContextId', $defineTermsContextId);
 		}
 
-		$templateMgr->display($this->getTemplatePath() . 'record.tpl', null);
+		$templateMgr->display($this->getTemplatePath() . 'record.tpl');
 	}
 
 	/**
