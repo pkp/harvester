@@ -11,10 +11,10 @@
   * $Id$
   -->
 
-<!DOCTYPE locales [
+<!DOCTYPE mappings [
 	<!ELEMENT mappings (mapping+)>
 	<!ELEMENT mapping EMPTY>
-		<!ATTLIST locale
+		<!ATTLIST mapping
 			from CDATA #REQUIRED
 			to CDATA #REQUIRED>
 ]>
