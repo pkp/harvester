@@ -144,10 +144,13 @@ class DublinCorePlugin extends SchemaPlugin {
 		switch ($fieldName) {
 			case 'date':
 				$returner = FIELD_TYPE_DATE;
+				break;
 			case 'language':
 				$returner = FIELD_TYPE_SELECT;
+				break;
 			default:
 				$returner = FIELD_TYPE_STRING;
+				break;
 		}
 		HookRegistry::call('DublinCorePlugin::getFieldType', array(&$this, $fieldName, &$returner));
 		return $returner;
