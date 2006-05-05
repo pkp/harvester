@@ -68,7 +68,7 @@ class preCompile extends CommandLineTool {
 	
 	function compileLocales() {
 		$locales = &Locale::getAllLocales();
-		foreach ($locales as $key => $name) {
+		if (is_array($locales)) foreach ($locales as $key => $name) {
 			Locale::loadLocale($key);
 		}
 	}
