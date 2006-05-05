@@ -39,6 +39,7 @@ lib/smarty/CHANGED_FILES					\
 lib/smarty/diff							\
 locale/te_ST							\
 cache/*.php							\
+plugins/harvesters/junk						\
 tools/buildpkg.sh						\
 tools/cvs2cl.pl							\
 tools/genLocaleReport.sh					\

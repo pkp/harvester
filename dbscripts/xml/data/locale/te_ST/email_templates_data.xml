@@ -14,7 +14,18 @@
 
 <data>
 	<table name="email_templates_data">
-		<field_default name="locale">te_ST</field_default>
+		<field_default name="locale">en_US</field_default>
 
+		<!--
+		  *
+		  * General
+		  *
+		  -->
+		<row>
+			<field name="email_key">NEW_ARCHIVE_NOTIFY</field>
+			<field name="subject">Archive Added: {$archiveTitle}</field>
+			<field name="body">A new archive, "{$archiveTitle}", has been submitted for addition to {$siteTitle}. To index this archive, log in at {$loginUrl} or use the command-line harvester tool.</field>
+			<field name="description">This email is sent to the site administrator to notify them about a new archive submission that needs to be indexed.</field>
+		</row>
 	</table>
 </data>
