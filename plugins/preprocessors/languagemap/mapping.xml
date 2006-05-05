@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  * mapping.xml
+  *
+  * Copyright (c) 2005-2006 The Public Knowledge Project
+  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
+  *
+  * Map language codes to preferred values.
+  *
+  * $Id$
+  -->
+
+<!DOCTYPE locales [
+	<!ELEMENT mappings (mapping+)>
+	<!ELEMENT mapping EMPTY>
+		<!ATTLIST locale
+			from CDATA #REQUIRED
+			to CDATA #REQUIRED>
+]>
+
+<mappings>
+	<mapping from="aa" to="aar" />
+	<mapping from="ab" to="abk" />
+	<mapping from="af" to="afr" />
+	<mapping from="ak" to="aka" />
+	<mapping from="sq" to="alb" />
+	<mapping from="sqi" to="alb" />
+	<mapping from="am" to="amh" />
+	<mapping from="ar" to="ara" />
+	<mapping from="an" to="arg" />
+	<mapping from="hy" to="arm" />
+	<mapping from="hye" to="arm" />
+	<mapping from="as" to="asm" />
+	<mapping from="av" to="ava" />
+	<mapping from="ae" to="ave" />
+	<mapping from="ay" to="aym" />
+	<mapping from="az" to="aze" />
+	<mapping from="ba" to="bak" />
+	<mapping from="bm" to="bam" />
+	<mapping from="eu" to="baq" />
+	<mapping from="eus" to="baq" />
+	<mapping from="be" to="bel" />
+	<mapping from="bn" to="ben" />
+	<mapping from="bh" to="bih" />
+	<mapping from="bi" to="bis" />
+	<mapping from="bo" to="tib" />
+	<mapping from="bod" to="tib" />
+	<mapping from="bs" to="bos" />
+	<mapping from="br" to="bre" />
+	<mapping from="bg" to="bul" />
+	<mapping from="my" to="bur" />
+	<mapping from="mya" to="bur" />
+	<mapping from="ca" to="cat" />
+	<mapping from="cs" to="cze" />
+	<mapping from="ces" to="cze" />
+	<mapping from="ch" to="cha" />
+	<mapping from="ce" to="che" />
+	<mapping from="zh" to="chi" />
+	<mapping from="zho" to="chi" />
+	<mapping from="cv" to="chv" />
+	<mapping from="kw" to="cor" />
+	<mapping from="co" to="cos" />
+	<mapping from="cr" to="cre" />
+	<mapping from="cy" to="wel" />
+	<mapping from="cym" to="wel" />
+	<mapping from="da" to="dan" />
+	<mapping from="de" to="ger" />
+	<mapping from="deu" to="ger" />
+	<mapping from="dv" to="div" />
+	<mapping from="nl" to="dut" />
+	<mapping from="nld" to="dut" />
+	<mapping from="dz" to="dzo" />
+	<mapping from="el" to="gre" />
+	<mapping from="ell" to="gre" />
+	<mapping from="en" to="eng" />
+	<mapping from="eo" to="epo" />
+	<mapping from="et" to="est" />
+	<mapping from="ee" to="ewe" />
+	<mapping from="fo" to="fao" />
+	<mapping from="fa" to="per" />
+	<mapping from="fas" to="per" />
+	<mapping from="fj" to="fij" />
+	<mapping from="fi" to="fin" />
+	<mapping from="fr" to="fre" />
+	<mapping from="fra" to="fre" />
+	<mapping from="fy" to="fry" />
+	<mapping from="ff" to="ful" />
+	<mapping from="ka" to="geo" />
+	<mapping from="kat" to="geo" />
+	<mapping from="gd" to="gla" />
+	<mapping from="ga" to="gle" />
+	<mapping from="gl" to="glg" />
+	<mapping from="gv" to="glv" />
+	<mapping from="gn" to="grn" />
+	<mapping from="gu" to="guj" />
+	<mapping from="ht" to="hat" />
+	<mapping from="ha" to="hau" />
+	<mapping from="he" to="heb" />
+	<mapping from="hz" to="her" />
+	<mapping from="hi" to="hin" />
+	<mapping from="ho" to="hmo" />
+	<mapping from="hr" to="scr" />
+	<mapping from="hrv" to="scr" />
+	<mapping from="hu" to="hun" />
+	<mapping from="ig" to="ibo" />
+	<mapping from="is" to="ice" />
+	<mapping from="isl" to="ice" />
+	<mapping from="io" to="ido" />
+	<mapping from="ii" to="iii" />
+	<mapping from="iu" to="iku" />
+	<mapping from="ie" to="ile" />
+	<mapping from="ia" to="ina" />
+	<mapping from="id" to="ind" />
+	<mapping from="ik" to="ipk" />
+	<mapping from="it" to="ita" />
+	<mapping from="jv" to="jav" />
+	<mapping from="ja" to="jpn" />
+	<mapping from="kl" to="kal" />
+	<mapping from="kn" to="kan" />
+	<mapping from="ks" to="kas" />
+	<mapping from="kr" to="kau" />
+	<mapping from="kk" to="kaz" />
+	<mapping from="km" to="khm" />
+	<mapping from="ki" to="kik" />
+	<mapping from="rw" to="kin" />
+	<mapping from="ky" to="kir" />
+	<mapping from="kv" to="kom" />
+	<mapping from="kg" to="kon" />
+	<mapping from="ko" to="kor" />
+	<mapping from="kj" to="kua" />
+	<mapping from="ku" to="kur" />
+	<mapping from="lo" to="lao" />
+	<mapping from="la" to="lat" />
+	<mapping from="lv" to="lav" />
+	<mapping from="li" to="lim" />
+	<mapping from="ln" to="lin" />
+	<mapping from="lt" to="lit" />
+	<mapping from="lb" to="ltz" />
+	<mapping from="lu" to="lub" />
+	<mapping from="lg" to="lug" />
+	<mapping from="mk" to="mac" />
+	<mapping from="mkd" to="mac" />
+	<mapping from="mh" to="mah" />
+	<mapping from="ml" to="mal" />
+	<mapping from="mi" to="mao" />
+	<mapping from="mri" to="mao" />
+	<mapping from="mr" to="mar" />
+	<mapping from="ms" to="may" />
+	<mapping from="msa" to="may" />
+	<mapping from="mg" to="mlg" />
+	<mapping from="mt" to="mlt" />
+	<mapping from="mo" to="mol" />
+	<mapping from="mn" to="mon" />
+	<mapping from="na" to="nau" />
+	<mapping from="nv" to="nav" />
+	<mapping from="nr" to="nbl" />
+	<mapping from="nd" to="nde" />
+	<mapping from="ng" to="ndo" />
+	<mapping from="ne" to="nep" />
+	<mapping from="nn" to="nno" />
+	<mapping from="nb" to="nob" />
+	<mapping from="no" to="nor" />
+	<mapping from="ny" to="nya" />
+	<mapping from="oc" to="oci" />
+	<mapping from="oj" to="oji" />
+	<mapping from="or" to="ori" />
+	<mapping from="om" to="orm" />
+	<mapping from="os" to="oss" />
+	<mapping from="pa" to="pan" />
+	<mapping from="pi" to="pli" />
+	<mapping from="pl" to="pol" />
+	<mapping from="pt" to="por" />
+	<mapping from="ps" to="pus" />
+	<mapping from="qu" to="que" />
+	<mapping from="rm" to="roh" />
+	<mapping from="ro" to="rum" />
+	<mapping from="ron" to="rum" />
+	<mapping from="rn" to="run" />
+	<mapping from="ru" to="rus" />
+	<mapping from="sg" to="sag" />
+	<mapping from="sa" to="san" />
+	<mapping from="sr" to="scc" />
+	<mapping from="srp" to="scc" />
+	<mapping from="si" to="sin" />
+	<mapping from="sk" to="slo" />
+	<mapping from="slk" to="slo" />
+	<mapping from="sl" to="slv" />
+	<mapping from="se" to="sme" />
+	<mapping from="sm" to="smo" />
+	<mapping from="sn" to="sna" />
+	<mapping from="sd" to="snd" />
+	<mapping from="so" to="som" />
+	<mapping from="st" to="sot" />
+	<mapping from="es" to="spa" />
+	<mapping from="sc" to="srd" />
+	<mapping from="ss" to="ssw" />
+	<mapping from="su" to="sun" />
+	<mapping from="sw" to="swa" />
+	<mapping from="sv" to="swe" />
+	<mapping from="ty" to="tah" />
+	<mapping from="ta" to="tam" />
+	<mapping from="tt" to="tat" />
+	<mapping from="te" to="tel" />
+	<mapping from="tg" to="tgk" />
+	<mapping from="tl" to="tgl" />
+	<mapping from="th" to="tha" />
+	<mapping from="ti" to="tir" />
+	<mapping from="to" to="ton" />
+	<mapping from="tn" to="tsn" />
+	<mapping from="ts" to="tso" />
+	<mapping from="tk" to="tuk" />
+	<mapping from="tr" to="tur" />
+	<mapping from="tw" to="twi" />
+	<mapping from="ug" to="uig" />
+	<mapping from="uk" to="ukr" />
+	<mapping from="ur" to="urd" />
+	<mapping from="uz" to="uzb" />
+	<mapping from="ve" to="ven" />
+	<mapping from="vi" to="vie" />
+	<mapping from="vo" to="vol" />
+	<mapping from="wa" to="wln" />
+	<mapping from="wo" to="wol" />
+	<mapping from="xh" to="xho" />
+	<mapping from="yi" to="yid" />
+	<mapping from="yo" to="yor" />
+	<mapping from="za" to="zha" />
+	<mapping from="zu" to="zul" />
+</mappings>
