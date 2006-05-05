@@ -25,7 +25,7 @@ fi
 VERSION=$1
 TAG=${2-HEAD}
 PATCHDIR=${3-}
-PREFIX=ojs
+PREFIX=harvester
 BUILD=$PREFIX-$VERSION
 TMPDIR=`mktemp -d $PREFIX.XXXXXX` || exit 1
 
