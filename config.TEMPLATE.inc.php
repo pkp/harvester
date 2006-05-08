@@ -176,7 +176,10 @@ encryption = md5
 [search]
 
 ; Minimum indexed word length
-min_word_length = 3
+min_word_length = 2
+
+; Maximum indexed word length (words above this length will be truncated)
+max_word_length = 40
 
 ; The maximum number of search results fetched per keyword. These results
 ; are fetched and merged to provide results for searches with several keywords.
