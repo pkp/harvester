@@ -27,7 +27,7 @@
 	<application>harvester2</application>
 	<release>2.0.0.0</release>
 	<tag>harvester-2_0_0-0</tag>
-	<date>2006-05-05</date>
+	<date>2006-05-08</date>
 	<info>http://pkp.sfu.ca/harvester2/</info>
 	<package>http://pkp.sfu.ca/harvester2/download/harvester2-2.0.0.tar.gz</package>
 </version>
