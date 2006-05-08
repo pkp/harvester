@@ -3,8 +3,7 @@ Frequently Asked Questions
 
 This document contains frequently asked questions about Harvester2, primarily
 dealing with common technical and support questions. For information about using
-or interacting with the OJS journal management system, consult the system's
-built-in help.
+or interacting with Harvester2, consult the system's built-in help.
 
 
 =================
@@ -52,7 +51,7 @@ A: Harvester2 is known to work reasonably well with PHP as a CGI using Apache's
    php.ini to avoid fatal "No input file specified" errors. This parameter is
    enabled by default on PHP 5.
    
-   Harvester2 may not function correctly if the base OJS directory is located
+   Harvester2 may not function correctly if the base directory is located
    outside of the virtual host's DocumentRoot directory (e.g., when using
    mod_alias or mod_userdir). This is due to a bug/feature in the method PHP
    uses to determine the SCRIPT_NAME environment variable by stripping the
@@ -76,7 +75,7 @@ A: While Harvester 2.x has not been tested on Microsoft IIS servers, it is based
    on the Open Journal Systems 2.x codebase, which has been tested on Microsoft
    Windows Server 2003 with IIS 6.0 on PHP 5.x. Additional standard environments
    should also be supported; we welcome feedback from users who have
-   successfully installed and used OJS in other server environments.
+   successfully installed and used Harvester2 in other server environments.
 
    -----------------------------------------------------------------------------
 

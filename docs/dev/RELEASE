@@ -1,8 +1,8 @@
-OJS Release Procedure
+Harvester Release Procedure
 ---------------------
 
 The following steps (subject to change) are typically performed to prepare a new
-OJS release:
+Harvester release:
 
 
 1. Update version, installation, and upgrade descriptor files:
@@ -35,15 +35,15 @@ OJS release:
     cvs rtag harvester-<MAJOR>_<MINOR>_<REVISION>-<BUILD> harvester2
 
 
-6. Build the OJS package and patch files:
+6. Build the Harvester package and patch files:
 
     sh tools/buildpkg.sh <VERSION> <TAG> <PATCH_DIR>
     
-    (<PATCH_DIR> is the path to a directory containing previous OJS release
-     packages against which to build patches)
+    (<PATCH_DIR> is the path to a directory containing previous Harvester
+    release packages against which to build patches)
 
 
-7. Place the new package, patches, and version descriptor on the OJS web site:
+7. Place the new package, patches, and version descriptor on the Harvester site:
 
     http://pkp.sfu.ca/harvester2/download/
     http://pkp.sfu.ca/harvester2/download/patch/

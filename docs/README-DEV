@@ -28,8 +28,8 @@ For code that is intended for inclusion in the main codebase:
   codebase.
 * Contributors are responsible for writing code compatible with the primary
   platforms listed in README.
-* Contributions should be delivered to the team via the public "OJS Development"
-  forum as a patch.
+* Contributions should be delivered to the team via the public "Harvester2
+  Development" forum as a patch.
 * Harvester2 management features should be kept in mind, such as upgrade and
   installation; all database schema information should be maintained in the
   dbscripts/xml/harvester2_schema.xml file; etc.
@@ -165,7 +165,7 @@ SQL
   that does get used (e.g., by filing a bug report).
 
 
-OJS Conventions
+Harvester2 Conventions
 _______________
 
 CVS
