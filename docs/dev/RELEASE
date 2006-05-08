@@ -32,7 +32,7 @@ OJS release:
 
 5. After committing any pending modifications, tag the release in CVS:
 
-    cvs rtag ojs-<MAJOR>_<MINOR>_<REVISION>-<BUILD> harvester2
+    cvs rtag harvester-<MAJOR>_<MINOR>_<REVISION>-<BUILD> harvester2
 
 
 6. Build the OJS package and patch files:
