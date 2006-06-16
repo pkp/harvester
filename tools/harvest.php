@@ -74,6 +74,7 @@ class harvest extends CommandLineTool {
 	 * Rebuild the search index for all articles in all journals.
 	 */
 	function execute() {
+		@set_time_limit(0);
 		if ($this->archive) {
 			$recordDao =& DAORegistry::getDAO('RecordDAO');
 			$archive =& $this->archive;

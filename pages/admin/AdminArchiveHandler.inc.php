@@ -146,7 +146,7 @@ class AdminArchiveHandler extends AdminHandler {
 
 			// Disable timeout, as this operation may take
 			// a long time.
-			set_time_limit(0);
+			@set_time_limit(0);
 
 			// Get the harvester for this archive
 			$plugins =& PluginRegistry::loadCategory('harvesters');

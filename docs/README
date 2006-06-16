@@ -135,7 +135,7 @@ Server requirements for full Unicode (UTF-8) support:
 
 Third-party Libraries
 ---------------------
-	* See lib/libraries.txt for a list of third-party libaries used by
+	* See lib/libraries.txt for a list of third-party libraries used by
 	  Harvester2.
 
 

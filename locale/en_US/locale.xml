@@ -29,6 +29,7 @@
 	<message key="common.add">Add</message>
 	<message key="common.off">Off</message>
 	<message key="common.edit">Edit</message>
+	<message key="common.select">Select</message>
 	<message key="common.manage">Manage</message>
 	<message key="common.error.databaseError">A database error has occurred: {$error}</message>
 	<message key="common.mailingAddress">Mailing Address</message>
@@ -346,7 +347,7 @@ Your server currently supports mbstring: <strong>{$supportsMBString}</strong>]]>
 	Harvester2
 	{$indexUrl}
 	]]></message>
-	<message key="default.footer"><![CDATA[&copy; 2005-2006 <a href="http://pkp.sfu.ca/harvester2">Public Knowledge Project</a>]]></message>
+	<message key="default.footer"><![CDATA[&copy; 2005-2006 <a href="http://pkp.sfu.ca/harvester2">Alec Smecher and John Willinsky</a>]]></message>
 
 	<message key="about.harvester">About the Harvester</message>
 	<message key="about.harvester.description"><![CDATA[The PKP Open Archives Harvester is a free metadata indexing system developed by the Public Knowledge Project through its federally funded efforts to expand and improve access to research. The PKP OAI Harvester allows you to create a searchable index of the metadata from Open Archives Initiative-compliant archives, such as sites using Open Journal Systems or Open Conference Systems.
