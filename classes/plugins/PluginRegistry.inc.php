@@ -69,7 +69,7 @@ class PluginRegistry {
 		// load it again.
 		if (($plugins = &PluginRegistry::getPlugins($category))!=null) return $plugins;
 
-		$categoryDir = 'plugins' . DIRECTORY_SEPARATOR . $category;
+		$categoryDir = 'plugins/' . $category;
 		$handle = opendir($categoryDir);
 		while (($file = readdir($handle)) !== false) {
 			if ($file != '.' && $file != '..') {
