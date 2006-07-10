@@ -28,8 +28,9 @@ class SearchIndex {
 		$searchDao = &DAORegistry::getDAO('SearchDAO');
 		$keywords = &SearchIndex::filterKeywords($text);
 		for ($i = 0, $count = count($keywords); $i < $count; $i++) {
-			$searchDao->insertObjectKeyword($objectId, $keywords[$i], $position);
-			$position += 1;
+			if ($searchDao->insertObjectKeyword($objectId, $keywords[$i], $position) !== null) {
+				$position += 1;
+			}
 		}
 	}
 

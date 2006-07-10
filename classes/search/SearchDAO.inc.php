@@ -38,11 +38,16 @@ class SearchDAO extends DAO {
 			$keyword
 		);
 		if($result->RecordCount() == 0) {
-			$this->update(
+			if ($this->update(
 				'INSERT INTO search_keyword_list (keyword_text) VALUES (?)',
-				$keyword
-			);
-			$keywordId = $this->getInsertId('search_keyword_list', 'keyword_id');
+				$keyword,
+				true,
+				false // Do not die on error
+			)) {
+				$keywordId = $this->getInsertId('search_keyword_list', 'keyword_id');
+			} else {
+				$keywordId = null; // Error with this keyword (see #2324)
+			}
 			
 		} else {
 			$keywordId = $result->fields[0];
@@ -248,15 +253,17 @@ class SearchDAO extends DAO {
 	 * @param $objectId int
 	 * @param $keyword string
 	 * @param $position int
-	 * @return $keyword
+	 * @return $keywordId
 	 */
 	function insertObjectKeyword($objectId, $keyword, $position) {
 		// FIXME Cache recently retrieved keywords?
 		$keywordId = $this->insertKeyword($keyword);
+		if ($keywordId === null) return null; // Bug #2324
 		$this->update(
 			'INSERT INTO search_object_keywords (object_id, keyword_id, pos) VALUES (?, ?, ?)',
 			array($objectId, $keywordId, $position)
 		);
+		return $keywordId;
 	}
 }
 
