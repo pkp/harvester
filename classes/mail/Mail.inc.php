@@ -191,9 +191,10 @@ class Mail extends DataObject {
 	/**
 	 * Return a string from an array of (name, email) pairs.
 	 * @param $encode boolean
+	 * @param $includeNames boolean
 	 * @return string;
 	 */
-	function getAddressArrayString($addresses, $encode = true) {
+	function getAddressArrayString($addresses, $encode = true, $includeNames = true) {
 		if ($addresses == null) {
 			return null;
 			
@@ -205,7 +206,7 @@ class Mail extends DataObject {
 					$addressString .= ', ';
 				}
 				
-				if (Core::isWindows()) {
+				if (Core::isWindows() || empty($address['name']) || !$includeNames) {
 					$addressString .= $address['email'];
 					
 				} else {
@@ -241,7 +242,7 @@ class Mail extends DataObject {
 	 * @return string
 	 */
 	function getBccString($encode = true) {
-		return $this->getAddressArrayString($this->getBccs(), $encode);
+		return $this->getAddressArrayString($this->getBccs(), $encode, false);
 	}
 	
 
@@ -293,7 +294,7 @@ class Mail extends DataObject {
 			if (!empty($headers)) {
 				$headers .= MAIL_EOL;
 			}
-			$headers .= $header['name'].': '.$header['content'];
+			$headers .= $header['name'].': '. str_replace(array("\r", "\n"), '', $header['content']);
 		}
 		
 		$mailBody = wordwrap($body, MAIL_WRAP, MAIL_EOL);
