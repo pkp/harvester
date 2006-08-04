@@ -155,6 +155,18 @@ class OAIHarvester extends Harvester {
 			'verb' => $verb,
 			'metadataPrefix' => $this->getMetadataFormat()
 		);
+		foreach (array('from', 'until') as $name) {
+			if (isset($params[$name]) && $params[$name] == 'now') {
+				$params[$name] = date('Y-m-d');
+			} else if (isset($params[$name]) && $params[$name] == 'last') {
+				$lastHarvested = $this->archive->getLastIndexedDate();
+				if (empty($lastHarvested)) {
+					unset($params[$name]);
+				} else {
+					$params[$name] = date('Y-m-d', strtotime($lastHarvested));
+				}
+			}
+		}
 		foreach (array('set', 'from', 'until') as $name) {
 			if (isset($params[$name])) $harvestingParameters[$name] = $params[$name];
 		}

@@ -20,8 +20,8 @@ class harvest extends CommandLineTool {
 	/** @var $firstParam mixed */
 	var $firstParam;
 
-	/** @var $archive object */
-	var $archive;
+	/** @var $archives array */
+	var $archives;
 
 	/** @var $params array */
 	var $params;
@@ -33,7 +33,19 @@ class harvest extends CommandLineTool {
 
 		$this->firstParam = array_shift($argv);
 		$archiveDao =& DAORegistry::getDAO('ArchiveDAO');
-		$this->archive =& $archiveDao->getArchive((int) $this->firstParam);
+		if ($this->firstParam === 'all') {
+			$this->archives =& $archiveDao->getArchives();
+		}
+		else {
+			$archive =& $archiveDao->getArchive((int) $this->firstParam);
+			if ($archive) {
+				$archives = array(&$archive);
+				if (!is_array($archives)) echo "NOT AN ARRAY!\n";
+				$this->archives =& new ArrayItemIterator($archives);
+			} else {
+				$this->archives = null; // Invalid ID specified
+			}
+		}
 
 		// Set the various flags for the parser, if supported.
 		$this->params = array();
@@ -61,6 +73,7 @@ class harvest extends CommandLineTool {
 		echo "Script to harvest an archive\n"
 			. "Usage: {$this->scriptName} [archive ID] [flags]\n"
 			. "If the specified archive ID is \"list\", a list will be displayed.\n"
+			. "If the specified archive ID is \"all\", all archives will be harvested.\n"
 			. "Flags include:\n"
 			. "\tverbose: Display status information during the harvest.\n"
 			. "\tflush: Flush the contents of the archive before harvesting.\n"
@@ -75,9 +88,9 @@ class harvest extends CommandLineTool {
 	 */
 	function execute() {
 		@set_time_limit(0);
-		if ($this->archive) {
+		$hadErrors = false;
+		if ($this->archives) while ($archive =& $this->archives->next()) {
 			$recordDao =& DAORegistry::getDAO('RecordDAO');
-			$archive =& $this->archive;
 
 			// Get the archive plugin
 			$plugins =& PluginRegistry::loadCategory('harvesters');
@@ -103,7 +116,7 @@ class harvest extends CommandLineTool {
 					!isset($this->params['skipIndexing'])
 				);
 				echo $recordCount . " records deleted.\n";
-			} else {
+			} elseif ($recordCount > 0) {
 				echo "Not flushing an existing $recordCount records.\n";
 			}
 
@@ -125,11 +138,11 @@ class harvest extends CommandLineTool {
 				foreach ($errors as $error) {
 					echo "\t$error\n";
 				}
-				return false;
+				$hadErrors = true;
 			}
-			return true;
+			unset($archive);
 		} else {
-			if ($this->firstParam == '' || $this->firstParam === 'help') {
+			if ($this->firstParam == '' || $this->firstParam === 'help' || $this->firstParam === 'usage') {
 				$this->usage();
 				return true;
 			}
@@ -148,6 +161,7 @@ class harvest extends CommandLineTool {
 			}
 			return false;
 		}
+		return !$hadErrors;
 	}
 
 	function statusCallback($message) {

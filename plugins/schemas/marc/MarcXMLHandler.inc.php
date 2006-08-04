@@ -86,7 +86,7 @@ class MarcXMLHandler extends XMLParserHandler {
 		$i2 = trim($this->i2);
 		$label = trim($this->label);
 		$field =& $this->harvester->getFieldByKey($id, MarcPlugin::getName());
-		if (!$field) {echo "BAD: ELEMENT: $tag ($id/$i1/$i2/$label)<br/>\n";
+		if (!$field) {
 			$this->harvester->addError(Locale::translate('harvester.error.unknownMetadataField', array('name' => $id)));
 			return;
 		}
