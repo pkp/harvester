@@ -38,11 +38,11 @@
 <div class="block">
 	<span class="blockTitle">{translate key="navigation.content"}</span>
 
-	<span class="blockSubtitle">{translate key="navigation.search"}</span>
 	<form method="get" action="{url page="search" op="results"}">
+	<span class="blockSubtitle"><label for="sidebar-query">{translate key="navigation.search"}</label></span>
 		<table>
 			<tr>
-				<td><input type="text" id="query" name="query" size="15" maxlength="255" value="{$query|escape}" class="textField" /></td>
+				<td><input type="text" id="sidebar-query" name="query" size="15" maxlength="255" value="{$query|escape}" class="textField" /></td>
 			</tr>
 			{if $theseArchiveIds}
 				<tr>
