@@ -92,7 +92,7 @@ function handleImportanceChange(newImportance) {
 			{assign var=crosswalkOptionsVar value=crosswalk-options-$crosswalkId}
 			{assign var=crosswalkOptions value=$crosswalkOptionsVar|get_value}
 			<tr valign="top">
-				<td class="label">{$crosswalk->getName()|escape}</td>
+				<td class="label"><label for="crosswalk-{$crosswalkId}">{$crosswalk->getName()|escape}</label></td>
 				<td colspan="2" class="value">
 					<select id="crosswalk-{$crosswalkId}" name="crosswalk-{$crosswalkId}[]" multiple class="selectMenu" size="5">
 						<option value="">{translate key="search.select.none"}</option>
@@ -105,7 +105,7 @@ function handleImportanceChange(newImportance) {
 		{else}{* FIELD_TYPE_TEXT *}
 			{assign var=crosswalkValueVar value=crosswalk-$crosswalkId}
 			<tr valign="top">
-				<td class="label">{$crosswalk->getName()|escape}</td>
+				<td class="label"><label for="crosswalk-{$crosswalkId}">{$crosswalk->getName()|escape}</label></td>
 				<td colspan="2" class="value"><input type="text" id="crosswalk-{$crosswalkId}" name="crosswalk-{$crosswalkId}" size="40" maxlength="255" value="{$crosswalkValueVar|get_value|escape}" class="textField" /></td>
 			</tr>
 		{/if}
@@ -133,7 +133,7 @@ function handleImportanceChange(newImportance) {
 			{assign var=fieldOptionsVar value=field-options-$fieldId}
 			{assign var=fieldOptions value=$fieldOptionsVar|get_value}
 			<tr valign="top">
-				<td class="label">{$field->getDisplayName()|escape}</td>
+				<td class="label"><label for="field-{$fieldId}">{$field->getDisplayName()|escape}</label></td>
 				<td colspan="2" class="value">
 					<select id="field-{$fieldId}" name="field-{$fieldId}[]" multiple class="selectMenu" size="5">
 						<option value="">{translate key="search.select.none"}</option>
@@ -145,7 +145,7 @@ function handleImportanceChange(newImportance) {
 			
 		{else}
 			<tr valign="top">
-				<td class="label">{$field->getDisplayName()|escape}</td>
+				<td class="label"><label for="field-{$fieldId}">{$field->getDisplayName()|escape}</label></td>
 				<td class="value" colspan="2">
 					{assign var=fieldValueVar value=field-$fieldId}
 					<input type="text" id="field-{$fieldId}" name="field-{$fieldId}" size="40" maxlength="255" value="{$fieldValueVar|get_value|escape}" class="textField" />
