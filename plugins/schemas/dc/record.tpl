@@ -12,7 +12,7 @@
 {assign var="pageTitle" value="record.viewRecord"}
 {include file="common/header.tpl"}
 
-<h3>{$entries.title.value|escape}</h3>
+<h3>{$record->getTitle()|escape}</h3>
 <h4>{$archive->getTitle()|escape}</h4>
 
 <a href="{url page="browse" op="archiveInfo" path=$archive->getArchiveId()}" class="action">{translate key="browse.archiveInfo"}</a><br/>&nbsp;
@@ -33,7 +33,11 @@
 			<td>{translate key="plugins.schemas.dc.fields.$name.name"}</td>
 			<td>
 				{foreach from=$entry item=value}
-					{$value.value|escape|default:"&mdash;"}<br/>
+					{if $name == 'identifier'}
+						<a href="{$value.value|escape}">{$value.value|escape|default:"&mdash;"}</a>
+					{else}
+						{$value.value|escape|default:"&mdash;"}
+					{/if}<br/>
 				{/foreach}
 			</td>
 		</tr>
