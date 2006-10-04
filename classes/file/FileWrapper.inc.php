@@ -30,7 +30,7 @@ class FileWrapper {
 	
 	/** @var $fp int the file descriptor */
 	var $fp;
-	
+
 	/**
 	 * Constructor.
 	 * @param $url string
@@ -47,7 +47,10 @@ class FileWrapper {
 	 */
 	function contents() {
 		$contents = '';
-		if ($this->open()) {
+		if ($retval =& $this->open()) {
+			if (is_object($retval)) { // It may be a redirect
+				return $retval->contents();
+			}
 			while (!$this->eof())
 				$contents .= $this->read();
 			$this->close();
@@ -63,7 +66,7 @@ class FileWrapper {
 	function open($mode = 'r') {
 		$this->fp = null;
 		$this->fp = fopen($this->url, $mode);
-		return $this->fp;
+		return ($this->fp !== false);
 	}
 	
 	/**
@@ -136,12 +139,14 @@ class HTTPFileWrapper extends FileWrapper {
 	var $defaultPort;
 	var $defaultHost;
 	var $defaultPath;
+	var $redirects;
 
-	function HTTPFileWrapper($url, &$info) {
+	function HTTPFileWrapper($url, &$info, $redirects = 5) {
 		parent::FileWrapper($url, $info);
 		$this->setDefaultPort(80);
 		$this->setDefaultHost('localhost');
 		$this->setDefaultPath('/');
+		$this->redirects = 5;
 	}
 
 	function setDefaultPort($port) {
@@ -163,7 +168,7 @@ class HTTPFileWrapper extends FileWrapper {
 		$this->headers[$name] = $value;
 	}
 
-	function open($mode = 'r', $redirects = 5) {
+	function open($mode = 'r') {
 		$host = isset($this->info['host']) ? $this->info['host'] : $this->defaultHost;
 		$port = isset($this->info['port']) ? (int)$this->info['port'] : $this->defaultPort;
 		$path = isset($this->info['path']) ? $this->info['path'] : $this->defaultPath;
@@ -190,16 +195,21 @@ class HTTPFileWrapper extends FileWrapper {
 			while(fgets($this->fp, 4096) !== "\r\n");
 			return true;
 		}
-		if(preg_match('!^3\d\d$!', $rc) && $redirects >= 1) {
+		if(preg_match('!^3\d\d$!', $rc) && $this->redirects >= 1) {
 			for($response = '', $time = time(); !feof($this->fp) && $time >= time() - 15; ) $response .= fgets($this->fp, 128);
 			if (preg_match('!^(?:(?:Location)|(?:URI)|(?:location)): ([^\s]+)[\r\n]!m', $response, $matches)) {
-				$location = $matches[1];
-				$newPath = ($this->info['path'] !== '' && strpos($location, '/') !== 0  ? dirname($this->info['path']) . '/' : (strpos($location, '/') === 0 ? '' : '/')) . $location;
-				$this->info['path'] = $newPath;
-				$this->url = $this->glue_url($this->info);
 				$this->close();
-				$this->HTTPFileWrapper($this->url, $this->info);
-				return $this->open($mode, $redirects - 1);
+				$location = $matches[1];
+				if (preg_match('!^[a-z]+://!', $location)) {
+					$this->url = $location;
+				} else {
+					$newPath = ($this->info['path'] !== '' && strpos($location, '/') !== 0  ? dirname($this->info['path']) . '/' : (strpos($location, '/') === 0 ? '' : '/')) . $location;
+					$this->info['path'] = $newPath;
+					$this->url = $this->glue_url($this->info);
+				}
+				$returner =& FileWrapper::wrapper($this->url);
+				$returner->redirects = $this->redirects - 1;
+				return $returner;
 			}
 		}
 		$this->close();
