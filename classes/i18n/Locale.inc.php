@@ -324,7 +324,6 @@ class Locale {
 		// Delete locale-specific data
 		$emailTemplateDao = &DAORegistry::getDAO('EmailTemplateDAO');
 		$emailTemplateDao->deleteEmailTemplatesByLocale($locale);
-		$emailTemplateDao->deleteDefaultEmailTemplatesByLocale($locale);
 	}
 	
 	/**
