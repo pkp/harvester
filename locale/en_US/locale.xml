@@ -43,6 +43,9 @@
 	<message key="common.default">Default</message>
 	<message key="common.enable">Enable</message>
 	<message key="common.disable">Disable</message>
+	<message key="common.captchaField">Validation</message>
+	<message key="common.captchaField.description">Please enter the letters as they appear in the image above.</message>
+	<message key="common.captchaField.badCaptcha">The characters you entered did not match the characters in the image. Please check the characters and try again.</message>
 
 	<!-- Navigation Messages -->
 	<message key="navigation.home">Home</message>

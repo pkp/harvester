@@ -81,6 +81,7 @@ class DAORegistry {
 		switch ($name) {
 			case 'ArchiveDAO': return 'archive.ArchiveDAO';
 			case 'ArchiveSettingsDAO': return 'archive.ArchiveSettingsDAO';
+			case 'CaptchaDAO': return 'captcha.CaptchaDAO';
 			case 'CrosswalkDAO': return 'field.CrosswalkDAO';
 			case 'EntryDAO': return 'entry.EntryDAO';
 			case 'EmailTemplateDAO': return 'mail.EmailTemplateDAO';

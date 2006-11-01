@@ -227,6 +227,24 @@ class AdminHandler extends Handler {
 		PluginHandler::plugin($args);
 	}
 
+	//
+	// Captcha
+	//
+	
+	function viewCaptcha($args) {
+		$captchaId = (int) array_shift($args);
+		import('captcha.CaptchaManager');
+		$captchaManager =& new CaptchaManager();
+		if ($captchaManager->isEnabled()) {
+			$captchaDao =& DAORegistry::getDAO('CaptchaDAO');
+			$captcha =& $captchaDao->getCaptcha($captchaId);
+			if ($captcha) {
+				$captchaManager->generateImage($captcha);
+				exit();
+			}
+		}
+		Request::redirect('index');
+	}
 }
 
 ?>

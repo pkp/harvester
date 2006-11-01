@@ -22,6 +22,9 @@ class ArchiveForm extends Form {
 	/** The ID of the archive being edited */
 	var $archiveId;
 
+	/** Whether or not Captcha tests are enabled */
+	var $captchaEnabled;
+
 	/** The archive object */
 	var $archive;
 
@@ -40,6 +43,13 @@ class ArchiveForm extends Form {
 		// Validation checks for this form
 		$this->addCheck(new FormValidator($this, 'title', 'required', 'admin.archives.form.titleRequired'));
 		$this->addCheck(new FormValidator($this, 'url', 'required', 'admin.archives.form.urlRequired'));
+
+		import('captcha.CaptchaManager');
+		$captchaManager =& new CaptchaManager();
+		$this->captchaEnabled = $captchaManager->isEnabled();
+		if ($this->captchaEnabled && !Validation::isLoggedIn()) {
+			$this->addCheck(new FormValidatorCaptcha($this, 'captcha', 'captchaId', 'common.captchaField.badCaptcha'));
+		}
 
 		$this->harvesterPluginName = Request::getUserVar('harvesterPluginName');
 
@@ -65,6 +75,15 @@ class ArchiveForm extends Form {
 	function display() {
 		$templateMgr = &TemplateManager::getManager();
 		$templateMgr->assign('archiveId', $this->archiveId);
+		if ($this->captchaEnabled && !Validation::isLoggedIn()) {
+			import('captcha.CaptchaManager');
+			$captchaManager =& new CaptchaManager();
+			$captcha =& $captchaManager->createCaptcha();
+			if ($captcha) {
+				$templateMgr->assign('captchaEnabled', $this->captchaEnabled);
+				$this->setData('captchaId', $captcha->getCaptchaId());
+			}
+		}
 		$templateMgr->assign_by_ref('harvesters', PluginRegistry::getPlugins('harvesters'));
 		HookRegistry::call('ArchiveForm::display', array(&$this, &$templateMgr, $this->harvesterPluginName));
 		parent::display();
@@ -109,6 +128,12 @@ class ArchiveForm extends Form {
 
 	function getParameterNames() {
 		$parameterNames = array('title', 'description', 'url');
+
+		if ($this->captchaEnabled && !Validation::isLoggedIn()) {
+			$parameterNames[] = 'captchaId';
+			$parameterNames[] = 'captcha';
+		}
+
 		if (Validation::isLoggedIn()) $parameterNames[] = 'publicArchiveId';
 		HookRegistry::call('ArchiveForm::getParameterNames', array(&$this, &$parameterNames, $this->harvesterPluginName));
 		return $parameterNames;

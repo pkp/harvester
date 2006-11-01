@@ -81,6 +81,18 @@ function selectHarvester() {
 		</tr>
 	{/if}
 
+	{if !$isUserLoggedIn}{* Display Captcha test *}
+		{if $captchaEnabled}
+			<td class="label" valign="top">{fieldLabel name="captcha" required="true" key="common.captchaField"}</td>
+			<td class="value">
+				<img src="{url page="admin" op="viewCaptcha" path=$captchaId}" alt="" /><br />
+				<span class="instruct">{translate key="common.captchaField.description"}</span><br />
+				<input name="captcha" id="captcha" value="" size="20" maxlength="32" class="textField" />
+				<input type="hidden" name="captchaId" value="{$captchaId|escape:"quoted"}" />
+			</td>
+		{/if}
+	{/if}
+
 	<tr>
 		<td class="label">{fieldLabel name="harvesterPluginName" key="archive.type" required="true"}</td>
 		<td><select onchange="selectHarvester()" name="harvesterPluginName" id="harvesterPluginName" size="1" class="selectMenu">
