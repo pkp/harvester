@@ -1,6 +1,6 @@
 <?php
 /* 
-V4.65 22 July 2005  (c) 2000-2005 John Lim (jlim@natsoft.com.my). All rights reserved.
+V4.90 8 June 2006  (c) 2000-2006 John Lim (jlim#natsoft.com.my). All rights reserved.
   Released under both BSD license and Lesser GPL library license. 
   Whenever there is any discrepancy between the two licenses, 
   the BSD license will take precedence. See License.txt. 
@@ -261,6 +261,7 @@ class perf_mysql extends adodb_perf{
 		$rs->Close();
 		$at = strpos($stat,'Buffer pool hit rate');
 		$stat = substr($stat,$at,200);
+
 		if (preg_match('!Buffer pool hit rate\s*([0-9]*) / ([0-9]*)!',$stat,$arr)) {
 			$val = 100*$arr[1]/$arr[2];
 			$_SESSION['INNODB_HIT_PCT'] = $val;
@@ -269,7 +270,7 @@ class perf_mysql extends adodb_perf{
 			if (isset($_SESSION['INNODB_HIT_PCT'])) return $_SESSION['INNODB_HIT_PCT'];
 			return 0;
 		}
-		return 0;
+
 	}
 	
 	function GetKeyHitRatio()

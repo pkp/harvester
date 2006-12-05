@@ -17,6 +17,20 @@
  * @package axmls
  * @tutorial getting_started.pkg
  */
+ 
+function _file_get_contents($file) 
+{
+ 	if (function_exists('file_get_contents')) return file_get_contents($file);
+	
+	$f = fopen($file,'r');
+	if (!$f) return '';
+	$t = '';
+	
+	while ($s = fread($f,100000)) $t .= $s;
+	fclose($f);
+	return $t;
+}
+
 
 /**
 * Debug on or off
@@ -730,12 +744,12 @@ class dbIndex extends dbObject {
 			return NULL;
 		}
 		
-		/* // eliminate any columns that aren't in the table -- REMOVED BY ALEC for partial indexes
+		// eliminate any columns that aren't in the table
 		foreach( $this->columns as $id => $col ) {
 			if( !isset( $this->parent->fields[$id] ) ) {
 				unset( $this->columns[$id] );
 			}
-		} */
+		}
 		
 		return $xmls->dict->CreateIndexSQL( $this->name, $this->parent->name, $this->columns, $this->opts );
 	}
@@ -1282,14 +1296,10 @@ class adoSchema {
 	* Creating an adoSchema object is the first step in processing an XML schema.
 	* The only parameter is an ADOdb database connection object, which must already
 	* have been created.
- 	*
-	* Modified to support specifying a character encoding
-	* Modified 2004-06-20 by Kevin Jamieson (http://www.pkp.ubc.ca/)
 	*
 	* @param object $db ADOdb database connection object.
-	* @param object $charSet character encoding for the data dictionary.
 	*/
-	function adoSchema( &$db, $charSet = false ) {
+	function adoSchema( &$db ) {
 		// Initialize the environment
 		$this->mgq = get_magic_quotes_runtime();
 		set_magic_quotes_runtime(0);
@@ -1297,9 +1307,6 @@ class adoSchema {
 		$this->db =& $db;
 		$this->debug = $this->db->debug;
 		$this->dict = NewDataDictionary( $this->db );
-		if ($charSet) {
-			$this->dict->SetCharSet( $charSet );
-		}
 		$this->sqlArray = array();
 		$this->schemaVersion = XMLS_SCHEMA_VERSION;
 		$this->executeInline( XMLS_EXECUTE_INLINE );
@@ -1436,6 +1443,10 @@ class adoSchema {
 		
 		if ( $returnSchema )
 		{
+			$xmlstring = '';
+			while( $data = fread( $fp, 100000 ) ) {
+				$xmlstring .= $data;
+			}
 			return $xmlstring;
 		}
 		
@@ -1579,6 +1590,7 @@ class adoSchema {
 	* @return array Array of SQL statements or FALSE if an error occurs
 	*/
 	function PrintSQL( $format = 'NONE' ) {
+		$sqlArray = null;
 		return $this->getSQL( $format, $sqlArray );
 	}
 	
@@ -1709,6 +1721,13 @@ class adoSchema {
 		return $result;
 	}
 	
+	// compat for pre-4.3 - jlim
+	function _file_get_contents($path)
+	{
+		if (function_exists('file_get_contents')) return file_get_contents($path);
+		return join('',file($path));
+	}
+	
 	/**
 	* Converts an XML schema file to the specified DTD version.
 	*
@@ -1737,7 +1756,7 @@ class adoSchema {
 		}
 		
 		if( $version == $newVersion ) {
-			$result = file_get_contents( $filename );
+			$result = _file_get_contents( $filename );
 			
 			// remove unicode BOM if present
 			if( substr( $result, 0, 3 ) == sprintf( '%c%c%c', 239, 187, 191 ) ) {
@@ -1776,7 +1795,7 @@ class adoSchema {
 					return FALSE;
 				}
 				
-				$schema = file_get_contents( $schema );
+				$schema = _file_get_contents( $schema );
 				break;
 			case 'string':
 			default:
@@ -1787,7 +1806,7 @@ class adoSchema {
 		
 		$arguments = array (
 			'/_xml' => $schema,
-			'/_xsl' => file_get_contents( $xsl_file )
+			'/_xsl' => _file_get_contents( $xsl_file )
 		);
 		
 		// create an XSLT processor
