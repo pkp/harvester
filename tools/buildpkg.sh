@@ -69,21 +69,20 @@ echo -n "Creating archive $BUILD.tar.gz ... "
 tar -zcf ../$BUILD.tar.gz $BUILD
 echo "Done"
 
-# This is the initial release; no patch generation required.
-# if [ ! -z "$PATCHDIR" ]; then
-# 	echo "Creating patches in $BUILD.patch ..."
-# 	[ -e "../${BUILD}.patch" ] || mkdir "../$BUILD.patch"
-# 	for FILE in $PATCHDIR/*; do
-# 		OLDBUILD=$(basename $FILE)
-# 		OLDVERSION=${OLDBUILD/$PREFIX-/}
-# 		OLDVERSION=${OLDVERSION/.tar.gz/}
-# 		echo -n "Creating patch against ${OLDVERSION} ... "
-# 		tar -zxf $FILE
-# 		diff -urN $PREFIX-$OLDVERSION $BUILD | gzip -c > ../${BUILD}.patch/$PREFIX-${OLDVERSION}_to_${VERSION}.patch.gz
-# 		echo "Done"
-# 	done
-# 	echo "Done"
-# fi
+if [ ! -z "$PATCHDIR" ]; then
+	echo "Creating patches in $BUILD.patch ..."
+	[ -e "../${BUILD}.patch" ] || mkdir "../$BUILD.patch"
+	for FILE in $PATCHDIR/*; do
+		OLDBUILD=$(basename $FILE)
+		OLDVERSION=${OLDBUILD/$PREFIX-/}
+		OLDVERSION=${OLDVERSION/.tar.gz/}
+		echo -n "Creating patch against ${OLDVERSION} ... "
+		tar -zxf $FILE
+		diff -urN $PREFIX-$OLDVERSION $BUILD | gzip -c > ../${BUILD}.patch/$PREFIX-${OLDVERSION}_to_${VERSION}.patch.gz
+		echo "Done"
+	done
+	echo "Done"
+fi
 
 cd ..
 rm -r $TMPDIR

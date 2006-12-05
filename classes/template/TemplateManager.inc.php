@@ -108,7 +108,7 @@ class TemplateManager extends Smarty {
 	}
 
 	/**
-	 * Dislay the template.
+	 * Display the template.
 	 */
 	function display($template, $sendContentType = 'text/html') {
 		$charset = Config::getVar('i18n', 'client_charset');
@@ -442,6 +442,19 @@ class TemplateManager extends Smarty {
 	function smartyPageLinks($params, &$smarty) {
 		$iterator =& $params['iterator'];
 		$name = $params['name'];
+		if (isset($params['anchor'])) {
+			$anchor = $params['anchor'];
+			unset($params['anchor']);
+		} else {
+			$anchor = null;
+		}
+		if (isset($params['all_extra'])) {
+			$allExtra = ' ' . $params['all_extra'];
+			unset($params['all_extra']);
+		} else {
+			$allExtra = '';
+		}
+
 		unset($params['iterator']);
 		unset($params['name']);
 
@@ -461,9 +474,9 @@ class TemplateManager extends Smarty {
 
 		if ($page>1) {
 			$params[$paramName] = 1;
-			$value .= '<a href="' . Request::url(null, null, Request::getRequestedArgs(), $params) . '">&lt;&lt;</a>&nbsp;';
+			$value .= '<a href="' . Request::url(null, null, Request::getRequestedArgs(), $params, $anchor) . '"' . $allExtra . '>&lt;&lt;</a>&nbsp;';
 			$params[$paramName] = $page - 1;
-			$value .= '<a href="' . Request::url(null, null, Request::getRequestedArgs(), $params) . '">&lt;</a>&nbsp;';
+			$value .= '<a href="' . Request::url(null, null, Request::getRequestedArgs(), $params, $anchor) . '"' . $allExtra . '>&lt;</a>&nbsp;';
 		}
 
 		for ($i=$pageBase; $i<min($pageBase+$numPageLinks, $pageCount+1); $i++) {
@@ -471,14 +484,14 @@ class TemplateManager extends Smarty {
 				$value .= "<b>$i</b>&nbsp;";
 			} else {
 				$params[$paramName] = $i;
-				$value .= '<a href="' . Request::url(null, null, Request::getRequestedArgs(), $params) . '">' . $i . '</a>&nbsp;';
+				$value .= '<a href="' . Request::url(null, null, Request::getRequestedArgs(), $params, $anchor) . '"' . $allExtra . '>' . $i . '</a>&nbsp;';
 			}
 		}
 		if ($page < $pageCount) {
 			$params[$paramName] = $page + 1;
-			$value .= '<a href="' . Request::url(null, null, Request::getRequestedArgs(), $params) . '">&gt;</a>&nbsp;';
+			$value .= '<a href="' . Request::url(null, null, Request::getRequestedArgs(), $params, $anchor) . '"' . $allExtra . '>&gt;</a>&nbsp;';
 			$params[$paramName] = $pageCount;
-			$value .= '<a href="' . Request::url(null, null, Request::getRequestedArgs(), $params) . '">&gt;&gt;</a>&nbsp;';
+			$value .= '<a href="' . Request::url(null, null, Request::getRequestedArgs(), $params, $anchor) . '"' . $allExtra . '>&gt;&gt;</a>&nbsp;';
 		}
 
 		return $value;

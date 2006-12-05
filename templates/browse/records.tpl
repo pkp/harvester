@@ -35,11 +35,13 @@
 
 <br />&nbsp;
 
+<a name="records"></a>
+
 <ul class="plain">
 {iterate from=records item=record}
 	<li>&#187; {$record->displaySummary()}</li>
 {/iterate}
 </ul>
-	{page_info iterator=$records}&nbsp;&nbsp;&nbsp;&nbsp;{page_links name="records" sortId=$sortId iterator=$records}
+	{page_info iterator=$records}&nbsp;&nbsp;&nbsp;&nbsp;{page_links anchor="records" name="records" sortId=$sortId iterator=$records}
 
 {include file="common/footer.tpl"}

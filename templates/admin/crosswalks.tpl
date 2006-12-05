@@ -15,6 +15,8 @@
 
 <p>{translate key="admin.crosswalks.description"}</p>
 
+<a name="crosswalks"></a>
+
 <table width="100%" class="listing">
 	<tr>
 		<td colspan="4" class="headseparator">&nbsp;</td>
@@ -47,7 +49,7 @@
 	{else}
 		<tr>
 			<td colspan="2" align="left">{page_info iterator=$crosswalks}</td>
-			<td colspan="2" align="right">{page_links name="crosswalks" iterator=$crosswalks}</td>
+			<td colspan="2" align="right">{page_links anchor="crosswalks" name="crosswalks" iterator=$crosswalks}</td>
 		</tr>
 	{/if}
 </table>

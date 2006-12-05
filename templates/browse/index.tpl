@@ -15,6 +15,8 @@
 
 <br />
 
+<a name="archives"></a>
+
 <ul class="plain">
 	<li>&#187; <a href="{url path="all"}">{translate key="browse.browseAll"}</a><br/>&nbsp;</li>
 {iterate from=archives item=archive}
@@ -25,7 +27,7 @@
 </ul>
 {else}
 </ul>
-	{page_info iterator=$archives}&nbsp;&nbsp;&nbsp;&nbsp;{page_links name="archives" iterator=$archives}
+	{page_info iterator=$archives}&nbsp;&nbsp;&nbsp;&nbsp;{page_links anchor="archives" name="archives" iterator=$archives}
 {/if}
 
 {include file="common/footer.tpl"}
