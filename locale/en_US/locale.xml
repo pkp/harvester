@@ -63,6 +63,7 @@
 	<message key="navigation.previousPage">&lt;&lt;</message>
 	<message key="navigation.nextPage">&gt;&gt;</message>
 	<message key="navigation.items">{$from} - {$to} of {$total} Items</message>
+	<message key="navigation.fontSize">Font Size</message>
 
 	<!-- Harvester messages -->
 	<message key="harvester.error.unknownMetadataField">An unknown metadata field {$name} was encountered.</message>
@@ -538,4 +539,12 @@ Validation may fail on search URLs that require posted form data.]]></message>
 
 	<message key="rt.context.and">AND</message>
 
+	<!--
+	 *
+	 * MISC - Entries that do not belong in the other sections.
+	 *
+	 -->
+	<message key="icon.small.alt">Small</message>
+	<message key="icon.medium.alt">Medium</message>
+	<message key="icon.large.alt">Large</message>
 </locale>
