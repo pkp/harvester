@@ -59,7 +59,7 @@
 		<td rowspan="2" class="label">{translate key="plugins.harvesters.oai.archive.form.dates"}</td>
 		<td class="value">{translate key="common.from"}:</td>
 		<td class="value">
-			{html_select_date prefix="from" time="--" all_extra="class=\"selectMenu\"" year_empty="" month_empty="" day_empty="" start_year="1900" end_year="+10"}
+			{html_select_date prefix="from" time=$lastIndexed all_extra="class=\"selectMenu\"" year_empty="" month_empty="" day_empty="" start_year="1900" end_year="+10"}
 		</td>
 	</tr>
 	<tr valign="top">
