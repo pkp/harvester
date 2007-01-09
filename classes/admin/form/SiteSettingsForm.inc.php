@@ -31,8 +31,7 @@ class SiteSettingsForm extends Form {
 		$this->addCheck(new FormValidator($this, 'contactEmail', 'required', 'admin.settings.form.contactEmailRequired'));
 		$this->addCheck(new FormValidator($this, 'adminUsername', 'required', 'installer.form.usernameRequired'));
 		$this->addCheck(new FormValidatorAlphaNum($this, 'adminUsername', 'required', 'installer.form.usernameAlphaNumeric'));
-		$this->addCheck(new FormValidator($this, 'adminPassword', 'required', 'installer.form.passwordRequired'));
-		$this->addCheck(new FormValidatorCustom($this, 'adminPassword', 'required', 'installer.form.passwordsDoNotMatch', create_function('$password,$form', 'return $password == $form->getData(\'adminPassword2\');'), array(&$this)));
+		$this->addCheck(new FormValidatorCustom($this, 'adminPassword', 'optional', 'installer.form.passwordsDoNotMatch', create_function('$password,$form', 'return $password == $form->getData(\'adminPassword2\');'), array(&$this)));
 		
 	}
 	
@@ -73,7 +72,7 @@ class SiteSettingsForm extends Form {
 		$site->setContactName($this->getData('contactName'));
 		$site->setContactEmail($this->getData('contactEmail'));
 		$site->setUsername($this->getData('adminUsername'));
-		$site->setPassword(Validation::encryptCredentials($this->getData('adminUsername'), $this->getData('adminPassword')));
+		if ($this->getData('adminPassword') != '') $site->setPassword(Validation::encryptCredentials($this->getData('adminUsername'), $this->getData('adminPassword')));
 	}
 	
 }
