@@ -30,7 +30,7 @@ class RTAdminHandler extends Handler {
 
 		RTAdminHandler::setupTemplate(false, $archiveId);
 
-		if ($archive =& $archiveDao->getArchive($archiveId) || $archiveId === 'default') {
+		if ($archive =& $archiveDao->getArchive($archiveId, false) || $archiveId === 'default') {
 			$site =& Request::getSite();
 			$rtDao = &DAORegistry::getDAO('RTDAO');
 
@@ -49,7 +49,7 @@ class RTAdminHandler extends Handler {
 		} else {
 			// List archives for the user administer.
 			$rangeInfo = Handler::getRangeInfo('archives');
-			$archives =& $archiveDao->getArchives($rangeInfo);
+			$archives =& $archiveDao->getArchives(false, $rangeInfo);
 			$templateMgr->assign_by_ref('archives', $archives);
 			$templateMgr->display('rtadmin/archives.tpl');
 
@@ -67,7 +67,7 @@ class RTAdminHandler extends Handler {
 		$versionId = Request::getUserVar('versionId');
 		
 		$archiveDao =& DAORegistry::getDAO('ArchiveDAO');
-		$archive =& $archiveDao->getArchive($archiveId);
+		$archive =& $archiveDao->getArchive($archiveId, false);
 
 		$rtDao =& DAORegistry::getDAO('RTDAO');
 		$version = $rtDao->getVersion($versionId, $archive?$archive->getArchiveId():null);

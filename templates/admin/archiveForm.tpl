@@ -69,6 +69,15 @@ function selectHarvester() {
 			{translate key="admin.archives.form.url.description"}
 		</td>
 	</tr>
+	
+	{if $isUserLoggedIn}{* Only administrators are allowed to set enabled/disabled for archives *}
+		<tr valign="top">
+			<td class="label">&nbsp;</td>
+			<td class="value">
+				<input type="checkbox" id="enabled" name="enabled" {if $enabled}checked {/if}/>&nbsp;{fieldLabel name="url" key="common.enabled"}
+			</td>
+		</tr>
+	{/if}
 
 	{if $isUserLoggedIn}{* Only administrators are allowed to enter public archive IDs *}
 		<tr valign="top">

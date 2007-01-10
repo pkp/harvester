@@ -48,6 +48,22 @@ class Archive extends DataObject {
 	}
 
 	/**
+	 * Get enabled/disabled state of archive
+	 * @return boolean
+	 */
+	 function getEnabled() {
+	 	return $this->getData('enabled')?1:0;
+	}
+	
+	/**
+	 * Set enabled/disabled state of archive
+	 * @param $enabled boolean
+	 */
+	function setEnabled($enabled) {
+		return $this->setData('enabled',$enabled?1:0);
+	}
+
+	/**
 	 * Get public ID of archive
 	 * @return string
 	 */

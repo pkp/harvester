@@ -37,10 +37,9 @@ class harvest extends CommandLineTool {
 			$this->archives =& $archiveDao->getArchives();
 		}
 		else {
-			$archive =& $archiveDao->getArchive((int) $this->firstParam);
+			$archive =& $archiveDao->getArchive((int) $this->firstParam, false);
 			if ($archive) {
 				$archives = array(&$archive);
-				if (!is_array($archives)) echo "NOT AN ARRAY!\n";
 				$this->archives =& new ArrayItemIterator($archives);
 			} else {
 				$this->archives = null; // Invalid ID specified

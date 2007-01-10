@@ -113,7 +113,7 @@ class Record extends DataObject {
 	 */
 	function &getArchive() {
 		$archiveDao =& DAORegistry::getDAO('ArchiveDAO');
-		return $archiveDao->getArchive($this->getArchiveId());
+		return $archiveDao->getArchive($this->getArchiveId(), false);
 	}
 
 	function displaySummary() {

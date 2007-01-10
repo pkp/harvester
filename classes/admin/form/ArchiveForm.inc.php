@@ -55,7 +55,7 @@ class ArchiveForm extends Form {
 
 		if ($archiveId) {
 			$archiveDao =& DAORegistry::getDAO('ArchiveDAO');
-			$this->archive =& $archiveDao->getArchive($this->archiveId);
+			$this->archive =& $archiveDao->getArchive($this->archiveId, false);
 			if (empty($this->harvesterPluginName) && $this->archive) $this->harvesterPluginName = $this->archive->getHarvesterPluginName();
 		}
 
@@ -100,12 +100,14 @@ class ArchiveForm extends Form {
 				'description' => $this->archive->getDescription(),
 				'url' => $this->archive->getUrl(),
 				'harvesterPluginName' => $this->harvesterPluginName,
-				'archive' => $this->archive
+				'archive' => $this->archive,
+				'enabled' => $this->archive->getEnabled()
 			);
 		} else {
 			$this->archiveId = null;
 			$this->_data = array(
-				'harvesterPluginName' => $this->harvesterPluginName
+				'harvesterPluginName' => $this->harvesterPluginName,
+				'enabled' => true
 			);
 		}
 
@@ -127,7 +129,7 @@ class ArchiveForm extends Form {
 	}
 
 	function getParameterNames() {
-		$parameterNames = array('title', 'description', 'url');
+		$parameterNames = array('title', 'description', 'url', 'enabled');
 
 		if ($this->captchaEnabled && !Validation::isLoggedIn()) {
 			$parameterNames[] = 'captchaId';
@@ -176,6 +178,9 @@ class ArchiveForm extends Form {
 		$this->archive->setTitle($this->getData('title'));
 		if (Validation::isLoggedIn()) {
 			$this->archive->setPublicArchiveId($this->getData('publicArchiveId'));
+			$this->archive->setEnabled($this->getData('enabled'));
+		} else {
+			$this->archive->setEnabled(true);
 		}
 
 		if ($this->archive->getArchiveId() != null) {

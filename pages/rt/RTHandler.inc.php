@@ -108,7 +108,7 @@ class RTHandler extends Handler {
 			$archiveDao =& DAORegistry::getDAO('ArchiveDAO');
 			$archive =& $archiveDao->getArchive($record->getArchiveId());
 
-			if ($archive) return array(&$archive, &$record);
+			if ($archive && $archive->getEnabled()) return array(&$archive, &$record);
 		}
 		Request::redirect('index');
 	}

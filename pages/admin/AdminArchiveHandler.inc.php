@@ -29,7 +29,7 @@ class AdminArchiveHandler extends AdminHandler {
 		$plugins =& PluginRegistry::loadCategory('harvesters');
 
 		$archiveDao = &DAORegistry::getDAO('ArchiveDAO');
-		$archives = &$archiveDao->getArchives($rangeInfo);
+		$archives = &$archiveDao->getArchives(false, $rangeInfo);
 		
 		$templateMgr = &TemplateManager::getManager();
 		$templateMgr->assign_by_ref('archives', $archives);
@@ -111,7 +111,7 @@ class AdminArchiveHandler extends AdminHandler {
 
 		if (isset($args) && isset($args[0])) {
 			$archiveId = $args[0];
-			$archive =& $archiveDao->getArchive($archiveId);
+			$archive =& $archiveDao->getArchive($archiveId, false);
 			if ($archive) {
 				$harvesterPlugin =& $archive->getHarvesterPlugin();
 				$harvesterPlugin->displayManagementPage($archive);
@@ -141,7 +141,7 @@ class AdminArchiveHandler extends AdminHandler {
 		
 		if (isset($args) && isset($args[0])) {
 			$archiveId = (int) $args[0];
-			$archive =& $archiveDao->getArchive($archiveId);
+			$archive =& $archiveDao->getArchive($archiveId, false);
 			if (!$archive) Request::redirect('admin', 'archives');
 
 			// Disable timeout, as this operation may take
@@ -189,7 +189,7 @@ class AdminArchiveHandler extends AdminHandler {
 		
 		if (isset($args) && isset($args[0])) {
 			$archiveId = (int) $args[0];
-			$archive =& $archiveDao->getArchive($archiveId);
+			$archive =& $archiveDao->getArchive($archiveId, false);
 			if ($archive) {
 				$recordDao =& DAORegistry::getDAO('RecordDAO');
 				$recordDao->deleteRecordsByArchiveId($archive->getArchiveId());

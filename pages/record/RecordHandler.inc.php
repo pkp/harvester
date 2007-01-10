@@ -26,6 +26,11 @@ class RecordHandler extends Handler {
 
 		$recordId = (int) array_shift($args);
 		$record =& $recordDao->getRecord($recordId);
+		if (!$record) Request::redirect('index');
+
+		$archive =& $record->getArchive();
+		if (!$archive || !$archive->getEnabled()) Request::redirect('index');
+
 		RecordHandler::setupTemplate($record, true);
 		$record->display();
 	}
@@ -43,7 +48,7 @@ class RecordHandler extends Handler {
 		}
 		if ($record) {
 			$archiveDao =& DAORegistry::getDAO('ArchiveDAO');
-			$archive =& $archiveDao->getArchive($record->getArchiveId());
+			$archive =& $archiveDao->getArchive($record->getArchiveId(), false);
 			$hierarchy[] = array(Request::url('browse', 'index', $archive->getArchiveId()), $archive->getTitle(), true);
 		}
 		$templateMgr->assign('pageHierarchy', $hierarchy);

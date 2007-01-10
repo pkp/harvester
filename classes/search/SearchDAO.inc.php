@@ -160,9 +160,9 @@ class SearchDAO extends DAO {
 				o.raw_field_id AS raw_field_id,
 				COUNT(*) AS count
 			FROM
-				records r, search_objects o NATURAL JOIN ' . $sqlFrom . '
+				records r LEFT JOIN archives a ON (r.archive_id = a.archive_id), search_objects o NATURAL JOIN ' . $sqlFrom . '
 			WHERE ' . $sqlWhere . $archiveLimitSql . '
-				AND r.record_id = o.record_id
+				AND r.record_id = o.record_id AND a.enabled = 1
 			GROUP BY o.record_id
 			ORDER BY count DESC
 			LIMIT ' . $limit,

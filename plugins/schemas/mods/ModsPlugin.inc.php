@@ -216,6 +216,7 @@ class ModsPlugin extends SchemaPlugin {
 		$entries = $record->getEntries();
 		list($authors, $title) = $this->getAuthorsAndTitle($entries);
 		$archive =& $record->getArchive();
+		if (!$archive || !$archive->getEnabled()) return false;
 
 		list($version, $defineTermsContextId) = $this->getRtVersion($archive);
 		if ($version) {
@@ -230,6 +231,7 @@ class ModsPlugin extends SchemaPlugin {
 		$templateMgr->assign('authors', $authors);
 		$templateMgr->assign('entries', $entries);
 		$templateMgr->display($this->getTemplatePath() . 'record.tpl', null);
+		return true;
 	}
 
 	/**

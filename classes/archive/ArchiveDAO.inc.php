@@ -32,16 +32,17 @@ class ArchiveDAO extends DAO {
 	/**
 	 * Retrieve a archive by ID.
 	 * @param $archiveId int
+	 * @param $enabledOnly boolean
 	 * @return Archive
 	 */
-	function &getArchive($archiveId) {
+	function &getArchive($archiveId, $enabledOnly = true) {
 		// First check the in-memory archive cache
 		if (isset($this->archiveCache[$archiveId])) {
 			return $this->archiveCache[$archiveId];
 		}
 
 		$result = &$this->retrieve(
-			'SELECT * FROM archives WHERE archive_id = ?', $archiveId
+			'SELECT * FROM archives WHERE archive_id = ?' . ($enabledOnly?' AND enabled = 1':''), $archiveId
 		);
 
 		$returner = null;
@@ -60,11 +61,12 @@ class ArchiveDAO extends DAO {
 	/**
 	 * Retrieve a archive by public archive ID.
 	 * @param $publicArchiveId string
+	 * @param $enabledOnly boolean
 	 * @return Archive
 	 */
-	function &getArchiveByPublicArchiveId($publicArchiveId) {
+	function &getArchiveByPublicArchiveId($publicArchiveId, $enabledOnly = true) {
 		$result = &$this->retrieve(
-			'SELECT * FROM archives WHERE public_archive_id = ?', $publicArchiveId
+			'SELECT * FROM archives WHERE public_archive_id = ?' . ($enabledOnly?' AND enabled = 1':''), $publicArchiveId
 		);
 
 		$returner = null;
@@ -90,6 +92,7 @@ class ArchiveDAO extends DAO {
 		$archive->setArchiveId($row['archive_id']);
 		$archive->setPublicArchiveId($row['public_archive_id']);
 		$archive->setTitle($row['title']);
+		$archive->setEnabled($row['enabled']);
 		$archive->setDescription($row['description']);
 		$archive->setUrl($row['url']);
 		$archive->setHarvesterPluginName($row['harvester_plugin']);
@@ -106,7 +109,7 @@ class ArchiveDAO extends DAO {
 	function insertArchive(&$archive) {
 		$this->update(
 			'INSERT INTO archives
-				(public_archive_id, title, description, url, harvester_plugin)
+				(public_archive_id, title, description, url, harvester_plugin, enabled)
 				VALUES
 				(?, ?, ?, ?, ?)',
 			array(
@@ -114,7 +117,8 @@ class ArchiveDAO extends DAO {
 				$archive->getTitle(),
 				$archive->getDescription(),
 				$archive->getUrl(),
-				$archive->getHarvesterPluginName()
+				$archive->getHarvesterPluginName(),
+				$archive->getEnabled()?1:0
 			)
 		);
 
@@ -139,7 +143,8 @@ class ArchiveDAO extends DAO {
 					title = ?,
 					description = ?,
 					url = ?,
-					harvester_plugin = ?
+					harvester_plugin = ?,
+					enabled = ?
 				WHERE archive_id = ?',
 			array(
 				$archive->getPublicArchiveId(),
@@ -147,6 +152,7 @@ class ArchiveDAO extends DAO {
 				$archive->getDescription(),
 				$archive->getUrl(),
 				$archive->getHarvesterPluginName(),
+				$archive->getEnabled()?1:0,
 				$archive->getArchiveId()
 			)
 		);
@@ -180,11 +186,13 @@ class ArchiveDAO extends DAO {
 	
 	/**
 	 * Retrieve all archives.
+	 * @param $enabledOnly boolean
+	 * @param $rangeInfo object
 	 * @return DAOResultFactory containing matching archives
 	 */
-	function &getArchives($rangeInfo = null) {
+	function &getArchives($enabledOnly = true, $rangeInfo = null) {
 		$result = &$this->retrieveRange(
-			'SELECT * FROM archives',
+			'SELECT * FROM archives' . ($enabledOnly?' WHERE enabled = 1':''),
 			false, $rangeInfo
 		);
 

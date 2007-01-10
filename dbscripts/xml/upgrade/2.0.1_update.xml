@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE data SYSTEM "../dtd/xmldata.dtd">
+
+<!--
+  * 2.0.1_update.xml
+  *
+  * Copyright (c) 2005-2007 John Willinsky and Alec Smecher
+  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
+  *
+  * 2.0.1 database updates XML file.
+  *
+  * $Id$
+  -->
+
+<data>
+	<!-- Bug #2440 -->
+	<sql>
+		<query>
+			UPDATE archives SET enabled = 1
+		</query>
+	</sql>
+
+</data>
