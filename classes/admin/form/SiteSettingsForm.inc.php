@@ -47,7 +47,8 @@ class SiteSettingsForm extends Form {
 			'about' => $site->getAbout(),
 			'contactName' => $site->getContactName(),
 			'contactEmail' => $site->getContactEmail(),
-			'adminUsername' => $site->getUsername()
+			'adminUsername' => $site->getUsername(),
+			'enableSubmit' => $site->getSetting('enableSubmit')
 		);
 	}
 	
@@ -56,7 +57,7 @@ class SiteSettingsForm extends Form {
 	 */
 	function readInputData() {
 		$this->readUserVars(
-			array('title', 'intro', 'about', 'redirect', 'contactName', 'contactEmail', 'adminUsername', 'adminPassword', 'adminPassword2')
+			array('title', 'intro', 'about', 'redirect', 'contactName', 'contactEmail', 'adminUsername', 'adminPassword', 'adminPassword2', 'enableSubmit')
 		);
 	}
 	
@@ -73,6 +74,7 @@ class SiteSettingsForm extends Form {
 		$site->setContactEmail($this->getData('contactEmail'));
 		$site->setUsername($this->getData('adminUsername'));
 		if ($this->getData('adminPassword') != '') $site->setPassword(Validation::encryptCredentials($this->getData('adminUsername'), $this->getData('adminPassword')));
+		$site->updateSetting('enableSubmit', $this->getData('enableSubmit'));
 	}
 	
 }

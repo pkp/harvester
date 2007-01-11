@@ -19,6 +19,9 @@ class AddHandler extends Handler {
 	 * Display add page.
 	 */
 	function index() {
+		$site =& Request::getSite();
+		if (!$site->getSetting('enableSubmit')) Request::redirect('index');
+
 		AddHandler::validate();
 		AddHandler::setupTemplate();
 
@@ -33,6 +36,9 @@ class AddHandler extends Handler {
 	 * Save changes to a archive's settings.
 	 */
 	function updateArchive() {
+		$site =& Request::getSite();
+		if (!$site->getSetting('enableSubmit')) Request::redirect('index');
+
 		AddHandler::validate();
 		
 		import('admin.form.ArchiveForm');

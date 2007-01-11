@@ -28,6 +28,8 @@ class IndexHandler extends Handler {
 		$recordDao =& DAORegistry::getDAO('RecordDAO');
 		$templateMgr->assign('recordCount', $recordDao->getRecordCount());
 
+		$templateMgr->assign('enableSubmit', $site->getSetting('enableSubmit'));
+
 		$templateMgr->display('index/index.tpl');
 	}
 

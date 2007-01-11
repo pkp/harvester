@@ -233,6 +233,8 @@ Your server currently supports mbstring: <strong>{$supportsMBString}</strong>]]>
 	<message key="admin.settings.contactEmail">Email of principal contact</message>
 	<message key="admin.settings.form.contactNameRequired">The name of the principal contact is required.</message>
 	<message key="admin.settings.form.contactEmailRequired">The email address of the principal contact is required.</message>
+	<message key="admin.settings.options">Options</message>
+	<message key="admin.settings.options.enableSubmit">Enable anonymous users to submit their archives for indexing.</message>
 	<message key="admin.settings.siteLanguage">Site language</message>
 
 	<message key="admin.siteManagement">Site Management</message>

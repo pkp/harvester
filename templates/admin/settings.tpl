@@ -49,6 +49,13 @@
 		<td class="label">{fieldLabel name="contactEmail" key="admin.settings.contactEmail" required="true"}</td>
 		<td class="value"><input type="text" id="contactEmail" name="contactEmail" value="{$contactEmail|escape}" size="40" maxlength="90" class="textField" /></td>
 	</tr>
+	<tr valign="top">
+		<td class="label">{translate key="admin.settings.options"}</td>
+		<td class="value">
+			<input type="checkbox" {if $enableSubmit}checked {/if}id="enableSubmit" name="enableSubmit" value="1" />&nbsp;
+			{fieldLabel name="enableSubmit" key="admin.settings.options.enableSubmit"}
+		</td>
+	</tr>
 </table>
 
 <p><input type="submit" value="{translate key="common.save"}" class="button defaultButton" /> <input type="button" value="{translate key="common.cancel"}" class="button" onclick="document.location.href='{url page="admin"}'" /></p>
