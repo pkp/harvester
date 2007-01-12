@@ -34,6 +34,7 @@ class AdminArchiveHandler extends AdminHandler {
 		$templateMgr = &TemplateManager::getManager();
 		$templateMgr->assign_by_ref('archives', $archives);
 		$templateMgr->assign('harvesters', $plugins);
+		if ($rangeInfo) $templateMgr->assign('archivesPage', $rangeInfo->getPage());
 		$templateMgr->display('admin/archives.tpl');
 	}
 	
@@ -97,7 +98,7 @@ class AdminArchiveHandler extends AdminHandler {
 			$archiveDao->deleteArchiveById($archiveId);
 		}
 		
-		Request::redirect('admin', 'archives');
+		Request::redirect('admin', 'archives', null, array('archivesPage' => Request::getUserVar('archivesPage')));
 	}
 	
 	/**
