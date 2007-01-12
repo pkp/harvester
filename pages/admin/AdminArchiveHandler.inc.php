@@ -93,6 +93,10 @@ class AdminArchiveHandler extends AdminHandler {
 		
 		$archiveDao = &DAORegistry::getDAO('ArchiveDAO');
 		
+		// Disable timeout, as this operation may take
+		// a long time.
+		@set_time_limit(0);
+
 		if (isset($args) && isset($args[0])) {
 			$archiveId = $args[0];
 			$archiveDao->deleteArchiveById($archiveId);

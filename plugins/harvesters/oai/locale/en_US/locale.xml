@@ -20,6 +20,7 @@
 	<message key="plugins.harvesters.oai.archive.form.fetchMetadata.warning">This form will be automatically populated with values fetched from the OAI repository's metadata. Current field values will be replaced. Are you sure you wish to continue?</message>
 	<message key="plugins.harvesters.oai.archive.form.harvesterUrlRequired">The OAI URL field is required.</message>
 	<message key="plugins.harvester.oai.archive.form.harvesterUrlInvalid">The specified OAI URL is not valid. Please check the URL and try again.</message>
+	<message key="plugins.harvester.oai.archive.form.harvesterUrlDuplicate">The specified OAI URL is already in use by another archive.</message>
 	<message key="plugins.harvesters.oai.archive.form.harvesterUrl.description">e.g. http://www.yourarchive.com/oai/index.php</message>
 	<message key="plugins.harvesters.oai.archive.form.adminEmail">Admin Email</message>
 	<message key="plugins.harvesters.oai.archive.form.adminEmailInvalid">The administrator email address you supplied is not valid.</message>

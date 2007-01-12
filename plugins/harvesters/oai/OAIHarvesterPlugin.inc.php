@@ -57,6 +57,18 @@ class OAIHarvesterPlugin extends HarvesterPlugin {
 		$form->addCheck(new FormValidatorInSet($form, 'oaiIndexMethod', 'required', 'plugins.harvesters.oai.archive.form.oaiIndexMethodRequired', array(OAI_INDEX_METHOD_LIST_RECORDS, OAI_INDEX_METHOD_LIST_IDENTIFIERS)));
 		$form->addCheck(new FormValidatorCustom($form, 'harvesterUrl', 'required', 'plugins.harvester.oai.archive.form.harvesterUrlInvalid', array(&$oaiHarvester, 'validateHarvesterURL')));
 		$form->addCheck(new FormValidatorEmail($form, 'adminEmail', Validation::isLoggedIn()?'optional':'required', 'plugins.harvesters.oai.archive.form.adminEmailInvalid'));
+		$form->addCheck(new FormValidatorCustom($form, 'harvesterUrl', 'required', 'plugins.harvester.oai.archive.form.harvesterUrlDuplicate', array(&$this, 'duplicateHarvesterUrlDoesNotExist'), array(Request::getUserVar('archiveId'))));
+	}
+
+	function duplicateHarvesterUrlDoesNotExist($harvesterUrl, $archiveId) {
+		$archiveDao =& DAORegistry::getDAO('ArchiveDAO');
+		$result =& $archiveDao->retrieve(
+			'SELECT a.archive_id FROM archives a, archive_settings s WHERE s.setting_name = ? AND s.archive_id = a.archive_id AND s.setting_value = ? AND a.archive_id <> ?',
+			array('harvesterUrl', trim($harvesterUrl), (int) $archiveId)
+		);
+		$returner = ($result->RecordCount() == 0);
+		unset($result);
+		return $returner;
 	}
 
 	function getAdditionalArchiveFormFields() {
