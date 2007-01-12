@@ -56,10 +56,11 @@ class OAIHarvesterPlugin extends HarvesterPlugin {
 		$form->addCheck(new FormValidator($form, 'harvesterUrl', 'required', 'plugins.harvesters.oai.archive.form.harvesterUrlRequired'));
 		$form->addCheck(new FormValidatorInSet($form, 'oaiIndexMethod', 'required', 'plugins.harvesters.oai.archive.form.oaiIndexMethodRequired', array(OAI_INDEX_METHOD_LIST_RECORDS, OAI_INDEX_METHOD_LIST_IDENTIFIERS)));
 		$form->addCheck(new FormValidatorCustom($form, 'harvesterUrl', 'required', 'plugins.harvester.oai.archive.form.harvesterUrlInvalid', array(&$oaiHarvester, 'validateHarvesterURL')));
+		$form->addCheck(new FormValidatorEmail($form, 'adminEmail', Validation::isLoggedIn()?'optional':'required', 'plugins.harvesters.oai.archive.form.adminEmailInvalid'));
 	}
 
 	function getAdditionalArchiveFormFields() {
-		return array('harvesterUrl', 'oaiIndexMethod');
+		return array('harvesterUrl', 'oaiIndexMethod', 'adminEmail');
 	}
 
 	function displayArchiveForm(&$form, &$templateMgr) {
@@ -149,6 +150,49 @@ class OAIHarvesterPlugin extends HarvesterPlugin {
 		$templateMgr->assign_by_ref('archive', $archive);
 
 		$templateMgr->display($this->getTemplatePath() . '/management.tpl');
+	}
+
+	function manage($verb, $args) {
+		switch ($verb) {
+			case 'fetchArchiveInfo':
+				// The user has requested that the archive form be filled out given
+				// the OAI URL.
+				$harvesterUrl = Request::getUserVar('harvesterUrl');
+				$archiveId = (int) array_shift($args);
+
+				$archiveDao =& DAORegistry::getDAO('ArchiveDAO');
+				$archive =& $archiveDao->getArchive($archiveId);
+
+				$this->import('OAIHarvester');
+				$this->import('OAIXMLHandler');
+
+				$oaiHarvester =& new OAIHarvester($archive);
+				$metadata = $oaiHarvester->getMetadata($harvesterUrl);
+
+				import('admin.form.ArchiveForm');
+				$archiveForm = &new ArchiveForm($archiveId);
+				$archiveForm->initData();
+				$archiveForm->readInputData();
+				
+				$metadataMap = array(
+					'repositoryName' => 'title',
+					'adminEmail' => 'adminEmail',
+					'description' => 'description'
+				);
+
+				foreach ($metadataMap as $oaiField => $harvesterField) {
+					if (isset($metadata[$oaiField])) {
+						$archiveForm->setData($harvesterField, $metadata[$oaiField]);
+					}
+				}
+
+				import('pages.admin.AdminArchiveHandler');
+				AdminArchiveHandler::setupTemplate(true);
+				$archiveForm->display();
+
+				return true;
+		}
+		return HarvesterPlugin::manage($verb, $args);
 	}
 }
 

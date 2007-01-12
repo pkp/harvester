@@ -115,15 +115,6 @@ class AdminArchiveHandler extends AdminHandler {
 			if ($archive) {
 				$harvesterPlugin =& $archive->getHarvesterPlugin();
 				$harvesterPlugin->displayManagementPage($archive);
-
-				/* $plugins =& PluginRegistry::loadCategory('harvesters');
-				$templateMgr = &TemplateManager::getManager();
-				$templateMgr->assign('numRecords', $archive->updateRecordCount());
-				$templateMgr->assign('lastIndexed', $archive->getLastIndexedDate());
-				$templateMgr->assign('title', $archive->getTitle());
-				$templateMgr->assign('archiveId', $archive->getArchiveId());
-				$templateMgr->assign_by_ref('archive', $archive);
-				$templateMgr->display('admin/manage.tpl'); */
 				return;
 			}
 		}

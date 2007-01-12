@@ -83,6 +83,12 @@ class OAIHarvester extends Harvester {
 	}
 
 	function validateHarvesterURL($harvesterUrl) {
+		$result = $this->getMetadata($harvesterUrl);
+		if (is_array($result) && !empty($result['repositoryName'])) return true;
+		return false;
+	}
+
+	function getMetadata($harvesterUrl) {
 		$parser =& new XMLParser();
 		$xmlHandler =& new OAIXMLHandler($this, 'Identify');
 
@@ -95,8 +101,7 @@ class OAIHarvester extends Harvester {
 		unset($parser);
 		unset($xmlHandler);
 
-		if (is_array($result) && !empty($result['repositoryName'])) return true;
-		return false;
+		return $result;
 	}
 
 	/**
