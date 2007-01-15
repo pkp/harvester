@@ -52,7 +52,6 @@ class harvest extends CommandLineTool {
 		foreach ($argv as $arg) switch ($arg) {
 			case 'verbose':
 				$this->params['callback'] = array(&$this, 'statusCallback');
-				break;
 			default:
 				if (($i = strpos($arg, '=')) !== false) {
 					// Treat the parameter like a name=value pair
@@ -79,7 +78,9 @@ class harvest extends CommandLineTool {
 			. "\tusage: Display additional usage information for the particular archive\n"
 			. "\tskipIndexing: Skip flushing and creation of search indexing\n"
 			. "Additional flags for each harvester can be listed using:\n"
-			. "\t{$this->scriptName} [archive ID] usage\n";
+			. "\t{$this->scriptName} [archive ID] usage\n\n"
+			. "For example, to update all records using the OAI harvester:\n"
+			. "\t{$this->scriptName} all from=last\n";
 	}
 	
 	/**
@@ -107,16 +108,17 @@ class harvest extends CommandLineTool {
 			}
 			
 			echo 'Selected archive: ' . $archive->getTitle() . "\n";
-			$recordCount = $recordDao->getRecordCount($archive->getArchiveId());
+			$oldRecordCount = $recordDao->getRecordCount($archive->getArchiveId());
 			if (isset($this->params['flush'])) {
 				echo 'Flushing metadata index for archive... ';
 				$recordDao->deleteRecordsByArchiveId(
 					$archive->getArchiveId(),
 					!isset($this->params['skipIndexing'])
 				);
-				echo $recordCount . " records deleted.\n";
-			} elseif ($recordCount > 0) {
-				echo "Not flushing an existing $recordCount records.\n";
+				echo $oldRecordCount . " records deleted.\n";
+				$oldRecordCount = 0;
+			} elseif ($oldRecordCount > 0) {
+				echo "Not flushing an existing $oldRecordCount records.\n";
 			}
 
 			$fetchStartTime = time();
@@ -127,17 +129,25 @@ class harvest extends CommandLineTool {
 			$fetchEndTime = time();
 			$timeElapsed = $fetchEndTime - $fetchStartTime;
 			$recordCount = $recordDao->getRecordCount($archive->getArchiveId());
-			if ($timeElapsed > 0) $recordsPerSecond = $recordCount / $timeElapsed;
+			$harvestedRecords = $recordCount - $oldRecordCount;
+			if ($timeElapsed > 0) $recordsPerSecond = $harvestedRecords / $timeElapsed;
 			else $recordsPerSecond = 0;
 			$recordsPerSecond = number_format($recordsPerSecond, 2);
 
-			echo "Finished; $recordCount records indexed in $timeElapsed seconds ($recordsPerSecond records per second).\n";
+			echo "Finished:\n";
+			echo "\t$harvestedRecords records indexed\n";
+			echo "\t$timeElapsed seconds elapsed\n";
+			echo "\t$recordsPerSecond records per second\n";
+			echo "\t$oldRecordCount records kept from past harvests\n";
+			echo "\t$recordCount records total.\n";
 			if ($errors = $plugin->getErrors()) {
 				echo "Errors/Warnings:\n";
-				foreach ($errors as $error) {
+				foreach (array_unique($errors) as $error) {
 					echo "\t$error\n";
 				}
+				$plugin->clearErrors();
 				$hadErrors = true;
+				echo "\n";
 			}
 			unset($archive);
 		} else {

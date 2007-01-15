@@ -60,17 +60,17 @@ class XMLParser {
 		import('file.FileWrapper');
 		$wrapper = &FileWrapper::wrapper($file);
 
-		while (is_object($newWrapper = $wrapper->open())) if (is_object($newWrapper)) { // Handle redirects
+		while (is_object($newWrapper = $wrapper->open())) { // Handle redirects
 			unset($wrapper);
 			$wrapper =& $newWrapper;
 			unset ($newWrapper);
 		}
 
-		if (!$wrapper) {
+		if (!$wrapper || !$newWrapper) {
 			$result = false;
 			return $result;
 		}
-		
+
 		while ($data = $wrapper->read()) {
 			if (!xml_parse($parser, $data, $wrapper->eof())) {
 				echo xml_error_string(xml_get_error_code($parser));
@@ -80,7 +80,7 @@ class XMLParser {
 				return $result;
 			}
 		}
-		
+
 		$wrapper->close();
 		$this->destroyParser($parser);
 		

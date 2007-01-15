@@ -249,6 +249,15 @@ class DAO {
 		if ($d === null) return null;
 		return $this->_dataSource->UserDate($d, 'Y-m-d');
 	}
+
+	/**
+	 * Get the driver for this connection.
+	 * @return string
+	 */
+	function getDriver() {
+		$conn =& DBConnection::getInstance();
+		return $conn->getDriver();
+	}
 }
 
 ?>

@@ -73,8 +73,10 @@ class FileWrapper {
 	 * Close the file.
 	 */
 	function close() {
-		fclose($this->fp);
-		unset($this->fp);
+		if (isset($this->fp)) {
+			fclose($this->fp);
+			unset($this->fp);
+		}
 	}
 	
 	/**

@@ -192,7 +192,7 @@ class ArchiveDAO extends DAO {
 	 */
 	function &getArchives($enabledOnly = true, $rangeInfo = null) {
 		$result = &$this->retrieveRange(
-			'SELECT * FROM archives' . ($enabledOnly?' WHERE enabled = 1':''),
+			'SELECT * FROM archives' . ($enabledOnly?' WHERE enabled = 1 ORDER BY title':''),
 			false, $rangeInfo
 		);
 

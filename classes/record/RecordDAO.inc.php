@@ -83,6 +83,7 @@ class RecordDAO extends DAO {
 	}
 
 	function deleteEntriesByRecordId($recordId) {
+		// FIXME: Remove mysql-specific optimization
 		$this->update('DELETE FROM entry_attributes USING entries, entry_attributes WHERE entries.record_id = ? AND entry_attributes.entry_id = entries.entry_id', $recordId);
 		return $this->update('DELETE FROM entries WHERE record_id = ?', $recordId);
 	}
@@ -210,9 +211,16 @@ class RecordDAO extends DAO {
 	 * Delete the records for a specified archive, INCLUDING ALL DEPENDENT ITEMS.
 	 */
 	function deleteRecordsByArchiveId($archiveId) {
-		$records =& $this->getRecords($archiveId);
-		while ($record =& $records->next()) {
-			$this->deleteRecord($record);
+		switch ($this->getDriver()) {
+			case 'mysql':
+				$this->update('DELETE records, entries, search_objects, entry_attributes, search_object_keywords FROM records LEFT JOIN entries ON (records.record_id = entries.record_id) LEFT JOIN search_objects ON (search_objects.record_id = records.record_id) LEFT JOIN search_object_keywords ON (search_object_keywords.object_id = search_objects.object_id) LEFT JOIN entry_attributes ON (entry_attributes.entry_id = entries.entry_id) WHERE records.archive_id = ?', $archiveId);
+				break;
+			default:
+				$records =& $this->getRecords($archiveId);
+				while ($record =& $records->next()) {
+					$this->deleteRecord($record);
+					unset($record);
+				}
 		}
 	}
 

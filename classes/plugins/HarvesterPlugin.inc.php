@@ -271,6 +271,13 @@ class HarvesterPlugin extends Plugin {
 	}
 
 	/**
+	 * Clear the error messages associated with this plugin.
+	 */
+	function clearErrors() {
+		$this->errors = array();
+	}
+
+	/**
 	 * Get the harvest update parameters from the Request object.
 	 * @param $archive object
 	 * @return array

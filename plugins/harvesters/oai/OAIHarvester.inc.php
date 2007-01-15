@@ -175,7 +175,9 @@ class OAIHarvester extends Harvester {
 		foreach (array('set', 'from', 'until') as $name) {
 			if (isset($params[$name])) $harvestingParameters[$name] = $params[$name];
 		}
-		$result =& $parser->parse($this->addParameters($this->oaiUrl, $harvestingParameters));
+		$harvestUrl = $this->addParameters($this->oaiUrl, $harvestingParameters);
+		if (isset($params['verbose'])) echo "Harvest URL: $harvestUrl\n";
+		$result =& $parser->parse($harvestUrl);
 
 		unset($parser);
 		unset($xmlHandler);

@@ -212,6 +212,7 @@ class OAIXMLHandler extends XMLParserHandler {
 				break;
 			case 'error':
 				$this->oaiHarvester->addError($this->characterData);
+				$this->oaiHarvester->setStatus(false);
 				break;
 			case 'request':
 			case 'requestURL': // (OAI 1.1)

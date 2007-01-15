@@ -165,7 +165,7 @@ class AdminArchiveHandler extends AdminHandler {
 				return $templateMgr->display('common/message.tpl');
 			} else {
 				$templateMgr = &TemplateManager::getManager();
-				$templateMgr->assign('errors', $plugin->getErrors());
+				$templateMgr->assign('errors', array_unique($plugin->getErrors()));
 				$templateMgr->assign('archiveId', $archiveId);
 				return $templateMgr->display('admin/updateFailed.tpl');
 			}
