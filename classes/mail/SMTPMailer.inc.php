@@ -67,19 +67,19 @@ class SMTPMailer {
 			return false;
 		
 		if (!$this->receive('220'))
-			return $this->disconnect();
+ 			return $this->disconnect('Did not receive expected 220');
 		
 		// Send HELO/EHLO command
 		if (!$this->send($this->auth ? 'EHLO' : 'HELO', Request::getServerHost()))
-			return $this->disconnect();
+ 			return $this->disconnect('Could not send HELO/HELO');
 		
 		if (!$this->receive('250'))
-			return $this->disconnect();
+ 			return $this->disconnect('Did not receive expected 250 (1)');
 		
 		if ($this->auth) {
 			// Perform authentication
 			if (!$this->authenticate())
-				return $this->disconnect();
+ 				return $this->disconnect('Could not authenticate');
 		}
 		
 		// Send MAIL command
@@ -93,10 +93,10 @@ class SMTPMailer {
 		}
 		
 		if (!$this->send('MAIL', 'FROM:<' . $sender . '>'))
-			return $this->disconnect();
+ 			return $this->disconnect('Could not send sender');
 		
 		if (!$this->receive('250'))
-			return $this->disconnect();
+ 			return $this->disconnect('Did not receive expected 250 (2)');
 		
 		// Send RCPT command(s)
 		$rcpt = array();
@@ -108,52 +108,52 @@ class SMTPMailer {
 			$rcpt = array_merge($rcpt, $addrs);
 		foreach ($rcpt as $addr) {
 			if (!$this->send('RCPT', 'TO:<' . $addr['email'] .'>'))
-				return $this->disconnect();
+ 				return $this->disconnect('Could not send recipients');
 			if (!$this->receive(array('250', '251')))
-				return $this->disconnect();
+ 				return $this->disconnect('Did not receive expected 250 or 251');
 		}
 		
 		// Send headers and body
 		if (!$this->send('DATA'))
-			return $this->disconnect();
+ 			return $this->disconnect('Could not send DATA');
 		
 		if (!$this->receive('354'))
-			return $this->disconnect();
+ 			return $this->disconnect('Did not receive expected 354');
 		
 		if (!$this->send('To:', empty($recipients) ? 'undisclosed-recipients:;' : $recipients))
-			return $this->disconnect();
+ 			return $this->disconnect('Could not send recipients (2)');
 		
 		if (!$this->send('Subject:', $subject))
-			return $this->disconnect();
+ 			return $this->disconnect('Could not send subject');
 		
 		$lines = explode(MAIL_EOL, $headers);
 		for ($i = 0, $num = count($lines); $i < $num; $i++) {
 			if (preg_match('/^bcc:/i', $lines[$i]))
 				continue;
 			if (!$this->send($lines[$i]))
-				return $this->disconnect();
+ 				return $this->disconnect('Could not send headers');
 		}
 		
 		if (!$this->send(''))
-			return $this->disconnect();
+ 			return $this->disconnect('Could not send CR');
 		
 		$lines = explode(MAIL_EOL, $body);
 		for ($i = 0, $num = count($lines); $i < $num; $i++) {
 			if (substr($lines[$i], 0, 1) == '.')
 				$lines[$i] = '.' . $lines[$i];
 			if (!$this->send($lines[$i]))
-				return $this->disconnect();
+ 				return $this->disconnect('Could not send body');
 		}
 		
 		// Mark end of data
 		if (!$this->send('.'))
-			return $this->disconnect();
+ 			return $this->disconnect('Could not send EOT');
 		
 		if (!$this->receive('250'))
-			return $this->disconnect();
+ 			return $this->disconnect('Did not receive expected 250 (3)');
 		
 		// Tear down connection
-		return $this->disconnect(true);
+ 		return $this->disconnect();
 	}
 	
 	/**
@@ -161,7 +161,7 @@ class SMTPMailer {
 	 * @return boolean
 	 */
 	function connect() {
-		$this->socket = @fsockopen($this->server, $this->port, $errno, $errstr, 30);
+ 		$this->socket = fsockopen($this->server, $this->port, $errno, $errstr, 30);
 		if (!$this->socket)
 			return false;
 		return true;
@@ -172,14 +172,17 @@ class SMTPMailer {
 	 * @param $success boolean
 	 * @return boolean
 	 */
-	function disconnect($success = false) {
-		$rc = false;
-		if ($this->send('QUIT')) {
-			if ($this->receive('221'))
-				$rc = true;
+ 	function disconnect($error = '') {
+ 		if (!$this->send('QUIT') || !$this->receive('221') && empty($error)) {
+ 			$error = 'Unable to disconnect from mail server';
 		}
 		fclose($this->socket);
-		return ($rc && $success);
+
+		if (!empty($error)) {
+			error_log('OJS SMTPMailer: ' . $error);
+			return false;
+		}
+ 		return true;
 	}
 	
 	/**
