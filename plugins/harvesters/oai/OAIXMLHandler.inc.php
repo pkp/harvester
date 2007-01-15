@@ -145,6 +145,9 @@ class OAIXMLHandler extends XMLParserHandler {
 			case 'header':
 				unset($this->header);
 				$this->header = array();
+				if (isset($attributes['status'])) {
+					$this->header['status'] = $attributes['status'];
+				}
 				break;
 			default:
 				$this->oaiHarvester->addError(Locale::translate('plugins.harvesters.oai.errors.unknownHeaderTag', array('tag' => $tag)));
@@ -152,6 +155,8 @@ class OAIXMLHandler extends XMLParserHandler {
 	}
 
 	function endElement(&$parser, $tag) {
+		$isDeletion = $this->header['status'] == 'deleted';
+
 		if (isset($this->delegatedParser)) {
 			if (--$this->depth < 0) {
 				unset($this->delegatedParser);
@@ -166,18 +171,25 @@ class OAIXMLHandler extends XMLParserHandler {
 				$schema =& $this->oaiHarvester->getSchema();
 				$record =& $this->oaiHarvester->getRecordByIdentifier($this->header['identifier']);
 				if (!$record) {
-					// This is a new record.
-					$record =& new Record();
-					$archive =& $this->oaiHarvester->getArchive();
-					$record->setIdentifier($this->header['identifier']);
-					$record->setArchiveId($archive->getArchiveId());
-					$record->setSchemaId($schema->getSchemaId());
-					$record->setDatestamp($this->header['datestamp']);
-					$this->recordDao->insertRecord($record);
+					if (!$isDeletion) {
+						// This is a new record.
+						$record =& new Record();
+						$archive =& $this->oaiHarvester->getArchive();
+						$record->setIdentifier($this->header['identifier']);
+						$record->setArchiveId($archive->getArchiveId());
+						$record->setSchemaId($schema->getSchemaId());
+						$record->setDatestamp($this->header['datestamp']);
+						$this->recordDao->insertRecord($record);
+					}
+				} elseif ($isDeletion) {
+					$this->recordDao->deleteRecord($record);
+					unset($record);
+					$record = null;
 				} else {
 					if (isset($this->params['skipExistingEntries'])) {
 						// Make sure the record isn't overwritten
 						unset($record);
+						$record = null;
 					} else {
 						// This is an old record: Delete old entries and indexing
 						if (!isset($this->params['skipIndexing'])) {
@@ -185,14 +197,18 @@ class OAIXMLHandler extends XMLParserHandler {
 							$searchDao->deleteRecordObjects($record->getRecordId());
 						}
 						$this->recordDao->deleteEntriesByRecordId($record->getRecordId());
+
+						// Prepare to re-harvest an existing record.
 						$record->setDatestamp($this->header['datestamp']);
 						$this->recordDao->updateRecord($record);
 					}
 				}
 
+				// Give the record object to the designated XML parser (i.e. for the schema
+				// in question). If this is a deletion, $record will be null.
 				$this->oaiHarvester->setRecord($record);
 
-				if ($this->verb === 'ListIdentifiers') {
+				if ($this->verb === 'ListIdentifiers' && !$isDeletion) {
 					// Harvesting via ListIdentifiers: we need to separately request
 					// each record.
 					$this->result =& $this->oaiHarvester->updateRecord($this->header['identifier'], $this->params);

@@ -180,21 +180,30 @@ class SearchDAO extends DAO {
 	 * @param $fieldId int optional
 	 */
 	function deleteRecordObjects($recordId, $fieldId = null) {
-		$sql = 'SELECT object_id FROM search_objects WHERE record_id = ?' . ($fieldId?' AND raw_field_id = ?':'');
-		$result = &$this->retrieve(
-			$sql,
-			$fieldId?
-				array($recordId,$fieldId):
-				$recordId
-		);
-		while (!$result->EOF) {
-			$objectId = $result->fields[0];
-			$this->update('DELETE FROM search_object_keywords WHERE object_id = ?', $objectId);
-			$this->update('DELETE FROM search_objects WHERE object_id = ?', $objectId);
-			$result->MoveNext();
+		switch ($this->getDriver()) {
+			case 'mysql':
+				$this->update(
+					'DELETE search_objects, search_object_keywords FROM search_objects LEFT JOIN search_object_keywords ON (search_objects.object_id = search_object_keywords.object_id) WHERE search_objects.record_id = ?' . ($fieldId?' AND search_objects.raw_field_id = ?':''),
+					$fieldId?array($recordId, $fieldId):$recordId
+				);
+				break;
+			default:
+				$result = &$this->retrieve(
+					'SELECT object_id FROM search_objects WHERE record_id = ?' . ($fieldId?' AND raw_field_id = ?':''),
+					$fieldId?
+						array($recordId,$fieldId):
+						$recordId
+				);
+				while (!$result->EOF) {
+					$objectId = $result->fields[0];
+					$this->update('DELETE FROM search_object_keywords WHERE object_id = ?', $objectId);
+					$this->update('DELETE FROM search_objects WHERE object_id = ?', $objectId);
+					$result->MoveNext();
+				}
+				$result->Close();
+				unset($result);
+				break;
 		}
-		$result->Close();
-		unset($result);
 	}
 	
 	/**
