@@ -155,7 +155,7 @@ class OAIXMLHandler extends XMLParserHandler {
 	}
 
 	function endElement(&$parser, $tag) {
-		$isDeletion = $this->header['status'] == 'deleted';
+		$isDeletion = isset($this->header['status']) && $this->header['status'] == 'deleted';
 
 		if (isset($this->delegatedParser)) {
 			if (--$this->depth < 0) {

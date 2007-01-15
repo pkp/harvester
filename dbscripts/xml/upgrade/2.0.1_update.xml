@@ -13,18 +13,29 @@
   -->
 
 <data>
-	<!-- Bug #2440 -->
+	<!-- Database structure changes. This is much faster than the
+	     schema verification process for small changes. -->
 	<sql>
 		<query>
-			UPDATE archives SET enabled = 1
+			CREATE TABLE captchas (
+				captcha_id SERIAL,
+				session_id varchar(32) NOT NULL,
+				value varchar(20) NOT NULL,
+				date_created datetime NOT NULL
+			)
 		</query>
+		<query>ALTER TABLE archives ADD COLUMN enabled INT</query>
 	</sql>
 
-	<!-- Bug #2446 -->
+	<!-- Bug #2440: Add enabled/disabled flag to archives. Default enabled. -->
+	<sql>
+		<query>UPDATE archives SET enabled = 1</query>
+	</sql>
+
+	<!-- Bug #2446: Add enabled/disabled flag for user site submission. Default enabled. -->
 	<sql>
 		<query>
 			INSERT INTO site_settings (setting_name, setting_value, setting_type) VALUES ('enableSubmit', 1, 'bool')
 		</query>
 	</sql>
-
 </data>

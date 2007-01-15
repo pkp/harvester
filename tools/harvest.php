@@ -117,8 +117,6 @@ class harvest extends CommandLineTool {
 				);
 				echo $oldRecordCount . " records deleted.\n";
 				$oldRecordCount = 0;
-			} elseif ($oldRecordCount > 0) {
-				echo "Not flushing an existing $oldRecordCount records.\n";
 			}
 
 			$fetchStartTime = time();
