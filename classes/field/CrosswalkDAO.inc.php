@@ -103,7 +103,7 @@ class CrosswalkDAO extends DAO {
 				$crosswalk->getDescription(),
 				$crosswalk->getSeq(),
 				$crosswalk->getType(),
-				$crosswalk->getSortable()?true:false
+				$crosswalk->getSortable()?1:0
 			)
 		);
 		
@@ -157,7 +157,7 @@ class CrosswalkDAO extends DAO {
 				$crosswalk->getDescription(),
 				$crosswalk->getSeq(),
 				$crosswalk->getType(),
-				$crosswalk->getSortable()?true:false,
+				$crosswalk->getSortable()?1:0,
 				$crosswalk->getCrosswalkId()
 			)
 		);

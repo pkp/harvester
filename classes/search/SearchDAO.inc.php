@@ -157,7 +157,7 @@ class SearchDAO extends DAO {
 		$result = &$this->retrieveCached(
 			'SELECT
 				o.record_id AS record_id,
-				o.raw_field_id AS raw_field_id,
+				MAX(o.raw_field_id) AS raw_field_id,
 				COUNT(*) AS count
 			FROM
 				records r LEFT JOIN archives a ON (r.archive_id = a.archive_id), search_objects o NATURAL JOIN ' . $sqlFrom . '

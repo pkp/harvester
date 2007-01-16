@@ -103,7 +103,7 @@ class SessionDAO extends DAO {
 				$session->getSecondsLastUsed(),
 				$session->getRemember() ? 1 : 0,
 				$session->getSessionData(),
-				$session->getLoggedIn(),
+				$session->getLoggedIn() ? 1 : 0,
 				$session->getId()
 			)
 		);

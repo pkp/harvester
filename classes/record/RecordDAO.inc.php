@@ -233,12 +233,20 @@ class RecordDAO extends DAO {
 			case 'mysql':
 				$this->update('DELETE records, entries, search_objects, entry_attributes, search_object_keywords FROM records LEFT JOIN entries ON (records.record_id = entries.record_id) LEFT JOIN search_objects ON (search_objects.record_id = records.record_id) LEFT JOIN search_object_keywords ON (search_object_keywords.object_id = search_objects.object_id) LEFT JOIN entry_attributes ON (entry_attributes.entry_id = entries.entry_id) WHERE records.archive_id = ?', $archiveId);
 				break;
+			case 'postgres':
+				$this->update('DELETE FROM search_object_keywords USING search_objects, records WHERE records.archive_id = ? AND records.record_id = search_objects.record_id AND search_object_keywords.object_id = search_objects.object_id', $archiveId);
+				$this->update('DELETE FROM search_objects USING records WHERE records.archive_id = ? AND records.record_id = search_objects.record_id', $archiveId);
+				$this->update('DELETE FROM entry_attributes USING entries, records WHERE records.archive_id = ? AND records.record_id = entries.record_id AND entry_attributes.entry_id = entries.entry_id', $archiveId);
+				$this->update('DELETE FROM entries USING records WHERE records.archive_id = ? AND records.record_id = entries.record_id', $archiveId);
+				$this->update('DELETE FROM records WHERE archive_id = ?', $archiveId);
+				break;
 			default:
 				$records =& $this->getRecords($archiveId);
 				while ($record =& $records->next()) {
 					$this->deleteRecord($record);
 					unset($record);
 				}
+				break;
 		}
 	}
 
@@ -274,6 +282,7 @@ class RecordDAO extends DAO {
 
 		$sortJoin = '';
 		$orderBy = '';
+		$orderSelect = '';
 
 		if ($sort !== null) {
 			if ($archiveId !== null) {
@@ -301,6 +310,7 @@ class RecordDAO extends DAO {
 					}
 					$sortJoin .= '))';
 					$orderBy = 'e.value';
+					$orderSelect = 'e.value';
 				} else {
 					$sortJoin = ' LEFT JOIN search_objects o ON (o.record_id = r.record_id AND (o.raw_field_id = ?';
 					$params[] = array_shift($fieldIds);
@@ -310,6 +320,7 @@ class RecordDAO extends DAO {
 					}
 					$sortJoin .= '))';
 					$orderBy = 'o.object_time DESC';
+					$orderSelect = 'o.object_time';
 				}
 			}
 		}
@@ -317,8 +328,8 @@ class RecordDAO extends DAO {
 		if (isset($archiveId)) $params[] = $archiveId;
 
 		$result = &$this->retrieveRange(
-			'SELECT DISTINCT r.* FROM records r' . $sortJoin .
-			(isset($archiveId)? ' WHERE archive_id = ? ':'') .
+			'SELECT DISTINCT r.*' . (empty($orderSelect)?'':', ' . $orderSelect) . ' FROM records r' . $sortJoin .
+			(isset($archiveId)? ' WHERE r.archive_id = ? ':'') .
 			(empty($orderBy)?'':" ORDER BY $orderBy"),
 			empty($params)?false:(count($params)==1?array_shift($params):$params),
 			$rangeInfo
