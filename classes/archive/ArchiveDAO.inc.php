@@ -111,7 +111,7 @@ class ArchiveDAO extends DAO {
 			'INSERT INTO archives
 				(public_archive_id, title, description, url, harvester_plugin, enabled)
 				VALUES
-				(?, ?, ?, ?, ?)',
+				(?, ?, ?, ?, ?, ?)',
 			array(
 				$archive->getPublicArchiveId(),
 				$archive->getTitle(),
