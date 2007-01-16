@@ -25,12 +25,7 @@
 	<link rel="alternate stylesheet" title="{translate key="icon.small.alt"}" href="{$baseUrl}/styles/small.css" type="text/css" />
 	<link rel="stylesheet" title="{translate key="icon.medium.alt"}" href="{$baseUrl}/styles/medium.css" type="text/css" />
 	<link rel="alternate stylesheet" title="{translate key="icon.large.alt"}" href="{$baseUrl}/styles/large.css" type="text/css" />
-	{foreach from=$stylesheets item=cssFile}
-	<link rel="stylesheet" href="{$baseUrl}/styles/{$cssFile}" type="text/css" />
-	{/foreach}
-	{if $pageStyleSheet}
-	<link rel="stylesheet" href="{$publicFilesDir}/{$pageStyleSheet.uploadName}" type="text/css" />
-	{/if}
+	{if $useStyleSheet}<link rel="stylesheet" href="{$publicFilesDir}/{$useStyleSheet.uploadName}" type="text/css" />{/if}
 	<script type="text/javascript" src="{$baseUrl}/js/general.js"></script>
 	{$additionalHeadData}
 </head>
@@ -39,7 +34,11 @@
 
 <div id="header">
 <h1>
-	<img src="{$publicFilesDir}/logo.png" width="331" height="52" border="0" alt="{translate key="common.harvester2"}" />
+	{if $useCustomLogo}
+		<img src="{$publicFilesDir}/{$useCustomLogo.uploadName}" type="text/css" />
+	{else}
+		<img src="{$publicFilesDir}/logo.png" width="331" height="52" border="0" alt="{translate key="common.harvester2"}" />
+	{/if}
 </h1>
 </div>
 

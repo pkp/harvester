@@ -71,7 +71,10 @@ class TemplateManager extends Smarty {
 			
 			$site = &Request::getSite();
 
-			$this->assign('siteTitle', $site->getTitle());
+			$this->assign('pageTitleTranslated', $site->getTitle());
+			$this->assign('useStyleSheet', $site->getSetting('styleSheet'));
+			$this->assign('useCustomLogo', $site->getSetting('customLogo'));
+
 			$this->assign('footer', $site->getSetting('footer'));
 
 			$locales = &$site->getSupportedLocaleNames();

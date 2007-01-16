@@ -13,8 +13,10 @@
 {assign var="helpTopicId" value="admin.siteSettings"}
 {include file="common/header.tpl"}
 
-<form method="post" action="{url op="saveSettings"}">
+<form method="post" action="{url op="saveSettings"}" enctype="multipart/form-data">
 {include file="common/formErrors.tpl"}
+
+<h3>{translate key="admin.settings.general"}</h3>
 
 <table class="data" width="100%">
 	<tr valign="top">
@@ -29,6 +31,35 @@
 		<td class="label">{fieldLabel name="about" key="admin.settings.aboutDescription"}</td>
 		<td class="value"><textarea name="about" id="about" cols="40" rows="10" class="textArea">{$about|escape}</textarea></td>
 	</tr>
+	<tr valign="top">
+		<td width="20%" class="label">{fieldLabel for="customLogo" key="admin.settings.customLogo"}</td>
+		<td width="80%" class="value">
+			<input type="file" name="customLogo" class="uploadField" /> <input type="submit" name="uploadCustomLogo" value="{translate key="common.upload"}" class="button" />
+			{if $customLogo}
+				<br />
+				{translate key="common.fileName"}: {$customLogo.name} {$customLogo.dateUploaded|date_format:$datetimeFormatShort} <input type="submit" name="deleteCustomLogo" value="{translate key="common.delete"}" class="button" />
+				<br />
+				<img src="{$publicFilesDir}/{$customLogo.uploadName}" width="{$customLogo.width}" height="{$customLogo.height}" border="0" alt="" />
+{/if}
+		</td>
+	</tr>
+	<tr valign="top">
+		<td class="label">{translate key="admin.settings.styleSheet"}</td>
+		<td class="value">
+			<input type="file" name="styleSheet" class="uploadField" /> <input type="submit" name="uploadStyleSheet" value="{translate key="common.upload"}" class="button" />
+			{if $styleSheet}
+				<br />
+				{translate key="common.fileName"}: <a href="{$publicFilesDir}/{$styleSheet.uploadName}" class="file">{$styleSheet.name}</a> {$styleSheet.dateUploaded|date_format:$datetimeFormatShort} <input type="submit" name="deleteStyleSheet" value="{translate key="common.delete"}" class="button" />
+			{/if}
+		</td>
+	</tr>
+</table>
+
+<div class="separator"></div>
+
+<h3>{translate key="admin.settings.administration"}</h3>
+
+<table class="data" width="100%">
 	<tr valign="top">	
 		<td width="20%" class="label">{fieldLabel name="adminUsername" key="user.username"}</td>
 		<td width="80%" class="value"><input type="text" name="adminUsername" id="adminUsername" value="{$adminUsername|escape}" size="20" maxlength="32" class="textField" /></td>

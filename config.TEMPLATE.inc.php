@@ -81,6 +81,22 @@ persistent = On
 ; Enable database debug output (very verbose!)
 debug = Off
 
+
+;;;;;;;;;;;;;;;;;
+; File Settings ;
+;;;;;;;;;;;;;;;;;
+
+[files]
+
+; Path to the directory to store public uploaded files
+; (This directory should be web-accessible and the specified path
+; should be relative to the base Harvester2 directory)
+public_files_dir = public
+
+; Permissions mask for created files and directories
+umask = 0022
+
+
 ;;;;;;;;;;;;;;;;;;
 ; Cache Settings ;
 ;;;;;;;;;;;;;;;;;;

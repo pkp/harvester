@@ -41,8 +41,30 @@ class AdminSettingsHandler extends AdminHandler {
 		
 		$settingsForm = &new SiteSettingsForm();
 		$settingsForm->readInputData();
-		
-		if ($settingsForm->validate()) {
+
+		$editData = false;
+
+		if (Request::getUserVar('uploadStyleSheet')) {
+			if ($settingsForm->uploadStyleSheet('styleSheet')) {
+				$editData = true;
+			} else {
+				$settingsForm->addError('styleSheet', 'admin.settings.styleSheet.invalid');
+			}
+		} elseif (Request::getUserVar('deleteStyleSheet')) {
+			$editData = true;
+			$settingsForm->deleteImage('styleSheet');
+		} elseif (Request::getUserVar('uploadCustomLogo')) {
+			if ($settingsForm->uploadImage('customLogo')) {
+				$editData = true;
+			} else {
+				$settingsForm->addError('customLogo', 'admin.settings.customLogo.invalid');
+			}
+		} elseif (Request::getUserVar('deleteCustomLogo')) {
+			$editData = true;
+			$settingsForm->deleteImage('customLogo');
+		}
+
+		if (!$editData && $settingsForm->validate()) {
 			$settingsForm->execute();
 		
 			$templateMgr = &TemplateManager::getManager();
