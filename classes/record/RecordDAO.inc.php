@@ -83,8 +83,26 @@ class RecordDAO extends DAO {
 	}
 
 	function deleteEntriesByRecordId($recordId) {
-		// FIXME: Remove mysql-specific optimization
-		$this->update('DELETE FROM entry_attributes USING entries, entry_attributes WHERE entries.record_id = ? AND entry_attributes.entry_id = entries.entry_id', $recordId);
+		switch ($this->getDriver()) {
+			case 'mysql':
+				$this->update('DELETE FROM entry_attributes USING entries, entry_attributes WHERE entries.record_id = ? AND entry_attributes.entry_id = entries.entry_id', $recordId);
+				break;
+			default:
+				$result = &$this->retrieve(
+					'SELECT entry_id FROM entries WHERE record_id = ?',
+					$recordId
+				);
+				while (!$result->EOF) {
+					$row = &$result->getRowAssoc(false);
+					$this->update('DELETE FROM entry_attributes WHERE entry_id = ?', $row['entry_id']);
+					$this->update('DELETE FROM entries WHERE entry_id = ?', $row['entry_id']);
+					$result->MoveNext();
+				}
+				$result->Close();
+				unset($result);
+
+				break;
+		}
 		return $this->update('DELETE FROM entries WHERE record_id = ?', $recordId);
 	}
 
