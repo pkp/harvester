@@ -1,0 +1,132 @@
+Upgrading a Harvester2 Installation
+-----------------------------------
+
+Note: backing up your current data files and database is strongly recommended
+prior to upgrading Harvester2.
+
+If you are using PHP Safe Mode, please ensure that the max_execution_time
+directive in your php.ini configuration file is set to a high limit. If this
+or any other time limit (e.g. Apache's "Timeout" directive) is reached and
+the upgrade process is interrupted, manual intervention will be required.
+
+
+============================
+Upgrading from Harvester 2.0
+============================
+
+Upgrading to the latest version of Harvester2 involves two steps:
+
+    - Obtaining the latest Harvester2 code
+    - Upgrading the Harvester2 database
+
+It is highly recommended that you also review the release notes (docs/RELEASE)
+and other documentation in the docs directory before performing an upgrade.
+
+Obtaining the latest Harvester2 code
+------------------------------------
+
+The Harvester2 source code is available in three forms: as patches against older
+releases of Harvester2, from an anonymous CVS repository, and as a complete
+stand-alone package.
+
+Patching or updating from CVS are the recommended approaches if you have made
+local modifications to the system.
+
+1. Patch
+
+Patch files for older releases of Harvester2 can be downloaded from the
+Harvester2 web site.
+
+To update by patching, download the appropriate patch file for your current
+version of Harvester2 and run the following command from your Harvester2
+directory:
+
+    $ patch -p1 < PATCH_FILE
+
+"PATCH_FILE" should be replaced with the path to the decompressed patch file
+that was downloaded, e.g. "harvester-2.0_to_2.0.1.patch".
+
+Alternatively, Harvester2 2.0.1 and later provide a command-line tool to
+automatically download and apply the appropriate patch to upgrade to the latest
+release. To use this tool run the following command from your Harvester2
+directory:
+
+    $ php tools/upgrade.php patch
+
+
+2. CVS
+
+If your instance of Harvester2 was checked out from the PKP anonymous CVS
+repository (see docs/README-CVS), you can update the Harvester2 code using a
+CVS client.
+
+To update the Harvester2 code from a CVS check-out, run the following command
+from your Harvester2 directory:
+
+    $ cvs update -r TAG
+
+"TAG" should be replaced with the CVS tag corresponding to the new release.
+Harvester2 release version tags are of the form
+"harvester-MAJOR_MINOR_REVSION-BUILD". For example, the tag for the initial
+release of Harvester2 2.0.1 is "harvester-2_0_1-0".
+
+Consult the README of the latest Harvester2 package or the Harvester2 web site
+for the tag corresponding to the latest available Harvester2 release.
+
+Note that attempting to update to an unreleased version (e.g., using the HEAD
+tag to obtain the bleeding-edge Harvester2 code) is not recommended for anyone
+other than Harvester2 or third-party developers; using experimental code on a
+production deployment is strongly discouraged and will not be supported in any
+way by the Harvester2 team.
+
+
+3. Full Package
+
+It is also possible to upgrade by downloading the complete package for the
+latest release of Harvester2:
+
+    - Download and decompress the package from the Harvester2 web site
+    - Make a copy of the config.inc.php provided in the new package
+    - Move or copy the following files and directories from your current
+      Harvester2 installation:
+        - config.inc.php
+        - public/
+    - Replace the current Harvester2 directory with the new Harvester2
+      directory, moving the old one to a safe location as a backup
+    - Be sure to review the Configuration Changes section of the release notes
+      in docs/release-notes/README-(version) for all versions between your
+      original version and the new version. You may need to manually add
+      new items to your config.inc.php file.
+
+
+
+Upgrading the Harvester2 database
+---------------------------------
+
+After obtaining the latest Harvester2 code, an additional script must be run to
+complete the upgrade process by upgrading the Harvester2 database and
+potentially executing additional upgrade code.
+
+This script can be executed from the command-line or via the Harvester2 web interface.
+
+1. Command-line
+
+If you have the CLI version of PHP installed (e.g., /usr/bin/php), you can
+upgrade the database by running the following command from the Harvester2
+directory:
+
+    $ php tools/upgrade.php upgrade
+
+
+2. Web
+
+If you do not have the PHP CLI installed, you can also upgrade by running a
+web-based script. To do so:
+
+    - Edit config.inc.php and change "installed = On" to "installed = Off"
+    - Open a web browser to your Harvester2 site; you should be redirected to
+      the installation and upgrade page
+    - Select the "Upgrade" link and follow the on-screen instructions
+    - Re-edit config.inc.php and change "installed = Off" back to
+       "installed = On"
+
