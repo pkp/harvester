@@ -4,7 +4,7 @@
 <!--
   * locale.xml
   *
-  * Copyright (c) 2005-2006 Alec Smecher and John Willinsky
+  * Copyright (c) 2005-2007 Alec Smecher and John Willinsky
   * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
   *
   * Localization strings for the te_ST (Test Loçale) locale.
@@ -310,7 +310,7 @@ Your server currently supports mbstring: <strong>{$supportsMBString}</strong>]]>
 	<message key="default.emailSignature">________________________________________________________________________
 	Hårvèþtèr2
 	{$indexUrl}</message>
-	<message key="default.footer"><![CDATA[&amp;çópý; 2005-2006 <a href="http://pkp.sfu.ca/harvester2">Püblîç Kñówlèðgè Prójèçt</a>]]></message>
+	<message key="default.footer"><![CDATA[&amp;çópý; 2005-2007 <a href="http://pkp.sfu.ca/harvester2">Püblîç Kñówlèðgè Prójèçt</a>]]></message>
 	<message key="about.harvester">Æbóüt thè Hårvèþtèr</message>
 	<message key="about.harvester.description">Thè PKP Òpèñ Ærçhîvèþ Hårvèþtèr îþ å frèè mètåðåtå îñðèxîñg þýþtèm ðèvèlópèð bý thè Püblîç Kñówlèðgè Prójèçt thróügh îtþ fèðèrållý füñðèð èffórtþ tó èxpåñð åñð împróvè åççèþþ tó rèþèårçh. Thè PKP ÒÆÎ Hårvèþtèr ållówþ ýóü tó çrèåtè å þèårçhåblè îñðèx óf thè mètåðåtå fróm Òpèñ Ærçhîvèþ Îñîtîåtîvè-çómplîåñt årçhîvèþ, þüçh åþ þîtèþ üþîñg Òpèñ Jóürñål ßýþtèmþ ór Òpèñ Çóñfèrèñçè ßýþtèmþ.
 	
