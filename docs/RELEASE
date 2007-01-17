@@ -1,9 +1,54 @@
-Harvester2 2.0.0 Release Notes
-CVS tag: harvester-2_0_0-0
-Release date: June 1, 2006
+Harvester2 2.0.1 Release Notes
+CVS tag: harvester-2_0_1-0
+Release date: Jan 17, 2007
 =================================
 
+Configuration Changes
+---------------------
 
-This is the initial release of Harvester2, a complete rewrite of the Public
-Knowledge Project's Metadata Harvester version 1.x based on the OJS (Open
-Journal Systems) 2.x codebase. See docs/README for more information.
+See config.TEMPLATE.inc.php for a description and examples of all supported
+configuration parameters.
+
+New config.inc.php parameters:
+	- captcha.captcha: "On" indicates that Captcha testing should be enabled
+	- captcha.font_location: Full path and filename to ttf file for Captcha
+	- proxy.http_host: Host name for HTTP proxy
+	- proxy.http_port: Port number for HTTP proxy
+	- proxy.proxy_username: Username for HTTP proxy
+	- proxy.proxy_password: Password for HTTP proxy
+	- files.public_files_dir: Location for public files to be stored
+	- files.umask: UNIX mode umask to be used for file storage
+
+New Features
+------------
+	- #2257# Added incremental update support (e.g. via Cron)
+	- #2363# Added support for record deletion
+	- #2288# Add proxy support
+	- #2357# Added font size selector
+	- #2417# Save context in archive deletion
+	- #2418# "from" harvest date in UI defaults to last harvest
+	- #2357# Added debug output to SMTPMailer
+	- #2357# Added anchors to paging lists
+	- #2357# Added support for plugin help
+	- #2357# Remove ambiguous letters from password generation
+	- #2419# Duplicate checks for OAI URLs
+	- #2430# Added default sorting for archive lists
+	- #2435# Change "browse" link behavior for empty archives
+	- #2439# Added admin email to archive settings
+	- #2446# Can now disable user archive submission
+	- #2454# Added Captcha support to archive submit form
+	- #2544# #2545# PostgreSQL support
+	- #2357# Added redirect support to HTTPWrapper
+
+Bug Fixes
+---------
+	- #2260# Add set_time_limit for harvest timeouts
+	- #2275# Searching/indexing needs to use UTF8 calls
+	- #2324# Add stupidity checks to indexing code
+	- #2352# Update Smarty and ADODB
+	- #2357# Missing date header in emails
+	- #2362# Warnings in ArrayItemIterator
+	- #2377# Added missing label tags
+	- #2378# DC display missing record title
+	- #2445# Removed necessity for password change on settings form
+	- #2393# Browsing and lists not working in PHP 5.1
