@@ -6,10 +6,10 @@ CVS web interface: <http://pkp.sfu.ca/cvs/>
 
 Using anonymous CVS:
 
-$ cvs -d :pserver:anonymous@research2.csci.educ.ubc.ca:/cvs login
-(Logging in to anonymous@research2.csci.educ.ubc.ca)
+$ cvs -d :pserver:anonymous@pkp.sfu.ca:/cvs login
+(Logging in to anonymous@pkp.sfu.ca)
 CVS password: <Enter>
-$ cvs -d :pserver:anonymous@research2.csci.educ.ubc.ca:/cvs co harvester2
+$ cvs -d :pserver:anonymous@pkp.sfu.ca:/cvs co harvester2
 
 Note that you must rename config.TEMPLATE.inc.php to config.inc.php prior to
 running the Harvester2 installation script.
