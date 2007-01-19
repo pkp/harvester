@@ -150,9 +150,9 @@ class OAIHarvesterPlugin extends HarvesterPlugin {
 
 		$oaiHarvester =& new OAIHarvester($archive);
 		$availableSets = $oaiHarvester->getSets($archive->getSetting('harvesterUrl'));
-		$selectedSets = array();
+		$selectedSet = '';
 
-		$templateMgr->assign('selectedSets', $selectedSets);
+		$templateMgr->assign('selectedSet', $selectedSet);
 		$templateMgr->assign('availableSets', $availableSets);
 
 		$templateMgr->assign('numRecords', $archive->updateRecordCount());
@@ -205,6 +205,27 @@ class OAIHarvesterPlugin extends HarvesterPlugin {
 				return true;
 		}
 		return HarvesterPlugin::manage($verb, $args);
+	}
+
+	/**
+	 * Get the harvest update parameters from the Request object.
+	 * @param $archive object
+	 * @return array
+	 */
+	function readUpdateParams(&$archive) {
+		$this->import('OAIHarvester');
+
+		$returner = array();
+		$set = Request::getUserVar('set');
+		if ($set != '') {
+			$returner['set'] = $set;
+		}
+		$dateFrom = Request::getUserDateVar('from', 1, 1);
+		$dateTo = Request::getUserDateVar('until', 32, 12, null, 23, 59, 59);
+		if (!empty($dateFrom)) $returner['from'] = OAIHarvester::UTCDate($dateFrom);
+		if (!empty($dateTo)) $returner['until'] = OAIHarvester::UTCDate($dateTo);
+
+		return $returner;
 	}
 }
 

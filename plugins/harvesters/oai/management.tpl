@@ -41,10 +41,10 @@
 	<tr valign="top">
 		<td class="label"><label for="set">{translate key="plugins.harvesters.oai.archive.form.sets"}</td>
 		<td colspan="2" class="value">
-			<select class="selectMenu" size="5" multiple name="set[]" id="set">
-				<option {if empty($selectedSets)}selected {/if}value="">{translate key="plugins.harvesters.oai.archive.form.allSets"}</option>
+			<select class="selectMenu" size="5" name="set" id="set">
+				<option {if $selectedSet == ''}selected {/if}value="">{translate key="plugins.harvesters.oai.archive.form.allSets"}</option>
 				{foreach from=$availableSets key=setSpec item=setName}
-					<option {if in_array($setSpec, $availableSets)}selected {/if}value="{$setSpec|escape}">{$setName|escape}</option>
+					<option {if $setSpec == $selectedSet}selected {/if}value="{$setSpec|escape}">{$setName|escape}</option>
 				{/foreach}
 			</select><br />
 			<input type="button" class="button" value="{translate key="common.refresh"}" onclick="selectHarvester()"/>

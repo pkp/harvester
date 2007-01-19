@@ -283,19 +283,7 @@ class HarvesterPlugin extends Plugin {
 	 * @return array
 	 */
 	function readUpdateParams(&$archive) {
-		$this->import('OAIHarvester');
-
-		$returner = array();
-		$sets = Request::getUserVar('set');
-		if (is_array($sets) && !empty($sets) && !in_array('', $sets)) {
-			$returner['set'] = join(':', $sets);
-		}
-		$dateFrom = Request::getUserDateVar('from', 1, 1);
-		$dateTo = Request::getUserDateVar('until', 32, 12, null, 23, 59, 59);
-		if (!empty($dateFrom)) $returner['from'] = OAIHarvester::UTCDate($dateFrom);
-		if (!empty($dateTo)) $returner['until'] = OAIHarvester::UTCDate($dateTo);
-
-		return $returner;
+		return true; // Override in subclass.
 	}
 
 	/**

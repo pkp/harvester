@@ -9,7 +9,7 @@
  * @package plugins.schemas.dc
  * @class DublinCoreXMLHandler
  *
- * OAI XML parser
+ * DC XML parser
  *
  * $Id$
  */

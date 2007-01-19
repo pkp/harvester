@@ -9,7 +9,7 @@
  * @package plugins.schemas.marc
  * @class MarcXMLHandler
  *
- * OAI XML parser for the MARC schema
+ * MarcXML parser
  *
  * $Id$
  */

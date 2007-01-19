@@ -9,7 +9,7 @@
  * @package plugins.schemas.mods
  * @class ModsXMLHandler
  *
- * OAI XML parser
+ * XML parser for the ModsXML schema
  *
  * $Id$
  */
