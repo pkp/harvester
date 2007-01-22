@@ -40,6 +40,6 @@
 	skipExistingEntries: When set, existing records will not be updated
 	from=YYYY-MM-DD: Harvest records at least as new as the specified date (use "now" for current date, "last" for date of last harvest)
 	until=YYYY-MM-DD: Harvest records at least as old as the specified date (use "now" for current date)
-	set=setName: Harvest records from the set named setName
+	set=setSpec: Harvest records from the specified set
 ]]></message>
 </locale>
