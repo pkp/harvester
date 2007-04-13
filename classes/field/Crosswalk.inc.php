@@ -163,7 +163,8 @@ class Crosswalk extends DataObject {
 
 	function &getFields() {
 		$crosswalkDao =& DAORegistry::getDAO('CrosswalkDAO');
-		return $crosswalkDao->getFieldsByCrosswalkId($this->getCrosswalkId());
+		$returner =& $crosswalkDao->getFieldsByCrosswalkId($this->getCrosswalkId());
+		return $returner;
 	}
 }
 
