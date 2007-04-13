@@ -200,7 +200,7 @@ class CrosswalkForm extends Form {
 					if (
 						$oldField->getFieldId() == $field->getFieldId() &&
 						!$isDisplayed &&
-						(($fieldType !== FIELD_TYPE_DATAE || $fieldType == $this->crosswalk->getType()) || $isFieldMixedType)
+						(($fieldType !== FIELD_TYPE_DATE || $fieldType == $this->crosswalk->getType()) || $isFieldMixedType)
 					) {
 						// This field was previously selected but wasn't displayed
 						// on the page -- make sure it's maintained.
