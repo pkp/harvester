@@ -186,7 +186,7 @@ class HarvesterPlugin extends Plugin {
 			foreach ($this->getAdditionalArchiveFormFields() as $field) {
 				$archive->updateSetting($field, Request::getUserVar($field));
 			}
-			$this->executeArchiveForm(&$form, &$archive);
+			$this->executeArchiveForm($form, $archive);
 		}
 		return false;
 	}
