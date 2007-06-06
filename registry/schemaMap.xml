@@ -33,6 +33,10 @@
 		<alias harvester="OAIHarvesterPlugin">oai_rfc1807</alias>
 	</schema>
 	<schema plugin="ModsPlugin">
+		<alias harvester="OAIHarvesterPlugin">oai_mods</alias>
 		<alias harvester="OAIHarvesterPlugin">mods</alias>
+	</schema>
+	<schema plugin="EtdmsPlugin">
+		<alias harvester="OAIHarvesterPlugin">oai_etdms</alias>
 	</schema>
 </schema_map>

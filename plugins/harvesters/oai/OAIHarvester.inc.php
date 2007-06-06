@@ -48,32 +48,42 @@ class OAIHarvester extends Harvester {
 	/**
 	 * Get the metadata format.
 	 */
-	function getMetadataFormat() {
+	function getMetadataFormat($default = 'oai_dc') {
+		if (isset($this->metadataFormat)) return $this->metadataFormat;
+
 		$archive =& $this->getArchive();
 		$schemaPluginName = $archive->getSchemaPluginName();
-		if (
-			empty($schemaPluginName) ||
-			($alias = SchemaMap::getSchemaAlias(OAIHarvesterPlugin::getName(), $schemaPluginName))==''
-		) {
-			return 'oai_dc';
+		if (empty($schemaPluginName)) {
+			return ($this->metadataFormat = $default);
 		}
-		return $alias;
+
+		$aliases = SchemaMap::getSchemaAliases(OAIHarvesterPlugin::getName(), $schemaPluginName);
+		$supportedFormats = OAIHarvester::getMetadataFormats($archive->getSetting('harvesterUrl'), $archive->getSetting('isStatic'));
+		// Return the first common format between the aliases for this
+		// plugin and the archive's supported formats.
+		$this->metadataFormat = array_shift(array_intersect($aliases, $supportedFormats));
+		if (empty($this->metadataFormat)) $this->metadataFormat = $default;
+		return $this->metadataFormat;
 	}
 
 	/**
 	 * Get a list of supported metadata formats for this archive.
 	 * This is a static method.
+	 * @param $harvesterUrl string
+	 * @param $static boolean optional
 	 * @return array
 	 */
-	function getMetadataFormats($harvesterUrl) {
+	function getMetadataFormats($harvesterUrl, $static = false) {
 		$parser =& new XMLParser();
 		$xmlHandler =& new OAIXMLHandler($this, 'ListMetadataFormats');
 
+		if (!$static) $harvesterUrl = $this->addParameters($harvesterUrl, array(
+			'verb' => 'ListMetadataFormats'
+		));
+
 		$parser->setHandler($xmlHandler);
 		$result = null;
-		@$result =& $parser->parse($this->addParameters($harvesterUrl, array(
-			'verb' => 'ListMetadataFormats'
-		)));
+		@$result =& $parser->parse($harvesterUrl);
 
 		unset($parser);
 		unset($xmlHandler);
@@ -82,21 +92,37 @@ class OAIHarvester extends Harvester {
 		return $result;
 	}
 
-	function validateHarvesterURL($harvesterUrl) {
-		$result = $this->getMetadata($harvesterUrl);
+	/**
+	 * Ensure that the supplied harvester URL is valid.
+	 * This is a static method.
+	 * @param $harvesterUrl string
+	 * @param $static boolean optional
+	 * @return boolean
+	 */
+	function validateHarvesterURL($harvesterUrl, $static = false) {
+		$result = $this->getMetadata($harvesterUrl, $static);
 		if (is_array($result) && !empty($result['repositoryName'])) return true;
 		return false;
 	}
 
-	function getMetadata($harvesterUrl) {
+	/**
+	 * Fetch the archive's self-descriptive metadata.
+	 * This is a static method.
+	 * @param $harvesterUrl string
+	 * @param $static boolean optional
+	 * @return array
+	 */
+	function getMetadata($harvesterUrl, $static = false) {
 		$parser =& new XMLParser();
 		$xmlHandler =& new OAIXMLHandler($this, 'Identify');
 
+		if (!$static) $harvesterUrl = $this->addParameters($harvesterUrl, array(
+			'verb' => 'Identify'
+		));
+
 		$parser->setHandler($xmlHandler);
 		$result = null;
-		@$result =& $parser->parse($this->addParameters($harvesterUrl, array(
-			'verb' => 'Identify'
-		)));
+		@$result =& $parser->parse($harvesterUrl);
 
 		unset($parser);
 		unset($xmlHandler);
@@ -134,6 +160,12 @@ class OAIHarvester extends Harvester {
 		return $this->responseDate;
 	}
 
+	/**
+	 * Return the current harvesting method for this archive, i.e.
+	 * either OAI_INDEX_METHOD_LIST_RECORDS or
+	 * OAI_INDEX_METHOD_LIST_IDENTIFIERS.
+	 * @return string
+	 */
 	function getHarvestingMethod() {
 		$archive =& $this->getArchive();
 		$indexingMethod = $archive->getSetting('oaiIndexMethod');
@@ -147,35 +179,47 @@ class OAIHarvester extends Harvester {
 		}
 	}
 
+	/**
+	 * Update the records for this archive.
+	 * The $params variable is an associative array that can include
+	 * "set", "from", "until", "skipIndexing", and "verbose" as keys.
+	 * @param $params array
+	 * @return boolean
+	 */
 	function updateRecords($params = array()) {
 		$this->fieldDao->enableCaching();
 
 		$verb = $this->getHarvestingMethod();
 		$parser =& new XMLParser();
 		$xmlHandler =& new OAIXMLHandler($this, $verb, $params);
+		$archive =& $this->getArchive();
 
 		$parser->setHandler($xmlHandler);
 
-		$harvestingParameters = array(
-			'verb' => $verb,
-			'metadataPrefix' => $this->getMetadataFormat()
-		);
-		foreach (array('from', 'until') as $name) {
-			if (isset($params[$name]) && $params[$name] == 'now') {
-				$params[$name] = date('Y-m-d');
-			} else if (isset($params[$name]) && $params[$name] == 'last') {
-				$lastHarvested = $this->archive->getLastIndexedDate();
-				if (empty($lastHarvested)) {
-					unset($params[$name]);
-				} else {
-					$params[$name] = date('Y-m-d', strtotime($lastHarvested));
+		if ($archive->getSetting('isStatic')) {
+			$harvestUrl = $this->oaiUrl;
+		} else {
+			$harvestingParameters = array(
+				'verb' => $verb,
+				'metadataPrefix' => $this->getMetadataFormat()
+			);
+			foreach (array('from', 'until') as $name) {
+				if (isset($params[$name]) && $params[$name] == 'now') {
+					$params[$name] = date('Y-m-d');
+				} else if (isset($params[$name]) && $params[$name] == 'last') {
+					$lastHarvested = $this->archive->getLastIndexedDate();
+					if (empty($lastHarvested)) {
+						unset($params[$name]);
+					} else {
+						$params[$name] = date('Y-m-d', strtotime($lastHarvested));
+					}
 				}
 			}
+			foreach (array('set', 'from', 'until') as $name) {
+				if (isset($params[$name])) $harvestingParameters[$name] = $params[$name];
+			}
+			$harvestUrl = $this->addParameters($this->oaiUrl, $harvestingParameters);
 		}
-		foreach (array('set', 'from', 'until') as $name) {
-			if (isset($params[$name])) $harvestingParameters[$name] = $params[$name];
-		}
-		$harvestUrl = $this->addParameters($this->oaiUrl, $harvestingParameters);
 		if (isset($params['verbose'])) echo "Harvest URL: $harvestUrl\n";
 		$result =& $parser->parse($harvestUrl);
 
@@ -212,6 +256,13 @@ class OAIHarvester extends Harvester {
 		return $result;
 	}
 
+	/**
+	 * Handle an incoming resumption token from an OAI data source.
+	 * @param $token string
+	 * @param $params array (see updateRecords)
+	 * @param $recordOffset int
+	 * @return boolean
+	 */
 	function handleResumptionToken($token, $params = array(), $recordOffset = 0) {
 		$verb = $this->getHarvestingMethod();
 		$parser =& new XMLParser();
@@ -285,6 +336,12 @@ class OAIHarvester extends Harvester {
 		return SchemaMap::getSchemaPlugin(OAIHarvesterPlugin::getName(), $this->getMetadataFormat());
 	}
 
+	/**
+	 * Add parameters to the given GET URL.
+	 * @param $url string
+	 * @param $params associative array
+	 * @return string
+	 */
 	function addParameters($url, $params) {
 		if (strpos($url, '?') !== false && !empty($params)) {
 			$separator = '&';

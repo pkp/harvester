@@ -54,8 +54,8 @@ class OAIHarvesterPlugin extends HarvesterPlugin {
 		$oaiHarvester =& new OAIHarvester($this->archive);
 
 		$form->addCheck(new FormValidator($form, 'harvesterUrl', 'required', 'plugins.harvesters.oai.archive.form.harvesterUrlRequired'));
-		$form->addCheck(new FormValidatorInSet($form, 'oaiIndexMethod', 'required', 'plugins.harvesters.oai.archive.form.oaiIndexMethodRequired', array(OAI_INDEX_METHOD_LIST_RECORDS, OAI_INDEX_METHOD_LIST_IDENTIFIERS)));
-		$form->addCheck(new FormValidatorCustom($form, 'harvesterUrl', 'required', 'plugins.harvester.oai.archive.form.harvesterUrlInvalid', array(&$oaiHarvester, 'validateHarvesterURL')));
+		$form->addCheck(new FormValidatorInSet($form, 'oaiIndexMethod', 'optional', 'plugins.harvesters.oai.archive.form.oaiIndexMethodRequired', array(OAI_INDEX_METHOD_LIST_RECORDS, OAI_INDEX_METHOD_LIST_IDENTIFIERS)));
+		$form->addCheck(new FormValidatorCustom($form, 'harvesterUrl', 'required', 'plugins.harvester.oai.archive.form.harvesterUrlInvalid', array(&$oaiHarvester, 'validateHarvesterURL'), array(Request::getUserVar('isStatic'))));
 		$form->addCheck(new FormValidatorEmail($form, 'adminEmail', Validation::isLoggedIn()?'optional':'required', 'plugins.harvesters.oai.archive.form.adminEmailInvalid'));
 		$form->addCheck(new FormValidatorCustom($form, 'harvesterUrl', 'required', 'plugins.harvester.oai.archive.form.harvesterUrlDuplicate', array(&$this, 'duplicateHarvesterUrlDoesNotExist'), array(Request::getUserVar('archiveId'))));
 	}
@@ -72,7 +72,7 @@ class OAIHarvesterPlugin extends HarvesterPlugin {
 	}
 
 	function getAdditionalArchiveFormFields() {
-		return array('harvesterUrl', 'oaiIndexMethod', 'adminEmail');
+		return array('harvesterUrl', 'oaiIndexMethod', 'adminEmail', 'isStatic');
 	}
 
 	function displayArchiveForm(&$form, &$templateMgr) {
@@ -90,7 +90,7 @@ class OAIHarvesterPlugin extends HarvesterPlugin {
 		$plugins =& PluginRegistry::loadCategory('schemas');
 		$archive =& $form->_data['archive'];
 		$oaiHarvester =& new OAIHarvester($archive);
-		$metadataFormats = $oaiHarvester->getMetadataFormats($form->getData('harvesterUrl'));
+		$metadataFormats = $oaiHarvester->getMetadataFormats($form->getData('harvesterUrl'), $form->getData('isStatic'));
 		$supportedFormats = array();
 		foreach ($metadataFormats as $format) {
 			if (($pluginName = SchemaMap::getSchemaPluginName($this->getName(), $format)) && isset($plugins[$pluginName])) {
@@ -105,6 +105,7 @@ class OAIHarvesterPlugin extends HarvesterPlugin {
 
 	function executeArchiveForm(&$form, &$archive) {
 		$archive->setSchemaPluginName(Request::getUserVar('metadataFormat'));
+		if ($form->getData('oaiIndexMethod') == '') $archive->updateSetting('oaiIndexMethod', OAI_INDEX_METHOD_LIST_RECORDS);
 	}
 
 	/**
@@ -179,7 +180,7 @@ class OAIHarvesterPlugin extends HarvesterPlugin {
 				$this->import('OAIXMLHandler');
 
 				$oaiHarvester =& new OAIHarvester($archive);
-				$metadata = $oaiHarvester->getMetadata($harvesterUrl);
+				$metadata = $oaiHarvester->getMetadata($harvesterUrl, Request::getUserVar('isStatic'));
 
 				import('admin.form.ArchiveForm');
 				$archiveForm = &new ArchiveForm($archiveId);

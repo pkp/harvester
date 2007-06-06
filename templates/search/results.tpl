@@ -81,7 +81,7 @@ function ensureKeyword() {
 	</ul>
 {else}
 	</ul>
-	{page_info iterator=$results}&nbsp;&nbsp;&nbsp;&nbsp;{page_links anchor="records" iterator=$results name="search" query=$query archiveIds=$archiveIds isAdvanced=$isAdvanced}
+	{page_info iterator=$results}&nbsp;&nbsp;&nbsp;&nbsp;{page_links anchor="records" iterator=$results name="search" query=$query archiveIds=$archiveIds isAdvanced=$isAdvanced params=$forwardParams}
 {/if}
 
 <p>{translate key="search.syntaxInstructions"}</p>

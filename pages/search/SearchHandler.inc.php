@@ -59,6 +59,7 @@ class SearchHandler extends Handler {
 		$rangeInfo = Handler::getRangeInfo('search');
 
 		$query = Request::getUserVar('query');
+		$forwardParams = array();
 
 		$keywords = array(
 			'all' => Search::parseQuery($query),
@@ -81,11 +82,17 @@ class SearchHandler extends Handler {
 				$dateFrom = Request::getUserDateVar($dateFromName, 1, 1);
 				$dateTo = Request::getUserDateVar($dateToName, 32, 12, null, 23, 59, 59);
 				$dates['field'][$field->getFieldId()] = array($dateFrom, $dateTo);
+				foreach (array('Month', 'Day', 'Year') as $datePart) {
+					$forwardPararms[$dateFromName . $datePart] = Request::getUserVar($dateFromName . $datePart);
+					$forwardPararms[$dateToName . $datePart] = Request::getUserVar($dateToName . $datePart);
+				}
 				if (!$field->isMixedType()) break;
 			case FIELD_TYPE_STRING:
 			case FIELD_TYPE_SELECT:
-				$value = Request::getUserVar('field-' . $field->getFieldId());
+				$varName = 'field-' . $field->getFieldId();
+				$value = Request::getUserVar($varName);
 				if (!empty($value)) {
+					$forwardParams[$varName] = $value;
 					if (is_array($value)) $value = '"' . implode('" OR "', $value) . '"';
 					$keywords['field'][$field->getFieldId()] = Search::parseQuery($value);
 				}
@@ -101,12 +108,18 @@ class SearchHandler extends Handler {
 				$dateFrom = Request::getUserDateVar($dateFromName, 1, 1);
 				$dateTo = Request::getUserDateVar($dateToName, 32, 12, null, 23, 59, 59);
 				$dates['crosswalk'][$crosswalk->getCrosswalkId()] = array($dateFrom, $dateTo);
+				foreach (array('Month', 'Day', 'Year') as $datePart) {
+					$forwardPararms[$dateFromName . $datePart] = Request::getUserVar($dateFromName . $datePart);
+					$forwardPararms[$dateToName . $datePart] = Request::getUserVar($dateToName . $datePart);
+				}
 				break;
 			case FIELD_TYPE_SELECT:
 			case FIELD_TYPE_STRING:
 			default:
-				$value = Request::getUserVar('crosswalk-' . $crosswalk->getCrosswalkId());
+				$varName = 'crosswalk-' . $crosswalk->getCrosswalkId();
+				$value = Request::getUserVar($varName);
 				if (!empty($value)) {
+					$forwardParams[$varName] = $value;
 					if (is_array($value)) $value = '"' . implode('" OR "', $value) . '"';
 					$keywords['crosswalk'][$crosswalk->getCrosswalkId()] = Search::parseQuery($value);
 				}
@@ -124,6 +137,9 @@ class SearchHandler extends Handler {
 		// Give the results page access to the search parameters
 		$templateMgr->assign('isAdvanced', Request::getUserVar('isAdvanced'));
 		$templateMgr->assign('importance', Request::getUserVar('importance')); // Field importance
+
+		foreach ($forwardParams as $key => $value) if ($value == '') unset($forwardParams[$key]);
+		$templateMgr->assign('forwardParams', $forwardParams); // Field importance
 
 		$templateMgr->assign_by_ref('results', $results);
 		$templateMgr->display('search/results.tpl');

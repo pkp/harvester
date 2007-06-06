@@ -26,6 +26,8 @@
 	<message key="plugins.harvesters.oai.archive.form.adminEmailInvalid">The administrator email address you supplied is not valid.</message>
 	<message key="plugins.harvesters.oai.archive.form.oaiIndexMethod">Index Method</message>
 	<message key="plugins.harvesters.oai.archive.form.metadataFormat">Metadata Format</message>
+	<message key="plugins.harvesters.oai.archive.form.isStatic">This is an OAI Static Repository</message>
+	<message key="plugins.harvesters.oai.archive.form.options">Options</message>
 	<message key="plugins.harvesters.oai.archive.form.sets">Sets</message>
 	<message key="plugins.harvesters.oai.archive.form.allSets">All Sets</message>
 	<message key="plugins.harvesters.oai.archive.form.dates">Record Dates</message>

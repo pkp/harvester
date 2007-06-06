@@ -90,12 +90,13 @@ class SchemaMap {
 	 * @param $schemaPluginName string
 	 * @return string
 	 */
-	function getSchemaAlias($harvesterPluginName, $schemaPluginName) {
+	function getSchemaAliases($harvesterPluginName, $schemaPluginName) {
 		$schemaMap =& SchemaMap::getSchemaMap();
+		$results = array();
 		foreach ($schemaMap as $entry) {
-			if ($entry[1] === $harvesterPluginName && $entry[0] === $schemaPluginName) return $entry[2];
+			if ($entry[1] === $harvesterPluginName && $entry[0] === $schemaPluginName) $results[] = $entry[2];
 		}
-		return null;
+		return $results;
 	}
 
 	function &getSchemaPlugin($harvesterPluginName, $schemaAlias) {

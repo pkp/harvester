@@ -38,6 +38,8 @@
 	</tr>
 	<tr valign="top"><td colspan="3" class="headseparator">&nbsp;</td></tr>
 
+{if !$archive->getSetting('isStatic')}
+
 	<tr valign="top">
 		<td class="label"><label for="set">{translate key="plugins.harvesters.oai.archive.form.sets"}</td>
 		<td colspan="2" class="value">
@@ -77,6 +79,9 @@
 	<tr valign="top">
 		<td colspan="3" class="headseparator">&nbsp;</td>
 	</tr>
+
+{/if}
+
 </table>
 
 <input type="submit" class="button defaultButton" onclick="return confirm('{translate|escape:"javascript" key="admin.archives.manage.updateIndex.confirm"}')" value="{translate key="admin.archives.manage.updateIndex"}"/>

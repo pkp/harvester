@@ -200,7 +200,7 @@ class ModsXMLHandler extends XMLParserHandler {
 				$this->inPhysicalDescription = false; // For differentiating note
 				break;
 			default:
-				fatalError("Unknown tag \"$tag\"!");
+				$this->harvester->addError("Unknown tag \"$tag\"!");
 		}
 		
 	}

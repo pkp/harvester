@@ -32,9 +32,6 @@ class OAIXMLHandler extends XMLParserHandler {
 	/** @var $request string */
 	var $request;
 
-	/** @var $responseType string OAI Verb */
-	var $responseType;
-
 	/** @var $depth int Depth in nested XML nodes, once out of headers */
 	var $depth = 0;
 
@@ -90,10 +87,21 @@ class OAIXMLHandler extends XMLParserHandler {
 		unset($this->characterData);
 		$this->characterData = null;
 
+		if (strpos($tag, 'oai:') === 0) $tag = String::substr($tag, 4);
+
 		switch ($tag) {
 			case 'metadata':
-				// Delegate metadata processing to another parser
 				$this->depth = 0;
+
+				// Static repositories contain metadata, even if we're requesting
+				// something else e.g. Identify. If so, send to the bit-bucket.
+				if (!in_array($this->verb, array('ListRecords', 'ListIdentifiers'))) {
+					import('xml.NullXMLHandler');
+					$this->delegatedParser =& new NullXMLHandler();
+					break;
+				}
+
+				// Otherwise, delegate metadata processing to another parser
 				$metadataFormat = $this->oaiHarvester->getMetadataFormat();
 				$schemaPlugin = SchemaMap::getSchemaPlugin(OAIHarvesterPlugin::getName(), $metadataFormat);
 				$this->delegatedParser =& $schemaPlugin->getXMLHandler($this->oaiHarvester);
@@ -116,6 +124,7 @@ class OAIXMLHandler extends XMLParserHandler {
 			case 'setDescription':
 			case 'repositoryName':
 			case 'baseUrl':
+			case 'baseURL':
 			case 'protocolVersion':
 			case 'adminEmail':
 			case 'earliestDatestamp':
@@ -128,6 +137,8 @@ class OAIXMLHandler extends XMLParserHandler {
 			case 'repositoryIdentifier':
 			case 'delimiter':
 			case 'sampleIdentifier':
+			case 'about':
+			case 'Repository':
 				// Do nothing.
 				break;
 			case 'request':
@@ -137,9 +148,22 @@ class OAIXMLHandler extends XMLParserHandler {
 			case 'Identify':
 			case 'ListIdentifiers':
 			case 'ListMetadataFormats':
-			case 'ListRecords':
 			case 'ListSets':
-				$this->responseType = $tag;
+				$this->notInHeader = true;
+				break;
+			case 'ListRecords':
+				if (!in_array($this->verb, array('ListRecords', 'ListIdentifiers'))) break;
+
+				// Static repositories will sometimes contain
+				// several metadata formats. If a prefix was
+				// specified, and it doesn't match the current
+				// archive prefix, send subtags into the bin.
+				$metadataFormat = $this->oaiHarvester->getMetadataFormat();
+				if (isset($attributes['metadataPrefix']) && $attributes['metadataPrefix'] != $metadataFormat) {
+					$this->depth = 0;
+					import('xml.NullXMLHandler');
+					$this->delegatedParser =& new NullXMLHandler();
+				}
 				$this->notInHeader = true;
 				break;
 			case 'header':
@@ -166,8 +190,15 @@ class OAIXMLHandler extends XMLParserHandler {
 			}
 		}
 
+		if (strpos($tag, 'oai:') === 0) $tag = String::substr($tag, 4);
+
 		switch ($tag) {
 			case 'header':
+				// If this is a static repository, we need to
+				// double-check that this is relevant to the
+				// request. If not, skip.
+				if (!in_array($this->verb, array('ListRecords', 'ListIdentifiers'))) break;
+
 				$schema =& $this->oaiHarvester->getSchema();
 				$record =& $this->oaiHarvester->getRecordByIdentifier($this->header['identifier']);
 				if (!$record) {
@@ -221,6 +252,7 @@ class OAIXMLHandler extends XMLParserHandler {
 				break;
 			case 'OAI-PMH':
 			case 'metadata':
+			case 'about':
 				// Do nothing.
 				break;
 			case 'responseDate':
@@ -252,6 +284,7 @@ class OAIXMLHandler extends XMLParserHandler {
 			case 'metadataFormat':
 			case 'schema':
 			case 'metadataNamespace':
+			case 'Repository':
 				// Do nothing.
 				break;
 			case 'set':
@@ -282,6 +315,7 @@ class OAIXMLHandler extends XMLParserHandler {
 				break;
 			case 'repositoryName':
 			case 'baseUrl':
+			case 'baseURL':
 			case 'protocolVersion':
 			case 'adminEmail':
 			case 'earliestDatestamp':

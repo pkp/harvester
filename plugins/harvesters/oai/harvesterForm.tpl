@@ -27,11 +27,40 @@
 		</td>
 		<td class="value"><input type="text" id="adminEmail" name="adminEmail" value="{$adminEmail|escape}" size="40" maxlength="120" class="textField" /></td>
 	</tr>
+	<script type="text/javascript">
+		<!--
+		{literal}
+
+		// When a static repository is selected, the indexing method must be ListRecords.
+		// Make sure the static checkbox indicates this in the UI.
+		function selectStatic(control) {
+			if (control.checked) {
+				document.archiveForm.oaiIndexMethod.selectedIndex = 0;
+				document.archiveForm.oaiIndexMethod.disabled = true;
+			} else {
+				document.archiveForm.oaiIndexMethod.disabled = false;
+			}
+		}
+
+		{/literal}
+		// -->
+	</script>
+	<tr align="top">
+		<td class="label">{translate key="plugins.harvesters.oai.archive.form.options"}</td>
+		<td class="value">
+			<input type="checkbox" name="isStatic" value="1" {if $isStatic}checked="checked" {/if} id="isStatic" onchange="selectStatic(this)" />
+			{fieldLabel name="isStatic" key="plugins.harvesters.oai.archive.form.isStatic"}
+		</td>
+	</tr>
 	<tr valign="top">
 		<td class="label">{fieldLabel name="oaiIndexMethod" key="plugins.harvesters.oai.archive.form.oaiIndexMethod" required="true"}</td>
 		<td class="value">
-			<select class="selectMenu" name="oaiIndexMethod" id="oaiIndexMethod">
-				{html_options options=$oaiIndexMethods selected=$oaiIndexMethod}
+			<select class="selectMenu" name="oaiIndexMethod" id="oaiIndexMethod"{if $isStatic} disabled="disabled"{/if}>
+				{if $isStatic}
+					{html_options options=$oaiIndexMethods selected=$oaiIndexMethod}
+				{else}
+					{html_options options=$oaiIndexMethods}{* Default to ListRecords *}
+				{/if}
 			</select>
 		</td>
 	</tr>
