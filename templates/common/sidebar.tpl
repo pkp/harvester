@@ -10,7 +10,7 @@
  *}
 
 {if $isUserLoggedIn}
-	<div class="block">
+	<div class="block" id="sidebarUser">
 		<span class="blockTitle">{translate key="navigation.administration"}</span>
 		{translate key="navigation.loggedInAs"}<br />
 		<strong>{$loggedInUsername|escape}</strong>
@@ -27,7 +27,7 @@
 {/if}
 
 {if $enableLanguageToggle}
-<div class="block">
+<div class="block" id="sidebarLanguageToggle">
 	<span class="blockTitle">{translate key="common.language"}</span>
 	<form action="#">
 		<select size="1" name="locale" onchange="location.href={if $languageToggleNoUser}'{$currentUrl}{if strstr($currentUrl, '?')}&{else}?{/if}setLocale='+this.options[this.selectedIndex].value{else}('{url page="index" op="setLocale" path="LOCALE_NAME" source=$smarty.server.REQUEST_URI escape="false"}'.replace('LOCALE_NAME', this.options[this.selectedIndex].value)){/if}" class="selectMenu">{html_options options=$languageToggleLocales selected=$currentLocale}</select>
@@ -35,7 +35,7 @@
 </div>
 {/if}
 
-<div class="block">
+<div class="block" id="sidebarContent">
 	<span class="blockTitle">{translate key="navigation.content"}</span>
 
 	<form method="get" action="{url page="search" op="results"}">
@@ -59,11 +59,10 @@
 	</form>
 </div>
 
-<div class="block">
+<div class="block" id="sidebarFontSize">
 	<span class="blockTitle">{translate key="navigation.fontSize"}</span>
 	<a href="#" onclick="setFontSize('{translate key="icon.small.alt"}');">{icon name="small"}</a>&nbsp;
 	<a href="#" onclick="setFontSize('{translate key="icon.medium.alt"}');">{icon name="medium"}</a>&nbsp;
 	<a href="#" onclick="setFontSize('{translate key="icon.large.alt"}');">{icon name="large"}</a>
 </div>
-
 
