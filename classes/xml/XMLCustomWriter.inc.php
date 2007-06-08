@@ -42,6 +42,9 @@ class XMLCustomWriter {
 	}
 
 	function &createElement(&$doc, $name) {
+
+		$value = Core::cleanVar($value);
+
 		if (is_callable(array($doc, 'createElement'))) $element = &$doc->createElement($name);
 		else $element = &new XMLNode($name);
 

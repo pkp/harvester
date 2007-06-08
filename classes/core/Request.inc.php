@@ -378,7 +378,7 @@ class Request {
 		static $vars;
 
 		if (!isset($vars)) {
-			$vars = $_GET + $_POST;
+			$vars = array_merge($_GET, $_POST);
 		}
 		
 		if (isset($vars[$key])) {
@@ -425,14 +425,13 @@ class Request {
 	 * Sanitize a user-submitted variable (i.e., GET/POST/Cookie variable).
 	 * Strips slashes if necessary, then sanitizes variable as per Core::cleanVar().
 	 * @param $var mixed
-	 * @param $stripHtml boolean optional, will encode HTML if set to true
 	 */
 	function cleanUserVar(&$var, $stripHtml = false) {
 		if (isset($var) && is_array($var)) {
-			array_walk($var, create_function('&$item,$key', 'Request::cleanUserVar($item, ' . ($stripHtml ? 'true' : 'false') . ');'));
+			array_walk($var, create_function('&$item,$key', 'Request::cleanUserVar($item);'));
 		
 		} else if (isset($var)) {
-			$var = Core::cleanVar(get_magic_quotes_gpc() ? stripslashes($var) : $var, $stripHtml);
+			$var = Core::cleanVar(get_magic_quotes_gpc() ? stripslashes($var) : $var);
 			
 		} else {
 			return null;

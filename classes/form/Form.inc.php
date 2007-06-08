@@ -79,6 +79,9 @@ class Form {
 	 * @param $value
 	 */
 	function setData($key, $value) {
+
+		if (is_string($value)) $value = Core::cleanVar($value);
+
 		$this->_data[$key] = $value;
 	}
 	
