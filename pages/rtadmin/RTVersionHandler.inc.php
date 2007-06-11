@@ -42,7 +42,7 @@ class RTVersionHandler extends RTAdminHandler {
 		$rtDao = &DAORegistry::getDAO('RTDAO');
 
 		$versionId = isset($args[0])?$args[0]:0;
-		$version = &$rtDao->getVersion($versionId, $archiveId);
+		$version = &$rtDao->getVersion($versionId);
 
 		if ($version) {
 			$templateMgr = &TemplateManager::getManager();

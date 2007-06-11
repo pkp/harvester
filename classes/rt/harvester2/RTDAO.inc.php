@@ -46,11 +46,15 @@ class RTDAO extends DAO {
 	 * @param $archivelId int
 	 * @return RTVersion
 	 */
-	function &getVersion($versionId, $archiveId) {
-		$result = &$this->retrieve(
-			'SELECT * FROM rt_versions WHERE version_id = ? AND archive_id = ?',
-			array((int) $versionId, (int) $archiveId)
-		);
+	function &getVersion($versionId, $archiveId = null) {
+		$sql = 'SELECT * FROM rt_versions WHERE version_id = ?';
+		$params = array((int) $versionId);
+		if ($archiveId !== null) {
+			$sql .= 'AND archive_id = ?';
+			$params[] = (int) $archiveId;
+		}
+
+		$result = &$this->retrieve($sql, $params);
 
 		$returner = null;
 		if ($result->RecordCount() != 0) {
