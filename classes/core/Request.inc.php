@@ -509,7 +509,7 @@ class Request {
 				}
 			}
 			if (!empty($path)) {
-				$pathString = $prefix . 'path[]=' . implode($amp . 'path[]=', $path);
+				$pathString = $prefix . 'path%5B%5D=' . implode($amp . 'path%5B%5D=', $path);
 				$prefix = $amp;
 			}
 		} else {
@@ -527,7 +527,7 @@ class Request {
 		$additionalParams = '';
 		if (!empty($params)) foreach ($params as $key => $value) {
 			if (is_array($value)) foreach($value as $element) {
-				$additionalParams .= $prefix . $key . '[]=' . rawurlencode($element);
+				$additionalParams .= $prefix . $key . '%5B%5D=' . rawurlencode($element);
 				$prefix = $amp;
 			} else {
 				$additionalParams .= $prefix . $key . '=' . rawurlencode($value);
