@@ -50,7 +50,7 @@ class RTDAO extends DAO {
 		$sql = 'SELECT * FROM rt_versions WHERE version_id = ?';
 		$params = array((int) $versionId);
 		if ($archiveId !== null) {
-			$sql .= 'AND archive_id = ?';
+			$sql .= ' AND archive_id = ?';
 			$params[] = (int) $archiveId;
 		}
 
