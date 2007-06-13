@@ -24,6 +24,7 @@ class UpgradeForm extends Form {
 	 */
 	function UpgradeForm() {
 		parent::Form('install/upgrade.tpl');
+		$this->addCheck(new FormValidatorPost($this));
 	}
 	
 	/**

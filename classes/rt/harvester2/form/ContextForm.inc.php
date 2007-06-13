@@ -37,6 +37,8 @@ class ContextForm extends Form {
 	function ContextForm($contextId, $versionId, $archiveId) {
 		parent::Form('rtadmin/context.tpl');
 
+		$this->addCheck(new FormValidatorPost($this));
+
 		$rtDao = &DAORegistry::getDAO('RTDAO');
 		$this->context = &$rtDao->getContext($contextId);
 

@@ -43,6 +43,7 @@ class ArchiveForm extends Form {
 		// Validation checks for this form
 		$this->addCheck(new FormValidator($this, 'title', 'required', 'admin.archives.form.titleRequired'));
 		$this->addCheck(new FormValidator($this, 'url', 'required', 'admin.archives.form.urlRequired'));
+		$this->addCheck(new FormValidatorPost($this));
 
 		import('captcha.CaptchaManager');
 		$captchaManager =& new CaptchaManager();

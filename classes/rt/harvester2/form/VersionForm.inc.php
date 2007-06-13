@@ -33,6 +33,8 @@ class VersionForm extends Form {
 	function VersionForm($versionId, $archiveId) {
 		parent::Form('rtadmin/version.tpl');
 
+		$this->addCheck(new FormValidatorPost($this));
+
 		$this->archiveId = $archiveId;
 
 		$rtDao = &DAORegistry::getDAO('RTDAO');

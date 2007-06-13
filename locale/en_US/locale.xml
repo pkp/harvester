@@ -197,6 +197,7 @@ Your server currently supports mbstring: <strong>{$supportsMBString}</strong>]]>
 	<message key="user.login.rememberUsernameAndPassword">Remember my username and password</message>
 
 	<message key="form.errorsOccurred">Errors occurred processing this form</message>
+	<message key="form.postRequired">The form was not submitted properly.</message>
 
 	<!-- Archive entity messages -->
 	<message key="archive.archives">Archives</message>

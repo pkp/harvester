@@ -37,6 +37,7 @@ class CrosswalkForm extends Form {
 		// Validation checks for this form
 		$this->addCheck(new FormValidator($this, 'name', 'required', 'admin.crosswalks.form.nameRequired'));
 		$this->addCheck(new FormValidator($this, 'description', 'required', 'admin.crosswalks.form.descriptionRequired'));
+		$this->addCheck(new FormValidatorPost($this));
 
 		$this->harvesterPlugin = Request::getUserVar('harvesterPlugin');
 

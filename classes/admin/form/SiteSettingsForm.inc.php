@@ -32,6 +32,7 @@ class SiteSettingsForm extends Form {
 		$this->addCheck(new FormValidator($this, 'adminUsername', 'required', 'installer.form.usernameRequired'));
 		$this->addCheck(new FormValidatorAlphaNum($this, 'adminUsername', 'required', 'installer.form.usernameAlphaNumeric'));
 		$this->addCheck(new FormValidatorCustom($this, 'adminPassword', 'optional', 'installer.form.passwordsDoNotMatch', create_function('$password,$form', 'return $password == $form->getData(\'adminPassword2\');'), array(&$this)));
+		$this->addCheck(new FormValidatorPost($this));
 		
 	}
 	
