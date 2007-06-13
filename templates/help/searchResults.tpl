@@ -13,7 +13,8 @@
 
 <div id="main" style="margin: 0; width: 600px;">
 
-	<h4>{translate key="help.harvesterHelp"}</h4>
+	{translate|assign:"defaultTitle" key="common.harvester2"}
+	<h4>{translate key="help.harvesterHelp" siteTitle=$siteTitle|default:$defaultTitle}</h4>
 
 	<div class="thickSeparator"></div>
 

@@ -10,8 +10,9 @@
  *}
 
 <div class="block" id="sidebarStats">
-	<span class="blockTitle"><img alt="{translate key="sidebar.harvesterStats"}" src="{$publicFilesDir}/stats.png" align="right" width="25" height="25"/>{translate key="sidebar.harvesterStats"}</span>
-	{translate key="sidebar.harvesterStats.description" recordCount=$recordCount archiveCount=$archiveCount}
+	{translate|assign:"defaultTitle" key="common.harvester2"}
+	<span class="blockTitle"><img alt="{translate key="sidebar.harvesterStats"}" src="{$publicFilesDir}/stats.png" align="right" width="25" height="25"/>{translate key="sidebar.harvesterStats" siteTitle=$siteTitle|default:$defaultTitle}</span>
+	{translate key="sidebar.harvesterStats.description" recordCount=$recordCount archiveCount=$archiveCount siteTitle=$siteTitle|default:$defaultTitle}
 </div>
 
 {if $enableSubmit}

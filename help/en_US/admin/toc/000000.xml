@@ -12,7 +12,7 @@
   * $Id$
   -->
 
-<toc id="admin/toc/000000" locale="en_US" title="Harvester Help" parent_topic="index/topic/000000">
+<toc id="admin/toc/000000" locale="en_US" title="Harvester2 Help" parent_topic="index/topic/000000">
 <!-- Administration -->
 	<topic id="admin/topic/000001" title="Site Settings"/>
 	<topic id="admin/topic/000002" title="Languages"/>

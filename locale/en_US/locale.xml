@@ -352,8 +352,8 @@ Your server currently supports mbstring: <strong>{$supportsMBString}</strong>]]>
 	<message key="admin.version.moreInfo">More Information</message>
 	
 	<!-- Sidebar Messages -->
-	<message key="sidebar.harvesterStats">Harvester Stats</message>
-	<message key="sidebar.harvesterStats.description"><![CDATA[Harvester2 currently has <strong>{$recordCount}</strong> papers from <strong>{$archiveCount}</strong> archive(s) indexed.]]></message>
+	<message key="sidebar.harvesterStats">{$siteTitle} Stats</message>
+	<message key="sidebar.harvesterStats.description"><![CDATA[{$siteTitle} currently has <strong>{$recordCount}</strong> papers from <strong>{$archiveCount}</strong> archive(s) indexed.]]></message>
 	<message key="sidebar.addYourArchive">Add Your Archive</message>
 	<message key="sidebar.addYourArchive.description"><![CDATA[<a href="{$addUrl}">Click here</a> to add your system to our index.]]></message>
 
@@ -424,7 +424,7 @@ Your server currently supports mbstring: <strong>{$supportsMBString}</strong>]]>
 
 	<!-- Help messages -->
 	<message key="help.help">Help</message>
-	<message key="help.harvesterHelp">Harvester2 Help</message>
+	<message key="help.harvesterHelp">{$siteTitle} Help</message>
 	<message key="help.toc">Table of Contents</message>	
 	<message key="help.searchResults">Search Results</message>
 	<message key="help.matchesFound">{$matches} matches found</message>

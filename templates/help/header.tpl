@@ -14,7 +14,8 @@
 	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 <head>
-	<title>{translate key="help.harvesterHelp"}</title>
+	{translate|assign:"defaultTitle" key="common.harvester2"}
+	<title>{translate key="help.harvesterHelp" siteTitle=$siteTitle|default:$defaultTitle}</title>
 	<meta http-equiv="Content-Type" content="text/html; charset={$defaultCharset}" />
 	<meta name="description" content="" />
 	<meta name="keywords" content="" />

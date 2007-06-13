@@ -13,7 +13,8 @@
 
 <div id="main" style="margin: 0; width: 660px;">
 
-		<h4>{translate key="help.harvesterHelp"}</h4>
+		{translate|assign:"defaultTitle" key="common.harvester2"}
+		<h4>{translate key="help.harvesterHelp" siteTitle=$siteTitle|default:$defaultTitle}</h4>
 
 		<div class="thickSeparator"></div>
 
@@ -27,7 +28,7 @@
 
 		<div id="toc">
 			<ul>
-				<li><a href="{get_help_id key="index.index" url="true"}">{translate key="help.harvesterHelp"}</a></li>
+				<li><a href="{get_help_id key="index.index" url="true"}">{translate key="help.harvesterHelp" siteTitle=$siteTitle|default:$defaultTitle}</a></li>
 				{foreach from=$helpToc item=topic key=topicId}
 				<li>{$topic.prefix}<a href="{url page="help" op="view" path=$topicId|explode:"/"}">{$topic.title}</a></li>
 				{/foreach}
