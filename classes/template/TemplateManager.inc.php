@@ -21,6 +21,11 @@ define('SMARTY_DIR', Core::getBaseDir() . DIRECTORY_SEPARATOR . 'lib' . DIRECTOR
 require_once('smarty/Smarty.class.php');
 
 class TemplateManager extends Smarty {
+	/** @var $styleSheets array of URLs to stylesheets */
+	var $styleSheets;
+
+	/** @var $progressFunctionCallback callback */
+	var $progressFunctionCallback;
 
 	/**
 	 * Constructor.
@@ -44,6 +49,9 @@ class TemplateManager extends Smarty {
 		//$this->compile_check = true;
 		
 		// Assign common variables
+		$this->styleSheets = array();
+		$this->assign_by_ref('stylesheets', $this->styleSheets);
+
 		$this->assign('defaultCharset', Config::getVar('i18n', 'client_charset'));
 		$this->assign('baseUrl', Request::getBaseUrl());
 		$this->assign('pageTitle', 'common.harvester2');
@@ -56,7 +64,10 @@ class TemplateManager extends Smarty {
 		$this->assign('dateFormatLong', Config::getVar('general', 'date_format_long'));
 		$this->assign('datetimeFormatShort', Config::getVar('general', 'datetime_format_short'));
 		$this->assign('datetimeFormatLong', Config::getVar('general', 'datetime_format_long'));
-		$this->assign('currentLocale', Locale::getLocale());
+
+		$locale = Locale::getLocale();
+		$this->assign('currentLocale', $locale);
+
 		$this->assign('publicFilesDir', Request::getBaseUrl() . '/public');
 		
 		if (!defined('SESSION_DISABLE_INIT')) {
@@ -92,6 +103,9 @@ class TemplateManager extends Smarty {
 			$this->assign('languageToggleLocales', $locales);
 		}
 
+		// If there's a locale-specific stylesheet, add it.
+		if (($localeStyleSheet = Locale::getLocaleStyleSheet($locale)) != null) $this->addStyleSheet(Request::getBaseUrl() . '/' . $localeStyleSheet);
+
 		// Register custom functions
 		$this->register_modifier('strip_unsafe_html', array('String', 'stripUnsafeHtml'));
 		$this->register_modifier('get_value', array(&$this, 'smartyGetValue'));
@@ -103,34 +117,61 @@ class TemplateManager extends Smarty {
 		$this->register_function('call_hook', array(&$this, 'smartyCallHook'));
 		$this->register_function('html_options_translate', array(&$this, 'smartyHtmlOptionsTranslate'));
 		$this->register_block('iterate', array(&$this, 'smartyIterate'));
+		$this->register_function('call_progress_function', array(&$this, 'smartyCallProgressFunction'));
 		$this->register_function('page_links', array(&$this, 'smartyPageLinks'));
 		$this->register_function('page_info', array(&$this, 'smartyPageInfo'));
 		$this->register_function('get_help_id', array(&$this, 'smartyGetHelpId'));
 		$this->register_function('icon', array(&$this, 'smartyIcon'));
 		$this->register_function('help_topic', array(&$this, 'smartyHelpTopic'));
 		$this->register_function('get_debug_info', array(&$this, 'smartyGetDebugInfo'));
+		$this->register_function('assign_mailto', array(&$this, 'smartyAssignMailto'));
+		$this->register_function('display_template', array(&$this, 'smartyDisplayTemplate'));
+
 		$this->register_function('url', array(&$this, 'smartyUrl'));
+	}
+
+	function addStyleSheet($url) {
+		array_push($this->styleSheets, $url);
 	}
 
 	/**
 	 * Display the template.
 	 */
-	function display($template, $sendContentType = 'text/html') {
+	function display($template, $sendContentType = 'text/html', $hookName = 'TemplateManager::display') {
 		$charset = Config::getVar('i18n', 'client_charset');
 
 		// Give any hooks registered against the TemplateManager
 		// the opportunity to modify behavior; otherwise, display
 		// the template as usual.
-		if (!HookRegistry::call('TemplateManager::display', array(&$this, &$template, &$sendContentType, &$charset))) {
+
+		$output = null;
+		if (!HookRegistry::call($hookName, array(&$this, &$template, &$sendContentType, &$charset, &$output))) {
+
 			// Explicitly set the character encoding
 			// Required in case server is using Apache's AddDefaultCharset directive
 			// (which can prevent browser auto-detection of the proper character set)
-			if ($sendContentType !== null) {
+			if ($hookName == 'TemplateManager::display' && $sendContentType != null) {
 				header('Content-Type: ' . $sendContentType . '; charset=' . $charset);
 			}
 
 			// Actually display the template.
 			parent::display($template);
+		} else {
+			// Display the results of the plugin.
+			echo $output;
+		}
+	}
+
+	/**
+	 * Display templates from Smarty and allow hook overrides
+	 *
+	 * Smarty usage: {display_template template="name.tpl" hookname="My::Hook::Name"}
+	 */
+	function smartyDisplayTemplate($params, &$smarty) {
+		$templateMgr =& TemplateManager::getManager();
+		// This is basically a wrapper for display()
+		if (isset($params['template'])) {
+			$templateMgr->display($params['template'], "", $params['hookname']);
 		}
 	}
 
@@ -235,7 +276,7 @@ class TemplateManager extends Smarty {
 			$params['values'] = array_map(array('Locale', 'translate'), $params['values']);
 		}
 		
-		require_once($smarty->_get_plugin_filepath('function','html_options'));
+		require_once($this->_get_plugin_filepath('function','html_options'));
 		return smarty_function_html_options($params, $smarty);
 	}
 
@@ -255,18 +296,21 @@ class TemplateManager extends Smarty {
 			else $smarty->assign($params['key'], $smarty->get_template_vars($params['key'])+1);
 		}
 
-		if ($iterator && !$iterator->eof()) {
-			$repeat = true;
-
-			if (isset($params['key'])) {
-				list($key, $value) = $iterator->nextWithKey();
-				$smarty->assign_by_ref($params['item'], $value);
-				$smarty->assign_by_ref($params['key'], $key);
-			} else {
-				$smarty->assign_by_ref($params['item'], $iterator->next());
-			}
-		} else {
+		// If the iterator is empty, we're finished.
+		if (!$iterator || $iterator->eof()) {
+			if (!$repeat) return $content;
 			$repeat = false;
+			return '';
+		}
+
+		$repeat = true;
+
+		if (isset($params['key'])) {
+			list($key, $value) = $iterator->nextWithKey();
+			$smarty->assign_by_ref($params['item'], $value);
+			$smarty->assign_by_ref($params['key'], $key);
+		} else {
+			$smarty->assign_by_ref($params['item'], $iterator->next());
 		}
 		return $content;
 	}
@@ -387,8 +431,14 @@ class TemplateManager extends Smarty {
 	 * a progress indicator or a message stating that the operation may take a while.
 	 */
 	function smartyFlush($params, &$smarty) {
+		$smarty->flush();
+	}
+
+	function flush() {
+		while (ob_get_level()) {
+			ob_end_flush();
+		}
 		flush();
-		ob_flush();
 	}
 
 	/**
@@ -415,7 +465,7 @@ class TemplateManager extends Smarty {
 	}
 
 	/**
-	 * Generate a URL into OJS.
+	 * Generate a URL into Harvester2. (This is a wrapper around Request::url to make it available to Smarty templates.)
 	 */
 	function smartyUrl($params, &$smarty) {
 		// Extract the variables named in $paramList, and remove them
@@ -433,6 +483,30 @@ class TemplateManager extends Smarty {
 		}
 
 		return Request::url($page, $op, $path, $params, $anchor, !isset($escape) || $escape);
+	}
+
+	function setProgressFunction(&$progressFunction) {
+		$this->progressFunctionCallback =& $progressFunction;
+	}
+
+	function smartyCallProgressFunction($params, &$smarty) {
+		if ($this->progressFunctionCallback) {
+			call_user_func($this->progressFunctionCallback);
+		}
+	}
+
+	function updateProgressBar($progress, $total) {
+		static $lastPercent;
+		$percent = round($progress * 100 / $total);
+		if (!isset($lastPercent) || $lastPercent != $percent) {
+			for($i=1; $i <= $percent-$lastPercent; $i++) {
+				echo '<img src="' . Request::getBaseUrl() . '/templates/images/progbar.gif" width="5" height="15">';
+			}
+		}
+		$lastPercent = $percent;
+
+		$templateMgr =& TemplateManager::getManager();
+		$templateMgr->flush();
 	}
 
 	/**

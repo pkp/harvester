@@ -226,8 +226,16 @@ class Locale {
 		}
 		return $currentLocale;
 	}
-	
-	
+
+	function getLocaleStyleSheet($locale) {
+		$allLocales =& Locale::_getAllLocalesCache();
+		$contents = $allLocales->getContents();
+		if (isset($contents[$locale]['stylesheet'])) {
+			return $contents[$locale]['stylesheet'];
+		}
+		return null;
+	}
+
 	/**
 	 * Retrieve the primary locale of the current context.
 	 * @return string
@@ -276,7 +284,7 @@ class Locale {
 			// Build array with ($localKey => $localeName)
 			if (isset($data['locale'])) {
 				foreach ($data['locale'] as $localeData) {
-					$allLocales[$localeData['attributes']['key']] = $localeData['attributes']['name'];
+					$allLocales[$localeData['attributes']['key']] = $localeData['attributes'];
 				}
 			}
 			asort($allLocales);
@@ -291,7 +299,19 @@ class Locale {
 	 */
 	function &getAllLocales() {
 		$cache =& Locale::_getAllLocalesCache();
-		return $cache->getContents();
+		$rawContents = $cache->getContents();
+		$allLocales = array();
+
+		foreach ($rawContents as $locale => $contents) {
+			$allLocales[$locale] = $contents['name'];
+		}
+
+		// if client encoding is set to iso-8859-1, transcode locales from utf8
+		if (LOCALE_ENCODING == "iso-8859-1") {
+			$allLocales = array_map('utf8_decode', $allLocales);
+		}
+
+		return $allLocales;
 	}
 	
 	/**
