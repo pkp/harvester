@@ -120,7 +120,6 @@ class OAIHarvesterPlugin extends HarvesterPlugin {
 		PluginRegistry::loadCategory('schemas');
 
 		$oaiHarvester =& new OAIHarvester($archive);
-		$templateMgr =& TemplateManager::getManager();
 
 		if (!$oaiHarvester->updateRecords($params)) {
 			foreach ($oaiHarvester->getErrors() as $error) {
