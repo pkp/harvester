@@ -56,18 +56,19 @@ class Harvester {
 		return $returner;
 	}
 
-	function insertEntry(&$field, $value, $attributes = array()) {
+	function insertEntry(&$field, $value, $attributes = array(), $parentEntryId = null) {
 		$record =& $this->getRecord();
 		$archive =& $this->getArchive();
 		if (!$record) return null;
 
-		if (HookRegistry::call('Harvester::insertEntry', array(&$archive, &$record, &$field, &$value, &$attributes))) return true;
+		if (HookRegistry::call('Harvester::insertEntry', array(&$archive, &$record, &$field, &$value, &$attributes, &$parentEntryId))) return true;
 
 		return $this->recordDao->insertEntry(
 			$record->getRecordId(),
 			$field->getFieldId(),
 			$value,
-			$attributes
+			$attributes,
+			$parentEntryId
 		);
 	}
 

@@ -235,6 +235,7 @@
 			<NOTNULL/>
 		</field>
 		<field name="value" type="X"/>
+		<field name="parent_entry_id" type="I4" />
 		<index name="entry_unique_index">
 			<col>record_id</col>
 			<col>raw_field_id</col>

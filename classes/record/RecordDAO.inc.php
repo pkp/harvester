@@ -68,7 +68,8 @@ class RecordDAO extends DAO {
 				$fieldName = $row['field_name'];
 				$returner[$fieldName][$entryId] = array(
 					'attributes' => array(),
-					'value' => $row['value']
+					'value' => $row['value'],
+					'parent_entry_id' => $row['parent_entry_id']
 				);
 			}
 			if (!empty($row['attribute_name'])) {
@@ -150,10 +151,11 @@ class RecordDAO extends DAO {
 	 * @param $fieldId int
 	 * @param $value string
 	 * @param $attributes array optional
+	 * @param $parentEntryId int optional
 	 * @return int ID of inserted entry
 	 */
-	function insertEntry($recordId, $fieldId, $value, $attributes = array()) {
-		$this->update('INSERT INTO entries (record_id, raw_field_id, value) VALUES (?, ?, ?)', array($recordId, $fieldId, $value));
+	function insertEntry($recordId, $fieldId, $value, $attributes = array(), $parentEntryId = null) {
+		$this->update('INSERT INTO entries (record_id, raw_field_id, value, parent_entry_id) VALUES (?, ?, ?, ?)', array($recordId, $fieldId, $value, $parentEntryId));
 		$entryId = $this->getInsertId('entries', 'entry_id');
 		foreach ($attributes as $name => $value) {
 			$this->insertEntryAttribute($entryId, $name, $value);
@@ -231,7 +233,15 @@ class RecordDAO extends DAO {
 	function deleteRecordsByArchiveId($archiveId) {
 		switch ($this->getDriver()) {
 			case 'mysql':
-				$this->update('DELETE records, entries, search_objects, entry_attributes, search_object_keywords FROM records LEFT JOIN entries ON (records.record_id = entries.record_id) LEFT JOIN search_objects ON (search_objects.record_id = records.record_id) LEFT JOIN search_object_keywords ON (search_object_keywords.object_id = search_objects.object_id) LEFT JOIN entry_attributes ON (entry_attributes.entry_id = entries.entry_id) WHERE records.archive_id = ?', $archiveId);
+				// Count on missing referential integrity for
+				// cases where records can be deleted.
+				// Using one or two DELETE FROM ... WHERE ...
+				// queries is too slow (at least for 5.0.15).
+				$this->update('DELETE FROM records WHERE archive_id = ?', $archiveId);
+				$this->update('DELETE entries FROM entries LEFT JOIN records ON (entries.record_id = records.record_id) WHERE records.record_id IS NULL');
+				$this->update('DELETE search_objects FROM search_objects LEFT JOIN records ON (search_objects.record_id = records.record_id) WHERE records.record_id IS NULL');
+				$this->update('DELETE entry_attributes FROM entry_attributes LEFT JOIN entries ON (entry_attributes.entry_id = entries.entry_id) WHERE entries.entry_id IS NULL');
+				$this->update('DELETE search_object_keywords FROM search_object_keywords LEFT JOIN search_objects ON (search_object_keywords.object_id = search_objects.object_id) WHERE search_objects.object_id IS NULL');
 				break;
 			case 'postgres':
 				$this->update('DELETE FROM search_object_keywords USING search_objects, records WHERE records.archive_id = ? AND records.record_id = search_objects.record_id AND search_object_keywords.object_id = search_objects.object_id', $archiveId);

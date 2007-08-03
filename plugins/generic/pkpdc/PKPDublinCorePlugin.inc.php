@@ -95,6 +95,7 @@ class PKPDublinCorePlugin extends Plugin {
 		$field =& $args[2];
 		$value =& $args[3];
 		$attributes =& $args[4];
+		$parentEntryId =& $args[5];
 
 		$pkpDcHandling = $archive->getSetting('pkpDcHandling');
 
@@ -138,7 +139,8 @@ class PKPDublinCorePlugin extends Plugin {
 				$record->getRecordId(),
 				$newField->getFieldId(),
 				$value,
-				$attributes
+				$attributes,
+				$parentEntryId
 			);
 			return true;
 		}

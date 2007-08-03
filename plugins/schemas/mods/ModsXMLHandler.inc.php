@@ -21,23 +21,14 @@ class ModsXMLHandler extends XMLParserHandler {
 	/** @var $metadata array */
 	var $metadata;
 
-	/** @var $characterData string */
-	var $characterData;
-
 	/** @var $attributes array */
 	var $attributes;
 
-	/** @var $nameAssocId int */
-	var $nameAssocId;
+	/** @var $rootElement array */
+	var $rootElement;
 
-	/** @var $titleAssocId int */
-	var $titleAssocId;
-
-	/** @var $inPhysicalDescription boolean */
-	var $inPhysicalDescription;
-
-	/** @var $inRelatedItem */
-	var $inRelatedItem;
+	/** @var $modsElement array Pointer within rootElement */
+	var $modsElement;
 
 	/**
 	 * Constructor
@@ -46,33 +37,33 @@ class ModsXMLHandler extends XMLParserHandler {
 	 */
 	function ModsXMLHandler(&$harvester) {
 		$this->harvester =& $harvester;
-		$this->inPhysicalDescription = false;
+	}
+
+	function initializeElements() {
+		unset($this->rootElement);
+		unset($this->modsElement);
+		$nullParent = null;
+		$this->rootElement =& new ModsElement($nullParent, null, null, null);
+		$this->modsElement =& $this->rootElement;
 	}
 
 	function startElement(&$parser, $tag, $attributes) {
-		$this->characterData = null;
-
 		if (String::substr($tag, 0, 5) === 'mods:') {
 			$tag = String::substr($tag, 5);
 		}
+
 		switch ($tag) {
-			case 'physicalDescription':
-				$this->inPhysicalDescription = true; // For differentiating note
-				break;
-			case 'relatedItem':
-				$this->inRelatedItem = true;
-				break;
-			case 'note':
-				if ($this->inPhysicalDescription) $tag = 'physicalDescriptionNote';
-				break;
-			case 'name':
-				unset($this->nameAssocId);
-				break;
-			case 'titleInfo':
-				unset($this->titleAssocId);
-				break;
+			case 'mods':
+				$this->initializeElements();
+			case 'oai_mods:mods':
+				return;
 		}
-		$this->attributes[$tag] = $attributes;
+
+		$oldCurrent =& $this->modsElement;
+		$newNode =& new ModsElement($oldCurrent, $tag, $attributes);
+		unset($this->modsElement);
+		$oldCurrent->addChild($newNode);
+		$this->modsElement =& $newNode;
 	}
 
 	function endElement(&$parser, $tag) {
@@ -81,139 +72,80 @@ class ModsXMLHandler extends XMLParserHandler {
 			$tag = String::substr($tag, 5);
 		}
 
-		if ($this->inRelatedItem) {
-			if ($tag == 'relatedItem') {
-				$this->inRelatedItem = false;
-			}
-			return;
+		switch ($tag) {
+			case 'mods':
+				$this->rootElement->flush($this->harvester);
+			case 'oai_mods:mods':
+				return;
 		}
 
-		switch ($tag) {
-			case 'namePart':
-			case 'affiliation':
-			case 'roleTerm':
-			case 'description':
-				// For subelements of the "name" tag, group them with an attribute
-				if (isset($this->nameAssocId)) $this->attributes[$tag]['nameAssocId'] = $this->nameAssocId;
-				else unset($this->attributes[$tag]['nameAssocId']);
-				$field =& $this->harvester->getFieldByKey($tag, ModsPlugin::getName());
-				$entryId = $this->harvester->insertEntry($field, $this->characterData, $this->attributes[$tag]);
-				if ($entryId !== null && !isset($this->nameAssocId)) {
-					$recordDao =& DAORegistry::getDAO('RecordDAO');
-					$recordDao->insertEntryAttribute($entryId, 'nameAssocId', $entryId);
-					$this->nameAssocId = $entryId;
-				}
-				break;
-			case 'title':
-			case 'subTitle':
-			case 'partNumber':
-			case 'partName':
-			case 'nonSort':
-				// For subelements of the "titleInfo" tag, group them with an attribute
-				if (isset($this->titleAssocId)) $this->attributes[$tag]['titleAssocId'] = $this->titleAssocId;
-				else unset($this->attributes[$tag]['titleAssocId']);
-				$field =& $this->harvester->getFieldByKey($tag, ModsPlugin::getName());
-				$entryId = $this->harvester->insertEntry($field, $this->characterData, $this->attributes[$tag]);
-				if ($entryId && !isset($this->titleAssocId)) {
-					$recordDao =& DAORegistry::getDAO('RecordDAO');
-					$recordDao->insertEntryAttribute($entryId, 'titleAssocId', $entryId);
-					$this->titleAssocId = $entryId;
-				}
-				break;
-			case 'displayForm':
-			case 'typeOfResource':
-			case 'genre':
-			case 'placeTerm':
-			case 'publisher':
-			case 'dateIssued':
-			case 'dateCreated':
-			case 'dateCaptured':
-			case 'dateValid':
-			case 'dateModified':
-			case 'copyrightDate':
-			case 'dateOther':
-			case 'recordCreationDate':
-			case 'recordChangeDate':
-			case 'edition':
-			case 'issuance':
-			case 'frequency':
-			case 'languageTerm':
-			case 'form':
-			case 'reformattingQuality':
-			case 'internetMediaType':
-			case 'extent':
-			case 'digitalOrigin':
-			case 'abstract':
-			case 'tableOfContents':
-			case 'targetAudience':
-			case 'topic':
-			case 'geographic':
-			case 'temporal':
-			case 'geographicCode':
-			case 'continent':
-			case 'country':
-			case 'region':
-			case 'state':
-			case 'territory':
-			case 'county':
-			case 'city':
-			case 'island':
-			case 'area':
-			case 'scale':
-			case 'projection':
-			case 'coordinates':
-			case 'occupation':
-			case 'classification':
-			case 'identifier':
-			case 'accessCondition':
-			case 'url':
-			case 'physicalLocation':
-			case 'extension':
-			case 'recordContentSource':
-			case 'recordIdentifier':
-			case 'recordOrigin':
-			case 'languageOfCataloging':
-				$field =& $this->harvester->getFieldByKey($tag, ModsPlugin::getName());
-				$entryId = $this->harvester->insertEntry($field, $this->characterData, $this->attributes[$tag]);
-				break;
-			case 'note':
-				$tagName = $this->inPhysicalDescription?'physicalDescriptionNote':'note';
-				$field =& $this->harvester->getFieldByKey($tagName, ModsPlugin::getName());
-				$entryId = $this->harvester->insertEntry($field, $this->characterData, $this->attributes[$tagName]);
-				break;
-			case 'mods':
-			case 'titleInfo':
-			case 'originInfo':
-			case 'place':
-			case 'language':
-			case 'hierarchicalGeographic':
-			case 'cartographics':
-			case 'identifier':
-			case 'location':
-			case 'recordInfo':
-			case 'subject':
-			case 'role':
-			case 'name':
-				// Do nothing.
-				break;
-			case 'physicalDescription':
-				$this->inPhysicalDescription = false; // For differentiating note
-				break;
-			default:
-				$this->harvester->addError("Unknown tag \"$tag\"!");
-		}
-		
+		$oldCurrent =& $this->modsElement;
+		unset($this->modsElement);
+		$this->modsElement =& $oldCurrent->getParent();
 	}
 
 	function characterData(&$parser, $data) {
-		if ($this->characterData === null) {
-			$this->characterData = '';
-		}
-		$this->characterData .= $data;
+		if ($this->modsElement) $this->modsElement->setValue($data);
 	}
 
 	function &getMetadata() {
 		return $this->metadata;
+	}
+}
+
+class ModsElement {
+	/** @var $tag string */
+	var $tag;
+
+	/** @var $value string */
+	var $value;
+
+	/** @var $attributes array */
+	var $attributes;
+
+	/** @var $children array */
+	var $children;
+
+	/** @var $parentElement array */
+	var $parentElement;
+
+	function ModsElement(&$parentElement, $tag, $attributes) {
+		$this->parentElement =& $parentElement;
+		$this->tag = $tag;
+		$this->value = null;
+		$this->attributes = $attributes;
+
+		$this->children = array();
+	}
+
+	function addChild(&$modsElement) {
+		$this->children[] =& $modsElement;
+	}
+
+	function setValue($value) {
+		$this->value = $value;
+	}
+
+	function &getParent() {
+		return $this->parentElement;
+	}
+
+	function flush(&$harvester, $parentId = null) {
+		$field = $entryId = null;
+
+		if ($this->tag !== null) {
+			$field =& $harvester->getFieldByKey($this->tag, ModsPlugin::getName());
+			if ($field) {
+				$entryId = $harvester->insertEntry($field, $this->value, $this->attributes, $parentId);
+			} else {
+				$harvester->addError("Unknown tag \"$this->tag\"!");
+				return;
+			}
+		}
+
+		foreach ($this->children as $key => $junk) {
+			$this->children[$key]->flush($harvester, $entryId);
+		}
 	}
 }
 

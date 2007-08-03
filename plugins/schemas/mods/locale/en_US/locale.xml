@@ -146,4 +146,20 @@
 	<message key="plugins.schemas.mods.fields.languageOfCataloging.description">Applies to the language of cataloging in a record</message>
 	<message key="plugins.schemas.mods.fields.note.name">Note</message>
 	<message key="plugins.schemas.mods.fields.note.description">General textual information relating to a resource</message>
+	<message key="plugins.schemas.mods.fields.titleInfo.name">Title Info</message>
+	<message key="plugins.schemas.mods.fields.titleInfo.description">Container element for title information</message>
+	<message key="plugins.schemas.mods.fields.relatedItem.name">Related Item</message>
+	<message key="plugins.schemas.mods.fields.relatedItem.description">Container element for related information</message>
+	<message key="plugins.schemas.mods.fields.subject.name">Subject</message>
+	<message key="plugins.schemas.mods.fields.subject.description">Container element for subject information</message>
+	<message key="plugins.schemas.mods.fields.name.name">Name</message>
+	<message key="plugins.schemas.mods.fields.name.description">Container element for name items</message>
+	<message key="plugins.schemas.mods.fields.list.name">List</message>
+	<message key="plugins.schemas.mods.fields.list.description">Container element for lists of items</message>
+	<message key="plugins.schemas.mods.fields.start.name">Start</message>
+	<message key="plugins.schemas.mods.fields.start.description">Start point</message>
+	<message key="plugins.schemas.mods.fields.part.name">Part</message>
+	<message key="plugins.schemas.mods.fields.part.description">Container element for parts</message>
+	<message key="plugins.schemas.mods.fields.originInfo.name">Origin Information</message>
+	<message key="plugins.schemas.mods.fields.originInfo.description">Container element for origin information</message>
 </locale>

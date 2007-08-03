@@ -119,7 +119,15 @@ class ModsPlugin extends SchemaPlugin {
 				'recordIdentifier',
 				'recordOrigin',
 				'languageOfCataloging',
-				'note'
+				'note',
+				'titleInfo',
+				'relatedItem',
+				'subject',
+				'name',
+				'list',
+				'start',
+				'part',
+				'originInfo'
 			);
 		}
 		return $fieldList;
@@ -133,36 +141,51 @@ class ModsPlugin extends SchemaPlugin {
 		return Locale::translate("plugins.schemas.mods.fields.$fieldSymbolic.description", $locale);
 	}
 
-	function getAuthorsAndTitle($entries) {
-		$authors = array();
-		$title = array();
-
+	function flattenEntries($entries) {
+		$returner = array();
 		foreach ($entries as $name => $entry) {
 			foreach ($entry as $entryId => $item) {
-				if (isset($item['attributes']['nameAssocId'])) {
-					$nameAssocId = $item['attributes']['nameAssocId'];
-					switch ($name) {
-						case 'roleTerm':
-							switch ($item['attributes']['type']) {
-								case 'text': $name = 'roleText'; break;
-								case 'code': $name = 'roleCode'; break;
-							}
-							break;
-					}
-					if (isset($authors[$nameAssocId][$name])) {
-						$authors[$nameAssocId][$name] .= '; ' . $item['value'];
-					} else {
-						$authors[$nameAssocId][$name] = $item['value'];
-					}
-				} elseif (isset($item['attributes']['titleAssocId'])) {
-					if (!isset($title[$name])) {
-						$title[$name] = $item['value'];
-					} else {
-						$title[$name] .= "\n" . $item['value'];
-					}
-				}
+				$item['name'] = $name;
+				$returner[$entryId] = $item;
 			}
 		}
+		return $returner;
+	}
+
+	function getAuthorsAndTitle($entries) {
+		$entries = $this->flattenEntries($entries);
+		$authors = array();
+		$titles = array();
+		$title = array();
+		$nameParts = array();
+		$authorRoles = array();
+		$titleInfoEntryId = null;
+
+		foreach ($entries as $entryId => $entry) {
+			switch ($entry['name']) {
+				case 'titleInfo':
+					if ($entry['parent_entry_id'] === null) $titleInfoEntryId = $entryId;
+					break;
+				case 'title':
+					$titles[$entry['parent_entry_id']] = $entry['value'];
+					break;
+				case 'namePart':
+					$nameParts[$entry['parent_entry_id']] = $entry['value'];
+					break;
+				case 'roleTerm':
+					if (String::strtolower(trim($entry['value'])) == 'author') $authorRoles[] = $entry['parent_entry_id'];
+					break;
+			}
+		}
+		if (isset($titleInfoEntryId) && isset($titles[$titleInfoEntryId])) $title = $titles[$titleInfoEntryId];
+
+		foreach ($authorRoles as $entryId) {
+			$nameNodeId = $entries[$entryId]['parent_entry_id'];
+			if (isset($nameParts[$nameNodeId])) {
+				$authors[] = $nameParts[$nameNodeId];
+			}
+		}
+
 		return array($authors, $title);
 	}
 
@@ -214,7 +237,6 @@ class ModsPlugin extends SchemaPlugin {
 		$templateMgr =& TemplateManager::getManager();
 
 		$entries = $record->getEntries();
-		list($authors, $title) = $this->getAuthorsAndTitle($entries);
 		$archive =& $record->getArchive();
 		if (!$archive || !$archive->getEnabled()) return false;
 
@@ -225,11 +247,40 @@ class ModsPlugin extends SchemaPlugin {
 			$templateMgr->assign('defineTermsContextId', $defineTermsContextId);
 		}
 
+		function displayEntry(&$returner, &$entries, &$entry, $entryId, $indent = 0) {
+			$fieldName = Locale::translate('plugins.schemas.mods.fields.' . $entry['name'] . '.name');
+			$pad = str_repeat('&nbsp;&nbsp;', $indent);
+			$thisNodeReturner = $value = $subNodesReturner = '';
+
+			switch ($entry['name']) {
+				case 'titleInfo':
+				case 'relatedItem':
+					$returner .= '<tr><td colspan="2"><h5>' . $pad . $fieldName . '</h5></td></tr>';
+					break;
+				default:
+					$value = trim($entry['value']);
+					if ($indent == 0) $thisNodeReturner .= "<tr><td><strong>$fieldName</strong></td><td>$value</td></tr>\n";
+					else $thisNodeReturner .= "<tr><td>$pad$fieldName</td><td>$value</td></tr>\n";
+			}
+
+			foreach ($entries as $childEntryId => $junk) {
+				if ($entries[$childEntryId]['parent_entry_id'] == $entryId) {
+					$subNodesReturner .= displayEntry($returner, $entries, $entries[$childEntryId], $childEntryId, $indent + 1);
+				}
+			}
+
+			if (!empty($value) || !empty($subNodesReturner)) $returner .= $thisNodeReturner . $subNodesReturner;
+		}
+
+		$recordHtml = '';
+		$entries = $this->flattenEntries($record->getEntries());
+		foreach ($entries as $entryId => $junk) {
+			if (!$entries[$entryId]['parent_entry_id']) displayEntry($recordHtml, $entries, $entries[$entryId], $entryId);
+		}
+
+		$templateMgr->assign_by_ref('recordHtml', $recordHtml);
 		$templateMgr->assign_by_ref('record', $record);
 		$templateMgr->assign_by_ref('archive', $archive);
-		$templateMgr->assign('title', $title);
-		$templateMgr->assign('authors', $authors);
-		$templateMgr->assign('entries', $entries);
 		$templateMgr->display($this->getTemplatePath() . 'record.tpl', null);
 		return true;
 	}
