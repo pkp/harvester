@@ -250,7 +250,6 @@ class ModsPlugin extends SchemaPlugin {
 		function displayEntry(&$returner, &$entries, &$entry, $entryId, $indent = 0) {
 			$fieldName = Locale::translate('plugins.schemas.mods.fields.' . $entry['name'] . '.name');
 			$pad = str_repeat('&nbsp;&nbsp;', $indent);
-			$thisNodeReturner = $value = $subNodesReturner = '';
 
 			switch ($entry['name']) {
 				case 'titleInfo':
@@ -259,17 +258,15 @@ class ModsPlugin extends SchemaPlugin {
 					break;
 				default:
 					$value = trim($entry['value']);
-					if ($indent == 0) $thisNodeReturner .= "<tr><td><strong>$fieldName</strong></td><td>$value</td></tr>\n";
-					else $thisNodeReturner .= "<tr><td>$pad$fieldName</td><td>$value</td></tr>\n";
+					if ($indent == 0) $returner .= "<tr><td><strong>$fieldName</strong></td><td>$value</td></tr>\n";
+					else $returner .= "<tr><td>$pad$fieldName</td><td>$value</td></tr>\n";
 			}
 
-			foreach ($entries as $childEntryId => $junk) {
+			foreach (array_keys($entries) as $childEntryId) {
 				if ($entries[$childEntryId]['parent_entry_id'] == $entryId) {
-					$subNodesReturner .= displayEntry($returner, $entries, $entries[$childEntryId], $childEntryId, $indent + 1);
+					displayEntry($returner, $entries, $entries[$childEntryId], $childEntryId, $indent + 1);
 				}
 			}
-
-			if (!empty($value) || !empty($subNodesReturner)) $returner .= $thisNodeReturner . $subNodesReturner;
 		}
 
 		$recordHtml = '';
