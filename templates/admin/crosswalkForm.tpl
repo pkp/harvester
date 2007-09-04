@@ -8,11 +8,10 @@
  *
  * $Id$
  *}
-
 {if $crosswalkId}
-	{assign var="pageTitle" value="admin.crosswalks.editCrosswalk"}
+{assign var="pageTitle" value="admin.crosswalks.editCrosswalk"}
 {else}
-	{assign var="pageTitle" value="admin.crosswalks.addCrosswalk"}
+{assign var="pageTitle" value="admin.crosswalks.addCrosswalk"}
 {/if}
 {assign var="helpTopicId" value="admin.crosswalkForm"}
 {include file="common/header.tpl"}

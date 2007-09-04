@@ -8,18 +8,16 @@
  *
  * $Id$
  *}
-
 {if $archiveId}
-	{assign var="helpTopicId" value="admin.archiveForm"}
-	{assign var="pageTitle" value="admin.archives.editArchive"}
+{assign var="helpTopicId" value="admin.archiveForm"}
+{assign var="pageTitle" value="admin.archives.editArchive"}
 {elseif $isUserLoggedIn}
-	{assign var="helpTopicId" value="admin.archiveForm"}
-	{assign var="pageTitle" value="admin.archives.addArchive"}
+{assign var="helpTopicId" value="admin.archiveForm"}
+{assign var="pageTitle" value="admin.archives.addArchive"}
 {else}
-	{assign var="helpTopicId" value="index.addArchive"}
-	{assign var="pageTitle" value="navigation.addArchive"}
+{assign var="helpTopicId" value="index.addArchive"}
+{assign var="pageTitle" value="navigation.addArchive"}
 {/if}
-
 {include file="common/header.tpl"}
 
 {if $archiveId}

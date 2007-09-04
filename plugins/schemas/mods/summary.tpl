@@ -8,7 +8,6 @@
  *
  * $Id$
  *}
-
 <span class="title">{$title|escape|default:"&mdash"}</span><br />
 
 <div class="recordContents">

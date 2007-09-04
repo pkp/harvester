@@ -8,7 +8,6 @@
  *
  * $Id$
  *}
-
 {assign var="pageTitle" value="record.viewRecord"}
 {include file="common/header.tpl"}
 

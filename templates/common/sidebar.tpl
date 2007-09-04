@@ -8,7 +8,6 @@
  *
  * $Id$
  *}
-
 {if $isUserLoggedIn}
 	<div class="block" id="sidebarUser">
 		<span class="blockTitle">{translate key="navigation.administration"}</span>

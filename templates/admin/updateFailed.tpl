@@ -8,9 +8,7 @@
  *
  * $Id$
  *}
-
 {assign var="pageTitle" value="admin.archives.manage.updateIndex"}
-
 {assign var="helpTopicId" value="admin.manage"}
 {include file="common/header.tpl"}
 

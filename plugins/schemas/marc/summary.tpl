@@ -8,7 +8,6 @@
  *
  * $Id$
  *}
-
 <span class="title">{$record->getTitle()|escape|truncate:90|default:"&mdash"}</span><br />
 <div class="recordContents">
 	<span class="author">{foreach from=$record->getAuthors() name="creators" item=creator}{$creator|escape|default:"&mdash;"}{if !$smarty.foreach.creators.last}</span><br /><span class="author">{/if}{/foreach}</span><br/>

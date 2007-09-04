@@ -8,7 +8,6 @@
  *
  * $Id$
  *}
-
 {assign var="pageTitle" value="admin.siteAdmin"}
 {assign var="helpTopicId" value="admin.index"}
 {include file="common/header.tpl"}

@@ -8,7 +8,6 @@
  *
  * $Id$
  *}
-
 <div class="block" id="sidebarStats">
 	{translate|assign:"defaultTitle" key="common.harvester2"}
 	<span class="blockTitle"><img alt="{translate key="sidebar.harvesterStats"}" src="{$publicFilesDir}/stats.png" align="right" width="25" height="25"/>{translate key="sidebar.harvesterStats" siteTitle=$siteTitle|default:$defaultTitle}</span>

@@ -8,10 +8,8 @@
  *
  * $Id$
  *}
-
 {* Make the list of selected archives available to the quick search sidebar *}
 {if is_array($archiveIds) && !in_array('all', $archiveIds)}{assign var="theseArchiveIds" value=$archiveIds}{/if}
-
 {assign var=pageTitle value="search.searchResults"}
 {assign var="helpTopicId" value="index.search"}
 {include file="common/header.tpl"}

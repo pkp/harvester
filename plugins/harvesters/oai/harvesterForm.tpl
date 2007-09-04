@@ -8,7 +8,6 @@
  *
  * $Id$
  *}
-
 	<tr valign="top">
 		<td class="label">{fieldLabel name="harvesterUrl" key="plugins.harvesters.oai.archive.form.harvesterUrl" required="true"}</td>
 		<td class="value">

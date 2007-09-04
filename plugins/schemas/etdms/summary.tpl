@@ -8,7 +8,6 @@
  *
  * $Id$
  *}
-
 <span class="title">{foreach name=title from=$entries.title item=entry}{$entry.value|escape|truncate:90|default:"&mdash"}{if !$smarty.foreach.title.last}<br/>{/if}{/foreach}</span><br />
 <div class="recordContents">
 	{foreach from=$entries.creator item=creator}<span class="author">{$creator.value|escape|default:"&mdash;"}</span><br />{/foreach}

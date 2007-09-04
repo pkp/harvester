@@ -8,7 +8,6 @@
  *
  * $Id$
  *}
-
 {assign var="pageTitle" value="admin.crosswalks"}
 {assign var="helpTopicId" value="admin.crosswalks"}
 {include file="common/header.tpl"}

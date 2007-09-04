@@ -8,9 +8,7 @@
  *
  * $Id$
  *}
-
 {assign var=sidebarTemplate value="index/sidebar.tpl"}
-
 {include file="common/header.tpl"}
 
 <br />

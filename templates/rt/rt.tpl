@@ -8,7 +8,6 @@
  *
  * $Id$
  *}
-
 {if $version}
 <div class="block">
 

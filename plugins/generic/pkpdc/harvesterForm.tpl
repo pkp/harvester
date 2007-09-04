@@ -8,7 +8,6 @@
  *
  * $Id$
  *}
-
 	<tr valign="top">
 		<td class="label">{fieldLabel name="pkpDcHandling" key="plugins.generic.pkpdc.archive.form.pkpDcHandling"}</td>
 		<td class="value">

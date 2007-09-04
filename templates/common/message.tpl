@@ -9,8 +9,8 @@
  *
  * $Id$
  *}
-
 {include file="common/header.tpl"}
+
 {if $message}{translate|assign:"messageTranslated" key=$message}{/if}
 
 <p>{$messageTranslated}</p>

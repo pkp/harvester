@@ -9,7 +9,6 @@
  *
  * $Id$
  *}
-
 {assign var="pageTitle" value="admin.systemConfiguration"}
 {url|assign:"currentUrl" op="editSystemConfig"}
 {assign var="helpTopicId" value="admin.systemConfiguration"}

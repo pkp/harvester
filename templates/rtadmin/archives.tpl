@@ -8,7 +8,6 @@
  *
  * $Id$
  *}
-
 {assign var="pageTitle" value="admin.rtAdmin"}
 {assign var="helpTopicId" value="FIXME"}
 {include file="common/header.tpl"}

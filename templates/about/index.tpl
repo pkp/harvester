@@ -8,7 +8,6 @@
  *
  * $Id$
  *}
-
 {assign var="pageTitle" value="navigation.about"}
 {include file="common/header.tpl"}
 {if !empty($about)}

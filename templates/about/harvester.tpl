@@ -8,7 +8,6 @@
  *
  * $Id$
  *}
-
 {assign var="pageTitle" value="about.harvester"}
 {include file="common/header.tpl"}
 

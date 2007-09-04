@@ -9,7 +9,6 @@
  *
  * $Id$
  *}
-
 {assign var="pageTitle" value="installer.harvester2Installation"}
 {include file="common/header.tpl"}
 
