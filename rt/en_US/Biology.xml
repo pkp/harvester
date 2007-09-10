@@ -4,7 +4,7 @@
 <!--
   * Biology.xml
   *
-  * Copyright (c) 2005-2007 Alec Smecher and John Willinsky
+  * Copyright (c) 2003-2007 John Willinsky
   * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
   *
   * Reading Tools version: Biology (en_US)
@@ -86,8 +86,8 @@
 		</search>
 	</context>
 	<context>
-		<context_title>Definitions</context_title>
-		<context_abbrev>Definitions</context_abbrev>
+		<context_title>Look up terms</context_title>
+		<context_abbrev>Look up terms</context_abbrev>
 		<context_description>Double click on any word in the text and it will appear in the &quot;Definition of terms&quot; box.  You can also type or paste a word into the box.  Then use the search function to find a definition for the word.  These resources have been selected because of their relevance and their open (free) access to all or part of their contents.</context_description>
 		<define_terms />
 		<search>
@@ -101,7 +101,7 @@
 			<search_title>Life Sciences Dictionary from BioTech</search_title>
 			<search_description>Life Sciences Dictionary from BioTech comprises 8,300+ terms relating to biochemistry, biotechnology, botany, cell biology and genetics, as well as selective entries on ecology, limnology, pharmacology, toxicology and medicine.</search_description>
 			<url>http://biotech.icmb.utexas.edu/search/dict-search.html</url>
-			<search_url>http://biotech.icmb.utexas.edu/search/dict-search.mhtml?bo1=AND&amp;search_type=normal&amp;def=&amp;word={$formKeywords}</search_url>
+			<search_url>http://biotech.icmb.utexas.edu/search/dict-search2.html?bo1=AND&amp;search_type=normal&amp;def=&amp;&amp;word={$formKeywords}</search_url>
 			
 		</search>
 		<search>
@@ -199,8 +199,8 @@ definition.</search_description>
 		</search>
 	</context>
 	<context>
-		<context_title>Book</context_title>
-		<context_abbrev>Book</context_abbrev>
+		<context_title>Book searches</context_title>
+		<context_abbrev>Book searches</context_abbrev>
 		<context_description>Book-related Resources</context_description>
 
 		<search>
@@ -247,7 +247,7 @@ definition.</search_description>
 		<search>
 			<search_title>ebrary</search_title>
 			<search_description>Independent researchers who do not have access to ebrary_ databases through their library may now set up an individual account for as little as $5. ebrary Discover spans multiple academic disciplines and provides anytime, anywhere access to over 20,000 authoritative titles including books in full-text, sheet music, reports and other authoritative documents from more than 175 leading publishers such as Cambridge University Press, Random House, Inc., and The McGraw-Hill Companies.</search_description>
-			<url>http://www.ebrary.com/company/</url>
+			<url>http://www.ebrary.com/corp/content.htm</url>
 			<search_url>http://shop.ebrary.com/Top?layout=search&amp;f00=text&amp;p01=&amp;f01=subject&amp;d=journal&amp;l=en&amp;sch=%A0%A0%A0%A0%A0Search%A0%A0%A0%A0%A0&amp;frm=adv.x&amp;p00={$formKeywords}</search_url>
 			
 		</search>
@@ -274,15 +274,15 @@ definition.</search_description>
 		</search>
 	</context>
 	<context>
-		<context_title>Portals</context_title>
-		<context_abbrev>Portals</context_abbrev>
+		<context_title>Relevant portals</context_title>
+		<context_abbrev>Relevant portals</context_abbrev>
 		<context_description>Offer an entry point to other websites.</context_description>
 
 		<search>
 			<search_title>Nature Biotechnology Directory</search_title>
 			<search_description>Nature Biotechnology Directory Website, a global information resource listing over 8,000 organizations, product and service providers in the biotechnology industry.</search_description>
 			<url>http://www.guide.nature.com/</url>
-			<search_url>http://www.guide.nature.com/resfull.html?whichdb=Alldbs&amp;free={$formKeywords}</search_url>
+			<search_url>http://www.biocompare.com/nature/search.asp?contentid=1&amp;maxrecords=50&amp;search={$formKeywords}</search_url>
 			
 		</search>
 		<search>
@@ -367,10 +367,16 @@ definition.</search_description>
 			
 		</search>
 		<search>
-			<search_title>Canadian Government Information</search_title>
-			<search_description>Includes links to Canadian government libraries, federal documents and news releases, publications catalogues, and provincial governments. Most information is in English, but some of the linked material is in French, or a combination of French and English.</search_description>
-			<url>http://www.nlc-bnc.ca/8/4/index-e.html</url>
-			<search_url>http://www.collectionscanada.ca/search/006001-110.01-e.php?q%5B1%5D=pagelevel%3A1&amp;q%5B2%5D=&amp;x=15&amp;y=13&amp;q%5B0%5D={$formKeywords}</search_url>
+			<search_title>The Government of Canada</search_title>
+			<search_description>You can search across all government departments federal departments and agencies as well as provincial, territorial and municipal governments. There is a Departments and Agencies link, and the A to Z Index offers a keyword search to programmes and services. 
+
+A recent development on Departmental sites is the inclusion of a &quot;Proactive Disclosure&quot; page, which outlines travel and hospitality expenses, disclosure of contracts, grants and awards. 
+
+The About Canada page includes links to Departments and Agencies, Structure of the Canadian Government, Commissions of Inquiry and more. 
+
+In addition to Department web sites, the government has been creating Portals which bring together information from across federal and provincial sources, and non-governmental organizations as well.</search_description>
+			<url>http://www.canada.gc.ca/main_e.html</url>
+			<search_url>http://search-recherche.gc.ca/cgi-bin/query?mss=canada%2Fen%2Fsimple&amp;pg=q&amp;enc=iso88591&amp;site=main&amp;bridge=&amp;stt=&amp;lowercaseq=&amp;what=web&amp;user=searchintranet&amp;browser=N6E&amp;kl=XX&amp;op=a&amp;q={$formKeywords}</search_url>
 			
 		</search>
 		<search>
@@ -384,7 +390,7 @@ definition.</search_description>
 			<search_title>Info4local.gov.uk</search_title>
 			<search_description>Information for local government from central government.  This site gives local authorities a quick and easy way to find relevant information on the web sites of central government departments, agencies and public bodies. It includes extensive information on implementing electronic government.</search_description>
 			<url>http://www.info4local.gov.uk</url>
-			<search_url>http://www.info4local.gov.uk/searchresults.asp?formname=frmAdvanced&amp;keywordstype=1&amp;month=&amp;year=&amp;pub=1&amp;news=1&amp;links=1&amp;allsubjects=1&amp;alldepts=1&amp;alldoctypes=1&amp;keywords={$formKeywords}</search_url>
+			<search_url>http://www.info4local.gov.uk/?view=Search+results&amp;subjects=all&amp;departmentsIds=0&amp;informationTypesIds=all&amp;query={$formKeywords}</search_url>
 			
 		</search>
 		<search>
@@ -398,8 +404,8 @@ definition.</search_description>
 			<search_title>Europa</search_title>
 			<search_description>Current information on the member countries of the European Union, including statistical data, policies, news, official documents, legal texts, and other publications.</search_description>
 			<url>http://europa.eu.int/index_en.htm</url>
-			<search_url>http://europa.eu.int/geninfo/query/engine/search/query.pl?action=FilterSearch&amp;filter=europaflt.hts&amp;Collection=fullEUROPA&amp;ResultTemplate=europarslt_ascii.hts&amp;ResultCount=25&amp;ResultMaxDocs=200&amp;DefaultLG=en&amp;ViewTemplate=europaview.hts&amp;QueryText={$formKeywords}</search_url>
-			
+			<search_url>http://europa.eu.int/geninfo/query/resultaction.jsp?page=1</search_url>
+			<search_post>Collection=EuropaFull&amp;ResultTemplate=/result_en.jsp&amp;ResultCount=25&amp;qtype=simple&amp;ResultMaxDocs=200&amp;DefaultLG=en&amp;QueryText={$formKeywords}</search_post>			
 		</search>
 		<search>
 			<search_title>The Global Legal Information Network (GLIN)</search_title>
@@ -419,7 +425,7 @@ definition.</search_description>
 			<search_title>Canada Sites</search_title>
 			<search_description>Canada Sites provides an information and services gateway run by the Government of Canada and each of the provinces.</search_description>
 			<url>http://www.canada.gc.ca/main_e.html</url>
-			<search_url>http://search-recherche.gc.ca/cgi-bin/query?mss=canada%2Fen%2Fsimple.html&amp;enc=iso88591&amp;pg=q&amp;kl=en&amp;site=main&amp;browser=IE&amp;mss=canada%2Fen%2Fsimple.html&amp;q={$formKeywords}</search_url>
+			<search_url>http://search-recherche.gc.ca/cgi-bin/query?mss=canada%2Fen%2Fsimple.html&amp;enc=iso88591&amp;pg=q&amp;kl=en&amp;site=main&amp;q={$formKeywords}</search_url>
 			
 		</search>
 	</context>
@@ -432,8 +438,8 @@ definition.</search_description>
 			<search_title>Biospace</search_title>
 			<search_description>BioSpace is a provider of web-based resources and information to the life science industry. For 20 years BioSpace has helped to accelerate communication and discovery among business and scientific leaders in the biopharmaceutical market. With a well-established site infrastructure and loyal online audience of over 1 million unique monthly visitors, BioSpace.com offers an unparalleled distribution channel for recruitment, investment, product, event and other life science industry messages.</search_description>
 			<url>http://www.biospace.com</url>
-			<search_url>http://www.biospace.com/navigate/search.aspx?range=news&amp;searchstring={$formKeywords}</search_url>
-			
+			<search_url>http://www.biospace.com/Default.aspx</search_url>
+			<search_post>ctl00$DropDownList1=News&amp;ctl00$TextBox1={$formKeywords}</search_post>			
 		</search>
 		<search>
 			<search_title>Google News</search_title>
@@ -460,14 +466,15 @@ definition.</search_description>
 			<search_title>Scientific American Archive</search_title>
 			<search_description>Scientific American Archive is the online science and technology resource offering access to every page and every issue of Scientific American magazine from 1993 to the present.</search_description>
 			<url>http://www.sciamdigital.com/</url>
-			<search_url>http://www.sciamdigital.com/searchresults.cfm?datapacketXMLO=&amp;methodnameCHAR=search_searchlog&amp;interfacenameCHAR=searchresults.cfm&amp;sequencenameCHAR=listresults&amp;calltypeCHAR=Formcall&amp;AUTHOR_CHAR=&amp;TITLE_CHAR=&amp;REQUESTERIDCHAR=anonymous&amp;REQUESTERGROUPCHAR=.1.2.0&amp;FullText_CHAR={$formKeywords}</search_url>
+			<search_url>http://www.sciamdigital.com/index.cfm?fa=Search.ViewSearchForItemResultList&amp;AUTHOR_CHAR=TITLE_CHAR&amp;FullText_CHAR={$formKeywords}</search_url>
 			
 		</search>
 		<search>
 			<search_title>Newsdirectory</search_title>
 			<search_description>Newsdirectory is a comprehensive and searchable guide to the world's English-language online media. Currently over 8,000 newspapers and magazines are listed, as well as more than 1,000 U.S. television broadcasters.</search_description>
 			<url>http://www.newsdirectory.com/</url>
-			<search_url>http://ask.elibrary.com/search.asp?refid=NEWSD&amp;datetype=all&amp;srcmags=checked&amp;srcnews=checked&amp;srcbooks=checked&amp;srctvrad=checked&amp;query={$formKeywords}</search_url>
+			<search_url>http://www.newsdirectory.com/hbSearch.php</search_url>
+			<search_post>s={$formKeywords}&amp; submit=Go</search_post>
 			
 		</search>
 	</context>

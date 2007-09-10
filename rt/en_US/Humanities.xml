@@ -4,7 +4,7 @@
 <!--
   * Humanities.xml
   *
-  * Copyright (c) 2005-2007 Alec Smecher and John Willinsky
+  * Copyright (c) 2003-2007 John Willinsky
   * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
   *
   * Reading Tools version: Humanities (en_US)
@@ -29,6 +29,13 @@
 			
 		</search>
 		<search>
+			<search_title>Intute: Arts &amp; Humanities</search_title>
+			<search_description>Intute: Arts &amp; Humanities is a free online service providing you with access to the best Web resources for education and research, selected and evaluated by a network of subject specialists. There are over 18,000 Web resources listed here that are freely available by keyword searching and browsing.</search_description>
+			<url>http://www.intute.ac.uk/artsandhumanities/ejournals.html</url>
+			<search_url>http://www.intute.ac.uk/artsandhumanities/cgi-bin/search.pl?submit.x=0&amp;submit.y=0&amp;submit=Go&amp;limit=0&amp;subject=artsandhumanities&amp;term1={$formKeywords}</search_url>
+			
+		</search>
+		<search>
 			<search_title>OAIster (Open Archives Initiative research databases)</search_title>
 			<search_description>OAIster is a project of the University of Michigan Digital Library Production Services, and provides searching a wide variety of collections from a wide variety of institutions. These institutions have made the records of their digital resources available to access, and the project team has gathered and aggregated them into the OAIster service.</search_description>
 			<url>http://oaister.umdl.umich.edu/</url>
@@ -47,7 +54,7 @@
 			<search_description>The Anthropological Index is a regionally arranged subject and author index to periodical articles in all areas of anthropology. It is produced by the Museum of Mankind Library.</search_description>
 			<url>http://aio.anthropology.org.uk/cgi-bin/uncgi/search_bib_ai/anthind_short</url>
 			<search_url>http://aio.anthropology.org.uk/cgi-bin/uncgi/search_bib_ai/anthind_short</search_url>
-			<search_post>Default_Years=#1957#1958#1959#1960#1961#1962#1963#1964#1965#1966#1967#1968#1969#1970#1971#1972#1973#1974#1975#1976#1977#1978#1979#1980#1981#1982#1983#1984#1985#1986#1987#1988#1989#1990#1991#1992#1993#1994#1995#1996#1997#1998#1999#2000#2001#2002#2003#2004#2005#Recent&amp;Year=Recent&amp;Text_w=&amp;Text=&amp;Author_w=&amp;Subject1=&amp;Subject2=&amp;Subject3=&amp;Email=You@whereever.edu&amp;Refer=on&amp;Author=</search_post>			
+			<search_post>Default_Years=#1957#1958#1959#1960#1961#1962#1963#1964#1965#1966#1967#1968#1969#1970#1971#1972#1973#1974#1975#1976#1977#1978#1979#1980#1981#1982#1983#1984#1985#1986#1987#1988#1989#1990#1991#1992#1993#1994#1995#1996#1997#1998#1999#2000#2001#2002#2003#2004#2005#Recent&amp;Year=Recent&amp;Text_w=&amp;Text=&amp;Author_w=&amp;Subject1=&amp;Subject2=&amp;Subject3=&amp;Email=You@whereever.edu&amp;Refer=on&amp;Author={$formKeywords}</search_post>			
 		</search>
 		<search>
 			<search_title>The English Server</search_title>
@@ -86,8 +93,8 @@
 		</search>
 	</context>
 	<context>
-		<context_title>Definitions</context_title>
-		<context_abbrev>Definitions</context_abbrev>
+		<context_title>Look up terms</context_title>
+		<context_abbrev>Look up terms</context_abbrev>
 		<context_description>Double click on any word in the text and it will appear in the &quot;Definition of terms&quot; box. You can also type or paste a word into the box. Then use the search function to find a definition for the word. These resources have been selected because of their relevance and their open (free) access to all or part of their contents.</context_description>
 		<define_terms />
 		<search>
@@ -143,7 +150,7 @@
 			<search_title>WordNet</search_title>
 			<search_description>WordNet, an electronic lexical database, is considered to be the most important resource available to researchers in computational linguistics, text analysis, and many related areas. Its design is inspired by current psycholinguistic and computational theories of human lexical memory. English nouns, verbs, adjectives, and adverbs are organized into synonym sets, each representing one underlying lexicalized concept. Different relations link the synonym sets.</search_description>
 			<url>http://www.cogsci.princeton.edu/~wn/</url>
-			<search_url>http://www.cogsci.princeton.edu/cgi-bin/webwn2.0?stage=1&amp;word={$formKeywords}</search_url>
+			<search_url>http://wordnet.princeton.edu/perl/webwn?sub=Search+WordNet&amp;o2=&amp;o0=1&amp;o7=&amp;o5=&amp;o1=1&amp;o6=&amp;o4=&amp;o3=&amp;h=&amp;s={$formKeywords}</search_url>
 			
 		</search>
 	</context>
@@ -160,10 +167,10 @@
 			
 		</search>
 		<search>
-			<search_title>Canadian Government Information</search_title>
-			<search_description>Includes links to Canadian government libraries, federal documents and news releases, publications catalogues, and provincial governments. Most information is in English, but some of the linked material is in French, or a combination of French and English.</search_description>
-			<url>http://www.nlc-bnc.ca/8/4/index-e.html</url>
-			<search_url>http://www.collectionscanada.ca/search/006001-110.01-e.php?q%5B1%5D=pagelevel%3A1&amp;q%5B2%5D=&amp;x=15&amp;y=13&amp;q%5B0%5D={$formKeywords}</search_url>
+			<search_title>Government of Canada Publicatons</search_title>
+			<search_description>The Government of Canada Publications Web site provides a single window access to free and priced publications authored by Government of Canada departments. The database does not have every publication published from all departments. It does however, have over 100,000 publications listed and this number is increasing on a daily basis as this site continues to collaborate with author departments.</search_description>
+			<url>http://www.canada.gc.ca/main_e.html</url>
+			<search_url>http://publications.gc.ca/control/quickPublicSearch?searchAction=2&amp;termValue={$formKeywords}</search_url>
 			
 		</search>
 		<search>
@@ -177,7 +184,7 @@
 			<search_title>Info4local.gov.uk</search_title>
 			<search_description>Information for local government from central government.  This site gives local authorities a quick and easy way to find relevant information on the web sites of central government departments, agencies and public bodies. It includes extensive information on implementing electronic government.</search_description>
 			<url>http://www.info4local.gov.uk</url>
-			<search_url>http://www.info4local.gov.uk/searchresults.asp?formname=frmAdvanced&amp;keywordstype=1&amp;month=&amp;year=&amp;pub=1&amp;news=1&amp;links=1&amp;allsubjects=1&amp;alldepts=1&amp;alldoctypes=1&amp;keywords={$formKeywords}</search_url>
+			<search_url>http://www.info4local.gov.uk/?view=Search+results&amp;subjects=all&amp;departmentsIds=0&amp;informationTypesIds=all&amp;query={$formKeywords}</search_url>
 			
 		</search>
 		<search>
@@ -191,8 +198,8 @@
 			<search_title>Europa</search_title>
 			<search_description>Current information on the member countries of the European Union, including statistical data, policies, news, official documents, legal texts, and other publications.</search_description>
 			<url>http://europa.eu.int/index_en.htm</url>
-			<search_url>http://europa.eu.int/geninfo/query/engine/search/query.pl?action=FilterSearch&amp;filter=europaflt.hts&amp;Collection=fullEUROPA&amp;ResultTemplate=europarslt_ascii.hts&amp;ResultCount=25&amp;ResultMaxDocs=200&amp;DefaultLG=en&amp;ViewTemplate=europaview.hts&amp;QueryText={$formKeywords}</search_url>
-			
+			<search_url>http://europa.eu.int/geninfo/query/resultaction.jsp?page=1</search_url>
+			<search_post>Collection=EuropaFull&amp;ResultTemplate=/result_en.jsp&amp;ResultCount=25&amp;qtype=simple&amp;ResultMaxDocs=200&amp;DefaultLG=en&amp;QueryText={$formKeywords}</search_post>			
 		</search>
 		<search>
 			<search_title>The Global Legal Information Network (GLIN)</search_title>
@@ -203,8 +210,8 @@
 		</search>
 	</context>
 	<context>
-		<context_title>Book</context_title>
-		<context_abbrev>Book</context_abbrev>
+		<context_title>Book searches</context_title>
+		<context_abbrev>Book searches</context_abbrev>
 		<context_description>Book-related Resources</context_description>
 
 		<search>
@@ -238,14 +245,28 @@
 	</context>
 	<context>
 		<context_title>Lit critics</context_title>
-		<context_abbrev>Literacry Critics</context_abbrev>
+		<context_abbrev>Literary Critics</context_abbrev>
 		<context_description>Search critical and biographical websites about authors and their works that can be browsed by author, by title, or by nationality and literary period.</context_description>
 
+		<search>
+			<search_title>Literary Index (Gale Group)</search_title>
+			<search_description>This is &quot;a master index to the major literature products published by Gale,&quot; including Contemporary Authors and Literature Criticism from 1400-1800. Also indexes print reference titles from Charles Scribner's Sons, St. James Press, and Twayne Publishers. Many of these resources, commonly found in libraries, &quot;contain complete biographies on authors and critical essays on their writings.&quot;</search_description>
+			<url>http://www.galenet.com/servlet/LitIndex</url>
+			<search_url>http://www.galenet.com/servlet/LitIndex/hits?ttlRad=ti&amp;n=10&amp;NA=&amp;r=s&amp;origSearch=true&amp;o=DocTitle&amp;l=8&amp;c=1&amp;secondary=false&amp;u=LitIndex&amp;t=KW&amp;s=2&amp;TI={$formKeywords}</search_url>
+			
+		</search>
 		<search>
 			<search_title>Internet Public Library Online Literary Criticism Collection</search_title>
 			<search_description>Browse the Internet Public Library's collection of links to websites on western and non-western literary criticism. Organized by author, title of work studied and by literary period within a particular national tradition.</search_description>
 			<url>http://www.ipl.org/div/litcrit/</url>
 			<search_url>http://www.ipl.org/div/searchresults/?where=searchresults&amp;words={$formKeywords}</search_url>
+			
+		</search>
+		<search>
+			<search_title>Poetry Portal</search_title>
+			<search_description>This is a very comprehensive and informative collection of links about poetry online, events, courses, styles, and publishing. The site also covers &quot;ezines, poetry sites, audio poetry, literary appreciation, criticism and reviews, poetry courses, workshops, conferences, book and trade news, literary chit-chat and trade news, plus sources to improve your own writing and get it published.&quot;</search_description>
+			<url>http://www.poetry-portal.com/</url>
+			<search_url>http://www.google.com/search?hl=en&amp;q=site%3Awww.poetry-portal.com+{$formKeywords}</search_url>
 			
 		</search>
 	</context>
@@ -358,10 +379,24 @@
 			
 		</search>
 		<search>
-			<search_title>Electronic Thesis/Dissertation OAI Union Catalog</search_title>
-			<search_description>This Union Catalog serves as a repository of rich graduate educational material contributed by a number of member institutions worldwide. This is a service built by harvesting metadata from Open Archives of electronic theses and dissertations.</search_description>
-			<url>http://rocky.dlib.vt.edu/~etdunion/cgi-bin/index.pl</url>
-			<search_url>http://rocky.dlib.vt.edu/~etdunion/cgi-bin/search.pl?query={$formKeywords}</search_url>
+			<search_title>Dissertation.com</search_title>
+			<search_description>Academic publishers of masters theses and doctoral PhD dissertations. Search 1000s of dissertation abstracts in dissertation database.</search_description>
+			<url>http://dissertation.com/</url>
+			<search_url>http://dissertation.com/browse.php?criteria=all&amp;submit.x=23&amp;submit.y=5&amp;keyword={$formKeywords}</search_url>
+			
+		</search>
+		<search>
+			<search_title>Networked Digital Library of Theses and Dissertations Union Catalog</search_title>
+			<search_description>This Union Catalog serves as a repository of rich graduate educational material contributed by a number of member institutions worldwide.  This project is a joint development with NDLTD and VTLS Inc.  It is hoped that this project will increase the availability of student research for scholars, empowere students to convey a richer message through the use of multimedia and hypermedia technologies and advance digital library technology worldwide.</search_description>
+			<url>http://zippo.vtls.com/cgi-bin/ndltd/chameleon</url>
+			<search_url>http://zippo.vtls.com/cgi-bin/ndltd/chameleon?sessionid=2006051219043826835&amp;skin=ndltd&amp;submittheform=Search&amp;usersrch=1&amp;beginsrch=1&amp;elementcount=3&amp;function=INITREQ&amp;search=SCAN&amp;lng=en&amp;pos=1&amp;conf=.%2Fchameleon.conf&amp;u1=4&amp;host=localhost%2B3668%2BDEFAULT&amp;t1={$formKeywords}</search_url>
+			
+		</search>
+		<search>
+			<search_title>Scirus ETD Search</search_title>
+			<search_description>NDLTD offers a search service provided by Scirus, which is based on data harvested from the Union Archive hosted by OCLC.</search_description>
+			<url>http://www.ndltd.org/info/description.en.html</url>
+			<search_url>http://www.scirus.com/srsapp/search?rep=ndl&amp;q={$formKeywords}</search_url>
 			
 		</search>
 	</context>
@@ -373,7 +408,7 @@
 		<search>
 			<search_title>AAD</search_title>
 			<search_description>Access to archival Databases (AAD) System has approximately 350 data files with millions of records available online that are highly structured, such as in databases. The series selected for AAD identify specific persons, geographic areas, organizations, or dates. Some of these series serve as indexes to accessioned archival records in non-electronic formats. Includes a link to search descriptions of NARA's non-electronic records through NARA's online catalogue, ARC.</search_description>
-			<url>http://aad.archives.gov/aad/title_list.jsp</url>
+			<url>http://aad.archives.gov/aad</url>
 			<search_url>http://search.nara.gov/query.html?rq=0&amp;qp=&amp;rq=0&amp;col=4ardor&amp;col=3ourdoc&amp;col=2pres&amp;col=1arch&amp;qs=&amp;qc=&amp;pw=100%25&amp;ws=0&amp;la=&amp;qm=0&amp;st=1&amp;nh=10&amp;lk=1&amp;rf=0&amp;oq=&amp;rq=0&amp;qt={$formKeywords}</search_url>
 			
 		</search>
@@ -395,7 +430,7 @@
 			<search_title>A2A - Access to Archives</search_title>
 			<search_description>Contains catalogues describing archives held throughout England and dating from the 900s to the present day.</search_description>
 			<url>http://www.a2a.org.uk/</url>
-			<search_url>http://www.a2a.org.uk/search/search.asp?Place_deposit=&amp;english_region=&amp;startdate=&amp;enddate=&amp;unidate=&amp;properties=&amp;keyword={$formKeywords}</search_url>
+			<search_url>http://www.a2a.org.uk/search/doclist.asp?nb=0&amp;nbKey=1&amp;com=1&amp;properties=0601&amp;keyword={$formKeywords}</search_url>
 			
 		</search>
 		<search>
@@ -408,15 +443,15 @@
 		<search>
 			<search_title>Catholic Encyclopedia</search_title>
 			<search_description>Contains full and authoritative information on Catholic interests, action, and doctrine.</search_description>
-			<url>http://www.newadvent.org/cathen/</url>
+			<url>http://www.newadvent.org/cathen/index.html</url>
 			<search_url>http://www.google.com/custom?domains=NewAdvent.org&amp;sa=Search+New+Advent&amp;sitesearch=NewAdvent.org&amp;client=pub-8168503353085287&amp;forid=1&amp;ie=ISO-8859-1&amp;oe=ISO-8859-1&amp;safe=active&amp;cof=GALT%3A%23008000%3BGL%3A1%3BDIV%3A%23336699%3BVLC%3A663399%3BAH%3Acenter%3BBGC%3AFFFFFF%3BLBGC%3A336699%3BALC%3A0000FF%3BLC%3A0000FF%3BT%3A000000%3BGFNT%3A0000FF%3BGIMP%3A0000FF%3BFORID%3A1%3B&amp;hl=en&amp;q={$formKeywords}</search_url>
 			
 		</search>
 		<search>
 			<search_title>Literature, Arts, and Medicine Databases</search_title>
-			<search_description>An annotated bibliography of prose, poetry, film, video, and art.</search_description>
-			<url>http://endeavor.med.nyu.edu/lit-med/lit-med-db/topview.html</url>
-			<search_url>http://mcrcr2.med.nyu.edu:8765/query.html?rq=0&amp;col=aes&amp;col=wwwmc&amp;charset=iso-8859-1&amp;style=lm&amp;qt={$formKeywords}</search_url>
+			<search_description>The Literature, Arts, &amp; Medicine Database is an annotated multimedia listing of prose, poetry, film, video and art that was developed to be a dynamic, accessible, comprehensive resource for teaching and research in MEDICAL HUMANITIES, and for use in health/pre-health, graduate and undergraduate liberal arts and social science settings.</search_description>
+			<url>http://litmed.med.nyu.edu/Main?action=aboutDB</url>
+			<search_url>http://google.med.nyu.edu/search?btnG=search&amp;access=p&amp;entqr=0&amp;output=xml_no_dtd&amp;sort=date%3AD%3AL%3Ad1&amp;ud=1&amp;client=litmed_test&amp;oe=UTF-8&amp;ie=UTF-8&amp;proxystylesheet=litmed_test&amp;site=litmed_test&amp;q={$formKeywords}</search_url>
 			
 		</search>
 		<search>
@@ -428,9 +463,9 @@
 		</search>
 	</context>
 	<context>
-		<context_title>Portals</context_title>
-		<context_abbrev>Portals</context_abbrev>
-		<context_description>Portals</context_description>
+		<context_title>Relevant portals</context_title>
+		<context_abbrev>Relevant portals</context_abbrev>
+		<context_description>Relevant portals</context_description>
 
 		<search>
 			<search_title>Archives Portal</search_title>
@@ -456,7 +491,7 @@
 		<search>
 			<search_title>Dante Project (Dartmouth)</search_title>
 			<search_description>Searchable collection of texts including the Italian text of the Divine Comedy and commentaries.</search_description>
-			<url>http://dciswww.dartmouth.edu:50080/v3?db=7&amp;page=s&amp;conn=2078917053&amp;seq=1117997527</url>
+			<url>http://dante.dartmouth.edu/</url>
 			<search_url>http://dante.dartmouth.edu/search_view.php?commentary[]=0&amp;language=any&amp;cantica=0&amp;canto=&amp;line={$formKeywords}</search_url>
 			<search_post>Cmd=Search&amp;query={$formKeywords}</search_post>			
 		</search>
@@ -468,10 +503,10 @@
 			
 		</search>
 		<search>
-			<search_title>Humbul Humanities Hub</search_title>
-			<search_description>Humbul Humanities Hub is a directory of Internet resources in each of the following areas: archaeology, classics, history, philosophy, history and philosophy of science, religion and theology, American studies, humanities computing, linguistics, languages, and literature. Developed for the United Kingdom's higher education community, it is a good tool for anyone doing research in the humanities on the Web.</search_description>
-			<url>http://www.humbul.ac.uk/about/</url>
-			<search_url>http://www.humbul.ac.uk/search/search2.php?go=Go&amp;type=and&amp;keyword={$formKeywords}</search_url>
+			<search_title>Intute: Arts &amp; Humanities</search_title>
+			<search_description>Intute: Arts &amp; Humanities is a free online service providing you with access to the best Web resources for education and research, selected and evaluated by a network of subject specialists. There are over 18,000 Web resources listed here that are freely available by keyword searching and browsing.</search_description>
+			<url>http://www.intute.ac.uk/artsandhumanities/ejournals.html</url>
+			<search_url>http://www.intute.ac.uk/artsandhumanities/cgi-bin/search.pl?submit.x=0&amp;submit.y=0&amp;submit=Go&amp;limit=0&amp;subject=artsandhumanities&amp;term1={$formKeywords}</search_url>
 			
 		</search>
 	</context>
@@ -490,7 +525,7 @@
 		<search>
 			<search_title>ebrary</search_title>
 			<search_description>Independent researchers who do not have access to ebrary?s databases through their library may now set up an individual account for as little as $5. ebrary Discover spans multiple academic disciplines and provides anytime, anywhere access to over 20,000 authoritative titles including books in full-text, sheet music, reports and other authoritative documents from more than 175 leading publishers such as Cambridge University Press, Random House, Inc., and The McGraw-Hill Companies.</search_description>
-			<url>http://www.ebrary.com/company/</url>
+			<url>http://www.ebrary.com/corp/content.htm</url>
 			<search_url>http://shop.ebrary.com/Top?layout=search&amp;f00=text&amp;p01=&amp;f01=subject&amp;d=journal&amp;l=en&amp;sch=%A0%A0%A0%A0%A0Search%A0%A0%A0%A0%A0&amp;frm=adv.x&amp;p00={$formKeywords}</search_url>
 			
 		</search>
@@ -549,13 +584,6 @@
 			<search_url>http://www.gutenberg.org/catalog/world/results?author=&amp;etestnr=&amp;title={$formKeywords}</search_url>
 			
 		</search>
-		<search>
-			<search_title>WESSWEB: Electronic Text Collections in Western European Literature</search_title>
-			<search_description>WESSWEB: Electronic Text Collections in Western European Literature lists Internet sources for literary texts in the Western European languages other than English. WESSWEB is a project of the West European Studies Section of the Association of College and Research Libraries.</search_description>
-			<url>http://www.lib.virginia.edu/wess/etexts.html</url>
-			<search_url>http://www.picosearch.com/cgi-bin/ts.pl?index=70760&amp;calln=3&amp;doc0=0&amp;search=Search&amp;opt=ANY&amp;query={$formKeywords}</search_url>
-			
-		</search>
 	</context>
 	<context>
 		<context_title>Online forums</context_title>
@@ -592,7 +620,7 @@
 		<search>
 			<search_title>EDSITEment</search_title>
 			<search_description>EDSITEment is a constantly growing collection of the most valuable online resources for teaching English, history, art history, and foreign languages.</search_description>
-			<url>http://edsitement.neh.fed.us/</url>
+			<url>http://edsitement.neh.gov/</url>
 			<search_url>http://marcopolosearch.org/MPSearch/Search_Results.asp?orgn_id=5&amp;log_type=1&amp;hdnFilter=+AND+%28%7Bsubject_social%241%7D%29&amp;hdnPerPage=15&amp;selUsing=all&amp;txtSearchFor={$formKeywords}</search_url>
 			
 		</search>
@@ -620,7 +648,7 @@
 			<search_title>People's Daily</search_title>
 			<search_description>People's Daily, China (January 1999-)</search_description>
 			<url>http://english.peopledaily.com.cn/</url>
-			<search_url>http://english.peopledaily.com.cn/cgi-bin/htsearch?method=boolean&amp;format=builtin-long&amp;sort=score&amp;config=english&amp;exclude=&amp;words={$formKeywords}</search_url>
+			<search_url>http://search.people.com.cn/was40/people/GB/english_index.jsp?type=1&amp;channel=&amp;Content=&amp;searchword={$formKeywords}</search_url>
 			
 		</search>
 		<search>
@@ -647,8 +675,8 @@
 		<search>
 			<search_title>The Japan Times Online</search_title>
 			<search_description>The Japan Times Online, Japan (January 1999-)</search_description>
-			<url>http://www.japantimes.co.jp/search.htm</url>
-			<search_url>http://search.japantimes.co.jp/cgi-bin/JTsearch4.pl5?term1={$formKeywords}</search_url>
+			<url>http://www.japantimes.co.jp/</url>
+			<search_url>http://www.google.co.jp/custom?domains=japantimes.co.jp&amp;client=pub-4223870936880387&amp;forid=1&amp;ie=Shift_JIS&amp;oe=Shift_JIS&amp;term1=&amp;cof=GALT%3A%23008000%3BGL%3A1%3BDIV%3A%23336699%3BVLC%3A663399%3BAH%3Acenter%3BBGC%3AFFFFFF%3BLBGC%3AFFFFFF%3BALC%3A0000FF%3BLC%3A0000FF%3BT%3A000000%3BGFNT%3A0000FF%3BGIMP%3A0000FF%3BLH%3A60%3BLW%3A200%3BL%3Ahttp%3A%2F%2Fwww.japantimes.co.jp%2Fimages%2Fheader_title.gif%3BS%3Ahttp%3A%2F%2Fwww.japantimes.co.jp%2F%3BFORID%3A1%3B&amp;hl=ja&amp;advancesearch=&amp;q={$formKeywords}</search_url>
 			
 		</search>
 		<search>
@@ -669,7 +697,8 @@
 			<search_title>Newsdirectory</search_title>
 			<search_description>Newsdirectory is a comprehensive and searchable guide to the world's English-language online media. Currently over 8,000 newspapers and magazines are listed, as well as more than 1,000 U.S. television broadcasters.</search_description>
 			<url>http://www.newsdirectory.com/</url>
-			<search_url>http://ask.elibrary.com/search.asp?refid=NEWSD&amp;datetype=all&amp;srcmags=checked&amp;srcnews=checked&amp;srcbooks=checked&amp;srctvrad=checked&amp;query={$formKeywords}</search_url>
+			<search_url>http://www.newsdirectory.com/hbSearch.php</search_url>
+			<search_post>s={$formKeywords}&amp; submit=Go</search_post>
 			
 		</search>
 	</context>
@@ -695,7 +724,7 @@
 		<search>
 			<search_title>Clusty the Clustering Engine</search_title>
 			<search_description>This search tool from Vivismo offers clustered results for a selection of searches.  Metasearch the whole web, or use tabs to search for news, gossip, images, orproducts via Bizrate or eBay.</search_description>
-			<url>http://clusty.com/</url>
+			<url>http://clusty.com/about</url>
 			<search_url>http://clusty.com/search?query={$formKeywords}</search_url>
 			
 		</search>
