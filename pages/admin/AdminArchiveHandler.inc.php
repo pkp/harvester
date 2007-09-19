@@ -22,7 +22,7 @@ class AdminArchiveHandler extends AdminHandler {
 	function archives() {
 		AdminArchiveHandler::validate();
 		AdminArchiveHandler::setupTemplate();
-		
+
 		$rangeInfo = Handler::getRangeInfo('archives');
 
 		// Load the harvester plugins so we can display names.
@@ -30,21 +30,21 @@ class AdminArchiveHandler extends AdminHandler {
 
 		$archiveDao = &DAORegistry::getDAO('ArchiveDAO');
 		$archives = &$archiveDao->getArchives(false, $rangeInfo);
-		
+
 		$templateMgr = &TemplateManager::getManager();
 		$templateMgr->assign_by_ref('archives', $archives);
 		$templateMgr->assign('harvesters', $plugins);
 		if ($rangeInfo) $templateMgr->assign('archivesPage', $rangeInfo->getPage());
 		$templateMgr->display('admin/archives.tpl');
 	}
-	
+
 	/**
 	 * Display form to create a new archive.
 	 */
 	function createArchive() {
 		AdminArchiveHandler::editArchive();
 	}
-	
+
 	/**
 	 * Display form to create/edit a archive.
 	 * @param $args array optional, if set the first parameter is the ID of the archive to edit
@@ -52,20 +52,20 @@ class AdminArchiveHandler extends AdminHandler {
 	function editArchive($args = array()) {
 		AdminArchiveHandler::validate();
 		AdminArchiveHandler::setupTemplate(true);
-		
+
 		import('admin.form.ArchiveForm');
-		
+
 		$archiveForm = &new ArchiveForm(!isset($args) || empty($args) ? null : (int) $args[0]);
 		$archiveForm->initData();
 		$archiveForm->display();
 	}
-	
+
 	/**
 	 * Save changes to a archive's settings.
 	 */
 	function updateArchive() {
 		AdminArchiveHandler::validate();
-		
+
 		import('admin.form.ArchiveForm');
 
 		$archiveId = (int) Request::getUserVar('archiveId');
@@ -73,26 +73,26 @@ class AdminArchiveHandler extends AdminHandler {
 		$archiveForm = &new ArchiveForm($archiveId);
 		$archiveForm->initData();
 		$archiveForm->readInputData();
-		
+
 		if ($archiveForm->validate()) {
 			$archiveForm->execute();
 			Request::redirect('admin', 'manage', $archiveId);
-			
+
 		} else {
 			AdminArchiveHandler::setupTemplate(true);
 			$archiveForm->display();
 		}
 	}
-	
+
 	/**
 	 * Delete a archive.
 	 * @param $args array first parameter is the ID of the archive to delete
 	 */
 	function deleteArchive($args) {
 		AdminArchiveHandler::validate();
-		
+
 		$archiveDao = &DAORegistry::getDAO('ArchiveDAO');
-		
+
 		// Disable timeout, as this operation may take
 		// a long time.
 		@set_time_limit(0);
@@ -101,17 +101,17 @@ class AdminArchiveHandler extends AdminHandler {
 			$archiveId = $args[0];
 			$archiveDao->deleteArchiveById($archiveId);
 		}
-		
+
 		Request::redirect('admin', 'archives', null, array('archivesPage' => Request::getUserVar('archivesPage')));
 	}
-	
+
 	/**
 	 * Manage an archive.
 	 */
 	function manage($args) {
 		AdminArchiveHandler::validate();
 		AdminArchiveHandler::setupTemplate(true);
-		
+
 		$archiveDao = &DAORegistry::getDAO('ArchiveDAO');
 
 		if (isset($args) && isset($args[0])) {
@@ -132,9 +132,9 @@ class AdminArchiveHandler extends AdminHandler {
 	function updateIndex($args) {
 		AdminArchiveHandler::validate();
 		AdminArchiveHandler::setupTemplate(true);
-		
+
 		$archiveDao = &DAORegistry::getDAO('ArchiveDAO');
-		
+
 		if (isset($args) && isset($args[0])) {
 			$archiveId = (int) $args[0];
 			$archive =& $archiveDao->getArchive($archiveId, false);
@@ -180,9 +180,9 @@ class AdminArchiveHandler extends AdminHandler {
 	function flushIndex($args) {
 		AdminArchiveHandler::validate();
 		AdminArchiveHandler::setupTemplate(true);
-		
+
 		$archiveDao = &DAORegistry::getDAO('ArchiveDAO');
-		
+
 		if (isset($args) && isset($args[0])) {
 			$archiveId = (int) $args[0];
 			$archive =& $archiveDao->getArchive($archiveId, false);

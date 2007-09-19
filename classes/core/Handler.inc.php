@@ -23,7 +23,7 @@ class Handler {
 		header('HTTP/1.0 404 Not Found');
 		fatalError('404 Not Found');
 	}
-	
+
 	/**
 	 * Perform request access validation based on security settings.
 	 */

@@ -24,7 +24,7 @@ class SearchDAO extends DAO {
 	function SearchDAO() {
 		parent::DAO();
 	}
-	
+
 	/**
 	 * Add a word to the keyword list (if it doesn't already exist).
 	 * @param $keyword string
@@ -48,19 +48,19 @@ class SearchDAO extends DAO {
 			} else {
 				$keywordId = null; // Error with this keyword (see #2324)
 			}
-			
+
 		} else {
 			$keywordId = $result->fields[0];
 		}
-		
+
 		$searchKeywordIds[$keyword] = $keywordId;
 
 		$result->Close();
 		unset($result);
-		
+
 		return $keywordId;
 	}
-	
+
 	/**
 	 * Retrieve the top results for a phrases with the given
 	 * limit (default 500 results).
@@ -81,7 +81,7 @@ class SearchDAO extends DAO {
 
 		$sqlFrom = '';
 		$sqlWhere = '';
-		
+
 		if (is_array($phrase)) for ($i = 0, $count = count($phrase); $i < $count; $i++) {
 			if (!empty($sqlFrom)) {
 				$sqlFrom .= ', ';
@@ -173,7 +173,7 @@ class SearchDAO extends DAO {
 		$returner = &new DBRowIterator($result);
 		return $returner;
 	}
-	
+
 	/**
 	 * Delete all search objects for a record.
 	 * @param $recordId int
@@ -205,7 +205,7 @@ class SearchDAO extends DAO {
 				break;
 		}
 	}
-	
+
 	/**
 	 * Add a record object to the index (if already exists, indexed keywords are cleared).
 	 * Each search object can contain a single date entry; this is an optimization to
@@ -253,10 +253,10 @@ class SearchDAO extends DAO {
 		}
 		$result->Close();
 		unset($result);
-		
+
 		return $objectId;
 	}
-	
+
 	/**
 	 * Index an occurrence of a keyword in an object.
 	 * @param $objectId int

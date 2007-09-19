@@ -26,11 +26,11 @@ class Crosswalk extends DataObject {
 	function Crosswalk() {
 		parent::DataObject();
 	}
-	
+
 	//
 	// Get/set methods
 	//
-	
+
 	/**
 	 * Get name of crosswalk
 	 * @return string
@@ -38,7 +38,7 @@ class Crosswalk extends DataObject {
 	 function getName() {
 	 	return $this->getData('name');
 	}
-	
+
 	/**
 	 * Set name of crosswalk
 	 * @param $name string
@@ -54,7 +54,7 @@ class Crosswalk extends DataObject {
 	 function getPublicCrosswalkId() {
 	 	return $this->getData('publicCrosswalkId');
 	}
-	
+
 	/**
 	 * Set public ID of crosswalk
 	 * @param $publicCrosswalkId string
@@ -70,7 +70,7 @@ class Crosswalk extends DataObject {
 	 function getType() {
 	 	return $this->getData('type');
 	}
-	
+
 	/**
 	 * Set type of crosswalk
 	 * @param $type int FIELD_TYPE_...
@@ -86,7 +86,7 @@ class Crosswalk extends DataObject {
 	 function getSortable() {
 	 	return $this->getData('sortable');
 	}
-	
+
 	/**
 	 * Set whether or not this crosswalk is sortable
 	 * @param $sortable boolean
@@ -103,7 +103,7 @@ class Crosswalk extends DataObject {
 	 	// FIXME: Localize.
 	 	return $this->getName();
 	}
-	
+
 	/**
 	 * Get sequence of field
 	 * @return int
@@ -111,7 +111,7 @@ class Crosswalk extends DataObject {
 	 function getSeq() {
 	 	return $this->getData('seq');
 	}
-	
+
 	/**
 	 * Set sequence of field
 	 * @param $seq int
@@ -127,7 +127,7 @@ class Crosswalk extends DataObject {
 	 function getDescription() {
 	 	return $this->getData('description');
 	}
-	
+
 	/**
 	 * Set description of field
 	 * @param $description string
@@ -135,7 +135,7 @@ class Crosswalk extends DataObject {
 	function setDescription($description) {
 		return $this->setData('description', $description);
 	}
-	
+
 	/**
 	 * Get localized description of crosswalk
 	 * @return string
@@ -144,7 +144,7 @@ class Crosswalk extends DataObject {
 	 	// FIXME: Localize.
 	 	return $this->getDescription();
 	}
-	
+
 	/**
 	 * Get ID of crosswalk.
 	 * @return int
@@ -152,7 +152,7 @@ class Crosswalk extends DataObject {
 	function getCrosswalkId() {
 		return $this->getData('crosswalkId');
 	}
-	
+
 	/**
 	 * Set ID of crosswalk.
 	 * @param $crosswalkId int

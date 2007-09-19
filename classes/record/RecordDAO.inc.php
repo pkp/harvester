@@ -28,7 +28,7 @@ class RecordDAO extends DAO {
 	function RecordDAO() {
 		parent::DAO();
 	}
-	
+
 	/**
 	 * Retrieve a record by ID.
 	 * @param $recordId int
@@ -125,7 +125,7 @@ class RecordDAO extends DAO {
 		unset($result);
 		return $returner;
 	}
-	
+
 	/**
 	 * Internal function to return a Record object from a row.
 	 * @param $row array
@@ -138,7 +138,7 @@ class RecordDAO extends DAO {
 		$record->setSchemaId($row['schema_plugin_id']);
 		$record->setIdentifier($row['identifier']);
 		$record->setDatestamp($row['datestamp']);
-		
+
 		HookRegistry::call('RecordDAO::_returnRecordFromRow', array(&$record, &$row));
 
 		return $record;
@@ -190,11 +190,11 @@ class RecordDAO extends DAO {
 				$record->getIdentifier()
 			)
 		);
-		
+
 		$record->setRecordId($this->getInsertRecordId());
 		return $record->getRecordId();
 	}
-	
+
 	/**
 	 * Update an existing record.
 	 * @param $record Record
@@ -218,7 +218,7 @@ class RecordDAO extends DAO {
 			)
 		);
 	}
-	
+
 	/**
 	 * Delete a record, INCLUDING ALL DEPENDENT ITEMS.
 	 * @param $record Record
@@ -275,7 +275,7 @@ class RecordDAO extends DAO {
 			'DELETE FROM records WHERE record_id = ?', $recordId
 		);
 	}
-	
+
 	/**
 	 * Retrieve all records in an archive.
 	 * @param $archiveId int ID of archive to browse; null to return all.
@@ -348,7 +348,7 @@ class RecordDAO extends DAO {
 		$returner = &new DAOResultFactory($result, $this, '_returnRecordFromRow');
 		return $returner;
 	}
-	
+
 	/**
 	 * Get the ID of the last inserted record.
 	 * @return int
@@ -356,7 +356,7 @@ class RecordDAO extends DAO {
 	function getInsertRecordId() {
 		return $this->getInsertId('records', 'record_id');
 	}
-	
+
 	/**
 	 * Retrieve a count of the records available.
 	 * @param $archiveId Specific archive to query (optional)

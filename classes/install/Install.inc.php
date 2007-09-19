@@ -25,7 +25,7 @@ define('INSTALLER_DEFAULT_MIN_PASSWORD_LENGTH', 6);
 import('install.Installer');
 
 class Install extends Installer {
-	
+
 	/**
 	 * Constructor.
 	 * @see install.form.InstallForm for the expected parameters
@@ -48,7 +48,7 @@ class Install extends Installer {
 	 */
 	function preInstall() {
  		$this->currentVersion = Version::fromString('');
- 		
+
  		$this->locale = $this->getParam('locale');
 		$this->installedLocales = $this->getParam('additionalLocales');
 		if (!isset($this->installedLocales) || !is_array($this->installedLocales)) {
@@ -57,7 +57,7 @@ class Install extends Installer {
 		if (!in_array($this->locale, $this->installedLocales) && Locale::isLocaleValid($this->locale)) {
 			array_push($this->installedLocales, $this->locale);
 		}
-		
+
 		if ($this->getParam('manualInstall')) {
 			// Do not perform database installation for manual install
 			// Create connection object with the appropriate database driver for adodb-xmlschema
@@ -69,7 +69,7 @@ class Install extends Installer {
 				null
 			);
 			$this->dbconn = &$conn->getDBConn();
-			
+
 		} else {
 			// Connect to database
 			$conn = &new DBConnection(
@@ -81,25 +81,25 @@ class Install extends Installer {
 				true,
 				$this->getParam('connectionCharset') == '' ? false : $this->getParam('connectionCharset')
 			);
-			
+
 			$this->dbconn = &$conn->getDBConn();
-			
+
 			if (!$conn->isConnected()) {
 				$this->setError(INSTALLER_ERROR_DB, $this->dbconn->errorMsg());
 				return false;
 			}
 		}
-		
+
 		DBConnection::getInstance($conn);
-		
+
 		return parent::preInstall();
 	}
-	
-	
+
+
 	//
 	// Installer actions
 	//
-	
+
 	/**
 	 * Create a new database if required.
 	 * @return boolean
@@ -108,25 +108,25 @@ class Install extends Installer {
 		if (!$this->getParam('createDatabase')) {
 			return true;
 		}
-		
+
 		// Get database creation sql
 		$dbdict = &NewDataDictionary($this->dbconn);
-		
+
 		if ($this->getParam('databaseCharset')) {
 				$dbdict->SetCharSet($this->getParam('databaseCharset'));
 		}
-		
+
 		list($sql) = $dbdict->CreateDatabase($this->getParam('databaseName'));
 		unset($dbdict);
-		
+
 		if (!$this->executeSQL($sql)) {
 			return false;
 		}
-		
+
 		if (!$this->getParam('manualInstall')) {
 			// Re-connect to the created database
 			$this->dbconn->disconnect();
-			
+
 			$conn = &new DBConnection(
 				$this->getParam('databaseDriver'),
 				$this->getParam('databaseHost'),
@@ -136,20 +136,20 @@ class Install extends Installer {
 				true,
 				$this->getParam('connectionCharset') == '' ? false : $this->getParam('connectionCharset')
 			);
-			
+
 			DBConnection::getInstance($conn);
-		
+
 			$this->dbconn = &$conn->getDBConn();
-			
+
 			if (!$conn->isConnected()) {
 				$this->setError(INSTALLER_ERROR_DB, $this->dbconn->errorMsg());
 				return false;
 			}
 		}
-			
+
 		return true;
 	}
-	
+
 	/**
 	 * Create initial required data.
 	 * @return boolean
@@ -176,10 +176,10 @@ class Install extends Installer {
 			$crosswalkDao =& DAORegistry::getDAO('CrosswalkDAO');
 			$crosswalkDao->installCrosswalks('registry/crosswalks.xml');
 		}
-		
+
 		return true;
 	}
-	
+
 	/**
 	 * Write the configuration file.
 	 * @return boolean
@@ -216,7 +216,7 @@ class Install extends Installer {
 			)
 		);
 	}
-	
+
 }
 
 ?>

@@ -65,7 +65,7 @@ class RTAdminHandler extends Handler {
 		RTAdminHandler::validate();
 		$archiveId = array_shift($args);
 		$versionId = Request::getUserVar('versionId');
-		
+
 		$archiveDao =& DAORegistry::getDAO('ArchiveDAO');
 		$archive =& $archiveDao->getArchive($archiveId, false);
 

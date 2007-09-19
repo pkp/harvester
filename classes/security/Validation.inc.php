@@ -46,7 +46,7 @@ class Validation {
 
 		return true;
 	}
-	
+
 	/**
 	 * Mark the user as logged out in the current session.
 	 * @return boolean
@@ -54,20 +54,20 @@ class Validation {
 	function logout() {
 		$sessionManager = &SessionManager::getManager();
 		$session = &$sessionManager->getUserSession();
-		
+
 		if ($session->getRemember()) {
 			$session->setRemember(0);
 			$sessionManager->updateSessionLifetime(0);
 		}
 
 		$session->setLoggedIn(false);
-			
+
 		$sessionDao = &DAORegistry::getDAO('SessionDAO');
 		$sessionDao->updateSession($session);
 
 		return true;
 	}
-	
+
 	/**
 	 * Redirect to the login page, appending the current URL as the source.
 	 */
@@ -78,7 +78,7 @@ class Validation {
 			Request::redirect('login');
 		}
 	}
-	
+
 	/**
 	 * Check if a user's credentials are valid.
 	 * @param $username string username
@@ -89,7 +89,7 @@ class Validation {
 		$site =& Request::getSite();
 		return (Validation::encryptCredentials($username, $password) === $site->getPassword());
 	}
-	
+
 	/**
 	 * Encrypt user passwords for database storage.
 	 * The username is used as a unique salt to make dictionary
@@ -101,11 +101,11 @@ class Validation {
 	 */
 	function encryptCredentials($username, $password, $encryption = false) {
 		$valueToEncrypt = $username . $password;
-		
+
 		if ($encryption == false) {
 			$encryption = Config::getVar('security', 'encryption');
 		}
-		
+
 		switch ($encryption) {
 			case 'sha1':
 				if (function_exists('sha1')) {
@@ -116,7 +116,7 @@ class Validation {
 				return md5($valueToEncrypt);
 		}
 	}
-	
+
 	/**
 	 * Generate a random password.
 	 * Assumes the random number generator has already been seeded.
@@ -133,7 +133,7 @@ class Validation {
 		}
 		return $password;
 	}
-	
+
 	/**
 	 * Check if the user must change their password in order to log in.
 	 * @return boolean
@@ -141,10 +141,10 @@ class Validation {
 	function isLoggedIn() {
 		$sessionManager = &SessionManager::getManager();
 		$session = &$sessionManager->getUserSession();
-		
+
 		return $session->getLoggedIn();
 	}
-	
+
 }
 
 ?>

@@ -25,7 +25,7 @@ class Upgrade extends Installer {
 	function Upgrade($params) {
 		parent::Installer('upgrade.xml', $params);
 	}
-	
+
 	/**
 	 * Returns true iff this is an upgrade process.
 	 */
@@ -36,7 +36,7 @@ class Upgrade extends Installer {
 	//
 	// Upgrade actions
 	//
-	
+
 	/**
 	 * Rebuild the search index.
 	 * @return boolean
@@ -46,7 +46,7 @@ class Upgrade extends Installer {
 		ArticleSearchIndex::rebuildIndex();
 		return true;
 	}
-	
+
 }
 
 ?>

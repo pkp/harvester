@@ -22,7 +22,7 @@ class Session extends DataObject  {
 	function Session() {
 		parent::DataObject();
 	}
-	
+
 	/**
 	 * Get a session variable's value.
 	 * @param $key string
@@ -31,7 +31,7 @@ class Session extends DataObject  {
 	function getSessionVar($key) {
 		return isset($_SESSION[$key]) ? $_SESSION[$key] : null;
 	}
-	
+
 	/**
 	 * Get a session variable's value.
 	 * @param $key string
@@ -42,7 +42,7 @@ class Session extends DataObject  {
 		$_SESSION[$key] = $value;
 		return $value;
 	}
-	
+
 	/**
 	 * Unset (delete) a session variable.
 	 * @param $key string
@@ -51,16 +51,16 @@ class Session extends DataObject  {
 		if (isset($_SESSION[$key])) {
 			unset($_SESSION[$key]);
 		}
-		
+
 		if (session_is_registered($key)) {
 			session_unregister($key);
 		}
 	}
-	
+
 	//
 	// Get/set methods
 	//
-	
+
 	/**
 	 * Get session ID.
 	 * @return string
@@ -68,7 +68,7 @@ class Session extends DataObject  {
 	function getId() {
 		return $this->getData('id');
 	}
-	
+
 	/**
 	 * Set session ID.
 	 * @param $id string
@@ -76,7 +76,7 @@ class Session extends DataObject  {
 	function setId($id) {
 		return $this->setData('id', $id);
 	}
-	
+
 	/**
 	 * Get boolean flag: true iff logged in.
 	 * @return boolean
@@ -84,7 +84,7 @@ class Session extends DataObject  {
 	function getLoggedIn() {
 		return $this->getData('loggedIn');
 	}
-	
+
 	/**
 	 * Set boolean flag: true iff logged in.
 	 * @param $loggedIn boolean
@@ -92,7 +92,7 @@ class Session extends DataObject  {
 	function setLoggedIn($loggedIn) {
 		return $this->setData('loggedIn', $loggedIn);
 	}
-	
+
 	/**
 	 * Get IP address.
 	 * @return string
@@ -100,7 +100,7 @@ class Session extends DataObject  {
 	function getIpAddress() {
 		return $this->getData('ipAddress');
 	}
-	
+
 	/**
 	 * Set IP address.
 	 * @param $ipAddress string
@@ -108,7 +108,7 @@ class Session extends DataObject  {
 	function setIpAddress($ipAddress) {
 		return $this->setData('ipAddress', $ipAddress);
 	}
-	
+
 	/**
 	 * Get user agent.
 	 * @return string
@@ -116,7 +116,7 @@ class Session extends DataObject  {
 	function getUserAgent() {
 		return $this->getData('userAgent');
 	}
-	
+
 	/**
 	 * Set user agent.
 	 * @param $userAgent string
@@ -124,7 +124,7 @@ class Session extends DataObject  {
 	function setUserAgent($userAgent) {
 		return $this->setData('userAgent', $userAgent);
 	}
-	
+
 	/**
 	 * Get time (in seconds) since session was created.
 	 * @return int
@@ -132,7 +132,7 @@ class Session extends DataObject  {
 	function getSecondsCreated() {
 		return $this->getData('created');
 	}
-	
+
 	/**
 	 * Set time (in seconds) since session was created.
 	 * @param $created int
@@ -140,7 +140,7 @@ class Session extends DataObject  {
 	function setSecondsCreated($created) {
 		return $this->setData('created', $created);
 	}
-	
+
 	/**
 	 * Get time (in seconds) since session was last used.
 	 * @return int
@@ -148,7 +148,7 @@ class Session extends DataObject  {
 	function getSecondsLastUsed() {
 		return $this->getData('lastUsed');
 	}
-	
+
 	/**
 	 * Set time (in seconds) since session was last used.
 	 * @param $lastUsed int
@@ -156,7 +156,7 @@ class Session extends DataObject  {
 	function setSecondsLastUsed($lastUsed) {
 		return $this->setData('lastUsed', $lastUsed);
 	}
-	
+
 	/**
 	 * Check if session is to be saved across browser sessions.
 	 * @return boolean
@@ -164,7 +164,7 @@ class Session extends DataObject  {
 	function getRemember() {
 		return $this->getData('remember');
 	}
-	
+
 	/**
 	 * Set whether session is to be saved across browser sessions.
 	 * @param $remember boolean
@@ -172,7 +172,7 @@ class Session extends DataObject  {
 	function setRemember($remember) {
 		return $this->setData('remember', $remember);
 	}
-	
+
 	/**
 	 * Get all session parameters.
 	 * @return array
@@ -180,7 +180,7 @@ class Session extends DataObject  {
 	function getSessionData() {
 		return $this->getData('data');
 	}
-	
+
 	/**
 	 * Set session parameters.
 	 * @param $data array
@@ -188,7 +188,7 @@ class Session extends DataObject  {
 	function setSessionData($data) {
 		return $this->setData('data', $data);
 	}
-	
+
 }
 
 ?>

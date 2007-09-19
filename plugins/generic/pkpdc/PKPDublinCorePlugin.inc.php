@@ -159,7 +159,7 @@ class PKPDublinCorePlugin extends Plugin {
 		if (!isset($params['plugin']) || $params['plugin'] != 'OAIHarvesterPlugin') return false;
 
 		$output .= $smarty->fetch($this->getTemplatePath() . '/harvesterForm.tpl');
-		
+
 		return false;
 	}
 

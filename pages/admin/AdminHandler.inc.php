@@ -22,11 +22,11 @@ class AdminHandler extends Handler {
 	function index() {
 		AdminHandler::validate();
 		AdminHandler::setupTemplate();
-			
+
 		$templateMgr = &TemplateManager::getManager();
 		$templateMgr->display('admin/index.tpl');
 	}
-	
+
 	/**
 	 * Validate that user has admin privileges
 	 * Redirects to the user index page if not properly authenticated.
@@ -37,7 +37,7 @@ class AdminHandler extends Handler {
 			Validation::redirectLogin();
 		}
 	}
-	
+
 	/**
 	 * Setup common template variables.
 	 * @param $subclass boolean set to true if caller is below this handler in the hierarchy
@@ -50,17 +50,17 @@ class AdminHandler extends Handler {
 			);
 		}
 	}
-	
-	
+
+
 	//
 	// Settings
 	//
-	
+
 	function settings() {
 		import('pages.admin.AdminSettingsHandler');
 		AdminSettingsHandler::settings();
 	}
-	
+
 	function saveSettings() {
 		import('pages.admin.AdminSettingsHandler');
 		AdminSettingsHandler::saveSettings();
@@ -74,32 +74,32 @@ class AdminHandler extends Handler {
 		import('pages.admin.AdminCrosswalkHandler');
 		AdminCrosswalkHandler::crosswalks();
 	}
-	
+
 	function editCrosswalk() {
 		import('pages.admin.AdminCrosswalkHandler');
 		AdminCrosswalkHandler::editCrosswalk();
 	}
-	
+
 	function createCrosswalk() {
 		import('pages.admin.AdminCrosswalkHandler');
 		AdminCrosswalkHandler::createCrosswalk();
 	}
-	
+
 	function resetCrosswalks() {
 		import('pages.admin.AdminCrosswalkHandler');
 		AdminCrosswalkHandler::resetCrosswalks();
 	}
-	
+
 	function deleteCrosswalk($args) {
 		import('pages.admin.AdminCrosswalkHandler');
 		AdminCrosswalkHandler::deleteCrosswalk($args);
 	}
-	
+
 	function updateCrosswalk($args) {
 		import('pages.admin.AdminCrosswalkHandler');
 		AdminCrosswalkHandler::updateCrosswalk($args);
 	}
-	
+
 	//
 	// Archive Management
 	//
@@ -108,17 +108,17 @@ class AdminHandler extends Handler {
 		import('pages.admin.AdminArchiveHandler');
 		AdminArchiveHandler::archives();
 	}
-	
+
 	function createArchive() {
 		import('pages.admin.AdminArchiveHandler');
 		AdminArchiveHandler::createArchive();
 	}
-	
+
 	function editArchive($args = array()) {
 		import('pages.admin.AdminArchiveHandler');
 		AdminArchiveHandler::editArchive($args);
 	}
-	
+
 	function manage($args = array()) {
 		import('pages.admin.AdminArchiveHandler');
 		AdminArchiveHandler::manage($args);
@@ -128,81 +128,81 @@ class AdminHandler extends Handler {
 		import('pages.admin.AdminArchiveHandler');
 		AdminArchiveHandler::updateArchive();
 	}
-	
+
 	function deleteArchive($args) {
 		import('pages.admin.AdminArchiveHandler');
 		AdminArchiveHandler::deleteArchive($args);
 	}
-	
+
 	function updateIndex($args) {
 		import('pages.admin.AdminArchiveHandler');
 		AdminArchiveHandler::updateIndex($args);
 	}
-	
+
 	function flushIndex($args) {
 		import('pages.admin.AdminArchiveHandler');
 		AdminArchiveHandler::flushIndex($args);
 	}
-	
+
 	//
 	// Languages
 	//
-	
+
 	function languages() {
 		import('pages.admin.AdminLanguagesHandler');
 		AdminLanguagesHandler::languages();
 	}
-	
+
 	function saveLanguageSettings() {
 		import('pages.admin.AdminLanguagesHandler');
 		AdminLanguagesHandler::saveLanguageSettings();
 	}
-	
+
 	function installLocale() {
 		import('pages.admin.AdminLanguagesHandler');
 		AdminLanguagesHandler::installLocale();
 	}
-	
+
 	function uninstallLocale() {
 		import('pages.admin.AdminLanguagesHandler');
 		AdminLanguagesHandler::uninstallLocale();
 	}
-	
+
 	function reloadLocale() {
 		import('pages.admin.AdminLanguagesHandler');
 		AdminLanguagesHandler::reloadLocale();
 	}
-	
-	
+
+
 	//
 	// Administrative functions
 	//
-	
+
 	function systemInfo() {
 		import('pages.admin.AdminFunctionsHandler');
 		AdminFunctionsHandler::systemInfo();
 	}
-	
+
 	function editSystemConfig() {
 		import('pages.admin.AdminFunctionsHandler');
 		AdminFunctionsHandler::editSystemConfig();
 	}
-	
+
 	function saveSystemConfig() {
 		import('pages.admin.AdminFunctionsHandler');
 		AdminFunctionsHandler::saveSystemConfig();
 	}
-	
+
 	function phpinfo() {
 		import('pages.admin.AdminFunctionsHandler');
 		AdminFunctionsHandler::phpInfo();
 	}
-	
+
 	function expireSessions() {
 		import('pages.admin.AdminFunctionsHandler');
 		AdminFunctionsHandler::expireSessions();
 	}
-	
+
 	function clearTemplateCache() {
 		import('pages.admin.AdminFunctionsHandler');
 		AdminFunctionsHandler::clearTemplateCache();
@@ -230,7 +230,7 @@ class AdminHandler extends Handler {
 	//
 	// Captcha
 	//
-	
+
 	function viewCaptcha($args) {
 		$captchaId = (int) array_shift($args);
 		import('captcha.CaptchaManager');

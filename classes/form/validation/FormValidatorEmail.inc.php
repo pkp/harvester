@@ -33,7 +33,7 @@ class FormValidatorEmail extends FormValidatorRegExp {
 			'$/i'
 		);
 	}
-	
+
 }
 
 ?>

@@ -22,11 +22,11 @@ class Record extends DataObject {
 	function Record() {
 		parent::DataObject();
 	}
-	
+
 	//
 	// Get/set methods
 	//
-	
+
 	/**
 	 * Get identifier for record
 	 * @return string
@@ -34,7 +34,7 @@ class Record extends DataObject {
 	 function getIdentifier() {
 	 	return $this->getData('identifier');
 	}
-	
+
 	/**
 	 * Set identifier for record
 	 * @param $identifier string
@@ -50,7 +50,7 @@ class Record extends DataObject {
 	 function getDatestamp() {
 	 	return $this->getData('datestamp');
 	}
-	
+
 	/**
 	 * Set datestamp of record
 	 * @param $datestamp string
@@ -66,7 +66,7 @@ class Record extends DataObject {
 	function getRecordId() {
 		return $this->getData('recordId');
 	}
-	
+
 	/**
 	 * Set ID of record.
 	 * @param $recordId int
@@ -82,7 +82,7 @@ class Record extends DataObject {
 	function getSchemaId() {
 		return $this->getData('schemaId');
 	}
-	
+
 	/**
 	 * Set ID of this record's schema.
 	 * @param $recordId int
@@ -98,7 +98,7 @@ class Record extends DataObject {
 	function getArchiveId() {
 		return $this->getData('archiveId');
 	}
-	
+
 	/**
 	 * Set ID of archive.
 	 * @param $archiveId int

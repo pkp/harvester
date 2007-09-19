@@ -59,7 +59,7 @@ class PluginHandler extends AdminHandler {
 		$verb = array_shift($args);
 
 		parent::validate();
-		
+
 		$plugins =& PluginRegistry::loadCategory($category);
 		if (!isset($plugins[$plugin]) || !$plugins[$plugin]->manage($verb, $args)) {
 			Request::redirect(null, 'plugins');

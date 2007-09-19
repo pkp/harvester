@@ -93,12 +93,12 @@ class Locale {
 			$locale = Locale::getLocale();
 		}
 
-		
+
 		$key = trim($key);
 		if (empty($key)) {
 			return '';
 		}
-		
+
 		$cache =& Locale::_getCache($locale);
 		$message = $cache->get($key);
 		if (!isset($message)) {
@@ -113,14 +113,14 @@ class Locale {
 					$message = str_replace("{\$$key}", $value, $message);
 				}
 			}
-			
+
 			return $message;
-			
+
 		} else {
 			// Add a missing key to the debug notes.
 			$notes =& Registry::get('system.debug.notes');
 			$notes[] = array('debug.notes.missingLocaleKey', array('key' => $key));
-		
+
 			// Add some octothorpes to missing keys to make them more obvious
 			return '##' . $key . '##';
 		}
@@ -153,27 +153,27 @@ class Locale {
 				setlocale(LC_ALL, $locale);
 			}
 		}
-		
+
 		if ($localeFile === null) $localeFile = Locale::getLocaleFilename($locale);
-		
+
 		// Add a locale load to the debug notes.
 		$notes =& Registry::get('system.debug.notes');
 		$notes[] = array('debug.notes.localeLoad', array('localeFile' => $localeFile));
-		
+
 		// Reload localization XML file
 		$xmlDao = &new XMLDAO();
 		$data = $xmlDao->parseStruct($localeFile, array('message'));
-	
+
 		// Build array with ($key => $string)
 		if (isset($data['message'])) {
 			foreach ($data['message'] as $messageData) {
 				$localeData[$messageData['attributes']['key']] = $messageData['value'];
 			}
 		}
-		
+
 		return $localeData;	
 	}
-	
+
 	/**
 	 * Check if a locale is valid.
 	 * @param $locale string
@@ -182,7 +182,7 @@ class Locale {
 	function isLocaleValid($locale) {
 		return isset($locale) && !empty($locale) && file_exists('locale/' . $locale . '/locale.xml');
 	}
-	
+
 	/**
 	 * Return the key name of the user's currently selected locale (default is "en_US" for U.S. English).
 	 * @return string 
@@ -192,7 +192,7 @@ class Locale {
 		if (!isset($currentLocale)) {
 			if (defined('SESSION_DISABLE_INIT')) {
 				$locale = Request::getCookieVar('currentLocale');
-			
+
 			} else {
 				$sessionManager = &SessionManager::getManager();
 				$session = &$sessionManager->getUserSession();
@@ -203,25 +203,25 @@ class Locale {
 				if (!isset($locale)) {
 					$locale = Request::getCookieVar('currentLocale');
 				}
-				
+
 				if (isset($locale)) {
 					// Check if user-specified locale is supported
 					$locales = &$site->getSupportedLocaleNames();
-					
+
 					if (!in_array($locale, array_keys($locales))) {
 						unset($locale);
 					}
 				}
-				
+
 				if (!isset($locale)) {
 					$locale = $site->getLocale();
 				}
 			}
-			
+
 			if (!Locale::isLocaleValid($locale)) {
 				$locale = LOCALE_DEFAULT;
 			}
-			
+
 			$currentLocale = $locale;
 		}
 		return $currentLocale;
@@ -243,11 +243,11 @@ class Locale {
 	function getPrimaryLocale() {
 		$site = &Request::getSite();
 		$locale = $site->getLocale();
-		
+
 		if (!isset($locale) || !Locale::isLocaleValid($locale)) {
 			$locale = LOCALE_DEFAULT;
 		}
-		
+
 		return $locale;
 	}
 
@@ -280,7 +280,7 @@ class Locale {
 			// Reload locale registry file
 			$xmlDao = &new XMLDAO();
 			$data = $xmlDao->parseStruct(LOCALE_REGISTRY_FILE, array('locale'));
-	
+
 			// Build array with ($localKey => $localeName)
 			if (isset($data['locale'])) {
 				foreach ($data['locale'] as $localeData) {
@@ -313,7 +313,7 @@ class Locale {
 
 		return $allLocales;
 	}
-	
+
 	/**
 	 * Uninstall support for an existing locale.
 	 * @param $locale string
@@ -321,11 +321,11 @@ class Locale {
 	function installLocale($locale) {
 		// Install default locale-specific data
 		import('db.DBDataXMLParser');
-		
+
 		$filesToInstall = array(
 			'dbscripts/xml/data/locale/' . $locale . '/email_templates_data.xml'
 		);
-		
+
 		$dataXMLParser = &new DBDataXMLParser();
 		foreach ($filesToInstall as $fileName) {
 			if (file_exists($fileName)) {
@@ -335,7 +335,7 @@ class Locale {
 		}
 		$dataXMLParser->destroy();
 	}
-	
+
 	/**
 	 * Install support for a new locale.
 	 * @param $locale string
@@ -345,7 +345,7 @@ class Locale {
 		$emailTemplateDao = &DAORegistry::getDAO('EmailTemplateDAO');
 		$emailTemplateDao->deleteEmailTemplatesByLocale($locale);
 	}
-	
+
 	/**
 	 * Reload locale-specific data.
 	 * @param $locale string
@@ -354,7 +354,7 @@ class Locale {
 		Locale::uninstallLocale($locale);
 		Locale::installLocale($locale);
 	}
-	
+
 }
 
 ?>

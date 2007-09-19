@@ -62,15 +62,15 @@ class SiteSettingsDAO extends DAO {
 	 */
 	function &getSiteSettings() {
 		$siteSettings = array();
-		
+
 		$result = &$this->retrieve(
 			'SELECT setting_name, setting_value, setting_type FROM site_settings'
 		);
-		
+
 		if ($result->RecordCount() == 0) {
 			$returner = null;
 			return $returner;
-			
+
 		} else {
 			while (!$result->EOF) {
 				$row = &$result->getRowAssoc(false);
@@ -104,7 +104,7 @@ class SiteSettingsDAO extends DAO {
 			return $siteSettings;
 		}
 	}
-	
+
 	/**
 	 * Add/update a site setting.
 	 * @param $name string
@@ -114,7 +114,7 @@ class SiteSettingsDAO extends DAO {
 	function updateSetting($name, $value, $type = null) {
 		$cache =& $this->_getCache();
 		$cache->setCache($name, $value);
-		
+
 		if ($type == null) {
 			switch (gettype($value)) {
 				case 'boolean':
@@ -139,19 +139,19 @@ class SiteSettingsDAO extends DAO {
 					break;
 			}
 		}
-		
+
 		if ($type == 'object') {
 			$value = serialize($value);
-			
+
 		} else if ($type == 'bool') {
 			$value = isset($value) && $value ? 1 : 0;
 		}
-		
+
 		$result = $this->retrieve(
 			'SELECT COUNT(*) FROM site_settings WHERE setting_name = ?',
 			$name
 		);
-		
+
 		if ($result->fields[0] == 0) {
 			$returner = $this->update(
 				'INSERT INTO site_settings
@@ -175,7 +175,7 @@ class SiteSettingsDAO extends DAO {
 
 		return $returner;
 	}
-	
+
 	/**
 	 * Delete a site setting.
 	 * @param $name string
@@ -183,13 +183,13 @@ class SiteSettingsDAO extends DAO {
 	function deleteSetting($name) {
 		$cache =& $this->_getCache();
 		$cache->setCache($name, null);
-		
+
 		return $this->update(
 			'DELETE FROM site_settings WHERE setting_name = ?',
 			$name
 		);
 	}
-	
+
 	/**
 	 * Used internally by installSettings to perform variable and translation replacements.
 	 * @param $rawInput string contains text including variable and/or translate replacements.

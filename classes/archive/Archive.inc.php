@@ -26,11 +26,11 @@ class Archive extends DataObject {
 		parent::DataObject();
 		$this->archiveSettingsDao =& DAORegistry::getDAO('ArchiveSettingsDAO');
 	}
-	
+
 	//
 	// Get/set methods
 	//
-	
+
 	/**
 	 * Get title of archive
 	 * @return string
@@ -38,7 +38,7 @@ class Archive extends DataObject {
 	 function getTitle() {
 	 	return $this->getData('title');
 	}
-	
+
 	/**
 	 * Set title of archive
 	 * @param $title string
@@ -54,7 +54,7 @@ class Archive extends DataObject {
 	 function getEnabled() {
 	 	return $this->getData('enabled')?1:0;
 	}
-	
+
 	/**
 	 * Set enabled/disabled state of archive
 	 * @param $enabled boolean
@@ -70,7 +70,7 @@ class Archive extends DataObject {
 	 function getPublicArchiveId() {
 	 	return $this->getData('publicArchiveId');
 	}
-	
+
 	/**
 	 * Set public ID of archive
 	 * @param $publicArchiveId string
@@ -86,7 +86,7 @@ class Archive extends DataObject {
 	 function getHarvesterPluginName() {
 	 	return $this->getData('harvesterPlugin');
 	}
-	
+
 	/**
 	 * Set name of harvester plugin
 	 * @param $harvesterPluginName string
@@ -115,7 +115,7 @@ class Archive extends DataObject {
 	 function getUrl() {
 	 	return $this->getData('url');
 	}
-	
+
 	/**
 	 * Set url of archive
 	 * @param $url string
@@ -131,7 +131,7 @@ class Archive extends DataObject {
 	 function getDescription() {
 	 	return $this->getData('description');
 	}
-	
+
 	/**
 	 * Set description of archive
 	 * @param $description string
@@ -139,7 +139,7 @@ class Archive extends DataObject {
 	function setDescription($description) {
 		return $this->setData('description', $description);
 	}
-	
+
 	/**
 	 * Get ID of archive.
 	 * @return int
@@ -147,7 +147,7 @@ class Archive extends DataObject {
 	function getArchiveId() {
 		return $this->getData('archiveId');
 	}
-	
+
 	/**
 	 * Set ID of archive.
 	 * @param $archiveId int

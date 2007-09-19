@@ -28,7 +28,7 @@ class ArchiveDAO extends DAO {
 		parent::DAO();
 		$this->archiveCache = array();
 	}
-	
+
 	/**
 	 * Retrieve a archive by ID.
 	 * @param $archiveId int
@@ -57,7 +57,7 @@ class ArchiveDAO extends DAO {
 
 		return $returner;
 	}
-	
+
 	/**
 	 * Retrieve a archive by public archive ID.
 	 * @param $publicArchiveId string
@@ -96,7 +96,7 @@ class ArchiveDAO extends DAO {
 		$archive->setDescription($row['description']);
 		$archive->setUrl($row['url']);
 		$archive->setHarvesterPluginName($row['harvester_plugin']);
-		
+
 		HookRegistry::call('ArchiveDAO::_returnArchiveFromRow', array(&$archive, &$row));
 
 		return $archive;
@@ -130,7 +130,7 @@ class ArchiveDAO extends DAO {
 
 		return $archive->getArchiveId();
 	}
-	
+
 	/**
 	 * Update an existing archive.
 	 * @param $archive Archive
@@ -157,7 +157,7 @@ class ArchiveDAO extends DAO {
 			)
 		);
 	}
-	
+
 	/**
 	 * Delete a archive, INCLUDING ALL DEPENDENT ITEMS.
 	 * @param $archive Archive
@@ -165,7 +165,7 @@ class ArchiveDAO extends DAO {
 	function deleteArchive(&$archive) {
 		return $this->deleteArchiveById($archive->getArchiveId());
 	}
-	
+
 	/**
 	 * Delete an archive by ID, INCLUDING ALL DEPENDENT ITEMS.
 	 * @param $archiveId int
@@ -183,7 +183,7 @@ class ArchiveDAO extends DAO {
 			'DELETE FROM archives WHERE archive_id = ?', $archiveId
 		);
 	}
-	
+
 	/**
 	 * Retrieve all archives.
 	 * @param $enabledOnly boolean
@@ -199,7 +199,7 @@ class ArchiveDAO extends DAO {
 		$returner = &new DAOResultFactory($result, $this, '_returnArchiveFromRow');
 		return $returner;
 	}
-	
+
 	/**
 	 * Get the ID of the last inserted archive.
 	 * @return int
@@ -207,7 +207,7 @@ class ArchiveDAO extends DAO {
 	function getInsertArchiveId() {
 		return $this->getInsertId('archives', 'archive_id');
 	}
-	
+
 	/**
 	 * Retrieve a count of the archives available.
 	 * @return int

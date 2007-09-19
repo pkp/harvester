@@ -58,7 +58,7 @@ class HelpTopicDAO extends XMLDAO {
 		}
 		return null;
 	}
-	
+
 	function getFilename($topicId) {
 		return sprintf('help/%s/%s.xml', Locale::getLocale(), $topicId);
 	}
@@ -164,15 +164,15 @@ class HelpTopicDAO extends XMLDAO {
 			$url = split('/', str_replace('\\', '/', $dir), 3);
 			$topicId = $url[2] . '/' . str_replace('.xml', '', $file);
 			$topic = &$this->getTopic($topicId);
-			
+
 			if ($topic) {
 				$numMatches = String::substr_count(String::strtolower($topic->getTitle()), $keyword);
-				
+
 				foreach ($topic->getSections() as $section) {
 					$numMatches += String::substr_count(String::strtolower($section->getTitle()), $keyword);
 					$numMatches += String::substr_count(String::strtolower($section->getContent()), $keyword);
 				}
-				
+
 				if ($numMatches > 0) {
 					$matchingTopics[($numMatches << 16) + count($matchingTopics)] = $topic;
 				}

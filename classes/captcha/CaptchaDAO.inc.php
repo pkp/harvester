@@ -18,14 +18,14 @@
 import('captcha.Captcha');
 
 class CaptchaDAO extends DAO {
- 
+
  	/**
 	 * Constructor.
 	 */
 	function CaptchaDAO() {
 		parent::DAO();
 	}
-	
+
 	/**
 	 * Retrieve captchas by session id
 	 * @param $userId int
@@ -33,7 +33,7 @@ class CaptchaDAO extends DAO {
 	 */
 	function &getCaptchasBySessionId($sessionId) {
 		$captchas = array();
-		
+
 		$result = &$this->retrieve('SELECT * FROM captchas WHERE session_id = ?', $sessionId);
 
 		while (!$result->EOF) {
@@ -43,10 +43,10 @@ class CaptchaDAO extends DAO {
 
 		$result->Close();
 		unset($result);
-		
+
 		return $captchas;
 	}
-	
+
 	/**
 	 * Retrieve expired captchas
 	 * @param $lifespan int optional number of seconds a captcha should last
@@ -55,7 +55,7 @@ class CaptchaDAO extends DAO {
 	function &getExpiredCaptchas($lifespan = 86400) {
 		$captchas = array();
 		$threshold = time() - $lifespan;
-		
+
 		$result = &$this->retrieve('SELECT c.* FROM captchas c LEFT JOIN sessions s ON (s.session_id = c.session_id) WHERE s.session_id IS NULL OR c.date_created <= ' . $this->datetimeToDB($threshold));
 
 		while (!$result->EOF) {
@@ -65,10 +65,10 @@ class CaptchaDAO extends DAO {
 
 		$result->Close();
 		unset($result);
-		
+
 		return $captchas;
 	}
-	
+
 	/**
 	 * Retrieve Captcha by captcha id
 	 * @param $captchaId int
@@ -86,10 +86,10 @@ class CaptchaDAO extends DAO {
 
 		$result->Close();
 		unset($result);
-		
+
 		return $captcha;
 	}	
-	
+
 	/**
 	 * Creates and returns an article captcha object from a row
 	 * @param $row array
@@ -106,7 +106,7 @@ class CaptchaDAO extends DAO {
 
 		return $captcha;
 	}
-	
+
 	/**
 	 * inserts a new captcha into article_captchas table
 	 * @param Captcha object
@@ -129,7 +129,7 @@ class CaptchaDAO extends DAO {
 		$captcha->setCaptchaId($this->getInsertCaptchaId());
 		return $captcha->getCaptchaId();
 	}
-		
+
 	/**
 	 * Get the ID of the last inserted article captcha.
 	 * @return int
@@ -167,5 +167,5 @@ class CaptchaDAO extends DAO {
 		);
 	}
 }
-  
+
 ?>

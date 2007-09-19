@@ -25,7 +25,7 @@ class Site extends DataObject {
 		parent::DataObject();
 		$this->siteSettingsDao =& DAORegistry::getDAO('SiteSettingsDAO');
 	}
-	
+
 	/**
 	 * Return associative array of all locales supported by the site.
 	 * These locales are used to provide a language toggle on the main site pages.
@@ -33,26 +33,26 @@ class Site extends DataObject {
 	 */
 	function &getSupportedLocaleNames() {
 		static $supportedLocales;
-		
+
 		if (!isset($supportedLocales)) {
 			$supportedLocales = array();
 			$localeNames = &Locale::getAllLocales();
-			
+
 			$locales = $this->getSupportedLocales();
 			foreach ($locales as $localeKey) {
 				$supportedLocales[$localeKey] = $localeNames[$localeKey];
 			}
-			
+
 			asort($supportedLocales);
 		}
-		
+
 		return $supportedLocales;
 	}
-	
+
 	//
 	// Get/set methods
 	//
-	
+
 	/**
 	 * Get site title.
 	 * @return string
@@ -60,7 +60,7 @@ class Site extends DataObject {
 	function getTitle() {
 		return $this->getSetting('title');
 	}
-	
+
 	/**
 	 * Set site title.
 	 * @param $title string
@@ -68,7 +68,7 @@ class Site extends DataObject {
 	function setTitle($title) {
 		$this->updateSetting('title', $title);
 	}
-	
+
 	/**
 	 * Get site username.
 	 * @return string
@@ -76,7 +76,7 @@ class Site extends DataObject {
 	function getUsername() {
 		return $this->getSetting('username');
 	}
-	
+
 	/**
 	 * Set site username.
 	 * @param $username string
@@ -84,7 +84,7 @@ class Site extends DataObject {
 	function setUsername($username) {
 		$this->updateSetting('username', $username);
 	}
-	
+
 	/**
 	 * Get site password.
 	 * @return string
@@ -92,7 +92,7 @@ class Site extends DataObject {
 	function getPassword() {
 		return $this->getSetting('password');
 	}
-	
+
 	/**
 	 * Set site password.
 	 * @param $password string
@@ -100,7 +100,7 @@ class Site extends DataObject {
 	function setPassword($password) {
 		$this->updateSetting('password', $password);
 	}
-	
+
 	/**
 	 * Get site introduction.
 	 * @return string
@@ -108,7 +108,7 @@ class Site extends DataObject {
 	function getIntro() {
 		return $this->getSetting('intro');
 	}
-	
+
 	/**
 	 * Set site introduction.
 	 * @param $intro string
@@ -116,7 +116,7 @@ class Site extends DataObject {
 	function setIntro($intro) {
 		$this->updateSetting('intro', $intro);
 	}
-	
+
 	/**
 	 * Get site about description.
 	 * @return string
@@ -124,7 +124,7 @@ class Site extends DataObject {
 	function getAbout() {
 		return $this->getSetting('about');
 	}
-	
+
 	/**
 	 * Set site about description.
 	 * @param $about string
@@ -132,7 +132,7 @@ class Site extends DataObject {
 	function setAbout($about) {
 		$this->updateSetting('about', $about);
 	}
-	
+
 	/**
 	 * Get site contact name.
 	 * @return string
@@ -140,7 +140,7 @@ class Site extends DataObject {
 	function getContactName() {
 		return $this->getSetting('contact_name');
 	}
-	
+
 	/**
 	 * Set site contact name.
 	 * @param $contactName string
@@ -148,7 +148,7 @@ class Site extends DataObject {
 	function setContactName($contactName) {
 		$this->updateSetting('contact_name', $contactName);
 	}
-	
+
 	/**
 	 * Get site contact email.
 	 * @return string
@@ -156,7 +156,7 @@ class Site extends DataObject {
 	function getContactEmail() {
 		return $this->getSetting('contact_email');
 	}
-	
+
 	/**
 	 * Set site contact email.
 	 * @param $contactEmail string
@@ -164,7 +164,7 @@ class Site extends DataObject {
 	function setContactEmail($contactEmail) {
 		$this->updateSetting('contact_email', $contactEmail);
 	}
-	
+
 	/**
 	 * Get primary locale.
 	 * @return string
@@ -172,7 +172,7 @@ class Site extends DataObject {
 	function getLocale() {
 		return $this->getSetting('locale');
 	}
-	
+
 	/**
 	 * Set primary locale.
 	 * @param $locale string
@@ -180,7 +180,7 @@ class Site extends DataObject {
 	function setLocale($locale) {
 		$this->updateSetting('locale', $locale);
 	}
-	
+
 	/**
 	 * Get installed locales.
 	 * @return array
@@ -190,7 +190,7 @@ class Site extends DataObject {
 		if (!isset($returner)) $returner = array();
 		return $returner;
 	}
-	
+
 	/**
 	 * Set installed locales.
 	 * @param $installedLocales array
@@ -198,7 +198,7 @@ class Site extends DataObject {
 	function setInstalledLocales($installedLocales) {
 		$this->updateSetting('installed_locales', $installedLocales);
 	}
-	
+
 	/**
 	 * Get array of all supported locales (for static text).
 	 * @return array
@@ -208,7 +208,7 @@ class Site extends DataObject {
 		if (!isset($returner)) $returner = array();
 		return $returner;
 	}
-	
+
 	/**
 	 * Set array of all supported locales (for static text).
 	 * @param $supportedLocales array

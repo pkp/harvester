@@ -23,7 +23,7 @@ class FormValidatorArray extends FormValidator {
 
 	/** @var array Array of field names where an error occurred */
 	var $errorFields;
-	
+
 	/**
 	 * Constructor.
 	 * @see FormValidator::FormValidator()
@@ -35,7 +35,7 @@ class FormValidatorArray extends FormValidator {
 		$this->fields = $fields;
 		$this->errorFields = array();
 	}
-	
+
 	/**
 	 * Check if field value is valid.
 	 * Value is valid if it is empty and optional or is in the set of accepted values.
@@ -45,7 +45,7 @@ class FormValidatorArray extends FormValidator {
 		if ($this->type == 'optional') {
 			return true;
 		}
-		
+
 		$ret = true;
 		$data = $this->form->getData($this->field);
 		foreach ($data as $key => $value) {
@@ -54,7 +54,7 @@ class FormValidatorArray extends FormValidator {
 					$ret = false;
 					array_push($this->errorFields, "{$this->field}[{$key}]");
 				}
-				
+
 			} else {
 				foreach ($this->fields as $field) {
 					if (trim($value[$field]) == '') {
@@ -64,10 +64,10 @@ class FormValidatorArray extends FormValidator {
 				}
 			}
 		}
-		
+
 		return $ret;
 	}
-	
+
 	/**
 	 * Get array of fields where an error occurred.
 	 * @return array
@@ -75,7 +75,7 @@ class FormValidatorArray extends FormValidator {
 	function getErrorFields() {
 		return $this->errorFields;
 	}
-	
+
 }
 
 ?>

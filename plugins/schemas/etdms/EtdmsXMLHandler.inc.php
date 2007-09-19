@@ -47,11 +47,11 @@ class EtdmsXMLHandler extends XMLParserHandler {
 		// Strip the "thesis:" from the tag, and we have the field key.  
 		if (String::substr($tag, 0, 10) === 'oai_etdms:') {
 			$fieldKey = String::substr($tag, 10);
-			
+
 		} elseif (String::substr($tag, 0, 10) === 'oai_etdms:'){
-		
+
 		$fieldKey = String::substr($tag, 10);
-		
+
 		} else {
 			$fieldKey = $tag;
 		}

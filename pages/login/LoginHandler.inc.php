@@ -25,15 +25,15 @@ class LoginHandler extends Handler {
 		if (Validation::isLoggedIn()) {
 			Request::redirect('admin');
 		}
-		
+
 		if (Config::getVar('security', 'force_login_ssl') && Request::getProtocol() != 'https') {
 			// Force SSL connections for login
 			Request::redirectSSL();
 		}
-		
+
 		$sessionManager = &SessionManager::getManager();
 		$session = &$sessionManager->getUserSession();
-		
+
 		$templateMgr = &TemplateManager::getManager();
 		$templateMgr->assign('username', $session->getSessionVar('username'));
 		$templateMgr->assign('remember', Request::getUserVar('remember'));
@@ -41,7 +41,7 @@ class LoginHandler extends Handler {
 		$templateMgr->assign('showRemember', Config::getVar('general', 'session_lifetime') > 0);
 		$templateMgr->display('login/login.tpl');
 	}
-	
+
 	/**
 	 * Validate a user's credentials and log the user in.
 	 */
@@ -50,7 +50,7 @@ class LoginHandler extends Handler {
 		if (Validation::isLoggedIn()) {
 			Request::redirect('admin');
 		}
-		
+
 		if (Config::getVar('security', 'force_login_ssl') && Request::getProtocol() != 'https') {
 			// Force SSL connections for login
 			Request::redirectSSL();
@@ -72,7 +72,7 @@ class LoginHandler extends Handler {
 		} else {
 			$sessionManager = &SessionManager::getManager();
 			$session = &$sessionManager->getUserSession();
-			
+
 			$templateMgr = &TemplateManager::getManager();
 			$templateMgr->assign('username', Request::getUserVar('username'));
 			$templateMgr->assign('remember', Request::getUserVar('remember'));
@@ -81,7 +81,7 @@ class LoginHandler extends Handler {
 			$templateMgr->display('login/login.tpl');
 		}
 	}
-	
+
 	/**
 	 * Log a user out.
 	 */
@@ -90,10 +90,10 @@ class LoginHandler extends Handler {
 		if (Validation::isLoggedIn()) {
 			Validation::logout();
 		}
-		
+
 		Request::redirect('login');
 	}
-	
+
 }
 
 ?>

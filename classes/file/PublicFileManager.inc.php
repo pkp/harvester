@@ -36,7 +36,7 @@ class PublicFileManager extends FileManager {
  	function uploadSiteFile($fileName, $destFileName) {
  		return $this->uploadFile($fileName, $this->getSiteFilesPath() . '/' . $destFileName);
  	}
- 	
+
  	/**
 	 * Delete a file from the site's public directory.
  	 * @param $fileName string the target file name

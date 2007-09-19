@@ -19,7 +19,7 @@ class DAO {
 
 	/** The database connection object */
 	var $_dataSource;
-	
+
 	/**
 	 * Constructor.
 	 * Initialize the database connection.
@@ -34,14 +34,14 @@ class DAO {
 				return;
 			}
 		}
-		
+
 		if (!isset($dataSource)) {
 			$this->_dataSource = &DBConnection::getConn();
 		} else {
 			$this->_dataSource = $dataSource;
 		}
 	}
-	
+
 	/**
 	 * Execute a SELECT SQL statement.
 	 * @param $sql string the SQL statement
@@ -59,7 +59,7 @@ class DAO {
 				return $value;
 			}
 		}
-		
+
 		$result = &$this->_dataSource->execute($sql, $params !== false && !is_array($params) ? array($params) : $params);
 		if ($this->_dataSource->errorNo()) {
 			// FIXME Handle errors more elegantly.
@@ -94,7 +94,7 @@ class DAO {
 		}
 		return $result;
 	}
-	
+
 	/**
 	 * Execute a SELECT SQL statement with LIMIT on the rows returned.
 	 * @param $sql string the SQL statement
@@ -114,7 +114,7 @@ class DAO {
 				return $value;
 			}
 		}
-		
+
 		$result = &$this->_dataSource->selectLimit($sql, $numRows === false ? -1 : $numRows, $offset === false ? -1 : $offset, $params !== false && !is_array($params) ? array($params) : $params);
 		if ($this->_dataSource->errorNo()) {
 			fatalError('DB Error: ' . $this->_dataSource->errorMsg());
@@ -151,7 +151,7 @@ class DAO {
 		}
 		return $result;
 	}
-	
+
 	/**
 	 * Execute an INSERT, UPDATE, or DELETE SQL statement.
 	 * @param $sql the SQL statement the execute
@@ -170,14 +170,14 @@ class DAO {
 				return $value;
 			}
 		}
-		
+
 		$this->_dataSource->execute($sql, $params !== false && !is_array($params) ? array($params) : $params);
 		if ($dieOnError && $this->_dataSource->errorNo()) {
 			fatalError('DB Error: ' . $this->_dataSource->errorMsg());
 		}
 		return $this->_dataSource->errorNo() == 0 ? true : false;
 	}
-	
+
 	/**
 	 * Return the last ID inserted in an autonumbered field.
 	 * @param $table string table name
@@ -187,7 +187,7 @@ class DAO {
 	function getInsertId($table = '', $id = '', $callHooks = true) {
 		return $this->_dataSource->po_insert_id($table, $id);
 	}
-	
+
 	/**
 	 * Configure the caching directory for database results
 	 * NOTE: This is implemented as a GLOBAL setting and cannot
@@ -221,7 +221,7 @@ class DAO {
 	function datetimeToDB($dt) {
 		return $this->_dataSource->DBTimeStamp($dt);
 	}
-	
+
 	/**
 	 * Return date formatted for DB insertion.
 	 * @param $d int/string *nix timestamp or ISO date string
@@ -230,7 +230,7 @@ class DAO {
 	function dateToDB($d) {
 		return $this->_dataSource->DBDate($d);
 	}
-	
+
 	/**
 	 * Return datetime from DB as ISO datetime string.
 	 * @param $dt string datetime from DB

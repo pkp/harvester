@@ -43,11 +43,11 @@ class TemplateManager extends Smarty {
 		$this->compile_dir = $cachePath . DIRECTORY_SEPARATOR . 't_compile';
 		$this->config_dir = $cachePath . DIRECTORY_SEPARATOR . 't_config';
 		$this->cache_dir = $cachePath . DIRECTORY_SEPARATOR . 't_cache';
-		
+
 		// TODO: Investigate caching behaviour and if Harvester2 can take advantage of it
 		//$this->caching = true;
 		//$this->compile_check = true;
-		
+
 		// Assign common variables
 		$this->styleSheets = array();
 		$this->assign_by_ref('stylesheets', $this->styleSheets);
@@ -69,7 +69,7 @@ class TemplateManager extends Smarty {
 		$this->assign('currentLocale', $locale);
 
 		$this->assign('publicFilesDir', Request::getBaseUrl() . '/public');
-		
+
 		if (!defined('SESSION_DISABLE_INIT')) {
 			/* Kludge to make sure no code that tries to connect to the database is executed
 			 * (e.g., when loading installer pages). */
@@ -79,7 +79,7 @@ class TemplateManager extends Smarty {
 			$this->assign_by_ref('userSession', $session);
 			$this->assign('isUserLoggedIn', $isUserLoggedIn);
 			$this->assign('loggedInUsername', $session->getSessionVar('username'));
-			
+
 			$site = &Request::getSite();
 
 			$siteTitle = $site->getTitle();
@@ -182,25 +182,25 @@ class TemplateManager extends Smarty {
 		$this->clear_compiled_tpl();
 		$this->clear_all_cache();
 	}
-	
+
 	/**
 	 * Return an instance of the template manager.
 	 * @return TemplateManager the template manager object
 	 */
 	function &getManager() {
 		static $instance;
-		
+
 		if (!isset($instance)) {
 			$instance = new TemplateManager();
 		}
 		return $instance;
 	}
-	
-	
+
+
 	//
 	// Custom template functions, modifiers, etc.
 	//
-	
+
 	/**
 	 * Smarty usage: {translate key="localization.key.name" [paramName="paramValue" ...]}
 	 *
@@ -223,13 +223,13 @@ class TemplateManager extends Smarty {
 					$params = array_merge($params, $paramsArray);
 				}
 				return Locale::translate($key, $params);
-				
+
 			} else {
 				return Locale::translate('');
 			}
 		}
 	}
-	
+
 	/**
 	 * Smarty usage: {translate var="varName" key="localization.key.name" [paramName="paramValue" ...]} 
 	 *
@@ -241,7 +241,7 @@ class TemplateManager extends Smarty {
 			$smarty->assign($params['var'], $smarty->smartyTranslate($params, $smarty));
 		}
 	}
-	
+
 	/**
 	 * Smarty usage: {html_options_translate ...}
 	 * For parameter usage, see http://smarty.php.net/manual/en/language.function.html.options.php
@@ -259,23 +259,23 @@ class TemplateManager extends Smarty {
 					$newOptions[Locale::translate($k)] = Locale::translate($v);
 				}
 				$params['options'] = $newOptions;
-				
+
 			} else {
 				// Just translate output
 				$params['options'] = array_map(array('Locale', 'translate'), $params['options']);
 			}
-			
+
 		}
-		
+
 		if (isset($params['output'])) {
 			$params['output'] = array_map(array('Locale', 'translate'), $params['output']);
-			
+
 		}
-		
+
 		if (isset($params['values']) && isset($params['translateValues'])) {
 			$params['values'] = array_map(array('Locale', 'translate'), $params['values']);
 		}
-		
+
 		require_once($this->_get_plugin_filepath('function','html_options'));
 		return smarty_function_html_options($params, $smarty);
 	}
@@ -333,7 +333,7 @@ class TemplateManager extends Smarty {
 			} else {
 				$translatedKey = Help::translate('');
 			}
-			
+
 			if ($params['url'] == "true") {
 				return Request::url('help', 'view', explode('/', $translatedKey));
 			} else {
@@ -374,7 +374,7 @@ class TemplateManager extends Smarty {
 				$disabled = (isset($params['disabled']) && !empty($params['disabled']));
 				$iconHtml = '<img src="' . $smarty->get_template_vars('baseUrl') . '/templates/images/icons/';			
 				$iconHtml .= $params['name'] . ($disabled ? '_disabled' : '') . '.gif" width="16" height="14" border="0" alt="';
-				
+
 				// if alt parameter specified use it, otherwise use localization version
 				if (isset($params['alt'])) {
 					$iconHtml .= $params['alt'];
@@ -599,7 +599,7 @@ class TemplateManager extends Smarty {
 
 	function _glueUrl($url) {
 		if (!is_array($url)) return false;
-	
+
 		$returner = @$url['scheme'] ? @$url['scheme'] . ':' . ((strtolower(@$url['scheme']) == 'mailto') ? '' : '//') : '';
 		$returner .= @$url['user'] ? @$url['user'] . (@$url['pass']? ':' . @$url['pass']:'') . '@' : '';
 		$returner .= @$url['host'] ? @$url['host'] : '';

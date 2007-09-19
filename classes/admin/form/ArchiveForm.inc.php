@@ -37,9 +37,9 @@ class ArchiveForm extends Form {
 	 */
 	function ArchiveForm($archiveId = null) {
 		parent::Form('admin/archiveForm.tpl');
-		
+
 		$this->archiveId = isset($archiveId) ? (int) $archiveId : null;
-		
+
 		// Validation checks for this form
 		$this->addCheck(new FormValidator($this, 'title', 'required', 'admin.archives.form.titleRequired'));
 		$this->addCheck(new FormValidator($this, 'url', 'required', 'admin.archives.form.urlRequired'));
@@ -69,7 +69,7 @@ class ArchiveForm extends Form {
 
 		HookRegistry::call('ArchiveForm::ArchiveForm', array(&$this, $this->harvesterPluginName));
 	}
-	
+
 	/**
 	 * Display the form.
 	 */
@@ -89,7 +89,7 @@ class ArchiveForm extends Form {
 		HookRegistry::call('ArchiveForm::display', array(&$this, &$templateMgr, $this->harvesterPluginName));
 		parent::display();
 	}
-	
+
 	/**
 	 * Initialize form data from current settings.
 	 */
@@ -148,7 +148,7 @@ class ArchiveForm extends Form {
 	function readInputData() {
 		$this->readUserVars($this->getParameterNames());
 	}
-	
+
 	function validate() {
 		if (Validation::isLoggedIn()) {
 			// Check to ensure that the public ID, if specified, is unique
@@ -167,7 +167,7 @@ class ArchiveForm extends Form {
 	 */
 	function execute() {
 		$archiveDao = &DAORegistry::getDAO('ArchiveDAO');
-		
+
 		if (!isset($this->archive)) {
 			$this->archive = &new Archive();
 		}
@@ -188,7 +188,7 @@ class ArchiveForm extends Form {
 			$archiveDao->updateArchive($this->archive);
 		} else {
 			$archiveId = $archiveDao->insertArchive($this->archive);
-			
+
 			// Include the current default set of reading tools.
 			import('rt.harvester2.HarvesterRTAdmin');
 			$rtAdmin =& new HarvesterRTADmin($archiveId);
@@ -213,7 +213,7 @@ class ArchiveForm extends Form {
 			}
 		}
 	}
-	
+
 }
 
 ?>

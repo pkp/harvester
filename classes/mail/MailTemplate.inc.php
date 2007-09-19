@@ -18,13 +18,13 @@ import('mail.Mail');
 
 define('MAIL_ERROR_INVALID_EMAIL', 0x000001);
 class MailTemplate extends Mail {
-	
+
 	/** @var $emailKey string Key of the email template we are using */
 	var $emailKey;
-	
+
 	/** @var $locale string locale of this template */
 	var $locale;
-	
+
 	/** @var $enabled boolean email template is enabled */
 	var $enabled;
 
@@ -40,7 +40,7 @@ class MailTemplate extends Mail {
 
 	/** @var boolean Whether or not email fields are disabled */
 	var $addressFieldsEnabled;
-	
+
 	/**
 	 * Constructor.
 	 * @param $emailKey string unique identifier for the template
@@ -51,7 +51,7 @@ class MailTemplate extends Mail {
 
 		// Use current user's locale if none specified
 		$this->locale = isset($locale) ? $locale : Locale::getLocale();
-		
+
 		if (isset($this->emailKey)) {
 			$emailTemplateDao = &DAORegistry::getDAO('EmailTemplateDAO');
 			$emailTemplate = &$emailTemplateDao->getEmailTemplate($this->emailKey, $this->locale);
@@ -149,11 +149,11 @@ class MailTemplate extends Mail {
 				$body = str_replace('{$' . $key . '}', $value, $body);
 			}
 		}
-		
+
 		$this->setSubject($subject);
 		$this->setBody($body);
 	}
-	
+
 	/**
 	 * Returns true if the email template is enabled; false otherwise.
 	 * @return boolean
@@ -251,18 +251,18 @@ class MailTemplate extends Mail {
 		$savedHeaders = $this->getHeaders();
 		$savedSubject = $this->getSubject();
 		$savedBody = $this->getBody();
-		
+
 		$this->assignParams($paramArray);
-		
+
 		$ret = $this->send();
-		
+
 		$this->setHeaders($savedHeaders);
 		$this->setSubject($savedSubject);
 		$this->setBody($savedBody);
-		
+
 		return $ret;
 	}
-	
+
 	/**
 	 * Clears the recipient, cc, and bcc lists.
 	 * @param $clearHeaders boolean if true, also clear headers

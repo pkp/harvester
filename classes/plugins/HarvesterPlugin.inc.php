@@ -200,7 +200,7 @@ class HarvesterPlugin extends Plugin {
 		$form =& $args[0];
 		$templateMgr =& $args[1];
 		$harvesterPlugin =& $args[2];
-		
+
 		if ($harvesterPlugin == $this->getName()) {
 			$this->displayArchiveForm($form, $templateMgr);
 		}

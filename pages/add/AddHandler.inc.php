@@ -26,12 +26,12 @@ class AddHandler extends Handler {
 		AddHandler::setupTemplate();
 
 		import('admin.form.ArchiveForm');
-		
+
 		$archiveForm = &new ArchiveForm(!isset($args) || empty($args) ? null : (int) $args[0]);
 		$archiveForm->initData();
 		$archiveForm->display();
 	}
-	
+
 	/**
 	 * Save changes to a archive's settings.
 	 */
@@ -40,7 +40,7 @@ class AddHandler extends Handler {
 		if (!$site->getSetting('enableSubmit')) Request::redirect('index');
 
 		AddHandler::validate();
-		
+
 		import('admin.form.ArchiveForm');
 
 		$archiveId = (int) Request::getUserVar('archiveId');
@@ -48,7 +48,7 @@ class AddHandler extends Handler {
 		$archiveForm = &new ArchiveForm($archiveId);
 		$archiveForm->initData();
 		$archiveForm->readInputData();
-		
+
 		if ($archiveForm->validate()) {
 			$archiveForm->execute();
 			Request::redirect('index', null);
@@ -69,8 +69,8 @@ class AddHandler extends Handler {
 			);
 		}
 	}
-	
-	
+
+
 }
 
 ?>

@@ -87,7 +87,7 @@ class OAIHarvester extends Harvester {
 
 		unset($parser);
 		unset($xmlHandler);
-		
+
 		if (empty($result)) return array('oai_dc');
 		return $result;
 	}
@@ -147,7 +147,7 @@ class OAIHarvester extends Harvester {
 
 		unset($parser);
 		unset($xmlHandler);
-		
+
 		if (empty($result)) return array();
 		return $result;
 	}
@@ -155,7 +155,7 @@ class OAIHarvester extends Harvester {
 	function setResponseDate($responseDate) {
 		$this->responseDate = $responseDate;
 	}
-	
+
 	function getResponseDate() {
 		return $this->responseDate;
 	}
@@ -295,15 +295,15 @@ class OAIHarvester extends Harvester {
 		if($includeTime) {
 			$format .= "\TH:i:s\Z";
 		}
-		
+
 		if($timestamp == 0) {
 			return gmdate($format);
-			
+
 		} else {
 			return gmdate($format, $timestamp);
 		}
 	}
-	
+
 	/**
 	 * Returns a UNIX timestamp from a UTC-formatted datestamp.
 	 * Returns null if datestamp is invalid
@@ -316,7 +316,7 @@ class OAIHarvester extends Harvester {
 			// Match date
 			$time = strtotime("$date UTC");
 			return ($time != -1) ? $time : 'invalid';
-			
+
 		} else if (preg_match("/^(\d\d\d\d\-\d\d\-\d\d)T(\d\d:\d\d:\d\d)Z$/", $date, $matches)) {
 			// Match datetime
 			// FIXME

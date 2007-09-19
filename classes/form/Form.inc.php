@@ -21,22 +21,22 @@ class Form {
 
 	/** The template file containing the HTML form */
 	var $_template;
-	
+
 	/** Associative array containing form data */
 	var $_data;
-	
+
 	/** Validation checks for this form */
 	var $_checks;
-	
+
 	/** Errors occurring in form validation */
 	var $_errors;
-	
+
 	/** Array of field names where an error occurred and the associated error message */
 	var $errorsArray;
-	
+
 	/** Array of field names where an error occurred */
 	var $errorFields;
-	
+
 	/**
 	 * Constructor.
 	 * @param $template string the path to the form template file
@@ -49,21 +49,21 @@ class Form {
 		$this->errorsArray = array();
 		$this->errorFields = array();
 	}
-	
+
 	/**
 	 * Display the form.
 	 */
 	function display() {
 		$templateMgr = &TemplateManager::getManager();
 		$templateMgr->register_function('fieldLabel', array(&$this, 'smartyFieldLabel'));
-		
+
 		$templateMgr->assign($this->_data);
 		$templateMgr->assign('isError', !$this->isValid());
 		$templateMgr->assign('errors', $this->getErrorsArray());
-		
+
 		$templateMgr->display($this->_template);
 	}
-	
+
 	/**
 	 * Get the value of a form field.
 	 * @param $key string
@@ -72,7 +72,7 @@ class Form {
 	function getData($key) {
 		return isset($this->_data[$key]) ? $this->_data[$key] : null;
 	}
-	
+
 	/**
 	 * Set the value of a form field.
 	 * @param $key
@@ -84,19 +84,19 @@ class Form {
 
 		$this->_data[$key] = $value;
 	}
-	
+
 	/**
 	 * Initialize form data for a new form.
 	 */
 	function initData() {
 	}
-	
+
 	/**
 	 * Assign form data to user-submitted data.
 	 */
 	function readInputData() {
 	}
-	
+
 	/**
 	 * Validate form data.
 	 */
@@ -104,12 +104,12 @@ class Form {
 		if (!isset($this->errorsArray)) {
 			$this->getErrorsArray();
 		}
-		
+
 		foreach ($this->_checks as $check) {
 			if (!isset($this->errorsArray[$check->getField()]) && !$check->isValid()) {
 				$this->addError($check->getField(), $check->getMessage());
 				$this->errorFields[$check->getField()] = 1;
-				
+
 				if (method_exists($check, 'getErrorFields')) {
 					$errorFields = call_user_func(array(&$check, 'getErrorFields'));
 					for ($i=0, $count=count($errorFields); $i < $count; $i++) {
@@ -120,14 +120,14 @@ class Form {
 		}
 		return $this->isValid();
 	}
-	
+
 	/**
 	 * Execute the form's action.
 	 * (Note that it is assumed that the form has already been validated.)
 	 */
 	function execute() {
 	}
-	
+
 	/**
 	 * Adds specified user variables to input data. 
 	 * @param $vars array the names of the variables to read
@@ -137,7 +137,7 @@ class Form {
 			$this->setData($k, Request::getUserVar($k));
 		}
 	}
-	
+
 	/**
 	 * Add a validation check to the form.
 	 * @param $formValidator FormValidator
@@ -145,7 +145,7 @@ class Form {
 	function addCheck($formValidator) {
 		$this->_checks[] = &$formValidator;
 	}
-	
+
 	/**
 	 * Add an error to the form.
 	 * Errors are typically assigned as the form is validated.
@@ -163,7 +163,7 @@ class Form {
 	function addErrorField($field) {
 		$this->errorFields[$field] = 1;
 	}
-	
+
 	/**
 	 * Check if form passes all validation checks.
 	 * @return boolean
@@ -171,7 +171,7 @@ class Form {
 	function isValid() {
 		return empty($this->_errors);
 	}
-	
+
 	/**
 	 * Return set of errors that occurred in form validation.
 	 * If multiple errors occurred processing a single field, only the first error is included.
@@ -186,7 +186,7 @@ class Form {
 		}
 		return $this->errorsArray;
 	}
-	
+
 	/**
 	 * Custom Smarty function for labelling/highlighting of form fields.
 	 * @param $params array can contain 'name' (field name/ID), 'required' (required field), 'key' (localization key), 'label' (non-localized label string), 'suppressId' (boolean)
@@ -197,7 +197,7 @@ class Form {
 			if (isset($params['key'])) {
 				$params['label'] = Locale::translate($params['key']);
 			}
-			
+
 			if (isset($this->errorFields[$params['name']])) {
 				$class = ' class="error"';
 			} else {

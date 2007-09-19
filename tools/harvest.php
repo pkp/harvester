@@ -82,7 +82,7 @@ class harvest extends CommandLineTool {
 			. "For example, to update all records using the OAI harvester:\n"
 			. "\t{$this->scriptName} all from=last\n";
 	}
-	
+
 	/**
 	 * Rebuild the search index for all articles in all journals.
 	 */
@@ -106,7 +106,7 @@ class harvest extends CommandLineTool {
 				$plugin->describeOptions();
 				return true;
 			}
-			
+
 			echo 'Selected archive: ' . $archive->getTitle() . "\n";
 			$oldRecordCount = $recordDao->getRecordCount($archive->getArchiveId());
 			if (isset($this->params['flush'])) {

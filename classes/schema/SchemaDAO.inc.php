@@ -79,7 +79,7 @@ class SchemaDAO extends DAO {
 
 		return $returner;
 	}
-	
+
 	/**
 	 * Retrieve a schema by plugin name.
 	 * @param $schemaPluginName string
@@ -104,7 +104,7 @@ class SchemaDAO extends DAO {
 
 		return $returner;
 	}
-	
+
 	/**
 	 * Internal function to return a Schema object from a row.
 	 * @param $row array
@@ -114,7 +114,7 @@ class SchemaDAO extends DAO {
 		$schema = &new Schema();
 		$schema->setSchemaId($row['schema_plugin_id']);
 		$schema->setPluginName($row['schema_plugin']);
-		
+
 		HookRegistry::call('SchemaDAO::_returnSchemaFromRow', array(&$schema, &$row));
 
 		return $schema;
@@ -134,11 +134,11 @@ class SchemaDAO extends DAO {
 				$schema->getPluginName()
 			)
 		);
-		
+
 		$schema->setSchemaId($this->getInsertSchemaId());
 		return $schema->getSchemaId();
 	}
-	
+
 	/**
 	 * Update an existing schema.
 	 * @param $schema Schema
@@ -155,7 +155,7 @@ class SchemaDAO extends DAO {
 			)
 		);
 	}
-	
+
 	/**
 	 * Delete a schema, INCLUDING ALL DEPENDENT ITEMS.
 	 * @param $schema Schema
@@ -163,7 +163,7 @@ class SchemaDAO extends DAO {
 	function deleteSchema(&$schema) {
 		$this->deleteSchemaById($schema->getSchemaId());
 	}
-	
+
 	/**
 	 * Delete a schema by ID, INCLUDING ALL DEPENDENT ITEMS.
 	 * @param $schemaId int
@@ -181,7 +181,7 @@ class SchemaDAO extends DAO {
 			'DELETE FROM schema_plugins WHERE schema_plugin_id = ?', $schemaId
 		);
 	}
-	
+
 	/**
 	 * Retrieve all schemas.
 	 * @return DAOResultFactory containing matching schemas

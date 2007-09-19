@@ -23,11 +23,11 @@ class Schema extends DataObject {
 	function Schema() {
 		parent::DataObject();
 	}
-	
+
 	//
 	// Get/set methods
 	//
-	
+
 	/**
 	 * Get schema plugin name for schema
 	 * @return string
@@ -35,7 +35,7 @@ class Schema extends DataObject {
 	 function getPluginName() {
 	 	return $this->getData('schema_plugin');
 	}
-	
+
 	/**
 	 * Set schema plugin name for schema
 	 * @param $schemaPlugin string
@@ -51,7 +51,7 @@ class Schema extends DataObject {
 	function getSchemaId() {
 		return $this->getData('schemaId');
 	}
-	
+
 	/**
 	 * Set ID of schema.
 	 * @param $schemaId int

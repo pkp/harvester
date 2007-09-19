@@ -25,7 +25,7 @@ class EmailTemplateDAO extends DAO {
 	function EmailTemplateDAO() {
 		parent::DAO();
 	}
-	
+
 	/**
 	 * Retrieve a base email template by key.
 	 * @param $emailKey string
@@ -49,7 +49,7 @@ class EmailTemplateDAO extends DAO {
 
 		return $returner;
 	}
-	
+
 	/**
 	 * Internal function to return an email template object from a row.
 	 * @param $row array
@@ -68,7 +68,7 @@ class EmailTemplateDAO extends DAO {
 				WHERE d.email_key = ?',
 				$row['email_key']
 			);
-		
+
 			while (!$result->EOF) {
 				$dataRow = &$result->GetRowAssoc(false);
 				$emailTemplate->addLocale($dataRow['locale']);
@@ -102,7 +102,7 @@ class EmailTemplateDAO extends DAO {
 		$emailTemplate->setEmailId($this->getInsertEmailId());
 		return $emailTemplate->getEmailId();
 	}
-	
+
 	/**
 	 * Update an existing base email template.
 	 * @param $emailTemplate BaseEmailTemplate
@@ -127,7 +127,7 @@ class EmailTemplateDAO extends DAO {
 		$this->insertBaseEmailTemplate($emailTemplate);
 		return $this->updateEmailTemplateData($emailTemplate);
 	}
-	
+
 	/**
 	 * Insert/update locale-specific email template data.
 	 * @param $emailTemplate LocaleEmailTemplate
@@ -139,7 +139,7 @@ class EmailTemplateDAO extends DAO {
 				WHERE email_key = ? AND locale = ?',
 				array($emailTemplate->getEmailKey(), $locale)
 			);
-			
+
 			if ($result->fields[0] == 0) {
 				$this->update(
 					'INSERT INTO email_templates_data
@@ -148,7 +148,7 @@ class EmailTemplateDAO extends DAO {
 					(?, ?, ?, ?)',
 					array($emailTemplate->getEmailKey(), $locale, $emailTemplate->getSubject($locale), $emailTemplate->getBody($locale))
 				);
-				
+
 			} else {
 				$this->update(
 					'UPDATE email_templates_data
@@ -163,7 +163,7 @@ class EmailTemplateDAO extends DAO {
 			unset($result);
 		}
 	}
-	
+
 	/**
 	 * Delete an email template by key.
 	 * @param $emailKey string
@@ -174,7 +174,7 @@ class EmailTemplateDAO extends DAO {
 			$emailKey
 		);
 	}
-	
+
 	/**
 	 * Get the ID of the last inserted email template.
 	 * @return int
@@ -182,7 +182,7 @@ class EmailTemplateDAO extends DAO {
 	function getInsertEmailId() {
 		return $this->getInsertId('email_templates', 'emailId');
 	}
-	
+
 	/**
 	 * Delete all email templates for a specific locale.
 	 * @param $locale string

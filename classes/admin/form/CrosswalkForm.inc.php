@@ -33,7 +33,7 @@ class CrosswalkForm extends Form {
 		parent::Form('admin/crosswalkForm.tpl');
 
 		$this->crosswalkId = isset($crosswalkId) ? (int) $crosswalkId : null;
-		
+
 		// Validation checks for this form
 		$this->addCheck(new FormValidator($this, 'name', 'required', 'admin.crosswalks.form.nameRequired'));
 		$this->addCheck(new FormValidator($this, 'description', 'required', 'admin.crosswalks.form.descriptionRequired'));
@@ -48,7 +48,7 @@ class CrosswalkForm extends Form {
 
 		HookRegistry::call('CrosswalkForm::CrosswalkForm', array(&$this));
 	}
-	
+
 	/**
 	 * Display the form.
 	 */
@@ -78,10 +78,10 @@ class CrosswalkForm extends Form {
 			$crosswalkDao =& DAORegistry::getDAO('CrosswalkDAO');
 			$templateMgr->assign('sortableFieldIds', $crosswalkDao->getSortableFieldIds($this->crosswalkId));
 		}
-		
+
 		parent::display();
 	}
-	
+
 	/**
 	 * Initialize form data from current settings.
 	 */
@@ -137,7 +137,7 @@ class CrosswalkForm extends Form {
 	function readInputData() {
 		$this->readUserVars($this->getParameterNames());
 	}
-	
+
 	function validate() {
 		// Check to ensure that the public ID, if specified, is unique
 		$publicCrosswalkId = $this->getData('publicCrosswalkId');
@@ -154,7 +154,7 @@ class CrosswalkForm extends Form {
 	 */
 	function execute() {
 		$crosswalkDao = &DAORegistry::getDAO('CrosswalkDAO');
-		
+
 		if (!isset($this->crosswalk)) {
 			$this->crosswalk = &new Crosswalk();
 		}
@@ -163,7 +163,7 @@ class CrosswalkForm extends Form {
 		$this->crosswalk->setPublicCrosswalkId($this->getData('publicCrosswalkId'));
 		$this->crosswalk->setDescription($this->getData('description'));
 		$this->crosswalk->setType($this->getData('crosswalkType'));
-		
+
 		$sortable = $this->getData('sortable');
 		$this->crosswalk->setSortable($sortable);
 		if (!$sortable) {
@@ -219,7 +219,7 @@ class CrosswalkForm extends Form {
 
 		HookRegistry::call('CrosswalkForm::execute', array(&$this, &$this->crosswalk));
 	}
-	
+
 }
 
 ?>

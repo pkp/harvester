@@ -23,10 +23,10 @@ class HarvesterRTAdmin extends RTAdmin {
 
 	/** @var $archiveId int */
 	var $archiveId;
-	
+
 	/** @var $dao DAO */
 	var $dao;
-	
+
 
 	function HarvesterRTAdmin($archiveId) {
 		$this->archiveId = $archiveId;

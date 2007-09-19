@@ -17,7 +17,7 @@
 define('SEARCH_STOPWORDS_FILE', 'registry/stopwords.txt');
 
 class SearchIndex {
-	
+
 	/**
 	 * Index a block of text for an object.
 	 * @param $objectId int
@@ -85,22 +85,22 @@ class SearchIndex {
 		$minLength = Config::getVar('search', 'min_word_length');
 		$maxLength = Config::getVar('search', 'max_word_length');
 		$stopwords = &SearchIndex::loadStopwords();
-		
+
 		// Remove punctuation
 		if (is_array($text)) {
 			$text = join("\n", $text);
 		}
-		
+
 		$cleanText = String::regexp_replace('/[!"\#\$%\'\(\)\.\?@\[\]\^`\{\}~]/', '', $text);
 		$cleanText = String::regexp_replace('/[\+,:;&\/<=>\|\\\]/', ' ', $cleanText);
 		$cleanText = String::regexp_replace('/[\*]/', $allowWildcards ? '%' : ' ', $cleanText);
 		$cleanText = String::strtolower($cleanText);
-		
+
 		// Split into words
 		$words = String::regexp_split('/\s+/', $cleanText);
-		
+
 		// FIXME Do not perform further filtering for some fields, e.g., author names?
-		
+
 		// Remove stopwords
 		$keywords = array();
 		foreach ($words as $k) {
@@ -110,7 +110,7 @@ class SearchIndex {
 		}
 		return $keywords;
 	}
-	
+
 	/**
 	 * Return list of stopwords.
 	 * FIXME Should this be locale-specific?
@@ -124,10 +124,10 @@ class SearchIndex {
 			$searchStopwords = array_count_values(array_filter(file(SEARCH_STOPWORDS_FILE), create_function('&$a', 'return ($a = trim($a)) && !empty($a) && $a[0] != \'#\';')));
 			$searchStopwords[''] = 1;
 		}
-		
+
 		return $searchStopwords;
 	}
-	
+
 	/**
 	 * Index record metadata.
 	 * @param $record Article
@@ -142,7 +142,7 @@ class SearchIndex {
 		}
 		$schemaPlugin->indexRecord($archive, $record, $entries);
 	}
-	
+
 	/**
 	 * Rebuild the search index.
 	 */
@@ -173,10 +173,10 @@ class SearchIndex {
 			}
 			unset($record);
 		}
-		
+
 		if ($log) echo "\n" . $numIndexed, " records indexed\n";
 	}
-	
+
 }
 
 ?>

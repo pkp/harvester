@@ -68,15 +68,15 @@ class PluginSettingsDAO extends DAO {
 	 */
 	function &getPluginSettings($pluginName) {
 		$pluginSettings[$pluginName] = array();
-		
+
 		$result = &$this->retrieve(
 			'SELECT setting_name, setting_value, setting_type FROM plugin_settings WHERE plugin_name = ?', $pluginName
 		);
-		
+
 		if ($result->RecordCount() == 0) {
 			$returner = null;
 			return $returner;
-			
+
 		} else {
 			while (!$result->EOF) {
 				$row = &$result->getRowAssoc(false);
@@ -110,7 +110,7 @@ class PluginSettingsDAO extends DAO {
 			return $pluginSettings[$pluginName];
 		}
 	}
-	
+
 	/**
 	 * Add/update a plugin setting.
 	 * @param $pluginName string
@@ -121,7 +121,7 @@ class PluginSettingsDAO extends DAO {
 	function updateSetting($pluginName, $name, $value, $type = null) {
 		$cache =& $this->_getCache($pluginName);
 		$cache->setCache($name, $value);
-		
+
 		if ($type == null) {
 			switch (gettype($value)) {
 				case 'boolean':
@@ -146,19 +146,19 @@ class PluginSettingsDAO extends DAO {
 					break;
 			}
 		}
-		
+
 		if ($type == 'object') {
 			$value = serialize($value);
-			
+
 		} else if ($type == 'bool') {
 			$value = isset($value) && $value ? 1 : 0;
 		}
-		
+
 		$result = $this->retrieve(
 			'SELECT COUNT(*) FROM plugin_settings WHERE plugin_name = ? AND setting_name = ?',
 			array($pluginName, $name)
 		);
-		
+
 		if ($result->fields[0] == 0) {
 			$returner = $this->update(
 				'INSERT INTO plugin_settings
@@ -182,7 +182,7 @@ class PluginSettingsDAO extends DAO {
 
 		return $returner;
 	}
-	
+
 	/**
 	 * Delete a plugin setting.
 	 * @param $pluginName int
@@ -191,13 +191,13 @@ class PluginSettingsDAO extends DAO {
 	function deleteSetting($pluginName, $name) {
 		$cache =& $this->_getCache($pluginName);
 		$cache->setCache($name, null);
-		
+
 		return $this->update(
 			'DELETE FROM plugin_settings WHERE plugin_name = ? AND setting_name = ?',
 			array($pluginName, $name)
 		);
 	}
-	
+
 	/**
 	 * Delete all settings for a plugin.
 	 * @param $pluginName string
@@ -205,7 +205,7 @@ class PluginSettingsDAO extends DAO {
 	function deleteSettingsByPlugin($pluginName) {
 		$cache =& $this->_getCache($pluginName);
 		$cache->flush();
-		
+
 		return $this->update(
 				'DELETE FROM plugin_settings WHERE plugin_name = ?', $pluginName
 		);

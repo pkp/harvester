@@ -185,7 +185,7 @@ class OAIHarvesterPlugin extends HarvesterPlugin {
 				$archiveForm = &new ArchiveForm($archiveId);
 				$archiveForm->initData();
 				$archiveForm->readInputData();
-				
+
 				$metadataMap = array(
 					'repositoryName' => 'title',
 					'adminEmail' => 'adminEmail',

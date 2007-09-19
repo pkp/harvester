@@ -25,7 +25,7 @@ class SessionDAO extends DAO {
 	function SessionDAO() {
 		parent::DAO();
 	}
-	
+
 	/**
 	 * Retrieve a session by ID.
 	 * @param $sessionId string
@@ -39,7 +39,7 @@ class SessionDAO extends DAO {
 		$session = null;
 		if ($result->RecordCount() != 0) {
 			$row = &$result->GetRowAssoc(false);
-			
+
 			$session = &new Session();
 			$session->setId($row['session_id']);
 			$session->setLoggedIn($row['logged_in']);
@@ -56,7 +56,7 @@ class SessionDAO extends DAO {
 
 		return $session;
 	}
-	
+
 	/**
 	 * Insert a new session.
 	 * @param $session Session
@@ -79,7 +79,7 @@ class SessionDAO extends DAO {
 			)
 		);
 	}
-	
+
 	/**
 	 * Update an existing session.
 	 * @param $session Session
@@ -108,7 +108,7 @@ class SessionDAO extends DAO {
 			)
 		);
 	}
-	
+
 	/**
 	 * Delete a session.
 	 * @param $session Session
@@ -116,7 +116,7 @@ class SessionDAO extends DAO {
 	function deleteSession(&$session) {
 		return $this->deleteSessionById($session->getId());
 	}
-	
+
 	/**
 	 * Delete a session by ID.
 	 * @param $sessionId string
@@ -126,7 +126,7 @@ class SessionDAO extends DAO {
 			'DELETE FROM sessions WHERE session_id = ?', $sessionId
 		);
 	}
-	
+
 	/**
 	 * Delete all sessions older than the specified time.
 	 * @param $lastUsed int cut-off time in seconds for not-remembered sessions
@@ -144,14 +144,14 @@ class SessionDAO extends DAO {
 			);
 		}
 	}
-	
+
 	/**
 	 * Delete all sessions.
 	 */
 	function deleteAllSessions() {
 		return $this->update('DELETE FROM sessions');
 	}
-	
+
 	/**
 	 * Check if a session exists with the specified ID.
 	 * @param $sessionId string
@@ -169,7 +169,7 @@ class SessionDAO extends DAO {
 
 		return $returner;
 	}
-	
+
 }
 
 ?>

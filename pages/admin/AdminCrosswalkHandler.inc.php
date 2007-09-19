@@ -15,19 +15,19 @@
  */
 
 class AdminCrosswalkHandler extends AdminHandler {
-	
+
 	/**
 	 * Display indexing information.
 	 */
 	function crosswalks() {
 		parent::validate();
 		AdminCrosswalkHandler::setupTemplate(false);
-		
+
 		$rangeInfo = Handler::getRangeInfo('crosswalks');
 
 		$crosswalkDao = &DAORegistry::getDAO('CrosswalkDAO');
 		$crosswalks = &$crosswalkDao->getCrosswalks($rangeInfo);
-		
+
 		$templateMgr = &TemplateManager::getManager();
 		$templateMgr->assign_by_ref('crosswalks', $crosswalks);
 		$templateMgr->display('admin/crosswalks.tpl');
@@ -48,23 +48,23 @@ class AdminCrosswalkHandler extends AdminHandler {
 	 */
 	function updateCrosswalk() {
 		parent::validate();
-		
+
 		import('admin.form.CrosswalkForm');
-		
+
 		$crosswalkForm = &new CrosswalkForm(Request::getUserVar('crosswalkId'));
 		$crosswalkForm->initData();
 		$crosswalkForm->readInputData();
-		
+
 		if ($crosswalkForm->validate()) {
 			$crosswalkForm->execute();
 			Request::redirect('admin', 'crosswalks');
-			
+
 		} else {
 			AdminCrosswalkHandler::setupTemplate(true);
 			$crosswalkForm->display();
 		}
 	}
-	
+
 	function deleteCrosswalk($args) {
 		parent::validate();
 

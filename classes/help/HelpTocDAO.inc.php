@@ -58,7 +58,7 @@ class HelpTocDAO extends XMLDAO {
 		}
 		return null;
 	}
-	
+
 	function getFilename($tocId) {
 		return sprintf('help/%s/%s.xml', Locale::getLocale(), $tocId);
 	}

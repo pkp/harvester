@@ -82,7 +82,7 @@ class FieldDAO extends DAO {
 
 		return $returner;
 	}
-	
+
 	/**
 	 * Retrieve a field by field name.
 	 * @param $fieldName string
@@ -110,7 +110,7 @@ class FieldDAO extends DAO {
 
 		return $returner;
 	}
-	
+
 	/**
 	 * Internal function to return a Field object from a row.
 	 * @param $row array
@@ -121,7 +121,7 @@ class FieldDAO extends DAO {
 		$field->setFieldId($row['raw_field_id']);
 		$field->setSchemaId($row['schema_plugin_id']);
 		$field->setName($row['name']);
-		
+
 		HookRegistry::call('FieldDAO::_returnFieldFromRow', array(&$field, &$row));
 
 		return $field;
@@ -142,11 +142,11 @@ class FieldDAO extends DAO {
 				$field->getSchemaId(),
 			)
 		);
-		
+
 		$field->setFieldId($this->getInsertFieldId());
 		return $field->getFieldId();
 	}
-	
+
 	/**
 	 * Update an existing field.
 	 * @param $field Field
@@ -165,7 +165,7 @@ class FieldDAO extends DAO {
 			)
 		);
 	}
-	
+
 	/**
 	 * Delete a field, INCLUDING ALL DEPENDENT ITEMS.
 	 * @param $field Field
@@ -173,7 +173,7 @@ class FieldDAO extends DAO {
 	function deleteField(&$field) {
 		$this->deleteFieldById($field->getFieldId());
 	}
-	
+
 	/**
 	 * Delete a field by ID, INCLUDING ALL DEPENDENT ITEMS.
 	 * @param $fieldId int
@@ -193,7 +193,7 @@ class FieldDAO extends DAO {
 			'DELETE FROM raw_fields WHERE field_id = ?', $fieldId
 		);
 	}
-	
+
 	/**
 	 * Retrieve all fields, optionally by schema.
 	 * @return DAOResultFactory containing matching fields

@@ -21,16 +21,16 @@ class AboutHandler extends Handler {
 	 */
 	function index() {
 		parent::validate();
-		
+
 		$templateMgr = &TemplateManager::getManager();
-				
+
 		$site = &Request::getSite();
 		$about = $site->getAbout();
 		$templateMgr->assign('about', $about);
 
 		$templateMgr->display('about/index.tpl');
 	}
-	
+
 
 	/**
 	 * Setup common template variables.
@@ -38,37 +38,37 @@ class AboutHandler extends Handler {
 	 */
 	function setupTemplate($subclass = false) {
 		parent::validate();
-		
+
 		$templateMgr = &TemplateManager::getManager();
 		if ($subclass) $templateMgr->assign('pageHierarchy', array(array('about', 'navigation.about')));
 	}
-	
+
 	/**
 	 * Display contact page.
 	 */
 	function contact() {
 		parent::validate(true);
-		
+
 		AboutHandler::setupTemplate(true);
-		
+
 		$site = &Request::getSite();
-	
+
 		$templateMgr = &TemplateManager::getManager();
 		$templateMgr->display('about/contact.tpl');
 	}
-	
+
 	/**
 	 * Display about the harvester page.
 	 */
 	function harvester() {
 		parent::validate();
-		
+
 		AboutHandler::setupTemplate(true);
-		
+
 		$templateMgr = &TemplateManager::getManager();
 		$templateMgr->display('about/harvester.tpl');
 	}
-	
+
 
 }
 

@@ -22,7 +22,7 @@ class SearchHandler extends Handler {
 	function index() {
 		SearchHandler::validate();
 		list($crosswalks, $fields, $archives) = SearchHandler::setupTemplate();
-			
+
 		$templateMgr = &TemplateManager::getManager();
 
 		$archiveDao =& DAORegistry::getDAO('ArchiveDAO');

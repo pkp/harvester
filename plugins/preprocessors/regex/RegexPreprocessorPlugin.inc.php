@@ -66,7 +66,7 @@ class RegexPreprocessorPlugin extends PreprocessorPlugin {
 		 *    $value = preg_replace('/\.$/', '', $value);  
 		 * }
 		 */
-		
+
 		return false;
 	}
 

@@ -68,15 +68,15 @@ class ArchiveSettingsDAO extends DAO {
 	 */
 	function &getArchiveSettings($archiveId) {
 		$archiveSettings[$archiveId] = array();
-		
+
 		$result = &$this->retrieve(
 			'SELECT setting_name, setting_value, setting_type FROM archive_settings WHERE archive_id = ?', $archiveId
 		);
-		
+
 		if ($result->RecordCount() == 0) {
 			$returner = null;
 			return $returner;
-			
+
 		} else {
 			while (!$result->EOF) {
 				$row = &$result->getRowAssoc(false);
@@ -110,7 +110,7 @@ class ArchiveSettingsDAO extends DAO {
 			return $archiveSettings[$archiveId];
 		}
 	}
-	
+
 	/**
 	 * Add/update a archive setting.
 	 * @param $archiveId int
@@ -121,7 +121,7 @@ class ArchiveSettingsDAO extends DAO {
 	function updateSetting($archiveId, $name, $value, $type = null) {
 		$cache =& $this->_getCache($archiveId);
 		$cache->setCache($name, $value);
-		
+
 		if ($type == null) {
 			switch (gettype($value)) {
 				case 'boolean':
@@ -146,19 +146,19 @@ class ArchiveSettingsDAO extends DAO {
 					break;
 			}
 		}
-		
+
 		if ($type == 'object') {
 			$value = serialize($value);
-			
+
 		} else if ($type == 'bool') {
 			$value = isset($value) && $value ? 1 : 0;
 		}
-		
+
 		$result = $this->retrieve(
 			'SELECT COUNT(*) FROM archive_settings WHERE archive_id = ? AND setting_name = ?',
 			array($archiveId, $name)
 		);
-		
+
 		if ($result->fields[0] == 0) {
 			$returner = $this->update(
 				'INSERT INTO archive_settings
@@ -182,7 +182,7 @@ class ArchiveSettingsDAO extends DAO {
 
 		return $returner;
 	}
-	
+
 	/**
 	 * Delete a archive setting.
 	 * @param $archiveId int
@@ -191,13 +191,13 @@ class ArchiveSettingsDAO extends DAO {
 	function deleteSetting($archiveId, $name) {
 		$cache =& $this->_getCache($archiveId);
 		$cache->setCache($name, null);
-		
+
 		return $this->update(
 			'DELETE FROM archive_settings WHERE archive_id = ? AND setting_name = ?',
 			array($archiveId, $name)
 		);
 	}
-	
+
 	/**
 	 * Delete all settings for a archive.
 	 * @param $archiveId string
@@ -205,7 +205,7 @@ class ArchiveSettingsDAO extends DAO {
 	function deleteSettingsByArchive($archiveId) {
 		$cache =& $this->_getCache($archiveId);
 		$cache->flush();
-		
+
 		return $this->update(
 				'DELETE FROM archive_settings WHERE archive_id = ?', $archiveId
 		);

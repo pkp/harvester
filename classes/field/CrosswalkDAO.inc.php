@@ -45,7 +45,7 @@ class CrosswalkDAO extends DAO {
 
 		return $returner;
 	}
-	
+
 	/**
 	 * Retrieve a crosswalk by a public crosswalk ID.
 	 * @param $publicCrosswalkId string
@@ -66,7 +66,7 @@ class CrosswalkDAO extends DAO {
 
 		return $returner;
 	}
-	
+
 	/**
 	 * Internal function to return a Crosswalk object from a row.
 	 * @param $row array
@@ -81,7 +81,7 @@ class CrosswalkDAO extends DAO {
 		$crosswalk->setSeq($row['seq']);
 		$crosswalk->setType($row['type']);
 		$crosswalk->setSortable($row['sortable']);
-		
+
 		HookRegistry::call('CrosswalkDAO::_returnCrosswalkFromRow', array(&$crosswalk, &$row));
 
 		return $crosswalk;
@@ -106,7 +106,7 @@ class CrosswalkDAO extends DAO {
 				$crosswalk->getSortable()?1:0
 			)
 		);
-		
+
 		$crosswalk->setCrosswalkId($this->getInsertCrosswalkId());
 		return $crosswalk->getCrosswalkId();
 	}
@@ -118,7 +118,7 @@ class CrosswalkDAO extends DAO {
 		$result = &$this->retrieve(
 			'SELECT crosswalk_id FROM crosswalks ORDER BY seq'
 		);
-		
+
 		for ($i=1; !$result->EOF; $i++) {
 			list($crosswalkId) = $result->fields;
 			$this->update(
@@ -128,7 +128,7 @@ class CrosswalkDAO extends DAO {
 					$crosswalkId
 				)
 			);
-			
+
 			$result->moveNext();
 		}
 
@@ -162,7 +162,7 @@ class CrosswalkDAO extends DAO {
 			)
 		);
 	}
-	
+
 	/**
 	 * Delete a crosswalk, INCLUDING ALL DEPENDENT ITEMS.
 	 * @param $crosswalk Crosswalk
@@ -170,7 +170,7 @@ class CrosswalkDAO extends DAO {
 	function deleteCrosswalk(&$crosswalk) {
 		return $this->deleteCrosswalkById($crosswalk->getCrosswalkId());
 	}
-	
+
 	/**
 	 * Delete a crosswalk by ID, INCLUDING ALL DEPENDENT ITEMS.
 	 * @param $crosswalkId int
@@ -181,7 +181,7 @@ class CrosswalkDAO extends DAO {
 			'DELETE FROM crosswalks WHERE crosswalk_id = ?', $crosswalkId
 		);
 	}
-	
+
 	/**
 	 * Retrieve all crosswalks.
 	 * @return DAOResultFactory containing matching crosswalks
@@ -195,7 +195,7 @@ class CrosswalkDAO extends DAO {
 		$returner = &new DAOResultFactory($result, $this, '_returnCrosswalkFromRow');
 		return $returner;
 	}
-	
+
 	/**
 	 * Retrieve all sortable crosswalks.
 	 * @return DAOResultFactory containing matching crosswalks
@@ -209,7 +209,7 @@ class CrosswalkDAO extends DAO {
 		$returner = &new DAOResultFactory($result, $this, '_returnCrosswalkFromRow');
 		return $returner;
 	}
-	
+
 	/**
 	 * Get the ID of the last inserted crosswalk.
 	 * @return int
@@ -217,7 +217,7 @@ class CrosswalkDAO extends DAO {
 	function getInsertCrosswalkId() {
 		return $this->getInsertId('crosswalks', 'crosswalk_id');
 	}
-	
+
 	/**
 	 * Retrieve all field IDs for a crosswalk.
 	 * @return DAOResultFactory containing matching crosswalks
@@ -233,7 +233,7 @@ class CrosswalkDAO extends DAO {
 		$returner = &new DAOResultFactory($result, $fieldDao, '_returnFieldFromRow');
 		return $returner;
 	}
-	
+
 	/**
 	 * Delete crosswalk fields by crosswalk ID, INCLUDING ALL DEPENDENT ITEMS.
 	 * @param $crosswalkId int
@@ -243,7 +243,7 @@ class CrosswalkDAO extends DAO {
 			'DELETE FROM crosswalk_fields WHERE crosswalk_id = ?', $crosswalkId
 		);
 	}
-	
+
 	/**
 	 * Insert fields for a crosswalk.
 	 * @param $crosswalkId int
@@ -385,7 +385,7 @@ class CrosswalkDAO extends DAO {
 				array($crosswalkId)
 			);
 		}
-		
+
 		$fieldDao =& DAORegistry::getDAO('FieldDAO');
 		$plugins =& PluginRegistry::loadCategory('schemas');
 		if (!isset($plugins[$schemaPluginName])) {
@@ -402,7 +402,7 @@ class CrosswalkDAO extends DAO {
 					$crosswalkId
 				)
 			);
-			
+
 			unset($field);
 		}
 
@@ -417,12 +417,12 @@ class CrosswalkDAO extends DAO {
 			'SELECT raw_field_id FROM crosswalk_fields WHERE crosswalk_id = ? AND sortable = 1',
 			array((int) $crosswalkId)
 		);
-		
+
 		$returner = array();
 		for ($i=1; !$result->EOF; $i++) {
 			list($fieldId) = $result->fields;
 			$returner[] = $fieldId;
-			
+
 			$result->moveNext();
 		}
 

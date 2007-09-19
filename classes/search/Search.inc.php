@@ -15,7 +15,7 @@
  *
  * $Id$
  */
- 
+
 import('search.SearchIndex');
 
 class Search {
@@ -32,7 +32,7 @@ class Search {
 		$keywords = Search::_parseQuery($matches[1], $matches[2], $pos, $count);
 		return $keywords;
 	}
-		
+
 	/**
 	 * Query parsing helper routine.
 	 * Returned structure is based on that used by the Search::QueryParser Perl module.
@@ -80,7 +80,7 @@ class Search {
 		}
 		return $return;
 	}
-	
+
 	/**
 	 * See implementation of retrieveResults for a description of this
 	 * function.
@@ -90,7 +90,7 @@ class Search {
 		$resultCacheHours = Config::getVar('search', 'result_cache_hours');
 		if (!is_numeric($resultsPerKeyword)) $resultsPerKeyword = 100;
 		if (!is_numeric($resultCacheHours)) $resultCacheHours = 24;
-		
+
 		$mergedKeywords = array('+' => array(), '' => array(), '-' => array());
 		foreach ($keywords as $type => $condition) {
 			if ($type == 'all') $condition = array($condition);
@@ -104,17 +104,17 @@ class Search {
 			}
 		}
 		$mergedResults = &Search::_getMergedKeywordResults($mergedKeywords, $dates, $archiveIds, null, null, $resultsPerKeyword, $resultCacheHours);
-		
+
 		$resultCount = count($mergedResults);
 		return $mergedResults;
 	}
-	
+
 	/**
 	 * Recursive helper for _getMergedArray.
 	 */
 	function &_getMergedKeywordResults(&$keyword, $dates, $archiveIds, $type, $id, $resultsPerKeyword, $resultCacheHours) {
 		$mergedResults = null;
-		
+
 		if (isset($keyword['type'])) {
 			$type = $keyword['type'];
 		}
@@ -137,11 +137,11 @@ class Search {
 				}
 			}
 		}
-		
+
 		if ($mergedResults == null) {
 			$mergedResults = array();
 		}
-		
+
 		if (!empty($mergedResults) || empty($keyword['+'])) {
 			foreach ($keyword[''] as $phrase) {
 				$results = &Search::_getMergedPhraseResults($phrase, $dates, $archiveIds, $type, $id, $resultsPerKeyword, $resultCacheHours);
@@ -153,7 +153,7 @@ class Search {
 					}
 				}
 			}
-			
+
 			foreach ($keyword['-'] as $phrase) {
 				$results = &Search::_getMergedPhraseResults($phrase, $dates, $archiveIds, $type, $id, $resultsPerKeyword, $resultCacheHours);
 				foreach ($results as $recordId => $count) {
@@ -163,10 +163,10 @@ class Search {
 				}
 			}
 		}
-		
+
 		return $mergedResults;
 	}
-	
+
 	/**
 	 * Recursive helper for _getMergedArray.
 	 */
@@ -175,7 +175,7 @@ class Search {
 			$mergedResults = &Search::_getMergedKeywordResults($phrase, $dates, $archiveIds, $type, $id, $resultsPerKeyword, $resultCacheHours);
 			return $mergedResults;
 		}
-		
+
 		$mergedResults = array();
 		$searchDao = &DAORegistry::getDAO('SearchDAO');
 		$results = &$searchDao->getPhraseResults(

@@ -29,7 +29,7 @@ class RTDAO extends DAO {
 	 */
 	function &getVersions($archiveId, $pagingInfo = null) {
 		$versions = array();
-		
+
 		$result = &$this->retrieveRange(
 			'SELECT * FROM rt_versions WHERE archive_id = ? ORDER BY version_key',
 			array((int) $archiveId),
@@ -80,17 +80,17 @@ class RTDAO extends DAO {
 			(?, ?, ?, ?, ?)',
 			array((int) $archiveId, $version->key, $version->locale, $version->title, $version->description)
 		);
-		
+
 		$version->versionId = $this->getInsertId('rt_versions', 'version_id');
-		
+
 		foreach ($version->contexts as $context) {
 			$context->versionId = $version->versionId;
 			$this->insertContext($context);
 		}
-		
+
 		return $version->versionId;
 	}
-	
+
 	/**
 	 * Update an exisiting verison.
 	 * @param $archiveId int
@@ -152,7 +152,7 @@ class RTDAO extends DAO {
 			$this->deleteVersion($version->getVersionId(), $archiveId);
 		}
 	}
-	
+
 	/**
 	 * Return RTVersion object from database row.
 	 * @param $row array
@@ -173,7 +173,7 @@ class RTDAO extends DAO {
 
 		return $version;
 	}
-	
+
 	/**
 	 * Return RTSearch object from database row.
 	 * @param $row array
@@ -194,9 +194,9 @@ class RTDAO extends DAO {
 
 		return $search;
 	}
-	
-	
-	
+
+
+
 	//
 	// RT Contexts
 	//
@@ -241,7 +241,7 @@ class RTDAO extends DAO {
 		$returner = &new DAOResultFactory($result, $this, '_returnContextFromRow');
 		return $returner;
 	}
-	
+
 	/**
 	 * Insert a context.
 	 * @param $versionId int
@@ -255,17 +255,17 @@ class RTDAO extends DAO {
 			(?, ?, ?, ?, ?, ?, ?, ?, ?)',
 			array((int) $context->versionId, $context->title, $context->abbrev, $context->description, $context->citedBy?1:0, $context->authorTerms?1:0, $context->geoTerms?1:0, $context->defineTerms?1:0, (int) $context->order)
 		);
-		
+
 		$context->contextId = $this->getInsertId('rt_contexts', 'context_id');
-		
+
 		foreach ($context->searches as $search) {
 			$search->contextId = $context->contextId;
 			$this->insertSearch($search);
 		}
-		
+
 		return $context->contextId;
 	}
-	
+
 	/**
 	 * Update an existing context.
 	 * @param $context RTContext
@@ -279,7 +279,7 @@ class RTDAO extends DAO {
 			array($context->title, $context->abbrev, $context->description, $context->citedBy, $context->authorTerms, $context->geoTerms, $context->defineTerms, (int) $context->order, (int) $context->contextId, (int) $context->versionId)
 		);
 	}
-	
+
 	/**
 	 * Delete all contexts by version ID.
 	 * @param $versionId int
@@ -307,7 +307,7 @@ class RTDAO extends DAO {
 		if ($result) $this->deleteSearchesByContextId($contextId);
 		return $result;
 	}
-	
+
 	/**
 	 * Sequentially renumber contexts in their sequence order.
 	 */
@@ -316,7 +316,7 @@ class RTDAO extends DAO {
 			'SELECT context_id FROM rt_contexts WHERE version_id = ? ORDER BY seq',
 			array((int) $versionId)
 		);
-		
+
 		for ($i=1; !$result->EOF; $i++) {
 			list($contextId) = $result->fields;
 			$this->update(
@@ -326,10 +326,10 @@ class RTDAO extends DAO {
 					(int) $contextId
 				)
 			);
-			
+
 			$result->moveNext();
 		}
-		
+
 		$result->close();
 		unset($result);
 	}
@@ -359,9 +359,9 @@ class RTDAO extends DAO {
 
 		return $context;
 	}
-	
-	
-	
+
+
+
 	//
 	// RT Searches
 	//
@@ -396,7 +396,7 @@ class RTDAO extends DAO {
 	 */
 	function &getSearches($contextId, $pagingInfo = null) {
 		$searches = array();
-		
+
 		$result = &$this->retrieveRange(
 			'SELECT * FROM rt_searches WHERE context_id = ? ORDER BY seq',
 			array((int) $contextId),
@@ -406,7 +406,7 @@ class RTDAO extends DAO {
 		$returner = &new DAOResultFactory($result, $this, '_returnSearchFromRow');
 		return $returner;
 	}
-	
+
 	/**
 	 * Insert new search.
 	 * @param $search RTSearch
@@ -427,11 +427,11 @@ class RTDAO extends DAO {
 				(int) $search->getOrder()
 			)
 		);
-		
+
 		$search->searchId = $this->getInsertId('rt_searches', 'search_id');
 		return $search->searchId;
 	}
-	
+
 	/**
 	 * Update an existing search.
 	 * @param $search RTSearch
@@ -476,7 +476,7 @@ class RTDAO extends DAO {
 			array((int) $searchId, (int) $contextId)
 		);
 	}
-	
+
 	/**
 	 * Sequentially renumber searches in their sequence order.
 	 */
@@ -485,7 +485,7 @@ class RTDAO extends DAO {
 			'SELECT search_id FROM rt_searches WHERE context_id = ? ORDER BY seq',
 			array((int) $contextId)
 		);
-		
+
 		for ($i=1; !$result->EOF; $i++) {
 			list($searchId) = $result->fields;
 			$this->update(
@@ -495,10 +495,10 @@ class RTDAO extends DAO {
 					(int) $searchId
 				)
 			);
-			
+
 			$result->moveNext();
 		}
-		
+
 		$result->close();
 		unset($result);
 	}

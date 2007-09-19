@@ -37,11 +37,11 @@ class Request {
 		if (HookRegistry::call('Request::redirect', array(&$url))) {
 			return;
 		}
-		
+
 		header("Location: $url");
 		exit();
 	}
-	
+
 	/**
 	 * Redirect to the specified page within Harvester2. Shorthand for a common call to Request::redirect(Request::url(...)).
 	 * @param $page string The name of the op to redirect to.
@@ -61,7 +61,7 @@ class Request {
 		$url = 'https://' . Request::getServerHost() . Request::getRequestPath();
 		Request::redirectUrl($url);
 	}
-	
+
 	/**
 	 * Redirect to the current URL, forcing the HTTP protocol to be used.
 	 */
@@ -76,12 +76,12 @@ class Request {
 	 */
 	function getBaseUrl() {
 		static $baseUrl;
-		
+
 		if (!isset($baseUrl)) {
 			$baseUrl = Request::getProtocol() . '://' . Request::getServerHost() . Request::getBasePath();
 			HookRegistry::call('Request::getBaseUrl', array(&$baseUrl));
 		}
-		
+
 		return $baseUrl;
 	}
 
@@ -91,7 +91,7 @@ class Request {
 	 */
 	function getBasePath() {
 		static $basePath;
-		
+
 		if (!isset($basePath)) {
 			$basePath = dirname($_SERVER['SCRIPT_NAME']);
 			if ($basePath == '/' || $basePath == '\\') {
@@ -99,7 +99,7 @@ class Request {
 			}
 			HookRegistry::call('Request::getBasePath', array(&$basePath));
 		}
-		
+
 		return $basePath;
 	}
 
@@ -149,15 +149,15 @@ class Request {
 	 */
 	function getRequestUrl() {
 		static $requestUrl;
-		
+
 		if (!isset($requestUrl)) {
 			$requestUrl = Request::getProtocol() . '://' . Request::getServerHost() . Request::getRequestPath();
 			HookRegistry::call('Request::getRequestUrl', array(&$requestUrl));
 		}
-		
+
 		return $requestUrl;
 	}
-	
+
 	/**
 	 * Return true iff PATH_INFO is enabled.
 	 */
@@ -196,7 +196,7 @@ class Request {
 		}
 		return $requestPath;
 	}
-	
+
 	/**
 	 * Get the server hostname in the request.
 	 * @return string
@@ -272,7 +272,7 @@ class Request {
 		}
 		return $ipaddr;
 	}
-	
+
 	/**
 	 * Get the remote domain of the current request
 	 * @return string
@@ -284,7 +284,7 @@ class Request {
 			HookRegistry::call('Request::getRemoteDomain', array(&$remoteDomain));
 		}
 	}
-	
+
 	/**
 	 * Get the user agent of the current request.
 	 * @return string
@@ -305,29 +305,29 @@ class Request {
 		}
 		return $userAgent;
 	}
-	
+
 	/**
 	 * Get the user session associated with the current request.
 	 * @return Session
 	 */
 	 function &getSession() {
 	 	static $session;
-	 	
+
 	 	if (!isset($session)) {
 	 		$sessionManager = &SessionManager::getManager();
 	 		$session = $sessionManager->getUserSession();
 	 	}
-	 	
+
 	 	return $session;
 	 }
-	
+
 	/**
 	 * Get the page requested in the URL.
 	 * @return String the page path (under the "pages" directory)
 	 */
 	function getRequestedPage() {
 		static $page;
-		
+
 		if (!isset($page)) {
 			if (Request::isPathInfoEnabled()) {
 				$page = '';
@@ -341,17 +341,17 @@ class Request {
 				$page = Request::getUserVar('page');
 			}
 		}
-		
+
 		return $page;
 	}
-	
+
 	/**
 	 * Get the operation requested in the URL (assumed to exist in the requested page handler).
 	 * @return string
 	 */
 	function getRequestedOp() {
 		static $op;
-		
+
 		if (!isset($op)) {
 			if (Request::isPathInfoEnabled()) {
 				$op = '';
@@ -366,10 +366,10 @@ class Request {
 				$op = Request::getUserVar('op');
 			}
 		}
-		
+
 		return $op;
 	}
-	
+
 	/**
 	 * Get the arguments requested in the URL (not GET/POST arguments, only arguments prepended to the URL separated by "/").
 	 * @return array
@@ -393,7 +393,7 @@ class Request {
 		}
 		return $args;	
 	}
-	
+
 	/**
 	 * Get the value of a GET/POST variable.
 	 * @return mixed
@@ -404,7 +404,7 @@ class Request {
 		if (!isset($vars)) {
 			$vars = array_merge($_GET, $_POST);
 		}
-		
+
 		if (isset($vars[$key])) {
 			// FIXME Do not clean vars again if function is called more than once?
 			Request::cleanUserVar($vars[$key]);
@@ -453,15 +453,15 @@ class Request {
 	function cleanUserVar(&$var, $stripHtml = false) {
 		if (isset($var) && is_array($var)) {
 			array_walk($var, create_function('&$item,$key', 'Request::cleanUserVar($item);'));
-		
+
 		} else if (isset($var)) {
 			$var = Core::cleanVar(get_magic_quotes_gpc() ? stripslashes($var) : $var);
-			
+
 		} else {
 			return null;
 		}
 	}
-	
+
 	/**
 	 * Get the value of a cookie variable.
 	 * @return mixed
@@ -475,7 +475,7 @@ class Request {
 			return null;
 		}
 	}
-	
+
 	/**
 	 * Set a cookie variable.
 	 * @param $key string
@@ -485,7 +485,7 @@ class Request {
 		setcookie($key, $value, 0, Request::getBasePath());
 		$_COOKIE[$key] = $value;
 	}
-	
+
 	/**
 	 * Build a URL into Harvester2.
 	 */

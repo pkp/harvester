@@ -39,26 +39,26 @@ class IndexHandler extends Handler {
 	 */
 	function setLocale($args) {
 		$setLocale = isset($args[0]) ? $args[0] : null;
-		
+
 		$site = &Request::getSite();
-		
+
 		if (Locale::isLocaleValid($setLocale) && in_array($setLocale, $site->getSupportedLocales())) {
 			$session = &Request::getSession();
 			$session->setSessionVar('currentLocale', $setLocale);
 		}
-		
+
 		if(isset($_SERVER['HTTP_REFERER'])) {
 			Request::redirectUrl($_SERVER['HTTP_REFERER']);
 		}
-		
+
 		$source = Request::getUserVar('source');
 		if (isset($source) && !empty($source)) {
 			Request::redirectUrl(Request::getProtocol() . '://' . Request::getServerHost() . $source, false);
 		}
-		
+
 		Request::redirect('index');		
 	}
-	
+
 }
 
 ?>

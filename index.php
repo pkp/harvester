@@ -19,7 +19,7 @@ function handleRequest() {
 	if (!Config::getVar('general', 'installed') && pageRequiresInstall()) {
 		// Redirect to installer if application has not been installed
 		Request::redirect('install');
-		
+
 	}
 
 	// Determine the handler for this request
@@ -45,7 +45,7 @@ function handleRequest() {
 	if (in_array(strtolower($op), $methods)) {
 		// Call a specific operation
 		call_user_func(array(HANDLER_CLASS, $op), Request::getRequestedArgs());
-		
+
 	} else {
 		// Call the selected handler's index operation
 		call_user_func(array(HANDLER_CLASS, 'index'), Request::getRequestedArgs());

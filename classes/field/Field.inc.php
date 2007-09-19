@@ -27,11 +27,11 @@ class Field extends DataObject {
 	function Field() {
 		parent::DataObject();
 	}
-	
+
 	//
 	// Get/set methods
 	//
-	
+
 	/**
 	 * Get name of field
 	 * @return string
@@ -39,7 +39,7 @@ class Field extends DataObject {
 	 function getName() {
 	 	return $this->getData('name');
 	}
-	
+
 	/**
 	 * Set name of field
 	 * @param $name string
@@ -55,7 +55,7 @@ class Field extends DataObject {
 	 function getSchemaId() {
 	 	return $this->getData('schemaId');
 	}
-	
+
 	/**
 	 * Set schema ID for field
 	 * @param $schemaId string
@@ -71,7 +71,7 @@ class Field extends DataObject {
 	function getFieldId() {
 		return $this->getData('fieldId');
 	}
-	
+
 	/**
 	 * Set ID of field.
 	 * @param $fieldId int

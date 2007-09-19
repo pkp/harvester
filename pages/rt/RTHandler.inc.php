@@ -49,13 +49,13 @@ class RTHandler extends Handler {
 					// Split name and value from each parameter
 					$nameValue = explode('=', $param);
 					if (!isset($nameValue[0])) break;
-	
+
 					$name = trim($nameValue[0]);
 					$value = trim(isset($nameValue[1])?$nameValue[1]:'');
 					if (!empty($name)) $params[] = array('name' => $name, 'value' => $value);
 				}
 			}
-			
+
 			$search->postParams = $params;
 			$searches[] = $search;
 		}
@@ -90,7 +90,7 @@ class RTHandler extends Handler {
 		$templateMgr->assign('defineTerm', Request::getUserVar('defineTerm'));
 		$templateMgr->display('rt/context.tpl');
 	}
-	
+
 	function getParameterNames($value) {
 		$matches = null;
 		String::regexp_match_all('/\{\$([a-zA-Z0-9]+)\}/', $value, $matches);

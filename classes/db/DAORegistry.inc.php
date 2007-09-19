@@ -66,7 +66,7 @@ class DAORegistry {
 				$daos[$name]->_dataSource = $dbconn;
 			}
 		}
-		
+
 		return $daos[$name];
 	}
 

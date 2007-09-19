@@ -36,38 +36,38 @@ class InstallForm extends Form {
 
 	/** @var array database drivers supported by this system */
 	var $supportedDatabaseDrivers;
-	
+
 	/**
 	 * Constructor.
 	 */
 	function InstallForm() {
 		parent::Form('install/install.tpl');
-		
+
 		// FIXME Move the below options to an external configuration file?
 		$this->supportedLocales = Locale::getAllLocales();
-		
+
 		$this->supportedClientCharsets = array (
 			'utf-8' => 'Unicode (UTF-8)',
 			'iso-8859-1' => 'Western (ISO-8859-1)'
 		);
-		
+
 		$this->supportedConnectionCharsets = array (
 			'' => Locale::translate('common.notApplicable'),
 			'utf8' => 'Unicode (UTF-8)'
 		);
-		
+
 		$this->supportedDatabaseCharsets = array (
 			'' => Locale::translate('common.notApplicable'),
 			'utf8' => 'Unicode (UTF-8)'
 		);
-		
+
 		$this->supportedEncryptionAlgorithms = array (
 			'md5' => 'MD5'
 		);
 		if (function_exists('sha1')) {
 			$this->supportedEncryptionAlgorithms['sha1'] = 'SHA1';
 		}
-		
+
 		$this->supportedDatabaseDrivers = array (
 			// <adodb-driver> => array(<php-module>, <name>)
 			'mysql' => array('mysql', 'MySQL'),
@@ -81,7 +81,7 @@ class InstallForm extends Form {
 			'sybase' => array('sybase', 'Sybase'),
 			'odbc' => array('odbc', 'ODBC'),
 		);
-		
+
 		// Validation checks for this form
 		$this->addCheck(new FormValidatorInSet($this, 'locale', 'required', 'installer.form.localeRequired', array_keys($this->supportedLocales)));
 		$this->addCheck(new FormValidatorCustom($this, 'locale', 'required', 'installer.form.localeRequired', array('Locale', 'isLocaleValid')));
@@ -96,7 +96,7 @@ class InstallForm extends Form {
 		$this->addCheck(new FormValidator($this, 'databaseName', 'required', 'installer.form.databaseNameRequired'));
 		$this->addCheck(new FormValidatorPost($this));
 	}
-	
+
 	/**
 	 * Display the form.
 	 */
@@ -116,7 +116,7 @@ class InstallForm extends Form {
 
 		parent::display();
 	}
-	
+
 	/**
 	 * Initialize form data.
 	 */
@@ -144,7 +144,7 @@ class InstallForm extends Form {
 			'createDatabase' => 1
 		);
 	}
-	
+
 	/**
 	 * Assign form data to user-submitted data.
 	 */
@@ -168,34 +168,34 @@ class InstallForm extends Form {
 			'createDatabase',
 			'manualInstall'
 		));
-		
+
 		if ($this->getData('additionalLocales') == null || !is_array($this->getData('additionalLocales'))) {
 			$this->setData('additionalLocales', array());
 		}
 	}
-	
+
 	/**
 	 * Perform installation.
 	 */
 	function execute() {
 		$templateMgr = &TemplateManager::getManager();
 		$installer = &new Install($this->_data);
-		
+
 		// FIXME Use logger?
-		
+
 		if ($installer->execute()) {
 			if ($this->getData('manualInstall')) {
 				// Display SQL statements that would have been executed during installation
 				$templateMgr->assign(array('manualInstall' => true, 'installSql' => $installer->getSQL()));
-				
+
 			}
 			if (!$installer->wroteConfig()) {
 				// Display config file contents for manual replacement
 				$templateMgr->assign(array('writeConfigFailed' => true, 'configFileContents' => $installer->getConfigContents()));
 			}
-			
+
 			$templateMgr->display('install/installComplete.tpl');
-			
+
 		} else {
 			switch ($installer->getErrorType()) {
 				case INSTALLER_ERROR_DB:
@@ -206,10 +206,10 @@ class InstallForm extends Form {
 					break;
 			}
 		}
-		
+
 		$installer->destroy();
 	}
-	
+
 	/**
 	 * Check if database drivers have the required PHP module loaded.
 	 * The names of drivers that appear to be unavailable are bracketed.
@@ -226,7 +226,7 @@ class InstallForm extends Form {
 		}
 		return $dbDrivers;
 	}
-	
+
 	/**
 	 * Fail with a generic installation error.
 	 * @param $errorMsg string
@@ -236,7 +236,7 @@ class InstallForm extends Form {
 		$templateMgr->assign(array('isInstallError' => true, 'errorMsg' => $errorMsg));
 		$this->display();
 	}
-	
+
 	/**
 	 * Fail with a database installation error.
 	 * @param $errorMsg string
@@ -246,7 +246,7 @@ class InstallForm extends Form {
 		$templateMgr->assign(array('isInstallError' => true, 'dbErrorMsg' => empty($errorMsg) ? Locale::translate('common.error.databaseErrorUnknown') : $errorMsg));
 		$this->display();
 	}
-	
+
 }
 
 ?>
