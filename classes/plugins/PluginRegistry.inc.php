@@ -36,7 +36,7 @@ class PluginRegistry {
 	 * @param $path The path the plugin was found in
 	 * @return boolean True IFF the plugin was registered successfully
 	 */
-	function register($category, $plugin, $path) {
+	function register($category, &$plugin, $path) {
 		if (!$plugin->register($category, $path)) {
 			return false;
 		}
@@ -72,18 +72,13 @@ class PluginRegistry {
 		$categoryDir = 'plugins/' . $category;
 		$handle = opendir($categoryDir);
 		while (($file = readdir($handle)) !== false) {
-			if ($file != '.' && $file != '..') {
-				$pluginPath = "$categoryDir/$file";
+			if ($file == '.' || $file == '..') continue;
+			$pluginPath = "$categoryDir/$file";
+			$pluginWrapper = "$pluginPath/index.php";
 
-				// If the plugin is returned when we try to
-				// include $pluginPath/index.php, register it;
-				// note that there may be valid cases where
-				// errors must be suppressed (e.g. the source
-				// is in a CVS tree; in this case the CVS
-				// directory will throw an error.)
-				$plugin = @include("$pluginPath/index.php");
-				if ($plugin) PluginRegistry::register($category, $plugin, $pluginPath);
-			}
+			if (!file_exists($pluginWrapper)) continue;
+			$plugin = include($pluginWrapper);
+			if ($plugin) PluginRegistry::register($category, $plugin, $pluginPath);
 		}
 		closedir($handle);
 		$plugins = &PluginRegistry::getPlugins($category);
