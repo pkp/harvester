@@ -78,7 +78,7 @@ class Plugin {
 		if (!isset($caches[$locale])) {
 			import('cache.CacheManager');
 			$cacheManager =& CacheManager::getManager();
-			$caches[$locale] =& $cacheManager->getCache(
+			$caches[$locale] = $cacheManager->getCache(
 				'locale-' . $this->getName(), $locale,
 				array($this, '_cacheMiss')
 			);

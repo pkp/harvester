@@ -58,7 +58,7 @@ class TypeMapPreprocessorPlugin extends PreprocessorPlugin {
 		if (!isset($cache)) {
 			import('cache.CacheManager');
 			$cacheManager =& CacheManager::getManager();
-			$cache =& $cacheManager->getFileCache(
+			$cache = $cacheManager->getFileCache(
 				$this->getName(), $archive->getArchiveId(),
 				array(&$this, '_mapCacheMiss')
 			);

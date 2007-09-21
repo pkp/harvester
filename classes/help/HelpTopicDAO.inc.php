@@ -31,7 +31,7 @@ class HelpTopicDAO extends XMLDAO {
 		if (!isset($cache)) {
 			import('cache.CacheManager');
 			$cacheManager =& CacheManager::getManager();
-			$cache =& $cacheManager->getFileCache('help-topic-' . Locale::getLocale(), $topicId, array($this, '_cacheMiss'));
+			$cache = $cacheManager->getFileCache('help-topic-' . Locale::getLocale(), $topicId, array($this, '_cacheMiss'));
 
 			// Check to see if the cache info is outdated.
 			$cacheTime = $cache->getCacheTime();

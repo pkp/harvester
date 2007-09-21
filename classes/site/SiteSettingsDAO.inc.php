@@ -28,7 +28,7 @@ class SiteSettingsDAO extends DAO {
 		if (!isset($settingCache)) {
 			import('cache.CacheManager');
 			$cacheManager =& CacheManager::getManager();
-			$settingCache =& $cacheManager->getCache(
+			$settingCache = $cacheManager->getCache(
 				'settings', 'site',
 				array($this, '_cacheMiss')
 			);

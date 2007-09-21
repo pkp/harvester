@@ -28,7 +28,7 @@ class SchemaMap {
 		if (!isset($cache)) {
 			import('cache.CacheManager');
 			$cacheManager =& CacheManager::getManager();
-			$cache =& $cacheManager->getFileCache(
+			$cache = $cacheManager->getFileCache(
 				'schema', 'map',
 				array('SchemaMap', '_schemaMapCacheMiss')
 			);

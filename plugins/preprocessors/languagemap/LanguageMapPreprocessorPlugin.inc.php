@@ -62,7 +62,7 @@ class LanguageMapPreprocessorPlugin extends PreprocessorPlugin {
 		if (!isset($cache)) {
 			import('cache.CacheManager');
 			$cacheManager =& CacheManager::getManager();
-			$cache =& $cacheManager->getFileCache(
+			$cache = $cacheManager->getFileCache(
 				$this->getName(), 'mapping',
 				array(&$this, '_mapCacheMiss')
 			);

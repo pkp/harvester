@@ -47,7 +47,7 @@ class Help {
 		if (!isset($cache)) {
 			import('cache.CacheManager');
 			$cacheManager =& CacheManager::getManager();
-			$cache =& $cacheManager->getFileCache(
+			$cache = $cacheManager->getFileCache(
 				'help', 'mapping',
 				array('Help', '_mappingCacheMiss')
 			);
@@ -68,7 +68,7 @@ class Help {
 		if (!isset($cache)) {
 			import('cache.CacheManager');
 			$cacheManager =& CacheManager::getManager();
-			$cache =& $cacheManager->getFileCache(
+			$cache = $cacheManager->getFileCache(
 				'help', 'toc',
 				array('Help', '_tocCacheMiss')
 			);

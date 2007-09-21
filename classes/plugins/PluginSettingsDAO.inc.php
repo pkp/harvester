@@ -32,7 +32,7 @@ class PluginSettingsDAO extends DAO {
 		if (!isset($settingCache[$pluginName])) {
 			import('cache.CacheManager');
 			$cacheManager =& CacheManager::getManager();
-			$settingCache[$pluginName] =& $cacheManager->getCache(
+			$settingCache[$pluginName] = $cacheManager->getCache(
 				'pluginSettings', $pluginName,
 				array($this, '_cacheMiss')
 			);

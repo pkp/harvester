@@ -32,7 +32,7 @@ class ArchiveSettingsDAO extends DAO {
 		if (!isset($settingCache[$archiveId])) {
 			import('cache.CacheManager');
 			$cacheManager =& CacheManager::getManager();
-			$settingCache[$archiveId] =& $cacheManager->getCache(
+			$settingCache[$archiveId] = $cacheManager->getCache(
 				'archiveSettings', $archiveId,
 				array($this, '_cacheMiss')
 			);

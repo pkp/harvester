@@ -22,12 +22,6 @@ define('LOCALE_ENCODING', Config::getVar('i18n', 'client_charset'));
 class Locale {
 	var $caches;
 
-	/**
-	 * Constructor.
-	 */
-	function Locale() {
-	}
-
 	function &_getCache($locale) {
 		static $caches;
 		if (!isset($caches)) {
@@ -37,7 +31,7 @@ class Locale {
 		if (!isset($caches[$locale])) {
 			import('cache.CacheManager');
 			$cacheManager =& CacheManager::getManager();
-			$caches[$locale] =& $cacheManager->getCache(
+			$caches[$locale] = $cacheManager->getCache(
 				'locale', $locale,
 				array('Locale', '_cacheMiss')
 			);
@@ -256,7 +250,7 @@ class Locale {
 		if (!isset($cache)) {
 			import('cache.CacheManager');
 			$cacheManager =& CacheManager::getManager();
-			$cache =& $cacheManager->getFileCache(
+			$cache = $cacheManager->getFileCache(
 				'locale', 'list',
 				array('Locale', '_allLocalesCacheMiss')
 			);
