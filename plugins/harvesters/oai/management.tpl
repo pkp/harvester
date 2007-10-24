@@ -82,7 +82,7 @@
 
 </table>
 
-<input type="submit" class="button defaultButton" onclick="return confirm('{translate|escape:"javascript" key="admin.archives.manage.updateIndex.confirm"}')" value="{translate key="admin.archives.manage.updateIndex"}"/>
+<input type="submit" class="button defaultButton" onclick="return confirm('{translate|escape:"jsparam" key="admin.archives.manage.updateIndex.confirm"}')" value="{translate key="admin.archives.manage.updateIndex"}"/>
 <input type="button" onclick="document.location='{url op="flushIndex" path=$archiveId}'" value="{translate key="admin.archives.manage.flush"}" class="button" />
 <input type="button" value="{translate key="common.cancel"}" onclick="history.go(-1)" class="button"/>
 </form>

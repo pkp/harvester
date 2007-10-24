@@ -32,7 +32,7 @@
 	<tr valign="top">
 		<td>{$crosswalk->getCrosswalkName()|escape}</td>
 		<td>{$crosswalk->getCrosswalkDescription()|escape}</td>
-		<td align="right"><a href="{url op="editCrosswalk" crosswalkId=$crosswalk->getCrosswalkId()}" class="action">{translate key="common.edit"}</a>&nbsp;|&nbsp;<a href="{url op="deleteCrosswalk" path=$crosswalk->getCrosswalkId()}" onclick="return confirm('{translate|escape:"javascript" key="admin.crosswalks.confirmDelete"}')" class="action">{translate key="common.delete"}</a></td>
+		<td align="right"><a href="{url op="editCrosswalk" crosswalkId=$crosswalk->getCrosswalkId()}" class="action">{translate key="common.edit"}</a>&nbsp;|&nbsp;<a href="{url op="deleteCrosswalk" path=$crosswalk->getCrosswalkId()}" onclick="return confirm('{translate|escape:"jsparam" key="admin.crosswalks.confirmDelete"}')" class="action">{translate key="common.delete"}</a></td>
 	</tr>
 	<tr>
 		<td colspan="4" class="{if $smarty.foreach.crosswalks.last}end{/if}separator">&nbsp;</td>
@@ -53,6 +53,6 @@
 	{/if}
 </table>
 
-<p><a href="{url op="createCrosswalk"}" class="action">{translate key="admin.crosswalks.addCrosswalk"}</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="#" class="action" onclick="confirmAction('{url op="resetCrosswalks"}', '{translate key="admin.crosswalks.confirmReset"}')">{translate key="admin.crosswalks.reset"}</a></p>
+<p><a href="{url op="createCrosswalk"}" class="action">{translate key="admin.crosswalks.addCrosswalk"}</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="#" class="action" onclick="confirmAction('{url op="resetCrosswalks"}', '{translate|escape:"jsparam" key="admin.crosswalks.confirmReset"}')">{translate key="admin.crosswalks.reset"}</a></p>
 
 {include file="common/footer.tpl"}
