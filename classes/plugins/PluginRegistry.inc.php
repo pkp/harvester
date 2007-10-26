@@ -79,6 +79,7 @@ class PluginRegistry {
 			if (!file_exists($pluginWrapper)) continue;
 			$plugin = include($pluginWrapper);
 			if ($plugin) PluginRegistry::register($category, $plugin, $pluginPath);
+			unset($plugin);
 		}
 		closedir($handle);
 		$plugins = &PluginRegistry::getPlugins($category);

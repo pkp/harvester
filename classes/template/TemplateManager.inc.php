@@ -19,6 +19,7 @@
 define('SMARTY_DIR', Core::getBaseDir() . DIRECTORY_SEPARATOR . 'lib' . DIRECTORY_SEPARATOR . 'smarty' . DIRECTORY_SEPARATOR);
 
 require_once('smarty/Smarty.class.php');
+require_once('smarty/plugins/modifier.escape.php'); // Seems to be needed?
 
 class TemplateManager extends Smarty {
 	/** @var $styleSheets array of URLs to stylesheets */
