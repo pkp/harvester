@@ -32,17 +32,17 @@ class ArchiveDAO extends DAO {
 	/**
 	 * Retrieve a archive by ID.
 	 * @param $archiveId int
-	 * @param $enabledOnly boolean
+	 * @param $onlyEnabled boolean
 	 * @return Archive
 	 */
-	function &getArchive($archiveId, $enabledOnly = true) {
+	function &getArchive($archiveId, $onlyEnabled = true) {
 		// First check the in-memory archive cache
 		if (isset($this->archiveCache[$archiveId])) {
 			return $this->archiveCache[$archiveId];
 		}
 
 		$result = &$this->retrieve(
-			'SELECT * FROM archives WHERE archive_id = ?' . ($enabledOnly?' AND enabled = 1':''), $archiveId
+			'SELECT * FROM archives WHERE archive_id = ?' . ($onlyEnabled?' AND enabled = 1':''), $archiveId
 		);
 
 		$returner = null;
@@ -61,12 +61,12 @@ class ArchiveDAO extends DAO {
 	/**
 	 * Retrieve a archive by public archive ID.
 	 * @param $publicArchiveId string
-	 * @param $enabledOnly boolean
+	 * @param $onlyEnabled boolean
 	 * @return Archive
 	 */
-	function &getArchiveByPublicArchiveId($publicArchiveId, $enabledOnly = true) {
+	function &getArchiveByPublicArchiveId($publicArchiveId, $onlyEnabled = true) {
 		$result = &$this->retrieve(
-			'SELECT * FROM archives WHERE public_archive_id = ?' . ($enabledOnly?' AND enabled = 1':''), $publicArchiveId
+			'SELECT * FROM archives WHERE public_archive_id = ?' . ($onlyEnabled?' AND enabled = 1':''), $publicArchiveId
 		);
 
 		$returner = null;
@@ -186,13 +186,13 @@ class ArchiveDAO extends DAO {
 
 	/**
 	 * Retrieve all archives.
-	 * @param $enabledOnly boolean
+	 * @param $onlyEnabled boolean
 	 * @param $rangeInfo object
 	 * @return DAOResultFactory containing matching archives
 	 */
-	function &getArchives($enabledOnly = true, $rangeInfo = null) {
+	function &getArchives($onlyEnabled = true, $rangeInfo = null) {
 		$result = &$this->retrieveRange(
-			'SELECT * FROM archives' . ($enabledOnly?' WHERE enabled = 1 ORDER BY title':''),
+			'SELECT * FROM archives' . ($onlyEnabled?' WHERE enabled = 1 ORDER BY title':''),
 			false, $rangeInfo
 		);
 

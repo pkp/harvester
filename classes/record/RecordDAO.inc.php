@@ -251,7 +251,7 @@ class RecordDAO extends DAO {
 				$this->update('DELETE FROM records WHERE archive_id = ?', $archiveId);
 				break;
 			default:
-				$records =& $this->getRecords($archiveId);
+				$records =& $this->getRecords(false, $archiveId);
 				while ($record =& $records->next()) {
 					$this->deleteRecord($record);
 					unset($record);
@@ -278,13 +278,14 @@ class RecordDAO extends DAO {
 
 	/**
 	 * Retrieve all records in an archive.
+	 * @param $onlyEnabled boolean Whether or not to only return records from enabled archives
 	 * @param $archiveId int ID of archive to browse; null to return all.
 	 * @param $sort array ID to sort by; if archive specified, use field ID;
 	 *                    Otherwise use crosswalk ID.
 	 * @param $rangeInfo object optional
 	 * @return DAOResultFactory containing matching records
 	 */
-	function &getRecords($archiveId = null, $sort = null, $rangeInfo = null) {
+	function &getRecords($onlyEnabled = true, $archiveId = null, $sort = null, $rangeInfo = null) {
 		$params = array();
 
 		$fieldDao =& DAORegistry::getDAO('FieldDAO');
@@ -338,8 +339,11 @@ class RecordDAO extends DAO {
 		if (isset($archiveId)) $params[] = $archiveId;
 
 		$result = &$this->retrieveRange(
-			'SELECT DISTINCT r.*' . (empty($orderSelect)?'':', ' . $orderSelect) . ' FROM records r' . $sortJoin .
-			(isset($archiveId)? ' WHERE r.archive_id = ? ':'') .
+			'SELECT r.*' . (empty($orderSelect)?'':', ' . $orderSelect) . ' FROM records r' . $sortJoin .
+			($onlyEnabled?' LEFT JOIN archives a ON (r.archive_id = a.archive_id)':'') .
+			((isset($archiveId) || $onlyEnabled)?' WHERE 1=1':'') .
+			(isset($archiveId)? ' AND r.archive_id = ? ':'') .
+			($onlyEnabled?' AND a.enabled = 1':'') .
 			(empty($orderBy)?'':" ORDER BY $orderBy"),
 			empty($params)?false:(count($params)==1?array_shift($params):$params),
 			$rangeInfo

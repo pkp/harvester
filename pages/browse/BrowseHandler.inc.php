@@ -37,6 +37,7 @@ class BrowseHandler extends Handler {
 
 			// The user has chosen an archive or opted to browse all
 			$records =& $recordDao->getRecords(
+				true, // Only enabled archives
 				$archive?$archiveId:null, 
 				$sortId, 
 				$rangeInfo
@@ -66,7 +67,7 @@ class BrowseHandler extends Handler {
 			// List archives for the user to browse.
 			$rangeInfo = Handler::getRangeInfo('archives');
 
-			$archives =& $archiveDao->getArchives($rangeInfo);
+			$archives =& $archiveDao->getArchives(true, $rangeInfo);
 
 			$templateMgr->assign_by_ref('archives', $archives);
 			$templateMgr->display('browse/index.tpl');
