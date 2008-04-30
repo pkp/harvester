@@ -19,6 +19,7 @@
 	<title>{$pageTitleTranslated}</title>
 	<meta name="description" content="{$metaSearchDescription}" />
 	<meta name="keywords" content="{$metaSearchKeywords}" />
+	<meta name="generator" content="{translate key="common.harvester2"} {$currentVersionString|escape}" />
 	{$metaCustomHeaders}
 	<link rel="stylesheet" href="{$baseUrl}/styles/common.css" type="text/css" />
 	{if $useStyleSheet}<link rel="stylesheet" href="{$publicFilesDir}/{$useStyleSheet.uploadName}" type="text/css" />{/if}
