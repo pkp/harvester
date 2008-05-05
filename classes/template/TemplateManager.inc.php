@@ -83,7 +83,8 @@ class TemplateManager extends Smarty {
 
 			$site = &Request::getSite();
 
-			$currentVersion = &DAORegistry::getDAO('VersionDAO')->getCurrentVersion();
+			$versionDAO = &DAORegistry::getDAO('VersionDAO'); 
+			$currentVersion = $versionDAO->getCurrentVersion();
 			$this->assign('currentVersionString', $currentVersion->getVersionString());
 
 			$siteTitle = $site->getTitle();
