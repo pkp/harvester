@@ -83,7 +83,7 @@
 		<field name="session_id" type="C2" size="32">
 			<KEY/>
 		</field>
-		<field name="ip_address" type="C2" size="15">
+		<field name="ip_address" type="C2" size="39">
 			<NOTNULL/>
 		</field>
 		<field name="user_agent" type="C2" size="255"/>
