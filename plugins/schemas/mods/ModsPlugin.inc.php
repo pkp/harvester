@@ -47,7 +47,7 @@ class ModsPlugin extends SchemaPlugin {
 
 	function &getXMLHandler(&$harvester) {
 		$this->import('ModsXMLHandler');
-		$handler =& new ModsXMLHandler(&$harvester);
+		$handler =& new ModsXMLHandler($harvester);
 		return $handler;
 	}
 
