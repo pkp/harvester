@@ -47,7 +47,7 @@ class EtdmsPlugin extends SchemaPlugin {
 
 	function &getXMLHandler(&$harvester) {
 		$this->import('EtdmsXMLHandler');
-		$handler =& new EtdmsXMLHandler(&$harvester);
+		$handler =& new EtdmsXMLHandler($harvester);
 		return $handler;
 	}
 

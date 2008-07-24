@@ -47,7 +47,7 @@ class MarcPlugin extends SchemaPlugin {
 
 	function &getXMLHandler(&$harvester) {
 		$this->import('MarcXMLHandler');
-		$handler =& new MarcXMLHandler(&$harvester);
+		$handler =& new MarcXMLHandler($harvester);
 		return $handler;
 	}
 
