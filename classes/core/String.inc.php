@@ -211,12 +211,30 @@ class String {
 		return preg_split($pattern, $subject, $limit);
 	}
 
+	/**
+	 * @see http://ca.php.net/manual/en/function.mime_content_type.php
+	 */
 	function mime_content_type($filename) {
-		if (!function_exists('mime_content_type')) {
-			$f = escapeshellarg($filename);
-			return trim(`file -bi $f`);
+		if (function_exists('mime_content_type')) {
+			return mime_content_type($filename);
+		} elseif (function_exists('finfo_open')) {
+			static $fi;
+			if (!isset($fi)) {
+				$fi = finfo_open(FILEINFO_MIME, Config::getVar('finfo', 'mime_database_path'));
+			}
+			if ($fi !== false) {
+				return strtok(finfo_file($fi, $filename), ' ;');
+			}
 		}
-		return mime_content_type($filename);
+
+		// Fall back on an external "file" tool
+		$f = escapeshellarg($filename);
+		$result = trim(`file --brief --mime $f`);
+		// Make sure we just return the mime type.
+		if (($i = strpos($result, ';')) !== false) {
+			$result = trim(substr($result, 0, $i));
+		}
+		return $result;
 	}
 
 
