@@ -276,6 +276,7 @@ class Search {
 		$results =& Search::formatResults($results);
 
 		// Return the appropriate iterator.
+		import('core.VirtualArrayIterator');
 		$returner = &new VirtualArrayIterator($results, $totalResults, $page, $itemsPerPage);
 		return $returner;
 	}

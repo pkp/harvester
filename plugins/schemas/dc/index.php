@@ -13,7 +13,7 @@
  * $Id$
  */
 
-require('DublinCorePlugin.inc.php');
+require_once('DublinCorePlugin.inc.php');
 
 return new DublinCorePlugin();
 

@@ -13,7 +13,7 @@
  * $Id$
  */
 
-require('PKPDublinCorePlugin.inc.php');
+require_once('PKPDublinCorePlugin.inc.php');
 
 return new PKPDublinCorePlugin();
 

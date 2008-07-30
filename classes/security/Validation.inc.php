@@ -1,18 +1,21 @@
 <?php
 
 /**
- * @file Validation.inc.php
+ * @file classes/security/Validation.inc.php
  *
- * Copyright (c) 2005-2007 Alec Smecher and John Willinsky
+ * Copyright (c) 2005-2008 John Willinsky and Alec Smecher
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
- * @package security
  * @class Validation
+ * @ingroup security
  *
- * Class providing user validation/authentication operations. 
- *
- * $Id$
+ * @brief Class providing user validation/authentication operations.
  */
+
+// $Id$
+
+
+import('security.Role');
 
 class Validation {
 
@@ -22,29 +25,78 @@ class Validation {
 	 * @param $password string unencrypted password
 	 * @param $reason string reference to string to receive the reason an account was disabled; null otherwise
 	 * @param $remember boolean remember a user's session past the current browser session
-	 * @return boolean True IFF login was successful
+	 * @return User the User associated with the login credentials, or false if the credentials are invalid
 	 */
-	function login($username, $password, &$reason, $remember = false) {
-		if (!Validation::checkCredentials($username, $password)) {
-			return false;
+	function &login($username, $password, &$reason, $remember = false) {
+		$reason = null;
+		$valid = false;
+		$userDao = &DAORegistry::getDAO('UserDAO');
+
+		$user = &$userDao->getUserByUsername($username, true);
+
+		if (!isset($user)) {
+			// User does not exist
+			return $valid;
 		}
 
-		$sessionManager = &SessionManager::getManager();
-
-		// Regenerate session ID first
-		$sessionManager->regenerateSessionId();
-
-		$session = &$sessionManager->getUserSession();
-		$session->setLoggedIn(true);
-		$session->setSessionVar('username', $username);
-		$session->setRemember($remember);
-
-		if ($remember && Config::getVar('general', 'session_lifetime') > 0) {
-			// Update session expiration time
-			$sessionManager->updateSessionLifetime(time() +  Config::getVar('general', 'session_lifetime') * 86400);
+		if ($user->getAuthId()) {
+			$authDao = &DAORegistry::getDAO('AuthSourceDAO');
+			$auth = &$authDao->getPlugin($user->getAuthId());
 		}
 
-		return true;
+		if (isset($auth)) {
+			// Validate against remote authentication source
+			$valid = $auth->authenticate($username, $password);
+			if ($valid) {
+				$oldEmail = $user->getEmail();
+				$auth->doGetUserInfo($user);
+				if ($user->getEmail() != $oldEmail) {
+					// FIXME OJS requires email addresses to be unique; if changed email already exists, ignore
+					if ($userDao->userExistsByEmail($user->getEmail())) {
+						$user->setEmail($oldEmail);
+					}
+				}
+			}
+		} else {
+			// Validate against OJS user database
+			$valid = ($user->getPassword() === Validation::encryptCredentials($username, $password));
+		}
+
+		if (!$valid) {
+			// Login credentials are invalid
+			return $valid;
+
+		} else {
+			if ($user->getDisabled()) {
+				// The user has been disabled.
+				$reason = $user->getDisabledReason();
+				if ($reason === null) $reason = '';
+				$valid = false;
+				return $valid;
+			}
+
+			// The user is valid, mark user as logged in in current session
+			$sessionManager = &SessionManager::getManager();
+
+			// Regenerate session ID first
+			$sessionManager->regenerateSessionId();
+
+			$session = &$sessionManager->getUserSession();
+			$session->setSessionVar('userId', $user->getUserId());
+			$session->setUserId($user->getUserId());
+			$session->setSessionVar('username', $user->getUsername());
+			$session->setRemember($remember);
+
+			if ($remember && Config::getVar('general', 'session_lifetime') > 0) {
+				// Update session expiration time
+				$sessionManager->updateSessionLifetime(time() +  Config::getVar('general', 'session_lifetime') * 86400);
+			}
+
+			$user->setDateLastLogin(Core::getCurrentDate());
+			$userDao->updateUser($user);
+
+			return $user;
+		}
 	}
 
 	/**
@@ -54,13 +106,14 @@ class Validation {
 	function logout() {
 		$sessionManager = &SessionManager::getManager();
 		$session = &$sessionManager->getUserSession();
+		$session->unsetSessionVar('userId');
+		$session->unsetSessionVar('signedInAs');
+		$session->setUserId(null);
 
 		if ($session->getRemember()) {
 			$session->setRemember(0);
 			$sessionManager->updateSessionLifetime(0);
 		}
-
-		$session->setLoggedIn(false);
 
 		$sessionDao = &DAORegistry::getDAO('SessionDAO');
 		$sessionDao->updateSession($session);
@@ -70,13 +123,19 @@ class Validation {
 
 	/**
 	 * Redirect to the login page, appending the current URL as the source.
+	 * @param $message string Optional name of locale key to add to login page
 	 */
-	function redirectLogin() {
+	function redirectLogin($message = null) {
+		$args = array();
+
 		if (isset($_SERVER['REQUEST_URI'])) {
-			Request::redirect('login', null, null, array('source' => $_SERVER['REQUEST_URI']));
-		} else {
-			Request::redirect('login');
+			$args['source'] = $_SERVER['REQUEST_URI'];
 		}
+		if ($message !== null) {
+			$args['loginMessage'] = $message;
+		}
+
+		Request::redirect('login', null, null, $args);
 	}
 
 	/**
@@ -86,8 +145,42 @@ class Validation {
 	 * @return boolean
 	 */
 	function checkCredentials($username, $password) {
-		$site =& Request::getSite();
-		return (Validation::encryptCredentials($username, $password) === $site->getPassword());
+		$userDao = &DAORegistry::getDAO('UserDAO');
+		$user = &$userDao->getUserByUsername($username, false);
+
+		$valid = false;
+		if (isset($user)) {
+			if ($user->getAuthId()) {
+				$authDao = &DAORegistry::getDAO('AuthSourceDAO');
+				$auth = &$authDao->getPlugin($user->getAuthId());
+			}
+
+			if (isset($auth)) {
+				$valid = $auth->authenticate($username, $password);
+			} else {
+				$valid = ($user->getPassword() === Validation::encryptCredentials($username, $password));
+			}
+		}
+
+		return $valid;
+	}
+
+	/**
+	 * Check if a user is authorized to access the specified role in the specified journal.
+	 * @param $roleId int
+	 * @return boolean
+	 */
+	function isAuthorized($roleId) {
+		if (!Validation::isLoggedIn()) {
+			return false;
+		}
+
+		$sessionManager = &SessionManager::getManager();
+		$session = &$sessionManager->getUserSession();
+		$user = &$session->getUser();
+
+		$roleDao = &DAORegistry::getDAO('RoleDAO');
+		return $roleDao->roleExists($user->getUserId(), $roleId);
 	}
 
 	/**
@@ -135,6 +228,33 @@ class Validation {
 	}
 
 	/**
+	 * Generate a hash value to use for confirmation to reset a password.
+	 * @param $userId int
+	 * @return string (boolean false if user is invalid)
+	 */
+	function generatePasswordResetHash($userId) {
+		$userDao = &DAORegistry::getDAO('UserDAO');
+		if (($user = $userDao->getUser($userId)) == null) {
+			// No such user
+			return false;
+		}
+		return substr(md5($user->getUserId() . $user->getUsername() . $user->getPassword()), 0, 6);
+	}
+
+	/**
+	 * Suggest a username given the first and last names.
+	 * @return string
+	 */
+	function suggestUsername($firstName, $lastName) {
+		$initial = String::substr($firstName, 0, 1);
+
+		$suggestion = String::regexp_replace('/[^a-zA-Z0-9_-]/', '', String::strtolower($initial . $lastName));
+		$userDao =& DAORegistry::getDAO('UserDAO');
+		for ($i = ''; $userDao->userExistsByUsername($suggestion . $i); $i++);
+		return $suggestion . $i;
+	}
+
+	/**
 	 * Check if the user must change their password in order to log in.
 	 * @return boolean
 	 */
@@ -142,9 +262,17 @@ class Validation {
 		$sessionManager = &SessionManager::getManager();
 		$session = &$sessionManager->getUserSession();
 
-		return $session->getLoggedIn();
+		$userId = $session->getUserId();
+		return isset($userId) && !empty($userId);
 	}
 
+	/**
+	 * Shortcut for checking authorization as site admin.
+	 * @return boolean
+	 */
+	function isSiteAdmin() {
+		return Validation::isAuthorized(ROLE_ID_SITE_ADMIN);
+	}
 }
 
 ?>

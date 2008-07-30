@@ -13,7 +13,7 @@
  * $Id$
  */
 
-require('IPBanPlugin.inc.php');
+require_once('IPBanPlugin.inc.php');
 
 return new IPBanPlugin();
 

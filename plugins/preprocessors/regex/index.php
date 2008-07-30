@@ -13,7 +13,7 @@
  * $Id$
  */
 
-require('RegexPreprocessorPlugin.inc.php');
+require_once('RegexPreprocessorPlugin.inc.php');
 
 return new RegexPreprocessorPlugin();
 

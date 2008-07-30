@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @file InstallHandler.inc.php
+ * @file pages/install/InstallHandler.inc.php
  *
  * Copyright (c) 2005-2007 Alec Smecher and John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
@@ -11,13 +11,16 @@
  *
  * Handle installation requests. 
  *
- * $Id$
  */
+
+// $Id$
+
 
 /* FIXME Prevent classes from trying to initialize the session manager (and thus the database connection) */
 define('SESSION_DISABLE_INIT', 1);
 
 import('install.form.InstallForm');
+import('core.Handler');
 
 class InstallHandler extends Handler {
 

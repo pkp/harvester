@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @file RTHandler.inc.php
+ * @file pages/rt/RTHandler.inc.php
  *
  * Copyright (c) 2005-2007 Alec Smecher and John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
@@ -11,10 +11,13 @@
  *
  * Handle Reading Tools requests. 
  *
- * $Id$
  */
 
+
+// $Id$
+
 import('rt.harvester2.RTDAO');
+import('core.Handler');
 
 class RTHandler extends Handler {
 	function context($args) {

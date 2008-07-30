@@ -1,17 +1,23 @@
 <?php
 
 /**
- * @file cliTool.inc.php
+ * @file tools/includes/cliTool.inc.php
  *
  * Copyright (c) 2005-2007 Alec Smecher and John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * Initialization code for command-line scripts.
  *
+ * @class CommandLineTool
  * @package tools
  *
- * $Id$
  */
+
+// $Id$
+
+
+define('INDEX_FILE_LOCATION', dirname(dirname(dirname(__FILE__))) . '/index.php');
+define('SESSION_DISABLE_INIT', 1);
 
 /** Initialization code */
 define('PWD', getcwd());
@@ -20,7 +26,6 @@ if (!defined('STDIN')) {
 	define('STDIN', fopen('php://stdin','r'));
 }
 require('includes/driver.inc.php');
-define('SESSION_DISABLE_INIT', 1);
 
 if (!isset($argc)) {
 	// In PHP < 4.3.0 $argc/$argv are not automatically registered

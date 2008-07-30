@@ -13,7 +13,7 @@
  * $Id$
  */
 
-require('MarcPlugin.inc.php');
+require_once('MarcPlugin.inc.php');
 
 return new MarcPlugin();
 

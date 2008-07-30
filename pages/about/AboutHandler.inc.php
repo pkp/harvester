@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @file AboutHandler.inc.php
+ * @file paes/about/AboutHandler.inc.php
  *
  * Copyright (c) 2005-2007 Alec Smecher and John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
@@ -11,8 +11,12 @@
  *
  * Handle requests for the About page.
  *
- * $Id$
  */
+
+// $Id$
+
+
+import('core.Handler');
 
 class AboutHandler extends Handler {
 

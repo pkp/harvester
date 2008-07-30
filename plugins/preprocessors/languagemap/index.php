@@ -13,7 +13,7 @@
  * $Id$
  */
 
-require('LanguageMapPreprocessorPlugin.inc.php');
+require_once('LanguageMapPreprocessorPlugin.inc.php');
 
 return new LanguageMapPreprocessorPlugin();
 

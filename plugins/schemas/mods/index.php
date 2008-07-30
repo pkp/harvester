@@ -13,7 +13,7 @@
  * $Id$
  */
 
-require('ModsPlugin.inc.php');
+require_once('ModsPlugin.inc.php');
 
 return new ModsPlugin();
 

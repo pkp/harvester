@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @file RTSearchHandler.inc.php
+ * @file pages/rtadmin/RTSearchHandler.inc.php
  *
  * Copyright (c) 2005-2007 Alec Smecher and John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
@@ -11,8 +11,10 @@
  *
  * Handle Reading Tools administration requests -- contexts section.
  *
- * $Id$
  */
+
+// $Id$
+
 
 import('rt.harvester2.HarvesterRTAdmin');
 

@@ -113,7 +113,7 @@ class SchemaPlugin extends Plugin {
 		$templateMgr =& TemplateManager::getManager();
 		$templateMgr->assign_by_ref('record', $record);
 		$templateMgr->assign('entries', $record->getEntries());
-		$templateMgr->display($this->getTemplatePath() . 'summary.tpl', null);
+		$templateMgr->display($this->getTemplatePath() . 'summary.tpl', null, 'SchemaPlugin::displayRecordSummary');
 	}
 
 	function getRtVersion(&$archive) {
@@ -160,7 +160,7 @@ class SchemaPlugin extends Plugin {
 			$templateMgr->assign('defineTermsContextId', $defineTermsContextId);
 		}
 
-		$templateMgr->display($this->getTemplatePath() . 'record.tpl');
+		$templateMgr->display($this->getTemplatePath() . 'record.tpl', null, 'SchemaPlugin::displayRecord');
 	}
 
 	/**

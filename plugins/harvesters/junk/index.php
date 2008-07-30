@@ -13,7 +13,7 @@
  * $Id$
  */
 
-require('JunkHarvesterPlugin.inc.php');
+require_once('JunkHarvesterPlugin.inc.php');
 
 return new JunkHarvesterPlugin();
 

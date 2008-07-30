@@ -13,7 +13,7 @@
  * $Id$
  */
 
-require('TypeMapPreprocessorPlugin.inc.php');
+require_once('TypeMapPreprocessorPlugin.inc.php');
 
 return new TypeMapPreprocessorPlugin();
 

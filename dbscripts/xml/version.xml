@@ -25,10 +25,11 @@
 
 <version>
 	<application>harvester2</application>
-	<release>2.0.1.0</release>
-	<tag>harvester-2_0_1-0</tag>
+	<release>2.3.0.0</release>
+	<tag>harvester-2_3_0-0</tag>
 	<date>2007-01-22</date>
 	<info>http://pkp.sfu.ca/harvester2/</info>
 	<package>http://pkp.sfu.ca/harvester2/download/harvester-2.0.1.tar.gz</package>
-	<patch from="2.0.0.0">http://pkp.sfu.ca/harvester2/download/patch/harvester-2.0_to_2.0.1.patch.gz</patch>
+	<patch from="2.0.0.0">http://pkp.sfu.ca/harvester2/download/patch/harvester-2.0_to_2.3.patch.gz</patch>
+	<patch from="2.0.1.0">http://pkp.sfu.ca/harvester2/download/patch/harvester-2.0.1_to_2.3.patch.gz</patch>
 </version>

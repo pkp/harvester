@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @file RecordHandler.inc.php
+ * @file pages/record/RecordHandler.inc.php
  *
  * Copyright (c) 2005-2007 Alec Smecher and John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
@@ -11,8 +11,12 @@
  *
  * Handle requests for browse functions. 
  *
- * $Id$
  */
+
+// $Id$
+
+
+import('core.Handler');
 
 class RecordHandler extends Handler {
 	function index() {

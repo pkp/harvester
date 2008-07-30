@@ -13,7 +13,7 @@
  * $Id$
  */
 
-require('OAIHarvesterPlugin.inc.php');
+require_once('OAIHarvesterPlugin.inc.php');
 
 return new OAIHarvesterPlugin();
 

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @file AdminArchiveHandler.inc.php
+ * @file pages/admin/AdminArchiveHandler.inc.php
  *
  * Copyright (c) 2005-2007 Alec Smecher and John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
@@ -11,8 +11,10 @@
  *
  * Handle requests for archive management in site administration. 
  *
- * $Id$
  */
+
+// $Id$
+
 
 class AdminArchiveHandler extends AdminHandler {
 

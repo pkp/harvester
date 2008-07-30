@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @file IndexHandler.inc.php
+ * @file pages/index/IndexHandler.inc.php
  *
  * Copyright (c) 2005-2007 Alec Smecher and John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
@@ -11,8 +11,12 @@
  *
  * Handle site index requests.
  *
- * $Id$
  */
+
+// $Id$
+
+
+import('core.Handler');
 
 class IndexHandler extends Handler {
 	function index($args) {
@@ -20,7 +24,7 @@ class IndexHandler extends Handler {
 		$templateMgr = &TemplateManager::getManager();
 		$site =& Request::getSite();
 
-		$templateMgr->assign('intro', $site->getIntro());
+		$templateMgr->assign('intro', $site->getSiteIntro());
 
 		$archiveDao =& DAORegistry::getDAO('ArchiveDAO');
 		$templateMgr->assign('archiveCount', $archiveDao->getArchiveCount());

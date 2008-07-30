@@ -13,7 +13,7 @@
  * $Id$
  */
 
-require('EtdmsPlugin.inc.php');
+require_once('EtdmsPlugin.inc.php');
 
 return new EtdmsPlugin();
 
