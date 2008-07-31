@@ -1,7 +1,7 @@
 {**
  * summary.tpl
  *
- * Copyright (c) 2005-2007 Alec Smecher and John Willinsky
+ * Copyright (c) 2005-2008 Alec Smecher and John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  * * Edited and modified by Kennedy Onyancha - DoKS (KHK Kempen) (2007)
  * Display a summary of a ETD-MS record.

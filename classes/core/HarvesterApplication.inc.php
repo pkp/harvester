@@ -3,7 +3,7 @@
 /**
  * @file classes/core/HarvesterApplication.inc.php
  *
- * Copyright (c) 2005-2008 John Willinsky and Alec Smecher
+ * Copyright (c) 2005-2008 Alec Smecher and John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class HarvesterApplication
@@ -84,6 +84,16 @@ class HarvesterApplication extends PKPApplication {
 			'SiteSettingsDAO' => 'site.SiteSettingsDAO',
 			'VersionDAO' => 'site.VersionDAO'
 		);
+	}
+
+	/**
+	 * Instantiate the help object for this application.
+	 * @return object
+	 */
+	function &instantiateHelp() {
+		import('help.Help');
+		$help =& new Help();
+		return $help;
 	}
 }
 

@@ -3,7 +3,7 @@
 /**
  * @file classes/template/TemplateManager.inc.php
  *
- * Copyright (c) 2005-2008 John Willinsky and Alec Smecher
+ * Copyright (c) 2005-2008 Alec Smecher and John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class TemplateManager
@@ -31,6 +31,8 @@ class TemplateManager extends PKPTemplateManager {
 		// Are we using implicit authentication?
 		$this->assign('implicitAuth', Config::getVar('security', 'implicit_auth'));
 
+		$this->register_modifier('get_value', array(&$this, 'smartyGetValue'));
+
 		if (!defined('SESSION_DISABLE_INIT')) {
 			/**
 			 * Kludge to make sure no code that tries to connect to
@@ -55,6 +57,14 @@ class TemplateManager extends PKPTemplateManager {
 	}
 
 	/**
+	 * Get the value of a template variable.
+	 */
+	function smartyGetValue($name) {
+		$templateMgr =& TemplateManager::getManager();
+		return $templateMgr->get_template_vars($name);
+	}
+
+	/**
 	 * Smarty usage: {get_help_id key="(dir)*.page.topic" url="boolean"}
 	 *
 	 * Custom Smarty function for retrieving help topic ids.
@@ -66,12 +76,13 @@ class TemplateManager extends PKPTemplateManager {
 	function smartyGetHelpId($params, &$smarty) {
 		import('help.Help');
 		if (isset($params) && !empty($params)) {
+			$help =& Help::getHelp();
 			if (isset($params['key'])) {
 				$key = $params['key'];
 				unset($params['key']);
-				$translatedKey = Help::translate($key);
+				$translatedKey = $help->translate($key);
 			} else {
-				$translatedKey = Help::translate('');
+				$translatedKey = $help->translate('');
 			}
 
 			if ($params['url'] == "true") {
@@ -93,7 +104,8 @@ class TemplateManager extends PKPTemplateManager {
 	function smartyHelpTopic($params, &$smarty) {
 		import('help.Help');
 		if (isset($params) && !empty($params)) {
-			$translatedKey = isset($params['key']) ? Help::translate($params['key']) : Help::translate('');
+			$help =& Help::getHelp();
+			$translatedKey = isset($params['key']) ? $help->translate($params['key']) : $help->translate('');
 			$link = Request::url('help', 'view', explode('/', $translatedKey));
 			$text = isset($params['text']) ? $params['text'] : '';
 			return "<a href=\"$link\">$text</a>";

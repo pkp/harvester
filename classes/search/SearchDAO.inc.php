@@ -3,7 +3,7 @@
 /**
  * @file SearchDAO.inc.php
  *
- * Copyright (c) 2005-2007 Alec Smecher and John Willinsky
+ * Copyright (c) 2005-2008 Alec Smecher and John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @package search
@@ -75,6 +75,7 @@ class SearchDAO extends DAO {
 	function &getPhraseResults($phrase, $dates, $archiveIds, $type, $id, $limit = 500, $cacheHours = 24) {
 		if (empty($phrase)) {
 			$results = false;
+			import('db.DBRowIterator');
 			$returner = &new DBRowIterator($results);
 			return $returner;
 		}
@@ -170,6 +171,7 @@ class SearchDAO extends DAO {
 			3600 * $cacheHours // Cache for 24 hours
 		);
 
+		import('db.DBRowIterator');
 		$returner = &new DBRowIterator($result);
 		return $returner;
 	}

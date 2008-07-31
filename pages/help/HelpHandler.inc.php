@@ -3,14 +3,13 @@
 /**
  * @file pages/help/HelpHandler.inc.php
  *
- * Copyright (c) 2005-2007 Alec Smecher and John Willinsky
+ * Copyright (c) 2003-2008 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
- * @package pages.help
  * @class HelpHandler
+ * @ingroup pages_help
  *
- * Handle requests for viewing help pages. 
- *
+ * @brief Handle requests for viewing help pages. 
  */
 
 // $Id$
@@ -19,7 +18,6 @@
 define('HELP_DEFAULT_TOPIC', 'index/topic/000000');
 define('HELP_DEFAULT_TOC', 'index/toc/000000');
 
-import('help.Help');
 import('help.HelpToc');
 import('help.HelpTocDAO');
 import('help.HelpTopic');
@@ -38,9 +36,11 @@ class HelpHandler extends Handler {
 
 	function toc() {
 		parent::validate();
+		HelpHandler::setupTemplate();
 
 		$templateMgr = &TemplateManager::getManager();
-		$templateMgr->assign_by_ref('helpToc', Help::getTableOfContents());
+		$help =& Help::getHelp();
+		$templateMgr->assign_by_ref('helpToc', $help->getTableOfContents());
 		$templateMgr->display('help/helpToc.tpl');
 	}
 
@@ -50,8 +50,11 @@ class HelpHandler extends Handler {
 	 */
 	function view($args) {
 		parent::validate();
+		HelpHandler::setupTemplate();
 
 		$topicId = implode("/",$args);
+		$keyword = trim(String::regexp_replace('/[^\w\s\.\-]/', '', strip_tags(Request::getUserVar('keyword'))));
+		$result = (int) Request::getUserVar('result');
 
 		$topicDao = &DAORegistry::getDAO('HelpTopicDAO');
 		$topic = $topicDao->getTopic($topicId);
@@ -86,7 +89,14 @@ class HelpHandler extends Handler {
 		$templateMgr->assign('toc', $toc);
 		$templateMgr->assign('subToc', $subToc);
 		$templateMgr->assign('relatedTopics', $relatedTopics);
+		$templateMgr->assign('locale', Locale::getLocale());
 		$templateMgr->assign('breadcrumbs', $toc->getBreadcrumbs());
+		if (!empty($keyword)) {
+			$templateMgr->assign('helpSearchKeyword', $keyword);
+		}
+		if (!empty($result)) {
+			$templateMgr->assign('helpSearchResult', $result);
+		}
 		$templateMgr->display('help/view.tpl');
 	}
 
@@ -95,6 +105,7 @@ class HelpHandler extends Handler {
 	 */
 	function search() {
 		parent::validate();
+		HelpHandler::setupTemplate();
 
 		$searchResults = array();
 
@@ -118,6 +129,13 @@ class HelpHandler extends Handler {
 		$templateMgr->display('help/searchResults.tpl');
 	}
 
+	/**
+	 * Initialize the template
+	 */
+	function setupTemplate() {
+		$templateMgr =& TemplateManager::getManager();
+		$templateMgr->setCacheability(CACHEABILITY_PUBLIC);
+	}
 }
 
 ?>

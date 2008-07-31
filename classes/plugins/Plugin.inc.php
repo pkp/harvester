@@ -3,7 +3,7 @@
 /**
  * @file classes/plugins/Plugin.inc.php
  *
- * Copyright (c) 2005-2008 John Willinsky and Alec Smecher
+ * Copyright (c) 2005-2008 Alec Smecher and John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class Plugin
