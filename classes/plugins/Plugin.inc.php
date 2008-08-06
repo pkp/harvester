@@ -22,7 +22,7 @@ class Plugin extends PKPPlugin {
 	 * Constructor
 	 */
 	function Plugin() {
-		Parent::PKPPlugin();
+		parent::PKPPlugin();
 	}
 
 	function getTemplatePath() {

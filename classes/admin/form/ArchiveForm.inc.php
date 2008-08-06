@@ -48,7 +48,7 @@ class ArchiveForm extends Form {
 		import('captcha.CaptchaManager');
 		$captchaManager =& new CaptchaManager();
 		$this->captchaEnabled = $captchaManager->isEnabled();
-		if ($this->captchaEnabled && !Validation::isLoggedIn()) {
+		if ($this->captchaEnabled && !Validation::isSiteAdmin()) {
 			$this->addCheck(new FormValidatorCaptcha($this, 'captcha', 'captchaId', 'common.captchaField.badCaptcha'));
 		}
 
@@ -76,7 +76,7 @@ class ArchiveForm extends Form {
 	function display() {
 		$templateMgr = &TemplateManager::getManager();
 		$templateMgr->assign('archiveId', $this->archiveId);
-		if ($this->captchaEnabled && !Validation::isLoggedIn()) {
+		if ($this->captchaEnabled && !Validation::isSiteAdmin()) {
 			import('captcha.CaptchaManager');
 			$captchaManager =& new CaptchaManager();
 			$captcha =& $captchaManager->createCaptcha();
@@ -132,12 +132,12 @@ class ArchiveForm extends Form {
 	function getParameterNames() {
 		$parameterNames = array('title', 'description', 'url', 'enabled');
 
-		if ($this->captchaEnabled && !Validation::isLoggedIn()) {
+		if ($this->captchaEnabled && !Validation::isSiteAdmin()) {
 			$parameterNames[] = 'captchaId';
 			$parameterNames[] = 'captcha';
 		}
 
-		if (Validation::isLoggedIn()) $parameterNames[] = 'publicArchiveId';
+		if (Validation::isSiteAdmin()) $parameterNames[] = 'publicArchiveId';
 		HookRegistry::call('ArchiveForm::getParameterNames', array(&$this, &$parameterNames, $this->harvesterPluginName));
 		return $parameterNames;
 	}
@@ -150,7 +150,7 @@ class ArchiveForm extends Form {
 	}
 
 	function validate() {
-		if (Validation::isLoggedIn()) {
+		if (Validation::isSiteAdmin()) {
 			// Check to ensure that the public ID, if specified, is unique
 			$publicArchiveId = $this->getData('publicArchiveId');
 			$archiveDao =& DAORegistry::getDAO('ArchiveDAO');
@@ -177,7 +177,7 @@ class ArchiveForm extends Form {
 		$this->archive->setDescription($this->getData('description'));
 		$this->archive->setUrl($this->getData('url'));
 		$this->archive->setTitle($this->getData('title'));
-		if (Validation::isLoggedIn()) {
+		if (Validation::isSiteAdmin()) {
 			$this->archive->setPublicArchiveId($this->getData('publicArchiveId'));
 			$this->archive->setEnabled($this->getData('enabled'));
 		} else {
@@ -197,7 +197,7 @@ class ArchiveForm extends Form {
 
 		HookRegistry::call('ArchiveForm::execute', array(&$this, &$this->archive, $this->harvesterPluginName));
 
-		if (!Validation::isLoggedIn()) {
+		if (!Validation::isSiteAdmin()) {
 			// Send an email notifying the administrator of the new archive.
 			import('mail.MailTemplate');
 			$email =& new MailTemplate('NEW_ARCHIVE_NOTIFY');

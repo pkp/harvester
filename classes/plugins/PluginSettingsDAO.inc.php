@@ -1,19 +1,20 @@
 <?php
 
 /**
- * @file PluginSettingsDAO.inc.php
+ * @file classes/plugins/PluginSettingsDAO.inc.php
  *
  * Copyright (c) 2005-2008 Alec Smecher and John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
- * @package plugins
  * @class PluginSettingsDAO
+ * @ingroup plugins
+ * @see Plugin
  *
- * Class for Plugin Settings DAO.
- * Operations for retrieving and modifying plugin settings.
- *
- * $Id$
+ * @brief Operations for retrieving and modifying plugin settings.
  */
+
+// $Id$
+
 
 class PluginSettingsDAO extends DAO {
 
@@ -29,15 +30,15 @@ class PluginSettingsDAO extends DAO {
 		if (!isset($settingCache)) {
 			$settingCache = array();
 		}
-		if (!isset($settingCache[$pluginName])) {
+		if (!isset($this->settingCache[$pluginName])) {
 			import('cache.CacheManager');
 			$cacheManager =& CacheManager::getManager();
-			$settingCache[$pluginName] = $cacheManager->getCache(
+			$this->settingCache[$pluginName] = $cacheManager->getCache(
 				'pluginSettings', $pluginName,
 				array($this, '_cacheMiss')
 			);
 		}
-		return $settingCache[$pluginName];
+		return $this->settingCache[$pluginName];
 	}
 
 	/**
@@ -54,8 +55,6 @@ class PluginSettingsDAO extends DAO {
 	function _cacheMiss(&$cache, $id) {
 		$settings =& $this->getPluginSettings($cache->getCacheId());
 		if (!isset($settings[$id])) {
-			// Make sure that even null values are cached
-			$cache->setCache($id, null);
 			return null;
 		}
 		return $settings[$id];
@@ -67,48 +66,24 @@ class PluginSettingsDAO extends DAO {
 	 * @return array
 	 */
 	function &getPluginSettings($pluginName) {
-		$pluginSettings[$pluginName] = array();
+		$pluginSettings = array();
 
 		$result = &$this->retrieve(
-			'SELECT setting_name, setting_value, setting_type FROM plugin_settings WHERE plugin_name = ?', $pluginName
+			'SELECT setting_name, setting_value, setting_type FROM plugin_settings WHERE plugin_name = ?', array($pluginName)
 		);
 
-		if ($result->RecordCount() == 0) {
-			$returner = null;
-			return $returner;
-
-		} else {
-			while (!$result->EOF) {
-				$row = &$result->getRowAssoc(false);
-				switch ($row['setting_type']) {
-					case 'bool':
-						$value = (bool) $row['setting_value'];
-						break;
-					case 'int':
-						$value = (int) $row['setting_value'];
-						break;
-					case 'float':
-						$value = (float) $row['setting_value'];
-						break;
-					case 'object':
-						$value = unserialize($row['setting_value']);
-						break;
-					case 'string':
-					default:
-						$value = $row['setting_value'];
-						break;
-				}
-				$pluginSettings[$pluginName][$row['setting_name']] = $value;
-				$result->MoveNext();
-			}
-			$result->close();
-			unset($result);
-
-			$cache =& $this->_getCache($pluginName);
-			$cache->setEntireCache($pluginSettings[$pluginName]);
-
-			return $pluginSettings[$pluginName];
+		while (!$result->EOF) {
+			$row = &$result->getRowAssoc(false);
+			$pluginSettings[$row['setting_name']] = $this->convertFromDB($row['setting_value'], $row['setting_type']);
+			$result->MoveNext();
 		}
+		$result->Close();
+		unset($result);
+
+		$cache =& $this->_getCache($pluginName);
+		$cache->setEntireCache($pluginSettings);
+
+		return $pluginSettings;
 	}
 
 	/**
@@ -122,43 +97,12 @@ class PluginSettingsDAO extends DAO {
 		$cache =& $this->_getCache($pluginName);
 		$cache->setCache($name, $value);
 
-		if ($type == null) {
-			switch (gettype($value)) {
-				case 'boolean':
-				case 'bool':
-					$type = 'bool';
-					break;
-				case 'integer':
-				case 'int':
-					$type = 'int';
-					break;
-				case 'double':
-				case 'float':
-					$type = 'float';
-					break;
-				case 'array':
-				case 'object':
-					$type = 'object';
-					break;
-				case 'string':
-				default:
-					$type = 'string';
-					break;
-			}
-		}
-
-		if ($type == 'object') {
-			$value = serialize($value);
-
-		} else if ($type == 'bool') {
-			$value = isset($value) && $value ? 1 : 0;
-		}
-
 		$result = $this->retrieve(
 			'SELECT COUNT(*) FROM plugin_settings WHERE plugin_name = ? AND setting_name = ?',
 			array($pluginName, $name)
 		);
 
+		$value = $this->convertToDB($value, $type);
 		if ($result->fields[0] == 0) {
 			$returner = $this->update(
 				'INSERT INTO plugin_settings
@@ -207,7 +151,8 @@ class PluginSettingsDAO extends DAO {
 		$cache->flush();
 
 		return $this->update(
-				'DELETE FROM plugin_settings WHERE plugin_name = ?', $pluginName
+			'DELETE FROM plugin_settings WHERE plugin_name = ?', 
+			array($pluginName)
 		);
 	}
 

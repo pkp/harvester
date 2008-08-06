@@ -64,26 +64,22 @@ class HarvesterApplication extends PKPApplication {
 	 * @return array
 	 */
 	function getDAOMap() {
-		return array(
+		return array_merge(parent::getDAOMap(), array(
 			'ArchiveDAO' => 'archive.ArchiveDAO',
 			'ArchiveSettingsDAO' => 'archive.ArchiveSettingsDAO',
-			'CaptchaDAO' => 'captcha.CaptchaDAO',
 			'CrosswalkDAO' => 'field.CrosswalkDAO',
 			'EntryDAO' => 'entry.EntryDAO',
 			'EmailTemplateDAO' => 'mail.EmailTemplateDAO',
 			'FieldDAO' => 'field.FieldDAO',
-			'HelpTocDAO' => 'help.HelpTocDAO',
-			'HelpTopicDAO' => 'help.HelpTopicDAO',
 			'PluginSettingsDAO' => 'plugins.PluginSettingsDAO',
 			'RecordDAO' => 'record.RecordDAO',
+			'RoleDAO' => 'security.RoleDAO',
 			'RTDAO' => 'rt.harvester2.RTDAO',
 			'SchemaDAO' => 'schema.SchemaDAO',
 			'SearchDAO' => 'search.SearchDAO',
-			'SessionDAO' => 'session.SessionDAO',
-			'SiteDAO' => 'site.SiteDAO',
-			'SiteSettingsDAO' => 'site.SiteSettingsDAO',
-			'VersionDAO' => 'site.VersionDAO'
-		);
+			'UserDAO' => 'user.UserDAO',
+			'UserSettingsDAO' => 'user.UserSettingsDAO'
+		));
 	}
 
 	/**

@@ -26,7 +26,7 @@ class LoginHandler extends Handler {
 	function index() {
 		parent::validate();
 		if (Validation::isLoggedIn()) {
-			Request::redirect('admin');
+			Request::redirect('index');
 		}
 
 		if (Config::getVar('security', 'force_login_ssl') && Request::getProtocol() != 'https') {

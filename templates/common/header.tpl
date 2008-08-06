@@ -17,16 +17,22 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset={$defaultCharset}" />
 	<title>{$pageTitleTranslated}</title>
-	<meta name="description" content="{$metaSearchDescription}" />
-	<meta name="keywords" content="{$metaSearchKeywords}" />
+	<meta name="description" content="{$metaSearchDescription|escape}" />
+	<meta name="keywords" content="{$metaSearchKeywords|escape}" />
 	<meta name="generator" content="{translate key="common.harvester2"} {$currentVersionString|escape}" />
 	{$metaCustomHeaders}
-	<link rel="stylesheet" href="{$baseUrl}/styles/common.css" type="text/css" />
-	{if $useStyleSheet}<link rel="stylesheet" href="{$publicFilesDir}/{$useStyleSheet.uploadName}" type="text/css" />{/if}
 
-	<link rel="alternate stylesheet" title="{translate key="icon.small.alt"}" href="{$baseUrl}/styles/small.css" type="text/css" />
-	<link rel="stylesheet" title="{translate key="icon.medium.alt"}" href="{$baseUrl}/styles/medium.css" type="text/css" />
-	<link rel="alternate stylesheet" title="{translate key="icon.large.alt"}" href="{$baseUrl}/styles/large.css" type="text/css" />
+	<link rel="stylesheet" href="{$baseUrl}/styles/common.css" type="text/css" />
+	{call_hook|assign:"leftSidebarCode" name="Templates::Common::LeftSidebar"}
+	{call_hook|assign:"rightSidebarCode" name="Templates::Common::RightSidebar"}
+	{if $leftSidebarCode || $rightSidebarCode}<link rel="stylesheet" href="{$baseUrl}/styles/sidebar.css" type="text/css" />{/if}
+	{if $leftSidebarCode}<link rel="stylesheet" href="{$baseUrl}/styles/leftSidebar.css" type="text/css" />{/if}
+	{if $rightSidebarCode}<link rel="stylesheet" href="{$baseUrl}/styles/rightSidebar.css" type="text/css" />{/if}
+	{if $leftSidebarCode && $rightSidebarCode}<link rel="stylesheet" href="{$baseUrl}/styles/bothSidebars.css" type="text/css" />{/if}
+
+	{foreach from=$stylesheets item=cssUrl}
+		<link rel="stylesheet" href="{$cssUrl}" type="text/css" />
+	{/foreach}
 
 	<script type="text/javascript" src="{$baseUrl}/lib/pkp/js/general.js"></script>
 	{$additionalHeadData}
@@ -35,28 +41,41 @@
 <div id="container">
 
 <div id="header">
+<div id="headerTitle">
 <h1>
-	{if $useCustomLogo}
-		<img src="{$publicFilesDir}/{$useCustomLogo.uploadName}" type="text/css" />
-	{else}
-		<img src="{$publicFilesDir}/logo.png" width="331" height="52" border="0" alt="{translate key="common.harvester2"}" />
-	{/if}
+{if $useCustomLogo}
+	<img src="{$publicFilesDir}/{$useCustomLogo.uploadName}" type="text/css" />
+{else}
+	<img src="{$publicFilesDir}/logo.png" width="331" height="52" border="0" alt="{translate key="common.harvester2"}" />
+{/if}
 </h1>
+</div>
 </div>
 
 <div id="body">
 
+{if $leftSidebarCode || $rightSidebarCode}
 	<div id="sidebar">
-		{include file="common/sidebar.tpl"}
+		{if $leftSidebarCode}
+			<div id="leftSidebar">
+				{$leftSidebarCode}
+			</div>
+		{/if}
+		{if $rightSidebarCode}
+			<div id="rightSidebar">
+				{$rightSidebarCode}
+			</div>
+		{/if}
 	</div>
+{/if}
 
 <div id="main">
 <div id="navbar">
 	<ul class="menu">
 		<li><a href="{url page="index"}">{translate key="navigation.home"}</a></li>
 		<li><a href="{url page="about"}">{translate key="navigation.about"}</a></li>
-		{if $isUserLoggedIn}
-			<li><a href="{url page="admin"}">{translate key="navigation.administration"}</a></li>
+		{if $isAdmin}
+			<li><a href="{url page="user"}">{translate key="navigation.userHome"}</a></li>
 		{/if}
 		<li><a href="{url page="search"}">{translate key="navigation.search"}</a></li>
 		<li><a href="{url page="browse"}">{translate key="navigation.browse"}</a></li>

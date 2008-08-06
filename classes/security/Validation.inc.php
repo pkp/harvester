@@ -171,10 +171,6 @@ class Validation {
 	 * @return boolean
 	 */
 	function isAuthorized($roleId) {
-		if (!Validation::isLoggedIn()) {
-			return false;
-		}
-
 		$sessionManager = &SessionManager::getManager();
 		$session = &$sessionManager->getUserSession();
 		$user = &$session->getUser();

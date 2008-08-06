@@ -15,7 +15,7 @@
 		<strong>{$loggedInUsername|escape}</strong>
 
 		<ul>
-			<li><a href="{url page="admin"}">{translate key="navigation.administration"}</a></li>
+			{if $isAdmin}<li><a href="{url page="admin"}">{translate key="navigation.administration"}</a></li>{/if}
 			<li><a href="{url page="login" op="signOut"}">{translate key="navigation.logout"}</a></li>
 		</ul>
 	</div>

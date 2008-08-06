@@ -56,7 +56,7 @@ class OAIHarvesterPlugin extends HarvesterPlugin {
 		$form->addCheck(new FormValidator($form, 'harvesterUrl', 'required', 'plugins.harvesters.oai.archive.form.harvesterUrlRequired'));
 		$form->addCheck(new FormValidatorInSet($form, 'oaiIndexMethod', 'optional', 'plugins.harvesters.oai.archive.form.oaiIndexMethodRequired', array(OAI_INDEX_METHOD_LIST_RECORDS, OAI_INDEX_METHOD_LIST_IDENTIFIERS)));
 		$form->addCheck(new FormValidatorCustom($form, 'harvesterUrl', 'required', 'plugins.harvester.oai.archive.form.harvesterUrlInvalid', array(&$oaiHarvester, 'validateHarvesterURL'), array(Request::getUserVar('isStatic'))));
-		$form->addCheck(new FormValidatorEmail($form, 'adminEmail', Validation::isLoggedIn()?'optional':'required', 'plugins.harvesters.oai.archive.form.adminEmailInvalid'));
+		$form->addCheck(new FormValidatorEmail($form, 'adminEmail', Validation::isSiteAdmin()?'optional':'required', 'plugins.harvesters.oai.archive.form.adminEmailInvalid'));
 		$form->addCheck(new FormValidatorCustom($form, 'harvesterUrl', 'required', 'plugins.harvester.oai.archive.form.harvesterUrlDuplicate', array(&$this, 'duplicateHarvesterUrlDoesNotExist'), array(Request::getUserVar('archiveId'))));
 	}
 

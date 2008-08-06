@@ -18,6 +18,7 @@
 	<message key="common.language">Language</message>
 	<message key="common.languages">Languages</message>
 	<message key="common.notApplicable">Not Applicable</message>
+	<message key="common.country">Country</message>
 	<message key="common.harvester2">Harvester2</message>
 	<message key="common.enabled">Enabled</message>
 	<message key="common.disabled">Disabled</message>
@@ -55,12 +56,13 @@
 	<message key="navigation.home">Home</message>
 	<message key="navigation.help">Help</message>
 	<message key="navigation.about">About</message>
+	<message key="navigation.user">User</message>
+	<message key="navigation.userHome">User Home</message>
 	<message key="navigation.search">Search</message>
 	<message key="navigation.browse">Browse</message>
 	<message key="navigation.login">Log In</message>
 	<message key="navigation.content">Content</message>
 	<message key="navigation.loggedInAs">You are logged in as...</message>
-	<message key="navigation.administration">Administration</message>
 	<message key="navigation.logout">Log Out</message>
 	<message key="navigation.addArchive">Add Archive</message>
 
@@ -187,11 +189,40 @@ Your server currently supports mbstring: <strong>{$supportsMBString}</strong>]]>
 	<message key="locale.supported">Supported Locales</message>
 
 	<!-- Login Messages -->
+	<message key="user.changePassword">Change Password</message>
+	<message key="user.editMyProfile">Edit My Profile</message>
+	<message key="user.changeMyPassword">Change My Password</message>
+	<message key="user.myAccount">My Account</message>
+	<message key="user.userHome">User Home</message>
 	<message key="user.login">Log In</message>
-	<message key="user.logout">Log Out</message>
+	<message key="user.logOut">Log Out</message>
 	<message key="user.username">Username</message>
 	<message key="user.password">Password</message>
+	<message key="user.salutation">Salutation</message>
+	<message key="user.name">Name</message>
+	<message key="user.firstName">First name</message>
+	<message key="user.middleName">Middle name</message>
+	<message key="user.lastName">Last name</message>
+	<message key="user.initials">Initials</message>
+	<message key="user.initialsExample">Joan Alice Smith = JAS</message>
+	<message key="user.gender">Gender</message>
+	<message key="user.masculine">M</message>
+	<message key="user.feminine">F</message>
+	<message key="user.title">Title</message>
+	<message key="user.signature">Signature</message>
+	<message key="user.affiliation">Affiliation</message>
+	<message key="user.affiliations">Affiliations</message>
 	<message key="user.email">Email</message>
+	<message key="user.url">URL</message>
+	<message key="user.phone">Phone</message>
+	<message key="user.fax">Fax</message>
+	<message key="user.interests">Reviewing interests</message>
+	<message key="user.mailingAddress">Mailing address</message>
+	<message key="user.biography">Bio statement</message>
+	<message key="user.biography.description">(E.g., department and rank)</message>
+	<message key="user.workingLanguages">Working languages</message>
+	<message key="user.dateRegistered">Date registered</message>
+	<message key="user.dateLastLogin">Last login</message>
 	<message key="user.register.repeatPassword">Repeat Password</message>
 	<message key="user.login.loginError">Invalid username or password. Please try again.</message>
 	<message key="user.login.rememberMe">Remember me</message>
@@ -554,6 +585,27 @@ Validation may fail on search URLs that require posted form data.]]></message>
 
 	<message key="rt.context.and">AND</message>
 
+	<!-- Profile -->
+	<message key="user.profile.editProfile">Edit Profile</message>
+	<message key="user.profile.form.firstNameRequired">A first name is required.</message>
+	<message key="user.profile.form.lastNameRequired">A last name is required.</message>
+	<message key="user.profile.form.emailRequired">A valid email address is required.</message>
+	<message key="user.profile.form.profileImageInvalid">Invalid profile image format or image too big. Accepted formats are .gif, .jpg, or .png, and the image must not exceed 150x150 pixels.</message>
+	<message key="user.profile.form.profileImage">Profile Image</message>
+	<message key="user.profile.form.urlInvalid">The specified URL is not valid. Please double-check the URL and try again. (Hint: Try adding http:// to the beginning of the URL.)</message>
+	<message key="user.profile.form.usernameRequired">A username is required.</message>
+	<message key="user.profile.form.passwordRequired">A password is required.</message>
+	<message key="user.profile.leavePasswordBlank">Leave the password fields blank to keep the current password.</message>
+	<message key="user.profile.oldPassword">Current password</message>
+	<message key="user.profile.newPassword">New password</message>
+	<message key="user.profile.repeatNewPassword">Repeat new password</message>
+	<message key="user.profile.changePasswordInstructions">Enter your current and new passwords below to change the password for your account.</message>
+	<message key="user.profile.form.oldPasswordInvalid">The current password you entered was incorrect.</message>
+	<message key="user.profile.form.newPasswordRequired">You must enter your new password.</message>
+	<message key="user.profile.form.publishedNotifications">New issue published email notifications</message>
+	<message key="user.profile.form.openAccessNotifications">Issue open access email notifications</message>
+	<message key="user.profile.publicProfile">User Profile</message>
+	
 	<!--
 	 *
 	 * MISC - Entries that do not belong in the other sections.

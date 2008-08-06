@@ -25,11 +25,11 @@ class AdminLanguagesHandler extends AdminHandler {
 		parent::validate();
 		parent::setupTemplate(true);
 
-		$site = &Request::getSite();
+		$site =& Request::getSite();
 
-		$templateMgr = &TemplateManager::getManager();
+		$templateMgr =& TemplateManager::getManager();
 		$templateMgr->assign('localeNames', Locale::getAllLocales());
-		$templateMgr->assign('primaryLocale', $site->getLocale());
+		$templateMgr->assign('primaryLocale', $site->getPrimaryLocale());
 		$templateMgr->assign('supportedLocales', $site->getSupportedLocales());
 		$templateMgr->assign('installedLocales', $site->getInstalledLocales());
 		$templateMgr->assign('uninstalledLocales', array_diff(array_keys(Locale::getAllLocales()), $site->getInstalledLocales()));
@@ -43,13 +43,13 @@ class AdminLanguagesHandler extends AdminHandler {
 		parent::validate();
 		parent::setupTemplate(true);
 
-		$site = &Request::getSite();
+		$site =& Request::getSite();
 
 		$primaryLocale = Request::getUserVar('primaryLocale');
 		$supportedLocales = Request::getUserVar('supportedLocales');
 
 		if (Locale::isLocaleValid($primaryLocale)) {
-			$site->setLocale($primaryLocale);
+			$site->setPrimaryLocale($primaryLocale);
 		}
 
 		$newSupportedLocales = array();
@@ -65,12 +65,15 @@ class AdminLanguagesHandler extends AdminHandler {
 		}
 		$site->setSupportedLocales($newSupportedLocales);
 
-		$templateMgr = &TemplateManager::getManager();
+		$siteDao =& DAORegistry::getDAO('SiteDAO');
+		$siteDao->updateSite($site);
+
+		$templateMgr =& TemplateManager::getManager();
 		$templateMgr->assign(array(
-			'currentUrl' => Request::getPageUrl() . '/admin/languages',
+			'currentUrl' => Request::url('admin', 'languages'),
 			'pageTitle' => 'common.languages',
 			'message' => 'common.changesSaved',
-			'backLink' => Request::getPageUrl() . '/admin',
+			'backLink' => Request::url('admin'),
 			'backLinkLabel' => 'admin.siteAdmin'
 		));
 		$templateMgr->display('common/message.tpl');
@@ -82,7 +85,7 @@ class AdminLanguagesHandler extends AdminHandler {
 	function installLocale() {
 		parent::validate();
 
-		$site = &Request::getSite();
+		$site =& Request::getSite();
 		$installLocale = Request::getUserVar('installLocale');
 
 		if (isset($installLocale) && is_array($installLocale)) {
@@ -107,7 +110,7 @@ class AdminLanguagesHandler extends AdminHandler {
 	function uninstallLocale() {
 		parent::validate();
 
-		$site = &Request::getSite();
+		$site =& Request::getSite();
 		$locale = Request::getUserVar('locale');
 
 		if (isset($locale) && !empty($locale) && $locale != $site->getLocale()) {
@@ -133,7 +136,7 @@ class AdminLanguagesHandler extends AdminHandler {
 	function reloadLocale() {
 		parent::validate();
 
-		$site = &Request::getSite();
+		$site =& Request::getSite();
 		$locale = Request::getUserVar('locale');
 
 		if (in_array($locale, $site->getInstalledLocales())) {

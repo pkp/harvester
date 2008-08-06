@@ -242,7 +242,7 @@ class PKPDublinCorePlugin extends Plugin {
 	}
 
 	function isEnabled() {
-		return $this->getSetting('enabled');
+		return $this->getSetting(null, 'enabled');
 	}
 }
 

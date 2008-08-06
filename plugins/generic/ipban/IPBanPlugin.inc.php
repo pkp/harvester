@@ -83,7 +83,7 @@ class IPBanPlugin extends Plugin {
 	}
 
 	function isEnabled() {
-		return $this->getSetting('enabled');
+		return $this->getSetting(null, 'enabled');
 	}
 }
 

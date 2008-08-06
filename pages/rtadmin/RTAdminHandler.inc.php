@@ -89,7 +89,7 @@ class RTAdminHandler extends Handler {
 	 */
 	function validate() {
 		parent::validate(true);
-		if (!Validation::isLoggedIn()) {
+		if (!Validation::isSiteAdmin()) {
 			Validation::redirectLogin();
 		}
 	}

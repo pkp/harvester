@@ -37,7 +37,7 @@ class AdminHandler extends Handler {
 	 */
 	function validate() {
 		parent::validate();
-		if (!Validation::isLoggedIn()) {
+		if (!Validation::isSiteAdmin()) {
 			Validation::redirectLogin();
 		}
 	}

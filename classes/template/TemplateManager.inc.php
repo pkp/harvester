@@ -27,10 +27,6 @@ class TemplateManager extends PKPTemplateManager {
 	 */
 	function TemplateManager() {
 		parent::PKPTemplateManager();
-
-		// Are we using implicit authentication?
-		$this->assign('implicitAuth', Config::getVar('security', 'implicit_auth'));
-
 		$this->register_modifier('get_value', array(&$this, 'smartyGetValue'));
 
 		if (!defined('SESSION_DISABLE_INIT')) {
@@ -45,6 +41,7 @@ class TemplateManager extends PKPTemplateManager {
 			$siteFilesDir = Request::getBaseUrl() . '/' . PublicFileManager::getSiteFilesPath();
 			$this->assign('sitePublicFilesDir', $siteFilesDir);
 			$this->assign('publicFilesDir', $siteFilesDir);
+			$this->assign('isAdmin', Validation::isSiteAdmin());
 
 			$siteStyleFilename = PublicFileManager::getSiteFilesPath() . '/' . $site->getSiteStyleFilename();
 			if (file_exists($siteStyleFilename)) $this->addStyleSheet(Request::getBaseUrl() . '/' . $siteStyleFilename);
