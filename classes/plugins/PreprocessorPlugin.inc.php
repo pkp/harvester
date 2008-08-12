@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @file PreprocessorPlugin.inc.php
+ * @file classes/plugins/PreprocessorPlugin.inc.php
  *
  * Copyright (c) 2005-2008 Alec Smecher and John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
@@ -11,8 +11,10 @@
  *
  * Abstract class for preprocessor plugins
  *
- * $Id$
  */
+
+// $Id$
+
 
 class PreprocessorPlugin extends Plugin {
 	function PreprocessorPlugin() {

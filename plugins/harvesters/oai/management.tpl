@@ -8,9 +8,11 @@
  *
  * $Id$
  *}
+{strip}
 {assign var="pageTitle" value="admin.archives.manage"}
 {assign var="helpTopicId" value="admin.manage"}
 {include file="common/header.tpl"}
+{/strip}
 
 <ul class="menu">
 	<li><a href="{url op="editArchive" path=$archiveId}">{translate key="admin.archives.editArchive"}</a></li>

@@ -18,15 +18,11 @@
 import ('archive.Archive');
 
 class ArchiveDAO extends DAO {
-	/** Cached array of archives by ID */
-	var $archiveCache;
-
 	/**
 	 * Constructor.
 	 */
 	function ArchiveDAO() {
 		parent::DAO();
-		$this->archiveCache = array();
 	}
 
 	/**
@@ -36,24 +32,16 @@ class ArchiveDAO extends DAO {
 	 * @return Archive
 	 */
 	function &getArchive($archiveId, $onlyEnabled = true) {
-		// First check the in-memory archive cache
-		if (isset($this->archiveCache[$archiveId])) {
-			return $this->archiveCache[$archiveId];
-		}
-
-		$result = &$this->retrieve(
+		$result =& $this->retrieve(
 			'SELECT * FROM archives WHERE archive_id = ?' . ($onlyEnabled?' AND enabled = 1':''), $archiveId
 		);
 
 		$returner = null;
 		if ($result->RecordCount() != 0) {
-			$returner = &$this->_returnArchiveFromRow($result->GetRowAssoc(false));
+			$returner =& $this->_returnArchiveFromRow($result->GetRowAssoc(false));
 		}
 		$result->Close();
 		unset($result);
-
-		// Cache this archive.
-		$this->archiveCache[$archiveId] =& $returner;
 
 		return $returner;
 	}
@@ -65,19 +53,16 @@ class ArchiveDAO extends DAO {
 	 * @return Archive
 	 */
 	function &getArchiveByPublicArchiveId($publicArchiveId, $onlyEnabled = true) {
-		$result = &$this->retrieve(
+		$result =& $this->retrieve(
 			'SELECT * FROM archives WHERE public_archive_id = ?' . ($onlyEnabled?' AND enabled = 1':''), $publicArchiveId
 		);
 
 		$returner = null;
 		if ($result->RecordCount() != 0) {
-			$returner = &$this->_returnArchiveFromRow($result->GetRowAssoc(false));
+			$returner =& $this->_returnArchiveFromRow($result->GetRowAssoc(false));
 		}
 		$result->Close();
 		unset($result);
-
-		// Cache this archive.
-		if ($returner) $this->archiveCache[$returner->getArchiveId()] =& $returner;
 
 		return $returner;
 	}
@@ -88,7 +73,7 @@ class ArchiveDAO extends DAO {
 	 * @return Archive
 	 */
 	function &_returnArchiveFromRow(&$row) {
-		$archive = &new Archive();
+		$archive =& new Archive();
 		$archive->setArchiveId($row['archive_id']);
 		$archive->setPublicArchiveId($row['public_archive_id']);
 		$archive->setTitle($row['title']);
@@ -125,9 +110,6 @@ class ArchiveDAO extends DAO {
 		$archiveId = $this->getInsertArchiveId();
 		$archive->setArchiveId($archiveId);
 
-		// Cache this archive.
-		$this->archiveCache[$archiveId] =& $returner;
-
 		return $archive->getArchiveId();
 	}
 
@@ -153,7 +135,7 @@ class ArchiveDAO extends DAO {
 				$archive->getUrl(),
 				$archive->getHarvesterPluginName(),
 				$archive->getEnabled()?1:0,
-				$archive->getArchiveId()
+				(int) $archive->getArchiveId()
 			)
 		);
 	}
@@ -171,13 +153,11 @@ class ArchiveDAO extends DAO {
 	 * @param $archiveId int
 	 */
 	function deleteArchiveById($archiveId) {
-		// Clear the archive from cache if applicable.
-		if (isset($this->archiveCache[$archiveId])) {
-			unset($this->archiveCache[$archiveId]);
-		}
-
 		$recordDao =& DAORegistry::getDAO('RecordDAO');
 		$recordDao->deleteRecordsByArchiveId($archiveId);
+
+		$archiveSettingsDao =& DAORegistry::getDAO('ArchiveSettingsDAO');
+		$archiveSettingsDao->deleteSettingsByArchiveId($archiveId);
 
 		return $this->update(
 			'DELETE FROM archives WHERE archive_id = ?', $archiveId
@@ -191,12 +171,12 @@ class ArchiveDAO extends DAO {
 	 * @return DAOResultFactory containing matching archives
 	 */
 	function &getArchives($onlyEnabled = true, $rangeInfo = null) {
-		$result = &$this->retrieveRange(
+		$result =& $this->retrieveRange(
 			'SELECT * FROM archives' . ($onlyEnabled?' WHERE enabled = 1 ORDER BY title':''),
 			false, $rangeInfo
 		);
 
-		$returner = &new DAOResultFactory($result, $this, '_returnArchiveFromRow');
+		$returner =& new DAOResultFactory($result, $this, '_returnArchiveFromRow');
 		return $returner;
 	}
 
@@ -213,7 +193,7 @@ class ArchiveDAO extends DAO {
 	 * @return int
 	 */
 	function getArchiveCount() {
-		$result = &$this->retrieve('SELECT COUNT(*) AS count FROM archives');
+		$result =& $this->retrieve('SELECT COUNT(*) AS count FROM archives');
 
 		$count = 0;
 		if ($result->RecordCount() != 0) {

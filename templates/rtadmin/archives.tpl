@@ -8,9 +8,11 @@
  *
  * $Id$
  *}
+{strip}
 {assign var="pageTitle" value="admin.rtAdmin"}
 {assign var="helpTopicId" value="FIXME"}
 {include file="common/header.tpl"}
+{/strip}
 
 <p>{translate key="rt.admin.desc"}</p>
 

@@ -8,8 +8,11 @@
  *
  * $Id$
  *}
+{strip}
 {assign var="pageTitle" value="navigation.about"}
 {include file="common/header.tpl"}
+{/strip}
+
 {if !empty($about)}
 	<p>{$about|nl2br}</p>
 {/if}

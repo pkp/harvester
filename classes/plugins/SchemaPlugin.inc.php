@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @file SchemaPlugin.inc.php
+ * @file classes/plugins/SchemaPlugin.inc.php
  *
  * Copyright (c) 2005-2008 Alec Smecher and John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
@@ -9,12 +9,12 @@
  * @package plugins
  * @class SchemaPlugin
  *
- * Abstract class for schema plugins
+ * @brief Abstract class for schema plugins
  *
- * $Id$
  */
 
-import('field.Field');
+// $Id$
+
 
 class SchemaPlugin extends Plugin {
 	function SchemaPlugin() {
@@ -57,14 +57,6 @@ class SchemaPlugin extends Plugin {
 	}
 
 	/**
-	 * Get an XML handler for this schema.
-	 */
-	function &getXMLHandler(&$harvester) {
-		$nullVar = null;
-		return $nullVar;
-	}
-
-	/**
 	 * Get a name for a field.
 	 * @param $fieldSymbolic string Symbolic name for the field
 	 * @param $locale string Name of locale (optional)
@@ -93,17 +85,20 @@ class SchemaPlugin extends Plugin {
 	}
 
 	/**
+	 * Parse a record's contents into an object
+	 * @param $contents string
+	 * @return object
+	 */
+	function &parseContents(&$contents) {
+		fatalError('ABSTRACT CLASS!');
+	}
+
+	/**
 	 * Get a list of the fields that can be used to sort in the browse list.
 	 * @return array
 	 */
 	function getSortFields() {
 		return array();
-	}
-
-	function getFieldId($fieldName) {
-		$fieldDao =& DAORegistry::getDAO('FieldDAO');
-		$field =& $fieldDao->buildField($fieldName, $this->getName());
-		return $field->getFieldId();
 	}
 
 	/**
@@ -112,7 +107,6 @@ class SchemaPlugin extends Plugin {
 	function displayRecordSummary(&$record) {
 		$templateMgr =& TemplateManager::getManager();
 		$templateMgr->assign_by_ref('record', $record);
-		$templateMgr->assign('entries', $record->getEntries());
 		$templateMgr->display($this->getTemplatePath() . 'summary.tpl', null, 'SchemaPlugin::displayRecordSummary');
 	}
 
@@ -150,7 +144,6 @@ class SchemaPlugin extends Plugin {
 		$archive =& $record->getArchive();
 		$templateMgr->assign_by_ref('archive', $archive);
 		$templateMgr->assign_by_ref('record', $record);
-		$templateMgr->assign('entries', $record->getEntries());
 
 		list($version, $defineTermsContextId) = $this->getRtVersion($archive);
 
@@ -217,43 +210,6 @@ class SchemaPlugin extends Plugin {
 	 */
 	function isFieldMixedType($fieldId) {
 		return false; // Default to single-use
-	}
-
-	/**
-	 * Index the given record.
-	 */
-	function indexRecord(&$archive, &$record, $entries) {
-		$searchDao =& DAORegistry::getDAO('SearchDAO');
-		$searchDao->deleteRecordObjects($record->getRecordId());
-
-		$fieldDao =& DAORegistry::getDAO('FieldDAO');
-		$schemaPlugin =& $record->getSchemaPlugin();
-		foreach ($entries as $fieldName => $entry) {
-			$fieldType = $this->getFieldType($fieldName);
-			foreach ($entry as $entryId => $info) {
-				$field =& $fieldDao->buildField($fieldName, $this->getName());
-				if (HookRegistry::call('SchemaPlugin::indexRecord', array(&$archive, &$record, &$field, &$info['value'], &$info['attributes']))) return true;
-				switch ($fieldType) {
-					case FIELD_TYPE_STRING:
-					case FIELD_TYPE_SELECT:
-						SearchIndex::updateTextIndex($record->getRecordId(), $field->getFieldId(), $info['value'], false);
-						break;
-					case FIELD_TYPE_DATE:
-						$date = $schemaPlugin->parseDate($fieldName, $info['value'], $info['attributes']);
-						$isMixedType = $schemaPlugin->isFieldMixedType($fieldName);
-						if ($date !== null) SearchIndex::updateDateIndex(
-							$record->getRecordId(),
-							$field->getFieldId(),
-							$date,
-							$isMixedType?$info['value']:null,
-							false
-						);
-						else SearchIndex::updateTextIndex($record->getRecordId(), $field->getFieldId(), $info['value'], $info['attributes'], false);
-						break;
-				}
-				unset($field);
-			}
-		}
 	}
 
 	/**

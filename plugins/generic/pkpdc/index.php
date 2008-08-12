@@ -13,8 +13,8 @@
  * $Id$
  */
 
-require_once('PKPDublinCorePlugin.inc.php');
+// require_once('PKPDublinCorePlugin.inc.php');
 
-return new PKPDublinCorePlugin();
+// DISABLED return new PKPDublinCorePlugin();
 
 ?>

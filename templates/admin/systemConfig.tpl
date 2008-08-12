@@ -8,9 +8,11 @@
  *
  * $Id$
  *}
+{strip}
 {assign var="pageTitle" value="admin.systemConfiguration"}
 {assign var="helpTopicId" value="admin.systemConfiguration"}
 {include file="common/header.tpl"}
+{/strip}
 
 <form method="post" action="{url op="saveSystemConfig"}">
 <p>{translate key="admin.editSystemConfigInstructions"}</p>

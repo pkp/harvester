@@ -9,10 +9,12 @@
  *
  * $Id$
  *}
+{strip}
 {assign var="pageTitle" value="installer.harvester2Installation"}
 {include file="common/header.tpl"}
+{/strip}
 
-{translate key="installer.installationComplete" indexUrl=$indexUrl}
+{translate key="installer.installationComplete" loginUrl=$loginUrl}
 
 {if $writeConfigFailed}
 {translate key="installer.overwriteConfigFileInstructions"}

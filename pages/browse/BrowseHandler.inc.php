@@ -31,36 +31,21 @@ class BrowseHandler extends Handler {
 
 		$archiveId = array_shift($args);
 		$archive = null;
-		if ($archiveId === 'all' || ($archive =& $archiveDao->getArchive($archiveId))) {
+		if (($archive =& $archiveDao->getArchive($archiveId)) || $archiveId == 'all') {
 			BrowseHandler::setupTemplate($archive, true);
 
 			$rangeInfo = Handler::getRangeInfo('records');
-			$sortId = Request::getUserVar('sortId');
+
+			/* $sortId = Request::getUserVar('sortId');
 			if ($sortId === 'none' || empty($sortId)) $sortId = null;
-			$templateMgr->assign('sortId', $sortId);
+			$templateMgr->assign('sortId', $sortId); */
 
 			// The user has chosen an archive or opted to browse all
 			$records =& $recordDao->getRecords(
+				$archive?(int)$archiveId:null,
 				true, // Only enabled archives
-				$archive?$archiveId:null, 
-				$sortId, 
 				$rangeInfo
 			);
-
-			if ($archive) {
-				$fieldDao =& DAORegistry::getDAO('FieldDAO');
-				$schemaPlugin =& $archive->getSchemaPlugin();
-				$sortableFieldNames = $schemaPlugin->getSortFields();
-				$sortableFields = array();
-				foreach ($sortableFieldNames as $name) {
-					$sortableFields[] =& $fieldDao->buildField($name, $schemaPlugin->getName());
-				}
-				$templateMgr->assign('sortableFields', $sortableFields);
-			} else {
-				$crosswalkDao =& DAORegistry::getDAO('CrosswalkDAO');
-				$sortableCrosswalks =& $crosswalkDao->getSortableCrosswalks();
-				$templateMgr->assign_by_ref('sortableCrosswalks', $sortableCrosswalks);
-			}
 
 			$templateMgr->assign_by_ref('records', $records);
 			$templateMgr->assign_by_ref('archive', $archive);

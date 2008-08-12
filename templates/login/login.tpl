@@ -8,8 +8,10 @@
  *
  * $Id$
  *}
+{strip}
 {assign var="pageTitle" value="user.login"}
 {include file="common/header.tpl"}
+{/strip}
 
 {if $error}
 	<span class="formError">{translate key="$error" reason=$reason}</span>

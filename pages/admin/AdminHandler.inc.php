@@ -71,40 +71,6 @@ class AdminHandler extends Handler {
 	}
 
 	//
-	// Crosswalks
-	//
-
-	function crosswalks() {
-		import('pages.admin.AdminCrosswalkHandler');
-		AdminCrosswalkHandler::crosswalks();
-	}
-
-	function editCrosswalk() {
-		import('pages.admin.AdminCrosswalkHandler');
-		AdminCrosswalkHandler::editCrosswalk();
-	}
-
-	function createCrosswalk() {
-		import('pages.admin.AdminCrosswalkHandler');
-		AdminCrosswalkHandler::createCrosswalk();
-	}
-
-	function resetCrosswalks() {
-		import('pages.admin.AdminCrosswalkHandler');
-		AdminCrosswalkHandler::resetCrosswalks();
-	}
-
-	function deleteCrosswalk($args) {
-		import('pages.admin.AdminCrosswalkHandler');
-		AdminCrosswalkHandler::deleteCrosswalk($args);
-	}
-
-	function updateCrosswalk($args) {
-		import('pages.admin.AdminCrosswalkHandler');
-		AdminCrosswalkHandler::updateCrosswalk($args);
-	}
-
-	//
 	// Archive Management
 	//
 

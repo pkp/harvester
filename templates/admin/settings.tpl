@@ -8,9 +8,11 @@
  *
  * $Id$
  *}
+{strip}
 {assign var="pageTitle" value="admin.siteSettings"}
 {assign var="helpTopicId" value="admin.siteSettings"}
 {include file="common/header.tpl"}
+{/strip}
 
 <form method="post" action="{url op="saveSettings"}" enctype="multipart/form-data">
 {include file="common/formErrors.tpl"}
@@ -18,17 +20,27 @@
 <h3>{translate key="admin.settings.general"}</h3>
 
 <table class="data" width="100%">
+{if count($formLocales) > 1}
+	<tr valign="top">
+		<td width="20%" class="label">{fieldLabel name="formLocale" key="form.formLanguage"}</td>
+		<td colspan="2" width="80%" class="value">
+			{url|assign:"settingsUrl" op="settings"}
+			{form_language_chooser form="settings" url=$settingsUrl}
+			<span class="instruct">{translate key="form.formLanguage.description"}</span>
+		</td>
+	</tr>
+{/if}
 	<tr valign="top">
 		<td width="20%" class="label">{fieldLabel name="title" key="admin.settings.siteTitle" required="true"}</td>
-		<td width="80%" class="value"><input type="text" id="title" name="title" value="{$title|escape}" size="40" maxlength="120" class="textField" /></td>
+		<td width="80%" class="value"><input type="text" id="title" name="title[{$formLocale|escape}]" value="{$title[$formLocale]|escape}" size="40" maxlength="120" class="textField" /></td>
 	</tr>
 	<tr valign="top">
 		<td class="label">{fieldLabel name="intro" key="admin.settings.introduction"}</td>
-		<td class="value"><textarea name="intro" id="intro" cols="40" rows="10" class="textArea">{$intro|escape}</textarea></td>
+		<td class="value"><textarea name="intro[{$formLocale|escape}]" id="intro" cols="40" rows="10" class="textArea">{$intro[$formLocale]|escape}</textarea></td>
 	</tr>
 	<tr valign="top">
 		<td class="label">{fieldLabel name="about" key="admin.settings.aboutDescription"}</td>
-		<td class="value"><textarea name="about" id="about" cols="40" rows="10" class="textArea">{$about|escape}</textarea></td>
+		<td class="value"><textarea name="about[{$formLocale|escape}]" id="about" cols="40" rows="10" class="textArea">{$about[$formLocale]|escape}</textarea></td>
 	</tr>
 	<tr valign="top">
 		<td width="20%" class="label">{fieldLabel for="customLogo" key="admin.settings.customLogo"}</td>
@@ -41,6 +53,10 @@
 				<img src="{$publicFilesDir}/{$customLogo.uploadName}" width="{$customLogo.width}" height="{$customLogo.height}" border="0" alt="" />
 {/if}
 		</td>
+	</tr>
+	<tr valign="top">
+		<td class="label">{fieldLabel name="minPasswordLength" key="admin.settings.minPasswordLength" required="true"}</td>
+		<td colspan="2" class="value"><input type="text" id="minPasswordLength" name="minPasswordLength" value="{$minPasswordLength|escape}" size="4" maxlength="2" class="textField" /> {translate key="admin.settings.passwordCharacters"}</td>
 	</tr>
 	<tr valign="top">
 		<td class="label">{translate key="admin.settings.styleSheet"}</td>
@@ -61,11 +77,11 @@
 <table class="data" width="100%">
 	<tr valign="top">
 		<td class="label">{fieldLabel name="contactName" key="admin.settings.contactName" required="true"}</td>
-		<td class="value"><input type="text" id="contactName" name="contactName" value="{$contactName|escape}" size="40" maxlength="90" class="textField" /></td>
+		<td class="value"><input type="text" id="contactName" name="contactName[{$formLocale|escape}]" value="{$contactName[$formLocale]|escape}" size="40" maxlength="90" class="textField" /></td>
 	</tr>
 	<tr valign="top">
 		<td class="label">{fieldLabel name="contactEmail" key="admin.settings.contactEmail" required="true"}</td>
-		<td class="value"><input type="text" id="contactEmail" name="contactEmail" value="{$contactEmail|escape}" size="40" maxlength="90" class="textField" /></td>
+		<td class="value"><input type="text" id="contactEmail" name="contactEmail[{$formLocale|escape}]" value="{$contactEmail[$formLocale]|escape}" size="40" maxlength="90" class="textField" /></td>
 	</tr>
 	<tr valign="top">
 		<td class="label">{translate key="admin.settings.options"}</td>

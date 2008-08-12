@@ -8,9 +8,16 @@
  *
  * $Id$
  *}
-{if !$pageTitleTranslated}{translate|assign:"pageTitleTranslated" key=$pageTitle}{/if}
-{if $pageCrumbTitle}{translate|assign:"pageCrumbTitleTranslated" key=$pageCrumbTitle}{elseif !$pageCrumbTitleTranslated}{assign var="pageCrumbTitleTranslated" value=$pageTitleTranslated}{/if}
-<?xml version="1.0" encoding="UTF-8"?>
+{strip}
+{if !$pageTitleTranslated}
+	{translate|assign:"pageTitleTranslated" key=$pageTitle}
+{/if}
+{if $pageCrumbTitle}
+	{translate|assign:"pageCrumbTitleTranslated" key=$pageCrumbTitle}
+{elseif !$pageCrumbTitleTranslated}
+	{assign var="pageCrumbTitleTranslated" value=$pageTitleTranslated}
+{/if}
+{/strip}<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -74,14 +81,21 @@
 	<ul class="menu">
 		<li><a href="{url page="index"}">{translate key="navigation.home"}</a></li>
 		<li><a href="{url page="about"}">{translate key="navigation.about"}</a></li>
-		{if $isAdmin}
+
+		{if $isUserLoggedIn}
 			<li><a href="{url page="user"}">{translate key="navigation.userHome"}</a></li>
-		{/if}
-		<li><a href="{url page="search"}">{translate key="navigation.search"}</a></li>
+		{/if}{* $isUserLoggedIn *}
+
 		<li><a href="{url page="browse"}">{translate key="navigation.browse"}</a></li>
+
+		{call_hook name="Templates::Common::Header::Navbar"}
+
 		{foreach from=$navMenuItems item=navItem}
-		<li><a href="{if $navItem.isAbsolute}{$navItem.url|escape}{else}{url page=""}{$navItem.url|escape}{/if}">{if $navItem.isLiteral}{$navItem.name|escape}{else}{translate key=$navItem.name}{/if}</a></li>
+			{if $navItem.url != '' && $navItem.name != ''}
+				<li><a href="{if $navItem.isAbsolute}{$navItem.url|escape}{else}{url page=""}{$navItem.url|escape}{/if}">{if $navItem.isLiteral}{$navItem.name|escape}{else}{translate key=$navItem.name}{/if}</a></li>
+			{/if}
 		{/foreach}
+
 		<li><a href="javascript:openHelp('{if $helpTopicId}{get_help_id key="$helpTopicId" url="true"}{else}{url page="help"}{/if}')">{translate key="navigation.help"}</a></li>
 	</ul>
 </div>

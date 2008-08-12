@@ -71,6 +71,58 @@ class ArchiveForm extends Form {
 	}
 
 	/**
+	 * Deletes an archive image.
+	 */
+	function deleteArchiveImage() {
+		$archive =& $this->archive;
+		$archiveImage = $archive->getSetting('archiveImage');
+		if (!$archiveImage) return false;
+
+		import('file.PublicFileManager');
+		$fileManager =& new PublicFileManager();
+		if ($fileManager->removeSiteFile($archiveImage['uploadName'])) {
+			return $archive->updateSetting('archiveImage', null);
+		} else {
+			return false;
+		}
+	}
+
+	function uploadArchiveImage() {
+		import('file.PublicFileManager');
+		$fileManager =& new PublicFileManager();
+
+		$archive =& $this->archive;
+
+		$type = $fileManager->getUploadedFileType('archiveImage');
+		$extension = $fileManager->getImageExtension($type);
+		if (!$extension) return false;
+
+		$uploadName = 'archiveImage-' . (int) $archive->getArchiveId() . $extension;
+		if (!$fileManager->uploadSiteFile('archiveImage', $uploadName)) return false;
+
+		$filePath = $fileManager->getSiteFilesPath();
+		list($width, $height) = getimagesize($filePath . '/' . $uploadName);
+
+		if (!Validation::isSiteAdmin() && ($width > 150 || $height > 150 || $width <= 0 || $height <= 0)) {
+			$archiveSetting = null;
+			$archive->updateSetting('archiveImage', $archiveSetting);
+			$fileManager->removeSiteFile($filePath);
+			return false;
+		}
+
+		$archiveSetting = array(
+			'name' => $fileManager->getUploadedFileName('archiveImage'),
+			'uploadName' => $uploadName,
+			'width' => $width,
+			'height' => $height,
+			'dateUploaded' => Core::getCurrentDate()
+		);
+
+		$archive->updateSetting('archiveImage', $archiveSetting);
+		return true;
+	}
+
+	/**
 	 * Display the form.
 	 */
 	function display() {
@@ -85,6 +137,7 @@ class ArchiveForm extends Form {
 				$this->setData('captchaId', $captcha->getCaptchaId());
 			}
 		}
+		if ($this->archive) $templateMgr->assign('archiveImage', $this->archive->getSetting('archiveImage'));
 		$templateMgr->assign_by_ref('harvesters', PluginRegistry::getPlugins('harvesters'));
 		HookRegistry::call('ArchiveForm::display', array(&$this, &$templateMgr, $this->harvesterPluginName));
 		parent::display();

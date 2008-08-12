@@ -11,12 +11,14 @@
  *
  * PKP extender for Dublin Core schema plugin
  *
- * $Id$
  */
 
-import('plugins.Plugin');
+// $Id$
 
-class PKPDublinCorePlugin extends Plugin {
+
+import('plugins.GenericPlugin');
+
+class PKPDublinCorePlugin extends GenericPlugin {
 	/** @var $currentRecord object */
 	var $currentRecord;
 
@@ -47,7 +49,6 @@ class PKPDublinCorePlugin extends Plugin {
 				HookRegistry::register('ArchiveForm::execute', array(&$this, '_saveAdditionalFormData'));
 			}
 			$this->currentRecord = null;
-			$this->fieldDao =& DAORegistry::getDAO('FieldDAO');
 			$this->recordDao =& DAORegistry::getDAO('RecordDAO');
 		}
 		return $success;

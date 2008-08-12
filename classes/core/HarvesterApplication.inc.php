@@ -67,16 +67,12 @@ class HarvesterApplication extends PKPApplication {
 		return array_merge(parent::getDAOMap(), array(
 			'ArchiveDAO' => 'archive.ArchiveDAO',
 			'ArchiveSettingsDAO' => 'archive.ArchiveSettingsDAO',
-			'CrosswalkDAO' => 'field.CrosswalkDAO',
-			'EntryDAO' => 'entry.EntryDAO',
 			'EmailTemplateDAO' => 'mail.EmailTemplateDAO',
-			'FieldDAO' => 'field.FieldDAO',
 			'PluginSettingsDAO' => 'plugins.PluginSettingsDAO',
 			'RecordDAO' => 'record.RecordDAO',
 			'RoleDAO' => 'security.RoleDAO',
 			'RTDAO' => 'rt.harvester2.RTDAO',
 			'SchemaDAO' => 'schema.SchemaDAO',
-			'SearchDAO' => 'search.SearchDAO',
 			'UserDAO' => 'user.UserDAO',
 			'UserSettingsDAO' => 'user.UserSettingsDAO'
 		));

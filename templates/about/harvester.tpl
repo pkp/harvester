@@ -8,8 +8,10 @@
  *
  * $Id$
  *}
+{strip}
 {assign var="pageTitle" value="about.harvester"}
 {include file="common/header.tpl"}
+{/strip}
 
 {translate|nl2br key="about.harvester.description"}
 

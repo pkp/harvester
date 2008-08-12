@@ -234,6 +234,23 @@ input.defaultButton {
 }
 
 
+#archiveImage img {
+	display: block;
+	margin: 0 auto;
+	border: 0;
+	text-align: center;
+}
+
+.archiveImage img {
+	margin: 0 auto;
+	border: 0;
+	float: left;
+	width: 100px;
+	margin: 1em 1em 1em 0;
+	text-align: center;
+}
+
+
 /**
  * Navigation bar
  */

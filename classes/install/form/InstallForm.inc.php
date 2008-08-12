@@ -194,6 +194,7 @@ class InstallForm extends Form {
 				$templateMgr->assign(array('writeConfigFailed' => true, 'configFileContents' => $installer->getConfigContents()));
 			}
 
+			$templateMgr->assign('loginUrl', Request::url('login'));
 			$templateMgr->display('install/installComplete.tpl');
 
 		} else {

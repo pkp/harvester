@@ -32,7 +32,7 @@ class Schema extends DataObject {
 	 * Get schema plugin name for schema
 	 * @return string
 	 */
-	 function getPluginName() {
+	function getPluginName() {
 	 	return $this->getData('schema_plugin');
 	}
 

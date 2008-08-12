@@ -8,9 +8,8 @@
  *
  * $Id$
  *}
-<span class="title">{foreach name=title from=$entries.title item=entry}{$entry.value|escape|truncate:90|default:"&mdash"}{if !$smarty.foreach.title.last}<br/>{/if}{/foreach}</span><br />
+<span class="title">{$record->getTitle()|escape|truncate:90|default:"&mdash"}</span><br />
 <div class="recordContents">
-	{foreach from=$entries.creator item=creator}<span class="author">{$creator.value|escape|default:"&mdash;"}</span><br />{/foreach}
-	{foreach name=date from=$entries.date item=entry}{$entry.value|escape}{/foreach}<br />
-	<a href="{url page="record" op="view" path=$record->getRecordId()}" class="action">{translate key="browse.viewRecord"}</a>{if $record->getUrl($entries)|assign:"recordUrl":true}&nbsp;|&nbsp;<a href="{$recordUrl}" class="action">{translate key="browse.viewOriginal"}</a>{/if}
+	<span class="author">{$record->getAuthorString()|escape|default:"&mdash;"}</span><br />
+	<a href="{url page="record" op="view" path=$record->getRecordId()}" class="action">{translate key="browse.viewRecord"}</a>{if $record->getUrl()|assign:"recordUrl":true}&nbsp;|&nbsp;<a href="{$recordUrl}" class="action">{translate key="browse.viewOriginal"}</a>{/if}
 </div>

@@ -8,8 +8,10 @@
  *
  * $Id$
  *}
+{strip}
 {assign var="pageTitle" value="record.viewRecord"}
 {include file="common/header.tpl"}
+{/strip}
 
 <h3>{foreach from=$entries.245 item=entry}{$entry.value|escape}{/foreach}</h3>
 <h4>{$archive->getTitle()|escape}</h4>

@@ -8,8 +8,10 @@
  *
  * $Id$
  *}
+{strip}
 {assign var="pageTitle" value="record.viewRecord"}
 {include file="common/header.tpl"}
+{/strip}
 
 <h3>{$record->getTitle()|escape}</h3>
 <h4>{$archive->getTitle()|escape}</h4>
@@ -27,15 +29,15 @@
 	<tr>
 		<td colspan="3" class="headseparator">&nbsp;</td>
 	</tr>
-	{foreach from=$entries item=entry key=name name=entries}
+	{foreach from=$record->getParsedContents() item=entry key=name name=entries}
 		<tr valign="top">
 			<td>{translate key="plugins.schemas.dc.fields.$name.name"}</td>
 			<td>
 				{foreach from=$entry item=value}
 					{if $name == 'identifier'}
-						<a href="{$value.value|escape}">{$value.value|escape|default:"&mdash;"}</a>
+						<a href="{$value|escape}">{$value|escape|default:"&mdash;"}</a>
 					{else}
-						{$value.value|escape|default:"&mdash;"}
+						{$value|escape|default:"&mdash;"}
 					{/if}<br/>
 				{/foreach}
 			</td>

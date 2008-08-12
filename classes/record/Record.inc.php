@@ -31,7 +31,7 @@ class Record extends DataObject {
 	 * Get identifier for record
 	 * @return string
 	 */
-	 function getIdentifier() {
+	function getIdentifier() {
 	 	return $this->getData('identifier');
 	}
 
@@ -44,10 +44,42 @@ class Record extends DataObject {
 	}
 
 	/**
+	 * Get contents for record
+	 * @return string
+	 */
+	function getContents() {
+	 	return $this->getData('contents');
+	}
+
+	/**
+	 * Set contents for record
+	 * @param $contents string
+	 */
+	function setContents($contents) {
+		return $this->setData('contents',$contents);
+	}
+
+	/**
+	 * Get parsed contents for record
+	 * @return object
+	 */
+	function getParsedContents() {
+	 	return $this->getData('parsedContents');
+	}
+
+	/**
+	 * Set parsed for record
+	 * @param $parsedContents object
+	 */
+	function setParsedContents($parsedContents) {
+		return $this->setData('parsedContents',$parsedContents);
+	}
+
+	/**
 	 * Get datestamp of record
 	 * @return string
 	 */
-	 function getDatestamp() {
+	function getDatestamp() {
 	 	return $this->getData('datestamp');
 	}
 
@@ -126,14 +158,9 @@ class Record extends DataObject {
 		$plugin->displayRecord($this);
 	}
 
-	function getEntries() {
-		$recordDao =& DAORegistry::getDAO('RecordDAO');
-		return $recordDao->getEntries($this->getRecordId());
-	}
-
-	function getUrl($entries) {
+	function getUrl() {
 		$plugin =& $this->getSchemaPlugin();
-		return $plugin->getUrl($this, $entries);
+		return $plugin->getUrl($this);
 	}
 
 	function &getSchemaPlugin() {
@@ -144,17 +171,17 @@ class Record extends DataObject {
 
 	function getTitle($entries = null) {
 		$plugin =& $this->getSchemaPlugin();
-		return $plugin->getTitle($this, $entries);
+		return $plugin->getTitle($this);
 	}
 
 	function getAuthors($entries = null) {
 		$plugin =& $this->getSchemaPlugin();
-		return $plugin->getAuthors($this, $entries);
+		return $plugin->getAuthors($this);
 	}
 
 	function getAuthorString($entries = null) {
 		$plugin =& $this->getSchemaPlugin();
-		return $plugin->getAuthorString($this, $entries);
+		return $plugin->getAuthorString($this);
 	}
 }
 

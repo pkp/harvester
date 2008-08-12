@@ -11,12 +11,14 @@
  *
  * IP Banning plugin; bans all access by IP
  *
- * $Id$
  */
 
-import('plugins.Plugin');
+// $Id$
 
-class IPBanPlugin extends Plugin {
+
+import('plugins.GenericPlugin');
+
+class IPBanPlugin extends GenericPlugin {
 	/**
 	 * Register the plugin.
 	 */

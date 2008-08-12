@@ -45,12 +45,6 @@ class DublinCorePlugin extends SchemaPlugin {
 		return Locale::translate('plugins.schemas.dc.description');
 	}
 
-	function &getXMLHandler(&$harvester) {
-		$this->import('DublinCoreXMLHandler');
-		$handler =& new DublinCoreXMLHandler($harvester);
-		return $handler;
-	}
-
 	function getFieldList() {
 		static $fieldList;
 		if (!isset($fieldList)) {
@@ -101,11 +95,11 @@ class DublinCorePlugin extends SchemaPlugin {
 	 * @param $entries array optional
 	 * @return string
 	 */
-	function getUrl(&$record, $entries = null) {
-		if ($entries === null) $entries = $record->getEntries();
-		if (is_array($entries['identifier'])) foreach ($entries['identifier'] as $entry) {
-			if (preg_match('/^[a-z]+:\/\//', $entry['value'])) {
-				return $entry['value'];
+	function getUrl(&$record) {
+		$parsedContents =& $record->getParsedContents();
+		if (isset($parsedContents['identifier'])) {
+			foreach ((array) $parsedContents['identifier'] as $url) {
+				if (preg_match('/^[a-z]+:\/\//', $url)) return $url;
 			}
 		}
 		return null;
@@ -117,13 +111,12 @@ class DublinCorePlugin extends SchemaPlugin {
 	 * @param $entries array
 	 * @return array
 	 */
-	function getAuthors(&$record, $entries = null) {
-		if ($entries === null) $entries = $record->getEntries();
-		$returner = array();
-		if (is_array($entries['creator'])) foreach ($entries['creator'] as $entry) {
-			$returner[] = $entry['value'];
+	function getAuthors(&$record) {
+		$parsedContents =& $record->getParsedContents();
+		if (isset($parsedContents['creator'])) {
+			return $parsedContents['creator'];
 		}
-		return $returner;
+		return null;
 	}
 
 	/**
@@ -132,13 +125,12 @@ class DublinCorePlugin extends SchemaPlugin {
 	 * @param $entries array
 	 * @return string
 	 */
-	function getTitle(&$record, $entries = null) {
-		if ($entries === null) $entries = $record->getEntries();
-		$returner = null;
-		if (is_array($entries['title'])) foreach ($entries['title'] as $entry) {
-			return $entry['value'];
+	function getTitle(&$record) {
+		$parsedContents =& $record->getParsedContents();
+		if (isset($parsedContents['title'])) {
+			return array_shift($parsedContents['title']);
 		}
-		return $returner;
+		return null;
 	}
 
 	function getFieldType($fieldName) {
@@ -154,6 +146,27 @@ class DublinCorePlugin extends SchemaPlugin {
 				break;
 		}
 		HookRegistry::call('DublinCorePlugin::getFieldType', array(&$this, $fieldName, &$returner));
+		return $returner;
+	}
+
+	/**
+	 * Parse a record's contents into an object
+	 * @param $contents string
+	 * @return object
+	 */
+	function &parseContents(&$contents) {
+		$xmlParser =& new XMLParser();
+		$result =& $xmlParser->parseText($contents);
+
+		$returner = array();
+		foreach ($result->getChildren() as $child) {
+			$name = $child->getName();
+			$value = $child->getValue();
+			if (String::substr($name, 0, 3) == 'dc:') $name = String::substr($name, 3);
+			$returner[$name][] = $value;
+		}
+
+		unset($result, $xmlParser);
 		return $returner;
 	}
 }

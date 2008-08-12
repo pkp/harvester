@@ -121,75 +121,8 @@
 		</field>
 		<field name="identifier" type="C2" size="255"/>
 		<field name="datestamp" type="T"/>
-	</table>
-
-	<!--
-	  *
-	  * TABLE crosswalks
-	  *
-	  -->
-	<table name="crosswalks">
-		<field name="crosswalk_id" type="I4">
-			<KEY/>
-			<AUTOINCREMENT/>
-		</field>
-		<field name="public_crosswalk_id" type="C2" size="40"/>
-		<field name="name" type="C2" size="60">
-			<NOTNULL/>
-		</field>
-		<field name="type" type="I4">
-			<NOTNULL/>
-		</field>
-		<field name="sortable" type="I4">
-			<NOTNULL/>
-			<DEFAULT VALUE="0"/>
-		</field>
-		<field name="seq" type="I4">
-			<KEY/>
-			<DEFAULT VALUE="0"/>
-		</field>
-		<field name="description" type="C2" size="255"/>
-	</table>
-
-	<!--
-	  *
-	  * TABLE crosswalk_fields
-	  *
-	  -->
-	<table name="crosswalk_fields">
-		<field name="crosswalk_id" type="I4">
-			<KEY/>
-		</field>
-		<field name="raw_field_id" type="I4">
-			<KEY/>
-		</field>
-		<field name="sortable" type="I4">
-			<NOTNULL/>
-			<DEFAULT VALUE="0"/>
-		</field>
-	</table>
-
-	<!--
-	  *
-	  * TABLE fields
-	  *
-	  -->
-	<table name="raw_fields">
-		<field name="raw_field_id" type="I4">
-			<KEY/>
-			<AUTOINCREMENT/>
-		</field>
-		<field name="name" type="C2" size="60">
-			<NOTNULL/>
-		</field>
-		<field name="schema_plugin_id" type="I4">
-			<NOTNULL/>
-		</field>
-		<index name="raw_field_symbolic_name">
-			<col>name</col>
-			<col>schema_plugin_id</col>
-			<UNIQUE/>
-		</index>
+		<field name="contents" type="X"/>
+		<field name="parsed_contents" type="X"/>
 	</table>
 
 	<!--
@@ -209,49 +142,6 @@
 			<col>schema_plugin</col>
 			<UNIQUE/>
 		</index>
-	</table>
-
-	<!--
-	  *
-	  * TABLE entries
-	  *
-	  -->
-	<table name="entries">
-		<field name="entry_id" type="I4">
-			<KEY/>
-			<AUTOINCREMENT/>
-		</field>
-		<field name="record_id" type="I4">
-			<NOTNULL/>
-		</field>
-		<field name="raw_field_id" type="I4">
-			<NOTNULL/>
-		</field>
-		<field name="value" type="X"/>
-		<field name="parent_entry_id" type="I4" />
-		<index name="entry_unique_index">
-			<col>record_id</col>
-			<col>raw_field_id</col>
-		</index>
-		<index name="entry_value">
-			<col>value(20)</col>
-			<col>raw_field_id</col>
-		</index>
-	</table>
-
-	<!--
-	  *
-	  * TABLE entry_attributes
-	  *
-	  -->
-	<table name="entry_attributes">
-		<field name="entry_id" type="I4">
-			<KEY/>
-		</field>
-		<field name="name" type="C2" size="40">
-			<KEY/>
-		</field>
-		<field name="value" type="X"/>
 	</table>
 
 	<!--
@@ -359,72 +249,6 @@
 		<descr>Default data for email templates.</descr>
 	</table>
 	
-	<!--
-	 *
-	 * TABLE search_keyword_list
-	 *
-	 -->
-	<table name="search_keyword_list">
-		<field name="keyword_id" type="I8">
-			<KEY/>
-			<AUTOINCREMENT/>
-		</field>
-		<field name="keyword_text" type="C2" size="60">
-			<NOTNULL/>
-		</field>
-		<descr>List of all keywords.</descr>
-		<index name="search_keyword_text">
-			<col>keyword_text</col>
-			<UNIQUE/>
-		</index>
-	</table>
-	
-	<!--
-	 *
-	 * TABLE search_objects
-	 *
-	 -->
-	<table name="search_objects">
-		<field name="object_id" type="I8">
-			<KEY/>
-			<AUTOINCREMENT/>
-		</field>
-		<field name="record_id" type="I8">
-			<NOTNULL/>
-		</field>
-		<field name="raw_field_id" type="I8">
-			<NOTNULL/>
-		</field>
-		<field name="object_time" type="T"/>
-		<descr>Indexed objects.</descr>
-		<index name="search_object_record_time">
-			<col>record_id</col>
-			<col>object_time</col>
-		</index>
-	</table>
-	
-	<!--
-	 *
-	 * TABLE search_object_keywords
-	 *
-	 -->
-	<table name="search_object_keywords">
-		<field name="object_id" type="I8">
-			<KEY/>
-		</field>
-		<field name="keyword_id" type="I8">
-			<NOTNULL/>
-		</field>
-		<field name="pos" type="I4">
-			<KEY/>
-			<descr>Word position of the keyword in the object.</descr>
-		</field>
-		<descr>Keyword occurrences for each indexed object.</descr>
-		<index name="search_object_keywords_keyword_id">
-			<col>keyword_id</col>
-		</index>
-	</table>
-
 	<!--
 	 *
 	 * TABLE rt_versions

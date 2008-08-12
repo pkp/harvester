@@ -35,7 +35,7 @@ class Archive extends DataObject {
 	 * Get title of archive
 	 * @return string
 	 */
-	 function getTitle() {
+	function getTitle() {
 	 	return $this->getData('title');
 	}
 
@@ -51,8 +51,8 @@ class Archive extends DataObject {
 	 * Get enabled/disabled state of archive
 	 * @return boolean
 	 */
-	 function getEnabled() {
-	 	return $this->getData('enabled')?1:0;
+	function getEnabled() {
+	 	return $this->getData('enabled');
 	}
 
 	/**
@@ -60,14 +60,14 @@ class Archive extends DataObject {
 	 * @param $enabled boolean
 	 */
 	function setEnabled($enabled) {
-		return $this->setData('enabled',$enabled?1:0);
+		return $this->setData('enabled',$enabled);
 	}
 
 	/**
 	 * Get public ID of archive
 	 * @return string
 	 */
-	 function getPublicArchiveId() {
+	function getPublicArchiveId() {
 	 	return $this->getData('publicArchiveId');
 	}
 
@@ -83,7 +83,7 @@ class Archive extends DataObject {
 	 * Get name of harvester plugin
 	 * @return string
 	 */
-	 function getHarvesterPluginName() {
+	function getHarvesterPluginName() {
 	 	return $this->getData('harvesterPlugin');
 	}
 
@@ -112,7 +112,7 @@ class Archive extends DataObject {
 	 * Get url of archive
 	 * @return string
 	 */
-	 function getUrl() {
+	function getUrl() {
 	 	return $this->getData('url');
 	}
 
@@ -128,7 +128,7 @@ class Archive extends DataObject {
 	 * Get description of archive
 	 * @return string
 	 */
-	 function getDescription() {
+	function getDescription() {
 	 	return $this->getData('description');
 	}
 

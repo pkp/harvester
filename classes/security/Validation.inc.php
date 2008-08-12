@@ -171,11 +171,13 @@ class Validation {
 	 * @return boolean
 	 */
 	function isAuthorized($roleId) {
-		$sessionManager = &SessionManager::getManager();
-		$session = &$sessionManager->getUserSession();
-		$user = &$session->getUser();
+		$sessionManager =& SessionManager::getManager();
+		$session =& $sessionManager->getUserSession();
 
-		$roleDao = &DAORegistry::getDAO('RoleDAO');
+		$user =& $session->getUser();
+		if (!$user) return false;
+
+		$roleDao =& DAORegistry::getDAO('RoleDAO');
 		return $roleDao->roleExists($user->getUserId(), $roleId);
 	}
 

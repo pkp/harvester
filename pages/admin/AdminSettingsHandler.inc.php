@@ -74,7 +74,7 @@ class AdminSettingsHandler extends AdminHandler {
 				'currentUrl' => 'admin/settings',
 				'pageTitle' => 'admin.siteSettings',
 				'message' => 'common.changesSaved',
-				'backLink' => Request::getPageUrl() . '/admin',
+				'backLink' => Request::url('admin'),
 				'backLinkLabel' => 'admin.siteAdmin'
 			));
 			$templateMgr->display('common/message.tpl');

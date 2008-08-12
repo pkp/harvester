@@ -8,8 +8,10 @@
  *
  * $Id$
  *}
+{strip}
 {assign var="pageTitle" value="admin.plugins"}
 {include file="common/header.tpl"}
+{/strip}
 
 {foreach from=$plugins item=plugin}
 	{if $plugin->getCategory() != $category}
@@ -21,7 +23,7 @@
 		{assign var=notFirst value=1}
 	{/if}
 	<li>
-		<strong>{$plugin->getDisplayName()|escape}</strong>:&nbsp;{$plugin->getDescription()|escape}<br/>
+		<strong>{$plugin->getDisplayName()|escape}</strong>:&nbsp;{$plugin->getDescription()}<br/>
 		{assign var=managementVerbs value=$plugin->getManagementVerbs()}
 		{if $managementVerbs}
 			{foreach from=$managementVerbs item=verb}

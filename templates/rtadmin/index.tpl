@@ -8,8 +8,10 @@
  *
  * $Id$
  *}
+{strip}
 {assign var="pageTitle" value="admin.rtAdmin"}
 {include file="common/header.tpl"}
+{/strip}
 
 <h3>{translate key="rt.admin.status"}</h3>
 <form action="{url op="selectVersion" path=$archiveId}" method="post">

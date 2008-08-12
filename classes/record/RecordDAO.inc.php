@@ -49,62 +49,23 @@ class RecordDAO extends DAO {
 	}
 
 	/**
-	 * Get the entries for this record.
+	 * Retrieve records by archive.
+	 * @param $recordId int
+	 * @return Record
 	 */
-	function getEntries($recordId) {
-		$result = &$this->retrieve(
-			'SELECT e.*, f.name AS field_name, a.name AS attribute_name, a.value AS attribute_value FROM raw_fields f, entries e LEFT JOIN entry_attributes a ON a.entry_id = e.entry_id WHERE f.raw_field_id = e.raw_field_id AND e.record_id = ? ORDER BY e.entry_id ASC', $recordId
+	function &getRecords($archiveId, $enabledOnly, $rangeInfo) {
+		$params = array();
+		if ($archiveId !== null) $params[] = (int) $archiveId;
+		$result =& $this->retrieveRange(
+			'SELECT r.* FROM records r, archives a WHERE a.archive_id = r.archive_id' .
+			($enabledOnly?' AND a.enabled = 1':'') .
+			($archiveId !== null?' AND a.archive_id = ?':''),
+			$params,
+			$rangeInfo
 		);
 
-		$entryId = null;
-
-		$returner = array();
-		while (!$result->EOF) {
-			$row = &$result->getRowAssoc(false);
-
-			if ($entryId != $row['entry_id']) {
-				$entryId = $row['entry_id'];
-
-				$fieldName = $row['field_name'];
-				$returner[$fieldName][$entryId] = array(
-					'attributes' => array(),
-					'value' => $row['value'],
-					'parent_entry_id' => $row['parent_entry_id']
-				);
-			}
-			if (!empty($row['attribute_name'])) {
-				$returner[$row['field_name']][$row['entry_id']]['attributes'][$row['attribute_name']] = $row['attribute_value'];
-			}
-			$result->MoveNext();
-		}
-		$result->Close();
-		unset($result);
-
+		$returner =& new DAOResultFactory($result, $this, '_returnRecordFromRow');
 		return $returner;
-	}
-
-	function deleteEntriesByRecordId($recordId) {
-		switch ($this->getDriver()) {
-			case 'mysql':
-				$this->update('DELETE FROM entry_attributes USING entries, entry_attributes WHERE entries.record_id = ? AND entry_attributes.entry_id = entries.entry_id', $recordId);
-				break;
-			default:
-				$result = &$this->retrieve(
-					'SELECT entry_id FROM entries WHERE record_id = ?',
-					$recordId
-				);
-				while (!$result->EOF) {
-					$row = &$result->getRowAssoc(false);
-					$this->update('DELETE FROM entry_attributes WHERE entry_id = ?', $row['entry_id']);
-					$this->update('DELETE FROM entries WHERE entry_id = ?', $row['entry_id']);
-					$result->MoveNext();
-				}
-				$result->Close();
-				unset($result);
-
-				break;
-		}
-		return $this->update('DELETE FROM entries WHERE record_id = ?', $recordId);
 	}
 
 	/**
@@ -138,38 +99,12 @@ class RecordDAO extends DAO {
 		$record->setSchemaId($row['schema_plugin_id']);
 		$record->setIdentifier($row['identifier']);
 		$record->setDatestamp($row['datestamp']);
+		$record->setContents($row['contents']);
+		$record->setParsedContents(unserialize($row['parsed_contents']));
 
 		HookRegistry::call('RecordDAO::_returnRecordFromRow', array(&$record, &$row));
 
 		return $record;
-	}
-
-	/**
-	 * Insert an entry for the given field of the given record, with
-	 * the supplied type and value.
-	 * @param $recordId int
-	 * @param $fieldId int
-	 * @param $value string
-	 * @param $attributes array optional
-	 * @param $parentEntryId int optional
-	 * @return int ID of inserted entry
-	 */
-	function insertEntry($recordId, $fieldId, $value, $attributes = array(), $parentEntryId = null) {
-		$this->update('INSERT INTO entries (record_id, raw_field_id, value, parent_entry_id) VALUES (?, ?, ?, ?)', array($recordId, $fieldId, $value, $parentEntryId));
-		$entryId = $this->getInsertId('entries', 'entry_id');
-		foreach ($attributes as $name => $value) {
-			$this->insertEntryAttribute($entryId, $name, $value);
-		}
-		return $entryId;
-	}
-
-	/**
-	 * Insert an entry attribute.
-	 * @param $entryId int
-	 * @param $value string
-	 */
-	function insertEntryAttribute($entryId, $name, $value) {
-		$this->update('INSERT INTO entry_attributes (entry_id, name, value) VALUES (?, ?, ?)', array($entryId, $name, $value));
 	}
 
 	/**
@@ -179,15 +114,17 @@ class RecordDAO extends DAO {
 	function insertRecord(&$record) {
 		$this->update(
 			sprintf('INSERT INTO records
-				(archive_id, schema_plugin_id, identifier, datestamp)
+				(archive_id, schema_plugin_id, identifier, datestamp, contents, parsed_contents)
 				VALUES
-				(?, ?, ?, %s)',
+				(?, ?, ?, %s, ?, ?)',
 				$this->datetimeToDB($record->getDatestamp())
 			),
 			array(
 				$record->getArchiveId(),
 				$record->getSchemaId(),
-				$record->getIdentifier()
+				$record->getIdentifier(),
+				$record->getContents(),
+				serialize($record->getParsedContents())
 			)
 		);
 
@@ -206,7 +143,9 @@ class RecordDAO extends DAO {
 					archive_id = ?,
 					schema_plugin_id = ?,
 					identifier = ?,
-					datestamp = %s
+					datestamp = %s,
+					contents = ?,
+					parsed_contents = ?
 				WHERE record_id = ?',
 				$this->datetimeToDB($record->getDatestamp())
 			),
@@ -214,6 +153,8 @@ class RecordDAO extends DAO {
 				$record->getArchiveId(),
 				$record->getSchemaId(),
 				$record->getIdentifier(),
+				$record->getContents(),
+				serialize($record->getParsedContents()),
 				$record->getRecordId()
 			)
 		);
@@ -238,16 +179,12 @@ class RecordDAO extends DAO {
 				// Using one or two DELETE FROM ... WHERE ...
 				// queries is too slow (at least for 5.0.15).
 				$this->update('DELETE FROM records WHERE archive_id = ?', $archiveId);
-				$this->update('DELETE entries FROM entries LEFT JOIN records ON (entries.record_id = records.record_id) WHERE records.record_id IS NULL');
 				$this->update('DELETE search_objects FROM search_objects LEFT JOIN records ON (search_objects.record_id = records.record_id) WHERE records.record_id IS NULL');
-				$this->update('DELETE entry_attributes FROM entry_attributes LEFT JOIN entries ON (entry_attributes.entry_id = entries.entry_id) WHERE entries.entry_id IS NULL');
 				$this->update('DELETE search_object_keywords FROM search_object_keywords LEFT JOIN search_objects ON (search_object_keywords.object_id = search_objects.object_id) WHERE search_objects.object_id IS NULL');
 				break;
 			case 'postgres':
 				$this->update('DELETE FROM search_object_keywords USING search_objects, records WHERE records.archive_id = ? AND records.record_id = search_objects.record_id AND search_object_keywords.object_id = search_objects.object_id', $archiveId);
 				$this->update('DELETE FROM search_objects USING records WHERE records.archive_id = ? AND records.record_id = search_objects.record_id', $archiveId);
-				$this->update('DELETE FROM entry_attributes USING entries, records WHERE records.archive_id = ? AND records.record_id = entries.record_id AND entry_attributes.entry_id = entries.entry_id', $archiveId);
-				$this->update('DELETE FROM entries USING records WHERE records.archive_id = ? AND records.record_id = entries.record_id', $archiveId);
 				$this->update('DELETE FROM records WHERE archive_id = ?', $archiveId);
 				break;
 			default:
@@ -274,83 +211,6 @@ class RecordDAO extends DAO {
 		return $this->update(
 			'DELETE FROM records WHERE record_id = ?', $recordId
 		);
-	}
-
-	/**
-	 * Retrieve all records in an archive.
-	 * @param $onlyEnabled boolean Whether or not to only return records from enabled archives
-	 * @param $archiveId int ID of archive to browse; null to return all.
-	 * @param $sort array ID to sort by; if archive specified, use field ID;
-	 *                    Otherwise use crosswalk ID.
-	 * @param $rangeInfo object optional
-	 * @return DAOResultFactory containing matching records
-	 */
-	function &getRecords($onlyEnabled = true, $archiveId = null, $sort = null, $rangeInfo = null) {
-		$params = array();
-
-		$fieldDao =& DAORegistry::getDAO('FieldDAO');
-		$crosswalkDao =& DAORegistry::getDAO('CrosswalkDAO');
-
-		$sortJoin = '';
-		$orderBy = '';
-		$orderSelect = '';
-
-		if ($sort !== null) {
-			if ($archiveId !== null) {
-				$field =& $fieldDao->getFieldById($sort);
-				if (
-					$field &&
-					($schemaPlugin =& $field->getSchemaPlugin()) &&
-					in_array($field->getName(), $schemaPlugin->getSortFields())
-				) $fieldIds = array($sort);
-				$isDate = $field->getType() == FIELD_TYPE_DATE;
-				unset($field);
-			} else {
-				$crosswalk =& $crosswalkDao->getCrosswalkById($sort);
-				$fieldIds = $crosswalkDao->getSortableFieldIds($sort);
-				$isDate = $crosswalk && ($crosswalk->getType() == FIELD_TYPE_DATE);
-			}
-
-			if (!empty($fieldIds)) {
-				if (!$isDate) {
-					$sortJoin = ' LEFT JOIN entries e ON (e.record_id = r.record_id AND (e.raw_field_id = ?';
-					$params[] = array_shift($fieldIds);
-					foreach ($fieldIds as $fieldId) {
-						$sortJoin .= ' OR e.raw_field_id = ?';
-						$params[] = $fieldId;
-					}
-					$sortJoin .= '))';
-					$orderBy = 'e.value';
-					$orderSelect = 'e.value';
-				} else {
-					$sortJoin = ' LEFT JOIN search_objects o ON (o.record_id = r.record_id AND (o.raw_field_id = ?';
-					$params[] = array_shift($fieldIds);
-					foreach ($fieldIds as $fieldId) {
-						$sortJoin .= ' OR o.raw_field_id = ?';
-						$params[] = $fieldId;
-					}
-					$sortJoin .= '))';
-					$orderBy = 'o.object_time DESC';
-					$orderSelect = 'o.object_time';
-				}
-			}
-		}
-
-		if (isset($archiveId)) $params[] = $archiveId;
-
-		$result = &$this->retrieveRange(
-			'SELECT r.*' . (empty($orderSelect)?'':', ' . $orderSelect) . ' FROM records r' . $sortJoin .
-			($onlyEnabled?' LEFT JOIN archives a ON (r.archive_id = a.archive_id)':'') .
-			((isset($archiveId) || $onlyEnabled)?' WHERE 1=1':'') .
-			(isset($archiveId)? ' AND r.archive_id = ? ':'') .
-			($onlyEnabled?' AND a.enabled = 1':'') .
-			(empty($orderBy)?'':" ORDER BY $orderBy"),
-			empty($params)?false:(count($params)==1?array_shift($params):$params),
-			$rangeInfo
-		);
-
-		$returner = &new DAOResultFactory($result, $this, '_returnRecordFromRow');
-		return $returner;
 	}
 
 	/**
@@ -381,71 +241,6 @@ class RecordDAO extends DAO {
 		unset($result);
 		return $count;
 	}
-
-	/**
-	 * Enumerate a list of entry options for the given field and archive IDs
-	 * @param $fieldId int
-	 * @param $archiveIds array optional
-	 */
-	function getFieldOptions($fieldId, $archiveIds = null) {
-		$sql = 'SELECT DISTINCT value FROM entries e, records r WHERE e.raw_field_id = ? AND r.record_id = e.record_id';
-		$params = array($fieldId);
-		if (!empty($archiveIds)) {
-			$sql .= ' AND (r.archive_id = ?';
-			$params[] = array_shift($archiveIds);
-			foreach ($archiveIds as $archiveId) {
-				$sql .= ' OR r.archive_id = ?';
-				$params[] = (int) $archiveId;
-			}
-			$sql .= ')';
-		}
-
-		$result = &$this->retrieveCached($sql, $params, 60 * 60 * 24);
-
-		$returner = array();
-		while (!$result->EOF) {
-			$row = &$result->getRowAssoc(false);
-			$returner[] = $row['value'];
-			$result->MoveNext();
-		}
-		$result->Close();
-		unset($result);
-
-		return $returner;
-	}
-
-	/**
-	 * Enumerate a list of entry options for the given field and crosswalk IDs
-	 * @param $crosswalkId int
-	 * @param $archiveIds array optional
-	 */
-	function getCrosswalkOptions($crosswalkId, $archiveIds = null) {
-		$sql = 'SELECT DISTINCT e.value FROM crosswalk_fields cf, entries e, records r WHERE cf.crosswalk_id = ? AND cf.raw_field_id = e.raw_field_id AND r.record_id = e.record_id';
-		$params = array($crosswalkId);
-		if (is_array($archiveIds)) {
-			$sql .= ' AND (r.archive_id = ?';
-			$params[] = array_shift($archiveIds);
-			foreach ($archiveIds as $archiveId) {
-				$sql .= ' OR r.archive_id = ?';
-				$params[] = $archiveId;
-			}
-			$sql .= ')';
-		}
-
-		$result = &$this->retrieveCached($sql, $params, 60 * 60 * 24);
-
-		$returner = array();
-		while (!$result->EOF) {
-			$row = &$result->getRowAssoc(false);
-			$returner[] = $row['value'];
-			$result->MoveNext();
-		}
-		$result->Close();
-		unset($result);
-
-		return $returner;
-	}
-
 }
 
 ?>

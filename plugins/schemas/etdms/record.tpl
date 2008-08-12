@@ -8,8 +8,10 @@
  *
  * $Id$
  *}
+{strip}
 {assign var="pageTitle" value="record.viewRecord"}
 {include file="common/header.tpl"}
+{/strip}
 
 <h3>{$record->getTitle()|escape}</h3>
 <h4>{$archive->getTitle()|escape}</h4>

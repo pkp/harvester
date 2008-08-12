@@ -8,9 +8,11 @@
  *
  * $Id$
  *}
+{strip}
 {assign var="pageTitle" value="admin.systemInformation"}
 {assign var="helpTopicId" value="admin.systemInformation"}
 {include file="common/header.tpl"}
+{/strip}
 
 <h3>{translate key="admin.systemVersion"}</h3>
 <h4>{translate key="admin.currentVersion"}</h4>

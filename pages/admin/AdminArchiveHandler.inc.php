@@ -76,7 +76,19 @@ class AdminArchiveHandler extends AdminHandler {
 		$archiveForm->initData();
 		$archiveForm->readInputData();
 
-		if ($archiveForm->validate()) {
+		$dataModified = false;
+
+		if (Request::getUserVar('uploadArchiveImage')) {
+			if (!$archiveForm->uploadArchiveImage()) {
+				$archiveForm->addError('archiveImage', Locale::translate('archive.image.profileImageInvalid'));
+			}
+			$dataModified = true;
+		} else if (Request::getUserVar('deleteArchiveImage')) {
+			$archiveForm->deleteArchiveImage();
+			$dataModified = true;
+		}
+
+		if (!$dataModified && $archiveForm->validate()) {
 			$archiveForm->execute();
 			Request::redirect('admin', 'manage', $archiveId);
 

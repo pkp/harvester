@@ -8,17 +8,19 @@
  *
  * $Id$
  *}
+{strip}
 {if $archiveId}
-{assign var="helpTopicId" value="admin.archiveForm"}
-{assign var="pageTitle" value="admin.archives.editArchive"}
+	{assign var="helpTopicId" value="admin.archiveForm"}
+	{assign var="pageTitle" value="admin.archives.editArchive"}
 {elseif $isUserLoggedIn}
-{assign var="helpTopicId" value="admin.archiveForm"}
-{assign var="pageTitle" value="admin.archives.addArchive"}
+	{assign var="helpTopicId" value="admin.archiveForm"}
+	{assign var="pageTitle" value="admin.archives.addArchive"}
 {else}
-{assign var="helpTopicId" value="index.addArchive"}
-{assign var="pageTitle" value="navigation.addArchive"}
+	{assign var="helpTopicId" value="index.addArchive"}
+	{assign var="pageTitle" value="navigation.addArchive"}
 {/if}
 {include file="common/header.tpl"}
+{/strip}
 
 {if $archiveId}
 <ul class="menu">
@@ -43,7 +45,7 @@ function selectHarvester() {
 </script>
 
 <a name="archiveForm"/>
-<form name="archiveForm" method="post" action="{url op="updateArchive"}">
+<form name="archiveForm" method="post" action="{url op="updateArchive"}" enctype="multipart/form-data">
 {if $archiveId}
 <input type="hidden" name="archiveId" value="{$archiveId}" />
 {/if}
@@ -58,6 +60,19 @@ function selectHarvester() {
 	<tr valign="top">
 		<td class="label">{fieldLabel name="description" key="archive.description"}</td>
 		<td class="value"><textarea name="description" id="description" cols="40" rows="10" class="textArea">{$description|escape}</textarea></td>
+	</tr>
+	<tr valign="top">
+		<td class="label">
+			{fieldLabel name="archiveImage" key="archive.image"}
+		</td>
+		<td class="value">
+			<input type="file" id="archiveImage" name="archiveImage" class="uploadField" /> <input type="submit" name="uploadArchiveImage" value="{translate key="common.upload"}" class="button" />
+			{if $archiveImage}
+				{translate key="common.fileName"}: {$archiveImage.name|escape} {$archiveImage.dateUploaded|date_format:$datetimeFormatShort} <input type="submit" name="deleteArchiveImage" value="{translate key="common.delete"}" class="button" />
+				<br />
+				<img src="{$sitePublicFilesDir}/{$archiveImage.uploadName|escape:"url"}" width="{$archiveImage.width|escape}" height="{$archiveImage.height|escape}" style="border: 0;" alt="{translate key="archive.image"}" />
+			{/if}
+		</td>
 	</tr>
 	<tr valign="top">
 		<td class="label">{fieldLabel name="url" key="archive.url" required="true"}</td>

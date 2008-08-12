@@ -8,16 +8,17 @@
  *
  * $Id$
  *}
+{strip}
 {assign var="pageTitle" value="admin.siteAdmin"}
 {assign var="helpTopicId" value="admin.index"}
 {include file="common/header.tpl"}
+{/strip}
 
 <h3>{translate key="admin.siteManagement"}</h3>
 
 <ul class="plain">
 	<li>&#187; <a href="{url op="settings"}">{translate key="admin.siteSettings"}</a></li>
 	<li>&#187; <a href="{url op="languages"}">{translate key="common.languages"}</a></li>
-	<li>&#187; <a href="{url op="crosswalks"}">{translate key="admin.crosswalks"}</a></li>
 	<li>&#187; <a href="{url op="plugins"}">{translate key="admin.plugins"}</a></li>
 	<li>&#187; <a href="{url page="rtadmin"}">{translate key="admin.rtAdmin"}</a></li>
 	{call_hook name="Template::Admin::Index::SiteManagement"}

@@ -26,9 +26,6 @@ class OAIHarvester extends Harvester {
 	/** @var $responseDate int Timestamp */
 	var $responseDate;
 
-	/** @var $oaiXmlHandler object */
-	var $oaiXmlHandler;
-
 	function OAIHarvester(&$archive) {
 		parent::Harvester($archive);
 		if ($archive) $this->oaiUrl = $archive->getSetting('harvesterUrl');
@@ -57,6 +54,7 @@ class OAIHarvester extends Harvester {
 			return ($this->metadataFormat = $default);
 		}
 
+		import('schema.SchemaMap');
 		$aliases = SchemaMap::getSchemaAliases(OAIHarvesterPlugin::getName(), $schemaPluginName);
 		$supportedFormats = OAIHarvester::getMetadataFormats($archive->getSetting('harvesterUrl'), $archive->getSetting('isStatic'));
 		// Return the first common format between the aliases for this
@@ -74,22 +72,28 @@ class OAIHarvester extends Harvester {
 	 * @return array
 	 */
 	function getMetadataFormats($harvesterUrl, $static = false) {
-		$parser =& new XMLParser();
-		$xmlHandler =& new OAIXMLHandler($this, 'ListMetadataFormats');
+		$returner = array('oai_dc'); // Assume DC as minimum
+		if (!$harvesterUrl) return $returner;
+
 
 		if (!$static) $harvesterUrl = $this->addParameters($harvesterUrl, array(
 			'verb' => 'ListMetadataFormats'
 		));
 
-		$parser->setHandler($xmlHandler);
-		$result = null;
-		@$result =& $parser->parse($harvesterUrl);
+		$parser =& new XMLParser();
+		$result =& $parser->parse($harvesterUrl);
 
-		unset($parser);
-		unset($xmlHandler);
+		if ($errorNode =& $result->getChildByName('error')) {
+			fatalError ($errorNode->getValue());
+		}
 
-		if (empty($result)) return array('oai_dc');
-		return $result;
+		$listMetadataFormatsNode =& $result->getChildByName('ListMetadataFormats');
+		foreach ($listMetadataFormatsNode->getChildren() as $node) {
+			$prefixNode =& $node->getChildByName('metadataPrefix');
+			if ($prefixNode) $returner[] = $prefixNode->getValue();
+			unset($prefixNode);
+		}
+		return $returner;
 	}
 
 	/**
@@ -101,7 +105,7 @@ class OAIHarvester extends Harvester {
 	 */
 	function validateHarvesterURL($harvesterUrl, $static = false) {
 		$result = $this->getMetadata($harvesterUrl, $static);
-		if (is_array($result) && !empty($result['repositoryName'])) return true;
+		if (is_array($result) && !empty($result['title'])) return true;
 		return false;
 	}
 
@@ -113,21 +117,25 @@ class OAIHarvester extends Harvester {
 	 * @return array
 	 */
 	function getMetadata($harvesterUrl, $static = false) {
-		$parser =& new XMLParser();
-		$xmlHandler =& new OAIXMLHandler($this, 'Identify');
-
 		if (!$static) $harvesterUrl = $this->addParameters($harvesterUrl, array(
 			'verb' => 'Identify'
 		));
 
-		$parser->setHandler($xmlHandler);
-		$result = null;
-		@$result =& $parser->parse($harvesterUrl);
+		$parser =& new XMLParser();
+		$result =& $parser->parse($harvesterUrl);
 
-		unset($parser);
-		unset($xmlHandler);
+		if ($errorNode =& $result->getChildByName('error')) {
+			fatalError ($errorNode->getValue());
+		}
 
-		return $result;
+		$returner = array();
+		$identifyNode =& $result->getChildByName('Identify');
+
+		$repositoryNameNode =& $identifyNode->getChildByName('repositoryName') && $returner['title'] = $repositoryNameNode->getValue();
+		$adminEmailNode =& $identifyNode->getChildByName('adminEmail') && $returner['adminEmail'] = $adminEmailNode->getValue();
+		$descriptionNode =& $identifyNode->getChildByName('description') && $returner['description'] = $descriptionNode->getValue();
+
+		return $returner;
 	}
 
 	/**
@@ -136,20 +144,27 @@ class OAIHarvester extends Harvester {
 	 * @return array
 	 */
 	function getSets($harvesterUrl) {
-		$parser =& new XMLParser();
-		$xmlHandler =& new OAIXMLHandler($this, 'ListSets');
-
-		$parser->setHandler($xmlHandler);
-		$result = null;
-		@$result =& $parser->parse($this->addParameters($harvesterUrl, array(
+		$harvesterUrl = $this->addParameters($harvesterUrl, array(
 			'verb' => 'ListSets'
-		)));
+		));
 
-		unset($parser);
-		unset($xmlHandler);
+		$parser =& new XMLParser();
+		$result =& $parser->parse($harvesterUrl);
 
-		if (empty($result)) return array();
-		return $result;
+		if ($errorNode =& $result->getChildByName('error')) {
+			fatalError ($errorNode->getValue());
+		}
+
+		$returner = array();
+		$listSetsNode =& $result->getChildByName('ListSets');
+		foreach ($listSetsNode->getChildren() as $node) {
+			$setSpecNode =& $node->getChildByName('setSpec');
+			$setNameNode =& $node->getChildByName('setName');
+			if ($setSpecNode && $setNameNode) 
+				$returner[$setSpecNode->getValue()] = $setNameNode->getValue();
+			unset($setSpecNode, $setNameNode);
+		}
+		return $returner;
 	}
 
 	function setResponseDate($responseDate) {
@@ -186,39 +201,37 @@ class OAIHarvester extends Harvester {
 	 * @param $params array
 	 * @return boolean
 	 */
-	function updateRecords($params = array()) {
-		$this->fieldDao->enableCaching();
-
+	function updateRecords($params = array(), $resumptionToken = null, $recordOffset = 0) {
 		$verb = $this->getHarvestingMethod();
 		$parser =& new XMLParser();
-		$xmlHandler =& new OAIXMLHandler($this, $verb, $params);
 		$archive =& $this->getArchive();
-
-		$parser->setHandler($xmlHandler);
 
 		if ($archive->getSetting('isStatic')) {
 			$harvestUrl = $this->oaiUrl;
 		} else {
-			$harvestingParameters = array(
-				'verb' => $verb,
-				'metadataPrefix' => $this->getMetadataFormat()
-			);
-			foreach (array('from', 'until') as $name) {
-				if (isset($params[$name]) && $params[$name] == 'now') {
-					$params[$name] = date('Y-m-d');
-				} else if (isset($params[$name]) && $params[$name] == 'last') {
-					$lastHarvested = $this->archive->getLastIndexedDate();
-					if (empty($lastHarvested)) {
-						unset($params[$name]);
-					} else {
-						$params[$name] = date('Y-m-d', strtotime($lastHarvested));
+			$harvestingParams = array();
+			$harvestingParams['verb'] = $verb;
+			if ($resumptionToken !== null) {
+				$harvestingParams['resumptionToken'] = $resumptionToken;
+			} else {
+				$harvestingParams['metadataPrefix'] = $this->getMetadataFormat();
+				foreach (array('from', 'until') as $name) {
+					if (isset($params[$name]) && $params[$name] == 'now') {
+						$params[$name] = date('Y-m-d');
+					} else if (isset($params[$name]) && $params[$name] == 'last') {
+						$lastHarvested = $this->archive->getLastIndexedDate();
+						if (empty($lastHarvested)) {
+							unset($params[$name]);
+						} else {
+							$params[$name] = date('Y-m-d', strtotime($lastHarvested));
+						}
 					}
 				}
+				foreach (array('set', 'from', 'until') as $name) {
+					if (isset($params[$name])) $harvestingParams[$name] = $params[$name];
+				}
 			}
-			foreach (array('set', 'from', 'until') as $name) {
-				if (isset($params[$name])) $harvestingParameters[$name] = $params[$name];
-			}
-			$harvestUrl = $this->addParameters($this->oaiUrl, $harvestingParameters);
+			$harvestUrl = $this->addParameters($this->oaiUrl, $harvestingParams);
 		}
 		if (isset($params['verbose'])) echo "Harvest URL: $harvestUrl\n";
 		$result =& $parser->parse($harvestUrl);
@@ -226,9 +239,56 @@ class OAIHarvester extends Harvester {
 		unset($parser);
 		unset($xmlHandler);
 
-		$this->fieldDao->disableCaching();
+		if ($errorNode =& $result->getChildByName('error')) {
+			fatalError ($errorNode->getValue());
+		}
 
-		return $this->getStatus() && $result;
+		$token = null;
+
+		$verbNode =& $result->getChildByName($verb);
+		foreach ($verbNode->getChildren() as $node) {
+			switch ($node->getName()) {
+				case 'header':
+					$identifierNode =& $node->getChildByName('identifier');
+					$this->updateRecord($identifierNode->getValue(), $params);
+					unset($identifierNode);
+					$recordOffset++;
+					break;
+				case 'record':
+					$this->handleRecordNode($node);
+					$recordOffset++;
+					break;
+				case 'resumptionToken':
+					$token = $node->getValue();
+					break;
+				default:
+					fatalError('Unknown node ' . $node->getName());
+			}
+		}
+
+		if ($token) {
+			unset($verbNode, $result, $node); // Free memory
+			return $this->updateRecords($params, $token, $recordOffset);
+		}
+		return $recordOffset;
+	}
+
+	function handleRecordNode(&$node) {
+		$metadataContainerNode =& $node->getChildByName('metadata');
+		$metadataNode = array_shift($metadataContainerNode->getChildren());
+		$schemaPlugin =& $this->getSchemaPlugin();
+		$schema =& $this->getSchema();
+
+		$record =& new Record();
+		$record->setSchemaId($schema->getSchemaId());
+		$record->setArchiveId($this->archive->getArchiveId());
+		$record->setContents($metadataNode->toXml());
+		$record->setParsedContents($schemaPlugin->parseContents($record->getContents()));
+		$this->recordDao->insertRecord($record);
+
+		unset($record, $metadataContainerNode, $metadataNode, $schemaPlugin, $schema);
+
+		return true;
 	}
 
 	/**
@@ -240,48 +300,22 @@ class OAIHarvester extends Harvester {
 	function &updateRecord($identifier, $params = array()) {
 		$verb = 'GetRecord';
 		$parser =& new XMLParser();
-		$xmlHandler =& new OAIXMLHandler($this, $verb, $params);
-
-		$parser->setHandler($xmlHandler);
 		$result =& $parser->parse($this->addParameters($this->oaiUrl, array(
 			'verb' => $verb,
 			'identifier' => $identifier,
 			'metadataPrefix' => $this->getMetadataFormat()
 		)));
-		unset ($parser);
-
 		unset($parser);
-		unset($xmlHandler);
 
-		return $result;
-	}
-
-	/**
-	 * Handle an incoming resumption token from an OAI data source.
-	 * @param $token string
-	 * @param $params array (see updateRecords)
-	 * @param $recordOffset int
-	 * @return boolean
-	 */
-	function handleResumptionToken($token, $params = array(), $recordOffset = 0) {
-		$verb = $this->getHarvestingMethod();
-		$parser =& new XMLParser();
-		$xmlHandler =& new OAIXMLHandler($this, $verb, $params, $recordOffset);
-
-		if (isset($params['callback'])) {
-			call_user_func($params['callback'], "Handling resumption token \"$token\"");
+		if ($errorNode =& $result->getChildByName('error')) {
+			fatalError ($errorNode->getValue());
 		}
 
-		$parser->setHandler($xmlHandler);
-		$result =& $parser->parse($this->addParameters($this->oaiUrl, array(
-			'verb' => $verb,
-			'resumptionToken' => $token
-		)));
+		$verbNode =& $result->getChildByName($verb);
+		$recordNode =& $result->getChildByName('record');
+		$this->handleRecordNode($recordNode);
 
-		unset ($parser);
-		unset($xmlHandler);
-
-		return $result?true:false;
+		return $result;
 	}
 
 	/**

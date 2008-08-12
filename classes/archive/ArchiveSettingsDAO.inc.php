@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @file ArchiveSettingsDAO.inc.php
+ * @file classes/archive/ArchiveSettingsDAO.inc.php
  *
  * Copyright (c) 2005-2008 Alec Smecher and John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
@@ -12,11 +12,12 @@
  * Class for Archive Settings DAO.
  * Operations for retrieving and modifying archive settings.
  *
- * $Id$
  */
 
-class ArchiveSettingsDAO extends DAO {
+// $Id$
 
+
+class ArchiveSettingsDAO extends DAO {
 	/**
 	 * Constructor.
 	 */
@@ -202,7 +203,7 @@ class ArchiveSettingsDAO extends DAO {
 	 * Delete all settings for a archive.
 	 * @param $archiveId string
 	 */
-	function deleteSettingsByArchive($archiveId) {
+	function deleteSettingsByArchiveId($archiveId) {
 		$cache =& $this->_getCache($archiveId);
 		$cache->flush();
 

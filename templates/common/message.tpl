@@ -9,7 +9,9 @@
  *
  * $Id$
  *}
+{strip}
 {include file="common/header.tpl"}
+{/strip}
 
 {if $message}{translate|assign:"messageTranslated" key=$message}{/if}
 

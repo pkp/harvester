@@ -13,8 +13,8 @@
  * $Id$
  */
 
-require_once('LanguageMapPreprocessorPlugin.inc.php');
+// require_once('LanguageMapPreprocessorPlugin.inc.php');
 
-return new LanguageMapPreprocessorPlugin();
+// DISABLED return new LanguageMapPreprocessorPlugin();
 
 ?>

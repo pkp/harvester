@@ -25,6 +25,9 @@ class OAIHarvesterPlugin extends HarvesterPlugin {
 	 */
 	function register($category, $path) {
 		$success = parent::register($category, $path);
+		if ($success) {
+			HookRegistry::register('TinyMCEPlugin::getEnableFields', array(&$this, 'addDescriptionField'));
+		}
 		$this->addLocaleData();
 		return $success;
 	}
@@ -50,7 +53,6 @@ class OAIHarvesterPlugin extends HarvesterPlugin {
 
 	function addArchiveFormChecks(&$form) {
 		$this->import('OAIHarvester');
-		$this->import('OAIXMLHandler');
 		$oaiHarvester =& new OAIHarvester($this->archive);
 
 		$form->addCheck(new FormValidator($form, 'harvesterUrl', 'required', 'plugins.harvesters.oai.archive.form.harvesterUrlRequired'));
@@ -58,6 +60,16 @@ class OAIHarvesterPlugin extends HarvesterPlugin {
 		$form->addCheck(new FormValidatorCustom($form, 'harvesterUrl', 'required', 'plugins.harvester.oai.archive.form.harvesterUrlInvalid', array(&$oaiHarvester, 'validateHarvesterURL'), array(Request::getUserVar('isStatic'))));
 		$form->addCheck(new FormValidatorEmail($form, 'adminEmail', Validation::isSiteAdmin()?'optional':'required', 'plugins.harvesters.oai.archive.form.adminEmailInvalid'));
 		$form->addCheck(new FormValidatorCustom($form, 'harvesterUrl', 'required', 'plugins.harvester.oai.archive.form.harvesterUrlDuplicate', array(&$this, 'duplicateHarvesterUrlDoesNotExist'), array(Request::getUserVar('archiveId'))));
+	}
+
+	/**
+	 * Add the description field to the TinyMCE list. Used with the
+	 * "fetch archive metadata" button on the archive form.
+	 */
+	function addDescriptionField($hookName, $args) {
+		$fields =& $args[1];
+		$fields[] = 'description';
+		return false;
 	}
 
 	function duplicateHarvesterUrlDoesNotExist($harvesterUrl, $archiveId) {
@@ -77,7 +89,6 @@ class OAIHarvesterPlugin extends HarvesterPlugin {
 
 	function displayArchiveForm(&$form, &$templateMgr) {
 		$this->import('OAIHarvester');
-		$this->import('OAIXMLHandler');
 
 		parent::displayArchiveForm($form, $templateMgr);
 		$templateMgr->assign('oaiIndexMethods', array(
@@ -115,7 +126,6 @@ class OAIHarvesterPlugin extends HarvesterPlugin {
 	 */
 	function updateIndex(&$archive, $params = array()) {
 		$this->import('OAIHarvester');
-		$this->import('OAIXMLHandler');
 
 		PluginRegistry::loadCategory('schemas');
 
@@ -146,7 +156,6 @@ class OAIHarvesterPlugin extends HarvesterPlugin {
 		$templateMgr =& TemplateManager::getManager();
 
 		$this->import('OAIHarvester');
-		$this->import('OAIXMLHandler');
 
 		$oaiHarvester =& new OAIHarvester($archive);
 		$availableSets = $oaiHarvester->getSets($archive->getSetting('harvesterUrl'));
@@ -176,7 +185,6 @@ class OAIHarvesterPlugin extends HarvesterPlugin {
 				$archive =& $archiveDao->getArchive($archiveId);
 
 				$this->import('OAIHarvester');
-				$this->import('OAIXMLHandler');
 
 				$oaiHarvester =& new OAIHarvester($archive);
 				$metadata = $oaiHarvester->getMetadata($harvesterUrl, Request::getUserVar('isStatic'));
@@ -192,10 +200,8 @@ class OAIHarvesterPlugin extends HarvesterPlugin {
 					'description' => 'description'
 				);
 
-				foreach ($metadataMap as $oaiField => $harvesterField) {
-					if (isset($metadata[$oaiField])) {
-						$archiveForm->setData($harvesterField, $metadata[$oaiField]);
-					}
+				foreach ($metadata as $name => $value) {
+					$archiveForm->setData($name, $value);
 				}
 
 				import('pages.admin.AdminArchiveHandler');

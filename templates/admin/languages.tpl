@@ -8,9 +8,11 @@
  *
  * $Id$
  *}
+{strip}
 {assign var="pageTitle" value="common.languages"}
 {assign var="helpTopicId" value="admin.languages"}
 {include file="common/header.tpl"}
+{/strip}
 
 <form method="post" action="{url op="saveLanguageSettings"}">
 
