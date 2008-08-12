@@ -24,12 +24,8 @@ class Harvester {
 	/** @var $archive object */
 	var $archive;
 
-	/** @var $status boolean Success (true)/failure */
-	var $status;
-
 	function Harvester($archive) {
 		$this->errors = array();
-		$this->status = true;
 
 		$this->recordDao =& DAORegistry::getDAO('RecordDAO');
 
@@ -41,6 +37,14 @@ class Harvester {
 	 */
 	function getErrors() {
 		return $this->errors;
+	}
+
+	/**
+	 * Determine whether or not the harvester is in an error condition.
+	 * @return boolean true == OK; false == error (see getErrors)
+	 */
+	function getStatus() {
+		return empty($this->errors);
 	}
 
 	/**

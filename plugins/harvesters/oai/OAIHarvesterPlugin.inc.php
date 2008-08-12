@@ -200,7 +200,11 @@ class OAIHarvesterPlugin extends HarvesterPlugin {
 					'description' => 'description'
 				);
 
-				foreach ($metadata as $name => $value) {
+				if ($metadata === false) {
+					foreach ($oaiHarvester->getErrors() as $error) {
+						$archiveForm->addError('harvesterUrl', $error);
+					}
+				} else foreach ($metadata as $name => $value) {
 					$archiveForm->setData($name, $value);
 				}
 

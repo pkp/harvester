@@ -82,9 +82,16 @@ class OAIHarvester extends Harvester {
 
 		$parser =& new XMLParser();
 		$result =& $parser->parse($harvesterUrl);
+		if (!$result) {
+			foreach ($parser->getErrors() as $error) {
+				$this->addError($error);
+			}
+			return false;
+		}
 
 		if ($errorNode =& $result->getChildByName('error')) {
-			fatalError ($errorNode->getValue());
+			$this->addError($errorNode->getValue());
+			return false;
 		}
 
 		$listMetadataFormatsNode =& $result->getChildByName('ListMetadataFormats');
@@ -123,9 +130,16 @@ class OAIHarvester extends Harvester {
 
 		$parser =& new XMLParser();
 		$result =& $parser->parse($harvesterUrl);
+		if (!$result) {
+			foreach ($parser->getErrors() as $error) {
+				$this->addError($error);
+			}
+			return false;
+		}
 
 		if ($errorNode =& $result->getChildByName('error')) {
-			fatalError ($errorNode->getValue());
+			$this->addError ($errorNode->getValue());
+			return false;
 		}
 
 		$returner = array();
@@ -150,9 +164,16 @@ class OAIHarvester extends Harvester {
 
 		$parser =& new XMLParser();
 		$result =& $parser->parse($harvesterUrl);
+		if (!$result) {
+			foreach ($parser->getErrors() as $error) {
+				$this->addError($error);
+			}
+			return false;
+		}
 
 		if ($errorNode =& $result->getChildByName('error')) {
-			fatalError ($errorNode->getValue());
+			$this->addError ($errorNode->getValue());
+			return false;
 		}
 
 		$returner = array();
@@ -190,7 +211,8 @@ class OAIHarvester extends Harvester {
 			case OAI_INDEX_METHOD_LIST_IDENTIFIERS:
 				return 'ListIdentifiers';
 			default:
-				fatalError ("Unknown indexing method $indexingMethod!");
+				$this->addError ("Unknown indexing method $indexingMethod!");
+				return false;
 		}
 	}
 
@@ -199,7 +221,7 @@ class OAIHarvester extends Harvester {
 	 * The $params variable is an associative array that can include
 	 * "set", "from", "until", "skipIndexing", and "verbose" as keys.
 	 * @param $params array
-	 * @return boolean
+	 * @return int Number or records, or false iff error condition
 	 */
 	function updateRecords($params = array(), $resumptionToken = null, $recordOffset = 0) {
 		$verb = $this->getHarvestingMethod();
@@ -235,12 +257,19 @@ class OAIHarvester extends Harvester {
 		}
 		if (isset($params['verbose'])) echo "Harvest URL: $harvestUrl\n";
 		$result =& $parser->parse($harvestUrl);
+		if (!$result) {
+			foreach ($parser->getErrors() as $error) {
+				$this->addError($error);
+			}
+			return false;
+		}
 
 		unset($parser);
 		unset($xmlHandler);
 
 		if ($errorNode =& $result->getChildByName('error')) {
-			fatalError ($errorNode->getValue());
+			$this->addError ($errorNode->getValue());
+			return false;
 		}
 
 		$token = null;
@@ -262,7 +291,7 @@ class OAIHarvester extends Harvester {
 					$token = $node->getValue();
 					break;
 				default:
-					fatalError('Unknown node ' . $node->getName());
+					$this->addError('Unknown node ' . $node->getName());
 			}
 		}
 
@@ -270,6 +299,7 @@ class OAIHarvester extends Harvester {
 			unset($verbNode, $result, $node); // Free memory
 			return $this->updateRecords($params, $token, $recordOffset);
 		}
+		if (!$this->getStatus()) return false; // Error
 		return $recordOffset;
 	}
 
@@ -305,10 +335,16 @@ class OAIHarvester extends Harvester {
 			'identifier' => $identifier,
 			'metadataPrefix' => $this->getMetadataFormat()
 		)));
+		if (!$result) {
+			foreach ($parser->getErrors() as $error) {
+				$this->addError($error);
+			}
+			return false;
+		}
 		unset($parser);
 
 		if ($errorNode =& $result->getChildByName('error')) {
-			fatalError ($errorNode->getValue());
+			$this->addError ($errorNode->getValue());
 		}
 
 		$verbNode =& $result->getChildByName($verb);
