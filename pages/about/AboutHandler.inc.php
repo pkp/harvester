@@ -29,8 +29,7 @@ class AboutHandler extends Handler {
 		$templateMgr = &TemplateManager::getManager();
 
 		$site = &Request::getSite();
-		$about = $site->getAbout();
-		$templateMgr->assign('about', $about);
+		$templateMgr->assign('about', $site->getLocalizedSetting('about'));
 
 		$templateMgr->display('about/index.tpl');
 	}

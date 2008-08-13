@@ -228,6 +228,9 @@ Your server currently supports mbstring: <strong>{$supportsMBString}</strong>]]>
 	<message key="user.workingLanguages">Working languages</message>
 	<message key="user.dateRegistered">Date registered</message>
 	<message key="user.dateLastLogin">Last login</message>
+	<message key="user.register.registerAs">Register as</message>
+	<message key="user.register.completeForm">Fill in this form to register with this journal.</message>
+	<message key="user.register.submitterDescription">Archive Managers can submit archives for indexing.</message>
 	<message key="user.register.repeatPassword">Repeat Password</message>
 	<message key="user.register.usernameRestriction">The username must contain only lowercase letters, numbers, and hyphens/underscores.</message>
 	<message key="user.register.passwordLengthRestriction">The password must be at least {$length} characters.</message>
@@ -241,6 +244,8 @@ Your server currently supports mbstring: <strong>{$supportsMBString}</strong>]]>
 
 	<message key="form.errorsOccurred">Errors occurred processing this form</message>
 	<message key="form.postRequired">The form was not submitted properly.</message>
+	<message key="user.noRoles">Your account does not currently have any roles. Please choose from the actions below:</message>
+	<message key="user.noRoles.submitArchive">Submit an archive</message>
 	<message key="user.noRoles.enableSubmitClosed">Registration as an archive submitter is currently disabled.</message>
 
 	<!-- Roles -->
@@ -258,6 +263,7 @@ Your server currently supports mbstring: <strong>{$supportsMBString}</strong>]]>
 	<message key="archive.publicArchiveId">Public ID</message>
 	<message key="archive.description">Description</message>
 	<message key="archive.type">Type</message>
+	<message key="archive.type.invalid">Invalid archive type.</message>
 	<message key="archive.lastIndexed">Last Indexed</message>
 
 	<!-- Site Administration -->

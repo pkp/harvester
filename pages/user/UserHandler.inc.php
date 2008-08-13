@@ -25,17 +25,16 @@ class UserHandler extends Handler {
 	function index() {
 		UserHandler::validate();
 
-		$sessionManager =& SessionManager::getManager();
-		$session =& $sessionManager->getUserSession();
-
+		$templateMgr =& TemplateManager::getManager();
 		$roleDao =& DAORegistry::getDAO('RoleDAO');
+		$user =& Request::getUser();
+		$site =& Request::getSite();
 
 		UserHandler::setupTemplate();
-		$templateMgr =& TemplateManager::getManager();
-
-		$templateMgr->assign('helpTopicId', 'user.userHome');
 
 		$templateMgr->assign('isSiteAdmin', Validation::isSiteAdmin());
+		$templateMgr->assign('userRoles', $roleDao->getRolesByUserId($user->getUserId()));
+		$templateMgr->assign('enableSubmit', $site->getSetting('enableSubmit'));
 		$templateMgr->display('user/index.tpl');
 	}
 

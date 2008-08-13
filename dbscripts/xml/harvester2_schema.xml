@@ -89,6 +89,9 @@
 			<NOTNULL/>
 		</field>
 		<field name="public_archive_id" type="C2" size="40"/>
+		<field name="user_id" type="I8">
+			<NOTNULL/>
+		</field>
 		<field name="title" type="C2" size="255">
 			<NOTNULL/>
 		</field>

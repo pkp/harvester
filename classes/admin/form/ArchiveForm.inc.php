@@ -19,14 +19,17 @@ import('form.Form');
 
 class ArchiveForm extends Form {
 
-	/** The ID of the archive being edited */
+	/** @var $archiveId int The ID of the archive being edited */
 	var $archiveId;
 
-	/** Whether or not Captcha tests are enabled */
+	/** @var $captchaEnabled boolean Whether or not Captcha tests are enabled */
 	var $captchaEnabled;
 
-	/** The archive object */
+	/** @var $archive object The archive object */
 	var $archive;
+
+	/** @var $harvesters array List of harvesters installed in the system */
+	var $harvesters;
 
 	/** The name of the harvester being used for this archive. */
 	var $harvesterPluginName;
@@ -65,7 +68,7 @@ class ArchiveForm extends Form {
 			$this->harvesterPluginName = $site->getSetting('defaultHarvesterPlugin');
 		}
 
-		$harvesters =& PluginRegistry::loadCategory('harvesters');
+		$this->harvesters =& PluginRegistry::loadCategory('harvesters');
 
 		HookRegistry::call('ArchiveForm::ArchiveForm', array(&$this, $this->harvesterPluginName));
 	}
@@ -203,6 +206,12 @@ class ArchiveForm extends Form {
 	}
 
 	function validate() {
+		// Check to ensure that the plugin name is valid
+		if (!isset($this->harvesters[(string) $this->harvesterPluginName])) {
+			$this->addError('harvesterPluginName', Locale::translate('archive.type.invalid'));
+			return false;
+		}
+
 		if (Validation::isSiteAdmin()) {
 			// Check to ensure that the public ID, if specified, is unique
 			$publicArchiveId = $this->getData('publicArchiveId');
@@ -223,6 +232,8 @@ class ArchiveForm extends Form {
 
 		if (!isset($this->archive)) {
 			$this->archive = &new Archive();
+			$user =& Request::getUser();
+			$this->archive->setUserId($user->getUserId());
 		}
 
 		$this->harvesterPluginName = Request::getUserVar('harvesterPluginName');
@@ -258,7 +269,7 @@ class ArchiveForm extends Form {
 				$site =& Request::getSite();
 				$email->assignParams(array(
 					'archiveTitle' => $this->getData('title'),
-					'siteTitle' => $site->getTitle(),
+					'siteTitle' => $site->getSiteTitle(),
 					'loginUrl' => Request::url('admin', 'manage', $this->archive->getArchiveId())
 				));
 				$email->addRecipient($site->getContactEmail(), $site->getContactName());

@@ -13,14 +13,27 @@
 {include file="common/header.tpl"}
 {/strip}
 
-{if $isSiteAdmin}
-	{assign var="hasRole" value=1}
-	<h4><a href="{url page="user"}">{$siteTitle|escape}</a></h4>
-	<ul class="plain">
-		<li>&#187; <a href="{url page="admin"}">{translate key=admin.siteAdmin}</a></li>
-		{call_hook name="Templates::User::Index::Site"}
-	</ul>
-{/if}
+<h4><a href="{url page="user"}">{$siteTitle|escape}</a></h4>
+
+<ul class="plain">
+	{foreach from=$userRoles item=role}
+		{assign var="hasRole" value=1}
+			<li>&#187; <a href="{url page=$role->getRolePath()}">{translate key=$role->getRoleName()}</a></li>
+	{foreachelse}
+		<li>
+			{translate key="user.noRoles"}
+			<ul class="plain">
+			{if $enableSubmit}
+				{url|assign:"submitUrl" page="add"}
+				<li>&#187; <a href="{url op="become" path="submitter" source=$submitUrl}">{translate key="user.noRoles.submitArchive"}</a>
+			{else}
+				{translate key="user.noRoles.enableSubmitClosed"}
+			{/if}
+			</ul>
+		</li>
+	{/foreach}{* $userRoles *}
+	{call_hook name="Templates::User::Index::Site"}
+</ul>
 
 <h3>{translate key="user.myAccount"}</h3>
 <ul class="plain">

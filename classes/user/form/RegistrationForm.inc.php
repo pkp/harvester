@@ -88,8 +88,7 @@ class RegistrationForm extends Form {
 		$templateMgr->assign_by_ref('countries', $countries);
 
 		$templateMgr->assign('source', Request::getUserVar('source'));
-
-		$site = &Request::getSite();
+		$templateMgr->assign('allowRegSubmitter', $site->getSetting('enableSubmit'));
 		$templateMgr->assign('availableLocales', $site->getSupportedLocaleNames());
 
 		$templateMgr->assign('helpTopicId', 'user.registerAndProfile');		
@@ -107,6 +106,7 @@ class RegistrationForm extends Form {
 	function initData() {
 		$this->setData('userLocales', array());
 		$this->setData('sendPassword', 1);
+		$this->setData('registerAsSubmitter', 1);
 	}
 
 	/**

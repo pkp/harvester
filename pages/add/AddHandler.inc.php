@@ -31,7 +31,7 @@ class AddHandler extends Handler {
 
 		import('admin.form.ArchiveForm');
 
-		$archiveForm = &new ArchiveForm(!isset($args) || empty($args) ? null : (int) $args[0]);
+		$archiveForm =& new ArchiveForm(!isset($args) || empty($args) ? null : (int) $args[0]);
 		$archiveForm->initData();
 		$archiveForm->display();
 	}
@@ -49,7 +49,7 @@ class AddHandler extends Handler {
 
 		$archiveId = (int) Request::getUserVar('archiveId');
 
-		$archiveForm = &new ArchiveForm($archiveId);
+		$archiveForm =& new ArchiveForm($archiveId);
 		$archiveForm->initData();
 		$archiveForm->readInputData();
 
@@ -66,7 +66,7 @@ class AddHandler extends Handler {
 	 * @param $subclass boolean set to true if caller is below this handler in the hierarchy
 	 */
 	function setupTemplate($subclass = false) {
-		$templateMgr = &TemplateManager::getManager();
+		$templateMgr =& TemplateManager::getManager();
 		if ($subclass) {
 			$templateMgr->assign('pageHierarchy',
 				array(array(Request::url('add'), 'navigation.addArchive'))

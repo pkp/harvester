@@ -157,6 +157,32 @@ class Archive extends DataObject {
 	}
 
 	/**
+	 * Get the user who created the archive
+	 * @return object
+	 */
+	function &getUser() {
+		$userDao =& DAORegistry::getDAO('UserDAO');
+		$user =& $userDao->getUser($this->getUserId());
+		return $user;
+	}
+
+	/**
+	 * Get ID of the user who created the archive.
+	 * @return int
+	 */
+	function getUserId() {
+		return $this->getData('userId');
+	}
+
+	/**
+	 * Set ID of the user who created the archive.
+	 * @param $userId int
+	 */
+	function setUserId($userId) {
+		return $this->setData('userId', $userId);
+	}
+
+	/**
 	 * Install settings from an XML file.
 	 * @param $filename
 	 */

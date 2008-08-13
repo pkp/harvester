@@ -75,6 +75,7 @@ class ArchiveDAO extends DAO {
 	function &_returnArchiveFromRow(&$row) {
 		$archive =& new Archive();
 		$archive->setArchiveId($row['archive_id']);
+		$archive->setUserId($row['user_id']);
 		$archive->setPublicArchiveId($row['public_archive_id']);
 		$archive->setTitle($row['title']);
 		$archive->setEnabled($row['enabled']);
@@ -94,10 +95,11 @@ class ArchiveDAO extends DAO {
 	function insertArchive(&$archive) {
 		$this->update(
 			'INSERT INTO archives
-				(public_archive_id, title, description, url, harvester_plugin, enabled)
+				(user_id, public_archive_id, title, description, url, harvester_plugin, enabled)
 				VALUES
-				(?, ?, ?, ?, ?, ?)',
+				(?, ?, ?, ?, ?, ?, ?)',
 			array(
+				(int) $archive->getUserId(),
 				$archive->getPublicArchiveId(),
 				$archive->getTitle(),
 				$archive->getDescription(),
@@ -121,6 +123,7 @@ class ArchiveDAO extends DAO {
 		return $this->update(
 			'UPDATE archives
 				SET
+					user_id = ?,
 					public_archive_id = ?,
 					title = ?,
 					description = ?,
@@ -129,6 +132,7 @@ class ArchiveDAO extends DAO {
 					enabled = ?
 				WHERE archive_id = ?',
 			array(
+				(int) $archive->getUserId(),
 				$archive->getPublicArchiveId(),
 				$archive->getTitle(),
 				$archive->getDescription(),
