@@ -124,6 +124,7 @@ class OAIHarvester extends Harvester {
 	 * @return array
 	 */
 	function getMetadata($harvesterUrl, $static = false) {
+		if (!$harvesterUrl) return false;
 		if (!$static) $harvesterUrl = $this->addParameters($harvesterUrl, array(
 			'verb' => 'Identify'
 		));

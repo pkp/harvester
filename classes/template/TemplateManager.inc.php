@@ -50,6 +50,7 @@ class TemplateManager extends PKPTemplateManager {
 			$this->assign('displayPageHeaderTitle', $site->getSitePageHeaderTitle());
 
 			$this->assign('siteTitle', $site->getSiteTitle());
+			$this->assign('enableSubmit', $site->getSetting('enableSubmit'));
 		}
 	}
 

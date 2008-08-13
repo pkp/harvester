@@ -184,6 +184,9 @@ encryption = md5
 ; (may not be possible with some server configurations)
 ; allow_envelope_sender = Off
 
+; If enabled, email addresses must be validated before login is possible.
+require_validation = Off
+
 
 ;;;;;;;;;;;;;;;;;;;
 ; Search Settings ;
@@ -226,6 +229,9 @@ page_links = 10
 
 ; Whether or not to enable Captcha features
 captcha = on
+
+; Whether or not to use Captcha on user registration
+captcha_on_register = on
 
 ; Font location for font to use in Captcha images
 font_location = /usr/share/fonts/truetype/freefont/FreeSerif.ttf

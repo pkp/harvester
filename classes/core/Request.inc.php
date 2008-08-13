@@ -11,7 +11,6 @@
  *
  * @brief Class providing operations associated with HTTP requests.
  * Requests are assumed to be in the format http://host.tld/index.php/<page_name>/<operation_name>/<arguments...>
- * <journal_id> is assumed to be "index" for top-level site requests.
  */
 
 // $Id$

@@ -18,6 +18,7 @@
 
 /** ID codes for all user roles */
 define('ROLE_ID_SITE_ADMIN',		0x00000001);
+define('ROLE_ID_SUBMITTER',		0x00000002);
 
 class Role extends DataObject {
 	/**

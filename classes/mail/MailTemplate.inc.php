@@ -97,7 +97,7 @@ class MailTemplate extends Mail {
 		$this->bccSender = Request::getUserVar('bccSender');
 
 		$site = &Request::getSite();
-		$this->setFrom($site->getContactEmail(), $site->getContactName());
+		$this->setFrom($site->getLocalizedSetting('contactEmail'), $site->getLocalizedSetting('contactName'));
 
 		$this->addressFieldsEnabled = true;
 	}
@@ -140,7 +140,7 @@ class MailTemplate extends Mail {
 
 		// Add commonly-used variables to the list
 		$site = &Request::getSite();
-		$paramArray['principalContactSignature'] = $site->getContactName();
+		$paramArray['principalContactSignature'] = $site->getLocalizedSetting('contactName');
 
 		// Replace variables in message with values
 		foreach ($paramArray as $key => $value) {

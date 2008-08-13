@@ -25,6 +25,25 @@ class SiteSettingsForm extends PKPSiteSettingsForm {
 	function SiteSettingsForm() {
 		parent::PKPSiteSettingsForm();
 	}
+
+	function initData() {
+		$site =& Request::getSite();
+		parent::initData();
+		$this->_data['enableSubmit'] = $site->getSetting('enableSubmit');
+	}
+
+	function readInputData() {
+		parent::readInputData();
+		$this->readUserVars(array('enableSubmit'));
+	}
+
+	function execute() {
+		if (parent::execute()) {
+			$site =& Request::getSite();
+			$site->updateSetting('enableSubmit', $this->getData('enableSubmit')?1:0);
+		}
+		return false;
+	}
 }
 
 ?>

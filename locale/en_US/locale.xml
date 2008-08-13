@@ -61,6 +61,7 @@
 	<message key="navigation.search">Search</message>
 	<message key="navigation.browse">Browse</message>
 	<message key="navigation.login">Log In</message>
+	<message key="navigation.register">Register</message>
 	<message key="navigation.content">Content</message>
 	<message key="navigation.loggedInAs">You are logged in as...</message>
 	<message key="navigation.logout">Log Out</message>
@@ -194,10 +195,14 @@ Your server currently supports mbstring: <strong>{$supportsMBString}</strong>]]>
 	<message key="user.changeMyPassword">Change My Password</message>
 	<message key="user.myAccount">My Account</message>
 	<message key="user.userHome">User Home</message>
+	<message key="user.profile">Profile</message>
+	<message key="user.register">Register</message>
 	<message key="user.login">Log In</message>
 	<message key="user.logOut">Log Out</message>
 	<message key="user.username">Username</message>
 	<message key="user.password">Password</message>
+	<message key="user.sendPassword">Confirmation</message>
+	<message key="user.sendPassword.description">Send me a confirmation email including my username and password</message>
 	<message key="user.salutation">Salutation</message>
 	<message key="user.name">Name</message>
 	<message key="user.firstName">First name</message>
@@ -224,12 +229,24 @@ Your server currently supports mbstring: <strong>{$supportsMBString}</strong>]]>
 	<message key="user.dateRegistered">Date registered</message>
 	<message key="user.dateLastLogin">Last login</message>
 	<message key="user.register.repeatPassword">Repeat Password</message>
+	<message key="user.register.usernameRestriction">The username must contain only lowercase letters, numbers, and hyphens/underscores.</message>
+	<message key="user.register.passwordLengthRestriction">The password must be at least {$length} characters.</message>
+	<message key="user.register.form.usernameExists">The selected username is already in use by another user.</message>
+	<message key="user.register.form.usernameAlphaNumeric">The username can contain only alphanumeric characters, underscores, and hyphens, and must begin and end with an alphanumeric character.</message>
+	<message key="user.register.form.emailExists">The selected email address is already in use by another user.</message>
+	<message key="user.register.form.passwordsDoNotMatch">The passwords do not match.</message>
 	<message key="user.login.loginError">Invalid username or password. Please try again.</message>
 	<message key="user.login.rememberMe">Remember me</message>
 	<message key="user.login.rememberUsernameAndPassword">Remember my username and password</message>
 
 	<message key="form.errorsOccurred">Errors occurred processing this form</message>
 	<message key="form.postRequired">The form was not submitted properly.</message>
+	<message key="user.noRoles.enableSubmitClosed">Registration as an archive submitter is currently disabled.</message>
+
+	<!-- Roles -->
+	<message key="user.role.siteAdmin">Site Administrator</message>
+	<message key="user.role.submitter">Archive Manager</message>
+	<message key="user.role.submitters">Archive Managers</message>
 
 	<!-- Archive entity messages -->
 	<message key="archive.archives">Archives</message>
@@ -280,7 +297,7 @@ Your server currently supports mbstring: <strong>{$supportsMBString}</strong>]]>
 	<message key="admin.settings.form.minPasswordLengthRequired">You must enter a minimum password length of at least 4 characters.</message>
 	<message key="admin.settings.passwordCharacters">characters</message>
 	<message key="admin.settings.options">Options</message>
-	<message key="admin.settings.options.enableSubmit">Enable anonymous users to submit their archives for indexing.</message>
+	<message key="admin.settings.options.enableSubmit">Enable anyone to register and submit their archives for indexing.</message>
 	<message key="admin.settings.siteLanguage">Site language</message>
 
 	<message key="admin.siteManagement">Site Management</message>
@@ -482,7 +499,7 @@ Your server currently supports mbstring: <strong>{$supportsMBString}</strong>]]>
 	<message key="rt.admin.rtDisabled">Disabled</message>
 	<message key="rt.admin.rtEnable">Enter Settings to enable the RT or change the selected version.</message>
 
-	<message key="rt.admin.versionDescription">Please select the version of the Reading Tools that best matches the requirements of this journal.</message>
+	<message key="rt.admin.versionDescription">Please select the version of the Reading Tools that best matches the requirements of this archive.</message>
 
 	<message key="rt.admin.options">Options</message>
 
@@ -494,7 +511,7 @@ Your server currently supports mbstring: <strong>{$supportsMBString}</strong>]]>
 	<message key="rt.admin.settings.printerFriendly">Go to print version (Takes reader to a printer-friendly version of an item)</message>
 	<message key="rt.admin.settings.authorBio">About the author (Displays the bio statements entered by the author)</message>
 	<message key="rt.admin.settings.defineTerms">Definition of terms (Enables readers to double-click on any word in an item and send the word to a dictionary)</message>
-	<message key="rt.admin.settings.addComment">Add comment to item (Enables readers to post comments, which Journal Manager can delete). Reader Comments must be enabled in Journal Setup</message>
+	<message key="rt.admin.settings.addComment">Add comment to item (Enables readers to post comments). Reader Comments must be enabled in Setup</message>
 	<message key="rt.admin.settings.emailAuthor">Email the author (Takes readers to an email template with the author's email)</message>
 	<message key="rt.admin.settings.emailOthers">Send item to colleague (Takes readers to an email template with the title of item as its subject)</message>
 

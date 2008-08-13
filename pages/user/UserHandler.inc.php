@@ -25,13 +25,13 @@ class UserHandler extends Handler {
 	function index() {
 		UserHandler::validate();
 
-		$sessionManager = &SessionManager::getManager();
-		$session = &$sessionManager->getUserSession();
+		$sessionManager =& SessionManager::getManager();
+		$session =& $sessionManager->getUserSession();
 
-		$roleDao = &DAORegistry::getDAO('RoleDAO');
+		$roleDao =& DAORegistry::getDAO('RoleDAO');
 
 		UserHandler::setupTemplate();
-		$templateMgr = &TemplateManager::getManager();
+		$templateMgr =& TemplateManager::getManager();
 
 		$templateMgr->assign('helpTopicId', 'user.userHome');
 
@@ -46,17 +46,10 @@ class UserHandler extends Handler {
 	function setLocale($args) {
 		$setLocale = isset($args[0]) ? $args[0] : null;
 
-		$site = &Request::getSite();
-		$journal = &Request::getJournal();
-		if ($journal != null) {
-			$journalSupportedLocales = $journal->getSetting('supportedLocales');
-			if (!is_array($journalSupportedLocales)) {
-				$journalSupportedLocales = array();
-			}
-		}
+		$site =& Request::getSite();
 
-		if (Locale::isLocaleValid($setLocale) && (!isset($journalSupportedLocales) || in_array($setLocale, $journalSupportedLocales)) && in_array($setLocale, $site->getSupportedLocales())) {
-			$session = &Request::getSession();
+		if (Locale::isLocaleValid($setLocale) && in_array($setLocale, $site->getSupportedLocales())) {
+			$session =& Request::getSession();
 			$session->setSessionVar('currentLocale', $setLocale);
 		}
 
@@ -77,28 +70,22 @@ class UserHandler extends Handler {
 	 */
 	function become($args) {
 		parent::validate(true, true);
-		$journal =& Request::getJournal();
 		$user =& Request::getUser();
 		if (!$user) Request::redirect(null, null, 'index');
 
 		switch (array_shift($args)) {
-			case 'author':
-				$roleId = ROLE_ID_AUTHOR;
-				$setting = 'allowRegAuthor';
-				$deniedKey = 'user.noRoles.submitArticleRegClosed';
-				break;
-			case 'reviewer':
-				$roleId = ROLE_ID_REVIEWER;
-				$setting = 'allowRegReviewer';
-				$deniedKey = 'user.noRoles.regReviewerClosed';
+			case 'submitter':
+				$roleId = ROLE_ID_SUBMITTER;
+				$setting = 'enableSubmit';
+				$deniedKey = 'user.noRoles.enableSubmitClosed';
 				break;
 			default:
-				Request::redirect(null, null, 'index');
+				Request::redirect('index');
 		}
 
-		if ($journal->getSetting($setting)) {
+		$site =& Request::getSite();
+		if ($site->getSetting($setting)) {
 			$role =& new Role();
-			$role->setJournalId($journal->getJournalId());
 			$role->setRoleId($roleId);
 			$role->setUserId($user->getUserId());
 
@@ -129,7 +116,7 @@ class UserHandler extends Handler {
 	 * @param $subclass boolean set to true if caller is below this handler in the hierarchy
 	 */
 	function setupTemplate($subclass = false) {
-		$templateMgr = &TemplateManager::getManager();
+		$templateMgr =& TemplateManager::getManager();
 		if ($subclass) {
 			$templateMgr->assign('pageHierarchy', array(array(Request::url(null, 'user'), 'navigation.user')));
 		}
@@ -234,56 +221,6 @@ class UserHandler extends Handler {
 
 		$templateMgr->assign_by_ref('user', $user);
 		$templateMgr->display('user/publicProfile.tpl');
-	}
-
-
-	//
-	// Payments
-	//
-
-	function payRenewSubscription($args) {
-		UserHandler::validate();
-		UserHandler::setupTemplate(true);
-
-		import('payment.ojs.OJSPaymentManager');
-		$paymentManager =& OJSPaymentManager::getManager();
-
-		import('subscription.SubscriptionDAO');
-		$subscriptionDAO =& DAORegistry::getDAO('SubscriptionDAO');
-		$subscriptionTypeDAO =& DAORegistry::getDAO('SubscriptionTypeDAO');
-
-		$journal =& Request::getJournal();
-		if ($journal) {
-			$user =& Request::getUser();
-			$subscriptionId = $subscriptionDAO->getSubscriptionIdByUser($user->getUserId(), $journal->getJournalId());
-
-			$subscriptionDAO =& DAORegistry::getDAO('SubscriptionDAO');
-			$subscription =& $subscriptionDAO->getSubscription($subscriptionId);
-			$subscriptionType =& $subscriptionTypeDAO->getSubscriptionType($subscription->getTypeId());
-
-			$queuedPayment =& $paymentManager->createQueuedPayment($journal->getJournalId(), PAYMENT_TYPE_SUBSCRIPTION, $user->getUserId(), $subscriptionId, $subscriptionType->getCost(), $subscriptionType->getCurrencyCodeAlpha());
-			$queuedPaymentId = $paymentManager->queuePayment($queuedPayment);
-
-			$paymentManager->displayPaymentForm($queuedPaymentId, $queuedPayment);
-		}
-
-	}
-
-	function payMembership($args) {
-		UserHandler::validate();
-		UserHandler::setupTemplate();
-
-		import('payment.ojs.OJSPaymentManager');
-		$paymentManager =& OJSPaymentManager::getManager();
-
-		$journal =& Request::getJournal();
-		$user =& Request::getUser();
-
-		$queuedPayment =& $paymentManager->createQueuedPayment($journal->getJournalId(), PAYMENT_TYPE_MEMBERSHIP, $user->getUserId(), null,  $journal->getSetting('membershipFee'));
-		$queuedPaymentId = $paymentManager->queuePayment($queuedPayment);
-
-		$paymentManager->displayPaymentForm($queuedPaymentId, $queuedPayment);
-
 	}
 }
 

@@ -47,7 +47,6 @@ class PluginHandler extends AdminHandler {
 		$templateMgr =& TemplateManager::getManager();
 		$templateMgr->assign_by_ref('plugins', $plugins);
 		$templateMgr->assign_by_ref('categories', $categories);
-		$templateMgr->assign('helpTopicId', 'journal.managementPages.plugins');
 
 		$templateMgr->display('admin/plugins.tpl');
 	}

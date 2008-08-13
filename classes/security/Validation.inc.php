@@ -166,7 +166,7 @@ class Validation {
 	}
 
 	/**
-	 * Check if a user is authorized to access the specified role in the specified journal.
+	 * Check if a user is authorized to access the specified role.
 	 * @param $roleId int
 	 * @return boolean
 	 */

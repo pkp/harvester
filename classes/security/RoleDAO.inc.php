@@ -151,6 +151,8 @@ class RoleDAO extends DAO {
 		switch ($roleId) {
 			case ROLE_ID_SITE_ADMIN:
 				return 'user.role.siteAdmin' . ($plural ? 's' : '');
+			case ROLE_ID_SUBMITTER:
+				return 'user.role.submitter' . ($plural ? 's' : '');
 			default:
 				return '';
 		}
@@ -165,6 +167,8 @@ class RoleDAO extends DAO {
 		switch ($roleId) {
 			case ROLE_ID_SITE_ADMIN:
 				return 'admin';
+			case ROLE_ID_SUBMITTER:
+				return 'submitter';
 			default:
 				return '';
 		}

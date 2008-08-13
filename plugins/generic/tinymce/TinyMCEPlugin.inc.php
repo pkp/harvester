@@ -22,8 +22,7 @@ define('TINYMCE_JS_PATH', TINYMCE_INSTALL_PATH . DIRECTORY_SEPARATOR . 'jscripts
 
 class TinyMCEPlugin extends GenericPlugin {
 	/**
-	 * Register the plugin, if enabled; note that this plugin
-	 * runs under both Journal and Site contexts.
+	 * Register the plugin, if enabled
 	 * @param $category string
 	 * @param $path string
 	 * @return boolean
