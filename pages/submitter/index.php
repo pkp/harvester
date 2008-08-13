@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @file pages/add/index.php
+ * @file pages/submitter/index.php
  *
  * Copyright (c) 2005-2008 Alec Smecher and John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
@@ -13,8 +13,8 @@
  * $Id$
  */
 
-define('HANDLER_CLASS', 'AddHandler');
+define('HANDLER_CLASS', 'SubmitterHandler');
 
-import('pages.add.AddHandler');
+import('pages.submitter.SubmitterHandler');
 
 ?>

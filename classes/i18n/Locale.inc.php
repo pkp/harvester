@@ -51,11 +51,11 @@ class Locale extends PKPLocale {
 				$locale = Request::getUserVar('setLocale');
 				if (empty($locale) || !in_array($locale, Locale::getSupportedLocales())) $locale = Request::getCookieVar('currentLocale');
 			} else {
-				$sessionManager = &SessionManager::getManager();
-				$session = &$sessionManager->getUserSession();
+				$sessionManager =& SessionManager::getManager();
+				$session =& $sessionManager->getUserSession();
 				$locale = $session->getSessionVar('currentLocale');
 
-				$site = &Request::getSite();
+				$site =& Request::getSite();
 
 				if (!isset($locale)) {
 					$locale = Request::getCookieVar('currentLocale');
@@ -63,7 +63,7 @@ class Locale extends PKPLocale {
 
 				if (isset($locale)) {
 					// Check if user-specified locale is supported
-					$locales = &$site->getSupportedLocaleNames();
+					$locales =& $site->getSupportedLocaleNames();
 
 					if (!in_array($locale, array_keys($locales))) {
 						unset($locale);
@@ -104,7 +104,7 @@ class Locale extends PKPLocale {
 	 * @return string
 	 */
 	function getPrimaryLocale() {
-		$site = &Request::getSite();
+		$site =& Request::getSite();
 		$locale = $site->getPrimaryLocale();
 
 		if (!isset($locale) || !Locale::isLocaleValid($locale)) {

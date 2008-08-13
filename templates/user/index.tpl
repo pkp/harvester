@@ -24,7 +24,7 @@
 			{translate key="user.noRoles"}
 			<ul class="plain">
 			{if $enableSubmit}
-				{url|assign:"submitUrl" page="add"}
+				{url|assign:"submitUrl" page="submitter"}
 				<li>&#187; <a href="{url op="become" path="submitter" source=$submitUrl}">{translate key="user.noRoles.submitArchive"}</a>
 			{else}
 				{translate key="user.noRoles.enableSubmitClosed"}

@@ -190,7 +190,7 @@ class OAIHarvesterPlugin extends HarvesterPlugin {
 				$metadata = $oaiHarvester->getMetadata($harvesterUrl, Request::getUserVar('isStatic'));
 
 				import('admin.form.ArchiveForm');
-				$archiveForm = &new ArchiveForm($archiveId);
+				$archiveForm =& new ArchiveForm($archiveId);
 				$archiveForm->initData();
 				$archiveForm->readInputData();
 

@@ -9,7 +9,6 @@
  * $Id$
  *}
 {strip}
-{assign var=sidebarTemplate value="index/sidebar.tpl"}
 {include file="common/header.tpl"}
 {/strip}
 

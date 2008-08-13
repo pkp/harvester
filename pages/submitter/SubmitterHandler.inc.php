@@ -1,13 +1,13 @@
 <?php
 
 /**
- * @file pages/add/AddHandler.inc.php
+ * @file pages/submitter/SubmitterHandler.inc.php
  *
  * Copyright (c) 2005-2008 Alec Smecher and John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
- * @package pages.add
- * @class AddHandler
+ * @package pages.submitter
+ * @class SubmitterHandler
  *
  * Handle requests for adding new archives.
  *
@@ -18,7 +18,7 @@
 
 import('core.Handler');
 
-class AddHandler extends Handler {
+class SubmitterHandler extends Handler {
 	/**
 	 * Display add page.
 	 */
@@ -26,8 +26,8 @@ class AddHandler extends Handler {
 		$site =& Request::getSite();
 		if (!$site->getSetting('enableSubmit')) Request::redirect('index');
 
-		AddHandler::validate();
-		AddHandler::setupTemplate();
+		SubmitterHandler::validate();
+		SubmitterHandler::setupTemplate();
 
 		import('admin.form.ArchiveForm');
 
@@ -43,7 +43,7 @@ class AddHandler extends Handler {
 		$site =& Request::getSite();
 		if (!$site->getSetting('enableSubmit')) Request::redirect('index');
 
-		AddHandler::validate();
+		SubmitterHandler::validate();
 
 		import('admin.form.ArchiveForm');
 
@@ -57,7 +57,7 @@ class AddHandler extends Handler {
 			$archiveForm->execute();
 			Request::redirect('index', null);
 		} else {
-			AddHandler::setupTemplate(true);
+			SubmitterHandler::setupTemplate(true);
 			$archiveForm->display();
 		}
 	}
@@ -69,7 +69,7 @@ class AddHandler extends Handler {
 		$templateMgr =& TemplateManager::getManager();
 		if ($subclass) {
 			$templateMgr->assign('pageHierarchy',
-				array(array(Request::url('add'), 'navigation.addArchive'))
+				array(array(Request::url('submitter'), 'navigation.addArchive'))
 			);
 		}
 	}
