@@ -52,14 +52,6 @@ class LanguageToggleBlockPlugin extends BlockPlugin {
 	}
 
 	/**
-	 * Install default settings on journal creation.
-	 * @return string
-	 */
-	function getNewJournalPluginSettingsFile() {
-		return $this->getPluginPath() . '/settings.xml';
-	}
-
-	/**
 	 * Get the block context. Overrides parent so that the plugin will be
 	 * displayed during install.
 	 * @return int
@@ -107,14 +99,8 @@ class LanguageToggleBlockPlugin extends BlockPlugin {
 	 */
 	function getContents(&$templateMgr) {
 		if (!defined('SESSION_DISABLE_INIT')) {
-			$journal =& Request::getJournal();
-			if (isset($journal)) {
-				$locales =& $journal->getSupportedLocaleNames();
-
-			} else {
-				$site =& Request::getSite();
-				$locales =& $site->getSupportedLocaleNames();
-			}
+			$site =& Request::getSite();
+			$locales =& $site->getSupportedLocaleNames();
 		} else {
 			$locales =& Locale::getAllLocales();
 			$templateMgr->assign('languageToggleNoUser', true);

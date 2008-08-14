@@ -24,6 +24,7 @@
 	<message key="common.disabled">Disabled</message>
 	<message key="common.search">Search</message>
 	<message key="common.refresh">Refresh</message>
+	<message key="common.saveAndContinue">Save and continue</message>
 	<message key="common.close">Close</message>
 	<message key="common.delete">Delete</message>
 	<message key="common.yes">Yes</message>
@@ -269,6 +270,7 @@ Your server currently supports mbstring: <strong>{$supportsMBString}</strong>]]>
 	<!-- Site Administration -->
 	<message key="admin.siteAdmin">Site Administration</message>
 	<message key="admin.siteSettings">Site Settings</message>
+	<message key="admin.layout">Layout</message>
 	<message key="admin.archives">Archives</message>
 	<message key="admin.plugins">Plugins</message>
 	<message key="admin.rtAdmin">Reading Tools</message>
@@ -314,6 +316,11 @@ Your server currently supports mbstring: <strong>{$supportsMBString}</strong>]]>
 	<message key="admin.clearDataCache">Clear Data Caches</message>
 	<message key="admin.confirmClearTemplateCache">Are you sure you want to clear the cache of compiled templates?</message>
 	<message key="admin.systemInformation">System Information</message>
+
+	<!-- Layout -->
+	<message key="admin.setup.layout.leftSidebar">Left Sidebar</message>
+	<message key="admin.setup.layout.unselected">Unselected</message>
+	<message key="admin.setup.layout.rightSidebar">Right Sidebar</message>
 
 	<!-- Archives -->
 	<message key="admin.archives.addArchive">Add Archive</message>

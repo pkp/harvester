@@ -185,6 +185,23 @@ class ArchiveDAO extends DAO {
 	}
 
 	/**
+	 * Retrieve all archives by user ID.
+	 * @param $onlyEnabled boolean
+	 * @param $rangeInfo object
+	 * @return DAOResultFactory containing matching archives
+	 */
+	function &getArchivesByUserId($userId, $rangeInfo = null) {
+		$result =& $this->retrieveRange(
+			'SELECT * FROM archives WHERE user_id = ? ORDER BY title',
+			array((int) $userId),
+			$rangeInfo
+		);
+
+		$returner =& new DAOResultFactory($result, $this, '_returnArchiveFromRow');
+		return $returner;
+	}
+
+	/**
 	 * Get the ID of the last inserted archive.
 	 * @return int
 	 */

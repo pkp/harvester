@@ -18,6 +18,7 @@
 
 <ul class="plain">
 	<li>&#187; <a href="{url op="settings"}">{translate key="admin.siteSettings"}</a></li>
+	<li>&#187; <a href="{url op="layout"}">{translate key="admin.layout"}</a></li>
 	<li>&#187; <a href="{url op="languages"}">{translate key="common.languages"}</a></li>
 	<li>&#187; <a href="{url op="plugins"}">{translate key="admin.plugins"}</a></li>
 	<li>&#187; <a href="{url page="rtadmin"}">{translate key="admin.rtAdmin"}</a></li>

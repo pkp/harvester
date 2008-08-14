@@ -70,6 +70,34 @@ class AdminHandler extends Handler {
 		AdminSettingsHandler::saveSettings();
 	}
 
+
+	//
+	// Layout
+	//
+
+	function layout() {
+		import('admin.form.LayoutForm');
+		$layoutForm =& new LayoutForm();
+		if ($layoutForm->isLocaleResubmit()) {
+			$layoutForm->readInputData();
+		} else {
+			$layoutForm->initData();
+		}
+		$layoutForm->display();
+	}
+
+	function saveLayout() {
+		import('admin.form.LayoutForm');
+		$layoutForm =& new LayoutForm();
+		$layoutForm->readInputData();
+		if ($layoutForm->validate()) {
+			$layoutForm->execute();
+			Request::redirect('admin');
+		} else {
+			$layoutForm->display();
+		}
+	}
+
 	//
 	// Archive Management
 	//

@@ -272,7 +272,7 @@ class ArchiveForm extends Form {
 					'siteTitle' => $site->getSiteTitle(),
 					'loginUrl' => Request::url('admin', 'manage', $this->archive->getArchiveId())
 				));
-				$email->addRecipient($site->getContactEmail(), $site->getContactName());
+				$email->addRecipient($site->getLocalizedSetting('contactEmail'), $site->getLocalizedSetting('contactName'));
 				$email->send();
 			}
 		}

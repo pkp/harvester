@@ -99,6 +99,8 @@ class AdminLanguagesHandler extends AdminHandler {
 			}
 
 			$site->setInstalledLocales($installedLocales);
+			$siteDao =& DAORegistry::getDAO('SiteDAO');
+			$siteDao->updateSite($site);
 		}
 
 		Request::redirect('admin', 'languages');

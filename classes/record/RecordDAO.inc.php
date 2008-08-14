@@ -172,29 +172,7 @@ class RecordDAO extends DAO {
 	 * Delete the records for a specified archive, INCLUDING ALL DEPENDENT ITEMS.
 	 */
 	function deleteRecordsByArchiveId($archiveId) {
-		switch ($this->getDriver()) {
-			case 'mysql':
-				// Count on missing referential integrity for
-				// cases where records can be deleted.
-				// Using one or two DELETE FROM ... WHERE ...
-				// queries is too slow (at least for 5.0.15).
-				$this->update('DELETE FROM records WHERE archive_id = ?', $archiveId);
-				$this->update('DELETE search_objects FROM search_objects LEFT JOIN records ON (search_objects.record_id = records.record_id) WHERE records.record_id IS NULL');
-				$this->update('DELETE search_object_keywords FROM search_object_keywords LEFT JOIN search_objects ON (search_object_keywords.object_id = search_objects.object_id) WHERE search_objects.object_id IS NULL');
-				break;
-			case 'postgres':
-				$this->update('DELETE FROM search_object_keywords USING search_objects, records WHERE records.archive_id = ? AND records.record_id = search_objects.record_id AND search_object_keywords.object_id = search_objects.object_id', $archiveId);
-				$this->update('DELETE FROM search_objects USING records WHERE records.archive_id = ? AND records.record_id = search_objects.record_id', $archiveId);
-				$this->update('DELETE FROM records WHERE archive_id = ?', $archiveId);
-				break;
-			default:
-				$records =& $this->getRecords(false, $archiveId);
-				while ($record =& $records->next()) {
-					$this->deleteRecord($record);
-					unset($record);
-				}
-				break;
-		}
+		$this->update('DELETE FROM records WHERE archive_id = ?', $archiveId);
 	}
 
 	/**

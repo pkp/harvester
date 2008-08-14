@@ -20,47 +20,125 @@ import('core.Handler');
 
 class SubmitterHandler extends Handler {
 	/**
-	 * Display add page.
+	 * Display a list of the user's archives
 	 */
 	function index() {
-		$site =& Request::getSite();
-		if (!$site->getSetting('enableSubmit')) Request::redirect('index');
-
 		SubmitterHandler::validate();
 		SubmitterHandler::setupTemplate();
 
+		$user =& Request::getUser();
+
+		$archiveDao =& DAORegistry::getDAO('ArchiveDAO');
+		$archives =& $archiveDao->getArchivesByUserId($user->getUserId());
+
+		// Load the harvester plugins so we can display names.
+		$plugins =& PluginRegistry::loadCategory('harvesters');
+
+		$templateMgr =& TemplateManager::getManager();
+		$templateMgr->assign_by_ref('harvesters', $plugins);
+		$templateMgr->assign_by_ref('archives', $archives);
+		$templateMgr->display('submitter/archives.tpl');
+	}
+
+	/**
+	 * Display add page.
+	 */
+	function createArchive() {
+		SubmitterHandler::editArchive();
+	}
+
+	/**
+	 * Display add/edit page.
+	 */
+	function editArchive($args = array()) {
+		$archiveId = null;
+		if (is_array($args) && !empty($args)) $archiveId = (int) array_shift($args);
+		SubmitterHandler::validate($archiveId);
+		SubmitterHandler::setupTemplate();
+
+		$site =& Request::getSite();
+		if (!$site->getSetting('enableSubmit')) Request::redirect('index');
+
 		import('admin.form.ArchiveForm');
 
-		$archiveForm =& new ArchiveForm(!isset($args) || empty($args) ? null : (int) $args[0]);
+		$archiveForm =& new ArchiveForm($archiveId);
 		$archiveForm->initData();
 		$archiveForm->display();
 	}
 
 	/**
-	 * Save changes to a archive's settings.
+	 * Save changes to an archive's settings.
 	 */
 	function updateArchive() {
-		$site =& Request::getSite();
-		if (!$site->getSetting('enableSubmit')) Request::redirect('index');
+		$archiveId = Request::getUserVar('archiveId');
+		if (empty($archiveId)) $archiveId = null;
+		else $archiveId = (int) $archiveId;
 
-		SubmitterHandler::validate();
+		SubmitterHandler::validate($archiveId);
 
 		import('admin.form.ArchiveForm');
 
-		$archiveId = (int) Request::getUserVar('archiveId');
 
-		$archiveForm =& new ArchiveForm($archiveId);
+		$archiveForm = &new ArchiveForm($archiveId);
 		$archiveForm->initData();
 		$archiveForm->readInputData();
 
-		if ($archiveForm->validate()) {
+		$dataModified = false;
+
+		if (Request::getUserVar('uploadArchiveImage')) {
+			if (!$archiveForm->uploadArchiveImage()) {
+				$archiveForm->addError('archiveImage', Locale::translate('archive.image.profileImageInvalid'));
+			}
+			$dataModified = true;
+		} else if (Request::getUserVar('deleteArchiveImage')) {
+			$archiveForm->deleteArchiveImage();
+			$dataModified = true;
+		}
+
+		if (!$dataModified && $archiveForm->validate()) {
 			$archiveForm->execute();
-			Request::redirect('index', null);
+			Request::redirect('submitter', $archiveId);
+
 		} else {
 			SubmitterHandler::setupTemplate(true);
 			$archiveForm->display();
 		}
 	}
+
+	/**
+	 * Delete an archive.
+	 * @param $args array first parameter is the ID of the archive to delete
+	 */
+	function deleteArchive($args) {
+		$archiveId = (int) array_shift($args);
+		list($archive) = SubmitterHandler::validate($archiveId);
+
+		$archiveDao =& DAORegistry::getDAO('ArchiveDAO');
+
+		// Disable timeout, as this operation may take
+		// a long time.
+		@set_time_limit(0);
+
+		$archiveDao->deleteArchiveById($archiveId);
+
+		Request::redirect('submitter');
+	}
+
+	function validate ($archiveId = null) {
+		$returner = null;
+		$user =& Request::getUser();
+		if ($archiveId !== null) {
+			$archiveDao =& DAORegistry::getDAO('ArchiveDAO');
+			$archive =& $archiveDao->getArchive((int) $archiveId);
+
+			if (!$archive) Request::redirect('index');
+			if ($archive->getUserId() != $user->getUserId()) Request::redirect('index');
+
+			$returner = array(&$archive);
+		}
+		return $returner;
+	}
+
 	/**
 	 * Setup common template variables.
 	 * @param $subclass boolean set to true if caller is below this handler in the hierarchy
