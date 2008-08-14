@@ -243,8 +243,12 @@ Your server currently supports mbstring: <strong>{$supportsMBString}</strong>]]>
 	<message key="user.login.rememberMe">Remember me</message>
 	<message key="user.login.rememberUsernameAndPassword">Remember my username and password</message>
 
+	<!-- Forms -->
 	<message key="form.errorsOccurred">Errors occurred processing this form</message>
 	<message key="form.postRequired">The form was not submitted properly.</message>
+	<message key="form.formLanguage">Form Language</message>
+	<message key="form.formLanguage.description">To enter the information below in additional languages, first select the language.</message>
+
 	<message key="user.noRoles">Your account does not currently have any roles. Please choose from the actions below:</message>
 	<message key="user.noRoles.submitArchive">Submit an archive</message>
 	<message key="user.noRoles.enableSubmitClosed">Registration as an archive submitter is currently disabled.</message>
