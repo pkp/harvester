@@ -115,7 +115,7 @@ class AdminLanguagesHandler extends AdminHandler {
 		$site =& Request::getSite();
 		$locale = Request::getUserVar('locale');
 
-		if (isset($locale) && !empty($locale) && $locale != $site->getLocale()) {
+		if (isset($locale) && !empty($locale) && $locale != $site->getPrimaryLocale()) {
 			$installedLocales = $site->getInstalledLocales();
 
 			if (in_array($locale, $installedLocales)) {
@@ -124,6 +124,9 @@ class AdminLanguagesHandler extends AdminHandler {
 				$supportedLocales = $site->getSupportedLocales();
 				$supportedLocales = array_diff($supportedLocales, array($locale));
 				$site->setSupportedLocales($supportedLocales);
+
+				$siteDao = &DAORegistry::getDAO('SiteDAO');
+				$siteDao->updateSite($site);
 
 				Locale::uninstallLocale($locale);
 			}

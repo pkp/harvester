@@ -125,22 +125,6 @@ class Archive extends DataObject {
 	}
 
 	/**
-	 * Get description of archive
-	 * @return string
-	 */
-	function getDescription() {
-	 	return $this->getData('description');
-	}
-
-	/**
-	 * Set description of archive
-	 * @param $description string
-	 */
-	function setDescription($description) {
-		return $this->setData('description', $description);
-	}
-
-	/**
 	 * Get ID of archive.
 	 * @return int
 	 */

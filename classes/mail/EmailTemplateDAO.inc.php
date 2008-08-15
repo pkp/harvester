@@ -192,6 +192,16 @@ class EmailTemplateDAO extends DAO {
 			'DELETE FROM email_templates_data WHERE locale = ?', $locale
 		);
 	}
+
+	/**
+	 * Delete all default email templates for a specific locale.
+	 * @param $locale string
+	 */
+	function deleteDefaultEmailTemplatesByLocale($locale) {
+		/*$this->update(
+			'DELETE FROM email_templates_default_data WHERE locale = ?', $locale
+		);*/ // Not used in Harvester, but called from PKP. FIXME
+	}
 }
 
 ?>

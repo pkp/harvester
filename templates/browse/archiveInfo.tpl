@@ -18,7 +18,7 @@
 
 <a href="{$archive->getUrl()|escape:"url"}">{$archive->getUrl()|escape}</a><br />
 
-{if $archive->getDescription() != ''}<p>{$archive->getDescription()|nl2br|strip_unsafe_html}</p>{/if}
+{if $archive->getSetting('description') != ''}<p>{$archive->getSetting('description')|nl2br|strip_unsafe_html}</p>{/if}
 
 {assign var=archiveImage value=$archive->getSetting('archiveImage')}
 {if $archiveImage}

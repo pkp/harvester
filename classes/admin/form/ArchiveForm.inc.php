@@ -129,7 +129,7 @@ class ArchiveForm extends Form {
 	 * Display the form.
 	 */
 	function display() {
-		$templateMgr = &TemplateManager::getManager();
+		$templateMgr =& TemplateManager::getManager();
 		$templateMgr->assign('archiveId', $this->archiveId);
 		if ($this->captchaEnabled && !Validation::isSiteAdmin()) {
 			import('captcha.CaptchaManager');
@@ -154,7 +154,7 @@ class ArchiveForm extends Form {
 			$this->_data = array(
 				'title' => $this->archive->getTitle(),
 				'publicArchiveId' => $this->archive->getPublicArchiveId(),
-				'description' => $this->archive->getDescription(),
+				'description' => $this->archive->getSetting('description'),
 				'url' => $this->archive->getUrl(),
 				'harvesterPluginName' => $this->harvesterPluginName,
 				'archive' => $this->archive,
@@ -228,17 +228,16 @@ class ArchiveForm extends Form {
 	 * Save archive settings.
 	 */
 	function execute() {
-		$archiveDao = &DAORegistry::getDAO('ArchiveDAO');
+		$archiveDao =& DAORegistry::getDAO('ArchiveDAO');
 
 		if (!isset($this->archive)) {
-			$this->archive = &new Archive();
+			$this->archive =& new Archive();
 			$user =& Request::getUser();
 			$this->archive->setUserId($user->getUserId());
 		}
 
 		$this->harvesterPluginName = Request::getUserVar('harvesterPluginName');
 		$this->archive->setHarvesterPluginName($this->harvesterPluginName);
-		$this->archive->setDescription($this->getData('description'));
 		$this->archive->setUrl($this->getData('url'));
 		$this->archive->setTitle($this->getData('title'));
 		if (Validation::isSiteAdmin()) {
@@ -258,6 +257,8 @@ class ArchiveForm extends Form {
 			$rtAdmin =& new HarvesterRTADmin($archiveId);
 			$rtAdmin->restoreVersions(false);
 		}
+
+		$this->archive->updateSetting('description', $this->getData('description'));
 
 		HookRegistry::call('ArchiveForm::execute', array(&$this, &$this->archive, $this->harvesterPluginName));
 

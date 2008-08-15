@@ -25,6 +25,7 @@ class IndexHandler extends Handler {
 		$site =& Request::getSite();
 
 		$templateMgr->assign('intro', $site->getSiteIntro());
+		$templateMgr->assign('title', $site->getSiteTitle());
 
 		$archiveDao =& DAORegistry::getDAO('ArchiveDAO');
 		$templateMgr->assign('archiveCount', $archiveDao->getArchiveCount());

@@ -68,7 +68,7 @@ class OAIHarvesterPlugin extends HarvesterPlugin {
 	 */
 	function addDescriptionField($hookName, $args) {
 		$fields =& $args[1];
-		$fields[] = 'description';
+		if (!in_array('description', $fields)) $fields[] = 'description';
 		return false;
 	}
 

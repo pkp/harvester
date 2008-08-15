@@ -99,7 +99,6 @@
 			<NOTNULL/>
 		</field>
 		<field name="enabled" type="I1"/>
-		<field name="description" type="X"/>
 		<descr>Archives and basic archive settings.</descr>
 		<index name="archive_public_id">
 			<col>public_archive_id</col>

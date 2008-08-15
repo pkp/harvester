@@ -48,7 +48,7 @@
 			<input type="file" name="customLogo" class="uploadField" /> <input type="submit" name="uploadCustomLogo" value="{translate key="common.upload"}" class="button" />
 			{if $customLogo}
 				<br />
-				{translate key="common.fileName"}: {$customLogo.name} {$customLogo.dateUploaded|date_format:$datetimeFormatShort} <input type="submit" name="deleteCustomLogo" value="{translate key="common.delete"}" class="button" />
+				{translate key="common.fileName"}: {$customLogo.uploadName} {$customLogo.dateUploaded|date_format:$datetimeFormatShort} <input type="submit" name="deleteCustomLogo" value="{translate key="common.delete"}" class="button" />
 				<br />
 				<img src="{$publicFilesDir}/{$customLogo.uploadName}" width="{$customLogo.width}" height="{$customLogo.height}" border="0" alt="" />
 {/if}
@@ -57,6 +57,17 @@
 	<tr valign="top">
 		<td class="label">{fieldLabel name="minPasswordLength" key="admin.settings.minPasswordLength" required="true"}</td>
 		<td colspan="2" class="value"><input type="text" id="minPasswordLength" name="minPasswordLength" value="{$minPasswordLength|escape}" size="4" maxlength="2" class="textField" /> {translate key="admin.settings.passwordCharacters"}</td>
+	</tr>
+	<tr>
+		<td width="20%" class="label"><label for="theme">{translate key="admin.settings.theme"}</label></td>
+		<td width="80%" class="value">
+			<select name="theme" class="selectMenu" id="theme"{if empty($themes)} disabled="disabled"{/if}>
+				<option value="">{translate key="common.none"}</option>
+				{foreach from=$themes key=path item=themePlugin}
+					<option value="{$path|escape}"{if $path == $theme} selected="selected"{/if}>{$themePlugin->getDisplayName()}</option>
+				{/foreach}
+			</select>
+		</td>
 	</tr>
 	<tr valign="top">
 		<td class="label">{translate key="admin.settings.styleSheet"}</td>
@@ -86,7 +97,7 @@
 	<tr valign="top">
 		<td class="label">{translate key="admin.settings.options"}</td>
 		<td class="value">
-			<input type="checkbox" {if $enableSubmit}checked {/if}id="enableSubmit" name="enableSubmit" value="1" />&nbsp;
+			<input type="checkbox" {if $enableSubmit}checked="checked" {/if}id="enableSubmit" name="enableSubmit" value="1" />&nbsp;
 			{fieldLabel name="enableSubmit" key="admin.settings.options.enableSubmit"}
 		</td>
 	</tr>

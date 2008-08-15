@@ -46,8 +46,21 @@ class TemplateManager extends PKPTemplateManager {
 			$siteStyleFilename = PublicFileManager::getSiteFilesPath() . '/' . $site->getSiteStyleFilename();
 			if (file_exists($siteStyleFilename)) $this->addStyleSheet(Request::getBaseUrl() . '/' . $siteStyleFilename);
 
+			// Load and apply theme plugin, if chosen
+			$themePluginPath = $site->getSetting('theme');
+			if (!empty($themePluginPath)) {
+				// Load and activate the theme
+				$themePlugin =& PluginRegistry::loadPlugin('themes', $themePluginPath);
+				if ($themePlugin) $themePlugin->activate($this);
+			}
+
 			// Add the site-wide logo, if set for this locale or the primary locale
 			$this->assign('displayPageHeaderTitle', $site->getSitePageHeaderTitle());
+			
+			$customLogo = $site->getSetting('customLogo');
+			if ($customLogo) {
+				$this->assign('useCustomLogo', $customLogo);
+			}
 
 			$this->assign('siteTitle', $site->getSiteTitle());
 			$this->assign('enableSubmit', $site->getSetting('enableSubmit'));

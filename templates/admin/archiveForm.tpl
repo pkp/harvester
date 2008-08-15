@@ -87,7 +87,7 @@ function selectHarvester() {
 		<tr valign="top">
 			<td class="label">&nbsp;</td>
 			<td class="value">
-				<input type="checkbox" id="enabled" name="enabled" {if $enabled}checked {/if}/>&nbsp;{fieldLabel name="url" key="common.enabled"}
+				<input type="checkbox" id="enabled" name="enabled" {if $enabled}checked="checked" {/if}/>&nbsp;{fieldLabel name="url" key="common.enabled"}
 			</td>
 		</tr>
 	{/if}

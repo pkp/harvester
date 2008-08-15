@@ -32,7 +32,7 @@
 
 
 	<p>
-		{$archive->getDescription()|strip_unsafe_html|nl2br}<br />
+		{$archive->getSetting('description')|strip_unsafe_html|nl2br}<br />
 		{translate key="browse.recordCount" count=$archive->getRecordCount()}
 	</p>
 

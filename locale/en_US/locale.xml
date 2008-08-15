@@ -298,6 +298,7 @@ Your server currently supports mbstring: <strong>{$supportsMBString}</strong>]]>
 	<message key="admin.settings.aboutDescription">About the Site description</message>
 	<message key="admin.settings.form.titleRequired">A title is required.</message>
 	<message key="admin.settings.styleSheet">Style sheet</message>
+	<message key="admin.settings.theme">Theme</message>
 	<message key="admin.settings.styleSheet.invalid">Invalid stylesheet format. Accepted format is .css.</message>
 	<message key="admin.settings.customLogo">Custom logo</message>
 	<message key="admin.settings.customLogo.invalid">Invalid custom logo format. Accepted formats are .gif, .jpg, and .png.</message>
