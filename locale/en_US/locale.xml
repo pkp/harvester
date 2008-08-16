@@ -311,6 +311,7 @@ Your server currently supports mbstring: <strong>{$supportsMBString}</strong>]]>
 	<message key="admin.settings.passwordCharacters">characters</message>
 	<message key="admin.settings.options">Options</message>
 	<message key="admin.settings.options.enableSubmit">Enable anyone to register and submit their archives for indexing.</message>
+	<message key="admin.settings.options.disableSubmissions">Submissions are disabled by default and must be enabled by the administrator.</message>
 	<message key="admin.settings.siteLanguage">Site language</message>
 
 	<message key="admin.siteManagement">Site Management</message>

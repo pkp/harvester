@@ -87,18 +87,24 @@
 
 <table class="data" width="100%">
 	<tr valign="top">
-		<td class="label">{fieldLabel name="contactName" key="admin.settings.contactName" required="true"}</td>
-		<td class="value"><input type="text" id="contactName" name="contactName[{$formLocale|escape}]" value="{$contactName[$formLocale]|escape}" size="40" maxlength="90" class="textField" /></td>
+		<td width="20%" class="label">{fieldLabel name="contactName" key="admin.settings.contactName" required="true"}</td>
+		<td width="80%" class="value"><input type="text" id="contactName" name="contactName[{$formLocale|escape}]" value="{$contactName[$formLocale]|escape}" size="40" maxlength="90" class="textField" /></td>
 	</tr>
 	<tr valign="top">
 		<td class="label">{fieldLabel name="contactEmail" key="admin.settings.contactEmail" required="true"}</td>
 		<td class="value"><input type="text" id="contactEmail" name="contactEmail[{$formLocale|escape}]" value="{$contactEmail[$formLocale]|escape}" size="40" maxlength="90" class="textField" /></td>
 	</tr>
 	<tr valign="top">
-		<td class="label">{translate key="admin.settings.options"}</td>
+		<td rowspan="2" class="label">{translate key="admin.settings.options"}</td>
 		<td class="value">
 			<input type="checkbox" {if $enableSubmit}checked="checked" {/if}id="enableSubmit" name="enableSubmit" value="1" />&nbsp;
 			{fieldLabel name="enableSubmit" key="admin.settings.options.enableSubmit"}
+		</td>
+	</tr>
+	<tr valign="top">
+		<td class="value">
+			<input type="checkbox" {if $disableSubmissions}checked="checked" {/if}id="disableSubmissions" name="disableSubmissions" value="1" />&nbsp;
+			{fieldLabel name="disableSubmissions" key="admin.settings.options.disableSubmissions"}
 		</td>
 	</tr>
 </table>

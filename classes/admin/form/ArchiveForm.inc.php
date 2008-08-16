@@ -244,7 +244,7 @@ class ArchiveForm extends Form {
 			$this->archive->setPublicArchiveId($this->getData('publicArchiveId'));
 			$this->archive->setEnabled($this->getData('enabled'));
 		} else {
-			$this->archive->setEnabled(true);
+			$this->archive->setEnabled($site->getSetting('disableSubmissions')?1:0);
 		}
 
 		if ($this->archive->getArchiveId() != null) {
