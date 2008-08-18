@@ -1,9 +1,9 @@
 <?php
 
 /**
- * @file includes/driver.inc.php
+ * @file driver.inc.php
  *
- * Copyright (c) 2005-2008 Alec Smecher and John Willinsky
+ * Copyright (c) 2005-2007 Alec Smecher and John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * Core system initialization code.
@@ -20,6 +20,10 @@
  * Basic initialization (pre-classloading).
  */
 
+// Useful for debugging purposes -- may want to disable for release version?
+error_reporting(E_ALL);
+
+
 // Update include path
 define('ENV_SEPARATOR', strtolower(substr(PHP_OS, 0, 3)) == 'win' ? ';' : ':');
 if (!defined('DIRECTORY_SEPARATOR')) {
@@ -31,21 +35,67 @@ ini_set('include_path', '.'
 	. ENV_SEPARATOR . BASE_SYS_DIR . '/includes'
 	. ENV_SEPARATOR . BASE_SYS_DIR . '/classes'
 	. ENV_SEPARATOR . BASE_SYS_DIR . '/pages'
-	. ENV_SEPARATOR . BASE_SYS_DIR . '/lib/pkp/classes'
-	. ENV_SEPARATOR . BASE_SYS_DIR . '/lib/pkp/lib/adodb'
-	. ENV_SEPARATOR . BASE_SYS_DIR . '/lib/pkp/lib/smarty'
+	. ENV_SEPARATOR . BASE_SYS_DIR . '/lib'
+	. ENV_SEPARATOR . BASE_SYS_DIR . '/lib/smarty'
 	. ENV_SEPARATOR . ini_get('include_path')
 );
 
+
+// Seed random number generator
+mt_srand(((double) microtime()) * 1000000);
+
 // System-wide functions
 require('functions.inc.php');
+
+
+/**
+ * System class imports.
+ * Only classes used system-wide should be included here.
+ */
+import('core.Core');
+import('core.Request');
+import('core.DataObject');
+import('core.Handler');
+import('core.String');
+import('core.Registry');
+import('core.ArrayItemIterator');
+import('core.VirtualArrayIterator');
+
+import('config.Config');
+
+import('db.DBConnection');
+import('db.DAO');
+import('db.DAOResultFactory');
+import('db.DBRowIterator');
+import('db.XMLDAO');
+import('db.DAORegistry');
+
+import('i18n.Locale');
+
+import('security.Validation');
+import('session.SessionManager');
+import('template.TemplateManager');
+
+import('help.Help');
+
+import('plugins.PluginRegistry');
+import('plugins.HookRegistry');
 
 /**
  * System initialization (post-classloading).
  */
 
-import('core.HarvesterApplication');
-$harvesterApplication =& new HarvesterApplication();
-PKPApplication::initialize($harvesterApplication);
+// Is this a pre-fetch that we want to prevent?
+if (isset($_SERVER['HTTP_X_MOZ']) && $_SERVER['HTTP_X_MOZ'] == 'prefetch') {
+	header('HTTP/1.0 403 Forbidden');
+	echo '403: Forbidden<br><br>Pre-fetching not allowed.';
+	exit;
+}
+
+// Initialize string wrapper library
+String::init();
+
+// Load the generic plugins
+PluginRegistry::loadCategory('generic');
 
 ?>
