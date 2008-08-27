@@ -1,26 +1,22 @@
 <?php
 
 /**
- * @file Field.inc.php
+ * @file classes/field/Field.inc.php
  *
  * Copyright (c) 2005-2008 Alec Smecher and John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
- * @package field
  * @class Field
+ * @in_group field
  *
- * Field class.
+ * @brief Field class.
  * Describes basic field properties.
  *
- * $Id$
  */
 
-define('FIELD_TYPE_STRING',	0x00000001);
-define('FIELD_TYPE_DATE',	0x00000002);
-define('FIELD_TYPE_SELECT',	0x00000003);
+// $Id$
 
 class Field extends DataObject {
-
 	/**
 	 * Constructor.
 	 */
@@ -90,22 +86,6 @@ class Field extends DataObject {
 		return $plugin;
 	}
 
-	/**
-	 * Get the type of the field -- FIELD_TYPE_STRING, etc.
-	 */
-	function getType() {
-		$schemaPlugin =& $this->getSchemaPlugin();
-		return $schemaPlugin->getFieldType($this->getName());
-	}
-
-	/**
-	 * Is the field of mixed type (i.e. has both dates and strings indexed)?
-	 */
-	function isMixedType() {
-		$schemaPlugin =& $this->getSchemaPlugin();
-		return $schemaPlugin->isFieldMixedType($this->getName());
-	}
-
 	function getDisplayName($locale = null) {
 		$plugin =& $this->getSchemaPlugin();
 		if (!$plugin) return null;
@@ -116,12 +96,6 @@ class Field extends DataObject {
 		$plugin =& $this->getSchemaPlugin();
 		if (!$plugin) return null;
 		return $plugin->getFieldName($this->getName(), $locale);
-	}
-
-	function getImportance() {
-		$plugin =& $this->getSchemaPlugin();
-		if (!$plugin) return null;
-		return $plugin->getFieldImportance($this->getName());
 	}
 }
 

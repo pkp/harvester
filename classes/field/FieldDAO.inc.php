@@ -6,14 +6,16 @@
  * Copyright (c) 2005-2008 Alec Smecher and John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
- * @package field
+ * @in_group field
  * @class FieldDAO
  *
- * Class for Field DAO.
+ * @brief Class for Field DAO.
  * Operations for retrieving and modifying Field objects.
  *
- * $Id$
  */
+
+// $Id$
+
 
 import ('field.Field');
 
@@ -61,15 +63,21 @@ class FieldDAO extends DAO {
 	function &getFieldById($fieldId) {
 		if ($this->cachingEnabled && isset($this->fieldsById[$fieldId])) return $this->fieldsById[$fieldId];
 
-		$result = &$this->retrieve(
-			'SELECT f.*, s.schema_plugin AS schema_plugin_name FROM raw_fields f, schema_plugins s WHERE f.schema_plugin_id = s.schema_plugin_id AND raw_field_id = ?', $fieldId
+		$result =& $this->retrieve(
+			'SELECT	f.*,
+				s.schema_plugin AS schema_plugin_name
+			FROM	raw_fields f,
+				schema_plugins s
+			WHERE	f.schema_plugin_id = s.schema_plugin_id
+				AND raw_field_id = ?',
+			array((int) $fieldId)
 		);
 
 		$returner = null;
 		$pluginName = null;
 		if ($result->RecordCount() != 0) {
 			$row = $result->GetRowAssoc(false);
-			$returner = &$this->_returnFieldFromRow($row);
+			$returner =& $this->_returnFieldFromRow($row);
 			$pluginName = $row['schema_plugin_name'];
 		}
 		$result->Close();
@@ -92,13 +100,20 @@ class FieldDAO extends DAO {
 	function &getFieldByName($fieldName, $schemaPluginName) {
 		if ($this->cachingEnabled && isset($this->fieldsBySchemaName[$schemaPluginName]) && isset($this->fieldsBySchemaName[$schemaPluginName][$fieldName])) return $this->fieldsBySchemaName[$schemaPluginName][$fieldName];
 
-		$result = &$this->retrieve(
-			'SELECT f.*, s.schema_plugin FROM raw_fields f, schema_plugins s WHERE f.name = ? AND f.schema_plugin_id = s.schema_plugin_id AND s.schema_plugin = ?', array($fieldName, $schemaPluginName)
+		$result =& $this->retrieve(
+			'SELECT	f.*,
+				s.schema_plugin
+			FROM	raw_fields f,
+				schema_plugins s
+			WHERE	f.name = ?
+				AND f.schema_plugin_id = s.schema_plugin_id
+				AND s.schema_plugin = ?',
+			array($fieldName, $schemaPluginName)
 		);
 
 		$returner = null;
 		if ($result->RecordCount() != 0) {
-			$returner = &$this->_returnFieldFromRow($result->GetRowAssoc(false));
+			$returner =& $this->_returnFieldFromRow($result->GetRowAssoc(false));
 		}
 		$result->Close();
 		unset($result);
@@ -117,7 +132,7 @@ class FieldDAO extends DAO {
 	 * @return Field
 	 */
 	function &_returnFieldFromRow(&$row) {
-		$field = &new Field();
+		$field =& new Field();
 		$field->setFieldId($row['raw_field_id']);
 		$field->setSchemaId($row['schema_plugin_id']);
 		$field->setName($row['name']);
@@ -130,7 +145,7 @@ class FieldDAO extends DAO {
 	/**
 	 * Insert a new field.
 	 * @param $field Field
-	 */	
+	 */
 	function insertField(&$field) {
 		$this->update(
 			'INSERT INTO raw_fields
@@ -139,7 +154,7 @@ class FieldDAO extends DAO {
 				(?, ?)',
 			array(
 				$field->getName(),
-				$field->getSchemaId(),
+				(int) $field->getSchemaId(),
 			)
 		);
 
@@ -160,8 +175,8 @@ class FieldDAO extends DAO {
 				WHERE raw_field_id = ?',
 			array(
 				$field->getName(),
-				$field->getSchemaId(),
-				$field->getFieldId()
+				(int) $field->getSchemaId(),
+				(int) $field->getFieldId()
 			)
 		);
 	}
@@ -199,12 +214,32 @@ class FieldDAO extends DAO {
 	 * @return DAOResultFactory containing matching fields
 	 */
 	function &getFields($schemaId = null, $rangeInfo = null) {
-		$result = &$this->retrieveRange(
+		$result =& $this->retrieveRange(
 			'SELECT * FROM raw_fields' . (isset($schemaId)?' WHERE schema_plugin_id = ?':''),
-			isset($schemaId)?$schemaId:false, $rangeInfo
+			isset($schemaId)?array((int) $schemaId):false,
+			$rangeInfo
 		);
 
-		$returner = &new DAOResultFactory($result, $this, '_returnFieldFromRow');
+		$returner =& new DAOResultFactory($result, $this, '_returnFieldFromRow');
+		return $returner;
+	}
+
+	/**
+	 * Retrieve all fields by sort order ID.
+	 * @return DAOResultFactory containing matching fields
+	 */
+	function &getFieldsBySortOrder($sortOrderId = null, $rangeInfo = null) {
+		$result =& $this->retrieveRange(
+			'SELECT	rf.*
+			FROM	raw_fields rf,
+				sort_order_fields sof
+			WHERE	rf.raw_field_id = sof.raw_field_id
+				AND sof.sort_order_id = ?',
+			array((int) $sortOrderId),
+			$rangeInfo
+		);
+
+		$returner =& new DAOResultFactory($result, $this, '_returnFieldFromRow');
 		return $returner;
 	}
 
@@ -247,7 +282,6 @@ class FieldDAO extends DAO {
 	function getInsertFieldId() {
 		return $this->getInsertId('raw_fields', 'raw_field_id');
 	}
-
 }
 
 ?>

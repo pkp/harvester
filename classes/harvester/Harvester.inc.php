@@ -21,15 +21,22 @@ class Harvester {
 	/** @var $recordDao object */
 	var $recordDao;
 
+	/** @var $sortOrderDao object */
+	var $sortOrderDao;
+
+	/** @var $fieldDao object */
+	var $fieldDao;
+
 	/** @var $archive object */
 	var $archive;
 
 	function Harvester($archive) {
 		$this->errors = array();
+		$this->archive =& $archive;
 
 		$this->recordDao =& DAORegistry::getDAO('RecordDAO');
-
-		$this->archive =& $archive;
+		$this->fieldDao =& DAORegistry::getDAO('FieldDAO');
+		$this->sortOrderDao =& DAORegistry::getDAO('SortOrderDAO');
 	}
 
 	/**
@@ -60,6 +67,69 @@ class Harvester {
 	 */
 	function addError($error) {
 		array_push($this->errors, $error);
+	}
+
+	/**
+	 * Index the record sort indexes for a specific sort order.
+	 * @param $record object
+	 * @param $sortOrder object
+	 */
+	function indexRecordSortingForSortOrder(&$record, &$sortOrder) {
+		$schemaPlugin =& $this->getSchemaPlugin();
+		$schema =& $this->getSchema();
+		$schemaId = $schema->getSchemaId();
+		$recordId = $record->getRecordId();
+
+		$sortOrderId = $sortOrder->getSortOrderId();
+		$sortOrderType = $sortOrder->getType();
+		$fields =& $this->fieldDao->getFieldsBySortOrder($sortOrder->getSortOrderId());
+		while ($field =& $fields->next()) {
+			if ($field->getSchemaId() == $schemaId) {
+				$fieldName = $field->getName();
+				$fieldValue = $schemaPlugin->getFieldValue($record, $fieldName, $sortOrderType);
+				if ($fieldValue !== null) switch ($sortOrderType) {
+					case SORT_ORDER_TYPE_STRING:
+						$this->sortOrderDao->insertString($recordId, $sortOrderId, $fieldValue);
+						break;
+					case SORT_ORDER_TYPE_NUMBER:
+						$this->sortOrderDao->insertNumber($recordId, $sortOrderId, $fieldValue);
+						break;
+					case SORT_ORDER_TYPE_DATE:
+						$this->sortOrderDao->insertDate($recordId, $sortOrderId, $fieldValue);
+						break;
+				}
+			}
+			unset($field);
+		}
+	}
+
+	/**
+	 * Index the record sort indexes for all sort orders.
+	 * @param $record object
+	 */
+	function indexRecordSorting(&$record) {
+		// Deal with sort order indexing
+		$sortOrders =& $this->sortOrderDao->getSortOrders();
+		while ($sortOrder =& $sortOrders->next()) {
+			$this->indexRecordSortingForSortOrder($record, $sortOrder);
+			unset($sortOrder);
+		}
+		
+	}
+
+	function insertRecord(&$contents) {
+		$schemaPlugin =& $this->getSchemaPlugin();
+		$schema =& $this->getSchema();
+		$schemaId = $schema->getSchemaId();
+
+		$record =& new Record();
+		$record->setSchemaId($schemaId);
+		$record->setArchiveId($this->archive->getArchiveId());
+		$record->setContents($contents);
+		$record->setParsedContents($schemaPlugin->parseContents($contents));
+		$this->recordDao->insertRecord($record);
+
+		return true;
 	}
 }
 

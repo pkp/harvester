@@ -72,13 +72,30 @@ class DublinCorePlugin extends SchemaPlugin {
 	}
 
 	/**
-	 * Get a list of the fields that can be used to sort in the browse list.
-	 * @return array
+	 * Get the value of a field by symbolic name.
+	 * @var $record object
+	 * @var $name string
+	 * @var $type SORT_ORDER_TYPE_...
+	 * @return mixed
 	 */
-	function getSortFields() {
-		$returner = array('title', 'date');
-		HookRegistry::call('DublinCorePlugin::getSortFields', array(&$this, &$returner));
-		return $returner;
+	function getFieldValue(&$record, $name, $type) {
+		$fieldValue = null;
+		$parsedContents = $record->getParsedContents();
+		if (isset($parsedContents[$name])) switch ($type) {
+			case SORT_ORDER_TYPE_STRING:
+				$fieldValue = join(';', $parsedContents[$name]);
+				break;
+			case SORT_ORDER_TYPE_NUMBER:
+				$fieldValue = (int) array_shift($parsedContents[$name]);
+				break;
+			case SORT_ORDER_TYPE_DATE:
+				$fieldValue = strtotime(array_shift($parsedContents[$name]));
+				break;
+			default:
+				fatalError('UNKNOWN TYPE');
+		}
+		HookRegistry::call('DublinCorePlugin::getFieldValue', array(&$this, &$fieldValue));
+		return $fieldValue;
 	}
 
 	function getFieldName($fieldSymbolic, $locale = null) {
@@ -131,22 +148,6 @@ class DublinCorePlugin extends SchemaPlugin {
 			return array_shift($parsedContents['title']);
 		}
 		return null;
-	}
-
-	function getFieldType($fieldName) {
-		switch ($fieldName) {
-			case 'date':
-				$returner = FIELD_TYPE_DATE;
-				break;
-			case 'language':
-				$returner = FIELD_TYPE_SELECT;
-				break;
-			default:
-				$returner = FIELD_TYPE_STRING;
-				break;
-		}
-		HookRegistry::call('DublinCorePlugin::getFieldType', array(&$this, $fieldName, &$returner));
-		return $returner;
 	}
 
 	/**

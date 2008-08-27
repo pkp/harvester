@@ -6,24 +6,19 @@
  * Copyright (c) 2005-2008 Alec Smecher and John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
- * @package core
  * @class Handler
+ * @ingroup core
  *
- * Base request handler class.
+ * @brief Base request handler class.
  *
- * $Id$
  */
 
-class Handler {
+// $Id$
 
-	/**
-	 * Fallback method in case request handler does not implement index method.
-	 */
-	function index() {
-		header('HTTP/1.0 404 Not Found');
-		fatalError('404 Not Found');
-	}
 
+import('core.PKPHandler');
+
+class Handler extends PKPHandler {
 	/**
 	 * Perform request access validation based on security settings.
 	 */

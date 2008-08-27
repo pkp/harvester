@@ -22,6 +22,7 @@
 	<li>&#187; <a href="{url op="languages"}">{translate key="common.languages"}</a></li>
 	<li>&#187; <a href="{url op="plugins"}">{translate key="admin.plugins"}</a></li>
 	<li>&#187; <a href="{url page="rtadmin"}">{translate key="admin.rtAdmin"}</a></li>
+	<li>&#187; <a href="{url op="sortOrders"}">{translate key="admin.sortOrders"}</a></li>
 	{call_hook name="Template::Admin::Index::SiteManagement"}
 </ul>
 

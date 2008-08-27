@@ -109,6 +109,16 @@ class Archive extends DataObject {
 	}
 
 	/**
+	 * Get the harvester object
+	 * @return object
+	 */
+	function &getHarvester() {
+		$harvesterPlugin =& $this->getHarvesterPlugin();
+		$harvester =& $harvesterPlugin->getHarvester($this);
+		return $harvester;
+	}
+
+	/**
 	 * Get url of archive
 	 * @return string
 	 */

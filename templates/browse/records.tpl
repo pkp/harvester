@@ -23,6 +23,19 @@
 	{assign var=archiveId value="all"}
 {/if}
 
+{* Sort orders *}
+<p>
+{assign var=isFirst value=1}
+{iterate from=sortOrders item=sortOrder}
+	{if $isFirst}
+		{assign var=isFirst value=0}
+	{else}
+		&nbsp;|&nbsp;
+	{/if}
+	<a class="action" href="{url op="browse" path=$archiveId sortOrderId=$sortOrder->getSortOrderId()}">{$sortOrder->getSortOrderName()|escape}</a>
+{/iterate}
+</p>
+
 <a name="records"></a>
 
 <ul class="plain">
@@ -30,6 +43,6 @@
 	<li>&#187; {$record->displaySummary()}</li>
 {/iterate}
 </ul>
-	{page_info iterator=$records}&nbsp;&nbsp;&nbsp;&nbsp;{page_links anchor="records" name="records" sortId=$sortId iterator=$records}
+	{page_info iterator=$records}&nbsp;&nbsp;&nbsp;&nbsp;{page_links anchor="records" name="records" sortOrderId=$sortOrderId iterator=$records}
 
 {include file="common/footer.tpl"}

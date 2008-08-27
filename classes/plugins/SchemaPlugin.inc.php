@@ -85,20 +85,31 @@ class SchemaPlugin extends Plugin {
 	}
 
 	/**
+	 * Get the value of a field by symbolic name for sort indexing.
+	 * @var $record object
+	 * @var $name string
+	 * @return mixed null on failure
+	 */
+	function getFieldValue(&$record, $name, $type) {
+		fatalError('ABSTRACT CLASS!');
+	}
+
+	/**
+	 * Get the schema object associated with this plugin
+	 */
+	function &getSchema() {
+		$schemaDao =& DAORegistry::getDAO('SchemaDAO');
+		$schema =& $schemaDao->buildSchema($this->getName());
+		return $schema;
+	}
+
+	/**
 	 * Parse a record's contents into an object
 	 * @param $contents string
 	 * @return object
 	 */
 	function &parseContents(&$contents) {
 		fatalError('ABSTRACT CLASS!');
-	}
-
-	/**
-	 * Get a list of the fields that can be used to sort in the browse list.
-	 * @return array
-	 */
-	function getSortFields() {
-		return array();
 	}
 
 	/**
@@ -197,22 +208,6 @@ class SchemaPlugin extends Plugin {
 	}
 
 	/**
-	 * Get the field type for the specified field.
-	 * Child classes should probably override this.
-	 */
-	function getFieldType($fieldId) {
-		// The default type for all fields is string.
-		return FIELD_TYPE_STRING;
-	}
-
-	/**
-	 * Determine whether a field is mixed type (i.e. has a date indexed and text too)
-	 */
-	function isFieldMixedType($fieldId) {
-		return false; // Default to single-use
-	}
-
-	/**
 	 * Parse a date into a value suitable for indexing.
 	 * @return int timestamp or string date, or null on failure
 	 */
@@ -221,26 +216,6 @@ class SchemaPlugin extends Plugin {
 		$date = strtotime($value);
 		if ($date === false || $date === -1) return null;
 		return date('Y-m-d H:i:s', $date);
-	}
-
-	/**
-	 * Get the "importance" of this field. This is used to display subsets of the complete
-	 * field list of a schema by importance.
-	 * @param $name string
-	 * @return int
-	 */
-	function getFieldImportance($name) {
-		// By default, all fields are of maximum importance.
-		return 0;
-	}
-
-	/**
-	 * Get a list of field importance levels supported by this plugin, in .
-	 * @return array
-	 */
-	function getSupportedFieldImportance() {
-		// Default: Just maximum importance.
-		return array(0);
 	}
 }
 

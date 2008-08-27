@@ -51,15 +51,50 @@ class RecordDAO extends DAO {
 	/**
 	 * Retrieve records by archive.
 	 * @param $recordId int
+	 * @param $enabledOnly boolean
+	 * @param $sortOrder object optional
+	 * @param $rangeInfo object optional
 	 * @return Record
 	 */
-	function &getRecords($archiveId, $enabledOnly, $rangeInfo) {
+	function &getRecords($archiveId, $enabledOnly = true, $sortOrder = null, $rangeInfo = null) {
 		$params = array();
 		if ($archiveId !== null) $params[] = (int) $archiveId;
+		if ($sortOrder) {
+			$params[] = (int) $sortOrder->getSortOrderId();
+			switch ($sortOrder->getType()) {
+				case SORT_ORDER_TYPE_NUMBER:
+					$sortOrderFromSql = ', sort_order_numbers son';
+					$sortOrderWhereSql = ' AND son.record_id = r.record_id AND son.sort_order_id = ?';
+					$sortOrderOrderSql = ' ORDER BY son.value';
+					break;
+				case SORT_ORDER_TYPE_DATE:
+					$sortOrderFromSql = ', sort_order_dates sod';
+					$sortOrderWhereSql = ' AND sod.record_id = r.record_id AND sod.sort_order_id = ?';
+					$sortOrderOrderSql = ' ORDER BY sod.value';
+					break;
+				case SORT_ORDER_TYPE_STRING:
+					$sortOrderFromSql = ', sort_order_strings sos';
+					$sortOrderWhereSql = ' AND sos.record_id = r.record_id AND sos.sort_order_id = ?';
+					$sortOrderOrderSql = ' ORDER BY sos.value';
+					break;
+				default:
+					fatalError('Unknown sort order type!');
+			}
+		} else {
+			$sortOrderFromSql = $sortOrderWhereSql = $sortOrderOrderSql = '';
+		}
+
+		
 		$result =& $this->retrieveRange(
-			'SELECT r.* FROM records r, archives a WHERE a.archive_id = r.archive_id' .
+			'SELECT	r.*
+			FROM	records r,
+				archives a' .
+				$sortOrderFromSql . '
+			WHERE	a.archive_id = r.archive_id' .
 			($enabledOnly?' AND a.enabled = 1':'') .
-			($archiveId !== null?' AND a.archive_id = ?':''),
+			($archiveId !== null?' AND a.archive_id = ?':'') .
+			$sortOrderWhereSql .
+			$sortOrderOrderSql,
 			$params,
 			$rangeInfo
 		);

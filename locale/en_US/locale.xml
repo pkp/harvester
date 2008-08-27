@@ -275,6 +275,7 @@ Your server currently supports mbstring: <strong>{$supportsMBString}</strong>]]>
 	<message key="admin.siteAdmin">Site Administration</message>
 	<message key="admin.siteSettings">Site Settings</message>
 	<message key="admin.layout">Layout</message>
+	<message key="admin.sortOrders">Sort Orders</message>
 	<message key="admin.archives">Archives</message>
 	<message key="admin.plugins">Plugins</message>
 	<message key="admin.rtAdmin">Reading Tools</message>
@@ -327,6 +328,21 @@ Your server currently supports mbstring: <strong>{$supportsMBString}</strong>]]>
 	<message key="admin.setup.layout.leftSidebar">Left Sidebar</message>
 	<message key="admin.setup.layout.unselected">Unselected</message>
 	<message key="admin.setup.layout.rightSidebar">Right Sidebar</message>
+
+	<!-- Sort Orders -->
+	<message key="admin.sortOrders.name">Name</message>
+	<message key="admin.sortOrders.type">Type</message>
+	<message key="admin.sortOrders.status">Status</message>
+	<message key="admin.sortOrders.type.string">Text</message>
+	<message key="admin.sortOrders.type.number">Number</message>
+	<message key="admin.sortOrders.type.date">Date</message>
+	<message key="admin.sortOrders.fields">Fields</message>
+	<message key="admin.sortOrders.noneCreated">No sort orders have been created.</message>
+	<message key="admin.sortOrders.edit">Edit Sort Order</message>
+	<message key="admin.sortOrders.create">Create Sort Order</message>
+	<message key="admin.sortOrders.confirmDelete">Are you sure you wish to delete this sorting order?</message>
+	<message key="admin.sortOrders.form.nameRequired">A name is required for this sort ordering.</message>
+	<message key="admin.sortOrders.form.typeRequired">A valid type is required for this sort ordering.</message>
 
 	<!-- Archives -->
 	<message key="admin.archives.addArchive">Add Archive</message>
@@ -499,6 +515,9 @@ Your server currently supports mbstring: <strong>{$supportsMBString}</strong>]]>
 	<message key="plugins.categories.schemas">Schema Plugins</message>
 	<message key="plugins.categories.schemas.description">This category contains plugins that implement various metadata formats.</message>
 
+	<message key="plugins.categories.themes">Theme Plugins</message>
+	<message key="plugins.categories.themes.description">Theme Plugins can be used to change the system's appearance.</message>
+
 	<message key="manager.plugins.disable">Disable</message>
 	<message key="manager.plugins.enable">Enable</message>
 
@@ -631,6 +650,8 @@ Validation may fail on search URLs that require posted form data.]]></message>
 	 * MISC - Entries that do not belong in the other sections.
 	 *
 	 -->
+	<message key="icon.checked.alt">Checked</message>
+	<message key="icon.unchecked.alt">Unchecked</message>
 	<message key="icon.small.alt">Small</message>
 	<message key="icon.medium.alt">Medium</message>
 	<message key="icon.large.alt">Large</message>

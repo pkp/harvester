@@ -237,6 +237,14 @@ class OAIHarvesterPlugin extends HarvesterPlugin {
 
 		return $returner;
 	}
+
+	/**
+	 * Get the harvester object for this plugin
+	 */
+	function getHarvester(&$archive) {
+		$this->import('OAIHarvester');
+		return new OAIHarvester($archive);
+	}
 }
 
 ?>

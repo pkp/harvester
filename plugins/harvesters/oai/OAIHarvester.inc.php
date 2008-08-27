@@ -37,6 +37,7 @@ class OAIHarvester extends Harvester {
 	 */
 	function setMetadataFormat($metadataFormat) {
 		$archive =& $this->getArchive();
+		import('schema.SchemaMap');
 		$archive->setSchemaPluginName(
 			SchemaMap::getSchemaPluginName(OAIHarvesterPlugin::getName(), $metadataFormat)
 		);
@@ -307,19 +308,7 @@ class OAIHarvester extends Harvester {
 	function handleRecordNode(&$node) {
 		$metadataContainerNode =& $node->getChildByName('metadata');
 		$metadataNode = array_shift($metadataContainerNode->getChildren());
-		$schemaPlugin =& $this->getSchemaPlugin();
-		$schema =& $this->getSchema();
-
-		$record =& new Record();
-		$record->setSchemaId($schema->getSchemaId());
-		$record->setArchiveId($this->archive->getArchiveId());
-		$record->setContents($metadataNode->toXml());
-		$record->setParsedContents($schemaPlugin->parseContents($record->getContents()));
-		$this->recordDao->insertRecord($record);
-
-		unset($record, $metadataContainerNode, $metadataNode, $schemaPlugin, $schema);
-
-		return true;
+		return $this->insertRecord($metadataNode->toXml());
 	}
 
 	/**
@@ -400,10 +389,12 @@ class OAIHarvester extends Harvester {
 	}
 
 	function &getSchema() {
+		import('schema.SchemaMap');
 		return SchemaMap::getSchema(OAIHarvesterPlugin::getName(), $this->getMetadataFormat());
 	}
 
 	function &getSchemaPlugin() {
+		import('schema.SchemaMap');
 		return SchemaMap::getSchemaPlugin(OAIHarvesterPlugin::getName(), $this->getMetadataFormat());
 	}
 

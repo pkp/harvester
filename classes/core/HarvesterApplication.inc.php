@@ -68,11 +68,13 @@ class HarvesterApplication extends PKPApplication {
 			'ArchiveDAO' => 'archive.ArchiveDAO',
 			'ArchiveSettingsDAO' => 'archive.ArchiveSettingsDAO',
 			'EmailTemplateDAO' => 'mail.EmailTemplateDAO',
+			'FieldDAO' => 'field.FieldDAO',
 			'PluginSettingsDAO' => 'plugins.PluginSettingsDAO',
 			'RecordDAO' => 'record.RecordDAO',
 			'RoleDAO' => 'security.RoleDAO',
 			'RTDAO' => 'rt.harvester2.RTDAO',
 			'SchemaDAO' => 'schema.SchemaDAO',
+			'SortOrderDAO' => 'sortOrder.SortOrderDAO',
 			'UserDAO' => 'user.UserDAO',
 			'UserSettingsDAO' => 'user.UserSettingsDAO'
 		));

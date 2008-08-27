@@ -294,6 +294,13 @@ class HarvesterPlugin extends Plugin {
 	function describeOptions() {
 		fatalError('ABSTRACT CLASS');
 	}
+
+	/**
+	 * Get the harvester object for this plugin
+	 */
+	function getHarvester(&$archive) {
+		fatalError('ABSTRACT CLASS');
+	}
 }
 
 ?>

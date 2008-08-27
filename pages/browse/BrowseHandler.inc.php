@@ -36,14 +36,21 @@ class BrowseHandler extends Handler {
 
 			$rangeInfo = Handler::getRangeInfo('records');
 
-			/* $sortId = Request::getUserVar('sortId');
-			if ($sortId === 'none' || empty($sortId)) $sortId = null;
-			$templateMgr->assign('sortId', $sortId); */
+			$sortOrderDao =& DAORegistry::getDAO('SortOrderDAO');
+			$sortOrderId = Request::getUserVar('sortOrderId');
+			$sortOrder =& $sortOrderDao->getSortOrder($sortOrderId);
+			if ($sortOrder) {
+				$templateMgr->assign('sortOrderId', $sortOrderId);
+			}
+
+			$sortOrders =& $sortOrderDao->getSortOrders();
+			$templateMgr->assign_by_ref('sortOrders', $sortOrders);
 
 			// The user has chosen an archive or opted to browse all
 			$records =& $recordDao->getRecords(
 				$archive?(int)$archiveId:null,
 				true, // Only enabled archives
+				$sortOrder,
 				$rangeInfo
 			);
 

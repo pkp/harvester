@@ -8,6 +8,8 @@
  *
  * $Id$
  *}
+
+<table class="listing" width="100%">
 	<tr valign="top">
 		<td width="20%" class="label">{translate key="archive.type"}</td>
 		<td width="80%" colspan="2" class="value">{translate key="plugins.harvesters.oai.protocolName"}</td>
@@ -17,5 +19,4 @@
 		<td width="20%" class="label">{translate key="plugins.harvesters.oai.archive.form.harvesterUrl"}</td>
 		<td width="80%" colspan="2" class="value">{$archive->getSetting("harvesterUrl")|escape}</td>
 	</tr>
-	<tr valign="top"><td colspan="3" class="headseparator">&nbsp;</td></tr>
-
+</table>

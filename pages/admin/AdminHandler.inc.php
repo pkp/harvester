@@ -27,7 +27,7 @@ class AdminHandler extends Handler {
 		AdminHandler::validate();
 		AdminHandler::setupTemplate();
 
-		$templateMgr = &TemplateManager::getManager();
+		$templateMgr =& TemplateManager::getManager();
 		$templateMgr->display('admin/index.tpl');
 	}
 
@@ -47,7 +47,7 @@ class AdminHandler extends Handler {
 	 * @param $subclass boolean set to true if caller is below this handler in the hierarchy
 	 */
 	function setupTemplate($subclass = false) {
-		$templateMgr = &TemplateManager::getManager();
+		$templateMgr =& TemplateManager::getManager();
 		if ($subclass) {
 			$templateMgr->assign('pageHierarchy',
 				array(array(Request::url('admin'), 'admin.siteAdmin'))
@@ -61,13 +61,11 @@ class AdminHandler extends Handler {
 	//
 
 	function settings() {
-		import('pages.admin.AdminSettingsHandler');
-		AdminSettingsHandler::settings();
+		Handler::delegate('pages.admin.AdminSettingsHandler');
 	}
 
 	function saveSettings() {
-		import('pages.admin.AdminSettingsHandler');
-		AdminSettingsHandler::saveSettings();
+		Handler::delegate('pages.admin.AdminSettingsHandler');
 	}
 
 
@@ -103,43 +101,59 @@ class AdminHandler extends Handler {
 	//
 
 	function archives() {
-		import('pages.admin.AdminArchiveHandler');
-		AdminArchiveHandler::archives();
+		Handler::delegate('pages.admin.AdminArchiveHandler');
 	}
 
 	function createArchive() {
-		import('pages.admin.AdminArchiveHandler');
-		AdminArchiveHandler::createArchive();
+		Handler::delegate('pages.admin.AdminArchiveHandler');
 	}
 
-	function editArchive($args = array()) {
-		import('pages.admin.AdminArchiveHandler');
-		AdminArchiveHandler::editArchive($args);
+	function editArchive() {
+		Handler::delegate('pages.admin.AdminArchiveHandler');
 	}
 
-	function manage($args = array()) {
-		import('pages.admin.AdminArchiveHandler');
-		AdminArchiveHandler::manage($args);
+	function manage() {
+		Handler::delegate('pages.admin.AdminArchiveHandler');
 	}
 
 	function updateArchive() {
-		import('pages.admin.AdminArchiveHandler');
-		AdminArchiveHandler::updateArchive();
+		Handler::delegate('pages.admin.AdminArchiveHandler');
 	}
 
-	function deleteArchive($args) {
-		import('pages.admin.AdminArchiveHandler');
-		AdminArchiveHandler::deleteArchive($args);
+	function deleteArchive() {
+		Handler::delegate('pages.admin.AdminArchiveHandler');
 	}
 
-	function updateIndex($args) {
-		import('pages.admin.AdminArchiveHandler');
-		AdminArchiveHandler::updateIndex($args);
+	function updateIndex() {
+		Handler::delegate('pages.admin.AdminArchiveHandler');
 	}
 
-	function flushIndex($args) {
-		import('pages.admin.AdminArchiveHandler');
-		AdminArchiveHandler::flushIndex($args);
+	function flushIndex() {
+		Handler::delegate('pages.admin.AdminArchiveHandler');
+	}
+
+	//
+	// Sort Order Management
+	//
+
+	function sortOrders() {
+		Handler::delegate('pages.admin.AdminSortOrdersHandler');
+	}
+
+	function createSortOrder() {
+		Handler::delegate('pages.admin.AdminSortOrdersHandler');
+	}
+
+	function editSortOrder() {
+		Handler::delegate('pages.admin.AdminSortOrdersHandler');
+	}
+
+	function updateSortOrder() {
+		Handler::delegate('pages.admin.AdminSortOrdersHandler');
+	}
+
+	function deleteSortOrder() {
+		Handler::delegate('pages.admin.AdminSortOrdersHandler');
 	}
 
 	//
@@ -147,28 +161,23 @@ class AdminHandler extends Handler {
 	//
 
 	function languages() {
-		import('pages.admin.AdminLanguagesHandler');
-		AdminLanguagesHandler::languages();
+		Handler::delegate('pages.admin.AdminLanguagesHandler');
 	}
 
 	function saveLanguageSettings() {
-		import('pages.admin.AdminLanguagesHandler');
-		AdminLanguagesHandler::saveLanguageSettings();
+		Handler::delegate('pages.admin.AdminLanguagesHandler');
 	}
 
 	function installLocale() {
-		import('pages.admin.AdminLanguagesHandler');
-		AdminLanguagesHandler::installLocale();
+		Handler::delegate('pages.admin.AdminLanguagesHandler');
 	}
 
 	function uninstallLocale() {
-		import('pages.admin.AdminLanguagesHandler');
-		AdminLanguagesHandler::uninstallLocale();
+		Handler::delegate('pages.admin.AdminLanguagesHandler');
 	}
 
 	function reloadLocale() {
-		import('pages.admin.AdminLanguagesHandler');
-		AdminLanguagesHandler::reloadLocale();
+		Handler::delegate('pages.admin.AdminLanguagesHandler');
 	}
 
 
@@ -177,52 +186,43 @@ class AdminHandler extends Handler {
 	//
 
 	function systemInfo() {
-		import('pages.admin.AdminFunctionsHandler');
-		AdminFunctionsHandler::systemInfo();
+		Handler::delegate('pages.admin.AdminFunctionsHandler');
 	}
 
 	function editSystemConfig() {
-		import('pages.admin.AdminFunctionsHandler');
-		AdminFunctionsHandler::editSystemConfig();
+		Handler::delegate('pages.admin.AdminFunctionsHandler');
 	}
 
 	function saveSystemConfig() {
-		import('pages.admin.AdminFunctionsHandler');
-		AdminFunctionsHandler::saveSystemConfig();
+		Handler::delegate('pages.admin.AdminFunctionsHandler');
 	}
 
 	function phpinfo() {
-		import('pages.admin.AdminFunctionsHandler');
-		AdminFunctionsHandler::phpInfo();
+		Handler::delegate('pages.admin.AdminFunctionsHandler');
 	}
 
 	function expireSessions() {
-		import('pages.admin.AdminFunctionsHandler');
-		AdminFunctionsHandler::expireSessions();
+		Handler::delegate('pages.admin.AdminFunctionsHandler');
 	}
 
 	function clearTemplateCache() {
-		import('pages.admin.AdminFunctionsHandler');
-		AdminFunctionsHandler::clearTemplateCache();
+		Handler::delegate('pages.admin.AdminFunctionsHandler');
 	}
 
 	function clearDataCache() {
-		import('pages.admin.AdminFunctionsHandler');
-		AdminFunctionsHandler::clearDataCache();
+		Handler::delegate('pages.admin.AdminFunctionsHandler');
 	}
 
 	//
 	// Plugin Management
 	//
 
-	function plugins($args) {
-		import('pages.admin.PluginHandler');
-		PluginHandler::plugins($args);
+	function plugins() {
+		Handler::delegate('pages.admin.PluginHandler');
 	}
 
-	function plugin($args) {
-		import('pages.admin.PluginHandler');
-		PluginHandler::plugin($args);
+	function plugin() {
+		Handler::delegate('pages.admin.PluginHandler');
 	}
 
 	//
