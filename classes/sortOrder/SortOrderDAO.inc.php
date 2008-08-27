@@ -272,7 +272,7 @@ class SortOrderDAO extends DAO {
 	function insertDate($recordId, $sortOrderId, $value) {
 		return $this->update(
 			sprintf(
-				'INSERT INTO sort_order_numbers
+				'INSERT INTO sort_order_dates
 					(record_id, sort_order_id, value)
 				VALUES
 					(?, ?, %s)',

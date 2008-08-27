@@ -89,7 +89,7 @@ class DublinCorePlugin extends SchemaPlugin {
 				$fieldValue = (int) array_shift($parsedContents[$name]);
 				break;
 			case SORT_ORDER_TYPE_DATE:
-				$fieldValue = strtotime(array_shift($parsedContents[$name]));
+				$fieldValue = strtotime($thing = array_shift($parsedContents[$name]));
 				break;
 			default:
 				fatalError('UNKNOWN TYPE');
