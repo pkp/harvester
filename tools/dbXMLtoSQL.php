@@ -1,21 +1,23 @@
 <?php
 
 /**
- * @file dbXMLtoSQL.php
+ * @file tools/dbXMLtoSQL.php
  *
  * Copyright (c) 2005-2008 Alec Smecher and John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
- * @package tools
  * @class dbXMLtoSQL
+ * @ingroup tools
  *
- * CLI tool to output the SQL statements corresponding to an XML database schema.
+ * @brief CLI tool to output the SQL statements corresponding to an XML database schema.
  *
- * $Id$
  */
 
+// $Id$
 
-require(dirname(__FILE__) . '/includes/cliTool.inc.php');
+
+define('INDEX_FILE_LOCATION', dirname(dirname(__FILE__)) . '/index.php');
+require(dirname(dirname(__FILE__)) . '/lib/pkp/classes/cliTool/CliTool.inc.php');
 
 /** Default XML file to parse if none is specified */
 define('DATABASE_XML_FILE', 'dbscripts/xml/harvester2_schema.xml');

@@ -1,20 +1,23 @@
 <?php
 
 /**
- * @file localeCheck.php
+ * @file tools/localeCheck.php
  *
  * Copyright (c) 2005-2008 Alec Smecher and John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
- * @package tools
  * @class localeCheck
+ * @ingroup tools
  *
- * CLI tool to check the various locales for consistency.
+ * @brief CLI tool to check the various locales for consistency.
  *
- * $Id$
  */
 
-require(dirname(__FILE__) . '/includes/cliTool.inc.php');
+// $Id$
+
+
+define('INDEX_FILE_LOCATION', dirname(dirname(__FILE__)) . '/index.php');
+require(dirname(dirname(__FILE__)) . '/lib/pkp/classes/cliTool/CliTool.inc.php');
 
 define('MASTER_LOCALE', 'en_US');
 

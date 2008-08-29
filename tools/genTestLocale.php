@@ -1,20 +1,23 @@
 <?php
 
 /**
- * @file genTestLocale.php
+ * @file tools/genTestLocale.php
  *
  * Copyright (c) 2005-2008 Alec Smecher and John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
- * @package tools
  * @class genTestLocale
+ * @ingroup tools
  *
- * CLI tool to generate a test locale file by munging the message strings of a real locale file.
+ * @brief CLI tool to generate a test locale file by munging the message strings of a real locale file.
  *
- * $Id$
  */
 
-require(dirname(__FILE__) . '/includes/cliTool.inc.php');
+// $Id$
+
+
+define('INDEX_FILE_LOCATION', dirname(dirname(__FILE__)) . '/index.php');
+require(dirname(dirname(__FILE__)) . '/lib/pkp/classes/cliTool/CliTool.inc.php');
 
 define('DEFAULT_IN_LOCALE', 'en_US');
 define('DEFAULT_OUT_LOCALE', 'te_ST');

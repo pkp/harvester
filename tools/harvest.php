@@ -1,20 +1,23 @@
 <?php
 
 /**
- * @file harvest.php
+ * @file tools/harvest.php
  *
  * Copyright (c) 2005-2008 Alec Smecher and John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
- * @package tools
  * @class harvest
+ * @ingroup tools
  *
- * CLI tool to harvest an archive.
+ * @brief CLI tool to harvest an archive.
  *
- * $Id$
  */
 
-require(dirname(__FILE__) . '/includes/cliTool.inc.php');
+// $Id$
+
+
+define('INDEX_FILE_LOCATION', dirname(dirname(__FILE__)) . '/index.php');
+require(dirname(dirname(__FILE__)) . '/lib/pkp/classes/cliTool/CliTool.inc.php');
 
 class harvest extends CommandLineTool {
 	/** @var $firstParam mixed */

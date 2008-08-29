@@ -1,20 +1,23 @@
 <?php
 
 /**
- * @file install.php
+ * @file tools/install.php
  *
  * Copyright (c) 2005-2008 Alec Smecher and John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
- * @package tools
  * @class installTool
+ * @ingroup tools
  *
- * CLI tool for installing Harvester2.
+ * @brief CLI tool for installing Harvester2.
  *
- * $Id$
  */
 
-require(dirname(__FILE__) . '/includes/cliTool.inc.php');
+// $Id$
+
+
+define('INDEX_FILE_LOCATION', dirname(dirname(__FILE__)) . '/index.php');
+require(dirname(dirname(__FILE__)) . '/lib/pkp/classes/cliTool/CliTool.inc.php');
 
 import('install.Install');
 import('install.form.InstallForm');
