@@ -307,6 +307,14 @@ class OAIHarvester extends Harvester {
 
 	function handleRecordNode(&$node) {
 		$metadataContainerNode =& $node->getChildByName('metadata');
+		if (!$metadataContainerNode) {
+			// FIXME: Implement record deletion here
+			$headerNode =& $node->getChildByName('header');
+			$identifierNode =& $headerNode->getChildByName('identifier');
+			$identifier = $identifierNode->getValue();
+			if (isset($params['verbose'])) echo "Deleted record: $identifier\n";
+			return null;
+		}
 		$metadataNode = array_shift($metadataContainerNode->getChildren());
 		return $this->insertRecord($metadataNode->toXml());
 	}

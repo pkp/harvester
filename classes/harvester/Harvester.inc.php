@@ -129,6 +129,8 @@ class Harvester {
 		$record->setParsedContents($schemaPlugin->parseContents($contents));
 		$this->recordDao->insertRecord($record);
 
+		$this->indexRecordSorting($record);
+
 		return true;
 	}
 }

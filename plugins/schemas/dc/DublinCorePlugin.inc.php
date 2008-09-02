@@ -133,7 +133,7 @@ class DublinCorePlugin extends SchemaPlugin {
 		if (isset($parsedContents['creator'])) {
 			return $parsedContents['creator'];
 		}
-		return null;
+		return array();
 	}
 
 	/**
