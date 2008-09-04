@@ -83,7 +83,7 @@ class OAIHarvester extends Harvester {
 
 		$parser =& new XMLParser();
 		$result =& $parser->parse($harvesterUrl);
-		if (!$result) {
+		if (!$parser->getStatus()) {
 			foreach ($parser->getErrors() as $error) {
 				$this->addError($error);
 			}
@@ -132,7 +132,7 @@ class OAIHarvester extends Harvester {
 
 		$parser =& new XMLParser();
 		$result =& $parser->parse($harvesterUrl);
-		if (!$result) {
+		if (!$parser->getStatus()) {
 			foreach ($parser->getErrors() as $error) {
 				$this->addError($error);
 			}
@@ -166,7 +166,7 @@ class OAIHarvester extends Harvester {
 
 		$parser =& new XMLParser();
 		$result =& $parser->parse($harvesterUrl);
-		if (!$result) {
+		if (!$parser->getStatus()) {
 			foreach ($parser->getErrors() as $error) {
 				$this->addError($error);
 			}
@@ -259,11 +259,11 @@ class OAIHarvester extends Harvester {
 		}
 		if (isset($params['verbose'])) echo "Harvest URL: $harvestUrl\n";
 		$result =& $parser->parse($harvestUrl);
-		if (!$result) {
+		if (!$parser->getStatus()) {
 			foreach ($parser->getErrors() as $error) {
 				$this->addError($error);
 			}
-			return false;
+			if (!$result) return false;
 		}
 
 		unset($parser);
@@ -306,17 +306,25 @@ class OAIHarvester extends Harvester {
 	}
 
 	function handleRecordNode(&$node) {
+		$headerNode =& $node->getChildByName('header');
+		$identifierNode =& $headerNode->getChildByName('identifier');
+		$identifier = $identifierNode->getValue();
+
 		$metadataContainerNode =& $node->getChildByName('metadata');
 		if (!$metadataContainerNode) {
-			// FIXME: Implement record deletion here
-			$headerNode =& $node->getChildByName('header');
-			$identifierNode =& $headerNode->getChildByName('identifier');
-			$identifier = $identifierNode->getValue();
+			// This is a deleted record.
 			if (isset($params['verbose'])) echo "Deleted record: $identifier\n";
-			return null;
+			return $this->_deleteRecordByIdentifier($identifier);
 		}
 		$metadataNode = array_shift($metadataContainerNode->getChildren());
-		return $this->insertRecord($metadataNode->toXml());
+
+		$record =& $this->getRecordByIdentifier($identifier);
+		if (!$record) {
+			// This is a new record.
+			return $this->_insertRecord($identifier, $metadataNode->toXml());
+		} else {
+			return $this->_updateRecord($record, $metadataNode->toXml());
+		}
 	}
 
 	/**
@@ -333,11 +341,11 @@ class OAIHarvester extends Harvester {
 			'identifier' => $identifier,
 			'metadataPrefix' => $this->getMetadataFormat()
 		)));
-		if (!$result) {
+		if (!$parser->getStatus()) {
 			foreach ($parser->getErrors() as $error) {
 				$this->addError($error);
 			}
-			return false;
+			if (!$result) return false;
 		}
 		unset($parser);
 

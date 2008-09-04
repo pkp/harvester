@@ -109,7 +109,6 @@ class DublinCorePlugin extends SchemaPlugin {
 	/**
 	 * Get a URL for the supplied record, if available; null otherwise.
 	 * @param $record object
-	 * @param $entries array optional
 	 * @return string
 	 */
 	function getUrl(&$record) {
@@ -125,7 +124,6 @@ class DublinCorePlugin extends SchemaPlugin {
 	/**
 	 * Get the authors for the supplied record, if available; null otherwise
 	 * @param $record object
-	 * @param $entries array
 	 * @return array
 	 */
 	function getAuthors(&$record) {
@@ -139,13 +137,25 @@ class DublinCorePlugin extends SchemaPlugin {
 	/**
 	 * Get the title for the supplied record, if available; null otherwise.
 	 * @param $record object
-	 * @param $entries array
 	 * @return string
 	 */
 	function getTitle(&$record) {
 		$parsedContents =& $record->getParsedContents();
 		if (isset($parsedContents['title'])) {
 			return array_shift($parsedContents['title']);
+		}
+		return null;
+	}
+
+	/**
+	 * Get the identifier for the supplied record.
+	 * @param $record object
+	 * @return string
+	 */
+	function getIdentifier(&$record) {
+		$parsedContents =& $record->getParsedContents();
+		if (isset($parsedContents['identifier'])) {
+			return array_shift($parsedContents['identifier']);
 		}
 		return null;
 	}

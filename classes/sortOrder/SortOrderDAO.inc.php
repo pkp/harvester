@@ -163,6 +163,22 @@ class SortOrderDAO extends DAO {
 		);
 	}
 
+	function flushRecordIndex($recordId) {
+		$count = $this->update(
+			'DELETE FROM sort_order_strings WHERE record_id = ?',
+			array((int) $recordId)
+		);
+		$count += $this->update(
+			'DELETE FROM sort_order_numbers WHERE record_id = ?',
+			array((int) $recordId)
+		);
+		$count += $this->update(
+			'DELETE FROM sort_order_dates WHERE record_id = ?',
+			array((int) $recordId)
+		);
+		return $count;
+	}
+
 	/**
 	 * Flush the index for a given sort order.
 	 * @return int Number of affected index entries

@@ -117,7 +117,45 @@ class Harvester {
 		
 	}
 
-	function insertRecord(&$contents) {
+	/**
+	 * Delete record sorting for a record.
+	 */
+	function deleteRecordSorting(&$record) {
+		$this->sortOrderDao->flushRecordIndex($record->getRecordId());
+	}
+
+	function &getRecordByIdentifier($identifier) {
+		$returner =& $this->recordDao->getRecordByIdentifier($identifier);
+		return $returner;
+	}
+
+	function _deleteRecordByIdentifier($identifier) {
+		$record =& $this->getRecordByIdentifier($identifier);
+		if (!$record) return false;
+
+		$this->recordDao->deleteRecordByIdentifier($identifier);
+
+		HookRegistry::call('Harvester::deleteRecord', array(&$record));
+
+		return true;
+	}
+
+	function _updateRecord(&$record, &$contents) {
+		$schemaPlugin =& $this->getSchemaPlugin();
+
+		$record->setContents($contents);
+		$record->setParsedContents($schemaPlugin->parseContents($contents));
+		$this->recordDao->updateRecord($record);
+
+		$this->deleteRecordSorting($record);
+		$this->indexRecordSorting($record);
+
+		HookRegistry::call('Harvester::updateRecord', array(&$record));
+
+		return true;
+	}
+
+	function _insertRecord($identifier, &$contents) {
 		$schemaPlugin =& $this->getSchemaPlugin();
 		$schema =& $this->getSchema();
 		$schemaId = $schema->getSchemaId();
@@ -127,9 +165,12 @@ class Harvester {
 		$record->setArchiveId($this->archive->getArchiveId());
 		$record->setContents($contents);
 		$record->setParsedContents($schemaPlugin->parseContents($contents));
+		$record->setIdentifier($identifier);
 		$this->recordDao->insertRecord($record);
 
 		$this->indexRecordSorting($record);
+
+		HookRegistry::call('Harvester::insertRecord', array(&$record));
 
 		return true;
 	}
