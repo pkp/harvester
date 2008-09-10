@@ -28,7 +28,7 @@ class ZendSearchHandler extends Handler {
 
 		$q = Request::getUserVar('q');
 
-		$resultsArray = $index->find($q);
+		$resultsArray = $index->find((string) $q);
 		$rangeInfo =& Handler::getRangeInfo('results');
 
 		import('core.ArrayItemIterator');
@@ -49,8 +49,8 @@ class ZendSearchHandler extends Handler {
 	function setupTemplate($subclass = false) {
 		parent::validate();
 
-		$templateMgr = &TemplateManager::getManager();
-		$templateMgr->assign('pageHierachy', array(array(Request::url(null, 'theses'), 'navigation.search')));
+		$templateMgr =& TemplateManager::getManager();
+		$templateMgr->assign('pageHierachy', array(array(Request::url('search'), 'navigation.search')));
 	}
 }
 

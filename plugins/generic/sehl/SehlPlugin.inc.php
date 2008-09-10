@@ -51,6 +51,7 @@ class SehlPlugin extends GenericPlugin {
 	 * the plugin should be used.
 	 * @param $templateMgr object
 	 * @param $page string The requested page
+	 */
 	function parse_quote_string($query_string) {
 		/* urldecode the string and setup variables */
 		$query_string = urldecode($query_string);

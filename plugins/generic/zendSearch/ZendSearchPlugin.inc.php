@@ -171,10 +171,12 @@ class ZendSearchPlugin extends GenericPlugin {
 		$doc = new Zend_Search_Lucene_Document();
 
 		$schemaPlugin =& $record->getSchemaPlugin();
+		$schemaPluginName = $schemaPlugin->getName();
 		foreach ($schemaPlugin->getFieldList() as $fieldName) {
-			$doc->addField(Zend_Search_Lucene_Field::UnStored('title', $schemaPlugin->getFieldValue($record, $fieldName, SORT_ORDER_TYPE_STRING)));
+			$doc->addField(Zend_Search_Lucene_Field::UnStored($schemaPluginName . '-' . $fieldName, $schemaPlugin->getFieldValue($record, $fieldName, SORT_ORDER_TYPE_STRING)));
 		}
 		$doc->addField(Zend_Search_Lucene_Field::Keyword('recordId', $record->getRecordId()));
+		$doc->addField(Zend_Search_Lucene_Field::Keyword('archiveId', $record->getArchiveId()));
 		$doc->addField(Zend_Search_Lucene_Field::Keyword('identifier', $record->getIdentifier()));
 
 		$index =& $this->getIndex();

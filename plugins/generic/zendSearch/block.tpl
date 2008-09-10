@@ -13,7 +13,7 @@
 	<form method="post" action="{url page="search" op="searchResults"}">
 	<table>
 	<tr>
-		<td><input type="text" id="q" name="q" size="15" maxlength="255" value="" class="textField" /></td>
+		<td><input type="text" id="q" name="q" size="15" maxlength="255" value="{$q|escape}" class="textField" /></td>
 	</tr>
 	<tr>
 		<td><input type="submit" value="{translate key="common.search"}" class="button" /></td>
