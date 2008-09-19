@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE schema SYSTEM "../../../lib/pkp/dtd/xmlSchema.dtd">
+
+<!--
+  * schema.xml
+  *
+  * Copyright (c) 2005-2008 Alec Smecher and John Willinsky
+  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
+  *
+  * Database schema in XML for the Zend Search plugin.
+  *
+  * $Id$
+  -->
+
+<schema version="0.2">
+	<!--
+	  *
+	  * TABLE search_form_elements
+	  *
+	  -->
+	<table name="search_form_elements">
+		<field name="search_form_element_id" type="I4">
+			<KEY/>
+			<AUTOINCREMENT/>
+		</field>
+		<field name="symbolic" type="C2" size="40" />
+		<field name="is_clean" type="L">
+			<NOTNULL />
+			<DEFAULT VALUE="0" />
+		</field>
+		<field name="range_start" type="C2" size="255" />
+		<field name="range_end" type="C2" size="255" />
+		<field name="element_type" type="I4">
+			<NOTNULL/>
+		</field>
+		<descr>Describes search form elements for the Zend Search advanced search form</descr>
+	</table>
+	
+	<!--
+	  *
+	  * TABLE search_form_element_settings
+	  *
+	  -->
+	<table name="search_form_element_settings">
+		<field name="search_form_element_id" type="I4">
+			<NOTNULL/>
+			<DEFAULT VALUE="0"/>
+		</field>
+		<field name="setting_name" type="C2" size="255">
+			<NOTNULL/>
+		</field>
+		<field name="locale" type="C2" size="5">
+			<NOTNULL/>
+			<DEFAULT VALUE=""/>
+		</field>
+		<field name="setting_value" type="X"/>
+		<field name="setting_type" type="C2" size="6">
+			<NOTNULL/>
+			<descr>(bool|int|float|string|object)</descr>
+		</field>
+		<descr>Search form element settings.</descr>
+		<index name="search_form_element_settings_pkey">
+			<col>search_form_element_id</col>
+			<col>locale</col>
+			<col>setting_name</col>
+			<UNIQUE />
+		</index>
+	</table>
+
+	<!--
+	  *
+	  * TABLE search_form_element_fields
+	  *
+	  -->
+	<table name="search_form_element_fields">
+		<field name="search_form_element_id" type="I2">
+			<NOTNULL/>
+		</field>
+		<field name="raw_field_id" type="I2">
+			<NOTNULL/>
+		</field>
+		<field name="schema_plugin_id" type="I2">
+			<NOTNULL/>
+		</field>
+		<index name="search_form_element_fields_pkey">
+			<col>search_form_element_id</col>
+			<col>raw_field_id</col>
+			<col>schema_plugin_id</col>
+			<UNIQUE />
+		</index>
+	</table>
+</schema>

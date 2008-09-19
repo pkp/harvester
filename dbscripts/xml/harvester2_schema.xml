@@ -408,7 +408,7 @@
 
 	<!--
 	  *
-	  * TABLE sort_order_settings
+	  * TABLE sort_order_fields
 	  *
 	  -->
 	<table name="sort_order_fields">

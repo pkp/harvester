@@ -217,6 +217,12 @@ class SortOrderDAO extends DAO {
 		);
 	}
 
+	/**
+	 * Insert a field/sort order association.
+	 * @param $sortOrderId int
+	 * @param $schemaPluginId int
+	 * @param $fieldId int
+	 */
 	function insertSortOrderField($sortOrderId, $schemaPluginId, $fieldId) {
 		return $this->update(
 			'INSERT INTO sort_order_fields

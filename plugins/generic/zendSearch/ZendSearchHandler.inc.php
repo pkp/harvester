@@ -19,16 +19,61 @@ import('core.Handler');
 
 class ZendSearchHandler extends Handler {
 	/**
-	 * Display search page.
+	 * Display search form
+	 */
+	function index() {
+		ZendSearchHandler::setupTemplate();
+		$plugin =& PluginRegistry::getPlugin('generic', 'ZendSearchPlugin');
+
+		$searchFormElementDao =& DAORegistry::getDAO('SearchFormElementDAO');
+		$searchFormElements =& $searchFormElementDao->getSearchFormElements();
+
+		$templateMgr =& TemplateManager::getManager();
+		$templateMgr->assign_by_ref('searchFormElements', $searchFormElements);
+		$templateMgr->display($plugin->getTemplatePath() . 'search.tpl');
+	}
+
+	/**
+	 * Display search results.
 	 */
 	function searchResults() {
 		ZendSearchHandler::setupTemplate();
 		$plugin =& PluginRegistry::getPlugin('generic', 'ZendSearchPlugin');
 		$index =& $plugin->getIndex();
 
-		$q = Request::getUserVar('q');
+		$query = new Zend_Search_Lucene_Search_Query_Boolean();
 
-		$resultsArray = $index->find((string) $q);
+		$q = Request::getUserVar('q');
+		if (!empty($q)) {
+			$query->addSubquery(new Zend_Search_Lucene_Search_Query_Term(new Zend_Search_Lucene_Index_Term($q)), true);
+		}
+
+		$searchFormElementDao =& DAORegistry::getDAO('SearchFormElementDAO');
+		$searchFormElements =& $searchFormElementDao->getSearchFormElements();
+		while ($searchFormElement =& $searchFormElements->next()) {
+			$searchFormElementId = $searchFormElement->getSearchFormElementId();
+			$symbolic = $searchFormElement->getSymbolic();
+			switch ($searchFormElement->getType()) {
+				case SEARCH_FORM_ELEMENT_TYPE_STRING:
+					$term = Request::getUserVar($symbolic);
+					if (!empty($term)) $query->addSubquery(new Zend_Search_Lucene_Search_Query_Term(new Zend_Search_Lucene_Index_Term($term, $symbolic)), true);
+					break;
+				case SEARCH_FORM_ELEMENT_TYPE_DATE:
+					$from = Request::getUserDateVar($symbolic . '-from');
+					$to = Request::getUserDateVar($symbolic . '-to');
+					if (!empty($from) && !empty($to)) {
+						$fromTerm = new Zend_Search_Lucene_Index_Term($from, $symbolic);
+						$toTerm = new Zend_Search_Lucene_Index_Term($to, $symbolic);
+						$query->addSubquery(new Zend_Search_Lucene_Search_Query_Range($fromTerm, $toTerm, true), true);
+					}
+					break;
+				default:
+					fatalError('Unknown element type!');
+			}
+			unset($searchFormElement);
+		}
+
+		$resultsArray = $index->find($query);
 		$rangeInfo =& Handler::getRangeInfo('results');
 
 		import('core.ArrayItemIterator');
@@ -44,13 +89,14 @@ class ZendSearchHandler extends Handler {
 
 	/**
 	 * Setup common template variables.
-	 * @param $subclass boolean set to true if caller is below this handler in the hierarchy
 	 */
-	function setupTemplate($subclass = false) {
+	function setupTemplate() {
 		parent::validate();
 
 		$templateMgr =& TemplateManager::getManager();
-		$templateMgr->assign('pageHierachy', array(array(Request::url('search'), 'navigation.search')));
+		$templateMgr->assign('pageHierachy', array(
+			array(Request::url('search'), 'navigation.search')
+		));
 	}
 }
 

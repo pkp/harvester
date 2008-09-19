@@ -56,7 +56,7 @@
 		<td align="right"><a href="{url op="editArchive" path=$archive->getArchiveId()}" class="action">{translate key="common.edit"}</a>&nbsp;|&nbsp;<a href="{url op="manage" path=$archive->getArchiveId()}" class="action">{translate key="common.manage"}</a>&nbsp;|&nbsp;<a class="action" href="{url op="deleteArchive" path=$archive->getArchiveId() archivesPage=$archivesPage}" onclick="return confirm('{translate|escape:"jsparam" key="admin.archives.confirmDelete"}')">{translate key="common.delete"}</a></td>
 	</tr>
 	<tr>
-		<td colspan="5" class="{if $smarty.foreach.archives.last}end{/if}separator">&nbsp;</td>
+		<td colspan="5" class="{if $archives->eof()}end{/if}separator">&nbsp;</td>
 	</tr>
 	{/iterate}
 	{if $archives->wasEmpty()}

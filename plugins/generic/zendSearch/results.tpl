@@ -20,7 +20,7 @@
 <ul class="plain">
 {iterate from=results item=result}
 	{assign var=document value=$result->getDocument()}
-	{assign var=recordId value=$document->getFieldValue('recordId')}
+	{assign var=recordId value=$document->getFieldValue('harvesterRecordId')}
 	{assign var=record value=$recordDao->getRecord($recordId)}
 	<li>&#187; {$record->displaySummary()}</li>
 {/iterate}

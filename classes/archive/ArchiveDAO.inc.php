@@ -9,11 +9,13 @@
  * @package archive
  * @class ArchiveDAO
  *
- * Class for Archive DAO.
+ * @brief Class for Archive DAO.
  * Operations for retrieving and modifying Archive objects.
  *
- * $Id$
  */
+
+// $Id$
+
 
 import ('archive.Archive');
 
@@ -26,14 +28,14 @@ class ArchiveDAO extends DAO {
 	}
 
 	/**
-	 * Retrieve a archive by ID.
+	 * Retrieve an archive by ID.
 	 * @param $archiveId int
 	 * @param $onlyEnabled boolean
 	 * @return Archive
 	 */
 	function &getArchive($archiveId, $onlyEnabled = true) {
 		$result =& $this->retrieve(
-			'SELECT * FROM archives WHERE archive_id = ?' . ($onlyEnabled?' AND enabled = 1':''), $archiveId
+			'SELECT * FROM archives WHERE archive_id = ?' . ($onlyEnabled?' AND enabled = 1':''), (int) $archiveId
 		);
 
 		$returner = null;
@@ -47,7 +49,7 @@ class ArchiveDAO extends DAO {
 	}
 
 	/**
-	 * Retrieve a archive by public archive ID.
+	 * Retrieve an archive by public archive ID.
 	 * @param $publicArchiveId string
 	 * @param $onlyEnabled boolean
 	 * @return Archive
@@ -141,7 +143,7 @@ class ArchiveDAO extends DAO {
 	}
 
 	/**
-	 * Delete a archive, INCLUDING ALL DEPENDENT ITEMS.
+	 * Delete an archive, INCLUDING ALL DEPENDENT ITEMS.
 	 * @param $archive Archive
 	 */
 	function deleteArchive(&$archive) {

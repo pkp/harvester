@@ -36,17 +36,37 @@ class ZendSearchPlugin extends GenericPlugin {
 				ini_set('include_path', BASE_SYS_DIR . '/lib/pkp/lib/ZendFramework/library' . ENV_SEPARATOR . ini_get('include_path'));
 				require_once('lib/pkp/lib/ZendFramework/library/Zend/Search/Lucene.php');
 
-				// Set hooks
-				HookRegistry::register('Installer::postInstall', array(&$this, 'postInstallCallback'));
+				// Add DAOs
+				$this->import('SearchFormElementDAO');
+				$this->import('SearchFormElement');
+				$searchFormElementDao =& new SearchFormElementDao();
+				DAORegistry::registerDAO('SearchFormElementDAO', $searchFormElementDao);
+
+				/**
+				 * Set hooks
+				 */
+
+				// Record handling & harvesting
 				HookRegistry::register('Harvester::insertRecord', array(&$this, 'insertRecordCallback'));
 				HookRegistry::register('Harvester::updateRecord', array(&$this, 'updateRecordCallback'));
 				HookRegistry::register('Harvester::deleteRecord', array(&$this, 'deleteRecordCallback'));
+
+				// User interface
+				HookRegistry::register('Templates::Common::Header::Navbar', array(&$this, 'navBarCallback'));
+				HookRegistry::register('Template::Admin::Index::SiteManagement', array(&$this, 'siteManagementCallback'));
 				HookRegistry::register('LoadHandler', array(&$this, 'loadHandlerCallback'));
 				HookRegistry::register('PluginRegistry::loadCategory', array(&$this, 'callbackLoadCategory'));
 			}
 			return true;
 		}
 		return false;
+	}
+
+	/**
+	 * Get the filename of the ADODB schema for this plugin.
+	 */
+	function getInstallSchemaFile() {
+		return $this->getPluginPath() . '/' . 'schema.xml';
 	}
 
 	/**
@@ -87,10 +107,12 @@ class ZendSearchPlugin extends GenericPlugin {
 	 */
 	function getManagementVerbs() {
 		$verbs = array();
-		$verbs[] = array(
-			($this->getEnabled()?'disable':'enable'),
-			Locale::translate($this->getEnabled()?'manager.plugins.disable':'manager.plugins.enable')
-		);
+		if ($this->getEnabled()) {
+			$verbs[] = array('adminSearchForm', Locale::translate('plugins.generic.zendSearch.searchForm'));
+			$verbs[] = array('disable', Locale::translate('manager.plugins.disable'));
+		} else {
+			$verbs[] = array('enable', Locale::translate('manager.plugins.enable'));
+		}
 		return $verbs;
 	}
 
@@ -108,6 +130,9 @@ class ZendSearchPlugin extends GenericPlugin {
 			case 'disable':
 				$this->updateSetting('enabled', false);
 				break;
+			case 'adminSearchForm':
+				Request::redirect('zendSearchAdmin', 'index');
+				break;
 		}
 		return false;
 	}
@@ -122,6 +147,24 @@ class ZendSearchPlugin extends GenericPlugin {
 			$this->index = Zend_Search_Lucene::open($indexPath);
 		}
 		return $this->index;
+	}
+
+	/**
+	 * Add the search link to the header.
+	 */
+	function navBarCallback($hookName, $args) {
+		$output =& $args[2];
+		$output .= '<li><a href="' . Request::url('search', 'index') . '">' . Locale::translate('navigation.search') . '</a></li>';
+		return false;
+	}
+
+	/**
+	 * Add the site management links
+	 */
+	function siteManagementCallback($hookName, $args) {
+		$output =& $args[2];
+		$output .= '<li>&#187;&nbsp;<a href="' . Request::url('admin', 'plugin', array('generic', $this->getName(), 'adminSearchForm')) . '">' . Locale::translate('plugins.generic.zendSearch.searchForm') . '</a></li>';
+		return false;
 	}
 
 	/**
@@ -156,28 +199,90 @@ class ZendSearchPlugin extends GenericPlugin {
 		$page =& $args[0];
 		$op =& $args[1];
 
-		if ($page != 'search') return false;
-
-		$this->import('ZendSearchHandler');
-		if (!method_exists('ZendSearchHandler', $op)) return false;
-
-		define('HANDLER_CLASS', 'ZendSearchHandler');
-		return true;
+		switch ($page) {
+			case 'search':
+				$this->import('ZendSearchHandler');
+				if (method_exists('ZendSearchHandler', $op)) {
+					define('HANDLER_CLASS', 'ZendSearchHandler');
+					return true;
+				}
+				break;
+			case 'zendSearchAdmin':
+				$this->import('ZendSearchAdminHandler');
+				if (method_exists('ZendSearchAdminHandler', $op)) {
+					define('HANDLER_CLASS', 'ZendSearchAdminHandler');
+					return true;
+				}
+				break;
+		}
+		return false;
 	}
 
 	function insertRecordCallback($hookName, $args) {
+		// Load a cached list of search form elements for which we will index.
+		static $searchFormElementCache;
+		static $fieldsToSearchFormElements;
+		if (!isset($searchFormElementCache)) {
+			$searchFormElementDao =& DAORegistry::getDAO('SearchFormElementDAO');
+			$searchFormElements =& $searchFormElementDao->getSearchFormElements();
+			while ($searchFormElement =& $searchFormElements->next()) {
+				$searchFormElementId = $searchFormElement->getSearchFormElementId();
+				$searchFormElementCache[$searchFormElementId] =& $searchFormElement;
+				$searchFormElementFields =& $searchFormElementDao->getFieldsBySearchFormElement($searchFormElementId);
+				while ($field =& $searchFormElementFields->next()) {
+					$fieldsToSearchFormElements[$field->getFieldId()][] = $searchFormElementId;
+					unset($field);
+				}
+				unset($searchFormElement, $searchFormElementFields);
+			}
+			unset($searchFormElements, $searchFormElementDao);
+		}
+
+		// Now handle the record.
 		$record =& $args[0];
 
 		$doc = new Zend_Search_Lucene_Document();
 
 		$schemaPlugin =& $record->getSchemaPlugin();
 		$schemaPluginName = $schemaPlugin->getName();
+		$fieldDao =& DAORegistry::getDAO('FieldDAO');
 		foreach ($schemaPlugin->getFieldList() as $fieldName) {
-			$doc->addField(Zend_Search_Lucene_Field::UnStored($schemaPluginName . '-' . $fieldName, $schemaPlugin->getFieldValue($record, $fieldName, SORT_ORDER_TYPE_STRING)));
+			$field =& $fieldDao->buildField($fieldName, $schemaPluginName);
+			if (isset($fieldsToSearchFormElements[$field->getFieldId()])) {
+				// This field belongs to one or more search form elements;
+				// make sure it is indexed against that element.
+				foreach ($fieldsToSearchFormElements[$field->getFieldId()] as $searchFormElementId) {
+					$searchFormElement =& $searchFormElementCache[$searchFormElementId];
+					switch ($searchFormElement->getType()) {
+						case SEARCH_FORM_ELEMENT_TYPE_STRING:
+							$fieldValue = $schemaPlugin->getFieldValue($record, $fieldName, SORT_ORDER_TYPE_STRING);
+							$doc->addField(Zend_Search_Lucene_Field::UnStored($searchFormElement->getSymbolic(), $fieldValue));
+							break;
+						/* case SEARCH_FORM_ELEMENT_TYPE_SELECT:
+							fatalError('BUILD SELECT LIST AS NEEDED');
+							break; */
+						case SEARCH_FORM_ELEMENT_TYPE_DATE:
+							$fieldValue = $schemaPlugin->getFieldValue($record, $fieldName, SORT_ORDER_TYPE_DATE);
+							if ($fieldValue !== null) {
+								// Don't index values that could not be parsed
+								$doc->addField(Zend_Search_Lucene_Field::Keyword($searchFormElement->getSymbolic(), $fieldValue));
+							}
+							break;
+						default:
+							fatalError('Unknown search form element type!');
+					}
+					unset($searchFormElement);
+				}
+			} else {
+				// This is not a search form element field; dump it under
+				// "other" so that it is still indexed.
+				$fieldValue = $schemaPlugin->getFieldValue($record, $fieldName, SORT_ORDER_TYPE_STRING);
+				$doc->addField(Zend_Search_Lucene_Field::UnStored('harvesterOther', $fieldValue));
+			}
 		}
-		$doc->addField(Zend_Search_Lucene_Field::Keyword('recordId', $record->getRecordId()));
-		$doc->addField(Zend_Search_Lucene_Field::Keyword('archiveId', $record->getArchiveId()));
-		$doc->addField(Zend_Search_Lucene_Field::Keyword('identifier', $record->getIdentifier()));
+		$doc->addField(Zend_Search_Lucene_Field::Keyword('harvesterRecordId', $record->getRecordId()));
+		$doc->addField(Zend_Search_Lucene_Field::Keyword('harvesterArchiveId', $record->getArchiveId()));
+		$doc->addField(Zend_Search_Lucene_Field::Keyword('harvesterIdentifier', $record->getIdentifier()));
 
 		$index =& $this->getIndex();
 		$index->addDocument($doc);

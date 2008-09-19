@@ -17,4 +17,23 @@
 	<message key="plugins.generic.zendSearch.description">This plugin implements support for the Zend Framework's search engine, which is a PHP implementation of the Apache Lucene project.</message>
 	<message key="plugins.generic.zendSearch.blockDisplayName">ZEND Search Block</message>
 	<message key="plugins.generic.zendSearch.blockDescription">This block allows searching via the Zend Framework implementation of the Lucene search engine.</message>
+	<message key="plugins.generic.zendSearch.searchForm">Search Form</message>
+	<message key="plugins.generic.zendSearch.formElement.confirmDelete">Are you sure you wish to delete this search form element?</message>
+	<message key="plugins.generic.zendSearch.formElement.noneCreated">No search form elements have been created.</message>
+	<message key="plugins.generic.zendSearch.formElement.create">Create Search Form Element</message>
+	<message key="plugins.generic.zendSearch.formElement.edit">Edit Search Form Element</message>
+	<message key="plugins.generic.zendSearch.formElement.status">Status</message>
+	<message key="plugins.generic.zendSearch.formElement.title">Title</message>
+	<message key="plugins.generic.zendSearch.formElement.title.required">A title is required.</message>
+	<message key="plugins.generic.zendSearch.formElement.symbolic">Symbolic Name</message>
+	<message key="plugins.generic.zendSearch.formElement.symbolic.required">Please ensure that a unique symbolic name is specified.</message>
+	<message key="plugins.generic.zendSearch.formElement.type">Type</message>
+	<message key="plugins.generic.zendSearch.formElement.type.required">A type is required.</message>
+	<message key="plugins.generic.zendSearch.formElement.type.string">String</message>
+	<message key="plugins.generic.zendSearch.formElement.type.select">Select</message>
+	<message key="plugins.generic.zendSearch.formElement.type.date">Date</message>
+	<message key="plugins.generic.zendSearch.formElement.type.date.rangeStart">First Date</message>
+	<message key="plugins.generic.zendSearch.formElement.type.date.rangeEnd">Last Date</message>
+	<message key="plugins.generic.zendSearch.formElement.type.date.recalulateRange">Recalculate Range</message>
+	<message key="plugins.generic.zendSearch.formElement.includeFields">Include Fields</message>
 </locale>

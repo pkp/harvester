@@ -9,11 +9,13 @@
  * @package archive
  * @class Archive
  *
- * Archive class.
+ * @brief Archive class.
  * Describes basic archive properties.
  *
- * $Id$
  */
+
+// $Id$
+
 
 class Archive extends DataObject {
 	/** Archive settings DAO */
