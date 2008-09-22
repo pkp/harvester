@@ -23,7 +23,8 @@ class SehlPlugin extends GenericPlugin {
 
 	function register($category, $path) {
 		if (parent::register($category, $path)) {
-			$isEnabled = $this->getSetting('enabled');
+			if (!Config::getVar('general', 'installed')) return false;
+			$isEnabled = $this->getEnabled();
 
 			$this->addLocaleData();
 			HookRegistry::register('SchemaPlugin::displayRecordSummary',array(&$this, 'displayTemplateCallback'));
