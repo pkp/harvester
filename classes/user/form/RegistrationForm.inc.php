@@ -119,8 +119,7 @@ class RegistrationForm extends Form {
 			'gender', 'initials', 'country',
 			'affiliation', 'email', 'userUrl', 'phone', 'fax', 'signature',
 			'mailingAddress', 'biography', 'interests', 'userLocales',
-			'registerAsReader', 'openAccessNotification', 'registerAsAuthor',
-			'registerAsReviewer', 'sendPassword'
+			'registerAsSubmitter', 'sendPassword'
 		);
 		if ($this->captchaEnabled) {
 			$userVars[] = 'captchaId';
@@ -213,11 +212,10 @@ class RegistrationForm extends Form {
 		foreach ($allowedRoles as $k => $v) {
 			$roleId = $roleDao->getRoleIdFromPath($k);
 			if ($this->getData($v) && !$roleDao->roleExists($userId, $roleId)) {
-				$role = &new Role();
+				$role =& new Role();
 				$role->setUserId($userId);
 				$role->setRoleId($roleId);
 				$roleDao->insertRole($role);
-
 			}
 		}
 
