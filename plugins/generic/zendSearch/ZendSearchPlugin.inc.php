@@ -222,8 +222,8 @@ class ZendSearchPlugin extends GenericPlugin {
 		// Load a cached list of search form elements for which we will index.
 		static $searchFormElementCache;
 		static $fieldsToSearchFormElements;
+		$searchFormElementDao =& DAORegistry::getDAO('SearchFormElementDAO');
 		if (!isset($searchFormElementCache)) {
-			$searchFormElementDao =& DAORegistry::getDAO('SearchFormElementDAO');
 			$searchFormElements =& $searchFormElementDao->getSearchFormElements();
 			while ($searchFormElement =& $searchFormElements->next()) {
 				$searchFormElementId = $searchFormElement->getSearchFormElementId();
@@ -235,7 +235,7 @@ class ZendSearchPlugin extends GenericPlugin {
 				}
 				unset($searchFormElement, $searchFormElementFields);
 			}
-			unset($searchFormElements, $searchFormElementDao);
+			unset($searchFormElements);
 		}
 
 		// Now handle the record.
@@ -258,9 +258,13 @@ class ZendSearchPlugin extends GenericPlugin {
 							$fieldValue = $schemaPlugin->getFieldValue($record, $fieldName, SORT_ORDER_TYPE_STRING);
 							$doc->addField(Zend_Search_Lucene_Field::UnStored($searchFormElement->getSymbolic(), $fieldValue));
 							break;
-						/* case SEARCH_FORM_ELEMENT_TYPE_SELECT:
-							fatalError('BUILD SELECT LIST AS NEEDED');
-							break; */
+						case SEARCH_FORM_ELEMENT_TYPE_SELECT:
+							$fieldValue = $schemaPlugin->getFieldValue($record, $fieldName, SORT_ORDER_TYPE_STRING);
+							$doc->addField(Zend_Search_Lucene_Field::UnStored($searchFormElement->getSymbolic(), $fieldValue));
+							if (!$searchFormElementDao->searchFormElementOptionExists($searchFormElementId, $fieldValue)) {
+								$searchFormElementDao->insertSearchFormElementOption($searchFormElementId, $fieldValue);
+							}
+							break;
 						case SEARCH_FORM_ELEMENT_TYPE_DATE:
 							$fieldValue = $schemaPlugin->getFieldValue($record, $fieldName, SORT_ORDER_TYPE_DATE);
 							if ($fieldValue !== null) {

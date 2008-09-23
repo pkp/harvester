@@ -106,9 +106,10 @@ class SearchFormElementForm extends Form {
 			$this->_data['rangeStart'] = $searchFormElement->getRangeStart();
 			$this->_data['rangeEnd'] = $searchFormElement->getRangeEnd();
 			$this->_data['recalculateRange'] = true;
+			$this->_data['recalculateOptions'] = true;
 			$this->setData('oldSymbolic', $searchFormElement->getSymbolic());
 		}
-		$this->readUserVars(array('symbolic', 'title', 'type', 'fieldNames'));
+		$this->readUserVars(array('symbolic', 'title', 'type', 'fieldNames', 'recalculateOptions', 'recalculateRange'));
 	}
 
 	/**
@@ -161,7 +162,7 @@ class SearchFormElementForm extends Form {
 			$oldFieldIds[] = $oldField->getFieldId();
 			unset($oldField);
 		}
-		$fieldsChanged = count(array_diff($oldFieldIds, $fieldIds)) != 0;
+		$fieldsChanged = count(array_diff($oldFieldIds, $fieldIds)) != 0 || count(array_diff($fieldIds, $oldFieldIds)) != 0;
 
 		// If the fields changed, save them and mark the element unclean
 		if ($fieldsChanged) {
@@ -203,6 +204,30 @@ class SearchFormElementForm extends Form {
 			$searchFormElement->setRangeStart($rangeStart);
 			$searchFormElement->setRangeEnd($rangeEnd);
 			$this->searchFormElementDao->updateSearchFormElement($searchFormElement);
+		} elseif ($searchFormElement->getType() == SEARCH_FORM_ELEMENT_TYPE_SELECT && $this->getData('recalculateOptions')) {
+			$archiveDao =& DAORegistry::getDAO('ArchiveDAO');
+			$recordDao =& DAORegistry::getDAO('RecordDAO');
+			$archives =& $archiveDao->getArchives();
+			while ($archive =& $archives->next()) {
+				import('sortOrder.SortOrderDAO');
+				$schemaPluginName = $archive->getSchemaPluginName();
+				if (isset($fields[$schemaPluginName])) {
+					$schemaFields =& $fields[$schemaPluginName];
+					$schemaPlugin =& $archive->getSchemaPlugin();
+					$records =& $recordDao->getRecords($archive->getArchiveId());
+					while ($record =& $records->next()) {
+						foreach ($schemaFields as $fieldName) {
+							$fieldValue = $schemaPlugin->getFieldValue($record, $fieldName, SORT_ORDER_TYPE_STRING);
+							if (!$this->searchFormElementDao->searchFormElementOptionExists($this->searchFormElementId, $fieldValue)) {
+								$this->searchFormElementDao->insertSearchFormElementOption($this->searchFormElementId, $fieldValue);
+							}
+						}
+						unset($record);
+					}
+					unset($records, $schemaFields, $schemaPlugin);
+				}
+				unset($archive, $schemaPlugin);
+			}
 		}
 	}
 }

@@ -89,4 +89,23 @@
 			<UNIQUE />
 		</index>
 	</table>
+
+	<!--
+	  *
+	  * TABLE search_form_element_options
+	  *
+	 -->
+	<table name="search_form_element_options">
+		<field name="search_form_element_id" type="I2">
+			<NOTNULL/>
+		</field>
+		<field name="value" type="C2" size="128">
+			<NOTNULL/>
+		</field>
+		<index name="sort_order_string">
+			<col>value</col>
+			<col>search_form_element_id</col>
+			<UNIQUE/>
+		</index>
+	</table>
 </schema>

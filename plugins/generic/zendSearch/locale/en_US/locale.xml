@@ -34,6 +34,7 @@
 	<message key="plugins.generic.zendSearch.formElement.type.date">Date</message>
 	<message key="plugins.generic.zendSearch.formElement.type.date.rangeStart">First Date</message>
 	<message key="plugins.generic.zendSearch.formElement.type.date.rangeEnd">Last Date</message>
-	<message key="plugins.generic.zendSearch.formElement.type.date.recalulateRange">Recalculate Range</message>
+	<message key="plugins.generic.zendSearch.formElement.type.date.recalculateRange">Recalculate Range</message>
+	<message key="plugins.generic.zendSearch.formElement.type.select.recalculateOptions">Recalculate Field Options</message>
 	<message key="plugins.generic.zendSearch.formElement.includeFields">Include Fields</message>
 </locale>

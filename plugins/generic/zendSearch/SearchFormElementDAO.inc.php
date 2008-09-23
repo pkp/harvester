@@ -262,6 +262,70 @@ class SearchFormElementDAO extends DAO {
 	}
 
 	/**
+	 * Insert a search form element option.
+	 * @param $searchFormElementId int
+	 * @param $value string
+	 * @return int Count
+	 */
+	function insertSearchFormElementOption($searchFormElementId, $value) {
+		return $this->update(
+			'INSERT INTO search_form_element_options
+				(search_form_element_id, value)
+			VALUES
+				(?, ?)',
+			array(
+				(int) $searchFormElementId,
+				String::substr($value, 0, 128)
+			)
+		);
+	}
+
+	/**
+	 * Check if a search form element option exists.
+	 * @param $searchFormElementId int
+	 * @param $value string
+	 * @return boolean
+	 */
+	function searchFormElementOptionExists($searchFormElementId, $value) {
+		$result =& $this->retrieve(
+			'SELECT COUNT(*) FROM search_form_element_options WHERE search_form_element_id = ? AND value = ?', array(
+				(int) $searchFormElementId,
+				String::substr($value, 0, 128)
+			)
+		);
+		$returner = isset($result->fields[0]) && $result->fields[0] == 1 ? true : false;
+
+		$result->Close();
+		unset($result);
+
+		return $returner;
+	}
+
+	/**
+	 * Retrieve all search form element options for a search form element.
+	 * @param $searchFormElementId int
+	 * @param $rangeInfo object
+	 * @return DAOResultFactory containing matching search form elements
+	 */
+	function &getSearchFormElementOptions($searchFormElementId, $rangeInfo = null) {
+		$result =& $this->retrieveRange(
+			'SELECT value FROM search_form_element_options WHERE search_form_element_id = ? ORDER BY value',
+			array((int) $searchFormElementId),
+			$rangeInfo
+		);
+
+		$returner =& new DAOResultFactory($result, $this, '_returnSearchFormElementOptionFromRow');
+		return $returner;
+	}
+
+	/**
+	 * Get a search form element option value from a row.
+	 */
+	function _returnSearchFormElementOptionFromRow(&$row) {
+		return $row['value'];
+	}
+
+	/**
 	 * Get the ID of the last inserted search form element.
 	 * @return int
 	 */

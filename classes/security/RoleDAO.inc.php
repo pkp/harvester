@@ -183,6 +183,8 @@ class RoleDAO extends DAO {
 		switch ($rolePath) {
 			case 'admin':
 				return ROLE_ID_SITE_ADMIN;
+			case 'submitter':
+				return ROLE_ID_SUBMITTER;
 			default:
 				return null;
 		}

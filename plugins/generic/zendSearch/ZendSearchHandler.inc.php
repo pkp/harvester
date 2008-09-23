@@ -54,6 +54,7 @@ class ZendSearchHandler extends Handler {
 			$searchFormElementId = $searchFormElement->getSearchFormElementId();
 			$symbolic = $searchFormElement->getSymbolic();
 			switch ($searchFormElement->getType()) {
+				case SEARCH_FORM_ELEMENT_TYPE_SELECT:
 				case SEARCH_FORM_ELEMENT_TYPE_STRING:
 					$term = Request::getUserVar($symbolic);
 					if (!empty($term)) $query->addSubquery(new Zend_Search_Lucene_Search_Query_Term(new Zend_Search_Lucene_Index_Term($term, $symbolic)), true);

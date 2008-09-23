@@ -84,7 +84,16 @@ function changeElementType() {
 		<td class="label">&nbsp;</td>
 		<td colspan="2" class="value">
 			<input type="checkbox" name="recalculateRange" id="recalculateRange" {if $recalculateRange}checked="checked" {/if} />
-			{fieldLabel name="recalculateRange" key="plugins.generic.zendSearch.formElement.type.date.recalulateRange"}
+			{fieldLabel name="recalculateRange" key="plugins.generic.zendSearch.formElement.type.date.recalculateRange"}
+		</td>
+	</tr>
+{elseif $type == $smarty.const.SEARCH_FORM_ELEMENT_TYPE_SELECT}
+	{* The SELECT form element type may need its options recalculated. *}
+	<tr valign="top">
+		<td class="label">&nbsp;</td>
+		<td colspan="2" class="value">
+			<input type="checkbox" name="recalculateOptions" id="recalculateOptions" {if $recalculateOptions}checked="checked" {/if} />
+			{fieldLabel name="recalculateOptions" key="plugins.generic.zendSearch.formElement.type.select.recalculateOptions"}
 		</td>
 	</tr>
 {/if}

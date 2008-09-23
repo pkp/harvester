@@ -36,6 +36,13 @@
 		<td class="value">
 			{if $searchFormElementType == $smarty.const.SEARCH_FORM_ELEMENT_TYPE_STRING}
 				<input id="searchFormElement-{$searchFormElementId|escape}" name="{$searchFormElementSymbolic|escape}" type="text" class="textField" />
+			{elseif $searchFormElementType == $smarty.const.SEARCH_FORM_ELEMENT_TYPE_SELECT}
+				<select id="searchFormElement-{$searchFormElementId|escape}" name="{$searchFormElementSymbolic|escape}" class="selectMenu">
+					{assign var='searchFormElementOptions' value=$searchFormElement->getOptions()}
+					{iterate from=searchFormElementOptions item=option}
+						<option value="{$option|escape}">{$option|escape}</option>
+					{/iterate}
+				</select>
 			{else}{* $searchFormElementype == $smarty.const.SEARCH_FORM_ELEMENT_TYPE_DATE *}
 				{assign var="startDate" value=$searchFormElement->getRangeStart()|strtotime}
 				{assign var="startYear" value=$startDate|date_format:"%Y"}

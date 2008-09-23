@@ -18,7 +18,7 @@
 
 
 define('SEARCH_FORM_ELEMENT_TYPE_STRING',	0x00000001);
-// define('SEARCH_FORM_ELEMENT_TYPE_SELECT',	0x00000002);
+define('SEARCH_FORM_ELEMENT_TYPE_SELECT',	0x00000002);
 define('SEARCH_FORM_ELEMENT_TYPE_DATE',		0x00000004);
 
 class SearchFormElement extends DataObject {
@@ -79,7 +79,7 @@ class SearchFormElement extends DataObject {
 		static $typeMap;
 		if (!isset($typeMap)) $typeMap = array(
 			SEARCH_FORM_ELEMENT_TYPE_STRING => 'plugins.generic.zendSearch.formElement.type.string',
-			// SEARCH_FORM_ELEMENT_TYPE_SELECT => 'plugins.generic.zendSearch.formElement.type.select',
+			SEARCH_FORM_ELEMENT_TYPE_SELECT => 'plugins.generic.zendSearch.formElement.type.select',
 			SEARCH_FORM_ELEMENT_TYPE_DATE => 'plugins.generic.zendSearch.formElement.type.date',
 
 		);
@@ -105,6 +105,18 @@ class SearchFormElement extends DataObject {
 	 */
 	function setType($type) {
 		return $this->setData('type', $type);
+	}
+
+	/**
+	 * Get the list of options for a SEARCH_FORM_ELEMENT_TYPE_SELECT form element
+	 * @return Object iterator
+	 */
+	function &getOptions() {
+		$searchFormElementDao =& DAORegistry::getDAO('SearchFormElementDAO');
+		$returner =& $searchFormElementDao->getSearchFormElementOptions(
+			$this->getSearchFormElementId()
+		);
+		return $returner;
 	}
 
 	/**
