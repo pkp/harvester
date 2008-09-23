@@ -193,6 +193,9 @@ class SearchFormElementDAO extends DAO {
 		$this->update(
 			'DELETE FROM search_form_element_settings WHERE search_form_element_id = ?', $searchFormElementId
 		);
+		$this->update(
+			'DELETE FROM search_form_element_options WHERE search_form_element_id = ?', $searchFormElementId
+		);
 		return $this->update(
 			'DELETE FROM search_form_elements WHERE search_form_element_id = ?', $searchFormElementId
 		);
@@ -316,6 +319,18 @@ class SearchFormElementDAO extends DAO {
 
 		$returner =& new DAOResultFactory($result, $this, '_returnSearchFormElementOptionFromRow');
 		return $returner;
+	}
+
+	/**
+	 * Delete a search form element's options by search form element ID.
+	 * @param $searchFormElementId int
+	 * @return int
+	 */
+	function deleteSearchFormElementOptions($searchFormElementId) {
+		return $this->update(
+			'DELETE FROM search_form_element_options WHERE search_form_element_id = ?',
+			array((int) $searchFormElementId)
+		);
 	}
 
 	/**

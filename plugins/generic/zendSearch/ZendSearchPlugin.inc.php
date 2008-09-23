@@ -56,6 +56,10 @@ class ZendSearchPlugin extends GenericPlugin {
 				HookRegistry::register('Template::Admin::Index::SiteManagement', array(&$this, 'siteManagementCallback'));
 				HookRegistry::register('LoadHandler', array(&$this, 'loadHandlerCallback'));
 				HookRegistry::register('PluginRegistry::loadCategory', array(&$this, 'callbackLoadCategory'));
+
+				// Rebuild index
+				HookRegistry::register('rebuildSearchIndex::flush', array(&$this, 'callbackFlush'));
+				HookRegistry::register('rebuildSearchIndex::finish', array(&$this, 'callbackFinish'));
 			}
 			return true;
 		}
@@ -324,6 +328,41 @@ class ZendSearchPlugin extends GenericPlugin {
 			$index = Zend_Search_Lucene::create($indexPath);
 		}
 		return false;
+	}
+
+	/**
+	 * Flush the entire index prior to rebuilding it.
+	 */
+	function callbackFlush($hookName, $args) {
+		// Flush the Lucene index
+		$indexPath = $this->getIndexPath();
+		$index = Zend_Search_Lucene::create($indexPath);
+
+		// Delete the field options
+		$searchFormElementDao =& DAORegistry::getDAO('SearchFormElementDAO');
+		$searchFormElements =& $searchFormElementDao->getSearchFormElements();
+		while ($searchFormElement =& $searchFormElements->next()) {
+			$searchFormElementDao->deleteSearchFormElementOptions(
+				$searchFormElement->getSearchFormElementId()
+			);
+			unset($searchFormElement);
+		}
+	}
+
+	/**
+	 * Index rebuild cleanup: mark select options as clean.
+	 */
+	function callbackFinish($hookName, $args) {
+		$searchFormElementDao =& DAORegistry::getDAO('SearchFormElementDAO');
+		$searchFormElements =& $searchFormElementDao->getSearchFormElements();
+		while ($searchFormElement =& $searchFormElements->next()) {
+			$searchFormElement->setIsClean(true);
+			$searchFormElementDao->updateSearchFormElement($searchFormElement);
+			unset($searchFormElement);
+		}
+
+		$index =& $this->getIndex();
+		$index->optimize();
 	}
 }
 

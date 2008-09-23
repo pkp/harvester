@@ -218,6 +218,15 @@ class SortOrderDAO extends DAO {
 	}
 
 	/**
+	 * Flush the entire index.
+	 */
+	function flush() {
+		$this->update('DELETE FROM sort_order_strings');
+		$this->update('DELETE FROM sort_order_numbers');
+		$this->update('DELETE FROM sort_order_dates');
+	}
+
+	/**
 	 * Insert a field/sort order association.
 	 * @param $sortOrderId int
 	 * @param $schemaPluginId int

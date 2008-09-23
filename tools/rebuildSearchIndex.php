@@ -70,23 +70,44 @@ class rebuildSearchIndex extends CommandLineTool {
 	 * Rebuild the search indexes.
 	 */
 	function execute() {
-		if (empty($this->argv)) return $this->usage();
-		while (true) {
-			$cmd = array_shift($this->argv);
-			if (!$cmd) exit;
-			switch ($cmd) {
-				case '--reparse':
-					die('implement');
-					break;
-				case '--sort-order':
-					$sortOrderId = array_shift($this->argv);
-					$this->reindexSortOrder($sortOrderId);
-					break;
-				default:
-					fatalError("Unknown command \"$cmd\"!");
-					break;
+		echo 'Flushing sort order index... ';
+		$sortOrderDao =& DAORegistry::getDAO('SortOrderDAO');
+		$sortOrderDao->flush();
+		echo "Done.\n";
+
+		echo 'Performing other index flush tasks... ';
+		HookRegistry::call('rebuildSearchIndex::flush');
+		echo "Done.\n";
+
+		echo "Indexing records...\n";
+		$archiveDao =& DAORegistry::getDAO('ArchiveDAO');
+		$recordDao =& DAORegistry::getDAO('RecordDAO');
+		$archives =& $archiveDao->getArchives();
+		while ($archive =& $archives->next()) {
+			echo ' ' . $archive->getTitle() . '... ';
+			$harvester =& $archive->getHarvester();
+			$records =& $recordDao->getRecords($archive->getArchiveId());
+			while ($record =& $records->next()) {
+				$harvester->indexRecordSorting($record);
+				HookRegistry::call('Harvester::insertRecord', array(&$record));
+				unset($record);
 			}
+			unset($archive, $records, $harvester);
+			echo "Done.\n";
 		}
+
+		echo 'Marking sort orders clean... ';
+		$sortOrders =& $sortOrderDao->getSortOrders();
+		while ($sortOrder =& $sortOrders->next()) {
+			$sortOrder->setIsClean(true);
+			$sortOrderDao->updateSortOrder($sortOrder);
+		}
+		unset($sortOrders);
+		echo "Done.\n";
+
+		echo 'Performing other cleanup tasks... ';
+		HookRegistry::call('rebuildSearchIndex::finish');
+		echo "Done.\n";
 	}
 
 }
