@@ -217,7 +217,7 @@ class ArchiveForm extends Form {
 			$publicArchiveId = $this->getData('publicArchiveId');
 			$archiveDao =& DAORegistry::getDAO('ArchiveDAO');
 			if ($publicArchiveId != '' && $archiveDao->archiveExistsByPublicArchiveId($publicArchiveId, $this->archiveId)) {
-				$this->addError('publicArchiveId', 'admin.archives.form.publicArchiveIdExists');
+				$this->addError('publicArchiveId', Locale::translate('admin.archives.form.publicArchiveIdExists'));
 				$this->addErrorField('publicArchiveId');
 			}
 		}
