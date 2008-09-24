@@ -322,6 +322,10 @@ class ZendSearchPlugin extends GenericPlugin {
 	}
 
 	function postInstallCallback($hookName, $args) {
+		// Include Zend Framework in include path
+		ini_set('include_path', BASE_SYS_DIR . '/lib/pkp/lib/ZendFramework/library' . ENV_SEPARATOR . ini_get('include_path'));
+		require_once('lib/pkp/lib/ZendFramework/library/Zend/Search/Lucene.php');
+
 		// If the indexes do not exist, create them.
 		$indexPath = $this->getIndexPath();
 		if (!file_exists($indexPath)) {
