@@ -49,6 +49,14 @@ class HarvesterApplication extends PKPApplication {
 	function getNameKey() {
 		return('common.harvester2');
 	}
+	
+	/**
+	 * Get the symbolic name of this application
+	 * @return string
+	 */
+	function getName() {
+		return 'harvester2';
+	}
 
 	/**
 	 * Get the URL to the XML descriptor for the current version of this
