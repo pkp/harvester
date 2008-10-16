@@ -16,9 +16,9 @@
 // $Id$
 
 
-import('core.Handler');
+import('core.PKPHandler');
 
-class BrowseHandler extends Handler {
+class BrowseHandler extends PKPHandler {
 	/**
 	 * Display record list or archive list.
 	 */
@@ -34,7 +34,7 @@ class BrowseHandler extends Handler {
 		if (($archive =& $archiveDao->getArchive($archiveId)) || $archiveId == 'all') {
 			BrowseHandler::setupTemplate($archive, true);
 
-			$rangeInfo = Handler::getRangeInfo('records');
+			$rangeInfo = PKPHandler::getRangeInfo('records');
 
 			$sortOrderDao =& DAORegistry::getDAO('SortOrderDAO');
 			$sortOrderId = Request::getUserVar('sortOrderId');
@@ -61,7 +61,7 @@ class BrowseHandler extends Handler {
 			BrowseHandler::setupTemplate($archive);
 
 			// List archives for the user to browse.
-			$rangeInfo = Handler::getRangeInfo('archives');
+			$rangeInfo = PKPHandler::getRangeInfo('archives');
 
 			$archives =& $archiveDao->getArchives(true, $rangeInfo);
 

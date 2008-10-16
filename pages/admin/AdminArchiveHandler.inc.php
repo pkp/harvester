@@ -25,7 +25,7 @@ class AdminArchiveHandler extends AdminHandler {
 		AdminArchiveHandler::validate();
 		AdminArchiveHandler::setupTemplate();
 
-		$rangeInfo = Handler::getRangeInfo('archives');
+		$rangeInfo = PKPHandler::getRangeInfo('archives');
 
 		// Load the harvester plugins so we can display names.
 		$plugins =& PluginRegistry::loadCategory('harvesters');

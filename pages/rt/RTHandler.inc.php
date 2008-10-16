@@ -17,9 +17,9 @@
 // $Id$
 
 import('rt.harvester2.RTDAO');
-import('core.Handler');
+import('core.PKPHandler');
 
-class RTHandler extends Handler {
+class RTHandler extends PKPHandler {
 	function context($args) {
 		$recordId = array_shift($args);
 		$contextId = array_shift($args);

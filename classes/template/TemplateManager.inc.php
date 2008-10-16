@@ -27,7 +27,6 @@ class TemplateManager extends PKPTemplateManager {
 	 */
 	function TemplateManager() {
 		parent::PKPTemplateManager();
-		$this->register_modifier('get_value', array(&$this, 'smartyGetValue'));
 
 		if (!defined('SESSION_DISABLE_INIT')) {
 			/**
@@ -43,6 +42,9 @@ class TemplateManager extends PKPTemplateManager {
 			$this->assign('publicFilesDir', $siteFilesDir);
 			$this->assign('isAdmin', Validation::isSiteAdmin());
 
+			// assign an empty home context
+			$this->assign('homeContext', array());
+			
 			$siteStyleFilename = PublicFileManager::getSiteFilesPath() . '/' . $site->getSiteStyleFilename();
 			if (file_exists($siteStyleFilename)) $this->addStyleSheet(Request::getBaseUrl() . '/' . $siteStyleFilename);
 
@@ -65,14 +67,6 @@ class TemplateManager extends PKPTemplateManager {
 			$this->assign('siteTitle', $site->getSiteTitle());
 			$this->assign('enableSubmit', $site->getSetting('enableSubmit'));
 		}
-	}
-
-	/**
-	 * Get the value of a template variable.
-	 */
-	function smartyGetValue($name) {
-		$templateMgr =& TemplateManager::getManager();
-		return $templateMgr->get_template_vars($name);
 	}
 
 	/**
@@ -124,23 +118,29 @@ class TemplateManager extends PKPTemplateManager {
 	}
 
 	/**
-	 * Generate a URL into OJS. (This is a wrapper around Request::url to make it available to Smarty templates.)
+	 * Generate a URL into Harvester2. (This is a wrapper around Request::url to make it available to Smarty templates.)
 	 */
 	function smartyUrl($params, &$smarty) {
 		// Extract the variables named in $paramList, and remove them
 		// from the params array. Variables remaining in params will be
 		// passed along to Request::url as extra parameters.
-		$paramList = array('page', 'op', 'path', 'anchor', 'escape');
-		foreach ($paramList as $param) {
-			if (isset($params[$param])) {
-				$$param = $params[$param];
-				unset($params[$param]);
-			} else {
-				$$param = null;
+		$context = array();
+		// the ContextList is empty in the harvester, but syntax here is left for consistency 
+		// with OCS and OJS and in case contexts are added in the future
+		$contextList = HarvesterApplication::getContextList();
+
+		if ( !isset($params['context']) ) {
+			foreach ($contextList as $contextName) {
+				if (isset($params[$contextName])) {
+					$context[$contextName] = $params[$contextName];
+					unset($params[$contextName]);
+				} else {
+					$context[$contextName] = null;				
+				}
 			}
 		}
 
-		return Request::url($page, $op, $path, $params, $anchor, !isset($escape) || $escape);
+		return parent::smartyUrl($params, &$smarty);
 	}
 
 	/**

@@ -49,7 +49,7 @@ class RTSearchHandler extends RTAdminHandler {
 		RTAdminHandler::validate();
 
 		$rtDao = &DAORegistry::getDAO('RTDAO');
-		$rangeInfo = Handler::getRangeInfo('searches');
+		$rangeInfo = PKPHandler::getRangeInfo('searches');
 
 		$archiveId = array_shift($args);
 		$versionId = array_shift($args);

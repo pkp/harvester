@@ -166,16 +166,6 @@ input.defaultButton {
 	padding: 15px;
 }
 
-#sidebar {
-	float: right;
-	width: 150px;
-	background-color: #EDEDED;
-	border: 1px #666 dotted;
-	padding: 10px;
-	margin: 5px;
-	font-size: 0.65em;
-}
-
 #main {
 	width: 550px;
 	margin-right: 150px;
@@ -270,39 +260,6 @@ input.defaultButton {
 }
 
 #navbar a:hover {
-}
-
-
-/**
- * Sidebar
- */
-
-#developedBy {
-	text-transform: uppercase;
-	font-size: 0.95em;
-}
-
-#sidebar div.block {
-	font-size: 1em;
-	padding-bottom: 1.5em;
-}
-
-#sidebar div.block span.blockTitle {
-	display: block;
-	padding: 0.5em 0 0.5em 0;
-	font-size: 1em;
-	font-weight: bold;
-	letter-spacing: 0.1em;
-	text-transform: uppercase;
-}
-
-#sidebar div.block span.blockSubtitle {
-	display: block;
-	padding: 0;
-}
-
-#sidebar input.textField, #sidebar select.selectMenu, #sidebar input.button {
-	font-size: 1em;
 }
 
 

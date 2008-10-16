@@ -69,7 +69,12 @@ span.blockTitle {
  */
 
 #sidebar {
+	float: right;
 	width: 165px;
+	padding: 1em 0em 1em 0em;
+	font-size: 0.65em;
+	height: 100%;
+	margin-right: 5%;
 }
 
 #sidebar div.block span.blockTitle {

@@ -84,7 +84,7 @@ class RTVersionHandler extends RTAdminHandler {
 
 
 		$rtDao = &DAORegistry::getDAO('RTDAO');
-		$rangeInfo = Handler::getRangeInfo('versions');
+		$rangeInfo = PKPHandler::getRangeInfo('versions');
 
 		$templateMgr = &TemplateManager::getManager();
 		$templateMgr->assign_by_ref('versions', $rtDao->getVersions($archiveId, $rangeInfo));

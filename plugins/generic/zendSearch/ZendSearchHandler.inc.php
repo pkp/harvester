@@ -15,9 +15,9 @@
 // $Id$
 
 
-import('core.Handler');
+import('core.PKPHandler');
 
-class ZendSearchHandler extends Handler {
+class ZendSearchHandler extends PKPHandler {
 	/**
 	 * Display search form
 	 */
@@ -75,7 +75,7 @@ class ZendSearchHandler extends Handler {
 		}
 
 		$resultsArray = $index->find($query);
-		$rangeInfo =& Handler::getRangeInfo('results');
+		$rangeInfo =& PKPHandler::getRangeInfo('results');
 
 		import('core.ArrayItemIterator');
 		$resultsIterator =& ArrayItemIterator::fromRangeInfo($resultsArray, $rangeInfo);

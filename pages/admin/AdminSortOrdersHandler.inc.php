@@ -24,7 +24,7 @@ class AdminSortOrdersHandler extends AdminHandler {
 		AdminSortOrdersHandler::validate();
 		AdminSortOrdersHandler::setupTemplate();
 
-		$rangeInfo = Handler::getRangeInfo('sortOrders');
+		$rangeInfo = PKPHandler::getRangeInfo('sortOrders');
 
 		$sortOrderDao =& DAORegistry::getDAO('SortOrderDAO');
 		$sortOrders =& $sortOrderDao->getSortOrders($rangeInfo);

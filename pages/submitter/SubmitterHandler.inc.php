@@ -16,9 +16,9 @@
 // $Id$
 
 
-import('core.Handler');
+import('core.PKPHandler');
 
-class SubmitterHandler extends Handler {
+class SubmitterHandler extends PKPHandler {
 	/**
 	 * Display a list of the user's archives
 	 */

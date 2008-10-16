@@ -43,6 +43,16 @@ class HarvesterApplication extends PKPApplication {
 	}
 
 	/**
+	 * Get the list of the contexts available for this application
+	 * i.e. the various parameters that are needed to represent the 
+	 * (e.g. array('journal') or array('conference', 'schedConf'))
+	 * @return Array
+	 */
+	function getContextList() {
+		return array();
+	}
+
+	/**
 	 * Get the locale key for the name of this application.
 	 * @return string
 	 */

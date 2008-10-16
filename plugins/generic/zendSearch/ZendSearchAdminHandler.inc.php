@@ -15,9 +15,9 @@
 // $Id$
 
 
-import('core.Handler');
+import('core.PKPHandler');
 
-class ZendSearchAdminHandler extends Handler {
+class ZendSearchAdminHandler extends PKPHandler {
 	/**
 	 * Get the Zend Search Plugin object.
 	 */

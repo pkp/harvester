@@ -17,9 +17,9 @@
 
 
 import('rt.harvester2.HarvesterRTAdmin');
-import('core.Handler');
+import('core.PKPHandler');
 
-class RTAdminHandler extends Handler {
+class RTAdminHandler extends PKPHandler {
 
 	/**
 	 * Display the index page for RT administration tasks.

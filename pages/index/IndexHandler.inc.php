@@ -16,9 +16,9 @@
 // $Id$
 
 
-import('core.Handler');
+import('core.PKPHandler');
 
-class IndexHandler extends Handler {
+class IndexHandler extends PKPHandler {
 	function index($args) {
 		parent::validate();
 		$templateMgr = &TemplateManager::getManager();

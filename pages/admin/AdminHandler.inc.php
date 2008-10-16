@@ -16,9 +16,9 @@
 // $Id$
 
 
-import('core.Handler');
+import('core.PKPHandler');
 
-class AdminHandler extends Handler {
+class AdminHandler extends PKPHandler {
 
 	/**
 	 * Display site admin index page.
@@ -61,11 +61,11 @@ class AdminHandler extends Handler {
 	//
 
 	function settings() {
-		Handler::delegate('pages.admin.AdminSettingsHandler');
+		PKPHandler::delegate('pages.admin.AdminSettingsHandler');
 	}
 
 	function saveSettings() {
-		Handler::delegate('pages.admin.AdminSettingsHandler');
+		PKPHandler::delegate('pages.admin.AdminSettingsHandler');
 	}
 
 
@@ -101,35 +101,35 @@ class AdminHandler extends Handler {
 	//
 
 	function archives() {
-		Handler::delegate('pages.admin.AdminArchiveHandler');
+		PKPHandler::delegate('pages.admin.AdminArchiveHandler');
 	}
 
 	function createArchive() {
-		Handler::delegate('pages.admin.AdminArchiveHandler');
+		PKPHandler::delegate('pages.admin.AdminArchiveHandler');
 	}
 
 	function editArchive() {
-		Handler::delegate('pages.admin.AdminArchiveHandler');
+		PKPHandler::delegate('pages.admin.AdminArchiveHandler');
 	}
 
 	function manage() {
-		Handler::delegate('pages.admin.AdminArchiveHandler');
+		PKPHandler::delegate('pages.admin.AdminArchiveHandler');
 	}
 
 	function updateArchive() {
-		Handler::delegate('pages.admin.AdminArchiveHandler');
+		PKPHandler::delegate('pages.admin.AdminArchiveHandler');
 	}
 
 	function deleteArchive() {
-		Handler::delegate('pages.admin.AdminArchiveHandler');
+		PKPHandler::delegate('pages.admin.AdminArchiveHandler');
 	}
 
 	function updateIndex() {
-		Handler::delegate('pages.admin.AdminArchiveHandler');
+		PKPHandler::delegate('pages.admin.AdminArchiveHandler');
 	}
 
 	function flushIndex() {
-		Handler::delegate('pages.admin.AdminArchiveHandler');
+		PKPHandler::delegate('pages.admin.AdminArchiveHandler');
 	}
 
 	//
@@ -137,23 +137,23 @@ class AdminHandler extends Handler {
 	//
 
 	function sortOrders() {
-		Handler::delegate('pages.admin.AdminSortOrdersHandler');
+		PKPHandler::delegate('pages.admin.AdminSortOrdersHandler');
 	}
 
 	function createSortOrder() {
-		Handler::delegate('pages.admin.AdminSortOrdersHandler');
+		PKPHandler::delegate('pages.admin.AdminSortOrdersHandler');
 	}
 
 	function editSortOrder() {
-		Handler::delegate('pages.admin.AdminSortOrdersHandler');
+		PKPHandler::delegate('pages.admin.AdminSortOrdersHandler');
 	}
 
 	function updateSortOrder() {
-		Handler::delegate('pages.admin.AdminSortOrdersHandler');
+		PKPHandler::delegate('pages.admin.AdminSortOrdersHandler');
 	}
 
 	function deleteSortOrder() {
-		Handler::delegate('pages.admin.AdminSortOrdersHandler');
+		PKPHandler::delegate('pages.admin.AdminSortOrdersHandler');
 	}
 
 	//
@@ -161,23 +161,23 @@ class AdminHandler extends Handler {
 	//
 
 	function languages() {
-		Handler::delegate('pages.admin.AdminLanguagesHandler');
+		PKPHandler::delegate('pages.admin.AdminLanguagesHandler');
 	}
 
 	function saveLanguageSettings() {
-		Handler::delegate('pages.admin.AdminLanguagesHandler');
+		PKPHandler::delegate('pages.admin.AdminLanguagesHandler');
 	}
 
 	function installLocale() {
-		Handler::delegate('pages.admin.AdminLanguagesHandler');
+		PKPHandler::delegate('pages.admin.AdminLanguagesHandler');
 	}
 
 	function uninstallLocale() {
-		Handler::delegate('pages.admin.AdminLanguagesHandler');
+		PKPHandler::delegate('pages.admin.AdminLanguagesHandler');
 	}
 
 	function reloadLocale() {
-		Handler::delegate('pages.admin.AdminLanguagesHandler');
+		PKPHandler::delegate('pages.admin.AdminLanguagesHandler');
 	}
 
 
@@ -186,31 +186,31 @@ class AdminHandler extends Handler {
 	//
 
 	function systemInfo() {
-		Handler::delegate('pages.admin.AdminFunctionsHandler');
+		PKPHandler::delegate('pages.admin.AdminFunctionsHandler');
 	}
 
 	function editSystemConfig() {
-		Handler::delegate('pages.admin.AdminFunctionsHandler');
+		PKPHandler::delegate('pages.admin.AdminFunctionsHandler');
 	}
 
 	function saveSystemConfig() {
-		Handler::delegate('pages.admin.AdminFunctionsHandler');
+		PKPHandler::delegate('pages.admin.AdminFunctionsHandler');
 	}
 
 	function phpinfo() {
-		Handler::delegate('pages.admin.AdminFunctionsHandler');
+		PKPHandler::delegate('pages.admin.AdminFunctionsHandler');
 	}
 
 	function expireSessions() {
-		Handler::delegate('pages.admin.AdminFunctionsHandler');
+		PKPHandler::delegate('pages.admin.AdminFunctionsHandler');
 	}
 
 	function clearTemplateCache() {
-		Handler::delegate('pages.admin.AdminFunctionsHandler');
+		PKPHandler::delegate('pages.admin.AdminFunctionsHandler');
 	}
 
 	function clearDataCache() {
-		Handler::delegate('pages.admin.AdminFunctionsHandler');
+		PKPHandler::delegate('pages.admin.AdminFunctionsHandler');
 	}
 
 	//
@@ -218,11 +218,11 @@ class AdminHandler extends Handler {
 	//
 
 	function plugins() {
-		Handler::delegate('pages.admin.PluginHandler');
+		PKPHandler::delegate('pages.admin.PluginHandler');
 	}
 
 	function plugin() {
-		Handler::delegate('pages.admin.PluginHandler');
+		PKPHandler::delegate('pages.admin.PluginHandler');
 	}
 
 	//

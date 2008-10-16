@@ -47,7 +47,7 @@ class RTContextHandler extends RTAdminHandler {
 		RTAdminHandler::validate();
 
 		$rtDao = &DAORegistry::getDAO('RTDAO');
-		$rangeInfo = Handler::getRangeInfo('contexts');
+		$rangeInfo = PKPHandler::getRangeInfo('contexts');
 
 		$archiveId = array_shift($args);
 		$versionId = array_shift($args);

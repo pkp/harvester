@@ -16,9 +16,9 @@
 // $Id$
 
 
-import('core.Handler');
+import('core.PKPHandler');
 
-class RecordHandler extends Handler {
+class RecordHandler extends PKPHandler {
 	function index() {
 		Request::redirect('browse');
 	}

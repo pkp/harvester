@@ -1,0 +1,23 @@
+/**
+ * rightSidebar.css
+ *
+ * Copyright (c) 2003-2008 John Willinsky
+ * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
+ *
+ * Side-wide style to push sidebar to the right hand side
+ *
+ */
+
+/**
+ * Common HTML elements
+ */
+
+#sidebar {
+	float: right;
+	width: 150px;
+	background-color: #EDEDED;
+	border: 1px #666 dotted;
+	padding: 10px;
+	margin: 5px;
+	font-size: 0.65em;
+}
