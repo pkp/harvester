@@ -47,6 +47,7 @@ class AdminHandler extends PKPHandler {
 	 * @param $subclass boolean set to true if caller is below this handler in the hierarchy
 	 */
 	function setupTemplate($subclass = false) {
+		parent::setupTemplate();
 		$templateMgr =& TemplateManager::getManager();
 		if ($subclass) {
 			$templateMgr->assign('pageHierarchy',

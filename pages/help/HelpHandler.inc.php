@@ -18,6 +18,7 @@
 define('HELP_DEFAULT_TOPIC', 'index/topic/000000');
 define('HELP_DEFAULT_TOC', 'index/toc/000000');
 
+import('help.Help');
 import('help.HelpToc');
 import('help.HelpTocDAO');
 import('help.HelpTopic');
@@ -133,6 +134,7 @@ class HelpHandler extends PKPHandler {
 	 * Initialize the template
 	 */
 	function setupTemplate() {
+		parent::setupTemplate();
 		$templateMgr =& TemplateManager::getManager();
 		$templateMgr->setCacheability(CACHEABILITY_PUBLIC);
 	}

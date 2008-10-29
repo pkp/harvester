@@ -29,6 +29,6 @@
 			{/if}
 		{/foreach}
 
-		<li><a href="javascript:openHelp('{if $helpTopicId}{get_help_id key="$helpTopicId" url="true"}{else}{url page="help"}{/if}')">{translate key="navigation.help"}</a></li>
+		<li><a href="javascript:openHelp('{if $helpTopicId}{get_help_id key="$helpTopicId" url="true"}{else}{url page="help"}{/if}')">{translate key="help.help"}</a></li>
 	</ul>
 </div>

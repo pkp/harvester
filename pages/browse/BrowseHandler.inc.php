@@ -98,6 +98,7 @@ class BrowseHandler extends PKPHandler {
 	 * @param $isSubclass boolean optional
 	 */
 	function setupTemplate(&$archive, $isSubclass = null) {
+		parent::setupTemplate();
 		$templateMgr = &TemplateManager::getManager();
 		$hierarchy = array();
 		if ($isSubclass) {

@@ -79,7 +79,6 @@ class SiteSettingsForm extends PKPSiteSettingsForm {
 					'height' => $height,
 					'dateUploaded' => Core::getCurrentDate()
 				);
-
 				return $settingsDao->updateSetting($settingName, $value, 'object');
 			}
 		}

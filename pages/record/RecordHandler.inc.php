@@ -45,7 +45,8 @@ class RecordHandler extends PKPHandler {
 	 * @param $subclass boolean set to true if caller is below this handler in the hierarchy
 	 */
 	function setupTemplate(&$record, $subclass = false) {
-		$templateMgr = &TemplateManager::getManager();
+		parent::setupTemplate();
+		$templateMgr =& TemplateManager::getManager();
 		$hierarchy = array();
 		if ($subclass) {
 			$hierarchy[] = array(Request::url('browse'), 'navigation.browse');

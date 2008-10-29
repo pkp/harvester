@@ -92,6 +92,7 @@ class ZendSearchHandler extends PKPHandler {
 	 * Setup common template variables.
 	 */
 	function setupTemplate() {
+		parent::setupTemplate();
 		parent::validate();
 
 		$templateMgr =& TemplateManager::getManager();

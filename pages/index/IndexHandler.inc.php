@@ -20,6 +20,7 @@ import('core.PKPHandler');
 
 class IndexHandler extends PKPHandler {
 	function index($args) {
+		parent::setupTemplate();
 		parent::validate();
 		$templateMgr = &TemplateManager::getManager();
 		$site =& Request::getSite();
@@ -63,7 +64,6 @@ class IndexHandler extends PKPHandler {
 
 		Request::redirect('index');		
 	}
-
 }
 
 ?>

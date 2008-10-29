@@ -39,7 +39,7 @@ class ZendSearchPlugin extends GenericPlugin {
 				// Add DAOs
 				$this->import('SearchFormElementDAO');
 				$this->import('SearchFormElement');
-				$searchFormElementDao =& new SearchFormElementDao();
+				$searchFormElementDao =& new SearchFormElementDAO();
 				DAORegistry::registerDAO('SearchFormElementDAO', $searchFormElementDao);
 
 				/**

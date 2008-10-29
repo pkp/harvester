@@ -18,6 +18,8 @@
 
 import('i18n.PKPLocale');
 
+define('LOCALE_COMPONENT_APPLICATION_COMMON',	0x00000101);
+
 class Locale extends PKPLocale {
 	/**
 	 * Get all supported locales for the current context.
@@ -112,6 +114,18 @@ class Locale extends PKPLocale {
 		}
 
 		return $locale;
+	}
+
+	/**
+	 * Make a map of components to their respective files.
+	 * @param $locale string
+	 * @return array
+	 */
+	function makeComponentMap($locale) {
+		$componentMap = parent::makeComponentMap($locale);
+		$baseDir = "locale/$locale/";
+		$componentMap[LOCALE_COMPONENT_APPLICATION_COMMON] = $baseDir . 'locale.xml';
+		return $componentMap;
 	}
 }
 

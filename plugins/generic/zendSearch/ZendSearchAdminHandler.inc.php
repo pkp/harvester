@@ -35,7 +35,7 @@ class ZendSearchAdminHandler extends PKPHandler {
 		$templateMgr =& TemplateManager::getManager();
 		$plugin =& ZendSearchAdminHandler::getPlugin();
 
-		$rangeInfo = Handler::getRangeInfo('searchFormElements');
+		$rangeInfo = PKPHandler::getRangeInfo('searchFormElements');
 		$searchFormElementDao =& DAORegistry::getDAO('SearchFormElementDAO');
 		$searchFormElements =& $searchFormElementDao->getSearchFormElements($rangeInfo);
 
@@ -137,6 +137,7 @@ class ZendSearchAdminHandler extends PKPHandler {
 	 * Setup common template variables.
 	 */
 	function setupTemplate() {
+		parent::setupTemplate();
 		$templateMgr =& TemplateManager::getManager();
 		$templateMgr->assign('pageHierarchy', array(
 			array(Request::url('admin'), 'admin.settings.administration')

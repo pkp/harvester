@@ -24,9 +24,10 @@ class AboutHandler extends PKPHandler {
 	 * Display about index page.
 	 */
 	function index() {
+		AboutHandler::setupTemplate();
 		parent::validate();
 
-		$templateMgr = &TemplateManager::getManager();
+		$templateMgr =& TemplateManager::getManager();
 
 		$site = &Request::getSite();
 		$templateMgr->assign('about', $site->getLocalizedSetting('about'));
@@ -40,6 +41,7 @@ class AboutHandler extends PKPHandler {
 	 * @param $subclass boolean set to true if caller is below this handler in the hierarchy
 	 */
 	function setupTemplate($subclass = false) {
+		parent::setupTemplate();
 		parent::validate();
 
 		$templateMgr = &TemplateManager::getManager();
@@ -71,8 +73,6 @@ class AboutHandler extends PKPHandler {
 		$templateMgr = &TemplateManager::getManager();
 		$templateMgr->display('about/harvester.tpl');
 	}
-
-
 }
 
 ?>
