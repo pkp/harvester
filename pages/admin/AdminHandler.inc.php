@@ -225,6 +225,11 @@ class AdminHandler extends PKPHandler {
 	function plugin() {
 		PKPHandler::delegate('pages.admin.PluginHandler');
 	}
+	
+	function pluginManagement($args) {
+		import('pages.admin.PluginManagementHandler');
+		PluginManagementHandler::managePlugins($args);
+	}
 
 	//
 	// Captcha

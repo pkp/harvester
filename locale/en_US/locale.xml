@@ -520,6 +520,31 @@ Your server currently supports mbstring: <strong>{$supportsMBString}</strong>]]>
 
 	<message key="manager.plugins.disable">Disable</message>
 	<message key="manager.plugins.enable">Enable</message>
+	
+	<message key="manager.plugins.description">This page allows the Administrator to review and potentially configure the plugins that are currently installed. Plugins are divided into categories, according to their function. The categories are listed below, and within each category, its current set of plugins.</message>
+	<message key="manager.plugins.install">Install A New Plugin</message>
+	<message key="manager.plugins.installDescription">This form allows you to upload and install a new plugin.  Please ensure the plugin is compressed as a .tar.gz file.</message>
+	<message key="manager.plugins.upgrade">Upgrade Plugin</message>
+	<message key="manager.plugins.upgradeDescription">This form allows you to upgrade a plugin.  Please ensure the plugin is compressed as a .tar.gz file.</message>
+	<message key="manager.plugins.delete">Delete Plugin</message>
+	<message key="manager.plugins.deleteDescription">By clicking delete, you will delete the plugin from the server's file system.</message>
+	<message key="manager.plugins.deleteSuccess">Plugin successfuly deleted</message>
+	<message key="manager.plugins.uploadPluginDir">Select plugin file</message>
+	<message key="manager.plugins.deleteConfirm">Are you sure you wish to delete this plugin from the system?</message>
+	<message key="manager.plugins.uploadError">Error uploading file</message>
+	<message key="manager.plugins.fileSelectError">Please select a file first</message>
+	<message key="manager.plugins.versionFileNotFound">Version.xml not found in plugin directory</message>
+	<message key="manager.plugins.copyError">Plugin was not successfully copied</message>
+	<message key="manager.plugins.pleaseUpgrade">Plugin already exists, but is newer than installed version.  Please upgrade instead</message>
+	<message key="manager.plugins.installedVersionOlder">Plugin already exists, and is older or equal to the installed version</message>
+	<message key="manager.plugins.installedVersionNewer">Plugin already exists, and is newer or equal to installed version</message>
+	<message key="manager.plugins.pleaseInstall">Plugin does not exist.  Please Install instead</message>
+	<message key="manager.plugins.deleteError">Plugin could not be deleted from the file system</message>
+	<message key="manager.plugins.doesNotExist">Plugin does not exist</message>
+	<message key="manager.plugins.installSuccessful">Successfully installed version</message>
+	<message key="manager.plugins.upgradeSuccessful">Successfully upgraded to version</message>
+	<message key="manager.plugins.installFailed">Installation failed</message>
+	<message key="manager.plugins.upgradeFailed">Upgrade failed</message>
 
 	<!-- Reading Tools entries -->
 	<message key="rt.readingTools">Reading Tools</message>

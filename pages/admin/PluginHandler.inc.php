@@ -22,17 +22,23 @@ class PluginHandler extends AdminHandler {
 	 */
 	function plugins($args) {
 		$category = isset($args[0])?$args[0]:null;
-
-		parent::validate();
-
 		$categories = PluginRegistry::getCategories();
+		
+		$templateMgr =& TemplateManager::getManager();
+		parent::validate();
 
 		if (isset($category)) {
 			// The user specified a category of plugins to view;
 			// get the plugins in that category only.
+			$mainPage = false;
 			$plugins =& PluginRegistry::loadCategory($category);
+
+			parent::setupTemplate(false);
+			$templateMgr->assign('pageTitle', 'plugins.categories.' . $category);
+			$templateMgr->assign('pageHierarchy', PluginHandler::setBreadcrumbs(true));
 		} else {
 			// No plugin specified; display all.
+			$mainPage = true;
 			$plugins = array();
 			foreach ($categories as $category) {
 				$newPlugins =& PluginRegistry::loadCategory($category);
@@ -40,14 +46,18 @@ class PluginHandler extends AdminHandler {
 					$plugins = array_merge($plugins, PluginRegistry::loadCategory($category));
 				}
 			}
+			
+			parent::setupTemplate(true);
+			$templateMgr->assign('pageTitle', 'admin.plugins');
+			$templateMgr->assign('pageHierarchy', PluginHandler::setBreadcrumbs(false));
 		}
 
-		parent::setupTemplate(true);
-
-		$templateMgr =& TemplateManager::getManager();
 		$templateMgr->assign_by_ref('plugins', $plugins);
 		$templateMgr->assign_by_ref('categories', $categories);
-
+		$templateMgr->assign('mainPage', $mainPage);
+		$templateMgr->assign('isSiteAdmin', Validation::isSiteAdmin());
+		$templateMgr->assign('helpTopicId', 'journal.managementPages.plugins');
+		
 		$templateMgr->display('admin/plugins.tpl');
 	}
 
@@ -65,6 +75,31 @@ class PluginHandler extends AdminHandler {
 		if (!isset($plugins[$plugin]) || !$plugins[$plugin]->manage($verb, $args)) {
 			Request::redirect(null, 'plugins');
 		}
+	}
+	
+	/**
+	 * Set the page's breadcrumbs
+	 * @param $subclass boolean
+	 */
+	function setBreadcrumbs($subclass = false) {
+		$templateMgr = &TemplateManager::getManager();
+		$pageCrumbs = array(
+			array(
+				Request::url(null),
+				'admin.siteAdmin',
+				false
+			)
+		);
+		
+		if ($subclass) {
+			$pageCrumbs[] = array(
+				Request::url(null, 'plugins'),
+				"admin.plugins",
+				false
+			);
+		}
+
+		return $pageCrumbs;
 	}
 }
 
