@@ -75,7 +75,7 @@ class ArchiveDAO extends DAO {
 	 * @return Archive
 	 */
 	function &_returnArchiveFromRow(&$row) {
-		$archive =& new Archive();
+		$archive = new Archive();
 		$archive->setArchiveId($row['archive_id']);
 		$archive->setUserId($row['user_id']);
 		$archive->setPublicArchiveId($row['public_archive_id']);
@@ -178,7 +178,7 @@ class ArchiveDAO extends DAO {
 			false, $rangeInfo
 		);
 
-		$returner =& new DAOResultFactory($result, $this, '_returnArchiveFromRow');
+		$returner = new DAOResultFactory($result, $this, '_returnArchiveFromRow');
 		return $returner;
 	}
 
@@ -195,7 +195,7 @@ class ArchiveDAO extends DAO {
 			$rangeInfo
 		);
 
-		$returner =& new DAOResultFactory($result, $this, '_returnArchiveFromRow');
+		$returner = new DAOResultFactory($result, $this, '_returnArchiveFromRow');
 		return $returner;
 	}
 

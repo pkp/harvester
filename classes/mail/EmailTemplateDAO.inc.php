@@ -56,7 +56,7 @@ class EmailTemplateDAO extends DAO {
 	 * @return EmailTemplate
 	 */
 	function &_returnEmailTemplateFromRow(&$row) {
-		$emailTemplate = &new EmailTemplate();
+		$emailTemplate = new EmailTemplate();
 		$emailTemplate->setEmailKey($row['email_key']);
 		$emailTemplate->setEnabled($row['enabled']);
 		$emailTemplate->setCanDisable($row['can_disable']);

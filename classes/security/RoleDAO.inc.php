@@ -59,7 +59,7 @@ class RoleDAO extends DAO {
 	 * @return Role
 	 */
 	function &_returnRoleFromRow(&$row) {
-		$role = &new Role();
+		$role = new Role();
 		$role->setUserId($row['user_id']);
 		$role->setRoleId($row['role_id']);
 

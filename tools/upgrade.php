@@ -32,7 +32,7 @@ class HarvesterUpgradeTool extends UpgradeTool {
 	}
 }
 
-$tool =& new HarvesterUpgradeTool(isset($argv) ? $argv : array());
+$tool = new HarvesterUpgradeTool(isset($argv) ? $argv : array());
 $tool->execute();
 
 ?>

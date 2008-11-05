@@ -55,7 +55,7 @@ class UserSettingsDAO extends DAO {
 			array($name, $value)
 		);
 
-		$returner =& new DAOResultFactory($result, $userDao, '_returnUserFromRow');
+		$returner = new DAOResultFactory($result, $userDao, '_returnUserFromRow');
 		return $returner;
 	}
 

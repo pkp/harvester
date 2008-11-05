@@ -57,7 +57,7 @@ class AdminArchiveHandler extends AdminHandler {
 
 		import('admin.form.ArchiveForm');
 
-		$archiveForm = &new ArchiveForm(!isset($args) || empty($args) ? null : (int) $args[0]);
+		$archiveForm = new ArchiveForm(!isset($args) || empty($args) ? null : (int) $args[0]);
 		$archiveForm->initData();
 		$archiveForm->display();
 	}
@@ -72,7 +72,7 @@ class AdminArchiveHandler extends AdminHandler {
 
 		$archiveId = (int) Request::getUserVar('archiveId');
 
-		$archiveForm = &new ArchiveForm($archiveId);
+		$archiveForm = new ArchiveForm($archiveId);
 		$archiveForm->initData();
 		$archiveForm->readInputData();
 

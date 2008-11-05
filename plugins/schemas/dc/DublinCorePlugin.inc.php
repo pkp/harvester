@@ -167,7 +167,7 @@ class DublinCorePlugin extends SchemaPlugin {
 	 * @return object
 	 */
 	function &parseContents(&$contents) {
-		$xmlParser =& new XMLParser();
+		$xmlParser = new XMLParser();
 		$result =& $xmlParser->parseText($contents);
 
 		$returner = array();

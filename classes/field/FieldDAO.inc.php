@@ -132,7 +132,7 @@ class FieldDAO extends DAO {
 	 * @return Field
 	 */
 	function &_returnFieldFromRow(&$row) {
-		$field =& new Field();
+		$field = new Field();
 		$field->setFieldId($row['raw_field_id']);
 		$field->setSchemaId($row['schema_plugin_id']);
 		$field->setName($row['name']);
@@ -220,7 +220,7 @@ class FieldDAO extends DAO {
 			$rangeInfo
 		);
 
-		$returner =& new DAOResultFactory($result, $this, '_returnFieldFromRow');
+		$returner = new DAOResultFactory($result, $this, '_returnFieldFromRow');
 		return $returner;
 	}
 
@@ -239,7 +239,7 @@ class FieldDAO extends DAO {
 			$rangeInfo
 		);
 
-		$returner =& new DAOResultFactory($result, $this, '_returnFieldFromRow');
+		$returner = new DAOResultFactory($result, $this, '_returnFieldFromRow');
 		return $returner;
 	}
 
@@ -255,7 +255,7 @@ class FieldDAO extends DAO {
 			$schemaDao =& DAORegistry::getDAO('SchemaDAO');
 			$schema =& $schemaDao->buildSchema($schemaPluginName);
 
-			$field =& new Field();
+			$field = new Field();
 			$field->setName($fieldName);
 			$field->setSchemaId($schema->getSchemaId());
 

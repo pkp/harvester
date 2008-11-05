@@ -76,7 +76,7 @@ class AdminHandler extends PKPHandler {
 
 	function layout() {
 		import('admin.form.LayoutForm');
-		$layoutForm =& new LayoutForm();
+		$layoutForm = new LayoutForm();
 		if ($layoutForm->isLocaleResubmit()) {
 			$layoutForm->readInputData();
 		} else {
@@ -87,7 +87,7 @@ class AdminHandler extends PKPHandler {
 
 	function saveLayout() {
 		import('admin.form.LayoutForm');
-		$layoutForm =& new LayoutForm();
+		$layoutForm = new LayoutForm();
 		$layoutForm->readInputData();
 		if ($layoutForm->validate()) {
 			$layoutForm->execute();
@@ -238,7 +238,7 @@ class AdminHandler extends PKPHandler {
 	function viewCaptcha($args) {
 		$captchaId = (int) array_shift($args);
 		import('captcha.CaptchaManager');
-		$captchaManager =& new CaptchaManager();
+		$captchaManager = new CaptchaManager();
 		if ($captchaManager->isEnabled()) {
 			$captchaDao =& DAORegistry::getDAO('CaptchaDAO');
 			$captcha =& $captchaDao->getCaptcha($captchaId);

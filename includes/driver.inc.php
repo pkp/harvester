@@ -48,7 +48,7 @@ require('functions.inc.php');
  */
 
 import('core.HarvesterApplication');
-$harvesterApplication =& new HarvesterApplication();
+$harvesterApplication = new HarvesterApplication();
 PKPApplication::initialize($harvesterApplication);
 
 ?>

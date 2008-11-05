@@ -53,7 +53,7 @@ class OAIHarvesterPlugin extends HarvesterPlugin {
 
 	function addArchiveFormChecks(&$form) {
 		$this->import('OAIHarvester');
-		$oaiHarvester =& new OAIHarvester($this->archive);
+		$oaiHarvester = new OAIHarvester($this->archive);
 
 		$form->addCheck(new FormValidator($form, 'harvesterUrl', 'required', 'plugins.harvesters.oai.archive.form.harvesterUrlRequired'));
 		$form->addCheck(new FormValidatorInSet($form, 'oaiIndexMethod', 'optional', 'plugins.harvesters.oai.archive.form.oaiIndexMethodRequired', array(OAI_INDEX_METHOD_LIST_RECORDS, OAI_INDEX_METHOD_LIST_IDENTIFIERS)));
@@ -100,7 +100,7 @@ class OAIHarvesterPlugin extends HarvesterPlugin {
 		import('schema.SchemaMap');
 		$plugins =& PluginRegistry::loadCategory('schemas');
 		$archive =& $form->_data['archive'];
-		$oaiHarvester =& new OAIHarvester($archive);
+		$oaiHarvester = new OAIHarvester($archive);
 		$metadataFormats = $oaiHarvester->getMetadataFormats($form->getData('harvesterUrl'), $form->getData('isStatic'));
 		$supportedFormats = array();
 		foreach ($metadataFormats as $format) {
@@ -129,7 +129,7 @@ class OAIHarvesterPlugin extends HarvesterPlugin {
 
 		PluginRegistry::loadCategory('schemas');
 
-		$oaiHarvester =& new OAIHarvester($archive);
+		$oaiHarvester = new OAIHarvester($archive);
 
 		if (!$oaiHarvester->updateRecords($params)) {
 			foreach ($oaiHarvester->getErrors() as $error) {
@@ -157,7 +157,7 @@ class OAIHarvesterPlugin extends HarvesterPlugin {
 
 		$this->import('OAIHarvester');
 
-		$oaiHarvester =& new OAIHarvester($archive);
+		$oaiHarvester = new OAIHarvester($archive);
 		$availableSets = $oaiHarvester->getSets($archive->getSetting('harvesterUrl'));
 		$selectedSet = '';
 
@@ -186,11 +186,11 @@ class OAIHarvesterPlugin extends HarvesterPlugin {
 
 				$this->import('OAIHarvester');
 
-				$oaiHarvester =& new OAIHarvester($archive);
+				$oaiHarvester = new OAIHarvester($archive);
 				$metadata = $oaiHarvester->getMetadata($harvesterUrl, Request::getUserVar('isStatic'));
 
 				import('admin.form.ArchiveForm');
-				$archiveForm =& new ArchiveForm($archiveId);
+				$archiveForm = new ArchiveForm($archiveId);
 				$archiveForm->initData();
 				$archiveForm->readInputData();
 

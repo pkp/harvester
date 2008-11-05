@@ -47,7 +47,7 @@ class HarvesterInstallTool extends InstallTool {
 
 }
 
-$tool =& new HarvesterInstallTool(isset($argv) ? $argv : array());
+$tool = new HarvesterInstallTool(isset($argv) ? $argv : array());
 $tool->execute();
 
 ?>

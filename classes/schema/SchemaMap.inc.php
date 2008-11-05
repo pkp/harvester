@@ -50,8 +50,8 @@ class SchemaMap {
 			$notes[] = array('debug.notes.schemaMapLoad', array('schemaMap' => SCHEMA_MAP_REGISTRY_FILE));
 
 			// Reload schema map file
-			$xmlDao = &new XMLDAO();
-			$schemaMapHandler =& new SchemaMapHandler();
+			$xmlDao = new XMLDAO();
+			$schemaMapHandler = new SchemaMapHandler();
 			$schemaMap =& $xmlDao->parseWithHandler(SCHEMA_MAP_REGISTRY_FILE, $schemaMapHandler);
 			asort($schemaMap);
 			$cache->setEntireCache($schemaMap);

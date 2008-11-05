@@ -49,7 +49,7 @@ class SortOrderDAO extends DAO {
 			$rangeInfo
 		);
 
-		$returner =& new DAOResultFactory($result, $this, '_returnSortOrderFromRow');
+		$returner = new DAOResultFactory($result, $this, '_returnSortOrderFromRow');
 		return $returner;
 	}
 
@@ -67,7 +67,7 @@ class SortOrderDAO extends DAO {
 	 * @return SortOrder
 	 */
 	function &_returnSortOrderFromRow(&$row) {
-		$sortOrder =& new SortOrder();
+		$sortOrder = new SortOrder();
 		$sortOrder->setSortOrderId($row['sort_order_id']);
 		$sortOrder->setType($row['order_type']);
 		$sortOrder->setIsClean($row['is_clean']);

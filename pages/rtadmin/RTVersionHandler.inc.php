@@ -26,7 +26,7 @@ class RTVersionHandler extends RTAdminHandler {
 
 		import('rt.harvester2.form.VersionForm');
 		$archiveId = Request::getUserVar('archiveId');
-		$versionForm = &new VersionForm(null, $archiveId);
+		$versionForm = new VersionForm(null, $archiveId);
 
 		if (isset($args[0]) && $args[0]=='save') {
 			$versionForm->readInputData();
@@ -59,7 +59,7 @@ class RTVersionHandler extends RTAdminHandler {
 		RTAdminHandler::validate();
 		$fileField = 'versionFile';
 		if (isset($_FILES[$fileField]['tmp_name']) && is_uploaded_file($_FILES[$fileField]['tmp_name'])) {
-			$rtAdmin = &new HarvesterRTAdmin($archiveId);
+			$rtAdmin = new HarvesterRTAdmin($archiveId);
 			$rtAdmin->importVersion($_FILES[$fileField]['tmp_name']);
 		}
 		Request::redirect(null, 'versions');
@@ -70,7 +70,7 @@ class RTVersionHandler extends RTAdminHandler {
 
 		$archiveId = array_shift($args);
 
-		$rtAdmin = &new HarvesterRTAdmin($archiveId);
+		$rtAdmin = new HarvesterRTAdmin($archiveId);
 		$rtAdmin->restoreVersions();
 
 		Request::redirect(null, 'versions');
@@ -105,7 +105,7 @@ class RTVersionHandler extends RTAdminHandler {
 		if (isset($version)) {
 			import('rt.harvester2.form.VersionForm');
 			RTAdminHandler::setupTemplate(true, $archiveId, $version);
-			$versionForm = &new VersionForm($versionId, $archiveId);
+			$versionForm = new VersionForm($versionId, $archiveId);
 			$versionForm->initData();
 			$versionForm->display();
 		}
@@ -135,7 +135,7 @@ class RTVersionHandler extends RTAdminHandler {
 
 		if (isset($version)) {
 			import('rt.harvester2.form.VersionForm');
-			$versionForm = &new VersionForm($versionId, $archiveId);
+			$versionForm = new VersionForm($versionId, $archiveId);
 			$versionForm->readInputData();
 			$versionForm->execute();
 		}

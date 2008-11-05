@@ -111,7 +111,7 @@ class SchemaDAO extends DAO {
 	 * @return Schema
 	 */
 	function &_returnSchemaFromRow(&$row) {
-		$schema = &new Schema();
+		$schema = new Schema();
 		$schema->setSchemaId($row['schema_plugin_id']);
 		$schema->setPluginName($row['schema_plugin']);
 
@@ -192,7 +192,7 @@ class SchemaDAO extends DAO {
 			false, $rangeInfo
 		);
 
-		$returner = &new DAOResultFactory($result, $this, '_returnSchemaFromRow');
+		$returner = new DAOResultFactory($result, $this, '_returnSchemaFromRow');
 		return $returner;
 	}
 
@@ -204,7 +204,7 @@ class SchemaDAO extends DAO {
 	function &buildSchema($schemaPluginName) {
 		$schema =& $this->getSchemaByPluginName($schemaPluginName);
 		if (!$schema) {
-			$schema =& new Schema();
+			$schema = new Schema();
 			$schema->setPluginName($schemaPluginName);
 			$this->insertSchema($schema);
 		}

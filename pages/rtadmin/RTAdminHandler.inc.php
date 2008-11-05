@@ -122,7 +122,7 @@ class RTAdminHandler extends PKPHandler {
 		if ($version) {
 			// Validate the URLs for a single version
 			$versions = array(&$version);
-			$versions = &new ArrayItemIterator($versions, 1, 1);
+			$versions = new ArrayItemIterator($versions, 1, 1);
 		} else {
 			// Validate all URLs for this archive
 			$versions = $rtDao->getVersions($archiveId);

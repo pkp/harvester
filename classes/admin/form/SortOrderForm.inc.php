@@ -109,7 +109,7 @@ class SortOrderForm extends Form {
 		}
 
 		if (!isset($sortOrder)) {
-			$sortOrder =& new SortOrder();
+			$sortOrder = new SortOrder();
 		}
 
 		$sortOrder->setName($this->getData('name'), null); // Localized

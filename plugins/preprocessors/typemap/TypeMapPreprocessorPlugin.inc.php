@@ -83,7 +83,7 @@ class TypeMapPreprocessorPlugin extends PreprocessorPlugin {
 		static $mappings;
 		if (!isset($mappings)) {
 			// Load the mapping list.
-			$xmlDao =& new XMLDAO();
+			$xmlDao = new XMLDAO();
 			// $cache->cacheId has the same value as the archive ID (but ask Alec to verify this is always
 			// true in this context)
 			$typemap_file = "typemap-" . $cache->cacheId . ".xml";

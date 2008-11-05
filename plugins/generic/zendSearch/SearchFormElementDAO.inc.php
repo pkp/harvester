@@ -68,7 +68,7 @@ class SearchFormElementDAO extends DAO {
 	 * @return Archive
 	 */
 	function &_returnSearchFormElementFromRow(&$row) {
-		$searchFormElement =& new SearchFormElement();
+		$searchFormElement = new SearchFormElement();
 		$searchFormElement->setSearchFormElementId($row['search_form_element_id']);
 		$searchFormElement->setType($row['element_type']);
 		$searchFormElement->setRangeStart($row['range_start']);
@@ -107,7 +107,7 @@ class SearchFormElementDAO extends DAO {
 		);
 
 		$fieldDao =& DAORegistry::getDAO('FieldDAO');
-		$returner =& new DAOResultFactory($result, $fieldDao, '_returnFieldFromRow');
+		$returner = new DAOResultFactory($result, $fieldDao, '_returnFieldFromRow');
 		return $returner;
 	}
 
@@ -212,7 +212,7 @@ class SearchFormElementDAO extends DAO {
 			false, $rangeInfo
 		);
 
-		$returner =& new DAOResultFactory($result, $this, '_returnSearchFormElementFromRow');
+		$returner = new DAOResultFactory($result, $this, '_returnSearchFormElementFromRow');
 		return $returner;
 	}
 
@@ -317,7 +317,7 @@ class SearchFormElementDAO extends DAO {
 			$rangeInfo
 		);
 
-		$returner =& new DAOResultFactory($result, $this, '_returnSearchFormElementOptionFromRow');
+		$returner = new DAOResultFactory($result, $this, '_returnSearchFormElementOptionFromRow');
 		return $returner;
 	}
 

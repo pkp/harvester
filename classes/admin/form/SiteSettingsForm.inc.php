@@ -58,7 +58,7 @@ class SiteSettingsForm extends PKPSiteSettingsForm {
 		$settingsDao =& DAORegistry::getDAO('SiteSettingsDAO');
 
 		import('file.PublicFileManager');
-		$fileManager =& new PublicFileManager();
+		$fileManager = new PublicFileManager();
 		if ($fileManager->uploadedFileExists($settingName)) {
 			$type = $fileManager->getUploadedFileType($settingName);
 			$extension = $fileManager->getImageExtension($type);
@@ -96,7 +96,7 @@ class SiteSettingsForm extends PKPSiteSettingsForm {
 		$setting = $settingsDao->getSetting($settingName);
 
 		import('file.PublicFileManager');
-		$fileManager =& new PublicFileManager();
+		$fileManager = new PublicFileManager();
 	 	if ($fileManager->removeSiteFile($setting['uploadName'])) {
 			return $settingsDao->deleteSetting($settingName);
 		} else {
@@ -128,7 +128,7 @@ class SiteSettingsForm extends PKPSiteSettingsForm {
 		$settingsDao =& DAORegistry::getDAO('SiteSettingsDAO');
 
 		import('file.PublicFileManager');
-		$fileManager =& new PublicFileManager();
+		$fileManager = new PublicFileManager();
 		if ($fileManager->uploadedFileExists($settingName)) {
 			$type = $fileManager->getUploadedFileType($settingName);
 			if ($type != 'text/plain' && $type != 'text/css') {

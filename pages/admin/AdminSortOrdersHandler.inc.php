@@ -52,7 +52,7 @@ class AdminSortOrdersHandler extends AdminHandler {
 
 		import('admin.form.SortOrderForm');
 
-		$sortOrderForm =& new SortOrderForm(!isset($args) || empty($args) ? null : (int) $args[0]);
+		$sortOrderForm = new SortOrderForm(!isset($args) || empty($args) ? null : (int) $args[0]);
 		$sortOrderForm->initData();
 		$sortOrderForm->display();
 	}
@@ -67,7 +67,7 @@ class AdminSortOrdersHandler extends AdminHandler {
 
 		$sortOrderId = (int) Request::getUserVar('sortOrderId');
 
-		$sortOrderForm = &new SortOrderForm($sortOrderId);
+		$sortOrderForm = new SortOrderForm($sortOrderId);
 		$sortOrderForm->initData();
 		$sortOrderForm->readInputData();
 

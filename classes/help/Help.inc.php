@@ -25,7 +25,7 @@ class Help extends PKPHelp {
 	function Help() {
 		parent::PKPHelp();
 		import('help.HarvesterHelpMappingFile');
-		$mainMappingFile =& new HarvesterHelpMappingFile();
+		$mainMappingFile = new HarvesterHelpMappingFile();
 		$this->addMappingFile($mainMappingFile);
 	}
 }

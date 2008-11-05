@@ -81,7 +81,7 @@ class OAIHarvester extends Harvester {
 			'verb' => 'ListMetadataFormats'
 		));
 
-		$parser =& new XMLParser();
+		$parser = new XMLParser();
 		$result =& $parser->parse($harvesterUrl);
 		if (!$parser->getStatus()) {
 			foreach ($parser->getErrors() as $error) {
@@ -130,7 +130,7 @@ class OAIHarvester extends Harvester {
 			'verb' => 'Identify'
 		));
 
-		$parser =& new XMLParser();
+		$parser = new XMLParser();
 		$result =& $parser->parse($harvesterUrl);
 		if (!$parser->getStatus()) {
 			foreach ($parser->getErrors() as $error) {
@@ -164,7 +164,7 @@ class OAIHarvester extends Harvester {
 			'verb' => 'ListSets'
 		));
 
-		$parser =& new XMLParser();
+		$parser = new XMLParser();
 		$result =& $parser->parse($harvesterUrl);
 		if (!$parser->getStatus()) {
 			foreach ($parser->getErrors() as $error) {
@@ -227,7 +227,7 @@ class OAIHarvester extends Harvester {
 	 */
 	function updateRecords($params = array(), $resumptionToken = null, $recordOffset = 0) {
 		$verb = $this->getHarvestingMethod();
-		$parser =& new XMLParser();
+		$parser = new XMLParser();
 		$archive =& $this->getArchive();
 
 		if ($archive->getSetting('isStatic')) {
@@ -335,7 +335,7 @@ class OAIHarvester extends Harvester {
 	 */
 	function &updateRecord($identifier, $params = array()) {
 		$verb = 'GetRecord';
-		$parser =& new XMLParser();
+		$parser = new XMLParser();
 		$result =& $parser->parse($this->addParameters($this->oaiUrl, array(
 			'verb' => $verb,
 			'identifier' => $identifier,

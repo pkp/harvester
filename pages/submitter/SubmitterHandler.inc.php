@@ -61,7 +61,7 @@ class SubmitterHandler extends PKPHandler {
 
 		import('admin.form.ArchiveForm');
 
-		$archiveForm =& new ArchiveForm($archiveId);
+		$archiveForm = new ArchiveForm($archiveId);
 		$archiveForm->initData();
 		$archiveForm->display();
 	}
@@ -79,7 +79,7 @@ class SubmitterHandler extends PKPHandler {
 		import('admin.form.ArchiveForm');
 
 
-		$archiveForm = &new ArchiveForm($archiveId);
+		$archiveForm = new ArchiveForm($archiveId);
 		$archiveForm->initData();
 		$archiveForm->readInputData();
 

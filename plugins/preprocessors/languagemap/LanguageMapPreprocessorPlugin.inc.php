@@ -86,7 +86,7 @@ class LanguageMapPreprocessorPlugin extends PreprocessorPlugin {
 		static $mappings;
 		if (!isset($mappings)) {
 			// Load the mapping list.
-			$xmlDao =& new XMLDAO();
+			$xmlDao = new XMLDAO();
 			$data = $xmlDao->parseStruct($this->getPluginPath() . '/' . LANGUAGE_MAP_FILE, array('mapping'));
 
 			if (isset($data['mapping'])) {

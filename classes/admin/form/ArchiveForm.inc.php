@@ -49,7 +49,7 @@ class ArchiveForm extends Form {
 		$this->addCheck(new FormValidatorPost($this));
 
 		import('captcha.CaptchaManager');
-		$captchaManager =& new CaptchaManager();
+		$captchaManager = new CaptchaManager();
 		$this->captchaEnabled = $captchaManager->isEnabled();
 		if ($this->captchaEnabled && !Validation::isSiteAdmin()) {
 			$this->addCheck(new FormValidatorCaptcha($this, 'captcha', 'captchaId', 'common.captchaField.badCaptcha'));
@@ -82,7 +82,7 @@ class ArchiveForm extends Form {
 		if (!$archiveImage) return false;
 
 		import('file.PublicFileManager');
-		$fileManager =& new PublicFileManager();
+		$fileManager = new PublicFileManager();
 		if ($fileManager->removeSiteFile($archiveImage['uploadName'])) {
 			return $archive->updateSetting('archiveImage', null);
 		} else {
@@ -92,7 +92,7 @@ class ArchiveForm extends Form {
 
 	function uploadArchiveImage() {
 		import('file.PublicFileManager');
-		$fileManager =& new PublicFileManager();
+		$fileManager = new PublicFileManager();
 
 		$archive =& $this->archive;
 
@@ -133,7 +133,7 @@ class ArchiveForm extends Form {
 		$templateMgr->assign('archiveId', $this->archiveId);
 		if ($this->captchaEnabled && !Validation::isSiteAdmin()) {
 			import('captcha.CaptchaManager');
-			$captchaManager =& new CaptchaManager();
+			$captchaManager = new CaptchaManager();
 			$captcha =& $captchaManager->createCaptcha();
 			if ($captcha) {
 				$templateMgr->assign('captchaEnabled', $this->captchaEnabled);
@@ -231,7 +231,7 @@ class ArchiveForm extends Form {
 		$archiveDao =& DAORegistry::getDAO('ArchiveDAO');
 
 		if (!isset($this->archive)) {
-			$this->archive =& new Archive();
+			$this->archive = new Archive();
 			$user =& Request::getUser();
 			$this->archive->setUserId($user->getUserId());
 		}
@@ -254,7 +254,7 @@ class ArchiveForm extends Form {
 
 			// Include the current default set of reading tools.
 			import('rt.harvester2.HarvesterRTAdmin');
-			$rtAdmin =& new HarvesterRTADmin($archiveId);
+			$rtAdmin = new HarvesterRTADmin($archiveId);
 			$rtAdmin->restoreVersions(false);
 		}
 
@@ -265,7 +265,7 @@ class ArchiveForm extends Form {
 		if (!Validation::isSiteAdmin()) {
 			// Send an email notifying the administrator of the new archive.
 			import('mail.MailTemplate');
-			$email =& new MailTemplate('NEW_ARCHIVE_NOTIFY');
+			$email = new MailTemplate('NEW_ARCHIVE_NOTIFY');
 			if ($email->isEnabled()) {
 				$site =& Request::getSite();
 				$email->assignParams(array(

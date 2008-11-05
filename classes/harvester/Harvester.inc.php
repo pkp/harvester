@@ -160,7 +160,7 @@ class Harvester {
 		$schema =& $this->getSchema();
 		$schemaId = $schema->getSchemaId();
 
-		$record =& new Record();
+		$record = new Record();
 		$record->setSchemaId($schemaId);
 		$record->setArchiveId($this->archive->getArchiveId());
 		$record->setContents($contents);

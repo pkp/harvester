@@ -68,7 +68,7 @@ class ZendSearchAdminHandler extends PKPHandler {
 		$plugin =& ZendSearchAdminHandler::getPlugin();
 		$plugin->import('SearchFormElementForm');
 
-		$searchFormElementForm =& new SearchFormElementForm(!isset($args) || empty($args) ? null : (int) $args[0]);
+		$searchFormElementForm = new SearchFormElementForm(!isset($args) || empty($args) ? null : (int) $args[0]);
 		if ($searchFormElementForm->isLocaleResubmit()) {
 			$searchFormElementForm->readInputData();
 		} else {
@@ -88,7 +88,7 @@ class ZendSearchAdminHandler extends PKPHandler {
 
 		$searchFormElementId = (int) Request::getUserVar('searchFormElementId');
 
-		$searchFormElementForm = &new SearchFormElementForm($searchFormElementId);
+		$searchFormElementForm = new SearchFormElementForm($searchFormElementId);
 		$searchFormElementForm->initData();
 		$searchFormElementForm->readInputData();
 

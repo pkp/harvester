@@ -44,7 +44,7 @@ class harvest extends CommandLineTool {
 			if ($archive) {
 				$archives = array(&$archive);
 				import('core.ArrayItemIterator');
-				$this->archives =& new ArrayItemIterator($archives);
+				$this->archives = new ArrayItemIterator($archives);
 			} else {
 				$this->archives = null; // Invalid ID specified
 			}
@@ -180,6 +180,6 @@ class harvest extends CommandLineTool {
 	}
 }
 
-$tool = &new harvest(isset($argv) ? $argv : array());
+$tool = new harvest(isset($argv) ? $argv : array());
 $tool->execute();
 ?>

@@ -43,7 +43,7 @@ class ModsXMLHandler extends XMLParserHandler {
 		unset($this->rootElement);
 		unset($this->modsElement);
 		$nullParent = null;
-		$this->rootElement =& new ModsElement($nullParent, null, null, null);
+		$this->rootElement = new ModsElement($nullParent, null, null, null);
 		$this->modsElement =& $this->rootElement;
 	}
 
@@ -60,7 +60,7 @@ class ModsXMLHandler extends XMLParserHandler {
 		}
 
 		$oldCurrent =& $this->modsElement;
-		$newNode =& new ModsElement($oldCurrent, $tag, $attributes);
+		$newNode = new ModsElement($oldCurrent, $tag, $attributes);
 		unset($this->modsElement);
 		$oldCurrent->addChild($newNode);
 		$this->modsElement =& $newNode;

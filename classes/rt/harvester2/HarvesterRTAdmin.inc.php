@@ -35,7 +35,7 @@ class HarvesterRTAdmin extends RTAdmin {
 
 	function restoreVersions($deleteBeforeLoad = true) {
 		import('rt.RTXMLParser');
-		$parser = &new RTXMLParser();
+		$parser = new RTXMLParser();
 
 		if ($deleteBeforeLoad) $this->dao->deleteVersionsByArchiveId($this->archiveId);
 
@@ -47,7 +47,7 @@ class HarvesterRTAdmin extends RTAdmin {
 
 	function importVersion($filename) {
 		import ('rt.RTXMLParser');
-		$parser = &new RTXMLParser();
+		$parser = new RTXMLParser();
 
 		$version = &$parser->parse($filename);
 		$this->dao->insertVersion($this->archiveId, $version);

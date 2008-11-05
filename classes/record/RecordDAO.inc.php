@@ -99,7 +99,7 @@ class RecordDAO extends DAO {
 			$rangeInfo
 		);
 
-		$returner =& new DAOResultFactory($result, $this, '_returnRecordFromRow');
+		$returner = new DAOResultFactory($result, $this, '_returnRecordFromRow');
 		return $returner;
 	}
 
@@ -128,7 +128,7 @@ class RecordDAO extends DAO {
 	 * @return Record
 	 */
 	function &_returnRecordFromRow(&$row) {
-		$record = &new Record();
+		$record = new Record();
 		$record->setRecordId($row['record_id']);
 		$record->setArchiveId($row['archive_id']);
 		$record->setSchemaId($row['schema_plugin_id']);

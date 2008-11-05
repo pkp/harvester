@@ -121,7 +121,7 @@ class SearchFormElementForm extends Form {
 		}
 
 		if (!isset($searchFormElement)) {
-			$searchFormElement =& new SearchFormElement();
+			$searchFormElement = new SearchFormElement();
 		}
 
 		$searchFormElement->setTitle($this->getData('title'), null); // Localized
