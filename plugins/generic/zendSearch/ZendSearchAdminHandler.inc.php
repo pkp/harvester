@@ -6,7 +6,7 @@
  * Copyright (c) 2005-2008 Alec Smecher and John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
- * @class SendSearchHandler
+ * @class ZendSearchAdminHandler
  * @ingroup plugins_generic_zendSearch
  *
  * @brief Handle requests for search administration functions
@@ -38,13 +38,6 @@ class ZendSearchAdminHandler extends PKPHandler {
 		$rangeInfo = PKPHandler::getRangeInfo('searchFormElements');
 		$searchFormElementDao =& DAORegistry::getDAO('SearchFormElementDAO');
 		$searchFormElements =& $searchFormElementDao->getSearchFormElements($rangeInfo);
-
-/*		$index =& $plugin->getIndex();
-		$terms = $index->terms();
-
-		foreach ($terms as $term) {
-			echo $term->field . ":" . $term->text . "<br/>\n";
-		} */
 
 		$templateMgr->assign_by_ref('searchFormElements', $searchFormElements);
 		$templateMgr->display($plugin->getTemplatePath() . 'searchForm.tpl');

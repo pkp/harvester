@@ -67,6 +67,15 @@ class SchemaPlugin extends Plugin {
 	}
 
 	/**
+	 * Get the ID for a field, building it if necessary.
+	 */
+	function getFieldId($fieldName) {
+		$fieldDao =& DAORegistry::getDAO('FieldDAO');
+		$field =& $fieldDao->buildField($fieldName, $this->getName());
+		return $field->getFieldId();
+	}
+
+	/**
 	 * Get a description for a field.
 	 * @param $fieldSymbolic string Symbolic name for the field
 	 * @param $locale string Name of locale (optional)
@@ -205,6 +214,15 @@ class SchemaPlugin extends Plugin {
 	 */
 	function getAuthorString(&$record, $entries = null) {
 		return (join('; ', $this->getAuthors($record, $entries)));
+	}
+
+ 	/**
+	 * Get the field type for the specified field.
+	 * Child classes should probably override this.
+	 */
+	function getFieldType($fieldId) {
+		// The default type for all fields is string.
+		return FIELD_TYPE_STRING;
 	}
 
 	/**

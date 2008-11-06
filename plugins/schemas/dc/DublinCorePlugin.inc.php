@@ -181,6 +181,26 @@ class DublinCorePlugin extends SchemaPlugin {
 		unset($result, $xmlParser);
 		return $returner;
 	}
+
+	/**
+	 * Get the type (FIELD_TYPE_...) of the specified field.
+	 * @return int
+	 */
+	function getFieldType($fieldName) {
+		switch ($fieldName) {
+			case 'date':
+				$returner = FIELD_TYPE_DATE;
+				break;
+			case 'language':
+				$returner = FIELD_TYPE_SELECT;
+				break;
+			default:
+				$returner = FIELD_TYPE_STRING;
+				break;
+		}
+		HookRegistry::call('DublinCorePlugin::getFieldType', array(&$this, $fieldName, &$returner));
+		return $returner;
+	}
 }
 
 ?>

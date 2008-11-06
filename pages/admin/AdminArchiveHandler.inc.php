@@ -216,6 +216,7 @@ class AdminArchiveHandler extends AdminHandler {
 	 * @param $subclass boolean set to true if caller is below this handler in the hierarchy
 	 */
 	function setupTemplate($subclass = false) {
+		parent::setupTemplate();
 		$templateMgr = &TemplateManager::getManager();
 		$pageHierarchy = array(
 			array(Request::url('admin'), 'admin.siteAdmin')

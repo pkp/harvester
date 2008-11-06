@@ -16,6 +16,10 @@
 
 // $Id$
 
+define('FIELD_TYPE_STRING',	0x00000001);
+define('FIELD_TYPE_DATE',	0x00000002);
+define('FIELD_TYPE_SELECT',	0x00000003);
+
 class Field extends DataObject {
 	/**
 	 * Constructor.
@@ -86,6 +90,14 @@ class Field extends DataObject {
 		return $plugin;
 	}
 
+	/**
+	 * Get the type of the field -- FIELD_TYPE_STRING, etc.
+	 */
+	function getType() {
+		$schemaPlugin =& $this->getSchemaPlugin();
+		return $schemaPlugin->getFieldType($this->getName());
+	}
+
 	function getDisplayName($locale = null) {
 		$plugin =& $this->getSchemaPlugin();
 		if (!$plugin) return null;
@@ -96,6 +108,12 @@ class Field extends DataObject {
 		$plugin =& $this->getSchemaPlugin();
 		if (!$plugin) return null;
 		return $plugin->getFieldName($this->getName(), $locale);
+	}
+
+	function getImportance() {
+		$plugin =& $this->getSchemaPlugin();
+		if (!$plugin) return null;
+		return $plugin->getFieldImportance($this->getName());
 	}
 }
 

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE locale SYSTEM "../../../../../lib/pkp/dtd/locale.dtd">
+
+<!--
+  * locale.xml
+  *
+  * Copyright (c) 2005-2008 Alec Smecher and John Willinsky
+  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
+  *
+  * Localization strings for the en_US (U.S. English) locale.
+  *
+  * $Id$
+  -->
+ 
+<locale name="en_US" full_name="U.S. English">
+	<message key="plugins.generic.mysqlIndex.name">MySQL Index Search Plugin</message>
+	<message key="plugins.generic.mysqlIndex.description">This plugin implements a simple MySQL-based index.</message>
+	<message key="plugins.generic.mysqlIndex.blockDisplayName">MySQL Search Block</message>
+	<message key="plugins.generic.mysqlIndex.blockDescription">This block allows searching via the MySQL indexing plugin.</message>
+	<message key="plugins.generic.mysqlIndex.searchForm">Search Form</message>
+
+	<!-- Crosswalks -->
+	<message key="plugins.generic.mysqlIndex.crosswalks">Crosswalks</message>
+	<message key="plugins.generic.mysqlIndex.crosswalk.name">Name</message>
+	<message key="plugins.generic.mysqlIndex.crosswalk.publicCrosswalkId">Public Crosswalk ID</message>
+	<message key="plugins.generic.mysqlIndex.crosswalk.description">Description</message>
+	<message key="plugins.generic.mysqlIndex.crosswalk.sortableDescription">Allow users to sort records using this crosswalk when browsing records</message>
+	<message key="plugins.generic.mysqlIndex.crosswalk.type">Type</message>
+	<message key="plugins.generic.mysqlIndex.crosswalk.type.string">Text</message>
+	<message key="plugins.generic.mysqlIndex.crosswalk.type.select">Select</message>
+	<message key="plugins.generic.mysqlIndex.crosswalk.type.date">Date</message>
+	<message key="plugins.generic.mysqlIndex.crosswalks.noneCreated">None Created</message>
+	<message key="plugins.generic.mysqlIndex.addCrosswalk">Add Crosswalk</message>
+	<message key="plugins.generic.mysqlIndex.reset">Reset To Defaults</message>
+	<message key="plugins.generic.mysqlIndex.confirmReset">Are you sure you wish to reset crosswalks to defaults?</message>
+	<message key="plugins.generic.mysqlIndex.confirmDelete">Are you sure you wish to delete this crosswalk?</message>
+	<message key="plugins.generic.mysqlIndex.addCrosswalk">Add Crosswalk</message>
+	<message key="plugins.generic.mysqlIndex.form.nameRequired">A name is required.</message>
+	<message key="plugins.generic.mysqlIndex.form.descriptionRequired">A description is required.</message>
+	<message key="plugins.generic.mysqlIndex.form.publicCrosswalkIdExists">A crosswalk with the specified public crosswalk ID already exists. Please choose another and try again.</message>
+	<message key="plugins.generic.mysqlIndex.form.publicCrosswalkId.description">When specified, the public crosswalk ID can be used in URL-based searches.</message>
+	<message key="plugins.generic.mysqlIndex.editCrosswalk">Edit Crosswalk</message>
+	<message key="plugins.generic.mysqlIndex.schemaFilter">Schema Filter</message>
+	<message key="plugins.generic.mysqlIndex.schemaFilter.all">All Schemas</message>
+	<message key="plugins.generic.mysqlIndex.schema">Schema</message>
+	<message key="plugins.generic.mysqlIndex.sort">Sort</message>
+	<message key="plugins.generic.mysqlIndex.search">Search</message>
+	<message key="plugins.generic.mysqlIndex.description">Crosswalks are used to identify similar fields in different metadata schema so that cross-schema searches can be performed.</message>
+
+</locale>
