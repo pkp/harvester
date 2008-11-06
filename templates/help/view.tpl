@@ -9,40 +9,7 @@
  * $Id$
  *}
 {strip}
-{include file="help/header.tpl"}
+{translate|assign:"defaultTitle" key="common.harvester2"}
+{translate|assign:"applicationHelpTranslated" key="help.harvesterHelp" siteTitle=$siteTitle|default:$defaultTitle}
+{include file="core:help/view.tpl"}
 {/strip}
-
-<div id="sidebar">
-	{include file="help/toc.tpl"}
-</div>
-
-<div id="main">
-
-	{translate|assign:"defaultTitle" key="common.harvester2"}
-	<h4>{translate key="help.harvesterHelp" siteTitle=$siteTitle|default:$defaultTitle}</h4>
-	
-	<div class="thickSeparator"></div>
-	
-	<div id="breadcrumb">
-		{if $topic->getId() == "index/topic/000000"}
-			<a href="{get_help_id key="index.index" url="true"}" class="current">{translate key="navigation.home"}</a>
-		{else}
-			<a href="{get_help_id key="index.index" url="true"}">{translate key="navigation.home"}</a>
-			{foreach name=breadcrumbs from=$breadcrumbs item=breadcrumb key=key}
-				{if $breadcrumb != $topic->getId()}
-				 &gt; <a href="{url op="view" path=$breadcrumb|explode:"/"}">{$key}</a>
-				{/if}
-			{/foreach}		
-			&gt; <a href="{url op="view" path=$topic->getId()}" class="current">{$topic->getTitle()}</a>
-		{/if}
-	</div>
-	
-	<h2>{$topic->getTitle()}</h2>
-	
-	<div id="content">
-		<div>{include file="help/topic.tpl"}</div>
-	</div>
-
-</div>
-
-{include file="help/footer.tpl"}
