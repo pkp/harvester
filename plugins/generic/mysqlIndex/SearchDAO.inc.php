@@ -276,6 +276,12 @@ class SearchDAO extends DAO {
 		);
 		return $keywordId;
 	}
+
+	function flushIndex() {
+		$this->update('DELETE FROM search_object_keywords');
+		$this->update('DELETE FROM search_objects');
+		$this->update('DELETE FROM search_keyword_list');
+	}
 }
 
 ?>

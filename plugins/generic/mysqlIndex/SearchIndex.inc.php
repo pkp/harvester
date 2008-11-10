@@ -142,41 +142,6 @@ class SearchIndex {
 		}
 		$schemaPlugin->indexRecord($archive, $record, $entries);
 	}
-
-	/**
-	 * Rebuild the search index.
-	 */
-	function rebuildIndex($log = false) {
-		// Clear index
-		if ($log) echo 'Clearing index ... ';
-		$searchDao =& DAORegistry::getDAO('SearchDAO');
-		// FIXME Abstract into SearchDAO?
-		$searchDao->update('DELETE FROM search_object_keywords');
-		$searchDao->update('DELETE FROM search_objects');
-		$searchDao->update('DELETE FROM search_keyword_list');
-		$searchDao->_dataSource->CacheFlush();
-		if ($log) echo "done\n";
-
-		$recordDao =& DAORegistry::getDAO('RecordDAO');
-		$records =& $recordDao->getRecords();
-		$numIndexed = 0;
-		while (!$records->eof()) {
-			$record =& $records->next();
-			if (!isset($archive) || $archive->getArchiveId() !== $record->getArchiveId()) {
-				unset($archive);
-				$archive =& $record->getArchive();
-			}
-			SearchIndex::indexRecord($archive, $record);
-			$numIndexed++;
-			if ($log && $numIndexed % 100 == 0) {
-				echo "$numIndexed records indexed...\r";
-			}
-			unset($record);
-		}
-
-		if ($log) echo "\n" . $numIndexed, " records indexed\n";
-	}
-
 }
 
 ?>

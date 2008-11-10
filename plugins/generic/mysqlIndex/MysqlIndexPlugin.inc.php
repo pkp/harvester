@@ -62,7 +62,6 @@ class MysqlIndexPlugin extends GenericPlugin {
 
 				// Rebuild index
 				HookRegistry::register('rebuildSearchIndex::flush', array(&$this, 'callbackFlush'));
-				HookRegistry::register('rebuildSearchIndex::finish', array(&$this, 'callbackFinish'));
 			}
 			return true;
 		}
@@ -174,9 +173,9 @@ class MysqlIndexPlugin extends GenericPlugin {
 		$plugins =& $args[1];
 		switch ($category) {
 			case 'blocks':
-				//$this->import('ZendSearchBlockPlugin');
-				//$blockPlugin =& new ZendSearchBlockPlugin();
-				//$plugins[$blockPlugin->getSeq()][$blockPlugin->getPluginPath()] =& $blockPlugin;
+				$this->import('MysqlIndexBlockPlugin');
+				$blockPlugin =& new MysqlIndexBlockPlugin();
+				$plugins[$blockPlugin->getSeq()][$blockPlugin->getPluginPath()] =& $blockPlugin;
 				break;
 		}
 		return false;
@@ -254,37 +253,10 @@ class MysqlIndexPlugin extends GenericPlugin {
 	/**
 	 * Flush the entire index prior to rebuilding it.
 	 */
-/*	function callbackFlush($hookName, $args) {
-		// Flush the Lucene index
-		$indexPath = $this->getIndexPath();
-		$index = Zend_Search_Lucene::create($indexPath);
-
-		// Delete the field options
-		$searchFormElementDao =& DAORegistry::getDAO('SearchFormElementDAO');
-		$searchFormElements =& $searchFormElementDao->getSearchFormElements();
-		while ($searchFormElement =& $searchFormElements->next()) {
-			$searchFormElementDao->deleteSearchFormElementOptions(
-				$searchFormElement->getSearchFormElementId()
-			);
-			unset($searchFormElement);
-		}
-	}*/
-
-	/**
-	 * Index rebuild cleanup: mark select options as clean.
-	 */
-/*	function callbackFinish($hookName, $args) {
-		$searchFormElementDao =& DAORegistry::getDAO('SearchFormElementDAO');
-		$searchFormElements =& $searchFormElementDao->getSearchFormElements();
-		while ($searchFormElement =& $searchFormElements->next()) {
-			$searchFormElement->setIsClean(true);
-			$searchFormElementDao->updateSearchFormElement($searchFormElement);
-			unset($searchFormElement);
-		}
-
-		$index =& $this->getIndex();
-		$index->optimize();
-	}*/
+	function callbackFlush($hookName, $args) {
+		$searchDao =& DAORegistry::getDAO('SearchIndex');
+		$searchDao->flushIndex();
+	}
 }
 
 ?>

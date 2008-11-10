@@ -75,6 +75,9 @@ class AdminHandler extends PKPHandler {
 	//
 
 	function layout() {
+		AdminHandler::setupTemplate();
+		AdminHandler::validate();
+
 		import('admin.form.LayoutForm');
 		$layoutForm = new LayoutForm();
 		if ($layoutForm->isLocaleResubmit()) {
@@ -86,6 +89,9 @@ class AdminHandler extends PKPHandler {
 	}
 
 	function saveLayout() {
+		AdminHandler::setupTemplate();
+		AdminHandler::validate();
+
 		import('admin.form.LayoutForm');
 		$layoutForm = new LayoutForm();
 		$layoutForm->readInputData();
