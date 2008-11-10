@@ -59,6 +59,7 @@ class preCompile extends CommandLineTool {
 		$this->templateMgr->register_function('fieldLabel', array(new Form(null), 'smartyFieldLabel'));
 		$this->_findFiles('templates', '_compileTemplate', create_function('$f', 'return preg_match(\'/\.tpl$/\', $f);'));
 		$this->_findFiles('plugins', '_compilePluginTemplate', create_function('$f', 'return preg_match(\'/\.tpl$/\', $f);'));
+		$this->templateMgr->register_function('form_language_chooser', array(new Form(null), 'smartyFormLanguageChooser'));
 	}
 
 	function _compileTemplate($file) {

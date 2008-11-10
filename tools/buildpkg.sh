@@ -14,7 +14,8 @@
 #
 
 CVSROOT=:pserver:anonymous@pkp.sfu.ca:/cvs
-MODULE=harvester2
+HARVESTERMODULE=harvester2
+PKPMODULE=pkp
 PRECOMPILE=1
 
 if [ -z "$1" ]; then
@@ -31,21 +32,25 @@ TMPDIR=`mktemp -d $PREFIX.XXXXXX` || exit 1
 
 EXCLUDE="dbscripts/xml/data/locale/te_ST			\
 docs/dev							\
-lib/adodb/CHANGED_FILES						\
-lib/adodb/diff							\
-lib/smarty/CHANGED_FILES					\
-lib/smarty/diff							\
 locale/te_ST							\
 plugins/harvesters/junk						\
 tools/buildpkg.sh						\
-tools/cvs2cl.pl							\
 tools/genTestLocale.php"
 
 cd $TMPDIR
 
-echo -n "Exporting $MODULE with tag $TAG ... "
-cvs -Q -d $CVSROOT export -r $TAG -d $BUILD $MODULE || exit 1
+echo -n "Exporting $HARVESTERMODULE with tag $TAG ... "
+cvs -Q -d $CVSROOT export -r $TAG -d $BUILD $HARVESTERMODULE || exit 1
 echo "Done"
+
+echo -n "Exporting $PKPMODULE with tag $TAG ... "
+cvs -Q -d $CVSROOT export -r HEAD $PKPMODULE || exit 1
+echo "Done"
+
+if [ ! -d $BUILD/lib ]; then
+	mkdir $BUILD/lib
+fi
+mv $PKPMODULE $BUILD/lib/$PKPMODULE
 
 cd $BUILD
 
