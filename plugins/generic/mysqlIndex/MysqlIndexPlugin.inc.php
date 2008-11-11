@@ -39,10 +39,10 @@ class MysqlIndexPlugin extends GenericPlugin {
 				$this->import('SearchIndex');
 				$this->import('SearchDAO');
 
-				$crosswalkDao =& new CrosswalkDAO();
+				$crosswalkDao = new CrosswalkDAO();
 				DAORegistry::registerDAO('CrosswalkDAO', $crosswalkDao);
 
-				$searchDao =& new SearchDAO();
+				$searchDao = new SearchDAO();
 				DAORegistry::registerDAO('SearchDAO', $searchDao);
 
 				/**
@@ -174,7 +174,7 @@ class MysqlIndexPlugin extends GenericPlugin {
 		switch ($category) {
 			case 'blocks':
 				$this->import('MysqlIndexBlockPlugin');
-				$blockPlugin =& new MysqlIndexBlockPlugin();
+				$blockPlugin = new MysqlIndexBlockPlugin();
 				$plugins[$blockPlugin->getSeq()][$blockPlugin->getPluginPath()] =& $blockPlugin;
 				break;
 		}

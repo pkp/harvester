@@ -52,7 +52,7 @@ class MysqlIndexAdminHandler extends PKPHandler {
 		$plugin =& MysqlIndexAdminHandler::getPlugin();
 		$plugin->import('CrosswalkForm');
 
-		$crosswalkForm =& new CrosswalkForm(Request::getUserVar('crosswalkId'));
+		$crosswalkForm = new CrosswalkForm(Request::getUserVar('crosswalkId'));
 		$crosswalkForm->initData();
 		$crosswalkForm->display();
 	}
@@ -66,7 +66,7 @@ class MysqlIndexAdminHandler extends PKPHandler {
 		$plugin =& MysqlIndexAdminHandler::getPlugin();
 		$plugin->import('CrosswalkForm');
 
-		$crosswalkForm =& new CrosswalkForm(Request::getUserVar('crosswalkId'));
+		$crosswalkForm = new CrosswalkForm(Request::getUserVar('crosswalkId'));
 		$crosswalkForm->initData();
 		$crosswalkForm->readInputData();
 

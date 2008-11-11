@@ -76,7 +76,7 @@ class SearchDAO extends DAO {
 		if (empty($phrase)) {
 			$results = false;
 			import('db.DBRowIterator');
-			$returner =& new DBRowIterator($results);
+			$returner = new DBRowIterator($results);
 			return $returner;
 		}
 
@@ -172,7 +172,7 @@ class SearchDAO extends DAO {
 		);
 
 		import('db.DBRowIterator');
-		$returner =& new DBRowIterator($result);
+		$returner = new DBRowIterator($result);
 		return $returner;
 	}
 

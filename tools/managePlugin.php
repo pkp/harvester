@@ -30,7 +30,7 @@ class managePlugin extends PluginTool {
 	}
 }
 
-$tool =& new managePlugin(isset($argv) ? $argv : array());
+$tool = new managePlugin(isset($argv) ? $argv : array());
 $tool->execute();
 
 ?>

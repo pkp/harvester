@@ -156,7 +156,7 @@ class CrosswalkForm extends Form {
 		$crosswalkDao =& DAORegistry::getDAO('CrosswalkDAO');
 
 		if (!isset($this->crosswalk)) {
-			$this->crosswalk =& new Crosswalk();
+			$this->crosswalk = new Crosswalk();
 		}
 
 		$this->crosswalk->setName($this->getData('name'));

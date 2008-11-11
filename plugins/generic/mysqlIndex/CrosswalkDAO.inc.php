@@ -73,7 +73,7 @@ class CrosswalkDAO extends DAO {
 	 * @return Crosswalk
 	 */
 	function &_returnCrosswalkFromRow(&$row) {
-		$crosswalk =& new Crosswalk();
+		$crosswalk = new Crosswalk();
 		$crosswalk->setCrosswalkId($row['crosswalk_id']);
 		$crosswalk->setPublicCrosswalkId($row['public_crosswalk_id']);
 		$crosswalk->setName($row['name']);
@@ -192,7 +192,7 @@ class CrosswalkDAO extends DAO {
 			false, $rangeInfo
 		);
 
-		$returner =& new DAOResultFactory($result, $this, '_returnCrosswalkFromRow');
+		$returner = new DAOResultFactory($result, $this, '_returnCrosswalkFromRow');
 		return $returner;
 	}
 
@@ -206,7 +206,7 @@ class CrosswalkDAO extends DAO {
 			false, $rangeInfo
 		);
 
-		$returner =& new DAOResultFactory($result, $this, '_returnCrosswalkFromRow');
+		$returner = new DAOResultFactory($result, $this, '_returnCrosswalkFromRow');
 		return $returner;
 	}
 
@@ -230,7 +230,7 @@ class CrosswalkDAO extends DAO {
 			$crosswalkId, $rangeInfo
 		);
 
-		$returner =& new DAOResultFactory($result, $fieldDao, '_returnFieldFromRow');
+		$returner = new DAOResultFactory($result, $fieldDao, '_returnFieldFromRow');
 		return $returner;
 	}
 
@@ -279,7 +279,7 @@ class CrosswalkDAO extends DAO {
 			$params
 		);
 
-		$returner =& new DAOResultFactory($result, $this, '_returnCrosswalkFromRow');
+		$returner = new DAOResultFactory($result, $this, '_returnCrosswalkFromRow');
 		return $returner;
 	}
 
@@ -303,7 +303,7 @@ class CrosswalkDAO extends DAO {
 	 * @param $paramArray array Optional parameters for variable replacement in crosswalks
 	 */
 	function installCrosswalks($filename, $paramArray = array()) {
-		$xmlParser =& new XMLParser();
+		$xmlParser = new XMLParser();
 		$tree = $xmlParser->parse($filename);
 
 		if (!$tree) {
@@ -325,7 +325,7 @@ class CrosswalkDAO extends DAO {
 				$name = $this->_performReplacement($nameNode->getValue());
 				$description = $this->_performReplacement($descriptionNode->getValue());
 
-				$crosswalk =& new Crosswalk();
+				$crosswalk = new Crosswalk();
 				$crosswalk->setName($name);
 				$crosswalk->setPublicCrosswalkId($publicId);
 				$crosswalk->setDescription($description);
