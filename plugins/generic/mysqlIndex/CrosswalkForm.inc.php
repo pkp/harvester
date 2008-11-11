@@ -63,7 +63,7 @@ class CrosswalkForm extends Form {
 			$filteredPlugins =& $schemaPlugins;
 		}
 
-		$templateMgr = &TemplateManager::getManager();
+		$templateMgr =& TemplateManager::getManager();
 		$templateMgr->assign('crosswalkId', $this->crosswalkId);
 		$templateMgr->assign('schemaPluginName', $schemaPluginName);
 		$templateMgr->assign('crosswalkTypes', array(
@@ -153,10 +153,10 @@ class CrosswalkForm extends Form {
 	 * Save crosswalk settings.
 	 */
 	function execute() {
-		$crosswalkDao = &DAORegistry::getDAO('CrosswalkDAO');
+		$crosswalkDao =& DAORegistry::getDAO('CrosswalkDAO');
 
 		if (!isset($this->crosswalk)) {
-			$this->crosswalk = &new Crosswalk();
+			$this->crosswalk =& new Crosswalk();
 		}
 
 		$this->crosswalk->setName($this->getData('name'));

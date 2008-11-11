@@ -35,13 +35,13 @@ class RecordDAO extends DAO {
 	 * @return Record
 	 */
 	function &getRecord($recordId) {
-		$result = &$this->retrieve(
+		$result =& $this->retrieve(
 			'SELECT * FROM records WHERE record_id = ?', $recordId
 		);
 
 		$returner = null;
 		if ($result->RecordCount() != 0) {
-			$returner = &$this->_returnRecordFromRow($result->GetRowAssoc(false));
+			$returner =& $this->_returnRecordFromRow($result->GetRowAssoc(false));
 		}
 		$result->Close();
 		unset($result);
@@ -109,13 +109,13 @@ class RecordDAO extends DAO {
 	 * @return Record
 	 */
 	function &getRecordByIdentifier($identifier) {
-		$result = &$this->retrieve(
+		$result =& $this->retrieve(
 			'SELECT * FROM records WHERE identifier = ?', $identifier
 		);
 
 		$returner = null;
 		if ($result->RecordCount() != 0) {
-			$returner = &$this->_returnRecordFromRow($result->GetRowAssoc(false));
+			$returner =& $this->_returnRecordFromRow($result->GetRowAssoc(false));
 		}
 		$result->Close();
 		unset($result);
@@ -246,7 +246,7 @@ class RecordDAO extends DAO {
 	 * @return int
 	 */
 	function getRecordCount($archiveId = null) {
-		$result = &$this->retrieve(
+		$result =& $this->retrieve(
 			'SELECT COUNT(*) AS count FROM records' . (isset($archiveId)?' WHERE archive_id = ?':''),
 			isset($archiveId)?$archiveId:false
 		);

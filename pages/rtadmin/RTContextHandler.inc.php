@@ -22,13 +22,13 @@ class RTContextHandler extends RTAdminHandler {
 	function createContext($args) {
 		RTAdminHandler::validate();
 
-		$rtDao = &DAORegistry::getDAO('RTDAO');
+		$rtDao =& DAORegistry::getDAO('RTDAO');
 
 		$archiveId = array_shift($args);
 		$versionId = array_shift($args);
 		$save = array_shift($args);
 
-		$version = &$rtDao->getVersion($versionId, $archiveId);
+		$version =& $rtDao->getVersion($versionId, $archiveId);
 
 		import('rt.harvester2.form.ContextForm');
 		$contextForm = new ContextForm(null, $versionId, $archiveId);
@@ -46,18 +46,18 @@ class RTContextHandler extends RTAdminHandler {
 	function contexts($args) {
 		RTAdminHandler::validate();
 
-		$rtDao = &DAORegistry::getDAO('RTDAO');
+		$rtDao =& DAORegistry::getDAO('RTDAO');
 		$rangeInfo = PKPHandler::getRangeInfo('contexts');
 
 		$archiveId = array_shift($args);
 		$versionId = array_shift($args);
 
-		$version = &$rtDao->getVersion($versionId, $archiveId);
+		$version =& $rtDao->getVersion($versionId, $archiveId);
 
 		if ($version) {
 			RTAdminHandler::setupTemplate(true, $archiveId, $version);
 
-			$templateMgr = &TemplateManager::getManager();
+			$templateMgr =& TemplateManager::getManager();
 
 			$templateMgr->assign('archiveId', $archiveId);
 			$templateMgr->assign_by_ref('version', $version);
@@ -73,14 +73,14 @@ class RTContextHandler extends RTAdminHandler {
 	function editContext($args) {
 		RTAdminHandler::validate();
 
-		$rtDao = &DAORegistry::getDAO('RTDAO');
+		$rtDao =& DAORegistry::getDAO('RTDAO');
 
 		$archiveId = array_shift($args);
 		$versionId = array_shift($args);
 		$contextId = array_shift($args);
 
-		$version = &$rtDao->getVersion($versionId, $archiveId);
-		$context = &$rtDao->getContext($contextId);
+		$version =& $rtDao->getVersion($versionId, $archiveId);
+		$context =& $rtDao->getContext($contextId);
 
 		if (isset($version) && isset($context) && $context->getVersionId() == $version->getVersionId()) {
 			import('rt.harvester2.form.ContextForm');
@@ -97,14 +97,14 @@ class RTContextHandler extends RTAdminHandler {
 	function deleteContext($args) {
 		RTAdminHandler::validate();
 
-		$rtDao = &DAORegistry::getDAO('RTDAO');
+		$rtDao =& DAORegistry::getDAO('RTDAO');
 
 		$archiveId = array_shift($args);
 		$versionId = array_shift($args);
 		$contextId = array_shift($args);
 
-		$version = &$rtDao->getVersion($versionId, $archiveId);
-		$context = &$rtDao->getContext($contextId);
+		$version =& $rtDao->getVersion($versionId, $archiveId);
+		$context =& $rtDao->getContext($contextId);
 
 		if (isset($version) && isset($context) && $context->getVersionId() == $version->getVersionId()) {
 			$rtDao->deleteContext($contextId, $versionId);
@@ -116,14 +116,14 @@ class RTContextHandler extends RTAdminHandler {
 	function saveContext($args) {
 		RTAdminHandler::validate();
 
-		$rtDao = &DAORegistry::getDAO('RTDAO');
+		$rtDao =& DAORegistry::getDAO('RTDAO');
 
 		$archiveId = array_shift($args);
 		$versionId = array_shift($args);
 		$contextId = array_shift($args);
 
-		$version = &$rtDao->getVersion($versionId, $archiveId);
-		$context = &$rtDao->getContext($contextId);
+		$version =& $rtDao->getVersion($versionId, $archiveId);
+		$context =& $rtDao->getContext($contextId);
 
 		if (isset($version) && isset($context) && $context->getVersionId() == $version->getVersionId()) {
 			import('rt.harvester2.form.ContextForm');
@@ -138,14 +138,14 @@ class RTContextHandler extends RTAdminHandler {
 	function moveContext($args) {
 		RTAdminHandler::validate();
 
-		$rtDao = &DAORegistry::getDAO('RTDAO');
+		$rtDao =& DAORegistry::getDAO('RTDAO');
 
 		$archiveId = array_shift($args);
 		$versionId = array_shift($args);
 		$contextId = array_shift($args);
 
-		$version = &$rtDao->getVersion($versionId, $archiveId);
-		$context = &$rtDao->getContext($contextId);
+		$version =& $rtDao->getVersion($versionId, $archiveId);
+		$context =& $rtDao->getContext($contextId);
 
 		if (isset($version) && isset($context) && $context->getVersionId() == $version->getVersionId()) {
 			$isDown = Request::getUserVar('dir')=='d';

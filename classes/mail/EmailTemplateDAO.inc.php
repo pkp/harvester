@@ -32,7 +32,7 @@ class EmailTemplateDAO extends DAO {
 	 * @return BaseEmailTemplate
 	 */
 	function &getEmailTemplate($emailKey) {
-		$result = &$this->retrieve(
+		$result =& $this->retrieve(
 			'SELECT d.email_key, d.can_edit, d.can_disable, d.enabled
 			FROM email_templates AS d
 			WHERE d.email_key = ?',
@@ -41,7 +41,7 @@ class EmailTemplateDAO extends DAO {
 
 		$returner = null;
 		if ($result->RecordCount() != 0) {
-			$returner = &$this->_returnEmailTemplateFromRow($result->GetRowAssoc(false));
+			$returner =& $this->_returnEmailTemplateFromRow($result->GetRowAssoc(false));
 		}
 
 		$result->Close();
@@ -62,7 +62,7 @@ class EmailTemplateDAO extends DAO {
 		$emailTemplate->setCanDisable($row['can_disable']);
 
 		if (!HookRegistry::call('EmailTemplateDAO::_returnEmailTemplateFromRow', array(&$emailTemplate, &$row))) {
-			$result = &$this->retrieve(
+			$result =& $this->retrieve(
 				'SELECT d.locale, d.description, d.subject, d.body
 				FROM email_templates_data AS d
 				WHERE d.email_key = ?',
@@ -70,7 +70,7 @@ class EmailTemplateDAO extends DAO {
 			);
 
 			while (!$result->EOF) {
-				$dataRow = &$result->GetRowAssoc(false);
+				$dataRow =& $result->GetRowAssoc(false);
 				$emailTemplate->addLocale($dataRow['locale']);
 				$emailTemplate->setSubject($dataRow['locale'], $dataRow['subject']);
 				$emailTemplate->setBody($dataRow['locale'], $dataRow['body']);
@@ -134,7 +134,7 @@ class EmailTemplateDAO extends DAO {
 	 */
 	function updateEmailTemplateData(&$emailTemplate) {
 		foreach ($emailTemplate->getLocales() as $locale) {
-			$result = &$this->retrieve(
+			$result =& $this->retrieve(
 				'SELECT COUNT(*) FROM email_templates_data
 				WHERE email_key = ? AND locale = ?',
 				array($emailTemplate->getEmailKey(), $locale)

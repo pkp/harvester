@@ -22,7 +22,7 @@ class IndexHandler extends PKPHandler {
 	function index($args) {
 		parent::setupTemplate();
 		parent::validate();
-		$templateMgr = &TemplateManager::getManager();
+		$templateMgr =& TemplateManager::getManager();
 		$site =& Request::getSite();
 
 		$templateMgr->assign('intro', $site->getSiteIntro());
@@ -46,10 +46,10 @@ class IndexHandler extends PKPHandler {
 	function setLocale($args) {
 		$setLocale = isset($args[0]) ? $args[0] : null;
 
-		$site = &Request::getSite();
+		$site =& Request::getSite();
 
 		if (Locale::isLocaleValid($setLocale) && in_array($setLocale, $site->getSupportedLocales())) {
-			$session = &Request::getSession();
+			$session =& Request::getSession();
 			$session->setSessionVar('currentLocale', $setLocale);
 		}
 

@@ -53,8 +53,8 @@ class MailTemplate extends Mail {
 		$this->locale = isset($locale) ? $locale : Locale::getLocale();
 
 		if (isset($this->emailKey)) {
-			$emailTemplateDao = &DAORegistry::getDAO('EmailTemplateDAO');
-			$emailTemplate = &$emailTemplateDao->getEmailTemplate($this->emailKey, $this->locale);
+			$emailTemplateDao =& DAORegistry::getDAO('EmailTemplateDAO');
+			$emailTemplate =& $emailTemplateDao->getEmailTemplate($this->emailKey, $this->locale);
 		}
 
 		if (isset($emailTemplate) && Request::getUserVar('subject')==null && Request::getUserVar('body')==null) {
@@ -96,7 +96,7 @@ class MailTemplate extends Mail {
 		// Record whether or not to BCC the sender when sending message
 		$this->bccSender = Request::getUserVar('bccSender');
 
-		$site = &Request::getSite();
+		$site =& Request::getSite();
 		$this->setFrom($site->getLocalizedSetting('contactEmail'), $site->getLocalizedSetting('contactName'));
 
 		$this->addressFieldsEnabled = true;
@@ -139,7 +139,7 @@ class MailTemplate extends Mail {
 		$body = $this->getBody();
 
 		// Add commonly-used variables to the list
-		$site = &Request::getSite();
+		$site =& Request::getSite();
 		$paramArray['principalContactSignature'] = $site->getLocalizedSetting('contactName');
 
 		// Replace variables in message with values
@@ -207,7 +207,7 @@ class MailTemplate extends Mail {
 
 		$form->setData('addressFieldsEnabled', $this->getAddressFieldsEnabled());
 
-		$user = &Request::getUser();
+		$user =& Request::getUser();
 		if ($user) {
 			$form->setData('senderEmail', $user->getEmail());
 			$form->setData('bccSender', $this->bccSender);
@@ -223,7 +223,7 @@ class MailTemplate extends Mail {
 			$form->setData($key, $value);
 		}
 
-		$templateMgr = &TemplateManager::getManager();
+		$templateMgr =& TemplateManager::getManager();
 
 		$form->display();
 	}

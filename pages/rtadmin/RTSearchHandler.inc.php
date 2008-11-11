@@ -22,15 +22,15 @@ class RTSearchHandler extends RTAdminHandler {
 	function createSearch($args) {
 		RTAdminHandler::validate();
 
-		$rtDao = &DAORegistry::getDAO('RTDAO');
+		$rtDao =& DAORegistry::getDAO('RTDAO');
 
 		$archiveId = array_shift($args);
 		$versionId = array_shift($args);
 		$contextId = array_shift($args);
 		$save = array_shift($args);
 
-		$version = &$rtDao->getVersion($versionId, $archiveId);
-		$context = &$rtDao->getContext($contextId);
+		$version =& $rtDao->getVersion($versionId, $archiveId);
+		$context =& $rtDao->getContext($contextId);
 
 		import('rt.harvester2.form.SearchForm');
 		$searchForm = new SearchForm(null, $contextId, $versionId, $archiveId);
@@ -48,20 +48,20 @@ class RTSearchHandler extends RTAdminHandler {
 	function searches($args) {
 		RTAdminHandler::validate();
 
-		$rtDao = &DAORegistry::getDAO('RTDAO');
+		$rtDao =& DAORegistry::getDAO('RTDAO');
 		$rangeInfo = PKPHandler::getRangeInfo('searches');
 
 		$archiveId = array_shift($args);
 		$versionId = array_shift($args);
 		$contextId = array_shift($args);
 
-		$version = &$rtDao->getVersion($versionId, $archiveId);
-		$context = &$rtDao->getContext($contextId);
+		$version =& $rtDao->getVersion($versionId, $archiveId);
+		$context =& $rtDao->getContext($contextId);
 
 		if ($context && $version && $context->getVersionId() == $version->getVersionId()) {
 			RTAdminHandler::setupTemplate(true, $archiveId, $version, $context);
 
-			$templateMgr = &TemplateManager::getManager();
+			$templateMgr =& TemplateManager::getManager();
 
 			$templateMgr->assign('archiveId', $archiveId);
 			$templateMgr->assign_by_ref('version', $version);
@@ -77,16 +77,16 @@ class RTSearchHandler extends RTAdminHandler {
 	function editSearch($args) {
 		RTAdminHandler::validate();
 
-		$rtDao = &DAORegistry::getDAO('RTDAO');
+		$rtDao =& DAORegistry::getDAO('RTDAO');
 
 		$archiveId = array_shift($args);
 		$versionId = array_shift($args);
 		$contextId = array_shift($args);
 		$searchId = array_shift($args);
 
-		$version = &$rtDao->getVersion($versionId, $archiveId);
-		$context = &$rtDao->getContext($contextId);
-		$search = &$rtDao->getSearch($searchId);
+		$version =& $rtDao->getVersion($versionId, $archiveId);
+		$context =& $rtDao->getContext($contextId);
+		$search =& $rtDao->getSearch($searchId);
 
 		if (isset($version) && isset($context) && isset($search) && $context->getVersionId() == $version->getVersionId() && $search->getContextId() == $context->getContextId()) {
 			import('rt.harvester2.form.SearchForm');
@@ -101,16 +101,16 @@ class RTSearchHandler extends RTAdminHandler {
 	function deleteSearch($args) {
 		RTAdminHandler::validate();
 
-		$rtDao = &DAORegistry::getDAO('RTDAO');
+		$rtDao =& DAORegistry::getDAO('RTDAO');
 
 		$archiveId = array_shift($args);
 		$versionId = array_shift($args);
 		$contextId = array_shift($args);
 		$searchId = array_shift($args);
 
-		$version = &$rtDao->getVersion($versionId, $archiveId);
-		$context = &$rtDao->getContext($contextId);
-		$search = &$rtDao->getSearch($searchId);
+		$version =& $rtDao->getVersion($versionId, $archiveId);
+		$context =& $rtDao->getContext($contextId);
+		$search =& $rtDao->getSearch($searchId);
 
 		if (isset($version) && isset($context) && isset($search) && $context->getVersionId() == $version->getVersionId() && $search->getContextId() == $context->getContextId()) {
 			$rtDao->deleteSearch($searchId, $contextId);
@@ -122,16 +122,16 @@ class RTSearchHandler extends RTAdminHandler {
 	function saveSearch($args) {
 		RTAdminHandler::validate();
 
-		$rtDao = &DAORegistry::getDAO('RTDAO');
+		$rtDao =& DAORegistry::getDAO('RTDAO');
 
 		$archiveId = array_shift($args);
 		$versionId = array_shift($args);
 		$contextId = array_shift($args);
 		$searchId = array_shift($args);
 
-		$version = &$rtDao->getVersion($versionId, $archiveId);
-		$context = &$rtDao->getContext($contextId);
-		$search = &$rtDao->getSearch($searchId);
+		$version =& $rtDao->getVersion($versionId, $archiveId);
+		$context =& $rtDao->getContext($contextId);
+		$search =& $rtDao->getSearch($searchId);
 
 		if (isset($version) && isset($context) && isset($search) && $context->getVersionId() == $version->getVersionId() && $search->getContextId() == $context->getContextId()) {
 			import('rt.harvester2.form.SearchForm');
@@ -146,16 +146,16 @@ class RTSearchHandler extends RTAdminHandler {
 	function moveSearch($args) {
 		RTAdminHandler::validate();
 
-		$rtDao = &DAORegistry::getDAO('RTDAO');
+		$rtDao =& DAORegistry::getDAO('RTDAO');
 
 		$archiveId = array_shift($args);
 		$versionId = array_shift($args);
 		$contextId = array_shift($args);
 		$searchId = array_shift($args);
 
-		$version = &$rtDao->getVersion($versionId, $archiveId);
-		$context = &$rtDao->getContext($contextId);
-		$search = &$rtDao->getSearch($searchId);
+		$version =& $rtDao->getVersion($versionId, $archiveId);
+		$context =& $rtDao->getContext($contextId);
+		$search =& $rtDao->getSearch($searchId);
 
 		if (isset($version) && isset($context) && isset($search) && $context->getVersionId() == $version->getVersionId() && $search->getContextId() == $context->getContextId()) {
 			$isDown = Request::getUserVar('dir')=='d';

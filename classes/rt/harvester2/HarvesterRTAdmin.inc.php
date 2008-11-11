@@ -30,7 +30,7 @@ class HarvesterRTAdmin extends RTAdmin {
 
 	function HarvesterRTAdmin($archiveId) {
 		$this->archiveId = $archiveId;
-		$this->dao = &DAORegistry::getDAO('RTDAO');
+		$this->dao =& DAORegistry::getDAO('RTDAO');
 	}
 
 	function restoreVersions($deleteBeforeLoad = true) {
@@ -49,7 +49,7 @@ class HarvesterRTAdmin extends RTAdmin {
 		import ('rt.RTXMLParser');
 		$parser = new RTXMLParser();
 
-		$version = &$parser->parse($filename);
+		$version =& $parser->parse($filename);
 		$this->dao->insertVersion($this->archiveId, $version);
 	}
 }

@@ -35,7 +35,7 @@ class RTAdminHandler extends PKPHandler {
 
 		if ($archive =& $archiveDao->getArchive($archiveId, false) || $archiveId === 'default') {
 			$site =& Request::getSite();
-			$rtDao = &DAORegistry::getDAO('RTDAO');
+			$rtDao =& DAORegistry::getDAO('RTDAO');
 
 			$version = $rtDao->getVersion(
 				$archive?$archive->getSetting('rtVersionId'):$site->getSetting('rtVersionId'),
@@ -43,7 +43,7 @@ class RTAdminHandler extends PKPHandler {
 			);
 
 			// Display the administration menu for this archive.
-			$templateMgr = &TemplateManager::getManager();
+			$templateMgr =& TemplateManager::getManager();
 			$templateMgr->assign_by_ref('version', $version);
 			$templateMgr->assign_by_ref('archiveId', $archiveId);
 			$templateMgr->assign_by_ref('versions', $rtDao->getVersions($archive?$archive->getArchiveId():null));
@@ -112,7 +112,7 @@ class RTAdminHandler extends PKPHandler {
 	function validateUrls($args) {
 		RTAdminHandler::validate();
 
-		$rtDao = &DAORegistry::getDAO('RTDAO');
+		$rtDao =& DAORegistry::getDAO('RTDAO');
 
 		$versionId = (int) array_shift($args);
 		$archiveId = array_shift($args);
@@ -129,7 +129,7 @@ class RTAdminHandler extends PKPHandler {
 		}
 
 		RTAdminHandler::setupTemplate(true, $archiveId, $version);
-		$templateMgr = &TemplateManager::getManager();
+		$templateMgr =& TemplateManager::getManager();
 		$templateMgr->register_modifier('validate_url', 'smarty_rtadmin_validate_url');
 		$templateMgr->assign_by_ref('versions', $versions);
 		$templateMgr->display('rtadmin/validate.tpl');
@@ -257,7 +257,7 @@ class RTAdminHandler extends PKPHandler {
 	 * @param $search object The current search, if applicable
 	 */
 	function setupTemplate($subclass = false, $archiveId = 'default', $version = null, $context = null, $search = null) {
-		$templateMgr = &TemplateManager::getManager();
+		$templateMgr =& TemplateManager::getManager();
 
 		$pageHierarchy = array(array(Request::url('admin'), 'admin.siteAdmin'));
 

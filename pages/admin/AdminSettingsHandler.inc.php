@@ -69,7 +69,7 @@ class AdminSettingsHandler extends AdminHandler {
 		if (!$editData && $settingsForm->validate()) {
 			$settingsForm->execute();
 
-			$templateMgr = &TemplateManager::getManager();
+			$templateMgr =& TemplateManager::getManager();
 			$templateMgr->assign(array(
 				'currentUrl' => 'admin/settings',
 				'pageTitle' => 'admin.siteSettings',

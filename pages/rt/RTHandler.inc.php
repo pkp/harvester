@@ -26,8 +26,8 @@ class RTHandler extends PKPHandler {
 
 		list($archive, $record) = RTHandler::validate($recordId);
 
-		$rtDao = &DAORegistry::getDAO('RTDAO');
-		$context = &$rtDao->getContext($contextId);
+		$rtDao =& DAORegistry::getDAO('RTDAO');
+		$context =& $rtDao->getContext($contextId);
 
 		if (!$context) {
 			Request::redirect('index');
@@ -84,7 +84,7 @@ class RTHandler extends PKPHandler {
 				break;
 		}
 
-		$templateMgr = &TemplateManager::getManager();
+		$templateMgr =& TemplateManager::getManager();
 		$templateMgr->assign_by_ref('context', $context);
 		$templateMgr->assign_by_ref('record', $record);
 		$templateMgr->assign_by_ref('searches', $searches);

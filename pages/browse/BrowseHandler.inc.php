@@ -24,7 +24,7 @@ class BrowseHandler extends PKPHandler {
 	 */
 	function index($args) {
 		BrowseHandler::validate();
-		$templateMgr = &TemplateManager::getManager();
+		$templateMgr =& TemplateManager::getManager();
 
 		$archiveDao =& DAORegistry::getDAO('ArchiveDAO');
 		$recordDao =& DAORegistry::getDAO('RecordDAO');
@@ -75,7 +75,7 @@ class BrowseHandler extends PKPHandler {
 	 */
 	function archiveInfo($args) {
 		BrowseHandler::validate();
-		$templateMgr = &TemplateManager::getManager();
+		$templateMgr =& TemplateManager::getManager();
 
 		$archiveDao =& DAORegistry::getDAO('ArchiveDAO');
 
@@ -99,7 +99,7 @@ class BrowseHandler extends PKPHandler {
 	 */
 	function setupTemplate(&$archive, $isSubclass = null) {
 		parent::setupTemplate();
-		$templateMgr = &TemplateManager::getManager();
+		$templateMgr =& TemplateManager::getManager();
 		$hierarchy = array();
 		if ($isSubclass) {
 			$hierarchy[] = array(Request::url('browse'), 'navigation.browse');

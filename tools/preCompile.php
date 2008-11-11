@@ -55,7 +55,7 @@ class preCompile extends CommandLineTool {
 
 	function compileTemplates() {
 		import('form.Form');
-		$this->templateMgr = &TemplateManager::getManager();
+		$this->templateMgr =& TemplateManager::getManager();
 		$this->templateMgr->register_function('fieldLabel', array(new Form(null), 'smartyFieldLabel'));
 		$this->_findFiles('templates', '_compileTemplate', create_function('$f', 'return preg_match(\'/\.tpl$/\', $f);'));
 		$this->_findFiles('plugins', '_compilePluginTemplate', create_function('$f', 'return preg_match(\'/\.tpl$/\', $f);'));
@@ -71,7 +71,7 @@ class preCompile extends CommandLineTool {
 	}
 
 	function compileLocales() {
-		$locales = &Locale::getAllLocales();
+		$locales =& Locale::getAllLocales();
 		if (is_array($locales)) foreach ($locales as $key => $name) {
 			Locale::loadLocale($key);
 		}
@@ -83,8 +83,8 @@ class preCompile extends CommandLineTool {
 		import('help.HelpTopic');
 		import('help.HelpTopicDAO');
 		import('help.HelpTopicSection');
-		$this->helpTopicDao = &DAORegistry::getDAO('HelpTopicDAO');
-		$this->helpTocDao = &DAORegistry::getDAO('HelpTocDAO');
+		$this->helpTopicDao =& DAORegistry::getDAO('HelpTopicDAO');
+		$this->helpTocDao =& DAORegistry::getDAO('HelpTocDAO');
 		$this->_findFiles('help', '_compileHelp', create_function('$f', 'return preg_match(\'/[\d]+\.xml$/\', $f);'));
 	}
 

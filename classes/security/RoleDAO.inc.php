@@ -24,7 +24,7 @@ class RoleDAO extends DAO {
 	 */
 	function RoleDAO() {
 		parent::DAO();
-		$this->userDao = &DAORegistry::getDAO('UserDAO');
+		$this->userDao =& DAORegistry::getDAO('UserDAO');
 	}
 
 	/**
@@ -34,7 +34,7 @@ class RoleDAO extends DAO {
 	 * @return Role
 	 */
 	function &getRole($userId, $roleId) {
-		$result = &$this->retrieve(
+		$result =& $this->retrieve(
 			'SELECT * FROM roles WHERE user_id = ? AND role_id = ?',
 			array(
 				(int) $userId,
@@ -44,7 +44,7 @@ class RoleDAO extends DAO {
 
 		$returner = null;
 		if ($result->RecordCount() != 0) {
-			$returner = &$this->_returnRoleFromRow($result->GetRowAssoc(false));
+			$returner =& $this->_returnRoleFromRow($result->GetRowAssoc(false));
 		}
 
 		$result->Close();
@@ -107,13 +107,13 @@ class RoleDAO extends DAO {
 	function &getRolesByUserId($userId) {
 		$roles = array();
 
-		$result = &$this->retrieve(
+		$result =& $this->retrieve(
 			'SELECT * FROM roles WHERE user_id = ?',
 			(int) $userId
 		);
 
 		while (!$result->EOF) {
-			$roles[] = &$this->_returnRoleFromRow($result->GetRowAssoc(false));
+			$roles[] =& $this->_returnRoleFromRow($result->GetRowAssoc(false));
 			$result->moveNext();
 		}
 
@@ -130,7 +130,7 @@ class RoleDAO extends DAO {
 	 * @return boolean
 	 */
 	function roleExists($userId, $roleId) {
-		$result = &$this->retrieve(
+		$result =& $this->retrieve(
 			'SELECT COUNT(*) FROM roles WHERE user_id = ? AND role_id = ?', array((int) $userId, (int) $roleId)
 		);
 		$returner = isset($result->fields[0]) && $result->fields[0] == 1 ? true : false;

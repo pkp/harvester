@@ -82,7 +82,7 @@ class PluginHandler extends AdminHandler {
 	 * @param $subclass boolean
 	 */
 	function setBreadcrumbs($subclass = false) {
-		$templateMgr = &TemplateManager::getManager();
+		$templateMgr =& TemplateManager::getManager();
 		$pageCrumbs = array(
 			array(
 				Request::url(null),

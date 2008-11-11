@@ -42,7 +42,7 @@ class RegistrationForm extends Form {
 		$this->addCheck(new FormValidator($this, 'username', 'required', 'user.profile.form.usernameRequired'));
 		$this->addCheck(new FormValidator($this, 'password', 'required', 'user.profile.form.passwordRequired'));
 
-		$site = &Request::getSite();
+		$site =& Request::getSite();
 
 		$this->addCheck(new FormValidatorCustom($this, 'username', 'required', 'user.register.form.usernameExists', array(DAORegistry::getDAO('UserDAO'), 'userExistsByUsername'), array(), true));
 		$this->addCheck(new FormValidatorAlphaNum($this, 'username', 'required', 'user.register.form.usernameAlphaNumeric'));
@@ -57,8 +57,8 @@ class RegistrationForm extends Form {
 			$this->addCheck(new FormValidatorCaptcha($this, 'captcha', 'captchaId', 'common.captchaField.badCaptcha'));
 		}
 
-		$authDao = &DAORegistry::getDAO('AuthSourceDAO');
-		$this->defaultAuth = &$authDao->getDefaultPlugin();
+		$authDao =& DAORegistry::getDAO('AuthSourceDAO');
+		$this->defaultAuth =& $authDao->getDefaultPlugin();
 		if (isset($this->defaultAuth)) {
 			$this->addCheck(new FormValidatorCustom($this, 'username', 'required', 'user.register.form.usernameExists', create_function('$username,$form,$auth', 'return (!$auth->userExists($username) || $auth->authenticate($username, $form->getData(\'password\')));'), array(&$this, $this->defaultAuth)));
 		}
@@ -70,8 +70,8 @@ class RegistrationForm extends Form {
 	 * Display the form.
 	 */
 	function display() {
-		$templateMgr = &TemplateManager::getManager();
-		$site = &Request::getSite();
+		$templateMgr =& TemplateManager::getManager();
+		$site =& Request::getSite();
 		$templateMgr->assign('minPasswordLength', $site->getMinPasswordLength());
 		if ($this->captchaEnabled) {
 			import('captcha.CaptchaManager');
@@ -166,7 +166,7 @@ class RegistrationForm extends Form {
 		$user->setDateRegistered(Core::getCurrentDate());
 		$user->setCountry($this->getData('country'));
 
-		$site = &Request::getSite();
+		$site =& Request::getSite();
 		$availableLocales = $site->getSupportedLocales();
 
 		$locales = array();
@@ -192,18 +192,18 @@ class RegistrationForm extends Form {
 			$user->setDisabledReason(Locale::translate('user.login.accountNotValidated'));
 		}
 
-		$userDao = &DAORegistry::getDAO('UserDAO');
+		$userDao =& DAORegistry::getDAO('UserDAO');
 		$userDao->insertUser($user);
 		$userId = $user->getUserId();
 		if (!$userId) {
 			return false;
 		}
 
-		$sessionManager = &SessionManager::getManager();
-		$session = &$sessionManager->getUserSession();
+		$sessionManager =& SessionManager::getManager();
+		$session =& $sessionManager->getUserSession();
 		$session->setSessionVar('username', $user->getUsername());
 
-		$roleDao = &DAORegistry::getDAO('RoleDAO');
+		$roleDao =& DAORegistry::getDAO('RoleDAO');
 
 		// Roles users are allowed to register themselves in
 		$allowedRoles = array('submitter' => 'registerAsSubmitter');

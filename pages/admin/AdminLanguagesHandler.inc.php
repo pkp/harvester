@@ -125,7 +125,7 @@ class AdminLanguagesHandler extends AdminHandler {
 				$supportedLocales = array_diff($supportedLocales, array($locale));
 				$site->setSupportedLocales($supportedLocales);
 
-				$siteDao = &DAORegistry::getDAO('SiteDAO');
+				$siteDao =& DAORegistry::getDAO('SiteDAO');
 				$siteDao->updateSite($site);
 
 				Locale::uninstallLocale($locale);

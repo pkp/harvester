@@ -70,7 +70,7 @@ class ArchiveSettingsDAO extends DAO {
 	function &getArchiveSettings($archiveId) {
 		$archiveSettings[$archiveId] = array();
 
-		$result = &$this->retrieve(
+		$result =& $this->retrieve(
 			'SELECT setting_name, setting_value, setting_type FROM archive_settings WHERE archive_id = ?', $archiveId
 		);
 
@@ -80,7 +80,7 @@ class ArchiveSettingsDAO extends DAO {
 
 		} else {
 			while (!$result->EOF) {
-				$row = &$result->getRowAssoc(false);
+				$row =& $result->getRowAssoc(false);
 				switch ($row['setting_type']) {
 					case 'bool':
 						$value = (bool) $row['setting_value'];
@@ -236,7 +236,7 @@ class ArchiveSettingsDAO extends DAO {
 		$value = array();
 		foreach ($node->getChildren() as $element) {
 			$key = $element->getAttribute('key');
-			$childArray = &$element->getChildByName('array');
+			$childArray =& $element->getChildByName('array');
 			if (isset($childArray)) {
 				$content = $this->_buildObject($childArray, $paramArray);
 			} else {
@@ -266,15 +266,15 @@ class ArchiveSettingsDAO extends DAO {
 		}
 
 		foreach ($tree->getChildren() as $setting) {
-			$nameNode = &$setting->getChildByName('name');
-			$valueNode = &$setting->getChildByName('value');
+			$nameNode =& $setting->getChildByName('name');
+			$valueNode =& $setting->getChildByName('value');
 
 			if (isset($nameNode) && isset($valueNode)) {
 				$type = $setting->getAttribute('type');
-				$name = &$nameNode->getValue();
+				$name =& $nameNode->getValue();
 
 				if ($type == 'object') {
-					$arrayNode = &$valueNode->getChildByName('array');
+					$arrayNode =& $valueNode->getChildByName('array');
 					$value = $this->_buildObject($arrayNode, $paramArray);
 				} else {
 					$value = $this->_performReplacement($valueNode->getValue(), $paramArray);

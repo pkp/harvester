@@ -29,7 +29,7 @@ class AboutHandler extends PKPHandler {
 
 		$templateMgr =& TemplateManager::getManager();
 
-		$site = &Request::getSite();
+		$site =& Request::getSite();
 		$templateMgr->assign('about', $site->getLocalizedSetting('about'));
 
 		$templateMgr->display('about/index.tpl');
@@ -44,7 +44,7 @@ class AboutHandler extends PKPHandler {
 		parent::setupTemplate();
 		parent::validate();
 
-		$templateMgr = &TemplateManager::getManager();
+		$templateMgr =& TemplateManager::getManager();
 		if ($subclass) $templateMgr->assign('pageHierarchy', array(array('about', 'navigation.about')));
 	}
 
@@ -56,9 +56,9 @@ class AboutHandler extends PKPHandler {
 
 		AboutHandler::setupTemplate(true);
 
-		$site = &Request::getSite();
+		$site =& Request::getSite();
 
-		$templateMgr = &TemplateManager::getManager();
+		$templateMgr =& TemplateManager::getManager();
 		$templateMgr->display('about/contact.tpl');
 	}
 
@@ -70,7 +70,7 @@ class AboutHandler extends PKPHandler {
 
 		AboutHandler::setupTemplate(true);
 
-		$templateMgr = &TemplateManager::getManager();
+		$templateMgr =& TemplateManager::getManager();
 		$templateMgr->display('about/harvester.tpl');
 	}
 }

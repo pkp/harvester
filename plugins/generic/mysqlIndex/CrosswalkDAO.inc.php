@@ -32,13 +32,13 @@ class CrosswalkDAO extends DAO {
 	 */
 	function &getCrosswalkById($crosswalkId) {
 
-		$result = &$this->retrieve(
+		$result =& $this->retrieve(
 			'SELECT * FROM crosswalks WHERE crosswalk_id = ?', $crosswalkId
 		);
 
 		$returner = null;
 		if ($result->RecordCount() != 0) {
-			$returner = &$this->_returnCrosswalkFromRow($result->GetRowAssoc(false));
+			$returner =& $this->_returnCrosswalkFromRow($result->GetRowAssoc(false));
 		}
 		$result->Close();
 		unset($result);
@@ -53,13 +53,13 @@ class CrosswalkDAO extends DAO {
 	 */
 	function &getCrosswalkByPublicCrosswalkId($publicCrosswalkId) {
 
-		$result = &$this->retrieve(
+		$result =& $this->retrieve(
 			'SELECT * FROM crosswalks WHERE public_crosswalk_id = ?', $publicCrosswalkId
 		);
 
 		$returner = null;
 		if ($result->RecordCount() != 0) {
-			$returner = &$this->_returnCrosswalkFromRow($result->GetRowAssoc(false));
+			$returner =& $this->_returnCrosswalkFromRow($result->GetRowAssoc(false));
 		}
 		$result->Close();
 		unset($result);
@@ -73,7 +73,7 @@ class CrosswalkDAO extends DAO {
 	 * @return Crosswalk
 	 */
 	function &_returnCrosswalkFromRow(&$row) {
-		$crosswalk = &new Crosswalk();
+		$crosswalk =& new Crosswalk();
 		$crosswalk->setCrosswalkId($row['crosswalk_id']);
 		$crosswalk->setPublicCrosswalkId($row['public_crosswalk_id']);
 		$crosswalk->setName($row['name']);
@@ -115,7 +115,7 @@ class CrosswalkDAO extends DAO {
 	 * Sequentially renumber crosswalks in their sequence order.
 	 */
 	function resequenceCrosswalks() {
-		$result = &$this->retrieve(
+		$result =& $this->retrieve(
 			'SELECT crosswalk_id FROM crosswalks ORDER BY seq'
 		);
 
@@ -187,12 +187,12 @@ class CrosswalkDAO extends DAO {
 	 * @return DAOResultFactory containing matching crosswalks
 	 */
 	function &getCrosswalks($rangeInfo = null) {
-		$result = &$this->retrieveRange(
+		$result =& $this->retrieveRange(
 			'SELECT * FROM crosswalks ORDER BY seq',
 			false, $rangeInfo
 		);
 
-		$returner = &new DAOResultFactory($result, $this, '_returnCrosswalkFromRow');
+		$returner =& new DAOResultFactory($result, $this, '_returnCrosswalkFromRow');
 		return $returner;
 	}
 
@@ -201,12 +201,12 @@ class CrosswalkDAO extends DAO {
 	 * @return DAOResultFactory containing matching crosswalks
 	 */
 	function &getSortableCrosswalks($rangeInfo = null) {
-		$result = &$this->retrieveRange(
+		$result =& $this->retrieveRange(
 			'SELECT * FROM crosswalks WHERE sortable = 1 ORDER BY seq',
 			false, $rangeInfo
 		);
 
-		$returner = &new DAOResultFactory($result, $this, '_returnCrosswalkFromRow');
+		$returner =& new DAOResultFactory($result, $this, '_returnCrosswalkFromRow');
 		return $returner;
 	}
 
@@ -225,12 +225,12 @@ class CrosswalkDAO extends DAO {
 	function &getFieldsByCrosswalkId($crosswalkId, $rangeInfo = null) {
 		$fieldDao =& DAORegistry::getDAO('FieldDAO');
 
-		$result = &$this->retrieveRange(
+		$result =& $this->retrieveRange(
 			'SELECT f.* FROM raw_fields f, crosswalk_fields c WHERE f.raw_field_id = c.raw_field_id AND c.crosswalk_id = ?',
 			$crosswalkId, $rangeInfo
 		);
 
-		$returner = &new DAOResultFactory($result, $fieldDao, '_returnFieldFromRow');
+		$returner =& new DAOResultFactory($result, $fieldDao, '_returnFieldFromRow');
 		return $returner;
 	}
 
@@ -274,12 +274,12 @@ class CrosswalkDAO extends DAO {
 			array_push($params, $schema->getSchemaId());
 			$schemaIndex++;
 		}
-		$result = &$this->retrieveRange(
+		$result =& $this->retrieveRange(
 			'SELECT DISTINCT c.* FROM crosswalks c' . $schemaTableList . ' WHERE ' . $schemaWhereList . ' ORDER BY c.seq',
 			$params
 		);
 
-		$returner = &new DAOResultFactory($result, $this, '_returnCrosswalkFromRow');
+		$returner =& new DAOResultFactory($result, $this, '_returnCrosswalkFromRow');
 		return $returner;
 	}
 
@@ -303,7 +303,7 @@ class CrosswalkDAO extends DAO {
 	 * @param $paramArray array Optional parameters for variable replacement in crosswalks
 	 */
 	function installCrosswalks($filename, $paramArray = array()) {
-		$xmlParser = &new XMLParser();
+		$xmlParser =& new XMLParser();
 		$tree = $xmlParser->parse($filename);
 
 		if (!$tree) {
@@ -318,8 +318,8 @@ class CrosswalkDAO extends DAO {
 			$type = $crosswalkNode->getAttribute('type');
 			$sortable = $crosswalkNode->getAttribute('sortable') == 'true';
 			$publicId = $crosswalkNode->getAttribute('public_id');
-			$nameNode = &$crosswalkNode->getChildByName('name');
-			$descriptionNode = &$crosswalkNode->getChildByName('description');
+			$nameNode =& $crosswalkNode->getChildByName('name');
+			$descriptionNode =& $crosswalkNode->getChildByName('description');
 
 			if (isset($nameNode) && isset($descriptionNode)) {
 				$name = $this->_performReplacement($nameNode->getValue());
@@ -413,7 +413,7 @@ class CrosswalkDAO extends DAO {
 	 * Get the list of sortable field IDs for a crosswalk.
 	 */
 	function getSortableFieldIds($crosswalkId) {
-		$result = &$this->retrieve(
+		$result =& $this->retrieve(
 			'SELECT raw_field_id FROM crosswalk_fields WHERE crosswalk_id = ? AND sortable = 1',
 			array((int) $crosswalkId)
 		);

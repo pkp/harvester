@@ -61,13 +61,13 @@ class SchemaDAO extends DAO {
 	function &getSchema($schemaId) {
 		if ($this->cachingEnabled && isset($this->schemasById[$schemaId])) return $this->schemasById[$schemaId];
 
-		$result = &$this->retrieve(
+		$result =& $this->retrieve(
 			'SELECT * FROM schema_plugins WHERE schema_plugin_id = ?', $schemaId
 		);
 
 		$returner = null;
 		if ($result->RecordCount() != 0) {
-			$returner = &$this->_returnSchemaFromRow($result->GetRowAssoc(false));
+			$returner =& $this->_returnSchemaFromRow($result->GetRowAssoc(false));
 		}
 		$result->Close();
 		unset($result);
@@ -88,11 +88,11 @@ class SchemaDAO extends DAO {
 	function &getSchemaByPluginName($schemaPluginName) {
 		if ($this->cachingEnabled && isset($this->schemasByPluginName[$schemaPluginName])) return $this->schemasByPluginName[$schemaPluginName];
 
-		$result = &$this->retrieve('SELECT * FROM schema_plugins WHERE schema_plugin = ?', $schemaPluginName);
+		$result =& $this->retrieve('SELECT * FROM schema_plugins WHERE schema_plugin = ?', $schemaPluginName);
 
 		$returner = null;
 		if ($result->RecordCount() != 0) {
-			$returner = &$this->_returnSchemaFromRow($result->GetRowAssoc(false));
+			$returner =& $this->_returnSchemaFromRow($result->GetRowAssoc(false));
 		}
 		$result->Close();
 		unset($result);
@@ -187,7 +187,7 @@ class SchemaDAO extends DAO {
 	 * @return DAOResultFactory containing matching schemas
 	 */
 	function &getSchemas($rangeInfo = null) {
-		$result = &$this->retrieveRange(
+		$result =& $this->retrieveRange(
 			'SELECT * FROM schema_plugins',
 			false, $rangeInfo
 		);

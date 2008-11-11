@@ -113,7 +113,7 @@ class PluginManagementHandler extends AdminHandler {
 	 * $param function string type of operation to perform after upload ('upgrade' or 'install')
 	 */
 	function uploadPlugin($function) {
-		$templateMgr = &TemplateManager::getManager();
+		$templateMgr =& TemplateManager::getManager();
 		parent::setupTemplate(true);
 		
 		$templateMgr->assign('error', false);
@@ -193,7 +193,7 @@ class PluginManagementHandler extends AdminHandler {
 				$installer = new Install($params, $installFile, true);
 
 				if ($installer->execute()) {
-					$newVersion = &$installer->getNewVersion();
+					$newVersion =& $installer->getNewVersion();
 				} else {
 					// Roll back the copy
 					FileManager::rmtree($pluginDest);
@@ -350,7 +350,7 @@ class PluginManagementHandler extends AdminHandler {
 	 * @param $subclass boolean
 	 */
 	function setBreadcrumbs($subclass = false) {
-		$templateMgr = &TemplateManager::getManager();
+		$templateMgr =& TemplateManager::getManager();
 		$pageCrumbs = array(
 			array(
 				Request::url(null, 'user'),

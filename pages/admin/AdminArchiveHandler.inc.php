@@ -30,10 +30,10 @@ class AdminArchiveHandler extends AdminHandler {
 		// Load the harvester plugins so we can display names.
 		$plugins =& PluginRegistry::loadCategory('harvesters');
 
-		$archiveDao = &DAORegistry::getDAO('ArchiveDAO');
-		$archives = &$archiveDao->getArchives(false, $rangeInfo);
+		$archiveDao =& DAORegistry::getDAO('ArchiveDAO');
+		$archives =& $archiveDao->getArchives(false, $rangeInfo);
 
-		$templateMgr = &TemplateManager::getManager();
+		$templateMgr =& TemplateManager::getManager();
 		$templateMgr->assign_by_ref('archives', $archives);
 		$templateMgr->assign('harvesters', $plugins);
 		if ($rangeInfo) $templateMgr->assign('archivesPage', $rangeInfo->getPage());
@@ -105,7 +105,7 @@ class AdminArchiveHandler extends AdminHandler {
 	function deleteArchive($args) {
 		AdminArchiveHandler::validate();
 
-		$archiveDao = &DAORegistry::getDAO('ArchiveDAO');
+		$archiveDao =& DAORegistry::getDAO('ArchiveDAO');
 
 		// Disable timeout, as this operation may take
 		// a long time.
@@ -126,7 +126,7 @@ class AdminArchiveHandler extends AdminHandler {
 		AdminArchiveHandler::validate();
 		AdminArchiveHandler::setupTemplate(true);
 
-		$archiveDao = &DAORegistry::getDAO('ArchiveDAO');
+		$archiveDao =& DAORegistry::getDAO('ArchiveDAO');
 
 		if (isset($args) && isset($args[0])) {
 			$archiveId = $args[0];
@@ -147,7 +147,7 @@ class AdminArchiveHandler extends AdminHandler {
 		AdminArchiveHandler::validate();
 		AdminArchiveHandler::setupTemplate(true);
 
-		$archiveDao = &DAORegistry::getDAO('ArchiveDAO');
+		$archiveDao =& DAORegistry::getDAO('ArchiveDAO');
 
 		if (isset($args) && isset($args[0])) {
 			$archiveId = (int) $args[0];
@@ -167,7 +167,7 @@ class AdminArchiveHandler extends AdminHandler {
 
 			if ($plugin->updateIndex($archive, $params)) {
 				$recordDao =& DAORegistry::getDAO('RecordDAO');
-				$templateMgr = &TemplateManager::getManager();
+				$templateMgr =& TemplateManager::getManager();
 				$templateMgr->assign('messageTranslated',
 					Locale::translate('admin.archive.manage.updateIndex.success', array(
 						'recordCount' => $recordDao->getRecordCount($archiveId)
@@ -178,7 +178,7 @@ class AdminArchiveHandler extends AdminHandler {
 				$templateMgr->assign('pageTitle', 'admin.archives.manage.updateIndex');
 				return $templateMgr->display('common/message.tpl');
 			} else {
-				$templateMgr = &TemplateManager::getManager();
+				$templateMgr =& TemplateManager::getManager();
 				$templateMgr->assign('errors', array_unique($plugin->getErrors()));
 				$templateMgr->assign('archiveId', $archiveId);
 				return $templateMgr->display('admin/updateFailed.tpl');
@@ -195,7 +195,7 @@ class AdminArchiveHandler extends AdminHandler {
 		AdminArchiveHandler::validate();
 		AdminArchiveHandler::setupTemplate(true);
 
-		$archiveDao = &DAORegistry::getDAO('ArchiveDAO');
+		$archiveDao =& DAORegistry::getDAO('ArchiveDAO');
 
 		if (isset($args) && isset($args[0])) {
 			$archiveId = (int) $args[0];
@@ -217,7 +217,7 @@ class AdminArchiveHandler extends AdminHandler {
 	 */
 	function setupTemplate($subclass = false) {
 		parent::setupTemplate();
-		$templateMgr = &TemplateManager::getManager();
+		$templateMgr =& TemplateManager::getManager();
 		$pageHierarchy = array(
 			array(Request::url('admin'), 'admin.siteAdmin')
 		);
