@@ -201,6 +201,23 @@ class DublinCorePlugin extends SchemaPlugin {
 		HookRegistry::call('DublinCorePlugin::getFieldType', array(&$this, $fieldName, &$returner));
 		return $returner;
 	}
+
+	function getMetadataPrefix() {
+		return 'oai_dc';
+	}
+
+	function getFormatClass() {
+		$this->import('OAIMetadataFormat_DC');
+		return 'OAIMetadataFormat_DC';
+	}
+
+	function getSchemaName() {
+		return 'http://www.openarchives.org/OAI/2.0/oai_dc.xsd';
+	}
+
+	function getNamespace() {
+		return 'http://www.openarchives.org/OAI/2.0/oai_dc/';
+	}
 }
 
 ?>

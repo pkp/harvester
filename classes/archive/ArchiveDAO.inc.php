@@ -83,6 +83,7 @@ class ArchiveDAO extends DAO {
 		$archive->setEnabled($row['enabled']);
 		$archive->setUrl($row['url']);
 		$archive->setHarvesterPluginName($row['harvester_plugin']);
+		$archive->setSchemaPluginName($row['schema_plugin']);
 
 		HookRegistry::call('ArchiveDAO::_returnArchiveFromRow', array(&$archive, &$row));
 
@@ -96,14 +97,15 @@ class ArchiveDAO extends DAO {
 	function insertArchive(&$archive) {
 		$this->update(
 			'INSERT INTO archives
-				(user_id, public_archive_id, title, url, harvester_plugin, enabled)
+				(user_id, public_archive_id, title, url, schema_plugin, harvester_plugin, enabled)
 				VALUES
-				(?, ?, ?, ?, ?, ?)',
+				(?, ?, ?, ?, ?, ?, ?)',
 			array(
 				(int) $archive->getUserId(),
 				$archive->getPublicArchiveId(),
 				$archive->getTitle(),
 				$archive->getUrl(),
+				$archive->getSchemaPluginName(),
 				$archive->getHarvesterPluginName(),
 				$archive->getEnabled()?1:0
 			)
@@ -127,6 +129,7 @@ class ArchiveDAO extends DAO {
 					public_archive_id = ?,
 					title = ?,
 					url = ?,
+					schema_plugin = ?,
 					harvester_plugin = ?,
 					enabled = ?
 				WHERE archive_id = ?',
@@ -135,6 +138,7 @@ class ArchiveDAO extends DAO {
 				$archive->getPublicArchiveId(),
 				$archive->getTitle(),
 				$archive->getUrl(),
+				$archive->getSchemaPluginName(),
 				$archive->getHarvesterPluginName(),
 				$archive->getEnabled()?1:0,
 				(int) $archive->getArchiveId()

@@ -357,6 +357,23 @@ class ModsPlugin extends SchemaPlugin {
 	function getSupportedFieldImportance() {
 		return array(0, 1);
 	}
+
+	function getMetadataPrefix() {
+		return 'oai_mods';
+	}
+
+	function getFormatClass() {
+		$this->import('OAIMetadataFormat_MODS');
+		return 'OAIMetadataFormat_MODS';
+	}
+
+	function getSchemaName() {
+		return 'http://www.loc.gov/standards/mods//v3/mods-3-3.xsd';
+	}
+
+	function getNamespace() {
+		return 'http://www.loc.gov/mods/v3';
+	}
 }
 
 ?>

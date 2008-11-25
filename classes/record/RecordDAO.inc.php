@@ -49,6 +49,27 @@ class RecordDAO extends DAO {
 	}
 
 	/**
+	 * Retrieve a record by ID.
+	 * @param $recordId int
+	 * @return Record
+	 */
+	function getRecordSchemaPluginName($recordId) {
+		$result =& $this->retrieve(
+			'SELECT	a.schema_plugin
+			FROM	records r,
+				archives a
+			WHERE	r.record_id = ? AND
+				r.archive_id = a.archive_id',
+			array((int) $recordId)
+		);
+
+		$returner = isset($result->fields[0]) && $result->fields[0] == 1 ? true : false;
+		$result->Close();
+		unset($result);
+		return $returner;
+	}
+
+	/**
 	 * Retrieve records by archive.
 	 * @param $recordId int
 	 * @param $enabledOnly boolean

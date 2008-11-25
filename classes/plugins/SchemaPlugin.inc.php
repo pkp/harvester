@@ -29,6 +29,7 @@ class SchemaPlugin extends Plugin {
 		if ($success) {
 			// Make sure postprocessors are loaded.
 			PluginRegistry::loadCategory('postprocessors');
+			HookRegistry::register('OAI::metadataFormats', array(&$this, 'callback_formatRequest'));
 		}
 		return $success;
 	}
@@ -234,6 +235,45 @@ class SchemaPlugin extends Plugin {
 		$date = strtotime($value);
 		if ($date === false || $date === -1) return null;
 		return date('Y-m-d H:i:s', $date);
+	}
+
+	/**
+	 * Get the metadata prefix for this plugin's format.
+	 */
+	function getMetadataPrefix() {
+		return 'Base OAIMetadata plugin class: abstract function getMetadataPrefix()';
+	}
+
+	function getSchemaName() {
+		return '';
+	}
+
+	function getNamespace() {
+		return '';
+	}
+
+	/**
+	 * Get a hold of the class that does the formatting.
+	 */
+	function getFormatClass() {
+		return 'Base OAIMetadata plugin class: abstract function getFormatClass()';
+	}
+
+	function callback_formatRequest($hookName, $args) {
+		$namesOnly = $args[0];
+		$identifier = $args[1];
+		$formats =& $args[2];
+
+		if ($namesOnly) {
+			$formats = array_merge($formats,array($this->getMetadataPrefix()));
+		} else {
+			$formatClass = $this->getFormatClass();
+			$formats = array_merge(
+				$formats,
+				array($this->getMetadataPrefix() => new $formatClass($this->getMetadataPrefix(), $this->getSchemaName(), $this->getNamespace()))
+			);
+		}
+		return false;
 	}
 }
 

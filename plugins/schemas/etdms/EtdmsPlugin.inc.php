@@ -160,5 +160,23 @@ class EtdmsPlugin extends SchemaPlugin {
 		HookRegistry::call('EtdmsPlugin::getFieldType', array(&$this, $fieldName, &$returner));
 		return $returner;
 	}
+
+	function getMetadataPrefix() {
+		return 'oai_etdms';
+	}
+
+	function getFormatClass() {
+		$this->import('OAIMetadataFormat_ETDMS');
+		return 'OAIMetadataFormat_ETDMS';
+	}
+
+	function getSchemaName() {
+		return 'http://www.ndltd.org/standards/metadata/etdms/1.0/etdms.xsd';
+	}
+
+	function getNamespace() {
+		return 'http://www.ndltd.org/standards/metadata/etdms/1.0/';
+	}
 }
+
 ?>

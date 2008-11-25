@@ -41,12 +41,14 @@ class OAIHarvester extends Harvester {
 		$archive->setSchemaPluginName(
 			SchemaMap::getSchemaPluginName(OAIHarvesterPlugin::getName(), $metadataFormat)
 		);
+		$archiveDao =& DAORegistry::getDAO('ArchiveDAO');
+		$archiveDao->updateArchive($archive);
 	}
 
 	/**
 	 * Get the metadata format.
 	 */
-	function getMetadataFormat($default = 'oai_dc') {
+	function getMetadataFormat($default = METADATA_PREFIX_OAI_DC) {
 		if (isset($this->metadataFormat)) return $this->metadataFormat;
 
 		$archive =& $this->getArchive();
@@ -73,7 +75,7 @@ class OAIHarvester extends Harvester {
 	 * @return array
 	 */
 	function getMetadataFormats($harvesterUrl, $static = false) {
-		$returner = array('oai_dc'); // Assume DC as minimum
+		$returner = array(METADATA_PREFIX_OAI_DC); // Assume DC as minimum
 		if (!$harvesterUrl) return $returner;
 
 

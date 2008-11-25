@@ -244,7 +244,7 @@ class Archive extends DataObject {
 	 * Get the schema plugin name for this archive.
 	 */
 	function getSchemaPluginName() {
-		return $this->getSetting('schemaPluginName');
+		return $this->getData('schemaPluginName');
 	}
 
 	/**
@@ -264,7 +264,7 @@ class Archive extends DataObject {
 	 * Set the schema plugin name for this archive.
 	 */
 	function setSchemaPluginName($schemaPluginName) {
-		$this->updateSetting('schemaPluginName', $schemaPluginName, 'string');
+		$this->setData('schemaPluginName', $schemaPluginName);
 	}
 }
 

@@ -214,6 +214,19 @@ results_per_keyword = 500
 result_cache_hours = 1
 
 
+;;;;;;;;;;;;;;;;
+; OAI Settings ;
+;;;;;;;;;;;;;;;;
+
+[oai]
+
+; Enable OAI front-end to the site
+oai = On
+
+; OAI Repository identifier
+repository_id = harvester2.pkp.sfu.ca
+
+
 ;;;;;;;;;;;;;;;;;;;;;;
 ; Interface Settings ;
 ;;;;;;;;;;;;;;;;;;;;;;

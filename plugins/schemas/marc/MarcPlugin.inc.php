@@ -205,6 +205,23 @@ class MarcPlugin extends SchemaPlugin {
 	function getSupportedFieldImportance() {
 		return array(0, 1);
 	}
+
+	function getMetadataPrefix() {
+		return 'oai_marc';
+	}
+
+	function getFormatClass() {
+		$this->import('OAIMetadataFormat_MARC');
+		return 'OAIMetadataFormat_MARC';
+	}
+
+	function getSchemaName() {
+		return 'http://www.openarchives.org/OAI/1.1/oai_marc.xsd';
+	}
+
+	function getNamespace() {
+		return 'http://www.openarchives.org/OAI/1.1/oai_marc';
+	}
 }
 
 ?>
