@@ -88,9 +88,7 @@
 		<field name="harvester_plugin" type="C2" size="80">
 			<NOTNULL/>
 		</field>
-		<field name="schema_plugin" type="C2" size="80">
-			<NOTNULL/>
-		</field>
+		<field name="schema_plugin" type="C2" size="80" />
 		<field name="public_archive_id" type="C2" size="40"/>
 		<field name="user_id" type="I4">
 			<NOTNULL/>
