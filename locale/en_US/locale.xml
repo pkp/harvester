@@ -149,8 +149,8 @@ Your server currently supports mbstring: <strong>{$supportsMBString}</strong>]]>
 	<message key="installer.databaseHostInstructions">Leave the hostname blank to connect using domain sockets instead of over TCP/IP. This is not necessary with MySQL, which will automatically use sockets if "localhost" is entered, but is required with some other database servers such as PostgreSQL.</message>
 	<message key="installer.createDatabase">Create new database</message>
 	<message key="installer.createDatabaseInstructions">To use this option your database system must support remote database creation and your user account must have the appropriate permissions to create new databases. If installation fails with this option selected, manually create the database on your server and run the installer again with this option disabled.</message>
-	<message key="installer.installHarvester2">Install Harvester2</message>
-	<message key="installer.upgradeHarvester2">Upgrade Harvester2</message>
+	<message key="installer.installApplication">Install Harvester2</message>
+	<message key="installer.upgradeApplication">Upgrade Harvester2</message>
 	<message key="installer.manualInstall">Manual Install</message>
 	<message key="installer.manualUpgrade">Manual Upgrade</message>
 	<message key="installer.form.localeRequired">A locale must be selected.</message>
