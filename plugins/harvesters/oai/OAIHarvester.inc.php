@@ -48,7 +48,7 @@ class OAIHarvester extends Harvester {
 	/**
 	 * Get the metadata format.
 	 */
-	function getMetadataFormat($default = METADATA_PREFIX_OAI_DC) {
+	function getMetadataFormat($default = DUBLIN_CORE_METADATA_PREFIX) {
 		if (isset($this->metadataFormat)) return $this->metadataFormat;
 
 		$archive =& $this->getArchive();
@@ -75,7 +75,7 @@ class OAIHarvester extends Harvester {
 	 * @return array
 	 */
 	function getMetadataFormats($harvesterUrl, $static = false) {
-		$returner = array(METADATA_PREFIX_OAI_DC); // Assume DC as minimum
+		$returner = array(DUBLIN_CORE_METADATA_PREFIX); // Assume DC as minimum
 		if (!$harvesterUrl) return $returner;
 
 

@@ -19,6 +19,8 @@ import('plugins.HarvesterPlugin');
 define('OAI_INDEX_METHOD_LIST_RECORDS', 0x00001);
 define('OAI_INDEX_METHOD_LIST_IDENTIFIERS', 0x00002);
 
+define('DUBLIN_CORE_METADATA_PREFIX', 'oai_dc');
+
 class OAIHarvesterPlugin extends HarvesterPlugin {
 	/**
 	 * Register the plugin.
@@ -115,7 +117,12 @@ class OAIHarvesterPlugin extends HarvesterPlugin {
 	}
 
 	function executeArchiveForm(&$form, &$archive) {
+		// Save the schema plugin info
 		$archive->setSchemaPluginName(Request::getUserVar('metadataFormat'));
+		$archiveDao =& DAORegistry::getDAO('ArchiveDAO');
+		$archiveDao->updateArchive($archive);
+
+		// Save the OAI indexing method
 		if ($form->getData('oaiIndexMethod') == '') $archive->updateSetting('oaiIndexMethod', OAI_INDEX_METHOD_LIST_RECORDS);
 	}
 

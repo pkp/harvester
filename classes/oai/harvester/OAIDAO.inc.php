@@ -16,10 +16,6 @@
 // $Id$
 
 
-// Hard-code support for the Dublin Core schema plugin, as all records must
-// be able to transcode to DC.
-define('DUBLIN_CORE_METADATA_PREFIX', 'oai_dc');
-
 import('oai.OAI');
 
 class OAIDAO extends DAO {

@@ -222,6 +222,69 @@ class MarcPlugin extends SchemaPlugin {
 	function getNamespace() {
 		return 'http://www.openarchives.org/OAI/1.1/oai_marc';
 	}
+
+	/**
+	 * Parse a record's contents into an object
+	 * @param $contents string
+	 * @return object
+	 */
+	function &parseContents(&$contents) {
+		$xmlParser = new XMLParser();
+		$result =& $xmlParser->parseText($contents);
+
+		$returner = array();
+		foreach ($result->getChildren() as $child) {
+			$name = $child->getName();
+			switch ($child->getName()) {
+				case 'datafield':
+					$id = $child->getAttribute('tag');
+					$i1 = $child->getAttribute('ind1');
+					$i2 = $child->getAttribute('ind2');
+					foreach ($child->getChildren() as $subfield) {
+						if ($subfield->getName() != 'subfield') continue;
+						$value = $subfield->getValue();
+						if (empty($value)) continue;
+						$label = $subfield->getAttribute('code');
+						$returner[$id][$i1][$i2][$label][] = $value;
+					}
+					break;
+				case 'controlfield':
+					break;
+			}
+		}
+
+		unset($result, $xmlParser);
+		return $returner;
+	}
+
+	/**
+	 * Get the value of a field by symbolic name.
+	 * @var $record object
+	 * @var $name string
+	 * @var $type SORT_ORDER_TYPE_...
+	 * @return mixed
+	 */
+	function getFieldValue(&$record, $name, $type) {
+		$fieldValue = null;
+		$parsedContents = $record->getParsedContents();
+		if (isset($parsedContents[$name])) switch ($type) {
+			case SORT_ORDER_TYPE_STRING:
+				$fieldValue = join(';', $parsedContents[$name]);
+				break;
+			case SORT_ORDER_TYPE_NUMBER:
+				$fieldValue = (int) array_shift($parsedContents[$name]);
+				break;
+			case SORT_ORDER_TYPE_DATE:
+				$fieldValue = strtotime($thing = array_shift($parsedContents[$name]));
+				if ($fieldValue === -1 || $fieldValue === false) $fieldValue = null;
+				break;
+			default:
+				fatalError('UNKNOWN TYPE');
+		}
+		HookRegistry::call('MarcPlugin::getFieldValue', array(&$this, &$fieldValue));
+		return $fieldValue;
+	}
+
 }
 
 ?>
