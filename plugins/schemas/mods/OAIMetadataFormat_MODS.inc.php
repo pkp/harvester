@@ -25,7 +25,23 @@ class OAIMetadataFormat_MODS extends OAIMetadataFormat {
 
 		switch ($format) {
 			case 'oai_dc':
-				fatalError('IMPLEMENT ME');
+				static $xslDoc, $proc;
+				if (!isset($xslDoc) || !isset($proc)) {
+					// Cache the XSL
+					$xslDoc = new DOMDocument();
+					$xslDoc->load('http://www.loc.gov/standards/mods/MODS3-22simpleDC.xsl');
+					$proc = new XSLTProcessor();
+					$proc->importStylesheet($xslDoc);
+				}
+
+				$xmlDoc = new DOMDocument();
+				$xmlDoc->loadXML($record->getContents());
+				$xml = $proc->transformToXML($xmlDoc);
+				// Cheesy: strip the XML header
+				if (($pos = strpos($xml, '<oai_dc:dc')) > 0) {
+					$xml = substr($xml, $pos);
+				}
+				return $xml;
 			case 'oai_mods':
 			case 'mods':
 				return $record->getContents();

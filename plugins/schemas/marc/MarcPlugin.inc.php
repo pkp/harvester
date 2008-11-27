@@ -45,12 +45,6 @@ class MarcPlugin extends SchemaPlugin {
 		return Locale::translate('plugins.schemas.marc.description');
 	}
 
-	function &getXMLHandler(&$harvester) {
-		$this->import('MarcXMLHandler');
-		$handler = new MarcXMLHandler($harvester);
-		return $handler;
-	}
-
 	function getFieldList() {
 		static $fieldList;
 		if (!isset($fieldList)) {

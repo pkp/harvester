@@ -45,12 +45,6 @@ class EtdmsPlugin extends SchemaPlugin {
 		return Locale::translate('plugins.schemas.etdms.description');
 	}
 
-	function &getXMLHandler(&$harvester) {
-		$this->import('EtdmsXMLHandler');
-		$handler = new EtdmsXMLHandler($harvester);
-		return $handler;
-	}
-
 	function getFieldList() {
 		static $fieldList;
 		if (!isset($fieldList)) {

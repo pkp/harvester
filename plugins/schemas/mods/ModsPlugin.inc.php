@@ -45,12 +45,6 @@ class ModsPlugin extends SchemaPlugin {
 		return Locale::translate('plugins.schemas.mods.description');
 	}
 
-	function &getXMLHandler(&$harvester) {
-		$this->import('ModsXMLHandler');
-		$handler = new ModsXMLHandler($harvester);
-		return $handler;
-	}
-
 	function getFieldList() {
 		static $fieldList;
 		if (!isset($fieldList)) {

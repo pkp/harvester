@@ -25,7 +25,8 @@ class OAIMetadataFormat_ETDMS extends OAIMetadataFormat {
 
 		switch ($format) {
 			case 'oai_dc':
-				fatalError('IMPLEMENT ME');
+				// FIXME: This is almost certainly not correct
+				return $record->getContents();
 			case 'oai_etdms':
 				return $record->getContents();
 			default:
