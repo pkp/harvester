@@ -30,7 +30,7 @@ class MysqlIndexPlugin extends GenericPlugin {
 	function register($category, $path) {
 		if (parent::register($category, $path)) {
 			$this->addLocaleData();
-			HookRegistry::register('Installer::postInstall',array(&$this, 'postInstallCallback'));
+			// HookRegistry::register('Installer::postInstall',array(&$this, 'postInstallCallback'));
 			if ($this->getEnabled()) {
 				// Add DAOs
 				$this->import('CrosswalkDAO');
