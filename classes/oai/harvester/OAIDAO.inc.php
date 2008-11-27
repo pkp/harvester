@@ -17,6 +17,7 @@
 
 
 import('oai.OAI');
+import('harvester.Harvester');
 
 class OAIDAO extends DAO {
  	/** @var $oai ArchiveOAI parent OAI object */

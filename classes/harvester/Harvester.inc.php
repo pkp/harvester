@@ -11,8 +11,12 @@
  *
  * Generic harvester
  *
- * $Id$
  */
+
+// $Id$
+
+
+define('DUBLIN_CORE_METADATA_PREFIX', 'oai_dc');
 
 class Harvester {
 	/** @var $errors array */

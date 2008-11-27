@@ -19,8 +19,6 @@ import('plugins.HarvesterPlugin');
 define('OAI_INDEX_METHOD_LIST_RECORDS', 0x00001);
 define('OAI_INDEX_METHOD_LIST_IDENTIFIERS', 0x00002);
 
-define('DUBLIN_CORE_METADATA_PREFIX', 'oai_dc');
-
 class OAIHarvesterPlugin extends HarvesterPlugin {
 	/**
 	 * Register the plugin.
