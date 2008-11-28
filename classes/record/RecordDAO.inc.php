@@ -55,11 +55,11 @@ class RecordDAO extends DAO {
 	 */
 	function getRecordSchemaPluginName($recordId) {
 		$result =& $this->retrieve(
-			'SELECT	a.schema_plugin
+			'SELECT	s.schema_plugin
 			FROM	records r,
-				archives a
+				schema_plugins s
 			WHERE	r.record_id = ? AND
-				r.archive_id = a.archive_id',
+				r.schema_plugin_id = s.schema_plugin_id',
 			array((int) $recordId)
 		);
 

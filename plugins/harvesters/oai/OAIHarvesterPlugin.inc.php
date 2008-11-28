@@ -97,14 +97,17 @@ class OAIHarvesterPlugin extends HarvesterPlugin {
 		));
 
 		// Build a list of supported metadata formats.
-		import('schema.SchemaMap');
+		$schemaDao =& DAORegistry::getDAO('SchemaDAO');
+		$aliases =& $schemaDao->getSchemaAliases();
+		
 		$plugins =& PluginRegistry::loadCategory('schemas');
 		$archive =& $form->_data['archive'];
 		$oaiHarvester = new OAIHarvester($archive);
 		$metadataFormats = $oaiHarvester->getMetadataFormats($form->getData('harvesterUrl'), $form->getData('isStatic'));
 		$supportedFormats = array();
 		foreach ($metadataFormats as $format) {
-			if (($pluginName = SchemaMap::getSchemaPluginName($this->getName(), $format)) && isset($plugins[$pluginName])) {
+			if (isset($aliases[$format]) && isset($plugins[$aliases[$format]])) {
+				$pluginName = $aliases[$format];
 				$plugin =& $plugins[$pluginName];
 				$supportedFormats[$pluginName] = $plugin->getSchemaDisplayName();
 				unset($plugin);

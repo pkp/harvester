@@ -37,10 +37,9 @@ class OAIHarvester extends Harvester {
 	 */
 	function setMetadataFormat($metadataFormat) {
 		$archive =& $this->getArchive();
-		import('schema.SchemaMap');
-		$archive->setSchemaPluginName(
-			SchemaMap::getSchemaPluginName(OAIHarvesterPlugin::getName(), $metadataFormat)
-		);
+		$schemaDao =& DAORegistry::getDAO('SchemaDAO');
+		$aliases = $schemaDao->getSchemaAliases();
+		$archive->setSchemaPluginName($aliases[$metadataFormat]);
 		$archiveDao =& DAORegistry::getDAO('ArchiveDAO');
 		$archiveDao->updateArchive($archive);
 	}
@@ -57,8 +56,8 @@ class OAIHarvester extends Harvester {
 			return ($this->metadataFormat = $default);
 		}
 
-		import('schema.SchemaMap');
-		$aliases = SchemaMap::getSchemaAliases(OAIHarvesterPlugin::getName(), $schemaPluginName);
+		$schemaDao =& DAORegistry::getDAO('SchemaDAO');
+		$aliases = array_keys($schemaDao->getSchemaAliases($schemaPluginName));
 		$supportedFormats = OAIHarvester::getMetadataFormats($archive->getSetting('harvesterUrl'), $archive->getSetting('isStatic'));
 		// Return the first common format between the aliases for this
 		// plugin and the archive's supported formats.
@@ -407,13 +406,29 @@ class OAIHarvester extends Harvester {
 	}
 
 	function &getSchema() {
-		import('schema.SchemaMap');
-		return SchemaMap::getSchema(OAIHarvesterPlugin::getName(), $this->getMetadataFormat());
+		$schemaDao =& DAORegistry::getDAO('SchemaDAO');
+		$aliases = $schemaDao->getSchemaAliases();
+		$metadataFormat = $this->getMetadataFormat();
+		$returner = null;
+		if (!isset($aliases[$metadataFormat])) return $returner;
+
+		$returner = $schemaDao->buildSchema($aliases[$metadataFormat]);
+		return $returner;
 	}
 
 	function &getSchemaPlugin() {
-		import('schema.SchemaMap');
-		return SchemaMap::getSchemaPlugin(OAIHarvesterPlugin::getName(), $this->getMetadataFormat());
+		$schemaDao =& DAORegistry::getDAO('SchemaDAO');
+		$aliases = $schemaDao->getSchemaAliases();
+		$metadataFormat = $this->getMetadataFormat();
+		$returner = null;
+		if (!isset($aliases[$metadataFormat])) return $returner;
+
+		$pluginName = $aliases[$metadataFormat];
+
+		$plugins =& PluginRegistry::loadCategory('schemas');
+		if (!isset($plugins[$pluginName])) return $returner;
+		$returner =& $plugins[$pluginName];
+		return $returner;
 	}
 
 	/**

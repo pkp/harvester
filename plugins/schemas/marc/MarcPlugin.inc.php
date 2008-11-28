@@ -263,7 +263,7 @@ class MarcPlugin extends SchemaPlugin {
 		$parsedContents = $record->getParsedContents();
 		if (isset($parsedContents[$name])) switch ($type) {
 			case SORT_ORDER_TYPE_STRING:
-				$fieldValue = join(';', $parsedContents[$name]);
+				$fieldValue = join(';', array_shift((array_shift(array_shift($parsedContents[$name])))));
 				break;
 			case SORT_ORDER_TYPE_NUMBER:
 				$fieldValue = (int) array_shift($parsedContents[$name]);

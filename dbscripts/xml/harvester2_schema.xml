@@ -176,6 +176,24 @@
 
 	<!--
 	  *
+	  * TABLE schema_plugins
+	  *
+	  -->
+	<table name="schema_aliases">
+		<field name="schema_plugin_id" type="I2">
+			<NOTNULL/>
+		</field>
+		<field name="alias" type="C2" size="60">
+			<NOTNULL/>
+		</field>
+		<index name="schema_alias_name">
+			<col>alias</col>
+			<UNIQUE/>
+		</index>
+	</table>
+
+	<!--
+	  *
 	  * TABLE plugin_settings
 	  *
 	  -->

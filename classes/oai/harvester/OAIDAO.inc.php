@@ -27,9 +27,6 @@ class OAIDAO extends DAO {
 	var $archiveDao;
 	var $recordDao;
 
-	/** Schema map */
-	var $schemaMap;
-
  	/**
 	 * Constructor.
 	 */
@@ -37,9 +34,6 @@ class OAIDAO extends DAO {
 		parent::DAO();
 		$this->archiveDao =& DAORegistry::getDAO('ArchiveDAO');
 		$this->recordDao =& DAORegistry::getDAO('RecordDAO');
-
-		import('schema.SchemaMap');
-		$this->schemaMap = new SchemaMap();
 
 		PluginRegistry::loadCategory('schemas');
 	}
@@ -154,9 +148,10 @@ class OAIDAO extends DAO {
 			'SELECT	r.*,
 				a.*
 			FROM	records r,
-				archives a
+				archives a' .
+				($metadataPrefix != DUBLIN_CORE_METADATA_PREFIX ? ', schema_aliases sa' : '') . '
 			WHERE	r.archive_id = a.archive_id AND ' .
-				($metadataPrefix != DUBLIN_CORE_METADATA_PREFIX ? 'a.schema_plugin = ? AND ':'') . '
+				($metadataPrefix != DUBLIN_CORE_METADATA_PREFIX ? 'sa.schema_plugin_id = r.schema_plugin_id AND sa.alias = ? AND ':'') . '
 				a.enabled = 1' .
 				(isset($archiveId)?' AND a.archive_id = ?':'') . '
 			ORDER BY a.archive_id',

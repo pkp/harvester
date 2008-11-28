@@ -140,6 +140,24 @@ class SchemaDAO extends DAO {
 	}
 
 	/**
+	 * Insert a new schema alias.
+	 * @param $schemaId int Schema ID
+	 * @param $alias string Alias
+	 */	
+	function insertSchemaAlias($schemaId, $alias) {
+		$this->update(
+			'INSERT INTO schema_aliases
+				(schema_plugin_id, alias)
+				VALUES
+				(?, ?)',
+			array(
+				(int) $schemaId,
+				$alias
+			)
+		);
+	}
+
+	/**
 	 * Update an existing schema.
 	 * @param $schema Schema
 	 */
@@ -193,6 +211,35 @@ class SchemaDAO extends DAO {
 		);
 
 		$returner = new DAOResultFactory($result, $this, '_returnSchemaFromRow');
+		return $returner;
+	}
+
+	/**
+	 * Retrieve all schema aliases.
+	 * @param $schemaPluginName string optional
+	 * @return array alias => schema plugin name
+	 */
+	function &getSchemaAliases($schemaPluginName = null) {
+		$params = array();
+		if ($schemaPluginName !== null) $params[] = $schemaPluginName;
+
+		$result =& $this->retrieve(
+			'SELECT	sa.alias, s.schema_plugin
+			FROM	schema_aliases sa,
+				schema_plugins s
+			WHERE	s.schema_plugin_id = sa.schema_plugin_id' .
+			($schemaPluginName !== null ? ' AND s.schema_plugin = ?' : ''),
+			$params
+		);
+
+		$returner = array();
+		while (!$result->EOF) {
+			$row =& $result->getRowAssoc(false);
+			$returner[$row['alias']] = $row['schema_plugin'];
+			$result->MoveNext();
+		}
+		$result->Close();
+
 		return $returner;
 	}
 
