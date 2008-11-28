@@ -3,7 +3,7 @@
 /**
  * @file managePlugin.php
  *
- * Copyright (c) 2003-2008 John Willinsky
+ * Copyright (c) 2005-2008 Alec Smecher and John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class managePlugin
