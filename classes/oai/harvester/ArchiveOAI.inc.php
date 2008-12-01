@@ -82,9 +82,12 @@ class ArchiveOAI extends OAI {
 	function setSpecToArchiveId($setSpec, $archiveId = null) {
 		$tmpArray = split(':', $setSpec);
 		if (count($tmpArray) == 1) {
-			$archiveSpec = array_shift($tmpArray);
+			$setSpec = array_shift($tmpArray);
+			$archiveDao =& DAORegistry::getDAO('ArchiveDAO');
+			$archive =& $archiveDao->getArchiveByTitle($setSpec);
+			if ($archive) return $archive->getArchiveId();
 		}
-		return $this->dao->getSetArchiveId($archiveSpec);
+		return null;
 	}
 
 	/**
@@ -176,7 +179,7 @@ class ArchiveOAI extends OAI {
 	function &records($metadataPrefix, $from, $until, $set, $offset, $limit, &$total) {
 		$archiveId = null;
 		if (isset($set)) {
-			list($archiveId) = $this->setSpecToSectionId($set);
+			list($archiveId) = $this->setSpecToArchiveId($set);
 		}
 		$records =& $this->dao->getRecords($metadataPrefix, $archiveId, $from, $until, $offset, $limit, $total);
 		return $records;

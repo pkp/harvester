@@ -56,7 +56,36 @@ class ArchiveDAO extends DAO {
 	 */
 	function &getArchiveByPublicArchiveId($publicArchiveId, $onlyEnabled = true) {
 		$result =& $this->retrieve(
-			'SELECT * FROM archives WHERE public_archive_id = ?' . ($onlyEnabled?' AND enabled = 1':''), $publicArchiveId
+			'SELECT	*
+			FROM	archives
+			WHERE	public_archive_id = ?' .
+			($onlyEnabled?' AND enabled = 1':''),
+			array($publicArchiveId)
+		);
+
+		$returner = null;
+		if ($result->RecordCount() != 0) {
+			$returner =& $this->_returnArchiveFromRow($result->GetRowAssoc(false));
+		}
+		$result->Close();
+		unset($result);
+
+		return $returner;
+	}
+
+	/**
+	 * Retrieve an archive by title.
+	 * @param $title string
+	 * @param $onlyEnabled boolean
+	 * @return Archive
+	 */
+	function &getArchiveByTitle($title, $onlyEnabled = true) {
+		$result =& $this->retrieve(
+			'SELECT	*
+			FROM	archives
+			WHERE	title = ?' .
+			($onlyEnabled?' AND enabled = 1':''),
+			array($title)
 		);
 
 		$returner = null;
