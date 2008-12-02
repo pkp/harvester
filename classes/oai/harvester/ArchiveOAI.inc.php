@@ -153,7 +153,6 @@ class ArchiveOAI extends OAI {
 			$recordId = $this->identifierToRecordId($identifier);
 			$recordDao =& DAORegistry::getDAO('RecordDAO');
 			$schemaPluginName = $recordDao->getRecordSchemaPluginName($recordId);
-			die("HERE: $recordId; $schemaPluginName");
 		}
 
 		return $metadataFormats;
