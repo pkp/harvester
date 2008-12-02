@@ -34,7 +34,7 @@ class Request extends PKPRequest {
 	/**
 	 * Build a URL into Harvester2.
 	 */
-	static function url($page = null,
+	function url($page = null,
 			$op = null, $path = null, $params = null, $anchor = null, $escape = false) {
 		return parent::url(null, $page, $op, $path, $params, $anchor, $escape);
 	}
