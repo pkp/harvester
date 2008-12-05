@@ -72,19 +72,19 @@ function ensureKeyword() {
 	<a href="javascript:document.revise.submit()" class="action">{translate key="search.reviseSearch"}</a><br />&nbsp;
 {/if}
 
-<a name="records"></a>
-
-<ul class="plain">
-{iterate from=results item=record}
-	{$record->displaySummary()}
-{/iterate}
-{if $results->wasEmpty()}
-	<li>&#187; {translate key="search.noResults"}</li>
-	</ul>
-{else}
-	</ul>
-	{page_info iterator=$results}&nbsp;&nbsp;&nbsp;&nbsp;{page_links anchor="records" iterator=$results name="search" query=$query archiveIds=$archiveIds isAdvanced=$isAdvanced params=$forwardParams}
-{/if}
+<div id="records">
+	<ul class="plain">
+	{iterate from=results item=record}
+		{$record->displaySummary()}
+	{/iterate}
+	{if $results->wasEmpty()}
+		<li>&#187; {translate key="search.noResults"}</li>
+		</ul>
+	{else}
+		</ul>
+		{page_info iterator=$results}&nbsp;&nbsp;&nbsp;&nbsp;{page_links anchor="records" iterator=$results name="search" query=$query archiveIds=$archiveIds isAdvanced=$isAdvanced params=$forwardParams}
+	{/if}
+</div>
 
 <p>{translate key="search.syntaxInstructions"}</p>
 

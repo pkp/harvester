@@ -36,13 +36,12 @@
 {/iterate}
 </p>
 
-<a name="records"></a>
-
-<ul class="plain">
-{iterate from=records item=record}
-	<li>&#187; {$record->displaySummary()}</li>
-{/iterate}
-</ul>
-	{page_info iterator=$records}&nbsp;&nbsp;&nbsp;&nbsp;{page_links anchor="records" name="records" sortOrderId=$sortOrderId iterator=$records}
-
+<div id="records">
+	<ul class="plain">
+	{iterate from=records item=record}
+		<li>&#187; {$record->displaySummary()}</li>
+	{/iterate}
+	</ul>
+		{page_info iterator=$records}&nbsp;&nbsp;&nbsp;&nbsp;{page_links anchor="records" name="records" sortOrderId=$sortOrderId iterator=$records}
+</div>
 {include file="common/footer.tpl"}

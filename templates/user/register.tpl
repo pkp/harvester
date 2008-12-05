@@ -180,12 +180,12 @@
 
 <p><span class="formRequired">{translate key="common.requiredField"}</span></p>
 
-<a name="privacyStatement"></a>
-
-{if $privacyStatement}
-	<h3>{translate key="user.register.privacyStatement"}</h3>
-	<p>{$privacyStatement|nl2br}</p>
-{/if}
-</form>
+<a name="privacyStatement">
+	{if $privacyStatement}
+		<h3>{translate key="user.register.privacyStatement"}</h3>
+		<p>{$privacyStatement|nl2br}</p>
+	{/if}
+	</form>
+</div>
 
 {include file="common/footer.tpl"}

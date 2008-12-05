@@ -14,45 +14,44 @@
 
 <p>{translate key="plugins.generic.mysqlIndex.description"}</p>
 
-<a name="crosswalks"></a>
-
-<table width="100%" class="listing">
-	<tr>
-		<td colspan="4" class="headseparator">&nbsp;</td>
-	</tr>
-	<tr valign="top" class="heading">
-		<td width="25%">{translate key="plugins.generic.mysqlIndex.crosswalk.name"}</td>
-		<td width="60%">{translate key="plugins.generic.mysqlIndex.crosswalk.description"}</td>
-		<td width="15%" align="right">{translate key="common.action"}</td>
-	</tr>
-	<tr>
-		<td colspan="4" class="headseparator">&nbsp;</td>
-	</tr>
-	{iterate from=crosswalks item=crosswalk}
-	<tr valign="top">
-		<td>{$crosswalk->getCrosswalkName()|escape}</td>
-		<td>{$crosswalk->getCrosswalkDescription()|escape}</td>
-		<td align="right"><a href="{url op="editCrosswalk" crosswalkId=$crosswalk->getCrosswalkId()}" class="action">{translate key="common.edit"}</a>&nbsp;|&nbsp;<a href="{url op="deleteCrosswalk" path=$crosswalk->getCrosswalkId()}" onclick="return confirm('{translate|escape:"jsparam" key="plugins.generic.mysqlIndex.confirmDelete"}')" class="action">{translate key="common.delete"}</a></td>
-	</tr>
-	<tr>
-		<td colspan="4" class="{if $smarty.foreach.crosswalks.last}end{/if}separator">&nbsp;</td>
-	</tr>
-	{/iterate}
-	{if $crosswalks->wasEmpty()}
-	<tr>
-		<td colspan="4" class="nodata">{translate key="plugins.generic.mysqlIndex.crosswalks.noneCreated"}</td>
-	</tr>
-	<tr>
-		<td colspan="4" class="endseparator">&nbsp;</td>
-	<tr>
-	{else}
+<div id="crosswalks">
+	<table width="100%" class="listing">
 		<tr>
-			<td colspan="2" align="left">{page_info iterator=$crosswalks}</td>
-			<td colspan="2" align="right">{page_links anchor="crosswalks" name="crosswalks" iterator=$crosswalks}</td>
+			<td colspan="4" class="headseparator">&nbsp;</td>
 		</tr>
-	{/if}
-</table>
-
-<p><a href="{url op="createCrosswalk"}" class="action">{translate key="plugins.generic.mysqlIndex.addCrosswalk"}</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="#" class="action" onclick="confirmAction('{url op="resetCrosswalks"}', '{translate|escape:"jsparam" key="plugins.generic.mysqlIndex.confirmReset"}')">{translate key="plugins.generic.mysqlIndex.reset"}</a></p>
-
+		<tr valign="top" class="heading">
+			<td width="25%">{translate key="plugins.generic.mysqlIndex.crosswalk.name"}</td>
+			<td width="60%">{translate key="plugins.generic.mysqlIndex.crosswalk.description"}</td>
+			<td width="15%" align="right">{translate key="common.action"}</td>
+		</tr>
+		<tr>
+			<td colspan="4" class="headseparator">&nbsp;</td>
+		</tr>
+		{iterate from=crosswalks item=crosswalk}
+		<tr valign="top">
+			<td>{$crosswalk->getCrosswalkName()|escape}</td>
+			<td>{$crosswalk->getCrosswalkDescription()|escape}</td>
+			<td align="right"><a href="{url op="editCrosswalk" crosswalkId=$crosswalk->getCrosswalkId()}" class="action">{translate key="common.edit"}</a>&nbsp;|&nbsp;<a href="{url op="deleteCrosswalk" path=$crosswalk->getCrosswalkId()}" onclick="return confirm('{translate|escape:"jsparam" key="plugins.generic.mysqlIndex.confirmDelete"}')" class="action">{translate key="common.delete"}</a></td>
+		</tr>
+		<tr>
+			<td colspan="4" class="{if $smarty.foreach.crosswalks.last}end{/if}separator">&nbsp;</td>
+		</tr>
+		{/iterate}
+		{if $crosswalks->wasEmpty()}
+		<tr>
+			<td colspan="4" class="nodata">{translate key="plugins.generic.mysqlIndex.crosswalks.noneCreated"}</td>
+		</tr>
+		<tr>
+			<td colspan="4" class="endseparator">&nbsp;</td>
+		<tr>
+		{else}
+			<tr>
+				<td colspan="2" align="left">{page_info iterator=$crosswalks}</td>
+				<td colspan="2" align="right">{page_links anchor="crosswalks" name="crosswalks" iterator=$crosswalks}</td>
+			</tr>
+		{/if}
+	</table>
+	
+	<p><a href="{url op="createCrosswalk"}" class="action">{translate key="plugins.generic.mysqlIndex.addCrosswalk"}</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="#" class="action" onclick="confirmAction('{url op="resetCrosswalks"}', '{translate|escape:"jsparam" key="plugins.generic.mysqlIndex.confirmReset"}')">{translate key="plugins.generic.mysqlIndex.reset"}</a></p>
+</div>
 {include file="common/footer.tpl"}
