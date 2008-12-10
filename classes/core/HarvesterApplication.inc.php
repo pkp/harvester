@@ -93,6 +93,7 @@ class HarvesterApplication extends PKPApplication {
 			'RoleDAO' => 'security.RoleDAO',
 			'RTDAO' => 'rt.harvester2.RTDAO',
 			'SchemaDAO' => 'schema.SchemaDAO',
+			'SchemaAliasDAO' => 'schema.SchemaAliasDAO',
 			'SortOrderDAO' => 'sortOrder.SortOrderDAO',
 			'UserDAO' => 'user.UserDAO',
 			'UserSettingsDAO' => 'user.UserSettingsDAO'

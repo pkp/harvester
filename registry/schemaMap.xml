@@ -11,32 +11,30 @@
   * $Id$
   -->
 
-<!DOCTYPE schema_map [
-	<!ELEMENT schema_map (schema+)>
+<!DOCTYPE schemaMap [
+	<!ELEMENT schemaMap (schema+)>
 	<!ELEMENT schema (alias+)>
-		<!ATTLIST schema
-			plugin CDATA #REQUIRED>
 	<!ELEMENT alias (#PCDATA)>
 		<!ATTLIST alias
 			harvester CDATA #IMPLIED>
 ]>
 
-<schema_map>
+<schemaMap>
 	<schema plugin="DublinCorePlugin">
-		<alias harvester="OAIHarvesterPlugin">oai_dc</alias>
+		<alias>oai_dc</alias>
 	</schema>
 	<schema plugin="MarcPlugin">
-		<alias harvester="OAIHarvesterPlugin">oai_marc</alias>
-		<alias harvester="OAIHarvesterPlugin">marcxml</alias>
+		<alias>oai_marc</alias>
+		<alias>marcxml</alias>
 	</schema>
 	<schema plugin="Rfc1807Plugin">
-		<alias harvester="OAIHarvesterPlugin">oai_rfc1807</alias>
+		<alias>oai_rfc1807</alias>
 	</schema>
 	<schema plugin="ModsPlugin">
-		<alias harvester="OAIHarvesterPlugin">oai_mods</alias>
-		<alias harvester="OAIHarvesterPlugin">mods</alias>
+		<alias>oai_mods</alias>
+		<alias>mods</alias>
 	</schema>
 	<schema plugin="EtdmsPlugin">
-		<alias harvester="OAIHarvesterPlugin">oai_etdms</alias>
+		<alias>oai_etdms</alias>
 	</schema>
-</schema_map>
+</schemaMap>

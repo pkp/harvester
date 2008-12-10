@@ -107,6 +107,10 @@ class Install extends PKPInstall {
 				$this->setError(INSTALLER_ERROR_DB, $this->dbconn->errorMsg());
 				return false;
 			}
+
+			// Install the schema aliases
+			$schemaAliasDao =& DAORegistry::getDAO('SchemaAliasDAO');
+			$schemaAliasDao->insertSchemaAliases();
 		}
 
 		return true;

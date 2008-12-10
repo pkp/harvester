@@ -254,7 +254,7 @@ class MysqlIndexPlugin extends GenericPlugin {
 	 * Flush the entire index prior to rebuilding it.
 	 */
 	function callbackFlush($hookName, $args) {
-		$searchDao =& DAORegistry::getDAO('SearchIndex');
+		$searchDao =& DAORegistry::getDAO('SearchDAO');
 		$searchDao->flushIndex();
 	}
 }
