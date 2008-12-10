@@ -27,7 +27,8 @@ class AdminSettingsHandler extends AdminHandler {
 
 		import('admin.form.SiteSettingsForm');
 
-		$settingsForm = new SiteSettingsForm();
+		// FIXME: Need construction by reference or validation always fails on PHP 4.x
+		$settingsForm =& new SiteSettingsForm();
 		$settingsForm->initData();
 		$settingsForm->display();
 	}
@@ -41,7 +42,8 @@ class AdminSettingsHandler extends AdminHandler {
 
 		import('admin.form.SiteSettingsForm');
 
-		$settingsForm = new SiteSettingsForm();
+		// FIXME: Need construction by reference or validation always fails on PHP 4.x
+		$settingsForm =& new SiteSettingsForm();
 		$settingsForm->readInputData();
 
 		$editData = false;

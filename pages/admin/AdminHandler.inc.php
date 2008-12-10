@@ -79,7 +79,8 @@ class AdminHandler extends PKPHandler {
 		AdminHandler::validate();
 
 		import('admin.form.LayoutForm');
-		$layoutForm = new LayoutForm();
+		// FIXME: Need construction by reference or validation always fails on PHP 4.x
+		$layoutForm =& new LayoutForm();
 		if ($layoutForm->isLocaleResubmit()) {
 			$layoutForm->readInputData();
 		} else {
@@ -93,7 +94,8 @@ class AdminHandler extends PKPHandler {
 		AdminHandler::validate();
 
 		import('admin.form.LayoutForm');
-		$layoutForm = new LayoutForm();
+		// FIXME: Need construction by reference or validation always fails on PHP 4.x
+		$layoutForm =& new LayoutForm();
 		$layoutForm->readInputData();
 		if ($layoutForm->validate()) {
 			$layoutForm->execute();

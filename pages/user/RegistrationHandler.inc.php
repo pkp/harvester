@@ -26,7 +26,8 @@ class RegistrationHandler extends UserHandler {
 
 		import('user.form.RegistrationForm');
 
-		$regForm = new RegistrationForm();
+		// FIXME: Need construction by reference or validation always fails on PHP 4.x
+		$regForm =& new RegistrationForm();
 		if ($regForm->isLocaleResubmit()) {
 			$regForm->readInputData();
 		} else {
@@ -42,7 +43,7 @@ class RegistrationHandler extends UserHandler {
 		RegistrationHandler::validate();
 		import('user.form.RegistrationForm');
 
-		$regForm = new RegistrationForm();
+		$regForm =& new RegistrationForm();
 		$regForm->readInputData();
 
 		if ($regForm->validate()) {

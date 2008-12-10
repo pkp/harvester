@@ -198,7 +198,8 @@ class OAIHarvesterPlugin extends HarvesterPlugin {
 				$metadata = $oaiHarvester->getMetadata($harvesterUrl, Request::getUserVar('isStatic'));
 
 				import('admin.form.ArchiveForm');
-				$archiveForm = new ArchiveForm($archiveId);
+				// FIXME: Need construction by reference or validation always fails on PHP 4.x
+				$archiveForm =& new ArchiveForm($archiveId);
 				$archiveForm->initData();
 				$archiveForm->readInputData();
 

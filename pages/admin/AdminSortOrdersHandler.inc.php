@@ -52,7 +52,8 @@ class AdminSortOrdersHandler extends AdminHandler {
 
 		import('admin.form.SortOrderForm');
 
-		$sortOrderForm = new SortOrderForm(!isset($args) || empty($args) ? null : (int) $args[0]);
+		// FIXME: Need construction by reference or validation always fails on PHP 4.x
+		$sortOrderForm =& new SortOrderForm(!isset($args) || empty($args) ? null : (int) $args[0]);
 		$sortOrderForm->initData();
 		$sortOrderForm->display();
 	}
@@ -67,7 +68,8 @@ class AdminSortOrdersHandler extends AdminHandler {
 
 		$sortOrderId = (int) Request::getUserVar('sortOrderId');
 
-		$sortOrderForm = new SortOrderForm($sortOrderId);
+		// FIXME: Need construction by reference or validation always fails on PHP 4.x
+		$sortOrderForm =& new SortOrderForm($sortOrderId);
 		$sortOrderForm->initData();
 		$sortOrderForm->readInputData();
 
