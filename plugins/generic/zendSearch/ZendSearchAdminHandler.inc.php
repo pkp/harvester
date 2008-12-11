@@ -44,6 +44,47 @@ class ZendSearchAdminHandler extends PKPHandler {
 	}
 
 	/**
+	 * Display the settings form
+	 */
+	function settings() {
+		ZendSearchAdminHandler::validate();
+		ZendSearchAdminHandler::setupTemplate(true);
+
+		$plugin =& ZendSearchAdminHandler::getPlugin();
+		$plugin->import('ZendSearchSettingsForm');
+
+		$zendSearchSettingsForm = new ZendSearchSettingsForm();
+		if ($zendSearchSettingsForm->isLocaleResubmit()) {
+			$zendSearchSettingsForm->readInputData();
+		} else {
+			$zendSearchSettingsForm->initData();
+		}
+		$zendSearchSettingsForm->display();
+	}
+
+	/**
+	 * Save changes to plugin settings.
+	 */
+	function saveSettings() {
+		ZendSearchAdminHandler::validate();
+
+		$plugin =& ZendSearchAdminHandler::getPlugin();
+		$plugin->import('ZendSearchSettingsForm');
+
+		$zendSearchSettingsForm = new ZendSearchSettingsForm();
+		$zendSearchSettingsForm->initData();
+		$zendSearchSettingsForm->readInputData();
+
+		if ($zendSearchSettingsForm->validate()) {
+			$zendSearchSettingsForm->execute();
+			Request::redirect(null, 'index');
+		} else {
+			ZendSearchAdminHandler::setupTemplate(true);
+			$zendSearchSettingsForm->display();
+		}
+	}
+
+	/**
 	 * Display form to create a new search form element.
 	 */
 	function createSearchFormElement() {

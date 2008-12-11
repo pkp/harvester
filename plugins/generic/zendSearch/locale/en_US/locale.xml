@@ -14,9 +14,13 @@
  
 <locale name="en_US" full_name="U.S. English">
 	<message key="plugins.generic.zendSearch.name">ZEND Framework Search Plugin</message>
-	<message key="plugins.generic.zendSearch.description">This plugin implements support for the Zend Framework's search engine, which is a PHP implementation of the Apache Lucene project.</message>
+	<message key="plugins.generic.zendSearch.description">This plugin implements support for the Zend Framework's search engine, which is a PHP implementation of the Apache Lucene project, or an external Lucene/Solr installation.</message>
+	<message key="plugins.generic.zendSearch.solrUrl">Solr URL</message>
+	<message key="plugins.generic.zendSearch.solrUrl.description">If you are using an external installation of Solr and Lucene, enter the URL to the Solr installation here. It will be used for indexing and queries. If this field is left blank, the built-in ZendSearch implementation of Lucene will be used instead.</message>
+	<message key="plugins.generic.zendSearch.solrUrl.invalid">The Solr URL was not valid.</message>
 	<message key="plugins.generic.zendSearch.blockDisplayName">ZEND Search Block</message>
 	<message key="plugins.generic.zendSearch.blockDescription">This block allows searching via the Zend Framework implementation of the Lucene search engine.</message>
+	<message key="plugins.generic.zendSearch.settings">Settings</message>
 	<message key="plugins.generic.zendSearch.searchForm">Search Form</message>
 	<message key="plugins.generic.zendSearch.formElement.confirmDelete">Are you sure you wish to delete this search form element?</message>
 	<message key="plugins.generic.zendSearch.formElement.noneCreated">No search form elements have been created.</message>

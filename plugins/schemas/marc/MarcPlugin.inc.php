@@ -230,6 +230,18 @@ class MarcPlugin extends SchemaPlugin {
 		foreach ($result->getChildren() as $child) {
 			$name = $child->getName();
 			switch ($child->getName()) {
+				case 'varfield':
+					$id = $child->getAttribute('id');
+					$i1 = $child->getAttribute('i1');
+					$i2 = $child->getAttribute('i2');
+					foreach ($child->getChildren() as $subfield) {
+						if ($subfield->getName() != 'subfield') continue;
+						$value = $subfield->getValue();
+						if (empty($value)) continue;
+						$label = $subfield->getAttribute('code');
+						$returner[$id][$i1][$i2][$label][] = $value;
+					}
+					break;
 				case 'datafield':
 					$id = $child->getAttribute('tag');
 					$i1 = $child->getAttribute('ind1');
