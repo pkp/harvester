@@ -62,6 +62,10 @@ disable_path_info = Off
 ; is disabled by PHP's configuration, this setting will be ignored.
 allow_url_fopen = Off
 
+; Impose a minimum number of seconds between requests. Useful if a
+; data source has a throttling policy.
+; throttling_delay = 3500
+
 
 ;;;;;;;;;;;;;;;;;;;;;
 ; Database Settings ;

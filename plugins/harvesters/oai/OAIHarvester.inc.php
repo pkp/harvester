@@ -32,6 +32,20 @@ class OAIHarvester extends Harvester {
 	}
 
 	/**
+	 * If necessary, wait until a minimum amount of time has passed
+	 * since the last request.
+	 */
+	function throttle() {
+		$delay = (int) Config::getVar('general', 'throttling_delay');
+		$lastRequest =& Registry::get('lastThrottledRequest', true, 0);
+		$timeDiff = $delay + $lastRequest - time();
+		if ($timeDiff > 0) {
+			sleep ($timeDiff);
+		}
+		$lastRequest = time();
+	}
+
+	/**
 	 * Set the metadata format.
 	 * @param $metadataFormat string
 	 */
@@ -82,6 +96,7 @@ class OAIHarvester extends Harvester {
 			'verb' => 'ListMetadataFormats'
 		));
 
+		$this->throttle();
 		$parser = new XMLParser();
 		$result =& $parser->parse($harvesterUrl);
 		if (!$parser->getStatus()) {
@@ -131,6 +146,7 @@ class OAIHarvester extends Harvester {
 			'verb' => 'Identify'
 		));
 
+		$this->throttle();
 		$parser = new XMLParser();
 		$result =& $parser->parse($harvesterUrl);
 		if (!$parser->getStatus()) {
@@ -165,6 +181,7 @@ class OAIHarvester extends Harvester {
 			'verb' => 'ListSets'
 		));
 
+		$this->throttle();
 		$parser = new XMLParser();
 		$result =& $parser->parse($harvesterUrl);
 		if (!$parser->getStatus()) {
@@ -259,6 +276,7 @@ class OAIHarvester extends Harvester {
 			$harvestUrl = $this->addParameters($this->oaiUrl, $harvestingParams);
 		}
 		if (isset($params['verbose'])) echo "Harvest URL: $harvestUrl\n";
+		$this->throttle();
 		$result =& $parser->parse($harvestUrl);
 		if (!$parser->getStatus()) {
 			foreach ($parser->getErrors() as $error) {
@@ -336,6 +354,7 @@ class OAIHarvester extends Harvester {
 	 */
 	function &updateRecord($identifier, $params = array()) {
 		$verb = 'GetRecord';
+		$this->throttle();
 		$parser = new XMLParser();
 		$result =& $parser->parse($this->addParameters($this->oaiUrl, array(
 			'verb' => $verb,
