@@ -333,7 +333,7 @@ class ZendSearchPlugin extends GenericPlugin {
 				$fieldValue = $schemaPlugin->getFieldValue($record, $fieldName, SORT_ORDER_TYPE_STRING);
 				if ($isUsingSolr) {
 					$fieldNode =& XMLCustomWriter::createChildWithText($doc, $docNode, 'field', $fieldValue, false);
-					if ($fieldNode) $fieldNode->setAttribute('name', 'other');
+					if ($fieldNode) $fieldNode->setAttribute('name', 'text');
 					unset($fieldNode);
 				} else {
 					$doc->addField(Zend_Search_Lucene_Field::UnStored('harvesterOther', $fieldValue));

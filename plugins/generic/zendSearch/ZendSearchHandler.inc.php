@@ -33,19 +33,41 @@ class ZendSearchHandler extends PKPHandler {
 		$templateMgr->display($plugin->getTemplatePath() . 'search.tpl');
 	}
 
+	function luceneEscape($str) {
+		return str_replace(array('+', '-', '&', '|', '!', '(', ')', '{', '}', '[', ']', '^', '"', '~', '*', '?', ':', '\\'), array('\\+', '\\-', '\\&', '\\|', '\\!', '\\(', '\\)', '\\{', '\\}', '\\[', '\\]', '\\^', '\\"', '\\~', '\\*', '\\?', '\\:', '\\\\'), $str);
+	}
+
 	/**
 	 * Display search results.
 	 */
 	function searchResults() {
 		ZendSearchHandler::setupTemplate();
 		$plugin =& PluginRegistry::getPlugin('generic', 'ZendSearchPlugin');
-		$index =& $plugin->getIndex();
+		$isUsingSolr = $plugin->isUsingSolr();
 
-		$query = new Zend_Search_Lucene_Search_Query_Boolean();
+		if ($isUsingSolr) {
+			$ch = curl_init();
+			curl_setopt($ch, CURLOPT_URL, $plugin->getSetting('solrUrl') . '/select');
+			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+			curl_setopt($ch, CURLOPT_TIMEOUT, 10);
+			curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+			curl_setopt($ch, CURLOPT_ENCODING, '');          
+			curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10);
+			curl_setopt($ch, CURLOPT_DNS_USE_GLOBAL_CACHE, 0);
+			curl_setopt($ch, CURLOPT_POST, 1);
+			$query = '';
+		} else {
+			$index =& $plugin->getIndex();
+			$query = new Zend_Search_Lucene_Search_Query_Boolean();
+		}
 
 		$q = Request::getUserVar('q');
 		if (!empty($q)) {
-			$query->addSubquery(new Zend_Search_Lucene_Search_Query_Term(new Zend_Search_Lucene_Index_Term($q)), true);
+			if ($isUsingSolr) {
+				$query .= 'text:"' . ZendSearchHandler::luceneEscape($q) . '" ';
+			} else {
+				$query->addSubquery(new Zend_Search_Lucene_Search_Query_Term(new Zend_Search_Lucene_Index_Term($q)), true);
+			}
 		}
 
 		$searchFormElementDao =& DAORegistry::getDAO('SearchFormElementDAO');
@@ -57,15 +79,25 @@ class ZendSearchHandler extends PKPHandler {
 				case SEARCH_FORM_ELEMENT_TYPE_SELECT:
 				case SEARCH_FORM_ELEMENT_TYPE_STRING:
 					$term = Request::getUserVar($symbolic);
-					if (!empty($term)) $query->addSubquery(new Zend_Search_Lucene_Search_Query_Term(new Zend_Search_Lucene_Index_Term($term, $symbolic)), true);
+					if (!empty($term)) {
+						if ($isUsingSolr) {
+							$query .= $symbolic . ':"' . ZendSearchHandler::luceneEscape($term) . '" ';
+						} else {
+							$query->addSubquery(new Zend_Search_Lucene_Search_Query_Term(new Zend_Search_Lucene_Index_Term($term, $symbolic)), true);
+						}
+					}
 					break;
 				case SEARCH_FORM_ELEMENT_TYPE_DATE:
 					$from = Request::getUserDateVar($symbolic . '-from');
 					$to = Request::getUserDateVar($symbolic . '-to');
 					if (!empty($from) && !empty($to)) {
-						$fromTerm = new Zend_Search_Lucene_Index_Term($from, $symbolic);
-						$toTerm = new Zend_Search_Lucene_Index_Term($to, $symbolic);
-						$query->addSubquery(new Zend_Search_Lucene_Search_Query_Range($fromTerm, $toTerm, true), true);
+						if ($isUsingSolr) {
+							$query .= $symbolic . ':[' . strftime('%y%m%d', $from) . ' to ' . strftime('%y%m%d', $to) . '] ';
+						} else {
+							$fromTerm = new Zend_Search_Lucene_Index_Term($from, $symbolic);
+							$toTerm = new Zend_Search_Lucene_Index_Term($to, $symbolic);
+							$query->addSubquery(new Zend_Search_Lucene_Search_Query_Range($fromTerm, $toTerm, true), true);
+						}
 					}
 					break;
 				default:
@@ -74,12 +106,29 @@ class ZendSearchHandler extends PKPHandler {
 			unset($searchFormElement);
 		}
 
-		$resultsArray = $index->find($query);
 		$rangeInfo =& PKPHandler::getRangeInfo('results');
 
-		import('core.ArrayItemIterator');
-		$resultsIterator =& ArrayItemIterator::fromRangeInfo($resultsArray, $rangeInfo);
-		unset($resultsArray);
+		if ($isUsingSolr) {
+			curl_setopt($ch, CURLOPT_POSTFIELDS, 'q=' . trim(urlencode($query)));
+			$data = curl_exec($ch);
+			$xmlParser = new XMLParser();
+			$result = null;
+			@$result =& $xmlParser->parseTextStruct($data, array("str"));
+			$recordIds = array();
+			if ($result) foreach ($result as $nodeSet) foreach ($nodeSet as $node) {
+				if (isset($node['attributes']['name']) && $node['attributes']['name'] == 'id') {
+					$recordIds[] = $node['value'];
+				}
+			}
+			$plugin->import('SolrResultIterator');
+			$resultsIterator =& SolrResultIterator::fromRangeInfo($recordIds, $rangeInfo);
+			unset($recordIds);
+		} else {
+			$resultsArray = $index->find($query);
+			$plugin->import('ZendSearchResultIterator');
+			$resultsIterator =& ZendSearchResultIterator::fromRangeInfo($resultsArray, $rangeInfo);
+			unset($resultsArray);
+		}
 
 		$templateMgr =& TemplateManager::getManager();
 		$templateMgr->assign_by_ref('recordDao', DAORegistry::getDAO('RecordDAO'));

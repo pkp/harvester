@@ -17,10 +17,7 @@
 
 <div id="results">
 <ul class="plain">
-{iterate from=results item=result}
-	{assign var=document value=$result->getDocument()}
-	{assign var=recordId value=$document->getFieldValue('harvesterRecordId')}
-	{assign var=record value=$recordDao->getRecord($recordId)}
+{iterate from=results item=record}
 	{if $record}<li>&#187; {$record->displaySummary()}</li>{/if}
 {/iterate}
 </ul>

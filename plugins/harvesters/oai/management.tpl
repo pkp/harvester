@@ -43,7 +43,7 @@
 	<tr valign="top">
 		<td class="label"><label for="set">{translate key="plugins.harvesters.oai.archive.form.sets"}</td>
 		<td colspan="2" class="value">
-			<select class="selectMenu" size="5" name="set" id="set">
+			<select class="selectMenu" multiple="multiple" size="5" name="set[]" id="set">
 				<option {if $selectedSet == ''}selected {/if}value="">{translate key="plugins.harvesters.oai.archive.form.allSets"}</option>
 				{foreach from=$availableSets key=setSpec item=setName}
 					<option {if $setSpec == $selectedSet}selected {/if}value="{$setSpec|escape}">{$setName|escape}</option>

@@ -1,0 +1,50 @@
+================================
+=== Harvester Zend Search / Lucene & SOLR Plugin
+=== Author: Alec Smecher <alec@smecher.bc.ca>
+================================
+
+About
+-----
+This plugin for the PKP Harvester supports Apache's Lucene search engine
+technology, either via Zend's "Zend Search" PHP port, which is built into the
+PKP codebase, or via the Apache SOLR project, which will require an external
+SOLR installation. SOLR/Lucene is the recommended configuration, as it is both
+faster and more fully featured, though it has substantial installation
+requirements that will not be available e.g. in shared hosting environments.
+
+License
+-------
+This plugin is licensed under the GNU General Public License v2. See the file
+COPYING for the complete terms of this license.
+
+Installation
+------------
+To install the plugin:
+ - as Site Administrator, go into the "System Plugins" page, into the "Generic"
+   plugin category, and enable the Zend Framework Search Plugin.
+ - Once enabled, find the "Settings" link (again, under "System Plugins" >
+   "Generic" > "Zend Framework Search Plugin"); here you can configure the URL
+   to the SOLR installation, if one is used. Leave this field blank if the
+   built-in "Zend Search" library is to be used.
+ - Once enabled, the plugin will add a link called "Search Form" under "Site
+   Management". This defines the schema that will be used to index content,
+   and the fields that will be available for searching under the Search link.
+
+
+Usage
+-----
+The Lucene schema must match the Search Form configuration. The PKP Harvester
+requires the following fields to exist:
+ - id (Numeric; this is used to store the record IDs)
+ - harvesterArchiveId (Numeric; this is used to store the archive IDs)
+ - harvesterIdentifier (String)
+ - text (String; this is used to index all textual content)
+
+Additionally, the Search Form allows for the definition of additional fields
+that can be indexed and searched. The "symbolic name" field defines the name
+of the field in the Lucene search index.
+
+Contact/Support
+---------------
+Please email the author for support, bugfixes, or comments.
+Email: <alec@smecher.bc.ca>

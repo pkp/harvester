@@ -244,6 +244,18 @@ class OAIHarvester extends Harvester {
 	 * @return int Number or records, or false iff error condition
 	 */
 	function updateRecords($params = array(), $resumptionToken = null, $recordOffset = 0) {
+		// Allow the harvesting of multiple sets by looping through
+		if (isset($params['set']) && is_array($params['set'])) {
+			$count = 0;
+			foreach ($params['set'] as $setSpec) {
+				$newParams = $params;
+				$newParams['set'] = $setSpec;
+				$count += $this->updateRecords($newParams, null, null);
+			}
+			return $count;
+		}
+
+		// Otherwise, harvest a single set (or all records)
 		$verb = $this->getHarvestingMethod();
 		$parser = new XMLParser();
 		$archive =& $this->getArchive();
