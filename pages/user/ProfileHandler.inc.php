@@ -88,6 +88,7 @@ class ProfileHandler extends UserHandler {
 	 * Save user's new password.
 	 */
 	function savePassword() {
+		parent::setupTemplate();
 		parent::validate();
 
 		import('user.form.ChangePasswordForm');

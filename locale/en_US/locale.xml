@@ -229,6 +229,7 @@ Your server currently supports mbstring: <strong>{$supportsMBString}</strong>]]>
 	<message key="user.workingLanguages">Working languages</message>
 	<message key="user.dateRegistered">Date registered</message>
 	<message key="user.dateLastLogin">Last login</message>
+	<message key="user.register.form.passwordLengthTooShort">The password you entered is not long enough.</message>
 	<message key="user.register.registerAs">Register as</message>
 	<message key="user.register.completeForm">Fill in this form to register with this journal.</message>
 	<message key="user.register.submitterDescription">Archive Managers can submit archives for indexing.</message>
