@@ -16,11 +16,11 @@
  *  - Update the config file with installation parameters.
  * It can also be used for a "manual install" to retrieve the SQL statements required for installation.
  *
- * $Id$
  */
 
-// Default installation data
-define('INSTALLER_DEFAULT_SITE_TITLE', 'common.harvester2');
+// $Id$
+
+
 define('INSTALLER_DEFAULT_MIN_PASSWORD_LENGTH', 6);
 
 import('install.PKPInstall');
@@ -81,10 +81,11 @@ class Install extends PKPInstall {
 				return false;
 			}
 
+			// Install site settings
 			$siteSettingsDao =& DAORegistry::getDAO('SiteSettingsDAO');
-			$siteSettingsDao->updateSetting('title', array($locale => Locale::translate(INSTALLER_DEFAULT_SITE_TITLE)), null, true);
-			$siteSettingsDao->updateSetting('contactName', array($locale => Locale::translate(INSTALLER_DEFAULT_SITE_TITLE)), null, true);
-			$siteSettingsDao->updateSetting('contactEmail', array($locale => $this->getParam('adminEmail')), null, true);
+			$siteSettingsDao->installSettings('registry/siteSettings.xml', array(
+				'adminEmail' => $this->getParam('adminEmail')
+			));
 
 			// Add initial site administrator user
 			$userDao =& DAORegistry::getDAO('UserDAO', $this->dbconn);
@@ -110,7 +111,7 @@ class Install extends PKPInstall {
 
 			// Install the schema aliases
 			$schemaAliasDao =& DAORegistry::getDAO('SchemaAliasDAO');
-			$schemaAliasDao->insertSchemaAliases();
+			$schemaAliasDao->installSchemaAliases();
 		}
 
 		return true;

@@ -11,10 +11,12 @@
   * $Id$
   -->
 
-<!DOCTYPE site_settings [
-	<!ELEMENT site_settings (setting+)>
+<!DOCTYPE siteSettings [
+	<!ELEMENT siteSettings (setting+)>
 	<!ELEMENT setting (name, value)>
-	<!ATTLIST setting type (int|string|object) #REQUIRED>
+	<!ATTLIST setting
+		type (int|string|object) #REQUIRED
+		localized (true|false) #IMPLIED>
 	<!ELEMENT name (#PCDATA)>
 	<!ELEMENT value (#PCDATA | array)*>
 	<!ELEMENT element (#PCDATA | array)*>
@@ -22,7 +24,7 @@
 	<!ELEMENT array (element+)>
 ]>
 
-<site_settings>
+<siteSettings>
 	<setting type="int">
 		<name>numPageLinks</name>
 		<value>10</value>
@@ -35,29 +37,21 @@
 		<name>emailSignature</name>
 		<value>{translate key="default.siteSettings.emailSignature"}</value>
 	</setting>
-	<setting type="string">
+	<setting type="string" localized="true">
 		<name>title</name>
 		<value>{translate key="common.harvester2"}</value>
 	</setting>
-	<setting type="string">
-		<name>contact_name</name>
-		<value>{translate key="common.harvester2"}</value>
-	</setting>
-	<setting type="string">
-		<name>contact_email</name>
-		<value>{$adminEmail}</value>
-	</setting>
-	<setting type="string">
-		<name>username</name>
-		<value>{$adminUsername}</value>
-	</setting>
-	<setting type="string">
-		<name>password</name>
-		<value>{$encryptedPassword}</value>
-	</setting>
-	<setting type="string">
+	<setting type="string" localized="true">
 		<name>intro</name>
 		<value>{translate key="default.siteIntro"}</value>
+	</setting>
+	<setting type="string" localized="true">
+		<name>contactName</name>
+		<value>{translate key="common.harvester2"}</value>
+	</setting>
+	<setting type="string" localized="true">
+		<name>contactEmail</name>
+		<value>{$adminEmail}</value>
 	</setting>
 	<setting type="string">
 		<name>footer</name>
@@ -67,4 +61,4 @@
 		<name>defaultHarvesterPlugin</name>
 		<value>OAIHarvesterPlugin</value>
 	</setting>
-</site_settings>
+</siteSettings>
