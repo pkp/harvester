@@ -102,7 +102,7 @@
 		<field name="value" type="C2" size="128">
 			<NOTNULL/>
 		</field>
-		<index name="sort_order_string">
+		<index name="search_form_element_value">
 			<col>value</col>
 			<col>search_form_element_id</col>
 			<UNIQUE/>

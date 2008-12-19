@@ -135,52 +135,285 @@ class ModsPlugin extends SchemaPlugin {
 		return Locale::translate("plugins.schemas.mods.fields.$fieldSymbolic.description", $locale);
 	}
 
-	function flattenEntries($entries) {
+	/**
+	 * Parse a record's contents into an object
+	 * @param $contents string
+	 * @return object
+	 */
+	function &parseContents(&$contents) {
+		$xmlParser = new XMLParser();
+		$result =& $xmlParser->parseText($contents);
 		$returner = array();
-		foreach ($entries as $name => $entry) {
-			foreach ($entry as $entryId => $item) {
-				$item['name'] = $name;
-				$returner[$entryId] = $item;
-			}
+
+		$modsNode =& $result->getChildByName(array('oai_mods:mods', 'mods:mods', 'mods'));
+		if (!isset($modsNode)) {
+			$returner = null;
+			return $returner;
 		}
+
+		$returner =& $this->handleRootNode($modsNode);
 		return $returner;
 	}
 
-	function getAuthorsAndTitle($entries) {
-		$entries = $this->flattenEntries($entries);
-		$authors = array();
-		$titles = array();
-		$title = array();
-		$nameParts = array();
-		$authorRoles = array();
-		$titleInfoEntryId = null;
-
-		foreach ($entries as $entryId => $entry) {
-			switch ($entry['name']) {
-				case 'titleInfo':
-					if ($entry['parent_entry_id'] === null) $titleInfoEntryId = $entryId;
-					break;
-				case 'title':
-					$titles[$entry['parent_entry_id']] = $entry['value'];
-					break;
-				case 'namePart':
-					$nameParts[$entry['parent_entry_id']] = $entry['value'];
-					break;
-				case 'roleTerm':
-					if (String::strtolower(trim($entry['value'])) == 'author') $authorRoles[] = $entry['parent_entry_id'];
-					break;
-			}
+	function &handleNameNode(&$nameNode) {
+		$nameReturner = array();
+		foreach (array('type', 'transliteration', 'authority', 'script') as $name) {
+			if (($value = $nameNode->getAttribute($name)) !== null) $nameReturner[$name] = $value;
 		}
-		if (isset($titleInfoEntryId) && isset($titles[$titleInfoEntryId])) $title = $titles[$titleInfoEntryId];
-
-		foreach ($authorRoles as $entryId) {
-			$nameNodeId = $entries[$entryId]['parent_entry_id'];
-			if (isset($nameParts[$nameNodeId])) {
-				$authors[] = $nameParts[$nameNodeId];
-			}
+		$namePartNode =& $nameNode->getChildByName(array('namePart', 'oai_mods:namePart', 'mods:namePart'));
+		if ($namePartNode) {
+			$nameReturner['namePart'] = $namePartNode->getValue();
+			if (($namePartType = $namePartNode->getAttribute('type')) !== null) $nameReturner['namePartType'] = $namePartType;
+		}
+		foreach (array('displayForm', 'affiliation', 'description') as $nodeName) {
+			$node =& $nameNode->getChildByName(array($nodeName, 'oai_mods:' . $nodeName, 'mods:' . $nodeName)) && $nameReturner[$nodeName] = $node->getValue();
+			unset($node);
 		}
 
-		return array($authors, $title);
+		$roleNode =& $nameNode->getChildByName(array('role', 'oai_mods:role', 'mods:role'));
+		if ($roleNode) {
+			$nameReturner['roles'] = array();
+			for ($j=0; $roleTermNode =& $roleNode->getChildByName(array('roleTerm', 'oai_mods:roleTerm', 'mods:roleTerm'), $j); $j++) {
+				$roleTerm = array('term' => $roleTermNode->getValue());
+				foreach (array('authority', 'type') as $name) {
+					if (($value = $roleTermNode->getAttribute($name)) !== null) $roleTerm[$name] = $value;
+				}
+				$nameReturner['roles'][] =& $roleTerm;
+				unset($roleTermNode, $roleTerm);
+			}
+		}
+		return $nameReturner;
+	}
+
+	function &handleRootNode(&$modsNode) {
+		// Handle titleInfo
+		$titleInfoNode =& $modsNode->getChildByName(array('titleInfo', 'mods:titleInfo', 'oai_mods:titleInfo'));
+		if (isset($titleInfoNode)) foreach($titleInfoNode->getChildren() as $child) {
+			$returner[$child->getName(false)] = $child->getValue();
+		}
+		unset($titleInfoNode);
+
+		// Handle "name" nodes
+		for ($i=0; $nameNode =& $modsNode->getChildByName(array('name', 'oai_mods:name', 'mods:name'), $i); $i++) {
+			$returner['names'][] =& $this->handleNameNode($nameNode);
+			unset($nameNode);
+		}
+
+		// Handle typeOfResource
+		$typeNode =& $modsNode->getChildByName(array('typeOfResource', 'mods:typeOfResource', 'oai_mods:typeOfResource'));
+		if (isset($typeNode)) {
+			$returner['typeOfResource'] = $typeNode->getValue();
+			foreach (array('collection' => 'typeOfResourceCollection', 'manuscript' => 'typeOfResourceManuscript') as $sourceName => $targetName) {
+				if (($value = $typeNode->getAttribute($sourceName)) !== null) $returner[$targetName] = $value;
+			}
+			
+			unset($typeNode);
+		}
+
+		// Handle originInfo
+		$originNode =& $modsNode->getChildByName(array('originInfo', 'mods:originInfo', 'oai_mods:originInfo'));
+		if (isset($originNode)) {
+			foreach ($originNode->getChildren() as $child) {
+				$name = $child->getName(false);
+				switch ($name) {
+					case 'publisher':
+					case 'edition':
+					case 'issuance':
+					case 'frequency':
+						$returner['originInfo'][$name] = $child->getValue();
+						break;
+					case 'dateIssued':
+					case 'dateCreated':
+					case 'dateCaptured':
+					case 'dateValid':
+					case 'dateModified':
+					case 'copyrightDate':
+					case 'dateOther':
+						$returner['originInfo'][$name]['value'] = $child->getValue();
+						foreach (array('encoding', 'point', 'keyDate', 'qualifier', 'type') as $attributeName) if (($value = $child->getAttribute($attributeName)) !== null) $returner['originInfo'][$name][$attributeName] = $value;
+						break;
+					case 'place':
+						for ($j=0; $placeTermNode =& $child->getChildByName(array('placeTerm', 'oai_mods:placeTerm', 'mods:placeTerm'), $j); $j++) {
+							$placeTerm = array('term' => $placeTermNode->getValue());
+							foreach (array('authority', 'type') as $name) {
+								if (($value = $placeTermNode->getAttribute($name)) !== null) $placeTerm[$name] = $value;
+							}
+							$returner['originInfo']['places'][] =& $placeTerm;
+							unset($placeTermNode, $placeTerm);
+						}
+						
+						break;
+					default: fatalError('Unknown node!');
+				}
+			}
+			unset($originNode);
+		}
+
+		// Handle language
+		$languageNode =& $modsNode->getChildByName(array('language', 'mods:language', 'oai_mods:language'));
+		if (isset($languageNode)) {
+			for ($j=0; $languageTermNode =& $child->getChildByName(array('languageTerm', 'oai_mods:languageTerm', 'mods:languageTerm'), $j); $j++) {
+				$languageTerm = array('term' => $languageTermNode->getValue());
+				foreach (array('authority', 'type') as $name) {
+					if (($value = $placeTermNode->getAttribute($name)) !== null) $placeTerm[$name] = $value;
+				}
+				$returner['languages'][] =& $languageTerm;
+				unset($languageTermNode, $languageTerm);
+			}
+			unset($languageNode);
+		}
+
+		$physicalDescriptionNode =& $modsNode->getChildByName(array('physicalDescription', 'mods:physicalDescription', 'oai_mods:physicalDescription'));
+		if (isset($physicalDescriptionNode)) {
+			foreach ($originNode->getChildren() as $child) {
+				$name = $child->getName(false);
+				switch ($name) {
+					case 'form':
+						$returner['form'] = $child->getValue();
+						foreach (array('authority' => 'formAuthority', 'type' => 'formType') as $sourceName => $targetName) {
+							if (($value = $child->getAttribute($sourceName)) !== null) $roleTerm[$targetName] = $value;
+						}
+						break;
+					case 'reformattingQuality':
+					case 'internetMediaType':
+					case 'extent':
+					case 'digitalOrigin':
+						$returner[$name] = $child->getValue();
+						break;
+					case 'note':
+						$returner['note'] = $child->getValue();
+						foreach (array('type' => 'noteType', 'transliteration' => 'noteTransliteration', 'authority' => 'noteAuthority', 'script' => 'noteScript') as $sourceName => $targetName) {
+							if (($value = $child->getAttribute($sourceName)) !== null) $returner[$targetName] = $value;
+						}
+						break;
+					default:
+						die('Unknown node!');
+				}
+			}
+			unset($physicalDescriptionNode);
+		}
+
+		// Handle abstract, tableOfContents, etc.
+		foreach (array('genre', 'abstract', 'tableOfContents', 'targetAudience', 'note', 'classification', 'accessCondition', 'extension') as $nodeName) {
+			$node =& $modsNode->getChildByName(array($nodeName, 'mods:' . $nodeName, 'oai_mods:' . $nodeName));
+			if (!isset($node)) continue;
+
+			foreach (array('authority' => $nodeName . 'Authority', 'type' => $nodeName . 'Type', 'transliteration' => $nodeName . 'Transliteration', 'script' => $nodeName . 'Script', 'displayLabel' => $nodeName . 'DisplayLabel') as $sourceName => $targetName) {
+				if (($value = $node->getAttribute($sourceName)) !== null) $returner[$targetName] = $value;
+			}
+
+			$returner[$nodeName] = $node->getValue();
+			unset($node);
+		}
+
+		// Handle relatedItem
+		for ($j=0; $relatedItemNode =& $modsNode->getChildByName(array('relatedItem', 'oai_mods:relatedItem', 'mods:relatedItem'), $j); $j++) {
+			$returner['relatedItems'][] = $this->handleRootNode($relatedItemNode);
+		}
+
+		// Handle subject
+		$subjectNode =& $modsNode->getChildByName(array('subject', 'mods:subject', 'oai_mods:subject'));
+		if (isset($subjectNode)) {
+			foreach (array('topic' => 'subjectTopic', 'geographic' => 'subjectGeographic', 'temporal' => 'subjectTemporal', 'geographicCode' => 'subjectGeographicCode', 'genre' => 'subjectGenre', 'occupation' => 'subjectOccupation') as $sourceNodeName => $targetNodeName) {
+				$node =& $subjectNode->getChildByName(array($sourceNodeName, 'mods:' . $sourceNodeName, 'oai_mods:' . $sourceNodeName));
+				if ($node) {
+					$returner[$targetNodeName] = $node->getValue();
+					unset($node);
+				}
+			}
+
+			// Handle titleInfo
+			$titleInfoNode =& $subjectNode->getChildByName(array('titleInfo', 'mods:titleInfo', 'oai_mods:titleInfo'));
+			if (isset($titleInfoNode)) foreach($titleInfoNode->getChildren() as $child) {
+				$returner['subjectTitleInfo'][$child->getName(false)] = $child->getValue();
+			}
+			unset($titleInfoNode);
+
+			// Handle "name" nodes
+			for ($i=0; $nameNode =& $subjectNode->getChildByName(array('name', 'oai_mods:name', 'mods:name'), $i); $i++) {
+				$returner['subjectNames'][] =& $this->handleNameNode($nameNode);
+				unset($nameNode);
+			}
+
+			// Handle hierarchicalGeographic and cartographics
+			foreach (array('hierarchicalGeographic', 'cartographics') as $nodeName) {
+				$node =& $subjectNode->getChildByName(array($nodeName, 'mods:' . $nodeName, 'oai_mods:' . $nodeName));
+				if ($node) {
+					$returner['subject'][$nodeName][] = $node->getValue();
+					unset($node);
+				}
+			}
+			unset($subjectNode);
+		}
+
+		// Handle identifier
+		$identifierNode =& $modsNode->getChildByName(array('identifier', 'mods:identifier', 'oai_mods:identifier'));
+		if (isset($identifierNode)) {
+			$returner['identifier'] = $identifierNode->getValue();
+			foreach (array('type' => 'identifierType', 'displayLabel' => 'identifierDisplayLabel', 'invalid' => 'identifierInvalid') as $sourceName => $targetName) {
+				$value = $identifierNode->getAttribute($sourceName);
+				if ($value != '') $returner[$targetName] = $value;
+			}
+			unset($identifierNode);
+		}
+
+		// Handle location
+		for ($i=0; $locationNode =& $modsNode->getChildByName(array('location', 'mods:location', 'oai_mods:location'), $i); $i++) {
+			$locationReturner = array();
+			$physicalLocationNode =& $locationNode->getChildByName(array('physicalLocation', 'mods:physicalLocation', 'oai_mods:physicalLocation'));
+			if ($physicalLocationNode) {
+				$locationReturner['physicalLocation'] = $physicalLocationNode->getValue();
+				foreach (array('authority' => 'physicalLocationAuthority', 'displayLabel' => 'physicalLocationDisplayLabel', 'type' => 'physicalLocationType') as $sourceName => $targetName) {
+					$value = $physicalLocationNode->getAttribute($sourceName);
+					if ($value != '') $locationReturner[$targetName] = $value;
+				}
+				unset($physicalLocationNode);
+			}
+
+			foreach (array('shelfLocator', 'holdingExternal') as $name) {
+				$node =& $locationNode->getChildByName(array($name, 'mods:' . $name, 'oai_mods:' . $name));
+				if ($node) {
+					$locationReturner[$name] = $node->getValue();
+					unset($node);
+				}
+			}
+
+			$returner['locations'][] =& $locationReturner;
+			unset($locationReturner, $locationNode, $physicalLocationNode);
+		}
+
+		// FIXME: Handle part, recordInfo
+
+		unset($result, $xmlParser);
+		return $returner;
+	}
+
+	/**
+	 * Get the value of a field by symbolic name.
+	 * @var $record object
+	 * @var $name string
+	 * @var $type SORT_ORDER_TYPE_...
+	 * @return mixed
+	 */
+	function getFieldValue(&$record, $name, $type) {
+		$fieldValue = null;
+		$parsedContents = $record->getParsedContents();
+		if (isset($parsedContents[$name])) switch ($type) {
+			case SORT_ORDER_TYPE_STRING:
+				$fieldValue = join(';', $parsedContents[$name]);
+				break;
+			case SORT_ORDER_TYPE_NUMBER:
+				$fieldValue = (int) array_shift($parsedContents[$name]);
+				break;
+			case SORT_ORDER_TYPE_DATE:
+				$fieldValue = strtotime($thing = array_shift($parsedContents[$name]));
+				if ($fieldValue === -1 || $fieldValue === false) $fieldValue = null;
+				break;
+			default:
+				fatalError('UNKNOWN TYPE');
+		}
+		HookRegistry::call('DublinCorePlugin::getFieldValue', array(&$this, &$fieldValue));
+		return $fieldValue;
 	}
 
 	/**
@@ -189,11 +422,11 @@ class ModsPlugin extends SchemaPlugin {
 	 * @param $entries array
 	 * @return array
 	 */
-	function getAuthors(&$record, $entries = null) {
+/*	function getAuthors(&$record, $entries = null) {
 		if ($entries === null) $entries = $record->getEntries();
 		list($authors, $title) = $this->getAuthorsAndTitle($entries);
 		return $authors;
-	}
+	}*/
 
 	/**
 	 * Get the title for the supplied record, if available; null otherwise.
@@ -201,16 +434,16 @@ class ModsPlugin extends SchemaPlugin {
 	 * @param $entries array
 	 * @return string
 	 */
-	function getTitle(&$record, $entries = null) {
+/*	function getTitle(&$record, $entries = null) {
 		if ($entries === null) $entries = $record->getEntries();
 		list($authors, $title) = $this->getAuthorsAndTitle($entries);
 		return $title;
-	}
+	}*/
 
 	/**
 	 * Display a record summary.
 	 */
-	function displayRecordSummary(&$record) {
+/*	function displayRecordSummary(&$record) {
 		$templateMgr =& TemplateManager::getManager();
 		$templateMgr->assign_by_ref('record', $record);
 
@@ -222,12 +455,12 @@ class ModsPlugin extends SchemaPlugin {
 		$templateMgr->assign('url', $this->getUrl($record, $entries));
 
 		$templateMgr->display($this->getTemplatePath() . 'summary.tpl', null);
-	}
+	}*/
 
 	/**
 	 * Display a record.
 	 */
-	function displayRecord(&$record) {
+/*	function displayRecord(&$record) {
 		$templateMgr =& TemplateManager::getManager();
 
 		$entries = $record->getEntries();
@@ -274,22 +507,7 @@ class ModsPlugin extends SchemaPlugin {
 		$templateMgr->assign_by_ref('archive', $archive);
 		$templateMgr->display($this->getTemplatePath() . 'record.tpl', null);
 		return true;
-	}
-
-	/**
-	 * Get a URL for the supplied record, if available; null otherwise.
-	 * @param $record object
-	 * @param $entries array
-	 * @return string
-	 */
-	function getUrl(&$record, $entries) {
-		if (is_array($entries['url'])) foreach ($entries['url'] as $entry) {
-			if (preg_match('/^[a-z]+:\/\//', $entry['value'])) {
-				return $entry['value'];
-			}
-		}
-		return null;
-	}
+	}*/
 
 	function getFieldType($name) {
 		switch ($name) {
@@ -308,48 +526,6 @@ class ModsPlugin extends SchemaPlugin {
 			default:
 				return FIELD_TYPE_STRING;
 		}
-	}
-
-	/**
-	 * Parse a date into a value suitable for indexing.
-	 * @return int timestamp or string date, or null on failure
-	 */
-	function parseDate($fieldName, $value, $attributes = null) {
-		if (String::strlen($value) == 4 && is_numeric($value)) {
-			// It's a year by itself e.g. 1942; make it 1942-01-01
-			$value .= '-01-01';
-		}
-		return parent::parseDate($fieldName, $value, $attributes);
-	}
-
-	/**
-	 * Get the "importance" of this field. This is used to display subsets of the complete
-	 * field list of a schema by importance.
-	 * @param $name string
-	 * @return int
-	 */
-	function getFieldImportance($name) {
-		switch ($name) {
-			case 'title':
-			case 'namePart':
-			case 'topic':
-			case 'abstract':
-			case 'note':
-			case 'publisher':
-			case 'dateCreated':
-			case 'genre':
-				return 1;
-			default:
-				return 0;
-		}
-	}
-
-	/**
-	 * Get a list of field importance levels supported by this plugin, in .
-	 * @return array
-	 */
-	function getSupportedFieldImportance() {
-		return array(0, 1);
 	}
 
 	function getMetadataPrefix() {

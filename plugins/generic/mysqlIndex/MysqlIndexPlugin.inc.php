@@ -257,6 +257,15 @@ class MysqlIndexPlugin extends GenericPlugin {
 		$searchDao =& DAORegistry::getDAO('SearchDAO');
 		$searchDao->flushIndex();
 	}
+
+	/**
+	 * Get the name of the settings file to be installed site-wide when
+	 * Harvester is installed.
+	 * @return string
+	 */
+	function getInstallSitePluginSettingsFile() {
+		return $this->getPluginPath() . '/settings.xml';
+	}
 }
 
 ?>

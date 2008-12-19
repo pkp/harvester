@@ -113,8 +113,8 @@ class OAIHarvester extends Harvester {
 
 		$listMetadataFormatsNode =& $result->getChildByName('ListMetadataFormats');
 		foreach ($listMetadataFormatsNode->getChildren() as $node) {
-			$prefixNode =& $node->getChildByName('metadataPrefix');
-			if ($prefixNode) $returner[] = $prefixNode->getValue();
+			$prefixNode =& $node->getChildByName(array('metadataPrefix', 'oai:metadataPrefix'));
+			if ($prefixNode) array_unshift($returner, $prefixNode->getValue());
 			unset($prefixNode);
 		}
 		return $returner;
@@ -164,9 +164,9 @@ class OAIHarvester extends Harvester {
 		$returner = array();
 		$identifyNode =& $result->getChildByName('Identify');
 
-		$repositoryNameNode =& $identifyNode->getChildByName('repositoryName') && $returner['title'] = $repositoryNameNode->getValue();
-		$adminEmailNode =& $identifyNode->getChildByName('adminEmail') && $returner['adminEmail'] = $adminEmailNode->getValue();
-		$descriptionNode =& $identifyNode->getChildByName('description') && $returner['description'] = $descriptionNode->getValue();
+		$repositoryNameNode =& $identifyNode->getChildByName(array('repositoryName', 'oai:repositoryName')) && $returner['title'] = $repositoryNameNode->getValue();
+		$adminEmailNode =& $identifyNode->getChildByName(array('adminEmail', 'oai:adminEmail')) && $returner['adminEmail'] = $adminEmailNode->getValue();
+		$descriptionNode =& $identifyNode->getChildByName(array('description', 'oai:description')) && $returner['description'] = $descriptionNode->getValue();
 
 		return $returner;
 	}
@@ -198,7 +198,7 @@ class OAIHarvester extends Harvester {
 
 		$returner = array();
 		$listSetsNode =& $result->getChildByName('ListSets');
-		foreach ($listSetsNode->getChildren() as $node) {
+		if ($listSetsNode) foreach ($listSetsNode->getChildren() as $node) {
 			$setSpecNode =& $node->getChildByName('setSpec');
 			$setNameNode =& $node->getChildByName('setName');
 			if ($setSpecNode && $setNameNode) 
@@ -311,16 +311,19 @@ class OAIHarvester extends Harvester {
 		foreach ($verbNode->getChildren() as $node) {
 			switch ($node->getName()) {
 				case 'header':
+				case 'oai:header':
 					$identifierNode =& $node->getChildByName('identifier');
 					$this->updateRecord($identifierNode->getValue(), $params);
 					unset($identifierNode);
 					$recordOffset++;
 					break;
 				case 'record':
+				case 'oai:record':
 					$this->handleRecordNode($node);
 					$recordOffset++;
 					break;
 				case 'resumptionToken':
+				case 'oai:resumptionToken':
 					$token = $node->getValue();
 					break;
 				default:
@@ -337,11 +340,11 @@ class OAIHarvester extends Harvester {
 	}
 
 	function handleRecordNode(&$node) {
-		$headerNode =& $node->getChildByName('header');
-		$identifierNode =& $headerNode->getChildByName('identifier');
+		$headerNode =& $node->getChildByName(array('header', 'oai:header'));
+		$identifierNode =& $headerNode->getChildByName(array('identifier', 'oai:identifier'));
 		$identifier = $identifierNode->getValue();
 
-		$metadataContainerNode =& $node->getChildByName('metadata');
+		$metadataContainerNode =& $node->getChildByName(array('metadata', 'oai:metadata'));
 		if (!$metadataContainerNode) {
 			// This is a deleted record.
 			if (isset($params['verbose'])) echo "Deleted record: $identifier\n";
@@ -386,7 +389,7 @@ class OAIHarvester extends Harvester {
 		}
 
 		$verbNode =& $result->getChildByName($verb);
-		$recordNode =& $result->getChildByName('record');
+		$recordNode =& $result->getChildByName(array('record', 'oai:record'));
 		$this->handleRecordNode($recordNode);
 
 		return $result;

@@ -85,7 +85,7 @@ class PluginHandler extends AdminHandler {
 		$templateMgr =& TemplateManager::getManager();
 		$pageCrumbs = array(
 			array(
-				Request::url(null),
+				Request::url('admin'),
 				'admin.siteAdmin',
 				false
 			)
