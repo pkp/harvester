@@ -21,6 +21,7 @@
 // $Id$
 
 
+define('INSTALLER_DEFAULT_SITE_TITLE', 'common.harvester2');
 define('INSTALLER_DEFAULT_MIN_PASSWORD_LENGTH', 6);
 
 import('install.PKPInstall');
