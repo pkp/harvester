@@ -24,7 +24,7 @@
 			<AUTOINCREMENT/>
 		</field>
 		<field name="symbolic" type="C2" size="40" />
-		<field name="is_clean" type="L">
+		<field name="is_clean" type="I1">
 			<NOTNULL />
 			<DEFAULT VALUE="0" />
 		</field>
