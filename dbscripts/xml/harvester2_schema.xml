@@ -525,7 +525,7 @@
 		<field name="value" type="N">
 			<NOTNULL/>
 		</field>
-		<index name="sort_order_string">
+		<index name="sort_order_number">
 			<col>value</col>
 			<col>sort_order_id</col>
 		</index>
@@ -551,7 +551,7 @@
 		<field name="value" type="T">
 			<NOTNULL/>
 		</field>
-		<index name="sort_order_string">
+		<index name="sort_order_date">
 			<col>value</col>
 			<col>sort_order_id</col>
 		</index>
