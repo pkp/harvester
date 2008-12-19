@@ -503,7 +503,7 @@
 			<col>value</col>
 			<col>sort_order_id</col>
 		</index>
-		<index name="sort_order_pkey">
+		<index name="sort_order_strings_pkey">
 			<col>record_id</col>
 			<col>sort_order_id</col>
 			<UNIQUE/>
@@ -529,7 +529,7 @@
 			<col>value</col>
 			<col>sort_order_id</col>
 		</index>
-		<index name="sort_order_pkey">
+		<index name="sort_order_numbers_pkey">
 			<col>record_id</col>
 			<col>sort_order_id</col>
 			<UNIQUE/>
@@ -555,7 +555,7 @@
 			<col>value</col>
 			<col>sort_order_id</col>
 		</index>
-		<index name="sort_order_pkey">
+		<index name="sort_order_dates_pkey">
 			<col>record_id</col>
 			<col>sort_order_id</col>
 			<UNIQUE/>
