@@ -126,6 +126,23 @@ class SubmitterHandler extends PKPHandler {
 		Request::redirect('submitter');
 	}
 
+	/**
+	 * Perform plugin-specific management functions.
+	 */
+	function plugin($args) {
+		$category = array_shift($args);
+		$plugin = array_shift($args);
+		$verb = array_shift($args);
+
+		SubmitterHandler::validate();
+		SubmitterHandler::setupTemplate(true);
+
+		$plugins =& PluginRegistry::loadCategory($category);
+		if (!isset($plugins[$plugin]) || !$plugins[$plugin]->allowSubmitterManagement($verb, $args) || !$plugins[$plugin]->manage($verb, $args)) {
+			Request::redirect(null, 'plugins');
+		}
+	}
+	
 	function validate ($archiveId = null) {
 		$returner = null;
 		$user =& Request::getUser();
@@ -146,6 +163,7 @@ class SubmitterHandler extends PKPHandler {
 	 * @param $subclass boolean set to true if caller is below this handler in the hierarchy
 	 */
 	function setupTemplate($subclass = false) {
+		parent::setupTemplate();
 		$templateMgr =& TemplateManager::getManager();
 		if ($subclass) {
 			$templateMgr->assign('pageHierarchy',
@@ -153,8 +171,6 @@ class SubmitterHandler extends PKPHandler {
 			);
 		}
 	}
-
-
 }
 
 ?>

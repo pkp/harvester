@@ -181,6 +181,13 @@ class OAIHarvesterPlugin extends HarvesterPlugin {
 		$templateMgr->display($this->getTemplatePath() . '/management.tpl');
 	}
 
+	function allowSubmitterManagement($verb, $args) {
+		switch ($verb) {
+			case 'fetchArchiveInfo': return true;
+		}
+		return false;
+	}
+
 	function manage($verb, $args) {
 		switch ($verb) {
 			case 'fetchArchiveInfo':
@@ -217,8 +224,6 @@ class OAIHarvesterPlugin extends HarvesterPlugin {
 					$archiveForm->setData($name, $value);
 				}
 
-				import('pages.admin.AdminArchiveHandler');
-				AdminArchiveHandler::setupTemplate(true);
 				$archiveForm->display();
 
 				return true;
