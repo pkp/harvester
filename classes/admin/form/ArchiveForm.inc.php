@@ -244,6 +244,7 @@ class ArchiveForm extends Form {
 			$this->archive->setPublicArchiveId($this->getData('publicArchiveId'));
 			$this->archive->setEnabled($this->getData('enabled'));
 		} else {
+			$site =& Request::getSite();
 			$this->archive->setEnabled($site->getSetting('disableSubmissions')?1:0);
 		}
 
@@ -267,7 +268,6 @@ class ArchiveForm extends Form {
 			import('mail.MailTemplate');
 			$email = new MailTemplate('NEW_ARCHIVE_NOTIFY');
 			if ($email->isEnabled()) {
-				$site =& Request::getSite();
 				$email->assignParams(array(
 					'archiveTitle' => $this->getData('title'),
 					'siteTitle' => $site->getSiteTitle(),
