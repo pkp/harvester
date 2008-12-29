@@ -14,6 +14,7 @@
  * $Id$
  */
 
+import('field.Field');
 import('db.DBDataXMLParser');
 import('form.Form');
 
