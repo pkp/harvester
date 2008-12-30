@@ -8,12 +8,29 @@
  *
  * $Id$
  *}
-<span class="title">{$title|escape|default:"&mdash"}</span><br />
-
+{assign var=contents value=$record->getParsedContents()}
+<span class="title">{$contents.title|escape|default:"&mdash"}</span><br />
 <div class="recordContents">
-	{foreach from=$authors item=author}
-		<span class="author">{$author|escape|default:"&mdash;"}</span><br />
-	{/foreach}
-	{$record->getDatestamp()|date_format:$dateFormatShort}<br />
-	<a href="{url page="record" op="view" path=$record->getRecordId()}" class="action">{translate key="browse.viewRecord"}</a>{if $url}&nbsp;|&nbsp;<a href="{$url}" class="action">{translate key="browse.viewOriginal"}</a>{/if}
+	<span class="author">
+	{strip}
+		{assign var=isFirstAuthor value=1}
+		{foreach from=$contents.names item=name}
+			{assign var=isAuthor value=0}
+			{foreach from=$name.roles item=role}
+				{if $role.term == 'author'}
+					{assign var=isAuthor value=1}
+				{/if}
+			{/foreach}{* roles *}
+			{if $isAuthor}
+				{if $isFirstAuthor}
+					{assign var=isFirstAuthor value=0}
+				{else},&nbsp;
+				{/if}
+				{$name.namePart|escape|default:"&mdash;"}
+			{/if}
+		{/foreach}{* names *}
+	{/strip}
+	</span><br/>
+	{$contents.originInfo.dateIssued.value|escape}<br />
+	<a href="{url page="record" op="view" path=$record->getRecordId()}" class="action">{translate key="browse.viewRecord"}</a>{if $contents.identifier}&nbsp;|&nbsp;<a href="{$contents.identifier}" class="action">{translate key="browse.viewOriginal"}</a>{/if}
 </div>

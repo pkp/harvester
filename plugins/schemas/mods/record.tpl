@@ -13,11 +13,12 @@
 {include file="common/header.tpl"}
 {/strip}
 
-<h3>{$title|escape|nl2br}</h3>
+{assign var=contents value=$record->getParsedContents()}
 <h4>{$archive->getTitle()|escape}</h4>
 
 <a href="{url page="browse" op="archiveInfo" path=$archive->getArchiveId()}" class="action">{translate key="browse.archiveInfo"}</a><br/>&nbsp;
 
+<h3>{translate key="plugins.schemas.mods.metadata"}</h3>
 <table width="100%" class="listing">
 	<tr>
 		<td colspan="2" class="headseparator">&nbsp;</td>
@@ -29,9 +30,100 @@
 	<tr>
 		<td colspan="2" class="headseparator">&nbsp;</td>
 	</tr>
-
-	{$recordHtml}
+	{foreach from="title"|to_array:"subTitle":"partNumber":"partName":"nonSort" item=nodeName}	
+		{if $contents.$nodeName}
+			<tr valign="top">
+				<td class="label">{translate key="plugins.schemas.mods.fields.$nodeName.name}</td>
+				<td class="value">{$contents.$nodeName|escape|nl2br}</td>
+			</tr>
+		{/if}
+	{/foreach}
+	<tr>
+		<td colspan="2" class="headseparator">&nbsp;</td>
+	</tr>
+	<tr valign="top">
+		<td class="label">{translate key="plugins.schemas.mods.names"}</td>
+		<td class="value">
+			{foreach from=$contents.names item=name name=names}
+				{$name.namePart}
+				{foreach from=$name.roles item=role name=roles}
+					{if $smarty.foreach.roles.first}({/if}{$role.term}{if $smarty.foreach.roles.last}){else}, {/if}
+				{/foreach}
+				<br/>
+			{/foreach}
+		</td>
+	</tr>
+	{foreach from="typeOfResourceCollection"|to_array:"typeOfResourceManuscript" item=nodeName}	
+		{if $contents.$nodeName}
+			<tr valign="top">
+				<td class="label">{translate key="plugins.schemas.mods.fields.$nodeName.name}</td>
+				<td class="value">{$contents.$nodeName|escape|nl2br}</td>
+			</tr>
+		{/if}
+	{/foreach}
+	{foreach from="publisher"|to_array:"edition":"issuance":"frequency" item=nodeName}	
+		{if $contents.originInfo.$nodeName}
+			<tr valign="top">
+				<td class="label">{translate key="plugins.schemas.mods.fields.$nodeName.name}</td>
+				<td class="value">{$contents.originInfo.$nodeName|escape|nl2br}</td>
+			</tr>
+		{/if}
+	{/foreach}
+	{foreach from="dateIssued"|to_array:"dateCreated":"dateCaptured":"dateValid":"dateModified":"copyrightDate":"dateOther" item=nodeName}	
+		{if $contents.originInfo.$nodeName}
+			<tr valign="top">
+				<td class="label">{translate key="plugins.schemas.mods.fields.$nodeName.name}</td>
+				<td class="value">{$contents.originInfo.$nodeName.value|escape|nl2br} ({$contents.originInfo.$nodeName.encoding|escape|nl2br})</td>
+			</tr>
+		{/if}
+	{/foreach}
+	{foreach from=$contents.originInfo.places item=place}
+		<tr valign="top">
+			<td class="label">{translate key="plugins.schemas.mods.fields.placeTerm.name"}</td>
+			<td class="value">{$place.term|escape|nl2br}</td>
+		</tr>
+	{/foreach}
+	{foreach from=$contents.languages item=language}
+		<tr valign="top">
+			<td class="label">{translate key="plugins.schemas.mods.fields.languageTerm.name"}</td>
+			<td class="value">{$language.term|escape|nl2br}</td>
+		</tr>
+	{/foreach}
+	{foreach from="form"|to_array:"reformattingQuality":"internetMediaType":"extent":"digitalOrigin":"note":"genre":"abstract":"tableOfContents":"targetAudience":"classification":"accessCondition":"extension":"subjectTopic":"subjectGeographic":"subjectTemporal":"subjectGeographicCode":"subjectGenre":"subjectOccupation" item=nodeName}	
+		{if $contents.$nodeName}
+			<tr valign="top">
+				<td class="label">{translate key="plugins.schemas.mods.fields.$nodeName.name}</td>
+				<td class="value">{$contents.$nodeName|escape|nl2br}</td>
+			</tr>
+		{/if}
+	{/foreach}
+	{if $contents.identifier}
+		<tr valign="top">
+			<td class="label">{translate key="plugins.schemas.mods.fields.identifier.name"}</td>
+			<td class="value"><a href="{$contents.identifier}">{$contents.identifier|escape}</a></td>
+		</tr>
+	{/if}
+	{foreach from=$contents.locations item=location}
+		{foreach from="physicalLocation"|to_array:"shelfLocator":"holdingExternal":"url" item=nodeName}
+			{if $location.$nodeName}
+				<tr valign="top">
+					<td class="label">{translate key="plugins.schemas.mods.fields.$nodeName.name"}</td>
+					<td class="value">{$location.$nodeName|escape|nl2br}</td>
+				</tr>
+			{/if}
+		{/foreach}
+	{/foreach}
+	{foreach from=$contents.relatedItems item=relatedItem}
+		<tr valign="top">
+			<td class="label">{translate key="plugins.schemas.mods.fields.relatedItem.name"}</td>
+			<td class="value">
+				{$relatedItem.title|escape|nl2br}
+			</td>
+		</tr>
+	{/foreach}
 </table>
+
+
 
 {if $defineTermsContextId}
 <script type="text/javascript">

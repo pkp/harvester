@@ -49,21 +49,22 @@ class ModsPlugin extends SchemaPlugin {
 		static $fieldList;
 		if (!isset($fieldList)) {
 			$fieldList = array(
-				'identifier',
 				'title',
 				'subTitle',
 				'partNumber',
 				'partName',
 				'nonSort',
-				'namePart',
-				'displayForm',
-				'affiliation',
+				'name',
+				'nameType',
+				'nameDisplayForm',
+				'nameAffiliation',
+				'nameDescription',
 				'role',
-				'roleTerm',
 				'typeOfResource',
-				'genre',
-				'placeTerm',
 				'publisher',
+				'edition',
+				'issuance',
+				'frequency',
 				'dateIssued',
 				'dateCreated',
 				'dateCaptured',
@@ -71,57 +72,32 @@ class ModsPlugin extends SchemaPlugin {
 				'dateModified',
 				'copyrightDate',
 				'dateOther',
-				'recordCreationDate',
-				'recordChangeDate',
-				'edition',
-				'issuance',
-				'frequency',
-				'languageTerm',
+				'place',
+				'language',
 				'form',
 				'reformattingQuality',
 				'internetMediaType',
 				'extent',
 				'digitalOrigin',
-				'physicalDescriptionNote',
+				'note',
+				'genre',
 				'abstract',
 				'tableOfContents',
 				'targetAudience',
-				'topic',
-				'geographic',
-				'temporal',
-				'geographicCode',
-				'continent',
-				'country',
-				'province',
-				'region',
-				'state',
-				'territory',
-				'county',
-				'city',
-				'island',
-				'area',
-				'scale',
-				'projection',
-				'coordinates',
-				'occupation',
+				'note',
 				'classification',
-				'physicalLocation',
-				'url',
 				'accessCondition',
 				'extension',
-				'recordContentSource',
-				'recordIdentifier',
-				'recordOrigin',
-				'languageOfCataloging',
-				'note',
-				'titleInfo',
 				'relatedItem',
-				'subject',
-				'name',
-				'list',
-				'start',
-				'part',
-				'originInfo'
+				'subjectTopic',
+				'subjectGeographic',
+				'subjectTemporal',
+				'subjectGeographicCode',
+				'subjectGenre',
+				'subjectOccupation',
+				'subjectTitleInfo',
+				'identifier',
+				'location'
 			);
 		}
 		return $fieldList;
@@ -265,7 +241,7 @@ class ModsPlugin extends SchemaPlugin {
 
 		$physicalDescriptionNode =& $modsNode->getChildByName(array('physicalDescription', 'mods:physicalDescription', 'oai_mods:physicalDescription'));
 		if (isset($physicalDescriptionNode)) {
-			foreach ($originNode->getChildren() as $child) {
+			foreach ($physicalDescriptionNode->getChildren() as $child) {
 				$name = $child->getName(false);
 				switch ($name) {
 					case 'form':
@@ -370,7 +346,7 @@ class ModsPlugin extends SchemaPlugin {
 				unset($physicalLocationNode);
 			}
 
-			foreach (array('shelfLocator', 'holdingExternal') as $name) {
+			foreach (array('shelfLocator', 'holdingExternal', 'url') as $name) {
 				$node =& $locationNode->getChildByName(array($name, 'mods:' . $name, 'oai_mods:' . $name));
 				if ($node) {
 					$locationReturner[$name] = $node->getValue();
@@ -396,118 +372,94 @@ class ModsPlugin extends SchemaPlugin {
 	 * @return mixed
 	 */
 	function getFieldValue(&$record, $name, $type) {
-		$fieldValue = null;
+		$returner = null;
 		$parsedContents = $record->getParsedContents();
-		if (isset($parsedContents[$name])) switch ($type) {
-			case SORT_ORDER_TYPE_STRING:
-				$fieldValue = join(';', $parsedContents[$name]);
+		switch ($name) {
+			case 'title':
+			case 'subTitle':
+			case 'partNumber':
+			case 'partName':
+			case 'nonSort':
+			case 'typeOfResource':
+			case 'language':
+			case 'form':
+			case 'reformattingQuality':
+			case 'internetMediaType':
+			case 'extent':
+			case 'digitalOrigin':
+			case 'note':
+			case 'genre':
+			case 'abstract':
+			case 'tableOfContents':
+			case 'targetAudience':
+			case 'note':
+			case 'classification':
+			case 'accessCondition':
+			case 'extension':
+			case 'subjectTopic':
+			case 'subjectGeographic':
+			case 'subjectTemporal':
+			case 'subjectGeographicCode':
+			case 'subjectGenre':
+			case 'subjectOccupation':
+			case 'subjectTitleInfo':
+			case 'identifier':
+				if (isset($parsedContents[$name])) {
+					$returner = $parsedContents[$name];
+				}
 				break;
-			case SORT_ORDER_TYPE_NUMBER:
-				$fieldValue = (int) array_shift($parsedContents[$name]);
+			case 'name':
+				if (isset($parsedContents['names'])) $returner = $this->collapse($parsedContents['names']);
 				break;
-			case SORT_ORDER_TYPE_DATE:
-				$fieldValue = strtotime($thing = array_shift($parsedContents[$name]));
-				if ($fieldValue === -1 || $fieldValue === false) $fieldValue = null;
+			case 'publisher':
+			case 'edition':
+			case 'issuance':
+			case 'frequency':
+				if (isset($parsedContents['originInfo'][$name])) {
+					$returner = $parsedContents['originInfo'][$name];
+				}
 				break;
-			default:
-				fatalError('UNKNOWN TYPE');
+			case 'dateIssued':
+			case 'dateCreated':
+			case 'dateCaptured':
+			case 'dateValid':
+			case 'dateModified':
+			case 'copyrightDate':
+			case 'dateOther':
+				if (isset($parsedContents['originInfo'][$name]['value'])) {
+					$returner = $parsedContents['originInfo'][$name]['value'];
+				}
+				break;
+			case 'place':
+				if (isset($parsedContents['places'])) foreach ($parsedContents['places'] as $placeValue) {
+					$returner .= join('; ', $placeValue);
+				}
+				break;
+			case 'relatedItem':
+				// Simply dump all related item pieces into a
+				// single string.
+				if (isset($parsedContents['relatedItems'])) $returner = $this->collapse($parsedContents['relatedItems']);
+				break;
+			case 'location':
+				// Simply dump all related item pieces into a
+				// single string.
+				if (isset($parsedContents['locations'])) $returner = $this->collapse($parsedContents['locations']);
+				break;
 		}
-		HookRegistry::call('DublinCorePlugin::getFieldValue', array(&$this, &$fieldValue));
-		return $fieldValue;
+		if ($returner === null) return $returner;
+
+		// Handle type here
+		if ($type === SORT_ORDER_TYPE_DATE) $returner = strtotime($returner);
+
+		return $returner;
 	}
 
-	/**
-	 * Get the authors for the supplied record, if available; null otherwise
-	 * @param $record object
-	 * @param $entries array
-	 * @return array
-	 */
-/*	function getAuthors(&$record, $entries = null) {
-		if ($entries === null) $entries = $record->getEntries();
-		list($authors, $title) = $this->getAuthorsAndTitle($entries);
-		return $authors;
-	}*/
-
-	/**
-	 * Get the title for the supplied record, if available; null otherwise.
-	 * @param $record object
-	 * @param $entries array
-	 * @return string
-	 */
-/*	function getTitle(&$record, $entries = null) {
-		if ($entries === null) $entries = $record->getEntries();
-		list($authors, $title) = $this->getAuthorsAndTitle($entries);
-		return $title;
-	}*/
-
-	/**
-	 * Display a record summary.
-	 */
-/*	function displayRecordSummary(&$record) {
-		$templateMgr =& TemplateManager::getManager();
-		$templateMgr->assign_by_ref('record', $record);
-
-		$entries = $record->getEntries();
-		list($authors, $title) = $this->getAuthorsAndTitle($entries);
-
-		$templateMgr->assign('title', $title);
-		$templateMgr->assign('authors', $authors);
-		$templateMgr->assign('url', $this->getUrl($record, $entries));
-
-		$templateMgr->display($this->getTemplatePath() . 'summary.tpl', null);
-	}*/
-
-	/**
-	 * Display a record.
-	 */
-/*	function displayRecord(&$record) {
-		$templateMgr =& TemplateManager::getManager();
-
-		$entries = $record->getEntries();
-		$archive =& $record->getArchive();
-		if (!$archive || !$archive->getEnabled()) return false;
-
-		list($version, $defineTermsContextId) = $this->getRtVersion($archive);
-		if ($version) {
-			$templateMgr->assign('sidebarTemplate', 'rt/rt.tpl');
-			$templateMgr->assign_by_ref('version', $version);
-			$templateMgr->assign('defineTermsContextId', $defineTermsContextId);
+	function collapse($val) {
+		if (is_array($val)) foreach ($val as $subval) {
+			return $this->collapse($subval) . '; ';
 		}
-
-		function displayEntry(&$returner, &$entries, &$entry, $entryId, $indent = 0) {
-			$fieldName = Locale::translate('plugins.schemas.mods.fields.' . $entry['name'] . '.name');
-			$pad = str_repeat('&nbsp;&nbsp;', $indent);
-
-			switch ($entry['name']) {
-				case 'titleInfo':
-				case 'relatedItem':
-					$returner .= '<tr><td colspan="2"><h5>' . $pad . $fieldName . '</h5></td></tr>';
-					break;
-				default:
-					$value = trim($entry['value']);
-					if ($indent == 0) $returner .= "<tr><td><strong>$fieldName</strong></td><td>$value</td></tr>\n";
-					else $returner .= "<tr><td>$pad$fieldName</td><td>$value</td></tr>\n";
-			}
-
-			foreach (array_keys($entries) as $childEntryId) {
-				if ($entries[$childEntryId]['parent_entry_id'] == $entryId) {
-					displayEntry($returner, $entries, $entries[$childEntryId], $childEntryId, $indent + 1);
-				}
-			}
-		}
-
-		$recordHtml = '';
-		$entries = $this->flattenEntries($record->getEntries());
-		foreach ($entries as $entryId => $junk) {
-			if (!$entries[$entryId]['parent_entry_id']) displayEntry($recordHtml, $entries, $entries[$entryId], $entryId);
-		}
-
-		$templateMgr->assign_by_ref('recordHtml', $recordHtml);
-		$templateMgr->assign_by_ref('record', $record);
-		$templateMgr->assign_by_ref('archive', $archive);
-		$templateMgr->display($this->getTemplatePath() . 'record.tpl', null);
-		return true;
-	}*/
+		return $val;
+	}
 
 	function getFieldType($name) {
 		switch ($name) {
