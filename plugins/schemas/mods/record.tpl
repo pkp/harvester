@@ -79,17 +79,17 @@
 	{/foreach}
 	{foreach from=$contents.originInfo.places item=place}
 		<tr valign="top">
-			<td class="label">{translate key="plugins.schemas.mods.fields.placeTerm.name"}</td>
+			<td class="label">{translate key="plugins.schemas.mods.fields.place.name"}</td>
 			<td class="value">{$place.term|escape|nl2br}</td>
 		</tr>
 	{/foreach}
 	{foreach from=$contents.languages item=language}
 		<tr valign="top">
-			<td class="label">{translate key="plugins.schemas.mods.fields.languageTerm.name"}</td>
+			<td class="label">{translate key="plugins.schemas.mods.fields.language.name"}</td>
 			<td class="value">{$language.term|escape|nl2br}</td>
 		</tr>
 	{/foreach}
-	{foreach from="form"|to_array:"reformattingQuality":"internetMediaType":"extent":"digitalOrigin":"note":"genre":"abstract":"tableOfContents":"targetAudience":"classification":"accessCondition":"extension":"subjectTopic":"subjectGeographic":"subjectTemporal":"subjectGeographicCode":"subjectGenre":"subjectOccupation" item=nodeName}	
+	{foreach from="form"|to_array:"reformattingQuality":"internetMediaType":"extent":"digitalOrigin":"note":"abstract":"genre":"tableOfContents":"targetAudience":"classification":"accessCondition":"extension":"subjectTopic":"subjectGeographic":"subjectTemporal":"subjectGeographicCode":"subjectGenre":"subjectOccupation" item=nodeName}	
 		{if $contents.$nodeName}
 			<tr valign="top">
 				<td class="label">{translate key="plugins.schemas.mods.fields.$nodeName.name}</td>
