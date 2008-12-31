@@ -90,12 +90,21 @@ class RoleDAO extends DAO {
 	 * @param $role Role
 	 */
 	function deleteRole(&$role) {
+		return $this->deleteRoleByUserId($role->getUserId(), $role->getRoleId());
+	}
+
+	/**
+	 * Delete a role.
+	 * @param $userId int
+	 * @param $roleId int optional
+	 */
+	function deleteRoleByUserId($userId, $roleId = null) {
+		$params = array((int) $userId);
+		$roleId = (int) $roleId;
+		if ($roleId) $params[] = $roleId;
 		return $this->update(
-			'DELETE FROM roles WHERE user_id = ? AND role_id = ?',
-			array(
-				(int) $role->getUserId(),
-				(int) $role->getRoleId()
-			)
+			'DELETE FROM roles WHERE user_id = ?' . ($roleId?' AND role_id = ?':''),
+			$params
 		);
 	}
 
@@ -121,6 +130,70 @@ class RoleDAO extends DAO {
 		unset($result);
 
 		return $roles;
+	}
+
+	/**
+	 * Retrieve a list of users in a specified role.
+	 * @param $roleId int optional (can leave as null to get all users in journal)
+	 * @param $searchType int optional, which field to search
+	 * @param $search string optional, string to match
+	 * @param $searchMatch string optional, type of match ('is' vs. 'contains' vs. 'startsWith')
+	 * @param $dbResultRange object DBRangeInfo object describing range of results to return
+	 * @return array matching Users
+	 */
+	function &getUsersByRoleId($roleId = null, $searchType = null, $search = null, $searchMatch = null, $dbResultRange = null) {
+		$users = array();
+
+		$paramArray = array('interests');
+		if ($roleId) $paramArray[] = (int) $roleId;
+
+		$searchSql = '';
+
+		$searchTypeMap = array(
+			USER_FIELD_FIRSTNAME => 'u.first_name',
+			USER_FIELD_LASTNAME => 'u.last_name',
+			USER_FIELD_USERNAME => 'u.username',
+			USER_FIELD_EMAIL => 'u.email',
+			USER_FIELD_INTERESTS => 's.setting_value'
+		);
+
+		if (isset($search) && isset($searchTypeMap[$searchType])) {
+			$fieldName = $searchTypeMap[$searchType];
+			switch ($searchMatch) {
+				case 'is':
+					$searchSql = "AND LOWER($fieldName) = LOWER(?)";
+					$paramArray[] = $search;
+					break;
+				case 'contains':
+					$searchSql = "AND LOWER($fieldName) LIKE LOWER(?)";
+					$paramArray[] = '%' . $search . '%';
+					break;
+				case 'startsWith':
+					$searchSql = "AND LOWER($fieldName) LIKE LOWER(?)";
+					$paramArray[] = $search . '%';
+					break;
+			}
+		} elseif (isset($search)) switch ($searchType) {
+			case USER_FIELD_USERID:
+				$searchSql = 'AND u.user_id=?';
+				$paramArray[] = $search;
+				break;
+			case USER_FIELD_INITIAL:
+				$searchSql = 'AND LOWER(u.last_name) LIKE LOWER(?)';
+				$paramArray[] = $search . '%';
+				break;
+		}
+
+		$searchSql .= ' ORDER BY u.last_name, u.first_name'; // FIXME Add "sort field" parameter?
+
+		$result = &$this->retrieveRange(
+			'SELECT DISTINCT u.* FROM users AS u LEFT JOIN user_settings s ON (u.user_id = s.user_id AND s.setting_name = ?), roles AS r WHERE u.user_id = r.user_id ' . ($roleId?'AND r.role_id = ?':'') . ' ' . $searchSql,
+			$paramArray,
+			$dbResultRange
+		);
+
+		$returner = new DAOResultFactory($result, $this->userDao, '_returnUserFromRowWithData');
+		return $returner;
 	}
 
 	/**

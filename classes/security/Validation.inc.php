@@ -182,6 +182,13 @@ class Validation {
 	}
 
 	/**
+	 * Determine whether or not the current user can administer another.
+	 */
+	function canAdminister($userId) {
+		return Validation::isSiteAdmin();
+	}
+
+	/**
 	 * Encrypt user passwords for database storage.
 	 * The username is used as a unique salt to make dictionary
 	 * attacks against a compromised database more difficult.

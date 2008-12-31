@@ -191,6 +191,96 @@ class AdminHandler extends PKPHandler {
 
 
 	//
+	// People Management
+	//
+
+	function people($args) {
+		import('pages.admin.PeopleHandler');
+		PeopleHandler::people($args);
+	}
+
+	function enrollSearch($args) {
+		import('pages.admin.PeopleHandler');
+		PeopleHandler::enrollSearch($args);
+	}
+
+	function enroll($args) {
+		import('pages.admin.PeopleHandler');
+		PeopleHandler::enroll($args);
+	}
+
+	function unEnroll($args) {
+		import('pages.admin.PeopleHandler');
+		PeopleHandler::unEnroll($args);
+	}
+
+	function enrollSyncSelect($args) {
+		import('pages.admin.PeopleHandler');
+		PeopleHandler::enrollSyncSelect($args);
+	}
+
+	function enrollSync($args) {
+		import('pages.admin.PeopleHandler');
+		PeopleHandler::enrollSync($args);
+	}
+
+	function createUser() {
+		import('pages.admin.PeopleHandler');
+		PeopleHandler::createUser();
+	}
+
+	function suggestUsername() {
+		import('pages.admin.PeopleHandler');
+		PeopleHandler::suggestUsername();
+	}
+
+	function mergeUsers($args) {
+		import('pages.admin.PeopleHandler');
+		PeopleHandler::mergeUsers($args);
+	}
+
+	function disableUser($args) {
+		import('pages.admin.PeopleHandler');
+		PeopleHandler::disableUser($args);
+	}
+
+	function enableUser($args) {
+		import('pages.admin.PeopleHandler');
+		PeopleHandler::enableUser($args);
+	}
+
+	function removeUser($args) {
+		import('pages.admin.PeopleHandler');
+		PeopleHandler::removeUser($args);
+	}
+
+	function editUser($args) {
+		import('pages.admin.PeopleHandler');
+		PeopleHandler::editUser($args);
+	}
+
+	function updateUser() {
+		import('pages.admin.PeopleHandler');
+		PeopleHandler::updateUser();
+	}
+
+	function userProfile($args) {
+		import('pages.admin.PeopleHandler');
+		PeopleHandler::userProfile($args);
+	}
+
+	function signInAsUser($args) {
+		import('pages.admin.PeopleHandler');
+		PeopleHandler::signInAsUser($args);
+	}
+
+	function signOutAsUser() {
+		import('pages.admin.PeopleHandler');
+		PeopleHandler::signOutAsUser();
+	}
+
+
+	//
 	// Administrative functions
 	//
 

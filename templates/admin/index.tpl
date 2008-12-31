@@ -33,6 +33,16 @@
 	<li>&#187; <a href="{url op="archives"}">{translate key="admin.archives.manageArchives"}</a></li>
 </ul>
 
+<h3>{translate key="admin.users"}</h3>
+
+<ul class="plain">
+	<li>&#187; <a href="{url op="people" path="all"}">{translate key="admin.people.allUsers"}</a></li>
+	{url|assign:"managementUrl" page="admin"}
+	<li>&#187; <a href="{url op="createUser" source=$managementUrl}">{translate key="admin.people.createUser"}</a></li>
+	<li>&#187; <a href="{url op="people" path="submitters"}">{translate key="user.role.submitters"}</a></li>
+	{call_hook name="Templates::Manager::Index::Users"}
+</ul>
+
 <h3>{translate key="admin.adminFunctions"}</h3>
 
 <ul class="plain">

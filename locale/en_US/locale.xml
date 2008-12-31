@@ -325,6 +325,61 @@ Your server currently supports mbstring: <strong>{$supportsMBString}</strong>]]>
 	<message key="admin.confirmClearTemplateCache">Are you sure you want to clear the cache of compiled templates?</message>
 	<message key="admin.systemInformation">System Information</message>
 
+	<!-- Users -->
+	<message key="admin.users">Users</message>
+	<message key="admin.people">People</message>
+	<message key="admin.people.allUsers">All Users</message>
+	<message key="admin.people.createUser">Create User</message>
+	<message key="admin.people.noAdministrativeRights"><![CDATA[Sorry, you do not have administrative rights over this user. This may be because:
+		<ul>
+			<li>The user is a site administrator</li>
+			<li>The user is active in journals you do not manage</li>
+		</ul>
+	This task must be performed by a site administrator.
+	]]></message>
+	<message key="admin.people.mustChooseRole">Please select a role at the top of the page before clicking "Enroll User".</message>
+	<message key="admin.people.editUser">Edit User</message>
+	<message key="admin.people.enrollExistingUser">Enroll an Existing User</message>
+	<message key="admin.people.enroll">Enroll User</message>
+	<message key="admin.people.enrollment">Enrollment</message>
+	<message key="admin.people.roleEnrollment">{$role} Enrollment</message>
+	<message key="admin.people.unenroll">Unenroll</message>
+	<message key="admin.people.confirmUnenroll">Unenroll this user?</message>
+	<message key="admin.people.mergeUsers.confirm">Are you sure you wish to merge the account with the username "{$oldUsername}" into the account with the username "{$newUsername}"? The account with the username "{$oldUsername}" will not exist afterwards. This action is not reversible.</message>
+	<message key="admin.people.confirmRemove">Remove this user from this journal? This action will unenroll the user from all roles within this journal.</message>
+	<message key="admin.people.confirmDisable">Disable this user? This will prevent the user from logging into the system.
+
+You may optionally provide the user with a reason for disabling their account.</message>
+	<message key="admin.people.noneEnrolled">No enrolled users.</message>
+	<message key="admin.people.enrollSelected">Enroll Selected Users</message>
+	<message key="admin.people.noMatchingUsers">No matching users.</message>
+	<message key="admin.people.saveAndCreateAnotherUser">Save and Create Another</message>
+	<message key="admin.people.userCreatedSuccessfully">User created successfully.</message>
+	<message key="admin.people.authSource">Authentication source</message>
+	<message key="admin.people.enrollUserAs">Enroll user as</message>
+	<message key="admin.people.doNotEnroll">With no role</message>
+	<message key="admin.people.enrollUserAsDescription">Users can be assigned to, or removed from, a role at any point.</message>
+	<message key="admin.people.invalidUser">Sorry, the requested user does not exist.</message>
+	<message key="admin.people.createUserGeneratePassword">Generate a random password.</message>
+	<message key="admin.people.createUserSendNotify">Send the user a welcome email containing their username and password.</message>
+	<message key="admin.people.mustProvideName">Please provide at least a last name for the user first.</message>
+	<message key="admin.people.userMustChangePassword">Require the user to change their password the next time they log in.</message>
+	<message key="admin.people.disable">Disable</message>
+	<message key="admin.people.enable">Enable</message>
+	<message key="admin.people.remove">Remove</message>
+	<message key="admin.people.emailUsers">Email Users</message>
+	<message key="admin.people.emailUsers.emailSelectedUsers">Email selected users</message>
+	<message key="admin.people.emailUsers.emailUsersEnrolledAs">Email users enrolled as</message>
+	<message key="admin.people.emailUsers.selectUsers">Select the users you would like to email by checking the boxes beside their names</message>
+	<message key="admin.people.emailUsers.selectTemplate">Select a template</message>
+	<message key="admin.people.emailUsers.selectLocale">Select a locale</message>
+
+	<message key="admin.people.editProfile">Edit Profile</message>
+
+	<message key="admin.people.signInAsUser">Log In as User</message>
+	<message key="admin.people.signInAs">Log In As</message>
+	
+
 	<!-- Layout -->
 	<message key="admin.setup.layout.leftSidebar">Left Sidebar</message>
 	<message key="admin.setup.layout.unselected">Unselected</message>
