@@ -74,7 +74,7 @@ class PluginHandler extends AdminHandler {
 
 		$plugins =& PluginRegistry::loadCategory($category);
 		if (!isset($plugins[$plugin]) || !$plugins[$plugin]->manage($verb, $args)) {
-			Request::redirect(null, 'plugins');
+			Request::redirect(null, 'plugins', $category);
 		}
 	}
 	
