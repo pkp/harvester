@@ -148,7 +148,7 @@ class SubmitterHandler extends PKPHandler {
 		$user =& Request::getUser();
 		if ($archiveId !== null) {
 			$archiveDao =& DAORegistry::getDAO('ArchiveDAO');
-			$archive =& $archiveDao->getArchive((int) $archiveId);
+			$archive =& $archiveDao->getArchive((int) $archiveId, false);
 
 			if (!$archive) Request::redirect('index');
 			if ($archive->getUserId() != $user->getUserId()) Request::redirect('index');
