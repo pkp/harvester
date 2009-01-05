@@ -241,9 +241,10 @@ class OAIHarvesterPlugin extends HarvesterPlugin {
 
 		$returner = array();
 		$set = Request::getUserVar('set');
-		if ($set != '') {
-			$returner['set'] = $set;
-		}
+		if (count($set) == 1 && $set[0] == '') $set = null;
+
+		$returner['set'] = $set;
+
 		$dateFrom = Request::getUserDateVar('from', 1, 1);
 		$dateTo = Request::getUserDateVar('until', 32, 12, null, 23, 59, 59);
 		if (!empty($dateFrom)) $returner['from'] = OAIHarvester::UTCDate($dateFrom);
