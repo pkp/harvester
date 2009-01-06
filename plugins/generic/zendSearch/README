@@ -29,7 +29,9 @@ To install the plugin:
  - Once enabled, the plugin will add a link called "Search Form" under "Site
    Management". This defines the schema that will be used to index content,
    and the fields that will be available for searching under the Search link.
-
+ - A search form element must be created for each field that the plugin will 
+   index; these MUST be entered before any search results will appear.
+ - Note that archive metadata indexes must be updated for this to take effect.
 
 Usage
 -----

@@ -43,7 +43,7 @@ class ZendSearchResultIterator extends ArrayItemIterator {
 	function &next() {
 		$result =& parent::next();
 		$doc = $result->getDocument();
-		$recordId = $document->getFieldValue('harvesterRecordId');
+		$recordId = $doc->getFieldValue('harvesterRecordId');
 		unset($result, $doc);
 
 		$returner =& $this->recordDao->getRecord($recordId);
