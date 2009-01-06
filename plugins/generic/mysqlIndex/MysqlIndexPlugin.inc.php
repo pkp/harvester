@@ -188,14 +188,16 @@ class MysqlIndexPlugin extends GenericPlugin {
 		switch ($page) {
 			case 'misearch':
 				$this->import('MysqlIndexSearchHandler');
-				if (method_exists('MysqlIndexSearchHandler', $op)) {
+				$methods = array_map('strtolower', get_class_methods('MysqlIndexSearchHandler'));
+				if (in_array(strtolower($op), $methods)) {
 					define('HANDLER_CLASS', 'MysqlIndexSearchHandler');
 					return true;
 				}
 				break;
 			case 'mysqlIndexAdmin':
 				$this->import('MysqlIndexAdminHandler');
-				if (method_exists('MysqlIndexAdminHandler', $op)) {
+				$methods = array_map('strtolower', get_class_methods('MysqlIndexAdminHandler'));
+				if (in_array(strtolower($op), $methods)) {
 					define('HANDLER_CLASS', 'MysqlIndexAdminHandler');
 					return true;
 				}
