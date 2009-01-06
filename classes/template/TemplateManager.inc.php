@@ -140,7 +140,7 @@ class TemplateManager extends PKPTemplateManager {
 			}
 		}
 
-		return parent::smartyUrl($params, &$smarty);
+		return parent::smartyUrl($params, $smarty);
 	}
 
 	/**
