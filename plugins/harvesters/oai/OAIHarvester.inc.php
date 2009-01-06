@@ -106,6 +106,8 @@ class OAIHarvester extends Harvester {
 			return false;
 		}
 
+		if (!$result) return false;
+
 		if ($errorNode =& $result->getChildByName('error')) {
 			$this->addError($errorNode->getValue());
 			return false;
@@ -155,6 +157,8 @@ class OAIHarvester extends Harvester {
 			}
 			return false;
 		}
+
+		if (!$result) return false;
 
 		if ($errorNode =& $result->getChildByName('error')) {
 			$this->addError ($errorNode->getValue());
