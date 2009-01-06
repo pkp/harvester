@@ -69,6 +69,13 @@ class TinyMCEPlugin extends GenericPlugin {
 			case 'admin/updateArchive':
 				$fields[] = 'description';
 				break;
+			case 'user/profile':
+			case 'user/register':
+			case 'admin/createUser':
+			case 'admin/updateUser':
+				$fields[] = 'mailingAddress';
+				$fields[] = 'biography';
+				break;
 		}
 		HookRegistry::call('TinyMCEPlugin::getEnableFields', array(&$this, &$fields));
 		return $fields;

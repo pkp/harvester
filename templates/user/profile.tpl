@@ -95,14 +95,6 @@
 </tr>
 
 <tr valign="top">
-	<td class="label">{fieldLabel name="interests" key="user.interests"}</td>
-	<td class="value"><input type="text" name="interests[{$formLocale|escape}]" id="interests" value="{$interests[$formLocale]|escape}" size="30" maxlength="255" class="textField" /></td>
-</tr>
-<tr valign="top">
-	<td class="label">{fieldLabel name="biography" key="user.biography"}<br />{translate key="user.biography.description"}</td>
-	<td class="value"><textarea name="biography[{$formLocale|escape}]" id="biography" rows="5" cols="40" class="textArea">{$biography[$formLocale]|escape}</textarea></td>
-</tr>
-<tr valign="top">
 	<td class="label">
 		{fieldLabel name="profileImage" key="user.profile.form.profileImage"}
 	</td>
