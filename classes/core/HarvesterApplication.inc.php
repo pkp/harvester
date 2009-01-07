@@ -101,6 +101,22 @@ class HarvesterApplication extends PKPApplication {
 	}
 
 	/**
+	 * Get the list of plugin categories for this application.
+	 */
+	function getPluginCategories() {
+		return array(
+			'blocks',
+			'generic',
+			'harvesters',
+			'oaiMetadataFormats',
+			'postprocessors',
+			'preprocessors',
+			'schemas',
+			'themes'
+		);
+	}
+
+	/**
 	 * Instantiate the help object for this application.
 	 * @return object
 	 */
