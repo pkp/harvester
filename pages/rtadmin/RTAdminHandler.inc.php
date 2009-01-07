@@ -257,6 +257,7 @@ class RTAdminHandler extends PKPHandler {
 	 * @param $search object The current search, if applicable
 	 */
 	function setupTemplate($subclass = false, $archiveId = 'default', $version = null, $context = null, $search = null) {
+		parent::setupTemplate();
 		$templateMgr =& TemplateManager::getManager();
 
 		$pageHierarchy = array(array(Request::url('admin'), 'admin.siteAdmin'));
