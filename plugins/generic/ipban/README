@@ -1,0 +1,29 @@
+================================
+=== Harvester IP Banning Plugin
+=== Author: Alec Smecher <alec@smecher.bc.ca>
+================================
+
+About
+-----
+This plugin can be used to ban selected IP addresses from accessing the
+application.
+
+License
+-------
+This plugin is licensed under the GNU General Public License v2. See the file
+COPYING for the complete terms of this license.
+
+Installation
+------------
+To use the plugin:
+ - Create a file on the server in the plugin's directory (typically this will
+   be plugins/generic/ipban/ips.txt relative to the Harvester installation)
+   containing IP addresses to ban, one per line.
+ - As Site Administrator, go into the "System Plugins" page, into the "Generic"
+   plugin category, and enable the IP Banning Plugin.
+
+
+Contact/Support
+---------------
+Please email the author for support, bugfixes, or comments.
+Email: <alec@smecher.bc.ca>
