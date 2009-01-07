@@ -85,7 +85,7 @@ class IPBanPlugin extends GenericPlugin {
 	}
 
 	function isEnabled() {
-		return $this->getSetting(null, 'enabled');
+		return $this->getSetting('enabled');
 	}
 }
 
