@@ -12,7 +12,7 @@
 {assign var="helpTopicId" value="plugins.generic.mysqlIndex"}
 {include file="common/header.tpl"}
 
-<p>{translate key="plugins.generic.mysqlIndex.description"}</p>
+<p>{translate key="plugins.generic.mysqlIndex.crosswalks.description"}</p>
 
 <div id="crosswalks">
 <table width="100%" class="listing">
