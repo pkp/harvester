@@ -14,7 +14,7 @@
  
 <locale name="en_US" full_name="U.S. English">
 	<message key="plugins.generic.mysqlIndex.name">MySQL Index Search Plugin</message>
-	<message key="plugins.generic.mysqlIndex.description">This plugin implements a simple MySQL-based index.</message>
+	<message key="plugins.generic.mysqlIndex.description">This plugin implements a simple MySQL-based search index.</message>
 	<message key="plugins.generic.mysqlIndex.blockDisplayName">MySQL Search Block</message>
 	<message key="plugins.generic.mysqlIndex.blockDescription">This block allows searching via the MySQL indexing plugin.</message>
 	<message key="plugins.generic.mysqlIndex.searchForm">Search Form</message>
@@ -45,6 +45,5 @@
 	<message key="plugins.generic.mysqlIndex.schema">Schema</message>
 	<message key="plugins.generic.mysqlIndex.sort">Sort</message>
 	<message key="plugins.generic.mysqlIndex.search">Search</message>
-	<message key="plugins.generic.mysqlIndex.description">Crosswalks are used to identify similar fields in different metadata schema so that cross-schema searches can be performed.</message>
-
+	<message key="plugins.generic.mysqlIndex.crosswalks.description">Crosswalks are used to identify similar fields in different metadata schema so that cross-schema searches can be performed.</message>
 </locale>
