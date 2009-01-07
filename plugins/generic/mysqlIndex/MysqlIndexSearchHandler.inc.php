@@ -88,6 +88,8 @@ class MysqlIndexSearchHandler extends PKPHandler {
 			'crosswalk' => array()
 		);
 
+		import('field.Field');
+
 		if (is_array($fields)) foreach ($fields as $field) switch ($field->getType()) {
 			case FIELD_TYPE_DATE:
 				$varName = 'field-' . $field->getFieldId();
@@ -184,6 +186,8 @@ class MysqlIndexSearchHandler extends PKPHandler {
 			'field' => array(),
 			'crosswalk' => array()
 		);
+
+		import('field.Field');
 
 		if (is_array($fields)) foreach ($fields as $field) switch ($field->getType()) {
 			case FIELD_TYPE_DATE:
@@ -299,6 +303,8 @@ class MysqlIndexSearchHandler extends PKPHandler {
 			array(DAORegistry::getDAO('SchemaDAO'), 'buildSchema'),
 			array_unique($schemaList)
 		);
+
+		import('field.Field');
 
 		if (count($schemaList) == 1) {
 			// There is a single schema being searched; make use of all its
