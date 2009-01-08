@@ -5,7 +5,7 @@
  *
  * Copyright (c) 2005-2008 Alec Smecher and John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
- *
+ * 
  * @class ZendSearchSettingsForm
  * @ingroup plugins_generic_zendSearch
  * @see ZendSearchSettingsForm
@@ -25,7 +25,11 @@ class ZendSearchSettingsForm extends Form {
 	function ZendSearchSettingsForm() {
 		$plugin =& PluginRegistry::getPlugin('generic', 'ZendSearchPlugin');
 		parent::Form($plugin->getTemplatePath() . 'zendSearchSettingsForm.tpl');
+		
 		$this->addCheck(new FormValidatorPost($this));
+		if(!checkPhpVersion('5.0.0') && $this->readUserVars(array('solrUrl')) == '') {
+			$this->addCheck(new FormValidator($this, 'solrUrl', 'required', 'plugins.generic.zendSearch.solrMustExist'));
+		}
 		$this->addCheck(new FormValidatorUrl($this, 'solrUrl', 'optional', 'plugins.generic.zendSearch.solrUrl.invalid'));
 	}
 
