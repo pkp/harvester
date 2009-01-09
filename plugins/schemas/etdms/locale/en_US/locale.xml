@@ -55,5 +55,6 @@
 	<message key="plugins.schemas.etdms.fields.discipline.description">Area of study of the intellectual content of the resource.</message>
 	<message key="plugins.schemas.etdms.fields.grantor.name">Degree grantor</message>
 	<message key="plugins.schemas.etdms.fields.grantor.description">Institution granting the degree associated with the resource.</message>
+	<message key="plugins.schemas.etdms.fields.degree.name">Degree</message>
+	<message key="plugins.schemas.etdms.fields.degree.description">The name of the degree associated with the resource.</message>
 </locale>
-

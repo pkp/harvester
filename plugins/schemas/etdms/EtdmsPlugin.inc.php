@@ -76,13 +76,31 @@ class EtdmsPlugin extends SchemaPlugin {
 	}
 
 	/**
-	 * Get a list of the fields that can be used to sort in the browse list.
-	 * @return array
+	 * Get the value of a field by symbolic name.
+	 * @var $record object
+	 * @var $name string
+	 * @var $type SORT_ORDER_TYPE_...
+	 * @return mixed
 	 */
-	function getSortFields() {
-		$returner = array('title', 'date');
-		HookRegistry::call('EtdmsPlugin::getSortFields', array(&$this, &$returner));
-		return $returner;
+	function getFieldValue(&$record, $name, $type) {
+		$fieldValue = null;
+		$parsedContents = $record->getParsedContents();
+		if (isset($parsedContents[$name])) switch ($type) {
+			case SORT_ORDER_TYPE_STRING:
+				$fieldValue = join(';', $parsedContents[$name]);
+				break;
+			case SORT_ORDER_TYPE_NUMBER:
+				$fieldValue = (int) array_shift($parsedContents[$name]);
+				break;
+			case SORT_ORDER_TYPE_DATE:
+				$fieldValue = strtotime($thing = array_shift($parsedContents[$name]));
+				if ($fieldValue === -1 || $fieldValue === false) $fieldValue = null;
+				break;
+			default:
+				fatalError('UNKNOWN TYPE');
+		}
+		HookRegistry::call('EtdmsPlugin::getFieldValue', array(&$this, &$fieldValue));
+		return $fieldValue;
 	}
 
 	function getFieldName($fieldSymbolic, $locale = null) {
@@ -96,14 +114,13 @@ class EtdmsPlugin extends SchemaPlugin {
 	/**
 	 * Get a URL for the supplied record, if available; null otherwise.
 	 * @param $record object
-	 * @param $entries array optional
 	 * @return string
 	 */
-	function getUrl(&$record, $entries = null) {
-		if ($entries === null) $entries = $record->getEntries();
-		if (is_array($entries['identifier'])) foreach ($entries['identifier'] as $entry) {
-			if (preg_match('/^[a-z]+:\/\//', $entry['value'])) {
-				return $entry['value'];
+	function getUrl(&$record) {
+		$parsedContents =& $record->getParsedContents();
+		if (isset($parsedContents['identifier'])) {
+			foreach ((array) $parsedContents['identifier'] as $url) {
+				if (preg_match('/^[a-z]+:\/\//', $url)) return $url;
 			}
 		}
 		return null;
@@ -112,30 +129,60 @@ class EtdmsPlugin extends SchemaPlugin {
 	/**
 	 * Get the authors for the supplied record, if available; null otherwise
 	 * @param $record object
-	 * @param $entries array
 	 * @return array
 	 */
-	function getAuthors(&$record, $entries = null) {
-		if ($entries === null) $entries = $record->getEntries();
-		$returner = array();
-		if (is_array($entries['creator'])) foreach ($entries['creator'] as $entry) {
-			$returner[] = $entry['value'];
+	function getAuthors(&$record) {
+		$parsedContents =& $record->getParsedContents();
+		if (isset($parsedContents['creator'])) {
+			return $parsedContents['creator'];
 		}
-		return $returner;
+		return array();
 	}
 
 	/**
 	 * Get the title for the supplied record, if available; null otherwise.
 	 * @param $record object
-	 * @param $entries array
 	 * @return string
 	 */
-	function getTitle(&$record, $entries = null) {
-		if ($entries === null) $entries = $record->getEntries();
-		$returner = null;
-		if (is_array($entries['title'])) foreach ($entries['title'] as $entry) {
-			return $entry['value'];
+	function getTitle(&$record) {
+		$parsedContents =& $record->getParsedContents();
+		if (isset($parsedContents['title'])) {
+			return array_shift($parsedContents['title']);
 		}
+		return null;
+	}
+
+	/**
+	 * Get the identifier for the supplied record.
+	 * @param $record object
+	 * @return string
+	 */
+	function getIdentifier(&$record) {
+		$parsedContents =& $record->getParsedContents();
+		if (isset($parsedContents['identifier'])) {
+			return array_shift($parsedContents['identifier']);
+		}
+		return null;
+	}
+
+	/**
+	 * Parse a record's contents into an object
+	 * @param $contents string
+	 * @return object
+	 */
+	function &parseContents(&$contents) {
+		$xmlParser = new XMLParser();
+		$result =& $xmlParser->parseText($contents);
+
+		$returner = array();
+		foreach ($result->getChildren() as $child) {
+			$name = $child->getName();
+			$value = $child->getValue();
+			if (String::substr($name, 0, 6) == 'etdms:') $name = String::substr($name, 3);
+			$returner[$name][] = $value;
+		}
+
+		unset($result, $xmlParser);
 		return $returner;
 	}
 

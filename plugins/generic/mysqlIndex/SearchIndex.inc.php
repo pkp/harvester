@@ -131,16 +131,11 @@ class SearchIndex {
 	/**
 	 * Index record metadata.
 	 * @param $record Article
-	 * @param $entries array
 	 */
-	function indexRecord(&$archive, &$record, $entries = null) {
+	function indexRecord(&$archive, &$record) {
 		$fieldDao =& DAORegistry::getDAO('FieldDAO');
 		$schemaPlugin =& $record->getSchemaPlugin();
-		if (!$entries) {
-			$recordDao =& DAORegistry::getDAO('RecordDAO');
-			$entries = $recordDao->getEntries($record->getRecordId());
-		}
-		$schemaPlugin->indexRecord($archive, $record, $entries);
+		$schemaPlugin->indexRecord($archive, $record);
 	}
 }
 

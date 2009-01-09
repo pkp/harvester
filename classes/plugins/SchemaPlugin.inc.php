@@ -180,41 +180,37 @@ class SchemaPlugin extends Plugin {
 	/**
 	 * Get a URL for the supplied record, if available; null otherwise.
 	 * @param $record object
-	 * @param $entries array
 	 * @return string
 	 */
-	function getUrl(&$record, $entries = null) {
+	function getUrl(&$record) {
 		return null;
 	}
 
 	/**
 	 * Get the title for the supplied record, if available; null otherwise.
 	 * @param $record object
-	 * @param $entries array
 	 * @return string
 	 */
-	function getTitle(&$record, $entries = null) {
+	function getTitle(&$record) {
 		return null;
 	}
 
 	/**
-	 * Get the authors for the supplied record, if available; null otherwise
+	 * Get the authors for the supplied record, if available
 	 * @param $record object
-	 * @param $entries array
 	 * @return array
 	 */
-	function getAuthors(&$record, $entries = null) {
-		return null;
+	function getAuthors(&$record) {
+		return array();
 	}
 
 	/**
 	 * Get the author string for the supplied record, if available; null otherwise.
 	 * @param $record object
-	 * @param $entries array
 	 * @return string
 	 */
-	function getAuthorString(&$record, $entries = null) {
-		return (join('; ', $this->getAuthors($record, $entries)));
+	function getAuthorString(&$record) {
+		return (join('; ', $this->getAuthors($record)));
 	}
 
  	/**

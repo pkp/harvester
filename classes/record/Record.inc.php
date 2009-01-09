@@ -169,17 +169,17 @@ class Record extends DataObject {
 		return $schema->getPlugin();
 	}
 
-	function getTitle($entries = null) {
+	function getTitle() {
 		$plugin =& $this->getSchemaPlugin();
 		return $plugin->getTitle($this);
 	}
 
-	function getAuthors($entries = null) {
+	function getAuthors() {
 		$plugin =& $this->getSchemaPlugin();
 		return $plugin->getAuthors($this);
 	}
 
-	function getAuthorString($entries = null) {
+	function getAuthorString() {
 		$plugin =& $this->getSchemaPlugin();
 		return $plugin->getAuthorString($this);
 	}

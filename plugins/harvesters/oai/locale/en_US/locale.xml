@@ -17,6 +17,7 @@
 	<message key="plugins.harvesters.oai.description">This harvester supports the Open Archives Initiative (OAI) protocol, versions 1.1 and 2.0.</message>
 	<message key="plugins.harvesters.oai.archive.form.harvesterUrl">OAI Base URL</message>
 	<message key="plugins.harvesters.oai.archive.form.fetchMetadata">Fetch archive metadata</message>
+	<message key="plugins.harvesters.oai.archive.form.refreshDescription">Click Refresh to update supported formats list for this archive.</message>
 	<message key="plugins.harvesters.oai.archive.form.fetchMetadata.warning">This form will be automatically populated with values fetched from the OAI repository's metadata. Current field values will be replaced. Are you sure you wish to continue?</message>
 	<message key="plugins.harvesters.oai.archive.form.harvesterUrlRequired">The OAI URL field is required.</message>
 	<message key="plugins.harvester.oai.archive.form.harvesterUrlInvalid">The specified OAI URL is not valid. Please check the URL and try again.</message>

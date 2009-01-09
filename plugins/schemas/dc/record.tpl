@@ -37,7 +37,7 @@
 					{if $name == 'identifier'}
 						<a href="{$value|escape}">{$value|escape|default:"&mdash;"}</a>
 					{else}
-						{$value|nl2br|strip_unsafe_html|default:"&mdash;"}
+						{$value|trim|nl2br|strip_unsafe_html|default:"&mdash;"}
 					{/if}<br/>
 				{/foreach}
 			</td>

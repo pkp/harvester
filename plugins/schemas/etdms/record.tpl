@@ -29,15 +29,15 @@
 	<tr>
 		<td colspan="3" class="headseparator">&nbsp;</td>
 	</tr>
-	{foreach from=$entries item=entry key=name name=entries}
+	{foreach from=$record->getParsedContents() item=entry key=name name=entries}
 		<tr valign="top">
 			<td>{translate key="plugins.schemas.etdms.fields.$name.name"}</td>
 			<td>
 				{foreach from=$entry item=value}
 					{if $name == 'identifier'}
-						<a href="{$value.value|escape}">{$value.value|escape|default:"&mdash;"}</a>
+						<a href="{$value|escape}">{$value|escape|default:"&mdash;"}</a>
 					{else}
-						{$value.value|escape|default:"&mdash;"}
+						{$value|trim|nl2br|strip_unsafe_html|default:"&mdash;"}
 					{/if}<br/>
 				{/foreach}
 			</td>

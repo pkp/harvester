@@ -22,8 +22,32 @@ class MarcPlugin extends SchemaPlugin {
 	 */
 	function register($category, $path) {
 		$success = parent::register($category, $path);
+		if ($success) {
+			// Smarty has trouble with string indexes to arrays
+			// that look like numbers. Work around by adding a new
+			// Smarty function to help look up MARC record elements
+			// for display.
+			$templateMgr =& TemplateManager::getManager();
+			$templateMgr->register_function('get_marc_element', array(&$this, 'smartyGetMarcElement'));
+		}
 		$this->addLocaleData();
 		return $success;
+	}
+
+	function smartyGetMarcElement($params, &$smarty) {
+		$id = $params['id'];
+		$i1 = $params['i1'];
+		$i2 = $params['i2'];
+		$label = $params['label'];
+		$record = $params['record'];
+		$elements = $record->getParsedContents();
+		if (isset($elements["$id"]["$i1"]["$i2"]["$label"])) {
+			if (isset($params['firstOnly']) && $params['firstOnly']) {
+				return array_shift($elements["$id"]["$i1"]["$i2"]["$label"]);
+			}
+			return $elements["$id"]["$i1"]["$i2"]["$label"];
+		}
+		return null;
 	}
 
 	function getName() {
@@ -64,55 +88,39 @@ class MarcPlugin extends SchemaPlugin {
 	/**
 	 * Get a URL for the supplied record, if available; null otherwise.
 	 * @param $record object
-	 * @param $entries array
 	 * @return string
 	 */
-	function getUrl(&$record, $entries) {
-		$returner = null;
-		if (isset($entries['856'])) {
-			foreach ($entries['856'] as $entry) {
-				if (
-					$entry['attributes']['i1'] == '4' &&
-					$entry['attributes']['i2'] == '0'
-				) {
-					$possibleUrl = $entry['value'];
-				}
+	function getUrl(&$record) {
+		$entries = $record->getParsedContents();
+		if (isset($entries['856']['4']['0']['u'])) foreach ($entries['856']['4']['0']['u'] as $entry) {
+			if (preg_match('/^[a-z]+:\/\//', $entry)) {
+				return $entry;
 			}
 		}
-		if (preg_match('/^[a-z]+:\/\//', $possibleUrl)) {
-			$returner = $possibleUrl;
-		}
-		return $returner;
+		return null;
 	}
 
 	/**
 	 * Get the authors for the supplied record, if available; null otherwise
 	 * @param $record object
-	 * @param $entries array
 	 * @return array
 	 */
-	function getAuthors(&$record, $entries = null) {
-		if ($entries === null) $entries = $record->getEntries();
-		$returner = array();
-		if (is_array($entries['720'])) foreach ($entries['720'] as $entry) {
-			$returner[] = $entry['value'];
-		}
-		return $returner;
+	function getAuthors(&$record) {
+		$entries = $record->getParsedContents();
+		if (isset($entries['720'][' '][' ']['a'])) return $entries['720'][' '][' ']['a'];
+		return array();
 	}
 
 	/**
 	 * Get the title for the supplied record, if available; null otherwise.
 	 * @param $record object
-	 * @param $entries array
 	 * @return string
 	 */
-	function getTitle(&$record, $entries = null) {
-		if ($entries === null) $entries = $record->getEntries();
-		$returner = null;
-		if (is_array($entries['245'])) foreach ($entries['245'] as $entry) {
-			return $entry['value'];
-		}
-		return $returner;
+	function getTitle(&$record) {
+		$entries = $record->getParsedContents();
+		if (isset($entries['245']['0']['0']['a'])) return array_shift($entries['245']['0']['0']['a']);
+		if (isset($entries['520'][' '][' ']['a'])) return array_shift($entries['520'][' '][' ']['a']);
+		return null;
 	}
 
 	function getFieldType($name) {
@@ -159,47 +167,6 @@ class MarcPlugin extends SchemaPlugin {
 		return null;
 	}
 
-	function isFieldMixedType($name) {
-		switch ($name) {
-			case '008': // Date entered on file
-			case '260': // Copyright date (?)
-				return true;
-			default:
-				return false;
-		}
-	}
-
-	/**
-	 * Get the "importance" of this field. This is used to display subsets of the complete
-	 * field list of a schema by importance.
-	 * @param $name string
-	 * @return int
-	 */
-	function getFieldImportance($name) {
-		switch ($name) {
-			case '245':
-			case '720':
-			case '653':
-			case '520':
-			case '260':
-			case '655':
-			case '856':
-			case '786':
-			case '546':
-				return 1;
-			default:
-				return 0;
-		}
-	}
-
-	/**
-	 * Get a list of field importance levels supported by this plugin, in .
-	 * @return array
-	 */
-	function getSupportedFieldImportance() {
-		return array(0, 1);
-	}
-
 	function getMetadataPrefix() {
 		return 'oai_marc';
 	}
@@ -238,7 +205,7 @@ class MarcPlugin extends SchemaPlugin {
 						if ($subfield->getName() != 'subfield') continue;
 						$value = $subfield->getValue();
 						if (empty($value)) continue;
-						$label = $subfield->getAttribute('code');
+						$label = $subfield->getAttribute('label');
 						$returner[$id][$i1][$i2][$label][] = $value;
 					}
 					break;
@@ -290,7 +257,6 @@ class MarcPlugin extends SchemaPlugin {
 		HookRegistry::call('MarcPlugin::getFieldValue', array(&$this, &$fieldValue));
 		return $fieldValue;
 	}
-
 }
 
 ?>

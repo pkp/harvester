@@ -23,14 +23,6 @@ function handleArchiveSelect() {
 	return true;
 }
 
-function handleImportanceChange(newImportance) {
-	// Specific fields are currently displayed; the field set should be
-	// updated.
-	document.search.action = "{/literal}{url op="search" importance=NEW_IMPORTANCE escape="false"}{literal}".replace("NEW_IMPORTANCE", newImportance);
-	document.search.submit();
-	return true;
-}
-
 // -->
 {/literal}
 </script>
@@ -59,16 +51,6 @@ function handleImportanceChange(newImportance) {
 		</select><br />
 	</td>
 </tr>
-
-{if $lessImportance!==null || $moreImportance!==null}
-	<tr valign="top">
-		<td class="label">&nbsp;</td>
-		<td colspan="2" class="value">
-			<input type="button" {if $moreImportance===null}disabled="disabled" {/if}class="button" onclick="handleImportanceChange('{$moreImportance|escape}')" value="{translate key="search.fields.less"}"/>
-			<input type="button" {if $lessImportance===null}disabled="disabled" {/if}class="button" onclick="handleImportanceChange('{$lessImportance|escape}')" value="{translate key="search.fields.more"}"/>
-		</td>
-	</tr>
-{/if}
 
 	{foreach from=$crosswalks item=crosswalk}
 		{assign var=crosswalkType value=$crosswalk->getType()}
@@ -112,9 +94,7 @@ function handleImportanceChange(newImportance) {
 	{foreach from=$fields item=field}
 		{assign var=fieldType value=$field->getType()}
 		{assign var=fieldId value=$field->getFieldId()}
-		{if $importance !== null && $field->getImportance() < $importance}
-			{* This field isn't important enough. Don't display it. *}
-		{elseif $fieldType == FIELD_TYPE_DATE}
+		{if $fieldType == FIELD_TYPE_DATE}
 			{assign var=fieldValueFromVar value=field-$fieldId-from}
 			{assign var=fieldValueToVar value=field-$fieldId-to}
 			<tr valign="top">

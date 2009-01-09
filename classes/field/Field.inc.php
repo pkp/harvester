@@ -109,12 +109,6 @@ class Field extends DataObject {
 		if (!$plugin) return null;
 		return $plugin->getFieldName($this->getName(), $locale);
 	}
-
-	function getImportance() {
-		$plugin =& $this->getSchemaPlugin();
-		if (!$plugin) return null;
-		return $plugin->getFieldImportance($this->getName());
-	}
 }
 
 ?>
