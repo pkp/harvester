@@ -226,7 +226,10 @@ class MarcPlugin extends SchemaPlugin {
 			}
 		}
 
+		$result->destroy();
+		$xmlParser->destroy();
 		unset($result, $xmlParser);
+
 		return $returner;
 	}
 

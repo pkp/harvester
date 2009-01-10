@@ -245,7 +245,7 @@ class SortOrderSettingsDAO extends DAO {
 		}
 
 		$xmlParser->destroy();
-
+		$tree->destroy();
 	}
 
 	/**

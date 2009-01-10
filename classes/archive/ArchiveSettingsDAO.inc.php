@@ -286,7 +286,7 @@ class ArchiveSettingsDAO extends DAO {
 		}
 
 		$xmlParser->destroy();
-
+		$tree->destroy();
 	}
 }
 

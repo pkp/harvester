@@ -230,7 +230,7 @@ class PluginSettingsDAO extends DAO {
 		}
 
 		$xmlParser->destroy();
-
+		$tree->destroy();
 	}
 }
 

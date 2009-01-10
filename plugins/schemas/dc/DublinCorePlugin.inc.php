@@ -178,7 +178,10 @@ class DublinCorePlugin extends SchemaPlugin {
 			$returner[$name][] = $value;
 		}
 
+		$result->destroy();
+		$xmlParser->destroy();
 		unset($result, $xmlParser);
+
 		return $returner;
 	}
 

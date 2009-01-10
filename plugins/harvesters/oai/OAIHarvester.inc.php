@@ -119,6 +119,8 @@ class OAIHarvester extends Harvester {
 			if ($prefixNode) array_unshift($returner, $prefixNode->getValue());
 			unset($prefixNode);
 		}
+		$parser->destroy();
+		$result->destroy();
 		return $returner;
 	}
 
@@ -171,7 +173,8 @@ class OAIHarvester extends Harvester {
 		$repositoryNameNode =& $identifyNode->getChildByName(array('repositoryName', 'oai:repositoryName')) && $returner['title'] = $repositoryNameNode->getValue();
 		$adminEmailNode =& $identifyNode->getChildByName(array('adminEmail', 'oai:adminEmail')) && $returner['adminEmail'] = $adminEmailNode->getValue();
 		$descriptionNode =& $identifyNode->getChildByName(array('description', 'oai:description')) && $returner['description'] = $descriptionNode->getValue();
-
+		$parser->destroy();
+		$result->destroy();
 		return $returner;
 	}
 
@@ -209,6 +212,8 @@ class OAIHarvester extends Harvester {
 				$returner[$setSpecNode->getValue()] = $setNameNode->getValue();
 			unset($setSpecNode, $setNameNode);
 		}
+		$parser->destroy();
+		$result->destroy();
 		return $returner;
 	}
 
@@ -301,6 +306,7 @@ class OAIHarvester extends Harvester {
 			if (!$result) return false;
 		}
 
+		$parser->destroy();
 		unset($parser);
 		unset($xmlHandler);
 
@@ -334,10 +340,12 @@ class OAIHarvester extends Harvester {
 					$this->addError('Unknown node ' . $node->getName());
 			}
 		}
+		$result->destroy();
+		unset($verbNode, $result, $node); // Free memory
 
 		if ($token) {
-			unset($verbNode, $result, $node); // Free memory
-			return $this->updateRecords($params, $token, $recordOffset);
+			$returner = $this->updateRecords($params, $token, $recordOffset);
+			return $returner;
 		}
 		if (!$this->getStatus()) return false; // Error
 		return $recordOffset;
@@ -369,7 +377,6 @@ class OAIHarvester extends Harvester {
 	 * Update a single record by identifier.
 	 * @param $identifier string
 	 * @param $params array
-	 * @return object Record
 	 */
 	function &updateRecord($identifier, $params = array()) {
 		$verb = 'GetRecord';
@@ -386,6 +393,7 @@ class OAIHarvester extends Harvester {
 			}
 			if (!$result) return false;
 		}
+		$parser->destroy();
 		unset($parser);
 
 		if ($errorNode =& $result->getChildByName('error')) {
@@ -395,8 +403,7 @@ class OAIHarvester extends Harvester {
 		$verbNode =& $result->getChildByName($verb);
 		$recordNode =& $result->getChildByName(array('record', 'oai:record'));
 		$this->handleRecordNode($recordNode);
-
-		return $result;
+		$result->destroy();
 	}
 
 	/**

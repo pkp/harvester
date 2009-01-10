@@ -365,7 +365,7 @@ class CrosswalkDAO extends DAO {
 		}
 
 		$xmlParser->destroy();
-
+		$tree->destroy();
 	}
 
 	/**

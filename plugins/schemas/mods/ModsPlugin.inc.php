@@ -127,7 +127,10 @@ class ModsPlugin extends SchemaPlugin {
 			return $returner;
 		}
 
+		$result->destroy();
+		$xmlParser->destroy();
 		$returner =& $this->handleRootNode($modsNode);
+
 		return $returner;
 	}
 
