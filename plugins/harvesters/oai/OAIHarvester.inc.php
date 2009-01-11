@@ -308,7 +308,6 @@ class OAIHarvester extends Harvester {
 
 		$parser->destroy();
 		unset($parser);
-		unset($xmlHandler);
 
 		if ($errorNode =& $result->getChildByName('error')) {
 			$this->addError ($errorNode->getValue());
@@ -362,14 +361,16 @@ class OAIHarvester extends Harvester {
 			if (isset($params['verbose'])) echo "Deleted record: $identifier\n";
 			return $this->_deleteRecordByIdentifier($identifier);
 		}
-		$metadataNode = array_shift($metadataContainerNode->getChildren());
+		$metadataContainerChildren =& $metadataContainerNode->getChildren();
+		$metadataNode =& $metadataContainerChildren[0];
 
 		$record =& $this->getRecordByIdentifier($identifier);
+		$xml =& $metadataNode->toXml();
 		if (!$record) {
 			// This is a new record.
-			return $this->_insertRecord($identifier, $metadataNode->toXml());
+			return $this->_insertRecord($identifier, $xml);
 		} else {
-			return $this->_updateRecord($record, $metadataNode->toXml());
+			return $this->_updateRecord($record, $xml);
 		}
 	}
 
