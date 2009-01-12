@@ -16,9 +16,12 @@
 
 <br />
 
-<div id="archives">
-	&#187; <a href="{url path="all"}">{translate key="browse.browseAll"}</a><br/><br/>
 {iterate from=archives item=archive}
+	{if !$notFirstArchive}
+		{assign var=notFirstArchive value=1}
+		<div id="archives">
+		&#187; <a href="{url path="all"}">{translate key="browse.browseAll"}</a><br/><br/>
+	{/if}
 	<div style="clear:left;">
 	{assign var="archiveImage" value=$archive->getSetting('archiveImage')}
 	{if $archiveImage}
@@ -27,24 +30,25 @@
 		</div>
 	{/if}
 	</div>
-	<h3><a href="{url path=$archive->getArchiveId()}">{$archive->getTitle()|escape}</a></h3>
 
+	<h3><a href="{url path=$archive->getArchiveId()}">{$archive->getTitle()|escape}</a></h3>
 
 	<p>
 		{$archive->getSetting('description')|strip_unsafe_html|nl2br}<br />
 		{translate key="browse.recordCount" count=$archive->getRecordCount()}
 	</p>
-
 {/iterate}
+
+{if $notFirstArchive}
+	</div>{* archives *}
+{/if}
 
 <div style="clear:left;"></div>
 
 {if $archives->wasEmpty()}
 	<p>{translate key="admin.archives.noneCreated"}</p>
 {else}
-</ul>
 	{page_info iterator=$archives}&nbsp;&nbsp;&nbsp;&nbsp;{page_links anchor="archives" name="archives" iterator=$archives}
 {/if}
-</div>
 
 {include file="common/footer.tpl"}

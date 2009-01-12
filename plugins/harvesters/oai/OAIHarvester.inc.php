@@ -303,8 +303,8 @@ class OAIHarvester extends Harvester {
 			foreach ($parser->getErrors() as $error) {
 				$this->addError($error);
 			}
-			if (!$result) return false;
 		}
+		if (!$result) return false;
 
 		$parser->destroy();
 		unset($parser);
