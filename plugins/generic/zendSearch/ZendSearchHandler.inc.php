@@ -51,7 +51,7 @@ class ZendSearchHandler extends PKPHandler {
 			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 			curl_setopt($ch, CURLOPT_TIMEOUT, 10);
 			curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
-			curl_setopt($ch, CURLOPT_ENCODING, '');          
+			curl_setopt($ch, CURLOPT_ENCODING, '');
 			curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10);
 			curl_setopt($ch, CURLOPT_DNS_USE_GLOBAL_CACHE, 0);
 			curl_setopt($ch, CURLOPT_POST, 1);
@@ -66,7 +66,7 @@ class ZendSearchHandler extends PKPHandler {
 			if ($isUsingSolr) {
 				$query .= 'text:"' . ZendSearchHandler::luceneEscape($q) . '" ';
 			} else {
-				$query->addSubquery(new Zend_Search_Lucene_Search_Query_Term(new Zend_Search_Lucene_Index_Term($q)), true);
+				$query->addSubquery(Zend_Search_Lucene_Search_QueryParser::parse($q));
 			}
 		}
 
