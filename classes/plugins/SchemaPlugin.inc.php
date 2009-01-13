@@ -169,7 +169,6 @@ class SchemaPlugin extends Plugin {
 		list($version, $defineTermsContextId) = $this->getRtVersion($archive);
 
 		if ($version) {
-			$templateMgr->assign('sidebarTemplate', 'rt/rt.tpl');
 			$templateMgr->assign_by_ref('version', $version);
 			$templateMgr->assign('defineTermsContextId', $defineTermsContextId);
 		}

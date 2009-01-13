@@ -25,6 +25,7 @@ class RTHandler extends PKPHandler {
 		$contextId = array_shift($args);
 
 		list($archive, $record) = RTHandler::validate($recordId);
+		RTHandler::setupTemplate();
 
 		$rtDao =& DAORegistry::getDAO('RTDAO');
 		$context =& $rtDao->getContext($contextId);
