@@ -134,19 +134,22 @@ class ZendSearchPlugin extends GenericPlugin {
 		return $verbs;
 	}
 
-	/**
-	 * Execute a management verb on this plugin
-	 * @param $verb string
-	 * @param $args array
-	 * @return boolean
-	 */
-	function manage($verb, $args) {
+ 	/*
+ 	 * Execute a management verb on this plugin
+ 	 * @param $verb string
+ 	 * @param $args array
+	 * @param $message string Location for the plugin to put a result msg
+ 	 * @return boolean
+ 	 */
+	function manage($verb, $args, &$message) {
 		switch ($verb) {
 			case 'enable':
 				if (checkPhpVersion('5.0.0')) {
 					$this->updateSetting('enabled', true);
+					$message = Locale::translate('plugins.generic.zendSearch.enabled');
 				} else {
 					$this->updateSetting('enabled', true);
+					$message = Locale::translate('plugins.generic.zendSearch.enabled');
 					if (!$this->isUsingSolr()) {
 						Request::redirect('zendSearchAdmin', 'settings');
 					}
@@ -154,6 +157,7 @@ class ZendSearchPlugin extends GenericPlugin {
 				break;
 			case 'disable':
 				$this->updateSetting('enabled', false);
+				$message = Locale::translate('plugins.generic.zendSearch.disabled');
 				break;
 			case 'adminSearchForm':
 				Request::redirect('zendSearchAdmin', 'index');

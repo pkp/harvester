@@ -18,6 +18,8 @@
 	<message key="plugins.generic.mysqlIndex.blockDisplayName">MySQL Search Block</message>
 	<message key="plugins.generic.mysqlIndex.blockDescription">This block allows searching via the MySQL indexing plugin.</message>
 	<message key="plugins.generic.mysqlIndex.searchForm">Search Form</message>
+	<message key="plugins.generic.mysqlIndex.enabled">The MySQL Index Search Plugin has been enabled.</message>
+	<message key="plugins.generic.mysqlIndex.disabled">The MySQL Index Search Plugin has been disabled.</message>
 
 	<!-- Crosswalks -->
 	<message key="plugins.generic.mysqlIndex.crosswalks">Crosswalks</message>

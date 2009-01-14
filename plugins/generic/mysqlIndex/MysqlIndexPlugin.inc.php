@@ -122,19 +122,22 @@ class MysqlIndexPlugin extends GenericPlugin {
 		return $verbs;
 	}
 
-	/**
-	 * Execute a management verb on this plugin
-	 * @param $verb string
-	 * @param $args array
-	 * @return boolean
-	 */
-	function manage($verb, $args) {
+ 	/*
+ 	 * Execute a management verb on this plugin
+ 	 * @param $verb string
+ 	 * @param $args array
+	 * @param $message string Location for the plugin to put a result msg
+ 	 * @return boolean
+ 	 */
+	function manage($verb, $args, &$message) {
 		switch ($verb) {
 			case 'enable':
 				$this->updateSetting('enabled', true);
+				$message = Locale::translate('plugins.generic.mysqlIndex.enabled');
 				break;
 			case 'disable':
 				$this->updateSetting('enabled', false);
+				$message = Locale::translate('plugins.generic.mysqlIndex.disabled');
 				break;
 			case 'adminCrosswalks':
 				Request::redirect('mysqlIndexAdmin', 'adminCrosswalks');

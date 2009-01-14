@@ -73,9 +73,15 @@ class PluginHandler extends AdminHandler {
 		PluginHandler::setupTemplate(true);
 
 		$plugins =& PluginRegistry::loadCategory($category);
-		if (!isset($plugins[$plugin]) || !$plugins[$plugin]->manage($verb, $args)) {
-			Request::redirect(null, 'plugins', $category);
+		$message = null;
+		if (!isset($plugins[$plugin]) || !$plugins[$plugin]->manage($verb, $args, $message)) {
+			if ($message) {
+				$templateMgr =& TemplateManager::getManager();
+				$templateMgr->assign('message', $message);
+			}
+			PluginHandler::plugins(array($category));
 		}
+
 	}
 	
 	/**
