@@ -12,12 +12,20 @@
  * Common HTML elements
  */
 
-#sidebar {
+#rightSidebar {
 	float: right;
-	width: 150px;
+	width: 20%;
 	background-color: #EDEDED;
 	border: 1px #666 dotted;
 	padding: 10px;
-	margin: 5px;
+	margin: 10px 5px 5px 5px;
 	font-size: 0.65em;
 }
+
+#main {
+	width: 73%;
+	float: left;
+	display: inline;
+	overflow: hidden;
+}
+

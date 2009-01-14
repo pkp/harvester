@@ -166,10 +166,14 @@ input.defaultButton {
 	padding-left: 10%;
 }
 
+#body {
+	margin-left: 10%;
+	margin-right: 10%;
+}
+
 #main {
 	padding: 0.5em 0em 2em 0em;
-	width: 80%;
-	margin: 0 auto;
+	width: 100%;
 }
 
 #main h2 {

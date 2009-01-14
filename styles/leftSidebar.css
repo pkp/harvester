@@ -1,7 +1,7 @@
 /**
  * leftSidebar.css
  *
- * Copyright (c) 2003-2008 John Willinsky
+ * Copyright (c) 2005-2008 Alec Smecher and John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * Site-wide shared elements for pages including a left-hand sidebar.
@@ -13,35 +13,20 @@
  * Common HTML elements
  */
 
-#headerTitle {
-	width: 100%;
-}
-
-#body {
-	vertical-align: top;
-	height: 100%;
-}
-
 #leftSidebar {
 	float: left;
-	width: 14%;
-	padding: 1em 0em 1em 0em;
+	width: 20%;
+	background-color: #EDEDED;
+	border: 1px #666 dotted;
+	padding: 10px;
+	margin: 10px 5px 5px 0px;
 	font-size: 0.65em;
-	height: 100%;
-	margin-left: 10%;
-	margin-right: 2%;
+}
+
+
+#main {
+	width: 73%;
+	float: right;
 	display: inline;
 	overflow: hidden;
 }
-
-#main {
-	float: right;
-	width: 63%;
-	margin-right: 10%;
-	overflow: hidden;
-}
-
-// Set main on non-IE browsers to have a 10% margin
-*html #main {
-	margin-right: 5%;
-} 

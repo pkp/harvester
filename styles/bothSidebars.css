@@ -1,0 +1,31 @@
+/**
+ * bothSidebars.css
+ *
+ * Copyright (c) 2005-2008 Alec Smecher and John Willinsky
+ * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
+ *
+ * Site-wide shared elements for pages including both a left-hand sidebar and a
+ * right-hand sidebar.
+ *
+ * $Id$
+ */
+
+/**
+ * Common HTML elements
+ */
+
+
+#main {
+	position: relative;
+	float: left;
+	width:50%;
+	height: 100%;
+	text-align: center;
+	margin-left: 10px;
+	display: inline;
+	overflow: auto;
+}
+
+#body {
+	min-width: 750px;
+}
