@@ -114,6 +114,7 @@ class OAIHarvesterPlugin extends HarvesterPlugin {
 			}
 		}
 		if ($archive) $templateMgr->assign('metadataFormat', $archive->getSchemaPluginName());
+
 		$templateMgr->assign('metadataFormats', $supportedFormats);
 	}
 
@@ -167,9 +168,9 @@ class OAIHarvesterPlugin extends HarvesterPlugin {
 
 		$oaiHarvester = new OAIHarvester($archive);
 		$availableSets = $oaiHarvester->getSets($archive->getSetting('harvesterUrl'));
-		$selectedSet = '';
+		@$defaultSets = $archive->getSetting('defaultSets');
+		if (isset($defaultSets) && is_array($defaultSets)) $templateMgr->assign('defaultSets', $defaultSets);
 
-		$templateMgr->assign('selectedSet', $selectedSet);
 		$templateMgr->assign('availableSets', $availableSets);
 
 		$templateMgr->assign('numRecords', $archive->updateRecordCount());
@@ -244,6 +245,8 @@ class OAIHarvesterPlugin extends HarvesterPlugin {
 		if (count($set) == 1 && $set[0] == '') $set = null;
 
 		$returner['set'] = $set;
+		// Store these set selections for next time
+		if (is_array($set)) $archive->updateSetting('defaultSets', $set);
 
 		$dateFrom = Request::getUserDateVar('from', 1, 1);
 		$dateTo = Request::getUserDateVar('until', 32, 12, null, 23, 59, 59);
