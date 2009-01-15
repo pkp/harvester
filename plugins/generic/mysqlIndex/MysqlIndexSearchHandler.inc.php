@@ -46,18 +46,6 @@ class MysqlIndexSearchHandler extends PKPHandler {
 		if (empty($archiveIds)) $archiveIds = null;
 		elseif (!is_array($archiveIds)) $archiveIds = array($archiveIds);
 
-/*		if (is_array($fields)) foreach ($fields as $field) switch ($field->getType()) {
-			case FIELD_TYPE_SELECT:
-				$templateMgr->assign('field-options-' . $field->getFieldId(), $recordDao->getFieldOptions($field->getFieldId(), $archiveIds));
-				break;
-		} */
-
-/*		if (is_array($crosswalks)) foreach ($crosswalks as $crosswalk) switch ($crosswalk->getType()) {
-			case FIELD_TYPE_SELECT:
-				$templateMgr->assign('crosswalk-options-' . $crosswalk->getCrosswalkId(), $recordDao->getCrosswalkOptions($crosswalk->getCrosswalkId(), $archiveIds));
-				break;
-		} */
-
 		$plugin =& MysqlIndexSearchHandler::getPlugin();
 		$templateMgr->display($plugin->getTemplatePath() . 'search.tpl');
 	}
@@ -100,8 +88,8 @@ class MysqlIndexSearchHandler extends PKPHandler {
 				$dateTo = Request::getUserDateVar($dateToName, 32, 12, null, 23, 59, 59);
 				$dates['field'][$field->getFieldId()] = array($dateFrom, $dateTo);
 				foreach (array('Month', 'Day', 'Year') as $datePart) {
-					$forwardPararms[$dateFromName . $datePart] = Request::getUserVar($dateFromName . $datePart);
-					$forwardPararms[$dateToName . $datePart] = Request::getUserVar($dateToName . $datePart);
+					$forwardParams[$dateFromName . $datePart] = Request::getUserVar($dateFromName . $datePart);
+					$forwardParams[$dateToName . $datePart] = Request::getUserVar($dateToName . $datePart);
 				}
 				break;
 			case FIELD_TYPE_STRING:
@@ -126,8 +114,8 @@ class MysqlIndexSearchHandler extends PKPHandler {
 				$dateTo = Request::getUserDateVar($dateToName, 32, 12, null, 23, 59, 59);
 				$dates['crosswalk'][$crosswalk->getCrosswalkId()] = array($dateFrom, $dateTo);
 				foreach (array('Month', 'Day', 'Year') as $datePart) {
-					$forwardPararms[$dateFromName . $datePart] = Request::getUserVar($dateFromName . $datePart);
-					$forwardPararms[$dateToName . $datePart] = Request::getUserVar($dateToName . $datePart);
+					$forwardParams[$dateFromName . $datePart] = Request::getUserVar($dateFromName . $datePart);
+					$forwardParams[$dateToName . $datePart] = Request::getUserVar($dateToName . $datePart);
 				}
 				break;
 			case FIELD_TYPE_SELECT:
@@ -174,6 +162,7 @@ class MysqlIndexSearchHandler extends PKPHandler {
 		$rangeInfo = PKPHandler::getRangeInfo('search');
 
 		$query = Request::getUserVar('query');
+		$forwardParams = array();
 
 		$keywords = array(
 			'all' => Search::parseQuery($query),
@@ -198,11 +187,16 @@ class MysqlIndexSearchHandler extends PKPHandler {
 				$dateFrom = Request::getUserVar($dateFromName);
 				$dateTo = Request::getUserVar($dateToName);
 				$dates['field'][$field->getFieldId()] = array($dateFrom, $dateTo);
+				foreach (array('Month', 'Day', 'Year') as $datePart) {
+					$forwardParams[$dateFromName . $datePart] = Request::getUserVar($dateFromName . $datePart);
+					$forwardParams[$dateToName . $datePart] = Request::getUserVar($dateToName . $datePart);
+				}
 				break;
 			case FIELD_TYPE_STRING:
 			case FIELD_TYPE_SELECT:
 				$value = Request::getUserVar($field->getName());
 				if (!empty($value)) {
+					$forwardParams[$field->getName()] = $value;
 					if (is_array($value)) $value = '"' . implode('" OR "', $value) . '"';
 					$keywords['field'][$field->getFieldId()] = Search::parseQuery($value);
 				}
@@ -218,11 +212,16 @@ class MysqlIndexSearchHandler extends PKPHandler {
 				$dateFrom = Request::getUserVar($dateFromName);
 				$dateTo = Request::getUserVar($dateToName);
 				$dates['crosswalk'][$crosswalk->getCrosswalkId()] = array($dateFrom, $dateTo);
+				foreach (array('Month', 'Day', 'Year') as $datePart) {
+					$forwardParams[$dateFromName . $datePart] = Request::getUserVar($dateFromName . $datePart);
+					$forwardParams[$dateToName . $datePart] = Request::getUserVar($dateToName . $datePart);
+				}
 				break;
 			case FIELD_TYPE_SELECT:
 			case FIELD_TYPE_STRING:
 				$value = Request::getUserVar($crosswalk->getPublicCrosswalkId());
 				if (!empty($value)) {
+					$forwardParams[$crosswalk->getPublicCrosswalkId()] = $value;
 					if (is_array($value)) $value = '"' . implode('" OR "', $value) . '"';
 					$keywords['crosswalk'][$crosswalk->getCrosswalkId()] = Search::parseQuery($value);
 				}
@@ -242,8 +241,12 @@ class MysqlIndexSearchHandler extends PKPHandler {
 		$templateMgr->assign('isAdvanced', Request::getUserVar('isAdvanced'));
 		$templateMgr->assign('importance', Request::getUserVar('importance')); // Field importance
 
+		foreach ($forwardParams as $key => $value) if ($value == '') unset($forwardParams[$key]);
+		$templateMgr->assign('forwardParams', $forwardParams);
+
 		$templateMgr->assign_by_ref('results', $results);
-		$templateMgr->display('search/results.tpl');
+		$plugin =& MysqlIndexSearchHandler::getPlugin();
+		$templateMgr->display($plugin->getTemplatePath() . 'results.tpl');
 	}
 
 	/**
@@ -340,6 +343,7 @@ class MysqlIndexSearchHandler extends PKPHandler {
 			$crosswalkDao =& DAORegistry::getDAO('CrosswalkDAO');
 			$crosswalks =& $crosswalkDao->getCrosswalksForSchemas($schemaList);
 			$crosswalks =& $crosswalks->toArray();
+
 			foreach ($crosswalks as $crosswalk) switch ($crosswalk->getType()) {
 				case FIELD_TYPE_DATE:
 					$varName = 'crosswalk-' . $crosswalk->getCrosswalkId();
