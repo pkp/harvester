@@ -199,3 +199,23 @@ A: This may indicate that your server does not have the selected PHP database
    your php.ini configuration to load the module, by adding "extension=mysql.so"
    or "extension=pgsql.so", for example.
 
+   -----------------------------------------------------------------------------
+
+   8) How can I remove "index.php" from the URLs in Harvester2?
+
+A: Harvester2 uses a REST-style URL syntax for all of its links.  To force Harvester2
+   to remove the "index.php" portion of all URLs, edit config.inc.php and set
+   "restful_urls" to "On".
+   
+   In addition, your server will have to support URL rewriting in order to recognize
+   the new URLs.  Apache servers use the mod_rewrite plugin, which must be enabled
+   in your httpd.conf, and the following section added to the correct section of either
+   your httpd.conf or an .htaccess file (preferred) in your Harvester2 root directory 
+   (the same location as config.inc.php):
+   
+   <IfModule mod_rewrite.c>
+   RewriteEngine on
+   RewriteCond %{REQUEST_FILENAME} !-d
+   RewriteCond %{REQUEST_FILENAME} !-f
+   RewriteRule ^(.*)$ index.php/$1 [QSA,L]
+  </IfModule>
