@@ -105,7 +105,7 @@ class OAIHarvesterPlugin extends HarvesterPlugin {
 		$oaiHarvester = new OAIHarvester($archive);
 		$metadataFormats = $oaiHarvester->getMetadataFormats($form->getData('harvesterUrl'), $form->getData('isStatic'));
 		$supportedFormats = array();
-		foreach ($metadataFormats as $format) {
+		if (is_array($metadataFormats)) foreach ($metadataFormats as $format) {
 			if (isset($aliases[$format]) && isset($plugins[$aliases[$format]])) {
 				$pluginName = $aliases[$format];
 				$plugin =& $plugins[$pluginName];
