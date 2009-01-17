@@ -23,10 +23,13 @@
 	font-size: 0.65em;
 }
 
-
 #main {
 	width: 73%;
 	float: right;
 	display: inline;
-	overflow: hidden;
+	overflow: auto;
+}
+
+#body {
+	min-width: 750px;
 }

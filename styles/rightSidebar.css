@@ -26,6 +26,9 @@
 	width: 73%;
 	float: left;
 	display: inline;
-	overflow: hidden;
+	overflow: auto;
 }
 
+#body {
+	min-width: 750px;
+}
