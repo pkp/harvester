@@ -140,6 +140,19 @@ class OAIHarvesterPlugin extends HarvesterPlugin {
 
 		$oaiHarvester = new OAIHarvester($archive);
 
+		// If necessary, save the set list.
+		if (isset($params['set'])) {
+			if (!is_array($params['set'])) $params['set'] = array($params['set']);
+			$archive->updateSetting('defaultSets', $params['set']);
+		}
+
+		// If the useLastSets param was specified, fetch the last set
+		// list from archive settings.
+		if (isset($params['useLastSets']) && $params['useLastSets']) {
+			$defaultSets = $archive->getSetting('defaultSets');
+			if (isset($defaultSets)) $params['set'] = $defaultSets;
+		}
+
 		if (!$oaiHarvester->updateRecords($params)) {
 			foreach ($oaiHarvester->getErrors() as $error) {
 				$this->addError($error);
@@ -168,7 +181,7 @@ class OAIHarvesterPlugin extends HarvesterPlugin {
 
 		$oaiHarvester = new OAIHarvester($archive);
 		$availableSets = $oaiHarvester->getSets($archive->getSetting('harvesterUrl'));
-		@$defaultSets = $archive->getSetting('defaultSets');
+		$defaultSets = $archive->getSetting('defaultSets');
 		if (isset($defaultSets) && is_array($defaultSets)) $templateMgr->assign('defaultSets', $defaultSets);
 
 		$templateMgr->assign('availableSets', $availableSets);
@@ -245,8 +258,6 @@ class OAIHarvesterPlugin extends HarvesterPlugin {
 		if (count($set) == 1 && $set[0] == '') $set = null;
 
 		$returner['set'] = $set;
-		// Store these set selections for next time
-		if (is_array($set)) $archive->updateSetting('defaultSets', $set);
 
 		$dateFrom = Request::getUserDateVar('from', 1, 1);
 		$dateTo = Request::getUserDateVar('until', 32, 12, null, 23, 59, 59);

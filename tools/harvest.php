@@ -59,7 +59,14 @@ class harvest extends CommandLineTool {
 			default:
 				if (($i = strpos($arg, '=')) !== false) {
 					// Treat the parameter like a name=value pair
-					$this->params[substr($arg, 0, $i)] = substr($arg, $i+1);
+					$paramName = substr($arg, 0, $i);
+					$paramValue = substr($arg, $i+1);
+					if (!isset($this->params[$paramName])) {
+						$this->params[$paramName] = $paramValue;
+					} else {
+						if (is_array($this->params[$paramName])) $this->params[$paramName][] = $paramValue;
+						else $this->params[$paramName] = array($this->params[$paramName], $paramValue);
+					}
 				} else {
 					// Treat the parameter like a boolean.
 					$this->params[$arg] = true;
