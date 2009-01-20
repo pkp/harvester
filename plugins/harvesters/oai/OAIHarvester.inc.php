@@ -114,7 +114,7 @@ class OAIHarvester extends Harvester {
 		}
 
 		$listMetadataFormatsNode =& $result->getChildByName('ListMetadataFormats');
-		foreach ($listMetadataFormatsNode->getChildren() as $node) {
+		if ($listMetadataFormatsNode) foreach ($listMetadataFormatsNode->getChildren() as $node) {
 			$prefixNode =& $node->getChildByName(array('metadataPrefix', 'oai:metadataPrefix'));
 			if ($prefixNode) array_unshift($returner, $prefixNode->getValue());
 			unset($prefixNode);
@@ -317,7 +317,7 @@ class OAIHarvester extends Harvester {
 		$token = null;
 
 		$verbNode =& $result->getChildByName($verb);
-		foreach ($verbNode->getChildren() as $node) {
+		if ($verbNode) foreach ($verbNode->getChildren() as $node) {
 			switch ($node->getName()) {
 				case 'header':
 				case 'oai:header':
