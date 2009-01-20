@@ -17,6 +17,7 @@
 		<query>INSERT INTO site (primary_locale, supported_locales) VALUES ('en_US', 'en_US')</query>
 		<query>INSERT INTO roles (user_id, role_id) VALUES (1,1)</query>
 		<query>UPDATE archives SET user_id = 1</query>
+		<query>DELETE FROM archive_settings WHERE setting_name = 'recordCount'</query><!-- Bug #4016 -->
 	</sql>
 	<!-- Localize the site table -->
 	<sql>
