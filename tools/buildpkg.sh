@@ -16,7 +16,7 @@
 CVSROOT=:pserver:anonymous@pkp.sfu.ca:/cvs
 HARVESTERMODULE=harvester2
 PKPMODULE=pkp
-PRECOMPILE=1
+PRECOMPILE=0
 
 if [ -z "$1" ]; then
 	echo "Usage: $0 <version> [<tag>] [<patch_dir>]";
@@ -44,7 +44,7 @@ cvs -Q -d $CVSROOT export -r $TAG -d $BUILD $HARVESTERMODULE || exit 1
 echo "Done"
 
 echo -n "Exporting $PKPMODULE with tag $TAG ... "
-cvs -Q -d $CVSROOT export -r HEAD $PKPMODULE || exit 1
+cvs -Q -d $CVSROOT export -r $TAG $PKPMODULE || exit 1
 echo "Done"
 
 if [ ! -d $BUILD/lib ]; then
