@@ -49,6 +49,28 @@ class Upgrade extends Installer {
 		return true;
 	}
 
+	function updateArchivePluginNames() {
+		$archiveDao =& DAORegistry::getDAO('ArchiveDAO');
+		$archiveSettingsDao =& DAORegistry::getDAO('ArchiveSettingsDAO');
+		$archives =& $archiveDao->getArchives(false);
+		while ($archive =& $archives->next()) {
+			$schemaPluginName = $archive->getSetting('schemaPluginName');
+			$archive->setSchemaPluginName($schemaPluginName);
+			$archiveDao->updateArchive($archive);
+			$archiveSettingsDao->deleteSetting($archive->getArchiveId(), 'schemaPluginName');
+			unset($archive);
+		}
+		return true;
+	}
+
+	/**
+	 * Install the schema aliases (during upgrade)
+	 */
+	function installSchemaAliases() {
+		$schemaAliasDao =& DAORegistry::getDAO('SchemaAliasDAO');
+		$schemaAliasDao->installSchemaAliases();
+		return true;
+	}
 }
 
 ?>

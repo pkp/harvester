@@ -73,6 +73,10 @@ class Harvester {
 		array_push($this->errors, $error);
 	}
 
+	function &getSchema() {
+		fatalError('ABSTRACT CLASS');
+	}
+
 	/**
 	 * Index the record sort indexes for a specific sort order.
 	 * @param $record object

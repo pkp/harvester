@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE data SYSTEM "../../../lib/pkp/dtd/xmlData.dtd">
+
+<!--
+  * 2.3_preupdate.xml
+  *
+  * Copyright (c) 2005-2008 Alec Smecher and John Willinsky
+  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
+  *
+  * 2.3 database updates XML file, applied prior to DB schema descriptors.
+  *
+  * $Id$
+  -->
+
+<data>
+	<!-- DROP CURRENT SET OF METADATA!!! The user should be warned in docs. -->
+	<sql>
+		<query>DROP TABLE records</query>
+		<query>DROP TABLE entries</query>
+		<query>DROP TABLE entry_attributes</query>
+		<query>DROP TABLE search_keyword_list</query>
+		<query>DROP TABLE search_objects</query>
+		<query>DROP TABLE search_object_keywords</query>
+	</sql>
+	<sql>
+		<query>
+			INSERT INTO users
+				(user_id, username, password, first_name, last_name, email, date_registered, date_last_login, disabled)
+			SELECT	1 AS user_id,
+				s1.setting_value AS username,
+				s2.setting_value AS password,
+				s1.setting_value AS first_name,
+				'' AS last_name,
+				s3.setting_value AS email,
+				NOW() AS date_registered,
+				NOW() AS date_last_login,
+				0 AS disabled
+			FROM	site_settings s1,
+				site_settings s2,
+				site_settings s3
+			WHERE	s1.setting_name = 'username' AND
+				s2.setting_name = 'password' AND
+				s3.setting_name = 'contact_email'
+		</query>
+	</sql>
+
+	<!-- Bug #2440: Add enabled/disabled flag to archives. Default enabled. -->
+	<sql>
+		<query>UPDATE archives SET enabled = 1</query>
+	</sql>
+
+	<!-- Bug #2446: Add enabled/disabled flag for user site submission. Default enabled. -->
+	<sql>
+		<query>
+			INSERT INTO site_settings (setting_name, setting_value, setting_type) VALUES ('enableSubmit', 1, 'bool')
+		</query>
+	</sql>
+</data>

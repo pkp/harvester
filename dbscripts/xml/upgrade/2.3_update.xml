@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE data SYSTEM "../../../lib/pkp/dtd/xmlData.dtd">
+
+<!--
+  * 2.3_update.xml
+  *
+  * Copyright (c) 2005-2008 Alec Smecher and John Willinsky
+  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
+  *
+  * 2.3 database updates XML file, applied after DB schema descriptors.
+  *
+  * $Id$
+  -->
+
+<data>
+	<sql>
+		<query>INSERT INTO site (primary_locale, supported_locales) VALUES ('en_US', 'en_US')</query>
+		<query>INSERT INTO roles (user_id, role_id) VALUES (1,1)</query>
+		<query>UPDATE archives SET user_id = 1</query>
+	</sql>
+	<!-- Localize the site table -->
+	<sql>
+		<query>UPDATE site_settings SET locale = 'en_US' WHERE setting_name = 'title' OR setting_name = 'intro' OR setting_name = 'about' OR setting_name = 'contact_name' OR setting_name = 'contact_email'</query>
+		<query>UPDATE site_settings SET setting_name = 'contactEmail' WHERE setting_name = 'contact_email'</query>
+		<query>UPDATE site_settings SET setting_name = 'contactName' WHERE setting_name = 'contact_name'</query>
+	</sql>
+</data>
