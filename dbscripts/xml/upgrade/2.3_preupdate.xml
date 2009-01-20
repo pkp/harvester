@@ -21,6 +21,7 @@
 		<query>DROP TABLE search_keyword_list</query>
 		<query>DROP TABLE search_objects</query>
 		<query>DROP TABLE search_object_keywords</query>
+		<query>DROP TABLE captchas</query><!-- Bug #4015 -->
 	</sql>
 	<sql>
 		<query>
