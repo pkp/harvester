@@ -64,7 +64,7 @@ allow_url_fopen = Off
 
 ; Generate RESTful URLs using mod_rewrite.  This requires the
 ; rewrite directive to be enabled in your .htaccess or httpd.conf.
-; See README for more details.
+; See FAQ for more details.
 restful_urls = Off
 
 ; Impose a minimum number of seconds between requests. Useful if a
