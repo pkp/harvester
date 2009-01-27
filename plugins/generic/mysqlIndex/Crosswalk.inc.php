@@ -79,22 +79,6 @@ class Crosswalk extends DataObject {
 	}
 
 	/**
-	 * Is this crosswalk sortable?
-	 * @return boolean
-	 */
-	 function getSortable() {
-	 	return $this->getData('sortable');
-	}
-
-	/**
-	 * Set whether or not this crosswalk is sortable
-	 * @param $sortable boolean
-	 */
-	function setSortable($sortable) {
-		return $this->setData('sortable',$sortable);
-	}
-
-	/**
 	 * Get localized name of crosswalk
 	 * @return string
 	 */

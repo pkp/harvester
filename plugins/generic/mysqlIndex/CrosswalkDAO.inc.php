@@ -80,7 +80,6 @@ class CrosswalkDAO extends DAO {
 		$crosswalk->setDescription($row['description']);
 		$crosswalk->setSeq($row['seq']);
 		$crosswalk->setType($row['type']);
-		$crosswalk->setSortable($row['sortable']);
 
 		HookRegistry::call('CrosswalkDAO::_returnCrosswalkFromRow', array(&$crosswalk, &$row));
 
@@ -94,16 +93,15 @@ class CrosswalkDAO extends DAO {
 	function insertCrosswalk(&$crosswalk) {
 		$this->update(
 			'INSERT INTO crosswalks
-				(name, public_crosswalk_id, description, seq, type, sortable)
+				(name, public_crosswalk_id, description, seq, type)
 				VALUES
-				(?, ?, ?, ?, ?, ?)',
+				(?, ?, ?, ?, ?)',
 			array(
 				$crosswalk->getName(),
 				$crosswalk->getPublicCrosswalkId(),
 				$crosswalk->getDescription(),
 				$crosswalk->getSeq(),
-				$crosswalk->getType(),
-				$crosswalk->getSortable()?1:0
+				$crosswalk->getType()
 			)
 		);
 
@@ -142,22 +140,19 @@ class CrosswalkDAO extends DAO {
 	 */
 	function updateCrosswalk(&$crosswalk) {
 		return $this->update(
-			'UPDATE crosswalks
-				SET
-					name = ?,
-					public_crosswalk_id = ?,
-					description = ?,
-					seq = ?,
-					type = ?,
-					sortable = ?
-				WHERE crosswalk_id = ?',
+			'UPDATE	crosswalks
+			SET	name = ?,
+				public_crosswalk_id = ?,
+				description = ?,
+				seq = ?,
+				type = ?
+			WHERE	crosswalk_id = ?',
 			array(
 				$crosswalk->getName(),
 				$crosswalk->getPublicCrosswalkId(),
 				$crosswalk->getDescription(),
 				$crosswalk->getSeq(),
 				$crosswalk->getType(),
-				$crosswalk->getSortable()?1:0,
 				$crosswalk->getCrosswalkId()
 			)
 		);
@@ -189,20 +184,6 @@ class CrosswalkDAO extends DAO {
 	function &getCrosswalks($rangeInfo = null) {
 		$result =& $this->retrieveRange(
 			'SELECT * FROM crosswalks ORDER BY seq',
-			false, $rangeInfo
-		);
-
-		$returner = new DAOResultFactory($result, $this, '_returnCrosswalkFromRow');
-		return $returner;
-	}
-
-	/**
-	 * Retrieve all sortable crosswalks.
-	 * @return DAOResultFactory containing matching crosswalks
-	 */
-	function &getSortableCrosswalks($rangeInfo = null) {
-		$result =& $this->retrieveRange(
-			'SELECT * FROM crosswalks WHERE sortable = 1 ORDER BY seq',
 			false, $rangeInfo
 		);
 
@@ -248,11 +229,10 @@ class CrosswalkDAO extends DAO {
 	 * Insert fields for a crosswalk.
 	 * @param $crosswalkId int
 	 * @param $fieldId int
-	 * @param $sortable boolean optional
 	 */
-	function insertCrosswalkField($crosswalkId, $fieldId, $sortable = false) {
+	function insertCrosswalkField($crosswalkId, $fieldId) {
 		return $this->update(
-			'INSERT INTO crosswalk_fields(crosswalk_id, raw_field_id, sortable) VALUES (?, ?, ?)', array($crosswalkId, $fieldId, $sortable?1:0)
+			'INSERT INTO crosswalk_fields(crosswalk_id, raw_field_id) VALUES (?, ?)', array($crosswalkId, $fieldId)
 		);
 	}
 
@@ -316,7 +296,6 @@ class CrosswalkDAO extends DAO {
 
 		foreach ($tree->getChildren() as $crosswalkNode) {
 			$type = $crosswalkNode->getAttribute('type');
-			$sortable = $crosswalkNode->getAttribute('sortable') == 'true';
 			$publicId = $crosswalkNode->getAttribute('public_id');
 			$nameNode =& $crosswalkNode->getChildByName('name');
 			$descriptionNode =& $crosswalkNode->getChildByName('description');
@@ -329,8 +308,7 @@ class CrosswalkDAO extends DAO {
 				$crosswalk->setName($name);
 				$crosswalk->setPublicCrosswalkId($publicId);
 				$crosswalk->setDescription($description);
-				$crosswalk->setSortable($sortable);
-				$crosswalk->setSeq(99999); // KLUDGE
+				$crosswalk->setSeq(REALLY_BIG_NUMBER);
 				switch($type) {
 					case 'date':
 						$crosswalk->setType(FIELD_TYPE_DATE);
@@ -351,12 +329,11 @@ class CrosswalkDAO extends DAO {
 				foreach ($crosswalkNode->getChildren() as $node) if ($node->getName() == 'field') {
 					$schemaPluginName = $node->getAttribute('schema');
 					$fieldName = $node->getAttribute('name');
-					$sortableField = $node->getAttribute('sortable') == 'true';
 
 					$schema =& $schemaDao->buildSchema($schemaPluginName);
 					$field =& $fieldDao->buildField($fieldName, $schemaPluginName);
 
-					$this->insertCrosswalkField($crosswalk->getCrosswalkId(), $field->getFieldId(), $sortableField);
+					$this->insertCrosswalkField($crosswalk->getCrosswalkId(), $field->getFieldId());
 					unset($schema);
 					unset($field);
 				}
@@ -366,69 +343,6 @@ class CrosswalkDAO extends DAO {
 
 		$xmlParser->destroy();
 		$tree->destroy();
-	}
-
-	/**
-	 * Set all fields to non-sortable for the given crosswalk and
-	 * schema plugin name or, if no plugin is specified, for all schemas.
-	 * If a schema plugin and field name are specified, sorting is enabled
-	 * for the combination.
-	 * @param $crosswalkId int
-	 * @param $schemaPluginName string optional
-	 * @param $fieldName string optional
-	 */
-	function resetSortField($crosswalkId, $schemaPluginName = null, $fieldName = null) {
-		// If no schema plugin name is specified, reset all.
-		if ($schemaPluginName === null) {
-			return $this->update(
-				'UPDATE crosswalk_fields SET sortable = 0 WHERE crosswalk_id = ?',
-				array($crosswalkId)
-			);
-		}
-
-		$fieldDao =& DAORegistry::getDAO('FieldDAO');
-		$plugins =& PluginRegistry::loadCategory('schemas');
-		if (!isset($plugins[$schemaPluginName])) {
-			die("Unknown schema plugin \"$schemaPluginName\"!");
-		}
-		$plugin =& $plugins[$schemaPluginName];
-		foreach ($plugin->getFieldList() as $thisFieldName) {
-			$field =& $fieldDao->buildField($thisFieldName, $schemaPluginName);
-			$this->update(
-				'UPDATE crosswalk_fields SET sortable = ? WHERE raw_field_id = ? AND crosswalk_id = ?',
-				array(
-					$thisFieldName === $fieldName?1:0,
-					$field->getFieldId(),
-					$crosswalkId
-				)
-			);
-
-			unset($field);
-		}
-
-		return true;
-	}
-
-	/**
-	 * Get the list of sortable field IDs for a crosswalk.
-	 */
-	function getSortableFieldIds($crosswalkId) {
-		$result =& $this->retrieve(
-			'SELECT raw_field_id FROM crosswalk_fields WHERE crosswalk_id = ? AND sortable = 1',
-			array((int) $crosswalkId)
-		);
-
-		$returner = array();
-		for ($i=1; !$result->EOF; $i++) {
-			list($fieldId) = $result->fields;
-			$returner[] = $fieldId;
-
-			$result->moveNext();
-		}
-
-		$result->close();
-		unset($result);
-		return $returner;
 	}
 
 	/**

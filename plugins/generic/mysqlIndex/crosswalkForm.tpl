@@ -33,7 +33,6 @@ function refreshForm() {
 
 <div id="crosswalkForm">
 <form name="crosswalkForm" method="post" action="{url op="updateCrosswalk"}">
-<input type="hidden" name="overrideSortable" value="1"/>
 {if $crosswalkId}
 <input type="hidden" name="crosswalkId" value="{$crosswalkId}" />
 {/if}
@@ -43,20 +42,20 @@ function refreshForm() {
 <table class="listing" width="100%">
 	<tr valign="top">
 		<td width="20%" class="label">{fieldLabel name="name" key="plugins.generic.mysqlIndex.crosswalk.name" required="true"}</td>
-		<td colspan="{if $sortable}3{else}2{/if}" width="80%" class="value"><input type="text" id="name" name="name" value="{$name|escape}" size="40" maxlength="120" class="textField" /></td>
+		<td colspan="2" width="80%" class="value"><input type="text" id="name" name="name" value="{$name|escape}" size="40" maxlength="120" class="textField" /></td>
 	</tr>
 	<tr valign="top">
 		<td class="label">{fieldLabel name="description" key="plugins.generic.mysqlIndex.crosswalk.description" required="true"}</td>
-		<td colspan="{if $sortable}3{else}2{/if}" class="value"><textarea name="description" id="description" cols="40" rows="10" class="textArea">{$description|escape}</textarea></td>
+		<td colspan="2" class="value"><textarea name="description" id="description" cols="40" rows="10" class="textArea">{$description|escape}</textarea></td>
 	</tr>
 
 	<tr>
-		<td colspan="{if $sortable}4{else}3{/if}" class="separator">&nbsp;</td>
+		<td colspan="3" class="separator">&nbsp;</td>
 	</tr>
 
 	<tr valign="top">
 		<td class="label">{fieldLabel name="url" key="plugins.generic.mysqlIndex.crosswalk.publicCrosswalkId"}</td>
-		<td colspan="{if $sortable}3{else}2{/if}" class="value">
+		<td colspan="2" class="value">
 			<input type="text" id="publicCrosswalkId" name="publicCrosswalkId" value="{$publicCrosswalkId|escape}" size="20" maxlength="40" class="textField" />
 			<br/>
 			{translate key="plugins.generic.mysqlIndex.form.publicCrosswalkId.description"}
@@ -64,26 +63,25 @@ function refreshForm() {
 	</tr>
 
 	<tr>
-		<td colspan="{if $sortable}4{else}3{/if}" class="separator">&nbsp;</td>
+		<td colspan="3" class="separator">&nbsp;</td>
 	</tr>
 
 	<tr valign="top">
 		<td class="label">{translate key="plugins.generic.mysqlIndex.crosswalk.type"}</td>
-		<td colspan="{if $sortable}3{else}2{/if}" class="value">
+		<td colspan="2" class="value">
 			{foreach from=$crosswalkTypes item=typeName key=typeId}
 				<input {if $crosswalkType == $typeId}checked {/if}onclick="refreshForm()" name="crosswalkType" type="radio" value="{$typeId}">&nbsp;&nbsp;{translate key=$typeName}<br />
 			{/foreach}
-			<input id="sortable" type="checkbox"{if $sortable} checked="checked"{/if} onclick="refreshForm()" name="sortable"/><label for="sortable">{translate key="plugins.generic.mysqlIndex.crosswalk.sortableDescription"}</label>
 		</td>
 	</tr>
 
 	<tr>
-		<td colspan="{if $sortable}4{else}3{/if}" class="separator">&nbsp;</td>
+		<td colspan="3" class="separator">&nbsp;</td>
 	</tr>
 
 	<tr valign="top">
 		<td class="label"><label for="schemaPluginName">{translate key="plugins.generic.mysqlIndex.schemaFilter"}</label></td>
-		<td colspan="{if $sortable}3{else}2{/if}" class="value">
+		<td colspan="2" class="value">
 			<select id="schemaPluginName" name="schemaPluginName" class="selectMenu" onchange="refreshForm()">
 				<option value="">{translate key="plugins.generic.mysqlIndex.schemaFilter.all"}</option>
 				{foreach from=$schemaPlugins item=schemaPlugin}
@@ -94,17 +92,16 @@ function refreshForm() {
 	</tr>
 
 	<tr>
-		<td colspan="{if $sortable}4{else}3{/if}" class="headseparator">&nbsp;</td>
+		<td colspan="3" class="headseparator">&nbsp;</td>
 	</tr>
 
 	<tr>
 		<td class="label"><strong>{translate key="plugins.generic.mysqlIndex.schema"}</strong></td>
-		{if $sortable}<td class="label"><strong>{translate key="plugins.generic.mysqlIndex.sort"}</strong></td>{/if}
 		<td class="label"><strong>{translate key="plugins.generic.mysqlIndex.search"}</strong></td>
 		<td class="label"><strong>{translate key="record.field"}</strong></td>
 	</tr>
 	<tr>
-		<td colspan="{if $sortable}4{else}3{/if}" class="separator">&nbsp;</td>
+		<td colspan="3" class="separator">&nbsp;</td>
 	</tr>
 
 	{foreach from=$filteredPlugins item=schemaPlugin name="schemaPlugins"}
@@ -118,11 +115,6 @@ function refreshForm() {
 					{assign var=firstField value="0"}
 				{else}
 					<td>&nbsp;</td>
-				{/if}
-				{if $sortable}
-					<td align="center" width="5%">
-						<input type="radio" {if is_array($sortableFieldIds) && in_array($fieldId, $sortableFieldIds)}checked {/if}name="{$schemaPlugin->getName()|escape}-sort" value="{$field|escape}" />
-					</td>
 				{/if}
 				<td width="5%" align="center">
 					{* Determine whether this field is already chosen *}
@@ -142,7 +134,7 @@ function refreshForm() {
 			</tr>
 		{/foreach}
 		<tr>
-			<td colspan="{if $sortable}4{else}3{/if}" class="{if $smarty.foreach.schemaPlugins.last}end{/if}separator">&nbsp;</td>
+			<td colspan="3" class="{if $smarty.foreach.schemaPlugins.last}end{/if}separator">&nbsp;</td>
 		</tr>
 	{/foreach}
 </table>

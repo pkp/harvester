@@ -403,7 +403,7 @@ class OAIHarvester extends Harvester {
 
 		$verbNode =& $result->getChildByName($verb);
 		$recordNode =& $result->getChildByName(array('record', 'oai:record'));
-		$this->handleRecordNode($recordNode);
+		if ($recordNode) $this->handleRecordNode($recordNode);
 		$result->destroy();
 	}
 

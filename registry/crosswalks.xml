@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  * crosswalks.xml
+  *
+  * Copyright (c) 2005-2007 Alec Smecher and John Willinsky
+  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
+  *
+  * Default crosswalks.
+  *
+  * $Id$
+  -->
+
+<!DOCTYPE crosswalks [
+	<!ELEMENT crosswalks (crosswalk+)>
+	<!ELEMENT crosswalk (name, description, field+)>
+	<!ATTLIST crosswalk
+		type (text | string | date | select) #IMPLIED
+		public_id CDATA #IMPLIED>
+	<!ELEMENT name (#PCDATA)>
+	<!ELEMENT description (#PCDATA)>
+	<!ELEMENT field EMPTY>
+	<!ATTLIST field 
+		schema CDATA #REQUIRED
+		name CDATA #REQUIRED>
+]>
+
+<crosswalks>
+	<crosswalk type="text" public_id="title">
+		<name>Title</name>
+		<description>This crosswalk associates the title fields from various schemas.</description>
+		<field schema="DublinCorePlugin" name="title"/>
+		<field schema="EtdmsPlugin" name="title"/>
+		<field schema="MarcPlugin" name="130"/>
+		<field schema="MarcPlugin" name="210"/>
+		<field schema="MarcPlugin" name="222"/>
+		<field schema="MarcPlugin" name="240"/>
+		<field schema="MarcPlugin" name="242"/>
+		<field schema="MarcPlugin" name="243"/>
+		<field schema="MarcPlugin" name="245"/>
+		<field schema="MarcPlugin" name="246"/>
+		<field schema="MarcPlugin" name="247"/>
+		<field schema="ModsPlugin" name="title"/>
+		<field schema="ModsPlugin" name="subTitle"/>
+		<field schema="ModsPlugin" name="partName"/>
+		<field schema="ModsPlugin" name="nonSort"/>
+		<field schema="ModsPlugin" name="displayForm"/>
+	</crosswalk>
+	<crosswalk type="text" public_id="author">
+		<name>Author</name>
+		<description>This crosswalk associates the creator / author fields from various schemas.</description>
+		<field schema="DublinCorePlugin" name="creator"/>
+		<field schema="EtdmsPlugin" name="creator"/>
+		<field schema="MarcPlugin" name="720"/>
+		<field schema="ModsPlugin" name="namePart"/>
+	</crosswalk>
+	<crosswalk type="date" public_id="date">
+		<name>Date</name>
+		<description>This crosswalk associates a generic date, generally creation, from the various schemas.</description>
+		<field schema="DublinCorePlugin" name="date"/>
+		<field schema="EtdmsPlugin" name="date"/>
+		<field schema="MarcPlugin" name="260"/>
+		<field schema="ModsPlugin" name="dateCreated"/>
+	</crosswalk>
+	<crosswalk type="select" public_id="language">
+		<name>Language</name>
+		<description>This crosswalk associates language information in the various schemas.</description>
+		<field schema="DublinCorePlugin" name="language"/>
+		<field schema="EtdmsPlugin" name="language"/>
+		<field schema="MarcPlugin" name="041"/>
+		<field schema="ModsPlugin" name="languageTerm"/>
+	</crosswalk>
+</crosswalks>
