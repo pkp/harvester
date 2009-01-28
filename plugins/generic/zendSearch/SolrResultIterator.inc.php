@@ -16,22 +16,22 @@
 // $Id$
 
 
-import('core.ArrayItemIterator');
+import('core.VirtualArrayIterator');
 
-class SolrResultIterator extends ArrayItemIterator {
+class SolrResultIterator extends VirtualArrayIterator {
 	/* @var $recordDao object */
 	var $recordDao;
 
-	function SolrResultIterator(&$theArray, $page=-1, $itemsPerPage=-1) {
-		parent::ArrayItemIterator($theArray, $page, $itemsPerPage);
+	function SolrResultIterator(&$theArray, $totalItems, $page=-1, $itemsPerPage=-1) {
+		parent::VirtualArrayIterator($theArray, $totalItems, $page, $itemsPerPage);
 		$this->recordDao =& DAORegistry::getDAO('RecordDAO');
 	}
 
-	function &fromRangeInfo(&$theArray, &$theRange) {
+	function &fromRangeInfo(&$theArray, $totalItems, &$theRange) {
 		if ($theRange && $theRange->isValid()) {
-			$theIterator = new SolrResultIterator($theArray, $theRange->getPage(), $theRange->getCount());
+			$theIterator = new SolrResultIterator($theArray, $totalItems, $theRange->getPage(), $theRange->getCount());
 		} else {
-			$theIterator = new SolrResultIterator($theArray);
+			$theIterator = new SolrResultIterator($theArray, $totalItems);
 		}
 		return $theIterator;
 	}

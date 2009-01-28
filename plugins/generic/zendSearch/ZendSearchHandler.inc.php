@@ -92,7 +92,7 @@ class ZendSearchHandler extends PKPHandler {
 					$to = Request::getUserDateVar($symbolic . '-to');
 					if (!empty($from) && !empty($to)) {
 						if ($isUsingSolr) {
-							$query .= $symbolic . ':[' . strftime('%y%m%d', $from) . ' to ' . strftime('%y%m%d', $to) . '] ';
+							$query .= $symbolic . ':[' . strftime('%Y-%m-%dT%H:%M:%SZ', $from) . ' TO ' . strftime('%Y-%m-%dT%H:%M:%SZ', $to) . '] ';
 						} else {
 							$fromTerm = new Zend_Search_Lucene_Index_Term($from, $symbolic);
 							$toTerm = new Zend_Search_Lucene_Index_Term($to, $symbolic);
@@ -109,19 +109,28 @@ class ZendSearchHandler extends PKPHandler {
 		$rangeInfo =& PKPHandler::getRangeInfo('results');
 
 		if ($isUsingSolr) {
-			curl_setopt($ch, CURLOPT_POSTFIELDS, 'q=' . trim(urlencode($query)));
+			$itemsPerPage = Config::getVar('interface', 'items_per_page');
+			curl_setopt(
+				$ch, CURLOPT_POSTFIELDS,
+				'q=' . trim(urlencode($query)) .
+				'&rows=' . urlencode($itemsPerPage) .
+				($rangeInfo?('&start=' . ($rangeInfo->getPage() * $itemsPerPage)):'')
+			);
 			$data = curl_exec($ch);
 			$xmlParser = new XMLParser();
 			$result = null;
-			@$result =& $xmlParser->parseTextStruct($data, array("str"));
+			$numFound = 0;
+			@$result =& $xmlParser->parseTextStruct($data, array('str', 'result'));
 			$recordIds = array();
 			if ($result) foreach ($result as $nodeSet) foreach ($nodeSet as $node) {
 				if (isset($node['attributes']['name']) && $node['attributes']['name'] == 'id') {
 					$recordIds[] = $node['value'];
+				} elseif (isset($node['attributes']['numFound'])) {
+					$numFound = $node['attributes']['numFound'];
 				}
 			}
 			$plugin->import('SolrResultIterator');
-			$resultsIterator =& SolrResultIterator::fromRangeInfo($recordIds, $rangeInfo);
+			$resultsIterator =& SolrResultIterator::fromRangeInfo($recordIds, $numFound, $rangeInfo);
 			unset($recordIds);
 		} else {
 			$resultsArray = $index->find($query);
