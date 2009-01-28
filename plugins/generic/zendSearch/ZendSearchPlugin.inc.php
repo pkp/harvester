@@ -322,6 +322,8 @@ class ZendSearchPlugin extends GenericPlugin {
 							break;
 						case SEARCH_FORM_ELEMENT_TYPE_DATE:
 							$fieldValue = $schemaPlugin->getFieldValue($record, $fieldName, SORT_ORDER_TYPE_DATE);
+							$fieldValue = strftime
+('%Y-%m-%dT%H:%M:%SZ', $fieldValue);
 							if ($fieldValue !== null) {
 								// Don't index values that could not be parsed
 								if ($isUsingSolr) {
