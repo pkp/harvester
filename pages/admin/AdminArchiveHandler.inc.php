@@ -68,6 +68,7 @@ class AdminArchiveHandler extends AdminHandler {
 	 */
 	function updateArchive() {
 		AdminArchiveHandler::validate();
+		AdminArchiveHandler::setupTemplate();
 
 		import('admin.form.ArchiveForm');
 

@@ -63,7 +63,8 @@ class AdminSortOrdersHandler extends AdminHandler {
 	 */
 	function updateSortOrder() {
 		AdminSortOrdersHandler::validate();
-
+		AdminSortOrdersHandler::setupTemplate(true);
+		
 		import('admin.form.SortOrderForm');
 
 		$sortOrderId = (int) Request::getUserVar('sortOrderId');
