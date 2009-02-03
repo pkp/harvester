@@ -124,7 +124,7 @@ class RTVersionHandler extends RTAdminHandler {
 
 		$rtDao->deleteVersion($versionId, $archiveId);
 
-		Request::redirect(null, 'versions');
+		Request::redirect(null, 'versions', array($archiveId));
 	}
 
 	function saveVersion($args) {

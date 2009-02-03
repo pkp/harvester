@@ -266,7 +266,7 @@ class RTAdminHandler extends PKPHandler {
 		if ($subclass) $pageHierarchy[] = array(Request::url('rtadmin'), 'admin.rtAdmin');
 
 		if ($version) {
-			$pageHierarchy[] = array(Request::url('rtadmin', 'versions'), 'rt.versions');
+			$pageHierarchy[] = array(Request::url('rtadmin', 'versions', array($archiveId)), 'rt.versions');
 			$pageHierarchy[] = array(Request::url('rtadmin', 'editVersion', array($archiveId, $version->getVersionId())), $version->getTitle(), true);
 			if ($context) {
 				$pageHierarchy[] = array(Request::url('rtadmin', 'contexts', array($archiveId, $version->getVersionId())), 'rt.contexts');
