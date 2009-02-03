@@ -119,7 +119,8 @@ class RTVersionHandler extends RTAdminHandler {
 
 		$rtDao =& DAORegistry::getDAO('RTDAO');
 
-		$versionId = isset($args[0])?$args[0]:0;
+		$archiveId = isset($args[0])?$args[0]:0;
+		$versionId = isset($args[1])?$args[1]:0;
 
 		$rtDao->deleteVersion($versionId, $archiveId);
 
