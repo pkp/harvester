@@ -54,7 +54,7 @@ class SubmitterHandler extends PKPHandler {
 		$archiveId = null;
 		if (is_array($args) && !empty($args)) $archiveId = (int) array_shift($args);
 		SubmitterHandler::validate($archiveId);
-		SubmitterHandler::setupTemplate();
+		SubmitterHandler::setupTemplate(true);
 
 		$site =& Request::getSite();
 		if (!$site->getSetting('enableSubmit')) Request::redirect('index');
@@ -76,9 +76,9 @@ class SubmitterHandler extends PKPHandler {
 		else $archiveId = (int) $archiveId;
 
 		SubmitterHandler::validate($archiveId);
+		SubmitterHandler::setupTemplate(true);
 
 		import('admin.form.ArchiveForm');
-
 
 		// FIXME: Need construction by reference or validation always fails on PHP 4.x
 		$archiveForm =& new ArchiveForm($archiveId);
@@ -102,7 +102,6 @@ class SubmitterHandler extends PKPHandler {
 			Request::redirect('submitter', $archiveId);
 
 		} else {
-			SubmitterHandler::setupTemplate(true);
 			$archiveForm->display();
 		}
 	}
@@ -165,11 +164,13 @@ class SubmitterHandler extends PKPHandler {
 	function setupTemplate($subclass = false) {
 		parent::setupTemplate();
 		$templateMgr =& TemplateManager::getManager();
+		$pageHierarchy = array(
+			array(Request::url('submitter'), 'user.role.submitter')
+		);
 		if ($subclass) {
-			$templateMgr->assign('pageHierarchy',
-				array(array(Request::url('submitter'), 'navigation.addArchive'))
-			);
+			$pageHierarchy[] = array(Request::url('submitter'), 'admin.archives');
 		}
+		$templateMgr->assign('pageHierarchy', $pageHierarchy);
 	}
 }
 

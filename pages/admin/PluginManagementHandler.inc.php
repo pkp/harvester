@@ -7,7 +7,7 @@
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class PluginManagementHandler
- * @ingroup pages_manager
+ * @ingroup pages_admin
  *
  * @brief Handle requests for installing/upgrading/deleting plugins.
  */
@@ -361,7 +361,7 @@ class PluginManagementHandler extends AdminHandler {
 		
 		if ($subclass) {
 			$pageCrumbs[] = array(
-				Request::url(null, 'manager', 'plugins'),
+				Request::url(null, 'plugins'),
 				'admin.plugins',
 				false
 			);
