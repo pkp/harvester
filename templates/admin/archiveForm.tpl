@@ -22,12 +22,12 @@
 {include file="common/header.tpl"}
 {/strip}
 
-{if $archiveId}
+{if $archiveId && $allowManagement}
 <ul class="menu">
 	<li class="current"><a href="{url path=$archiveId}">{translate key="admin.archives.editArchive"}</a></li>
 	<li><a href="{url op="manage" path=$archiveId}">{translate key="admin.archives.manage"}</a></li>
 </ul>
-{/if}
+{/if}{* $archiveId && $isAdmin *}
 
 <br />
 

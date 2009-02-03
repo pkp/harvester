@@ -34,14 +34,18 @@ class ArchiveForm extends Form {
 	/** The name of the harvester being used for this archive. */
 	var $harvesterPluginName;
 
+	/** Whether or not to allow archive management in the user interface */
+	var $allowManagement;
+
 	/**
 	 * Constructor.
 	 * @param $archiveId omit for a new archive
 	 */
-	function ArchiveForm($archiveId = null) {
+	function ArchiveForm($archiveId = null, $allowManagement = false) {
 		parent::Form('admin/archiveForm.tpl');
 
 		$this->archiveId = isset($archiveId) ? (int) $archiveId : null;
+		$this->allowManagement = $allowManagement;
 
 		// Validation checks for this form
 		$this->addCheck(new FormValidator($this, 'title', 'required', 'admin.archives.form.titleRequired'));
@@ -142,6 +146,7 @@ class ArchiveForm extends Form {
 		}
 		if ($this->archive) $templateMgr->assign('archiveImage', $this->archive->getSetting('archiveImage'));
 		$templateMgr->assign_by_ref('harvesters', PluginRegistry::getPlugins('harvesters'));
+		$templateMgr->assign('allowManagement', $this->allowManagement);
 		HookRegistry::call('ArchiveForm::display', array(&$this, &$templateMgr, $this->harvesterPluginName));
 		parent::display();
 	}

@@ -58,7 +58,7 @@ class AdminArchiveHandler extends AdminHandler {
 		import('admin.form.ArchiveForm');
 
 		// FIXME: Need construction by reference or validation always fails on PHP 4.x
-		$archiveForm =& new ArchiveForm(!isset($args) || empty($args) ? null : (int) $args[0]);
+		$archiveForm =& new ArchiveForm(!isset($args) || empty($args) ? null : (int) $args[0], true);
 		$archiveForm->initData();
 		$archiveForm->display();
 	}
@@ -75,7 +75,7 @@ class AdminArchiveHandler extends AdminHandler {
 		$archiveId = (int) Request::getUserVar('archiveId');
 
 		// FIXME: Need construction by reference or validation always fails on PHP 4.x
-		$archiveForm =& new ArchiveForm($archiveId);
+		$archiveForm =& new ArchiveForm($archiveId, true);
 		$archiveForm->initData();
 		$archiveForm->readInputData();
 
