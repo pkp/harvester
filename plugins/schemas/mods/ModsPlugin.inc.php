@@ -56,7 +56,7 @@ class ModsPlugin extends SchemaPlugin {
 				'nonSort',
 				'name',
 				'nameType',
-				'nameDisplayForm',
+				'displayForm',
 				'nameAffiliation',
 				'nameDescription',
 				'role',
@@ -236,7 +236,7 @@ class ModsPlugin extends SchemaPlugin {
 				foreach (array('authority', 'type') as $name) {
 					if (($value = $placeTermNode->getAttribute($name)) !== null) $placeTerm[$name] = $value;
 				}
-				$returner['languages'][] =& $languageTerm;
+				$returner['language'][] =& $languageTerm;
 				unset($languageTermNode, $languageTerm);
 			}
 			unset($languageNode);
@@ -412,6 +412,7 @@ class ModsPlugin extends SchemaPlugin {
 				}
 				break;
 			case 'name':
+			case 'displayForm':
 				if (isset($parsedContents['names'])) $returner = $this->collapse($parsedContents['names']);
 				break;
 			case 'publisher':
@@ -476,7 +477,7 @@ class ModsPlugin extends SchemaPlugin {
 			case 'recordCreationDate':
 			case 'recordChangeDate':
 				return FIELD_TYPE_DATE;
-			case 'languageTerm':
+			case 'language':
 				return FIELD_TYPE_SELECT;
 			default:
 				return FIELD_TYPE_STRING;

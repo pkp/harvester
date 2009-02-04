@@ -333,7 +333,7 @@ class CrosswalkDAO extends DAO {
 					$schema =& $schemaDao->buildSchema($schemaPluginName);
 					$field =& $fieldDao->buildField($fieldName, $schemaPluginName);
 
-					$this->insertCrosswalkField($crosswalk->getCrosswalkId(), $field->getFieldId());
+					if ($field) $this->insertCrosswalkField($crosswalk->getCrosswalkId(), $field->getFieldId());
 					unset($schema);
 					unset($field);
 				}

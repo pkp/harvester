@@ -68,6 +68,6 @@
 		<field schema="DublinCorePlugin" name="language"/>
 		<field schema="EtdmsPlugin" name="language"/>
 		<field schema="MarcPlugin" name="041"/>
-		<field schema="ModsPlugin" name="languageTerm"/>
+		<field schema="ModsPlugin" name="language"/>
 	</crosswalk>
 </crosswalks>
