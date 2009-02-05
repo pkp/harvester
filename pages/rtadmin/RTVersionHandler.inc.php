@@ -25,7 +25,7 @@ class RTVersionHandler extends RTAdminHandler {
 		$rtDao =& DAORegistry::getDAO('RTDAO');
 
 		import('rt.harvester2.form.VersionForm');
-		$archiveId = Request::getUserVar('archiveId');
+		$archiveId = (int) Request::getUserVar('archiveId');
 		// FIXME: Need construction by reference or validation always fails on PHP 4.x
 		$versionForm =& new VersionForm(null, $archiveId);
 
@@ -44,7 +44,7 @@ class RTVersionHandler extends RTAdminHandler {
 
 		$rtDao =& DAORegistry::getDAO('RTDAO');
 
-		$versionId = isset($args[0])?$args[0]:0;
+		$versionId = (int) array_shift($args);
 		$version =& $rtDao->getVersion($versionId);
 
 		if ($version) {
@@ -69,7 +69,7 @@ class RTVersionHandler extends RTAdminHandler {
 	function restoreVersions($args) {
 		RTAdminHandler::validate();
 
-		$archiveId = array_shift($args);
+		$archiveId = (int) array_shift($args);
 
 		$rtAdmin = new HarvesterRTAdmin($archiveId);
 		$rtAdmin->restoreVersions();
@@ -78,7 +78,7 @@ class RTVersionHandler extends RTAdminHandler {
 	}
 
 	function versions($args) {
-		$archiveId = array_shift($args);
+		$archiveId = (int) array_shift($args);
 
 		RTAdminHandler::validate();
 		RTAdminHandler::setupTemplate(true, $archiveId);
@@ -98,8 +98,8 @@ class RTVersionHandler extends RTAdminHandler {
 
 		$rtDao =& DAORegistry::getDAO('RTDAO');
 
-		$archiveId = array_shift($args);
-		$versionId = array_shift($args);
+		$archiveId = (int) array_shift($args);
+		$versionId = (int) array_shift($args);
 
 		$version =& $rtDao->getVersion($versionId, $archiveId);
 
@@ -119,8 +119,8 @@ class RTVersionHandler extends RTAdminHandler {
 
 		$rtDao =& DAORegistry::getDAO('RTDAO');
 
-		$archiveId = isset($args[0])?$args[0]:0;
-		$versionId = isset($args[1])?$args[1]:0;
+		$archiveId = (int) array_shift($args);
+		$versionId = (int) array_shift($args);
 
 		$rtDao->deleteVersion($versionId, $archiveId);
 
@@ -132,8 +132,8 @@ class RTVersionHandler extends RTAdminHandler {
 
 		$rtDao =& DAORegistry::getDAO('RTDAO');
 
-		$versionId = isset($args[0])?$args[0]:0;
-		$archiveId = Request::getUserVar('archiveId');
+		$versionId = (int) array_shift($args);
+		$archiveId = (int) Request::getUserVar('archiveId');
 		$version =& $rtDao->getVersion($versionId, $archiveId);
 
 		if (isset($version)) {

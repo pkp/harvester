@@ -141,7 +141,7 @@ class SchemaPlugin extends Plugin {
 		if ($version === null) { // Fall back on the site default
 			$site =& Request::getSite();
 			$versionId = $site->getSetting('rtVersionId');
-			$version =& $rtDao->getVersion($versionId, null);
+			$version =& $rtDao->getVersion($versionId, 0);
 		}
 
 		if ($version) {

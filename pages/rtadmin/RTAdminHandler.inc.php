@@ -28,18 +28,18 @@ class RTAdminHandler extends PKPHandler {
 		RTAdminHandler::validate();
 		$templateMgr =& TemplateManager::getManager();
 
-		$archiveId = array_shift($args);
+		$archiveId = (int) array_shift($args);
 		$archiveDao =& DAORegistry::getDAO('ArchiveDAO');
 
 		RTAdminHandler::setupTemplate(false, $archiveId);
 
-		if ($archive =& $archiveDao->getArchive($archiveId, false) || $archiveId === 'default') {
+		if ($archive =& $archiveDao->getArchive($archiveId, false) || $archiveId == 0) {
 			$site =& Request::getSite();
 			$rtDao =& DAORegistry::getDAO('RTDAO');
 
 			$version = $rtDao->getVersion(
 				$archive?$archive->getSetting('rtVersionId'):$site->getSetting('rtVersionId'),
-				$archive?$archive->getArchiveId():null
+				$archive?$archive->getArchiveId():0
 			);
 
 			// Display the administration menu for this archive.
@@ -57,8 +57,6 @@ class RTAdminHandler extends PKPHandler {
 			$templateMgr->display('rtadmin/archives.tpl');
 
 		}
-
-
 	}
 
 	/**
@@ -66,7 +64,7 @@ class RTAdminHandler extends PKPHandler {
 	 */
 	function selectVersion($args) {
 		RTAdminHandler::validate();
-		$archiveId = array_shift($args);
+		$archiveId = (int) array_shift($args);
 		$versionId = Request::getUserVar('versionId');
 
 		$archiveDao =& DAORegistry::getDAO('ArchiveDAO');
@@ -115,7 +113,7 @@ class RTAdminHandler extends PKPHandler {
 		$rtDao =& DAORegistry::getDAO('RTDAO');
 
 		$versionId = (int) array_shift($args);
-		$archiveId = array_shift($args);
+		$archiveId = (int) array_shift($args);
 
 		$version = $rtDao->getVersion($versionId, $archiveId);
 
@@ -257,7 +255,7 @@ class RTAdminHandler extends PKPHandler {
 	 * @param $context object The current context, if applicable
 	 * @param $search object The current search, if applicable
 	 */
-	function setupTemplate($subclass = false, $archiveId = 'default', $version = null, $context = null, $search = null) {
+	function setupTemplate($subclass = false, $archiveId = 0, $version = null, $context = null, $search = null) {
 		parent::setupTemplate();
 		$templateMgr =& TemplateManager::getManager();
 

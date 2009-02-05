@@ -28,7 +28,7 @@
 		<tr valign="top">
 			<td>{$version->getTitle()|escape}</td>
 			<td>{$version->getLocale()|escape}</td>
-			<td align="right"><a href="{url op="validateUrls" path=$version->getVersionId()}" class="action">{translate key="rt.admin.validateUrls.validate"}</a>&nbsp;|&nbsp;<a href="{url op="editVersion" path=$archiveId|to_array:$version->getVersionId()}" class="action">{translate key="rt.admin.versions.metadata"}</a>&nbsp;|&nbsp;<a href="{url page="rtadmin" op="contexts" path=$archiveId|to_array:$version->getVersionId()}" class="action">{translate key="rt.contexts"}</a>&nbsp;|&nbsp;<a href="{url op="exportVersion" path=$version->getVersionId()}" class="action">{translate key="rt.admin.versions.export"}</a>&nbsp;|&nbsp;<a href="{url op="deleteVersion" path=$archiveId|to_array:$version->getVersionId()}" onclick="return confirm('{translate|escape:"jsparam" key="rt.admin.versions.confirmDelete"}')" class="action">{translate key="common.delete"}</a></td>
+			<td align="right"><a href="{url op="validateUrls" path=$version->getVersionId()}" class="action">{translate key="rt.admin.validateUrls.validate"}</a>&nbsp;|&nbsp;<a href="{url op="editVersion" path=$archiveId|default:0|to_array:$version->getVersionId()}" class="action">{translate key="rt.admin.versions.metadata"}</a>&nbsp;|&nbsp;<a href="{url page="rtadmin" op="contexts" path=$archiveId|default:0|to_array:$version->getVersionId()}" class="action">{translate key="rt.contexts"}</a>&nbsp;|&nbsp;<a href="{url op="exportVersion" path=$version->getVersionId()}" class="action">{translate key="rt.admin.versions.export"}</a>&nbsp;|&nbsp;<a href="{url op="deleteVersion" path=$archiveId|default:0|to_array:$version->getVersionId()}" onclick="return confirm('{translate|escape:"jsparam" key="rt.admin.versions.confirmDelete"}')" class="action">{translate key="common.delete"}</a></td>
 		</tr>
 		<tr><td class="{if $versions->eof()}end{/if}separator" colspan="3"></td></tr>
 	{/iterate}
@@ -48,12 +48,12 @@
 
 <a href="{url op="createVersion"}" class="action">{translate key="rt.admin.versions.createVersion"}</a><br/>
 
-<a href="{url op="restoreVersions" path=$archiveId}" onclick="return confirm('{translate|escape:"jsparam" key="rt.admin.versions.confirmRestore"}')" class="action">{translate key="rt.admin.versions.restoreVersions"}</a>
+<a href="{url op="restoreVersions" path=$archiveId|default:0}" onclick="return confirm('{translate|escape:"jsparam" key="rt.admin.versions.confirmRestore"}')" class="action">{translate key="rt.admin.versions.restoreVersions"}</a>
 
 <br/>
 <br/>
 
-<form method="post" action="{url op="importVersion" path=$archiveId}" enctype="multipart/form-data">
+<form method="post" action="{url op="importVersion" path=$archiveId|default:0}" enctype="multipart/form-data">
 	<input type="file" class="uploadField" name="versionFile" />
 	<input type="submit" class="button" value="{translate key="rt.admin.versions.importVersion"}" />
 </form>

@@ -16,7 +16,7 @@
 <h3>{translate key="rt.admin.status"}</h3>
 <form action="{url op="selectVersion" path=$archiveId}" method="post">
 <p>{translate key="rt.admin.selectedVersion"}:&nbsp;<select name="versionId" class="selectMenu" id="versionId">
-	<option value="">({if $archiveId && $archiveId != 'default'}{translate key="common.default"}{else}{translate key="common.none"}{/if})</option>
+	<option value="">({if $archiveId}{translate key="common.default"}{else}{translate key="common.none"}{/if})</option>
 	{iterate from=versions item=versionLoop}
 		<option {if $version && $versionLoop->getVersionId() == $version->getVersionId()}selected {/if}value="{$versionLoop->getVersionId()}">{$versionLoop->getTitle()|escape}</option>
 	{/iterate}
