@@ -125,7 +125,7 @@ class Search {
 
 		foreach ($keyword['+'] as $phrase) {
 			$results =& Search::_getMergedPhraseResults($phrase, $dates, $archiveIds, $type, $id, $resultsPerKeyword, $resultCacheHours);
-			if ($mergedResults == null) {
+			if ($mergedResults === null) {
 				$mergedResults = $results;
 			} else {
 				foreach ($mergedResults as $recordId => $count) {
