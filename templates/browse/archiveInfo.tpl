@@ -16,7 +16,7 @@
 
 <h3>{$archive->getTitle()|escape}</h3>
 
-<a href="{$archive->getUrl()|escape:"url"}">{$archive->getUrl()|escape}</a><br />
+<a href="{$archive->getUrl()|escape}">{$archive->getUrl()|escape}</a><br />
 
 {if $archive->getSetting('description') != ''}<p>{$archive->getSetting('description')|nl2br|strip_unsafe_html}</p>{/if}
 
