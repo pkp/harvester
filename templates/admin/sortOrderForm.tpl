@@ -34,7 +34,7 @@
 		<td width="20%" class="label">{fieldLabel name="formLocale" key="form.formLanguage"}</td>
 		<td colspan="2" width="80%" class="value">
 			{if $sortOrderId}{url|assign:"sortOrderUrl" op="editSortOrder" path=$sortOrderId}
-			{else}{url|assign:"sortOrderUrl" op="createSortOrder"}
+			{else}{url|assign:"sortOrderUrl" op="createSortOrder" escape=false}
 			{/if}
 			{form_language_chooser form="sortOrder" url=$sortOrderUrl}
 			<span class="instruct">{translate key="form.formLanguage.description"}</span>

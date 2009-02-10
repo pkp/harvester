@@ -20,7 +20,7 @@
 {/strip}
 
 {if $searchFormElementId}{url|assign:"searchFormElementUrl" op="editSearchFormElement" path=$searchFormElementId}
-{else}{url|assign:"searchFormElementUrl" op="createSearchFormElement"}
+{else}{url|assign:"searchFormElementUrl" op="createSearchFormElement" escape=false}
 {/if}
 
 <script type="text/javascript">

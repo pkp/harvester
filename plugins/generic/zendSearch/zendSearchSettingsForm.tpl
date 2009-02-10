@@ -36,7 +36,7 @@ function changeElementType() {
 	<tr valign="top">
 		<td width="20%" class="label">{fieldLabel name="formLocale" key="form.formLanguage"}</td>
 		<td width="80%" class="value">
-			{url|assign:"zendSearchSettingsFormUrl" op="settings"}
+			{url|assign:"zendSearchSettingsFormUrl" op="settings" escape=false}
 			{form_language_chooser form="zendSearchSettings" url=$zendSearchSettingsFormUrl}
 			<span class="instruct">{translate key="form.formLanguage.description"}</span>
 		</td>
