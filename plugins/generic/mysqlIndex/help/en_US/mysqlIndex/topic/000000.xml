@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic SYSTEM "../../../../../../../lib/pkp/dtd/helpTopic.dtd">
+
+<!--
+  * 000000.xml
+  *
+  * Copyright (c) 2003-2008 John Willinsky
+  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
+  *
+  * MySQLIndex Help Page 
+  *
+  * $Id$
+  -->
+
+<topic id="mysqlIndex/topic/000000" locale="en_US" title="MySQL Index" toc="mysqlIndex/toc/000000" key="mysqlIndex.index">
+	<section>
+		<![CDATA[<p>The MySQL Index Search Plugin implements a simple MySQL-based search plugin. When enabled, users will see a Search link from the top navigation bar, as well as a search field in the sidebar. The search field to the right searches the entire MySQL index, whereas clicking the top Search link will bring the user to a more comprehensive search page, where searches can be run against all, some or one archive at a time, and where specific keywords can be used against applicable metadata fields.</p>]]>
+	</section>
+</topic>

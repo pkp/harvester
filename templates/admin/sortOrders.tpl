@@ -10,6 +10,7 @@
  *}
 {strip}
 {assign var="pageTitle" value="admin.sortOrders"}
+{assign var="helpTopicId" value="admin.sortOrders"}
 {assign var="pageId" value="admin.sortOrders"}
 {include file="common/header.tpl"}
 {/strip}

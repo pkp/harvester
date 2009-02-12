@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic SYSTEM "../../../../lib/pkp/dtd/helpTopic.dtd">
+
+<!--
+  * 000014.xml
+  *
+  * Copyright (c) 2005-2008 Alec Smecher and John Willinsky
+  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
+  *
+  * Users Help Page 
+  *
+  * $Id$
+  -->
+
+<topic id="admin/topic/000014" locale="en_US" title="Users" toc="admin/toc/000000" key="admin.Users">
+  <section>
+    <![CDATA[<p>It is the Site Administrator's responsibility to manage users in the Harvester system. This includes creating users, disabling accounts, managing roles, etc. The Site Administrator can browse and add to existing enrollments, modify profiles, and contact groups of users.</p>
+    <p>There are currently only two roles included in the Harvester: Site Administrator, of which there can be only one (the person who originally installed the Harvester2 platform); and Archive Manager, of which there can be as many as desired or needed. The Site Administrator has all the powers of an Archive Manager.</p>
+
+<p><em>All Users</em>. This list includes everyone who is registered with the Harvester in some capacity. The Site Administrator has the ability to sign in as any registered user. This can be extremely helpful when trying to provide the user with assistance at a distance, because it allows the Site Administrator to gain a more precise sense of what may be going wrong.</p>
+
+<p><em>Create User</em>. The Site Administrator can use the Create User link to register a new user as an Archive Manager. The user can, on logging in to the Harvester, complete and change the profile information entered by the Site Administrator. </p>
+
+<p><em>Archive Managers</em>. This list includes all Archive Managers. Although the Site Administrator has all the powers of an Archive Manager, they are not listed here. The Site Administrator can enroll existing users and create new users with a Site Administrator role assignment from this page.</p>
+
+<p><em>Changing a password</em>. Users can change their passwords once they have logged into the journal. The Site Administrator cannot access a password once it has been assigned. However, the system will generate a new password and email it to users who click on the "Forgot your password?" link under the login box.
+
+<p><em>Enroll Existing User</em>. The Site Administrator can assign an existing to a new role.</p>]]>
+  </section>
+</topic>

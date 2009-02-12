@@ -10,6 +10,7 @@
  *}
 {strip}
 {assign var="pageTitle" value="user.profile.editProfile"}
+{assign var="helpTopicId" value="user.userHome"}
 {url|assign:"url" op="profile"}
 {include file="common/header.tpl"}
 {/strip}

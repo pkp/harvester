@@ -14,7 +14,7 @@
 	{assign var="theseArchiveIds" value=$archiveIds}
 {/if}
 {assign var=pageTitle value="search.searchResults"}
-{assign var="helpTopicId" value="index.search"}
+{assign var="helpTopicId" value="plugins.generic.mysqlIndex.search"}
 {include file="common/header.tpl"}
 {/strip}
 

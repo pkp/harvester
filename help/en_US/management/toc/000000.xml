@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE toc SYSTEM "../../../../lib/pkp/dtd/helpToc.dtd">
+
+<!--
+  * 000000.xml
+  *
+  * Copyright (c) 2005-2008 Alec Smecher and John Willinsky
+  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
+  *
+  * Management table of contents for help. 
+  *
+  * $Id$
+  -->
+
+<toc id="management/toc/000000" locale="en_US" title="Harvester2 Help" parent_topic="index/topic/000000">
+<!-- Administration -->
+
+<!-- Site Management --> 
+	<topic id="management/topic/000001" title="Add Archive"/>
+	<topic id="management/topic/000002" title="Manage Archives"/>
+</toc>

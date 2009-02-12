@@ -68,9 +68,6 @@ class UserManagementForm extends Form {
 			$userDao =& DAORegistry::getDAO('UserDAO');
 			$user =& $userDao->getUser($this->userId);
 			$templateMgr->assign('username', $user->getUsername());
-			$helpTopicId = 'admin.users.index';
-		} else {
-			$helpTopicId = 'admin.users.createNewUser';
 		}
 	
 		$activeRoles = array(
@@ -103,7 +100,6 @@ class UserManagementForm extends Form {
 		$site =& Request::getSite();
 		$templateMgr->assign('availableLocales', $site->getSupportedLocaleNames());
 
-		$templateMgr->assign('helpTopicId', $helpTopicId);
 
 		$countryDao =& DAORegistry::getDAO('CountryDAO');
 		$countries =& $countryDao->getCountries();

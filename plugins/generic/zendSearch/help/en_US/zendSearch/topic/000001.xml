@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic SYSTEM "../../../../../../../lib/pkp/dtd/helpTopic.dtd">
+
+<!--
+  * 000001.xml
+  *
+  * Copyright (c) 2003-2008 John Willinsky
+  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
+  *
+  * Search Form Help Page 
+  *
+  * $Id$
+  -->
+
+<topic id="zendSearch/topic/000001" locale="en_US" title="Search Form" toc="zendSearch/toc/000000" key="zendSearch.searchForm">
+	<section>
+		<![CDATA[<p>The Zend Search plugin only provides one search field by default, available either from the sidebar or as the very first field in the advanced search page: this field searches across the entire database.</p>
+		 <p>The Site Administrator can also provide more search form elements by clicking Search Form link on the Site Administrator's User Home page (only available after enabling the Zend Search plugin), and then clicking the Create Search Form Element link.</p>
+		<p>New Elements must be defined by Title, Symbolic Name (see <em>plugins/generic/zendSearch/README</em> for more information), and Type (either string, select and date). One or more fields across all available schemas can be selected to create an index for that particular element.</p>
+		<p>When specifying fields to include, you can select more than one of each schema type by holding down your CTRL key (the Command key for Macintosh).</p>]]>
+	</section>
+</topic>

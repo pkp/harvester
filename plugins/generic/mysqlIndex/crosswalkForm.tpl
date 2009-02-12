@@ -13,7 +13,7 @@
 {else}
 {assign var="pageTitle" value="plugins.generic.mysqlIndex.addCrosswalk"}
 {/if}
-{assign var="helpTopicId" value="admin.crosswalkForm"}
+{assign var="helpTopicId" value="plugins.generic.mysqlIndex.crosswalks"}
 {include file="common/header.tpl"}
 
 <script type="text/javascript">

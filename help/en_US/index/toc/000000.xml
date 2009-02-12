@@ -16,6 +16,7 @@
 	<topic id="index/topic/000000" title="Introduction to Harvester2" />
 	<topic id="index/topic/000001" title="Searching" />
 	<topic id="index/topic/000002" title="Browsing" />
-	<topic id="index/topic/000003" title="Add Archive" />
+	<topic id="user/topic/000000" title="User Home"/>
 	<topic id="admin/topic/000000" title="Administration" />
+	<topic id="management/topic/000000" title="Archive Management" />
 </toc>

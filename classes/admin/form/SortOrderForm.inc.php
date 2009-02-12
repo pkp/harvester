@@ -65,7 +65,6 @@ class SortOrderForm extends Form {
 		$templateMgr->assign('sortOrderId', $this->sortOrderId);
 		import('sortOrder.SortOrder');
 		$templateMgr->assign('typeOptions', SortOrder::getTypeOptions());
-		$templateMgr->assign('helpTopicId', 'admin.sortOrders');
 
 		$schemaPlugins =& PluginRegistry::loadCategory('schemas');
 		$templateMgr->assign_by_ref('schemaPlugins', $schemaPlugins);

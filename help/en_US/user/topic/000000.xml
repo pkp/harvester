@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic SYSTEM "../../../../lib/pkp/dtd/helpTopic.dtd">
+
+<!--
+  * 000000.xml
+  *
+  * Copyright (c) 2005-2008 Alec Smecher and John Willinsky
+  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
+  *
+  * User Home Help Page 
+  *
+  * $Id$
+  -->
+
+<topic id="user/topic/000000" locale="en_US" title="User Home" toc="index/toc/000000" key="user.userHome">
+		<section>
+			<![CDATA[<p>Once a user has logged in, a User Home link appears in the top navigation bar.</p><p>If the user is enrolled as a particular role within the system, links to these roles will appear under the repository's name. The only roles available in the system are those of Site Administrator or Archive Manager.</p>]]>
+
+	</section>
+
+	<section title="Account Information">
+			<![CDATA[<p>Account information can be accessed from the User Home page. Clicking the <em>Edit My Profile</em> link will 
+			allow the user to edit most information related to their profile, such as first and last name, email address, mailing address, etc. First name, last name, and email address are all mandatory fields. Email addresses must be unique to the system. Users cannot change their usernames post-registration.</p>
+			<p>Users can change their password by clicking the <em>Change My Password</em> link.</p>
+			<p>Users can log out by clicking the <em>Log Out</em> link.</p>]]>
+
+	</section>
+</topic>

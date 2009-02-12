@@ -113,7 +113,6 @@ class ProfileForm extends Form {
 		$countries =& $countryDao->getCountries();
 
 		$templateMgr->assign_by_ref('countries', $countries);
-		$templateMgr->assign('helpTopicId', 'user.registerAndProfile');
 
 		$templateMgr->assign('profileImage', $user->getSetting('profileImage'));
 

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic SYSTEM "../../../../lib/pkp/dtd/helpTopic.dtd">
+
+<!--
+  * 000000.xml
+  *
+  * Copyright (c) 2005-2008 Alec Smecher and John Willinsky
+  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
+  *
+  * Archive Management Help Page 
+  *
+  * $Id$
+  -->
+
+<topic id="management/topic/000000" locale="en_US" title="Archive Management" toc="index/toc/000000" key="admin.Management" subtoc="management/toc/000000">
+  <section>
+		<![CDATA[<p>The PKP Harvester2 is capable of indexing multiple repositories in a number of metadata formats. Each repository is listed under the "Manage Archives" page, along with a number of options for management.</p>
+		<p>Any Existing archive can be edited using the "Edit" link beside its name. Likewise, new archives can be created using the "Add Archive" link at the bottom of the page. See {help_topic key="management.addArchive" text="Adding Archives"} for information about this form.</p>
+		<p>Once an archive has been created and its harvesting information has been entered, you can use the "Manage" link to access record information and perform various management functions on the archive. See {help_topic key="management.manageArchive" text="Manage Archive"} for more information.</p>
+		<p>The Harvester2 system can be configured to allow anyone to register as an Archive Manager; as well, Site Administrators can configure the system so that new submissions are disabled by default, and must be enabled by the Administrator.</p>]]>
+  </section>
+</topic>

@@ -11,7 +11,7 @@
 {strip}
 {url|assign:"currentUrl" op="searchResults" q=$q}
 {assign var="pageTitle" value="record.records"}
-{assign var="helpTopicId" value="index.browse"}
+{assign var="helpTopicId" value="plugins.generic.zendSearch.search"}
 {include file="common/header.tpl"}
 {/strip}
 

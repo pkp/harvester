@@ -9,7 +9,7 @@
  * $Id$
  *}
 {strip}
-{assign var="helpTopicId" value="user.registerAndProfile"}
+{assign var="helpTopicId" value="user.userHome"}
 {assign var="registerOp" value="register"}
 {assign var="registerLocaleKey" value="user.login.registerNewAccount"}
 {include file="core:user/login.tpl"}

@@ -9,7 +9,7 @@
  * $Id$
  *}
 {assign var="pageTitle" value="plugins.generic.mysqlIndex.crosswalks"}
-{assign var="helpTopicId" value="plugins.generic.mysqlIndex"}
+{assign var="helpTopicId" value="plugins.generic.mysqlIndex.crosswalks"}
 {include file="common/header.tpl"}
 
 <p>{translate key="plugins.generic.mysqlIndex.crosswalks.description"}</p>

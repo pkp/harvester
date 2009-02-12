@@ -10,7 +10,7 @@
  *}
 {strip}
 {assign var="pageTitle" value="plugins.generic.zendSearch.searchForm"}
-{assign var="helpTopicId" value="index.browse"}
+{assign var="helpTopicId" value="plugins.generic.zendSearch.searchForm"}
 {include file="common/header.tpl"}
 {/strip}
 

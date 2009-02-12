@@ -10,6 +10,7 @@
  *}
 {strip}
 {assign var="pageTitle" value="rt.admin.contexts.edit.editContext"}
+{assign var="helpTopicId" value="admin.rtAdmin"}
 {include file="common/header.tpl"}
 {/strip}
 

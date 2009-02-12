@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic SYSTEM "../../../../../../../lib/pkp/dtd/helpTopic.dtd">
+
+<!--
+  * 000000.xml
+  *
+  * Copyright (c) 2003-2008 John Willinsky
+  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
+  *
+  * Index Help Page 
+  *
+  * $Id$
+  -->
+
+<topic id="zendSearch/topic/000000" locale="en_US" title="Zend Search" toc="zendSearch/toc/000000" key="zendSearch.index">
+	<section>
+		<![CDATA[<p>The Zend Search plugin for the PKP Harvester supports Apache's Lucene search engine
+		technology, either via Zend's "Zend Search" PHP port, which is built into the
+		PKP codebase, or via the Apache SOLR project, which will require an external
+		SOLR installation. SOLR/Lucene is the recommended configuration, as it is both
+		faster and more fully featured, though it has substantial installation
+		requirements that will not be available e.g. in shared hosting environments.</p>
+		
+		<p>More information is available in <em>plugins/generic/zendSearch/README.</em></p>]]>
+	</section>
+</topic>

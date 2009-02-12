@@ -16,6 +16,7 @@
 	{assign var="pageTitle" value="admin.sortOrders.create"}
 {/if}
 {assign var="pageId" value="manager.sortOrders.sortOrderForm"}
+{assign var="helpTopicId" value="admin.sortOrders"}
 {include file="common/header.tpl"}
 {/strip}
 

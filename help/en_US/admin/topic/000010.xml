@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic SYSTEM "../../../../lib/pkp/dtd/helpTopic.dtd">
+
+<!--
+  * 000010.xml
+  *
+  * Copyright (c) 2005-2008 Alec Smecher and John Willinsky
+  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
+  *
+  * Layout Help Page 
+  *
+  * $Id$
+  -->
+
+<topic id="admin/topic/000010" locale="en_US" title="Layout" toc="admin/toc/000000" key="admin.layout">
+	<section>
+		<![CDATA[<p>The Site Administrator's Layout interface controls the display of sidebar elements, otherwise known as "blocks". Block-level UI components (installed as plugins and administered from the Plugins page) can be moved from left to right, or made to disappear, 
+		via the Layout page. The Site Administrator can use the arrow buttons to move one or more blocks at a time: blocks that
+		are moved to the middle column will not appear on the site, while blocks moved to either the left or right columns
+		will appear in a left or right sidebar, respectively. It is possible to have both a left and a right sidebar
+		at the same time by moving at least one block to each side, and it is also possible to have no sidebar at all by moving all blocks into the middle column.</p>]]>
+	</section>
+</topic>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic SYSTEM "../../../../lib/pkp/dtd/helpTopic.dtd">
+
+<!--
+  * 000012.xml
+  *
+  * Copyright (c) 2005-2008 Alec Smecher and John Willinsky
+  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
+  *
+  * Reading Tools Help Page 
+  *
+  * $Id$
+  -->
+
+<topic id="admin/topic/000012" locale="en_US" title="Reading Tools" toc="admin/toc/000000" key="admin.rtAdmin">
+  <section>
+    <![CDATA[<p>The Reading Tools are designed to assist experienced and novice readers by providing a rich context of related materials from a wide variety of largely open access sources. The tools use keywords to automatically search a relevant open access database for related materials which are presented to the reader in another window. Readers have a choice of tools, and within each tool a choice of databases, along with access to information about the database.</p>
+    
+    <p>The Site Administrator is able to choose a default set of Reading Tools for all archives, and can specify a unique set of Reading Tools for each archive. </p>
+    
+    <p>The Administrator can also create custom Reading Tools versions, or import versions from other PKP platforms.</p>
+    
+    <p>A Reading Tool <strong>Version</strong> is simply a collection of databases, usually specific to a particular academic discipline, for example Cognitive Science. <strong>Version Metadata</strong> includes a title and a key ('<em>Cognitive Science</em>' and  <em>Cognitive_Science</em>, respectively) as well as the version locale (say <em>en_US</em>) and a brief description.</p>
+    
+    <p>Each Version contains a series of <strong>Contexts</strong>, groupings of searchable databases by type. Context groupings may be relatively generic (search against a the assigned group of databases for the <em>Author's Work</em>, or for <em>Related Studies</em>, etc.); or they can be fairly specific depending on the collection of databases (for example, if the database grouping was specific to <em>Cognitive Science</em> and related collections.) Each context can have a Title, an Abbreviation, and a brief Description.</p>
+    
+    <p>Context <strong>Searches</strong> are internet-accessible search engines, collections, and scholarly databases. When they are created they must include a Title (eg. <em>Google Scholar</em>); URL (<em>http://scholar.google.com</em>); Search URL <em>http://scholar.google.com/scholar?ie=UTF-8&oe=UTF-8&hl=eng&as_sauthors={$formKeywords}</em>); Post Data, if necessary; and can include a description.</p>
+    
+    <p>Versions and Contexts can be imported and exported between the Harvester and other compatible systems (other Harvester2 installations as well as OJS and OCS); searches should be validated to ensure that they work properly.</p>]]>
+  </section>
+</topic>

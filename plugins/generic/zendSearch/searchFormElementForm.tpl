@@ -10,6 +10,7 @@
  *}
 {strip}
 {assign var="pageCrumbTitle" value="$searchFormElementTitle"}
+{assign var="helpTopicId" value="plugins.generic.zendSearch.searchForm"}
 {if $searchFormElementId}
 	{assign var="pageTitle" value="plugins.generic.zendSearch.formElement.edit"}
 {else}

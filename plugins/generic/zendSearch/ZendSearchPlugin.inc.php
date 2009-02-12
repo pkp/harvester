@@ -35,6 +35,7 @@ class ZendSearchPlugin extends GenericPlugin {
 			$this->addLocaleData();
 			HookRegistry::register('Installer::postInstall',array(&$this, 'postInstallCallback'));
 			if ($this->getEnabled()) {
+				$this->addHelpData();
 				// Include Zend Framework in include path
 				if (!$this->isUsingSolr() && checkPhpVersion('5.0.0')) {
 					ini_set('include_path', BASE_SYS_DIR . '/lib/pkp/lib/ZendFramework/library' . ENV_SEPARATOR . ini_get('include_path'));

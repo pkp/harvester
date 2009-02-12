@@ -91,7 +91,6 @@ class RegistrationForm extends Form {
 		$templateMgr->assign('allowRegSubmitter', $site->getSetting('enableSubmit'));
 		$templateMgr->assign('availableLocales', $site->getSupportedLocaleNames());
 
-		$templateMgr->assign('helpTopicId', 'user.registerAndProfile');		
 		parent::display();
 	}
 

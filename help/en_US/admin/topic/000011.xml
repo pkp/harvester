@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic SYSTEM "../../../../lib/pkp/dtd/helpTopic.dtd">
+
+<!--
+  * 000011.xml
+  *
+  * Copyright (c) 2005-2008 Alec Smecher and John Willinsky
+  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
+  *
+  * Plugins Help Page 
+  *
+  * $Id$
+  -->
+
+<topic id="admin/topic/000011" locale="en_US" title="Plugins" toc="admin/toc/000000" key="admin.plugins">
+	<section>
+	  <![CDATA[<p>The Plugins page allows the Site Administrator to view and configure plugins found in several broad plugin categories. </p>
+	<ul>
+	<li><strong>Block</strong> plugins provide navigational and display elements to the sidebar, such as User information.</li> 				
+	<li><strong>Generic</strong> plugins include general-purpose plugins that are not better suited to other categories.</li>
+	<li><strong>Harvester</strong> plugins implement various harvesting protocols, such as OAI.</li>
+	<li><strong>Preprocessor</strong> plugins process harvested data before it is added to the repository.<li>
+	<li><strong>Schema</strong> plugins extend the repository's metadata format implementations.</li>
+	<li><strong>Theme</strong> plugins can be used to change the repository's appearance.</li>
+  </ul>
+	  <p>Help and documentation specific to each plugin can generally be found within the plugin directory itself: for example, help for the generic IP Ban plugin can be found in <em>plugins/generic/ipban/README</em>. You are able to upgrade and delete individual plugins through the plugins page, and install new plugins. Please note that to install or upgrade a plugin it must be compressed as a tar.gz file.</p>]]>
+	</section>
+</topic>

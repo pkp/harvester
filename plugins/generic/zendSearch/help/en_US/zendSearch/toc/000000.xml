@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE toc SYSTEM "../../../../../../../lib/pkp/dtd/helpToc.dtd">
+
+<!--
+  * 000000.xml
+  *
+  * Copyright (c) 2003-2008 John Willinsky
+  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
+  *
+  * Main table of contents for zendSearch plugin help. 
+  *
+  * $Id$
+  -->
+
+<toc id="zendSearch/toc/000000" locale="en_US" title="Zend Search" parent_topic="index/topic/000000">
+	<topic id="zendSearch/topic/000000" title="Zend Search" />
+	<topic id="zendSearch/topic/000001" title="Search Form" />
+	<topic id="zendSearch/topic/000002" title="Settings" />
+	<topic id="zendSearch/topic/000003" title="Searching" />
+</toc>

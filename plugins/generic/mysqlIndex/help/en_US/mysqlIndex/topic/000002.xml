@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic SYSTEM "../../../../../../../lib/pkp/dtd/helpTopic.dtd">
+
+<!--
+  * 000002.xml
+  *
+  * Copyright (c) 2003-2008 John Willinsky
+  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
+  *
+  * Searching Help Page 
+  *
+  * $Id$
+  -->
+
+<topic id="mysqlIndex/topic/000002" locale="en_US" title="Searching" toc="mysqlIndex/toc/000000" key="mysqlIndex.search">
+	<section>
+		<![CDATA[<p>(Please note that this help page refers explicitly to the MySQL Index Search plugin. Further advice on searching is available on the more general {help_topic key="index.search" text="search page"}.)</p>
+		<p>The PKP Harvester2 is capable of searching multiple repositories in several metadata formats. Depending on the archives you select to search and the way Harvester2 is configured, you will be presented with a customized search form that allows you to search in as much detail as possible.</p>
+		<p>For example, if you choose several archives that are indexed using the Dublin Core metadata format, you will be presented with a search form that supports the various Dublin Core fields. However, if some of the archives you choose are indexed Dublin Core and others in the MARC format, you will be presented with a form that represents common fields shared between the two formats. (These are called Crosswalks, and they are definable by the Administrator.)
+		<p>For simple searches, you can use the search form on the right-hand sidebar. When you search for keywords using this form, all fields in all archives are searched.</p>
+		<p>For more complex searches, use the Search link on the top navigation bar. To use this form, you must enter at least one search keyword. When entering multiple constraints, results will be ordered as follows:
+		<ul>
+		<li>All results must satisfy all date constraints.</li>
+		<li>Results satisfying all keyword constraints will rank high in the results list.</li>
+		<li>Results satisfying only some of the keyword constraints will be ranked in decreasing order of the number of constraints satisfied.</li>
+		<li>A keyword constraint will be considered satisfied only when all of its terms are met. For example, the constraint "university NOT school" will only be satisfied by records with the specified field containing the word "university" and not containing the word "school". However, results not satisfying this constraint may appear as noted above.</li>
+		</ul></p>]]>
+	</section>
+</topic>

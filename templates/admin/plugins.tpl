@@ -9,6 +9,7 @@
  * $Id$
  *}
 {strip}
+{assign var="helpTopicId" value="admin.plugins"}
 {include file="common/header.tpl"}
 {/strip}
 

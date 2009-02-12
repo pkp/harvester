@@ -16,7 +16,9 @@
 	<topic key="index.index" id="index/topic/000000"/>
 	<topic key="index.search" id="index/topic/000001"/>
 	<topic key="index.browse" id="index/topic/000002"/>
-	<topic key="index.addArchive" id="index/topic/000003"/>
+	
+	<!-- User -->
+	<topic key="user.userHome" id="user/topic/000000"/>
 
 	<!-- Administration -->
 	<topic key="admin.index" id="admin/topic/000000"/>
@@ -25,11 +27,15 @@
 
 	<topic key="admin.systemConfiguration" id="admin/topic/000003"/>
 	<topic key="admin.systemInformation" id="admin/topic/000004"/>
-
-	<topic key="admin.archives" id="admin/topic/000005"/>
-	<topic key="admin.archiveForm" id="admin/topic/000006"/>
-	<topic key="admin.manage" id="admin/topic/000007"/>
-
-	<topic key="admin.crosswalks" id="admin/topic/000008"/>
-	<topic key="admin.crosswalkForm" id="admin/topic/000009"/>
+	<topic key="admin.layout" id="admin/topic/000010"/>
+	<topic key="admin.plugins" id="admin/topic/000011"/>
+	<topic key="admin.rtAdmin" id="admin/topic/000012"/>
+	<topic key="admin.sortOrders" id="admin/topic/000013"/>
+	<topic key="admin.users" id="admin/topic/000014"/>
+	
+	
+	<!-- Management -->
+	<topic key="management.archives" id="management/topic/000000"/>
+	<topic key="management.addArchive" id="management/topic/000001"/>
+	<topic key="management.manageArchive" id="management/topic/000002"/>
 </help>

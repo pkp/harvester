@@ -10,6 +10,7 @@
  *}
 {strip}
 {assign var="pageTitle" value="user.changePassword"}
+{assign var="helpTopicId" value="user.userHome"}
 {url|assign:"currentUrl" page="user" op="changePassword"}
 {include file="common/header.tpl"}
 {/strip}

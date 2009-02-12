@@ -9,7 +9,7 @@
  * $Id$
  *}
 {assign var="pageTitle" value="navigation.search"}
-{assign var="helpTopicId" value="index.search"}
+{assign var="helpTopicId" value="plugins.generic.mysqlIndex.search"}
 {include file="common/header.tpl"}
 
 <script type="text/javascript">

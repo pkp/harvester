@@ -10,6 +10,7 @@
  *}
 {strip}
 {assign var="pageTitle" value="user.userHome"}
+{assign var="helpTopicId" value="user.userHome"}
 {include file="common/header.tpl"}
 {/strip}
 

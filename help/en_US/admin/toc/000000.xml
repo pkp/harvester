@@ -7,20 +7,19 @@
   * Copyright (c) 2005-2008 Alec Smecher and John Willinsky
   * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
   *
-  * Main table of contents for help. 
+  * Administration table of contents for help. 
   *
   * $Id$
   -->
 
 <toc id="admin/toc/000000" locale="en_US" title="Harvester2 Help" parent_topic="index/topic/000000">
 <!-- Administration -->
-	<topic id="admin/topic/000001" title="Site Settings"/>
+  	<topic id="admin/topic/000001" title="Site Settings"/>
+	<topic id="admin/topic/000010" title="Layout"/>
 	<topic id="admin/topic/000002" title="Languages"/>
-	<topic id="admin/topic/000003" title="System Configuration"/>
-	<topic id="admin/topic/000004" title="System Information"/>
-	<topic id="admin/topic/000005" title="Archives"/>
-	<topic id="admin/topic/000006" title="Archive Administration"/>
-	<topic id="admin/topic/000007" title="Manage Archive"/>
-	<topic id="admin/topic/000008" title="Crosswalks"/>
-	<topic id="admin/topic/000009" title="Crosswalk Administration"/>
+	<topic id="admin/topic/000011" title="Plugins"/>
+	<topic id="admin/topic/000012" title="Reading Tools"/>
+	<topic id="admin/topic/000013" title="Sort Orders"/>
+	<topic id="admin/topic/000014" title="Users"/>
+	<topic id="admin/topic/000003" title="Administrative Functions"/>
 </toc>

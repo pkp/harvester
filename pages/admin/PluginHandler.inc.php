@@ -56,7 +56,6 @@ class PluginHandler extends AdminHandler {
 		$templateMgr->assign_by_ref('categories', $categories);
 		$templateMgr->assign('mainPage', $mainPage);
 		$templateMgr->assign('isSiteAdmin', Validation::isSiteAdmin());
-		$templateMgr->assign('helpTopicId', 'journal.managementPages.plugins');
 		
 		$templateMgr->display('admin/plugins.tpl');
 	}

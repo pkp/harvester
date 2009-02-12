@@ -10,7 +10,7 @@
  *}
 {strip}
 {assign var="pageTitle" value="admin.archives"}
-{assign var="helpTopicId" value="admin.archives"}
+{assign var="helpTopicId" value="management.archives"}
 {include file="common/header.tpl"}
 {/strip}
 

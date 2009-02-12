@@ -11,6 +11,7 @@
 {strip}
 {assign var="pageTitle" value="admin.layout"}
 {assign var="pageCrumbTitle" value="admin.layout"}
+{assign var="helpTopicId" value="admin.layout"}
 {url|assign:"currentUrl" op="layout"}
 {include file="common/header.tpl"}
 {/strip}

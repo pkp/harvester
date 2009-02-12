@@ -62,14 +62,6 @@ class PeopleHandler extends AdminHandler {
 
 		$users =& $roleDao->getUsersByRoleId($roleId, $searchType, $search, $searchMatch, $rangeInfo);
 		$templateMgr->assign('roleId', $roleId);
-		switch($roleId) {
-			case ROLE_ID_SUBMITTER:
-				$helpTopicId = 'admin.roles.submitter';
-				break;
-			default:
-				$helpTopicId = 'admin.roles.index';
-				break;
-		}
 
 		$templateMgr->assign('currentUrl', Request::url(null, 'people', 'all'));
 		$templateMgr->assign('roleName', $roleName);
@@ -81,7 +73,6 @@ class PeopleHandler extends AdminHandler {
 		$templateMgr->assign('search', $search);
 		$templateMgr->assign('searchInitial', Request::getUserVar('searchInitial'));
 
-		$templateMgr->assign('helpTopicId', $helpTopicId);
 		$fieldOptions = Array(
 			USER_FIELD_FIRSTNAME => 'user.firstName',
 			USER_FIELD_LASTNAME => 'user.lastName',
@@ -146,7 +137,6 @@ class PeopleHandler extends AdminHandler {
 		$templateMgr->assign_by_ref('users', $users);
 		$templateMgr->assign_by_ref('thisUser', Request::getUser());
 		$templateMgr->assign('alphaList', explode(' ', Locale::translate('common.alphaList')));
-		$templateMgr->assign('helpTopicId', 'admin.users.index');
 		$templateMgr->display('admin/people/searchUsers.tpl');
 	}
 
@@ -387,7 +377,6 @@ class PeopleHandler extends AdminHandler {
 
 		$templateMgr =& TemplateManager::getManager();
 		$templateMgr->assign('currentUrl', Request::url(null, null, 'people', 'all'));
-		$templateMgr->assign('helpTopicId', 'admin.users.index');
 
 		$userDao =& DAORegistry::getDAO('UserDAO');
 		$userId = isset($args[0]) ? $args[0] : 0;

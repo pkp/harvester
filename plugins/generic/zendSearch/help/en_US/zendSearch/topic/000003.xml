@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic SYSTEM "../../../../../../../lib/pkp/dtd/helpTopic.dtd">
+
+<!--
+  * 000003.xml
+  *
+  * Copyright (c) 2003-2008 John Willinsky
+  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
+  *
+  * Searching Help Page 
+  *
+  * $Id$
+  -->
+
+<topic id="zendSearch/topic/000002" locale="en_US" title="Searching" toc="zendSearch/toc/000000" key="zendSearch.search">
+	<section>
+		<![CDATA[<p>(Please note that this help page refers explicitly to the Zend Search plugin. Further advice on searching is available on the more general {help_topic key="index.search" text="search page"}.)</p>
+		<p>The Zend Search plugin provides one field by default, labelled "All", which searches through the entire Zend or Lucene database. The Administrator may also specify further searchable fields to be used across the database.</p>]]>
+	</section>
+</topic>

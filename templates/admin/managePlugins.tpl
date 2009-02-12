@@ -10,6 +10,7 @@
  *}
 {strip}
 {assign var="pageTitle" value="manager.plugins.$path"}
+{assign var="helpTopicId" value="admin.plugins"}
 {include file="common/header.tpl"}
 {/strip}
 

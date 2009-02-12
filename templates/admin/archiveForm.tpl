@@ -10,13 +10,13 @@
  *}
 {strip}
 {if $archiveId}
-	{assign var="helpTopicId" value="admin.archiveForm"}
+	{assign var="helpTopicId" value="management.addArchive"}
 	{assign var="pageTitle" value="admin.archives.editArchive"}
 {elseif $isUserLoggedIn}
-	{assign var="helpTopicId" value="admin.archiveForm"}
+	{assign var="helpTopicId" value="management.addArchive"}
 	{assign var="pageTitle" value="admin.archives.addArchive"}
 {else}
-	{assign var="helpTopicId" value="index.addArchive"}
+	{assign var="helpTopicId" value="management.archives"}
 	{assign var="pageTitle" value="navigation.addArchive"}
 {/if}
 {include file="common/header.tpl"}
