@@ -30,7 +30,24 @@ class Request extends PKPRequest {
 	function redirect($page = null, $op = null, $path = null, $params = null, $anchor = null) {
 		Request::redirectUrl(Request::url($page, $op, $path, $params, $anchor));
 	}
+	
+	/**
+	 * Redirect to user home page (or the role home page if the user has one role).
+	 */
+	function redirectHome() {
+		$roleDao =& DAORegistry::getDAO('RoleDAO');
+		$user = Request::getUser();
+		$userId = $user->getUserId();
 
+		$roles =& $roleDao->getRolesByUserId($userId);
+		if(count($roles) == 1) {
+			$role = array_shift($roles);
+			Request::redirect($role->getRolePath());
+		} else {
+			Request::redirect('user');
+		}
+	}
+	
 	/**
 	 * Build a URL into Harvester2.
 	 */
