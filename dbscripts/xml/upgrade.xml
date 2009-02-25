@@ -15,7 +15,7 @@
 <install version="2.3.0.0">
 	<upgrade minversion="2.0.0.0" maxversion="2.0.0.0">
 		<!-- 2.0.0.0 to 2.0.1.0 -->
-		<data file="dbscripts/xml/upgrade/2.0.1_update.xml"/>
+		<data file="dbscripts/xml/upgrade/2.0.1_update.xml" />
 		<note file="dbscripts/xml/release-notes/README-2.0.1" />
 	</upgrade>
 	<upgrade minversion="2.0.0.0" maxversion="2.0.1.0">
@@ -24,13 +24,17 @@
 
 		<!-- Stage 1: Add selected new tables without dropping
 		     deprecated columns containing information to migrate -->
-		<schema file="dbscripts/xml/harvester2_schema_stage1.xml"/>
-		<data file="dbscripts/xml/upgrade/2.3_preupdate.xml"/>
+		<schema file="dbscripts/xml/harvester2_schema_stage1.xml" />
+		<data file="dbscripts/xml/upgrade/2.3_preupdate.xml" />
 
-		<schema file="lib/pkp/xml/pkp_schema.xml" />
-		<schema file="dbscripts/xml/harvester2_schema.xml"/>
+		<!-- PKP schema components -->
+		<schema file="lib/pkp/xml/schema/common.xml" />
 
-		<data file="dbscripts/xml/upgrade/2.3_update.xml"/>
+		<!-- Harvester schema -->
+		<schema file="dbscripts/xml/harvester2_schema.xml" />
+
+		<!-- Other upgrade tasks -->
+		<data file="dbscripts/xml/upgrade/2.3_update.xml" />
 		<code function="updateArchivePluginNames" />
 		<code function="installSchemaAliases" />
 
