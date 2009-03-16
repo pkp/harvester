@@ -379,7 +379,7 @@ class OAIHarvester extends Harvester {
 	 * @param $identifier string
 	 * @param $params array
 	 */
-	function &updateRecord($identifier, $params = array()) {
+	function updateRecord($identifier, $params = array()) {
 		$verb = 'GetRecord';
 		$this->throttle();
 		$parser = new XMLParser();
@@ -405,6 +405,7 @@ class OAIHarvester extends Harvester {
 		$recordNode =& $result->getChildByName(array('record', 'oai:record'));
 		if ($recordNode) $this->handleRecordNode($recordNode);
 		$result->destroy();
+		return true;
 	}
 
 	/**
