@@ -15,8 +15,6 @@
 
 <br />
 
-{if $intro}
-<p>{$intro|nl2br}</p>
-{/if}
+{if $intro}{$intro|nl2br}{/if}
 
 {include file="common/footer.tpl"}
