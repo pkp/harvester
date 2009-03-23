@@ -280,6 +280,9 @@ font_location = /usr/share/fonts/truetype/freefont/FreeSerif.ttf
 ; proxy_username = username
 ; proxy_password = password
 
+; Display an error message when an email is not successfully sent
+display_errors = On
+
 
 ;;;;;;;;;;;;;;;;;;
 ; Debug Settings ;
