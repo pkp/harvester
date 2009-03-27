@@ -9,48 +9,21 @@
  * @package mail
  * @class MailTemplate
  *
- * Subclass of Mail for mailing a template email.
+ * Subclass of PKPMailTemplate for mailing a template email.
  *
  * $Id$
  */
 
-import('mail.Mail');
+import('mail.PKPMailTemplate');
 
-define('MAIL_ERROR_INVALID_EMAIL', 0x000001);
-class MailTemplate extends Mail {
-
-	/** @var $emailKey string Key of the email template we are using */
-	var $emailKey;
-
-	/** @var $locale string locale of this template */
-	var $locale;
-
-	/** @var $enabled boolean email template is enabled */
-	var $enabled;
-
-	/** @var $errorMessages array List of errors to display to the user */
-	var $errorMessages;
-
-	/** @var $skip boolean If set to true, this message has been skipped
-	    during the editing process by the user. */
-	var $skip;
-
-	/** @var $bccSender boolean whether or not to bcc the sender */
-	var $bccSender;
-
-	/** @var boolean Whether or not email fields are disabled */
-	var $addressFieldsEnabled;
-
+class MailTemplate extends PKPMailTemplate {
 	/**
 	 * Constructor.
 	 * @param $emailKey string unique identifier for the template
 	 * @param $locale string locale of the template
 	 */
 	function MailTemplate($emailKey = null, $locale = null) {
-		$this->emailKey = isset($emailKey) ? $emailKey : null;
-
-		// Use current user's locale if none specified
-		$this->locale = isset($locale) ? $locale : Locale::getLocale();
+		parent::MailTemplate($emailKey, $locale);
 
 		if (isset($this->emailKey)) {
 			$emailTemplateDao =& DAORegistry::getDAO('EmailTemplateDAO');
@@ -93,40 +66,8 @@ class MailTemplate extends Mail {
 			}
 		}
 
-		// Record whether or not to BCC the sender when sending message
-		$this->bccSender = Request::getUserVar('bccSender');
-
 		$site =& Request::getSite();
 		$this->setFrom($site->getLocalizedSetting('contactEmail'), $site->getLocalizedSetting('contactName'));
-
-		$this->addressFieldsEnabled = true;
-	}
-
-	/**
-	 * Disable or enable the address fields on the email form.
-	 * NOTE: This affects the displayed form ONLY; if disabling the address
-	 * fields, callers should manually clearAllRecipients and add/set
-	 * recipients just prior to sending.
-	 * @param $addressFieldsEnabled boolean
-	 */
-	function setAddressFieldsEnabled($addressFieldsEnabled) {
-		$this->addressFieldsEnabled = $addressFieldsEnabled;
-	}
-
-	/**
-	 * Get the enabled/disabled state of address fields on the email form.
-	 * @return boolean
-	 */
-	function getAddressFieldsEnabled() {
-		return $this->addressFieldsEnabled;
-	}
-
-	/**
-	 * Check whether or not there were errors in the user input for this form.
-	 * @return boolean true iff one or more error messages are stored.
-	 */
-	function hasErrors() {
-		return ($this->errorMessages != null);
 	}
 
 	/**
@@ -135,147 +76,11 @@ class MailTemplate extends Mail {
 	 * @return void
 	 */
 	function assignParams($paramArray = array()) {
-		$subject = $this->getSubject();
-		$body = $this->getBody();
-
 		// Add commonly-used variables to the list
 		$site =& Request::getSite();
 		$paramArray['principalContactSignature'] = $site->getLocalizedSetting('contactName');
 
-		// Replace variables in message with values
-		foreach ($paramArray as $key => $value) {
-			if (!is_object($value)) {
-				$subject = str_replace('{$' . $key . '}', $value, $subject);
-				$body = str_replace('{$' . $key . '}', $value, $body);
-			}
-		}
-
-		$this->setSubject($subject);
-		$this->setBody($body);
-	}
-
-	/**
-	 * Returns true if the email template is enabled; false otherwise.
-	 * @return boolean
-	 */
-	function isEnabled() {
-		return $this->enabled;
-	}
-
-	/**
-	 * Processes form-submitted addresses for inclusion in
-	 * the recipient list
-	 * @param $currentList array Current recipient/cc/bcc list
-	 * @param $newAddresses array "Raw" form parameter for additional addresses
-	 */
-	function &processAddresses($currentList, &$newAddresses) {
-		foreach ($newAddresses as $newAddress) {
-			$regs = array();
-			// Match the form "My Name <my_email@my.domain.com>"
-			if (ereg('^([^<>' . "\n" . ']*[^<> ' . "\n" . '])[ ]*<([-A-Za-z0-9]+([-_\+\.][A-Za-z0-9]+)*@[A-Za-z0-9]+([-_\.][A-Za-z0-9]+)*\.[A-Za-z]{2,})>$', $newAddress, $regs)) {
-				$currentList[] = array('name' => $regs[1], 'email' => $regs[2]);
-			} elseif (ereg('^[A-Za-z0-9]+([-_\+\.][A-Za-z0-9]+)*@[A-Za-z0-9]+([-_\.][A-Za-z0-9]+)*\.[A-Za-z]{2,}$', $newAddress)) {
-				$currentList[] = array('name' => '', 'email' => $newAddress);
-			} else if ($newAddress != '') {
-				$this->errorMessages[] = array('type' => MAIL_ERROR_INVALID_EMAIL, 'address' => $newAddress);
-			}
-		}
-		return $currentList;
-	}
-
-	/**
-	 * Displays an edit form to customize the email.
-	 * @param $formActionUrl string
-	 * @param $hiddenFormParams array
-	 * @return void
-	 */
-	function displayEditForm($formActionUrl, $hiddenFormParams = null, $alternateTemplate = null, $additionalParameters = array()) {
-		import('form.Form');
-		// FIXME: Need construction by reference or validation always fails on PHP 4.x
-		$form =& new Form($alternateTemplate!=null?$alternateTemplate:'email/email.tpl');
-
-		$form->setData('formActionUrl', $formActionUrl);
-		$form->setData('subject', $this->getSubject());
-		$form->setData('body', $this->getBody());
-
-		$form->setData('to', $this->getRecipients());
-		$form->setData('cc', $this->getCcs());
-		$form->setData('bcc', $this->getBccs());
-		$form->setData('blankTo', Request::getUserVar('blankTo'));
-		$form->setData('blankCc', Request::getUserVar('blankCc'));
-		$form->setData('blankBcc', Request::getUserVar('blankBcc'));
-		$form->setData('from', $this->getFromString(false));
-
-		$form->setData('addressFieldsEnabled', $this->getAddressFieldsEnabled());
-
-		$user =& Request::getUser();
-		if ($user) {
-			$form->setData('senderEmail', $user->getEmail());
-			$form->setData('bccSender', $this->bccSender);
-		}
-
-		$form->setData('errorMessages', $this->errorMessages);
-
-		if ($hiddenFormParams != null) {
-			$form->setData('hiddenFormParams', $hiddenFormParams);
-		}
-
-		foreach ($additionalParameters as $key => $value) {
-			$form->setData($key, $value);
-		}
-
-		$templateMgr =& TemplateManager::getManager();
-
-		$form->display();
-	}
-
-	/**
-	 * Send the email.
-	 */
-	function send() {
-		if (isset($this->skip) && $this->skip) {
-			$result = true;
-		} else {
-			$result = parent::send();
-		}
-
-		return $result;
-	}
-
-	/**
-	 * Assigns user-specific values to email parameters, sends
-	 * the email, then clears those values.
-	 * @param $paramArray array
-	 * @return void
-	 */
-	function sendWithParams($paramArray) {
-		$savedHeaders = $this->getHeaders();
-		$savedSubject = $this->getSubject();
-		$savedBody = $this->getBody();
-
-		$this->assignParams($paramArray);
-
-		$ret = $this->send();
-
-		$this->setHeaders($savedHeaders);
-		$this->setSubject($savedSubject);
-		$this->setBody($savedBody);
-
-		return $ret;
-	}
-
-	/**
-	 * Clears the recipient, cc, and bcc lists.
-	 * @param $clearHeaders boolean if true, also clear headers
-	 * @return void
-	 */
-	function clearRecipients($clearHeaders = true) {
-		$this->setData('recipients', null);
-		$this->setData('ccs', null);
-		$this->setData('bccs', null);
-		if ($clearHeaders) {
-			$this->setData('headers', null);
-		}
+		return parent::assignParams($paramArray);
 	}
 }
 
