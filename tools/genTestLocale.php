@@ -3,7 +3,7 @@
 /**
  * @file tools/genTestLocale.php
  *
- * Copyright (c) 2005-2008 Alec Smecher and John Willinsky
+ * Copyright (c) 2005-2009 Alec Smecher and John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class genTestLocale
@@ -97,7 +97,7 @@ class genTestLocale extends CommandLineTool {
 					"<!--\n" .
 					"  * locale.xml\n" .
 					"  *\n" .
-					"  * Copyright (c) 2005-2008 Alec Smecher and John Willinsky\n" .
+					"  * Copyright (c) 2005-2009 Alec Smecher and John Willinsky\n" .
 					"  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.\n" .
 					"  *\n" .
 					sprintf("  * Localization strings for the %s (%s) locale.\n", $this->outLocale, DEFAULT_OUT_LOCALE_NAME) .
