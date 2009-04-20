@@ -14,6 +14,7 @@
 
 // $Id$
 
+import('pages.user.UserHandler');
 
 class RegistrationHandler extends UserHandler {
 
@@ -21,8 +22,8 @@ class RegistrationHandler extends UserHandler {
 	 * Display registration form for new users.
 	 */
 	function register() {
-		RegistrationHandler::validate();
-		parent::setupTemplate(true);
+		$this->validate();
+		$this->setupTemplate(true);
 
 		import('user.form.RegistrationForm');
 
@@ -40,7 +41,7 @@ class RegistrationHandler extends UserHandler {
 	 * Validate user registration information and register new user.
 	 */
 	function registerUser() {
-		RegistrationHandler::validate();
+		$this->validate();
 		import('user.form.RegistrationForm');
 
 		$regForm =& new RegistrationForm();
@@ -59,7 +60,7 @@ class RegistrationHandler extends UserHandler {
 			Validation::login($regForm->getData('username'), $regForm->getData('password'), $reason);
 
 			if ($reason !== null) {
-				parent::setupTemplate(true);
+				$this->setupTemplate(true);
 				$templateMgr =& TemplateManager::getManager();
 				$templateMgr->assign('pageTitle', 'user.login');
 				$templateMgr->assign('errorMsg', $reason==''?'user.login.accountDisabled':'user.login.accountDisabledWithReason');
@@ -74,7 +75,7 @@ class RegistrationHandler extends UserHandler {
 			else Request::redirect('login');
 
 		} else {
-			parent::setupTemplate(true);
+			$this->setupTemplate(true);
 			$regForm->display();
 		}
 	}
@@ -83,7 +84,7 @@ class RegistrationHandler extends UserHandler {
 	 * Show error message if user registration is not allowed.
 	 */
 	function registrationDisabled() {
-		parent::setupTemplate(true);
+		$this->setupTemplate(true);
 		$templateMgr =& TemplateManager::getManager();
 		$templateMgr->assign('pageTitle', 'user.register');
 		$templateMgr->assign('errorMsg', 'user.register.registrationDisabled');
@@ -133,11 +134,11 @@ class RegistrationHandler extends UserHandler {
 	 * Checks if site allows user registration.
 	 */	
 	function validate() {
-		parent::validate(false);
+		parent::validate();
 		$site =& Request::getSite();
 		if (!$site->getSetting('enableSubmit')) {
 			// Users cannot register themselves
-			RegistrationHandler::registrationDisabled();
+			$this->registrationDisabled();
 			exit;
 		}
 	}

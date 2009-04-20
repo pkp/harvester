@@ -15,6 +15,7 @@
 
 // $Id$
 
+import('pages.admin.AdminHandler');
 
 class AdminArchiveHandler extends AdminHandler {
 
@@ -22,8 +23,8 @@ class AdminArchiveHandler extends AdminHandler {
 	 * Display a list of the archives hosted on the site.
 	 */
 	function archives() {
-		AdminArchiveHandler::validate();
-		AdminArchiveHandler::setupTemplate();
+		$this->validate();
+		$this->setupTemplate();
 
 		$rangeInfo = PKPHandler::getRangeInfo('archives');
 
@@ -44,7 +45,7 @@ class AdminArchiveHandler extends AdminHandler {
 	 * Display form to create a new archive.
 	 */
 	function createArchive() {
-		AdminArchiveHandler::editArchive();
+		$this->editArchive();
 	}
 
 	/**
@@ -52,8 +53,8 @@ class AdminArchiveHandler extends AdminHandler {
 	 * @param $args array optional, if set the first parameter is the ID of the archive to edit
 	 */
 	function editArchive($args = array()) {
-		AdminArchiveHandler::validate();
-		AdminArchiveHandler::setupTemplate(true);
+		$this->validate();
+		$this->setupTemplate(true);
 
 		import('admin.form.ArchiveForm');
 
@@ -67,8 +68,8 @@ class AdminArchiveHandler extends AdminHandler {
 	 * Save changes to a archive's settings.
 	 */
 	function updateArchive() {
-		AdminArchiveHandler::validate();
-		AdminArchiveHandler::setupTemplate();
+		$this->validate();
+		$this->setupTemplate();
 
 		import('admin.form.ArchiveForm');
 
@@ -96,7 +97,7 @@ class AdminArchiveHandler extends AdminHandler {
 			Request::redirect('admin', 'manage', $archiveId);
 
 		} else {
-			AdminArchiveHandler::setupTemplate(true);
+			$this->setupTemplate(true);
 			$archiveForm->display();
 		}
 	}
@@ -106,7 +107,7 @@ class AdminArchiveHandler extends AdminHandler {
 	 * @param $args array first parameter is the ID of the archive to delete
 	 */
 	function deleteArchive($args) {
-		AdminArchiveHandler::validate();
+		$this->validate();
 
 		$archiveDao =& DAORegistry::getDAO('ArchiveDAO');
 
@@ -126,8 +127,8 @@ class AdminArchiveHandler extends AdminHandler {
 	 * Manage an archive.
 	 */
 	function manage($args) {
-		AdminArchiveHandler::validate();
-		AdminArchiveHandler::setupTemplate(true);
+		$this->validate();
+		$this->setupTemplate(true);
 
 		$archiveDao =& DAORegistry::getDAO('ArchiveDAO');
 
@@ -147,8 +148,8 @@ class AdminArchiveHandler extends AdminHandler {
 	 * Update the metadata index for an archive.
 	 */
 	function updateIndex($args) {
-		AdminArchiveHandler::validate();
-		AdminArchiveHandler::setupTemplate(true);
+		$this->validate();
+		$this->setupTemplate(true);
 
 		$archiveDao =& DAORegistry::getDAO('ArchiveDAO');
 
@@ -195,8 +196,8 @@ class AdminArchiveHandler extends AdminHandler {
 	 * Flush the metadata index for an archive.
 	 */
 	function flushIndex($args) {
-		AdminArchiveHandler::validate();
-		AdminArchiveHandler::setupTemplate(true);
+		$this->validate();
+		$this->setupTemplate(true);
 
 		$archiveDao =& DAORegistry::getDAO('ArchiveDAO');
 

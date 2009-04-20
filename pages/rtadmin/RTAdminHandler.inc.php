@@ -17,21 +17,21 @@
 
 
 import('rt.harvester2.HarvesterRTAdmin');
-import('core.PKPHandler');
+import('handler.Handler');
 
-class RTAdminHandler extends PKPHandler {
+class RTAdminHandler extends Handler {
 
 	/**
 	 * Display the index page for RT administration tasks.
 	 */
 	function index($args = array()) {
-		RTAdminHandler::validate();
+		$this->validate();
 		$templateMgr =& TemplateManager::getManager();
 
 		$archiveId = (int) array_shift($args);
 		$archiveDao =& DAORegistry::getDAO('ArchiveDAO');
 
-		RTAdminHandler::setupTemplate(false, $archiveId);
+		$this->setupTemplate(false, $archiveId);
 
 		if ($archive =& $archiveDao->getArchive($archiveId, false) || $archiveId == 0) {
 			$site =& Request::getSite();
@@ -63,7 +63,7 @@ class RTAdminHandler extends PKPHandler {
 	 * Save the selected choice of version.
 	 */
 	function selectVersion($args) {
-		RTAdminHandler::validate();
+		$this->validate();
 		$archiveId = (int) array_shift($args);
 		$versionId = Request::getUserVar('versionId');
 
@@ -86,10 +86,8 @@ class RTAdminHandler extends PKPHandler {
 	 * Ensure that this page is available to the user.
 	 */
 	function validate() {
-		parent::validate(true);
-		if (!Validation::isSiteAdmin()) {
-			Validation::redirectLogin();
-		}
+		$this->addCheck(new HandlerValidatorRoles(&$this, true, null, null, array(ROLE_ID_SITE_ADMIN)));		
+		parent::validate();
 	}
 
 
@@ -108,7 +106,7 @@ class RTAdminHandler extends PKPHandler {
 	}
 
 	function validateUrls($args) {
-		RTAdminHandler::validate();
+		$this->validate();
 
 		$rtDao =& DAORegistry::getDAO('RTDAO');
 
@@ -127,7 +125,7 @@ class RTAdminHandler extends PKPHandler {
 			$versions = $rtDao->getVersions($archiveId);
 		}
 
-		RTAdminHandler::setupTemplate(true, $archiveId, $version);
+		$this->setupTemplate(true, $archiveId, $version);
 		$templateMgr =& TemplateManager::getManager();
 		$templateMgr->register_modifier('validate_url', 'smarty_rtadmin_validate_url');
 		$templateMgr->assign_by_ref('versions', $versions);

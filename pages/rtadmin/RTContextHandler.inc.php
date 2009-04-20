@@ -17,10 +17,11 @@
 
 
 import('rt.harvester2.HarvesterRTAdmin');
+import('pages.rtadmin.RTAdminHandler'):
 
 class RTContextHandler extends RTAdminHandler {
 	function createContext($args) {
-		RTAdminHandler::validate();
+		$this->validate();
 
 		$rtDao =& DAORegistry::getDAO('RTDAO');
 
@@ -39,13 +40,13 @@ class RTContextHandler extends RTAdminHandler {
 			$contextForm->execute();
 			Request::redirect(null, 'contexts', array($archiveId, $versionId));
 		} else {
-			RTAdminHandler::setupTemplate(true, $archiveId, $version);
+			$this->setupTemplate(true, $archiveId, $version);
 			$contextForm->display();
 		}
 	}
 
 	function contexts($args) {
-		RTAdminHandler::validate();
+		$this->validate();
 
 		$rtDao =& DAORegistry::getDAO('RTDAO');
 		$rangeInfo = PKPHandler::getRangeInfo('contexts');
@@ -56,7 +57,7 @@ class RTContextHandler extends RTAdminHandler {
 		$version =& $rtDao->getVersion($versionId, $archiveId);
 
 		if ($version) {
-			RTAdminHandler::setupTemplate(true, $archiveId, $version);
+			$this->setupTemplate(true, $archiveId, $version);
 
 			$templateMgr =& TemplateManager::getManager();
 
@@ -72,7 +73,7 @@ class RTContextHandler extends RTAdminHandler {
 	}
 
 	function editContext($args) {
-		RTAdminHandler::validate();
+		$this->validate();
 
 		$rtDao =& DAORegistry::getDAO('RTDAO');
 
@@ -85,7 +86,7 @@ class RTContextHandler extends RTAdminHandler {
 
 		if (isset($version) && isset($context) && $context->getVersionId() == $version->getVersionId()) {
 			import('rt.harvester2.form.ContextForm');
-			RTAdminHandler::setupTemplate(true, $archiveId, $version, $context);
+			$this->setupTemplate(true, $archiveId, $version, $context);
 			// FIXME: Need construction by reference or validation always fails on PHP 4.x
 			$contextForm =& new ContextForm($contextId, $versionId, $archiveId);
 			$contextForm->initData();
@@ -97,7 +98,7 @@ class RTContextHandler extends RTAdminHandler {
 	}
 
 	function deleteContext($args) {
-		RTAdminHandler::validate();
+		$this->validate();
 
 		$rtDao =& DAORegistry::getDAO('RTDAO');
 
@@ -116,7 +117,7 @@ class RTContextHandler extends RTAdminHandler {
 	}
 
 	function saveContext($args) {
-		RTAdminHandler::validate();
+		$this->validate();
 
 		$rtDao =& DAORegistry::getDAO('RTDAO');
 
@@ -139,7 +140,7 @@ class RTContextHandler extends RTAdminHandler {
 	}
 
 	function moveContext($args) {
-		RTAdminHandler::validate();
+		$this->validate();
 
 		$rtDao =& DAORegistry::getDAO('RTDAO');
 

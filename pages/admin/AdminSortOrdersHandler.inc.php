@@ -15,14 +15,15 @@
 
 // $Id$
 
+import('pages.admin.AdminHandler');
 
 class AdminSortOrdersHandler extends AdminHandler {
 	/**
 	 * Display a list of the sort orders configured on the site.
 	 */
 	function sortOrders() {
-		AdminSortOrdersHandler::validate();
-		AdminSortOrdersHandler::setupTemplate();
+		$this->validate();
+		$this->setupTemplate();
 
 		$rangeInfo = PKPHandler::getRangeInfo('sortOrders');
 
@@ -39,7 +40,7 @@ class AdminSortOrdersHandler extends AdminHandler {
 	 * Display form to create a new sort order.
 	 */
 	function createSortOrder() {
-		AdminSortOrdersHandler::editSortOrder();
+		$this->editSortOrder();
 	}
 
 	/**
@@ -47,8 +48,8 @@ class AdminSortOrdersHandler extends AdminHandler {
 	 * @param $args array optional, if set the first parameter is the ID of the sort order to edit
 	 */
 	function editSortOrder($args = array()) {
-		AdminSortOrdersHandler::validate();
-		AdminSortOrdersHandler::setupTemplate(true);
+		$this->validate();
+		$this->setupTemplate(true);
 
 		import('admin.form.SortOrderForm');
 
@@ -62,8 +63,8 @@ class AdminSortOrdersHandler extends AdminHandler {
 	 * Save changes to a sort order's settings.
 	 */
 	function updateSortOrder() {
-		AdminSortOrdersHandler::validate();
-		AdminSortOrdersHandler::setupTemplate(true);
+		$this->validate();
+		$this->setupTemplate(true);
 		
 		import('admin.form.SortOrderForm');
 
@@ -78,7 +79,7 @@ class AdminSortOrdersHandler extends AdminHandler {
 			$sortOrderForm->execute();
 			Request::redirect('admin', 'sortOrders');
 		} else {
-			AdminSortOrdersHandler::setupTemplate(true);
+			$this->setupTemplate(true);
 			$sortOrderForm->display();
 		}
 	}
@@ -88,7 +89,7 @@ class AdminSortOrdersHandler extends AdminHandler {
 	 * @param $args array first parameter is the ID of the sort order to delete
 	 */
 	function deleteSortOrder($args) {
-		AdminSortOrdersHandler::validate();
+		$this->validate();
 
 		$sortOrderDao =& DAORegistry::getDAO('SortOrderDAO');
 

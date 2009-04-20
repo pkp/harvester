@@ -15,22 +15,22 @@
 // $Id$
 
 
-import('core.PKPHandler');
+import('handler.Handler');
 
-class UserHandler extends PKPHandler {
+class UserHandler extends Handler {
 
 	/**
 	 * Display user index page.
 	 */
 	function index() {
-		UserHandler::validate();
+		$this->validate();
 
 		$templateMgr =& TemplateManager::getManager();
 		$roleDao =& DAORegistry::getDAO('RoleDAO');
 		$user =& Request::getUser();
 		$site =& Request::getSite();
 
-		UserHandler::setupTemplate();
+		$this->setupTemplate();
 
 		$templateMgr->assign('isSiteAdmin', Validation::isSiteAdmin());
 		$templateMgr->assign('userRoles', $roleDao->getRolesByUserId($user->getUserId()));
@@ -200,7 +200,7 @@ class UserHandler extends PKPHandler {
 	 * if that user should be exposed for public view.
 	 */
 	function viewPublicProfile($args) {
-		UserHandler::validate(false);
+		$this->validate(false);
 		$templateMgr =& TemplateManager::getManager();
 		$userId = (int) array_shift($args);
 

@@ -16,16 +16,16 @@
 // $Id$
 
 
-import('core.PKPHandler');
+import('handler.Handler');
 
-class AdminHandler extends PKPHandler {
+class AdminHandler extends Handler {
 
 	/**
 	 * Display site admin index page.
 	 */
 	function index() {
-		AdminHandler::validate();
-		AdminHandler::setupTemplate();
+		$this->validate();
+		$this->setupTemplate();
 
 		$templateMgr =& TemplateManager::getManager();
 		$templateMgr->display('admin/index.tpl');
@@ -36,10 +36,8 @@ class AdminHandler extends PKPHandler {
 	 * Redirects to the user index page if not properly authenticated.
 	 */
 	function validate() {
+		$this->addCheck(new HandlerValidatorRoles(&$this, true, null, null, array(ROLE_ID_SITE_ADMIN)));
 		parent::validate();
-		if (!Validation::isSiteAdmin()) {
-			Validation::redirectLogin();
-		}
 	}
 
 	/**
@@ -56,27 +54,13 @@ class AdminHandler extends PKPHandler {
 		}
 	}
 
-
-	//
-	// Settings
-	//
-
-	function settings() {
-		PKPHandler::delegate('pages.admin.AdminSettingsHandler');
-	}
-
-	function saveSettings() {
-		PKPHandler::delegate('pages.admin.AdminSettingsHandler');
-	}
-
-
 	//
 	// Layout
 	//
 
 	function layout() {
-		AdminHandler::setupTemplate();
-		AdminHandler::validate();
+		$this->setupTemplate();
+		$this->validate();
 
 		import('admin.form.LayoutForm');
 		// FIXME: Need construction by reference or validation always fails on PHP 4.x
@@ -90,8 +74,8 @@ class AdminHandler extends PKPHandler {
 	}
 
 	function saveLayout() {
-		AdminHandler::setupTemplate();
-		AdminHandler::validate();
+		$this->setupTemplate();
+		$this->validate();
 
 		import('admin.form.LayoutForm');
 		// FIXME: Need construction by reference or validation always fails on PHP 4.x
@@ -103,230 +87,6 @@ class AdminHandler extends PKPHandler {
 		} else {
 			$layoutForm->display();
 		}
-	}
-
-	//
-	// Archive Management
-	//
-
-	function archives() {
-		PKPHandler::delegate('pages.admin.AdminArchiveHandler');
-	}
-
-	function createArchive() {
-		PKPHandler::delegate('pages.admin.AdminArchiveHandler');
-	}
-
-	function editArchive() {
-		PKPHandler::delegate('pages.admin.AdminArchiveHandler');
-	}
-
-	function manage() {
-		PKPHandler::delegate('pages.admin.AdminArchiveHandler');
-	}
-
-	function updateArchive() {
-		PKPHandler::delegate('pages.admin.AdminArchiveHandler');
-	}
-
-	function deleteArchive() {
-		PKPHandler::delegate('pages.admin.AdminArchiveHandler');
-	}
-
-	function updateIndex() {
-		PKPHandler::delegate('pages.admin.AdminArchiveHandler');
-	}
-
-	function flushIndex() {
-		PKPHandler::delegate('pages.admin.AdminArchiveHandler');
-	}
-
-	//
-	// Sort Order Management
-	//
-
-	function sortOrders() {
-		PKPHandler::delegate('pages.admin.AdminSortOrdersHandler');
-	}
-
-	function createSortOrder() {
-		PKPHandler::delegate('pages.admin.AdminSortOrdersHandler');
-	}
-
-	function editSortOrder() {
-		PKPHandler::delegate('pages.admin.AdminSortOrdersHandler');
-	}
-
-	function updateSortOrder() {
-		PKPHandler::delegate('pages.admin.AdminSortOrdersHandler');
-	}
-
-	function deleteSortOrder() {
-		PKPHandler::delegate('pages.admin.AdminSortOrdersHandler');
-	}
-
-	//
-	// Languages
-	//
-
-	function languages() {
-		PKPHandler::delegate('pages.admin.AdminLanguagesHandler');
-	}
-
-	function saveLanguageSettings() {
-		PKPHandler::delegate('pages.admin.AdminLanguagesHandler');
-	}
-
-	function installLocale() {
-		PKPHandler::delegate('pages.admin.AdminLanguagesHandler');
-	}
-
-	function uninstallLocale() {
-		PKPHandler::delegate('pages.admin.AdminLanguagesHandler');
-	}
-
-	function reloadLocale() {
-		PKPHandler::delegate('pages.admin.AdminLanguagesHandler');
-	}
-
-
-	//
-	// People Management
-	//
-
-	function people($args) {
-		import('pages.admin.PeopleHandler');
-		PeopleHandler::people($args);
-	}
-
-	function enrollSearch($args) {
-		import('pages.admin.PeopleHandler');
-		PeopleHandler::enrollSearch($args);
-	}
-
-	function enroll($args) {
-		import('pages.admin.PeopleHandler');
-		PeopleHandler::enroll($args);
-	}
-
-	function unEnroll($args) {
-		import('pages.admin.PeopleHandler');
-		PeopleHandler::unEnroll($args);
-	}
-
-	function enrollSyncSelect($args) {
-		import('pages.admin.PeopleHandler');
-		PeopleHandler::enrollSyncSelect($args);
-	}
-
-	function enrollSync($args) {
-		import('pages.admin.PeopleHandler');
-		PeopleHandler::enrollSync($args);
-	}
-
-	function createUser() {
-		import('pages.admin.PeopleHandler');
-		PeopleHandler::createUser();
-	}
-
-	function suggestUsername() {
-		import('pages.admin.PeopleHandler');
-		PeopleHandler::suggestUsername();
-	}
-
-	function mergeUsers($args) {
-		import('pages.admin.PeopleHandler');
-		PeopleHandler::mergeUsers($args);
-	}
-
-	function disableUser($args) {
-		import('pages.admin.PeopleHandler');
-		PeopleHandler::disableUser($args);
-	}
-
-	function enableUser($args) {
-		import('pages.admin.PeopleHandler');
-		PeopleHandler::enableUser($args);
-	}
-
-	function removeUser($args) {
-		import('pages.admin.PeopleHandler');
-		PeopleHandler::removeUser($args);
-	}
-
-	function editUser($args) {
-		import('pages.admin.PeopleHandler');
-		PeopleHandler::editUser($args);
-	}
-
-	function updateUser() {
-		import('pages.admin.PeopleHandler');
-		PeopleHandler::updateUser();
-	}
-
-	function userProfile($args) {
-		import('pages.admin.PeopleHandler');
-		PeopleHandler::userProfile($args);
-	}
-
-	function signInAsUser($args) {
-		import('pages.admin.PeopleHandler');
-		PeopleHandler::signInAsUser($args);
-	}
-
-	function signOutAsUser() {
-		import('pages.admin.PeopleHandler');
-		PeopleHandler::signOutAsUser();
-	}
-
-
-	//
-	// Administrative functions
-	//
-
-	function systemInfo() {
-		PKPHandler::delegate('pages.admin.AdminFunctionsHandler');
-	}
-
-	function editSystemConfig() {
-		PKPHandler::delegate('pages.admin.AdminFunctionsHandler');
-	}
-
-	function saveSystemConfig() {
-		PKPHandler::delegate('pages.admin.AdminFunctionsHandler');
-	}
-
-	function phpinfo() {
-		PKPHandler::delegate('pages.admin.AdminFunctionsHandler');
-	}
-
-	function expireSessions() {
-		PKPHandler::delegate('pages.admin.AdminFunctionsHandler');
-	}
-
-	function clearTemplateCache() {
-		PKPHandler::delegate('pages.admin.AdminFunctionsHandler');
-	}
-
-	function clearDataCache() {
-		PKPHandler::delegate('pages.admin.AdminFunctionsHandler');
-	}
-
-	//
-	// Plugin Management
-	//
-
-	function plugins() {
-		PKPHandler::delegate('pages.admin.PluginHandler');
-	}
-
-	function plugin() {
-		PKPHandler::delegate('pages.admin.PluginHandler');
-	}
-	
-	function pluginManagement($args) {
-		import('pages.admin.PluginManagementHandler');
-		PluginManagementHandler::managePlugins($args);
 	}
 
 	//

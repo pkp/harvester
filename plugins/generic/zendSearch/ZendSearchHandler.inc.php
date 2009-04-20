@@ -15,9 +15,9 @@
 // $Id$
 
 
-import('core.PKPHandler');
+import('handler.Handler');
 
-class ZendSearchHandler extends PKPHandler {
+class ZendSearchHandler extends Handler {
 	/**
 	 * Display search form
 	 */

@@ -16,16 +16,16 @@
 // $Id$
 
 
-import('core.PKPHandler');
+import('handler.Handler');
 
-class AboutHandler extends PKPHandler {
+class AboutHandler extends Handler {
 
 	/**
 	 * Display about index page.
 	 */
 	function index() {
-		AboutHandler::setupTemplate();
-		parent::validate();
+		$this->setupTemplate();
+		$this->validate();
 
 		$templateMgr =& TemplateManager::getManager();
 
@@ -42,7 +42,7 @@ class AboutHandler extends PKPHandler {
 	 */
 	function setupTemplate($subclass = false) {
 		parent::setupTemplate();
-		parent::validate();
+		$this->validate();
 
 		$templateMgr =& TemplateManager::getManager();
 		if ($subclass) $templateMgr->assign('pageHierarchy', array(array('about', 'navigation.about')));
@@ -52,9 +52,9 @@ class AboutHandler extends PKPHandler {
 	 * Display contact page.
 	 */
 	function contact() {
-		parent::validate(true);
+		$this->validate();
 
-		AboutHandler::setupTemplate(true);
+		$this->setupTemplate(true);
 
 		$site =& Request::getSite();
 
@@ -66,9 +66,9 @@ class AboutHandler extends PKPHandler {
 	 * Display about the harvester page.
 	 */
 	function harvester() {
-		parent::validate();
+		$this->validate();
 
-		AboutHandler::setupTemplate(true);
+		$this->setupTemplate(true);
 
 		$templateMgr =& TemplateManager::getManager();
 		$templateMgr->display('about/harvester.tpl');

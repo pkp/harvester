@@ -16,15 +16,15 @@
 // $Id$
 
 
-import('core.PKPHandler');
+import('handler.Handler');
 
-class RecordHandler extends PKPHandler {
+class RecordHandler extends Handler {
 	function index() {
 		Request::redirect('browse');
 	}
 
 	function view($args) {
-		RecordHandler::validate();
+		$this->validate();
 
 		$recordDao =& DAORegistry::getDAO('RecordDAO');
 
@@ -35,7 +35,7 @@ class RecordHandler extends PKPHandler {
 		$archive =& $record->getArchive();
 		if (!$archive || !$archive->getEnabled()) Request::redirect('index');
 
-		RecordHandler::setupTemplate($record, true);
+		$this->setupTemplate($record, true);
 		$record->display();
 	}
 

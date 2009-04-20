@@ -14,6 +14,7 @@
 
 // $Id$
 
+import('pages.user.UserHandler');
 
 class ProfileHandler extends UserHandler {
 
@@ -21,8 +22,8 @@ class ProfileHandler extends UserHandler {
 	 * Display form to edit user's profile.
 	 */
 	function profile() {
-		ProfileHandler::validate();
-		ProfileHandler::setupTemplate(true);
+		$this->validate();
+		$this->setupTemplate(true);
 
 		import('user.form.ProfileForm');
 
@@ -40,8 +41,8 @@ class ProfileHandler extends UserHandler {
 	 * Validate and save changes to user's profile.
 	 */
 	function saveProfile() {
-		ProfileHandler::validate();
-		ProfileHandler::setupTemplate();
+		$this->validate();
+		$this->setupTemplate();
 		$dataModified = false;
 
 		import('user.form.ProfileForm');
@@ -65,7 +66,7 @@ class ProfileHandler extends UserHandler {
 			Request::redirect(null, Request::getRequestedPage());
 
 		} else {
-			ProfileHandler::setupTemplate(true);
+			$this->setupTemplate(true);
 			$profileForm->display();
 		}
 	}
@@ -74,8 +75,8 @@ class ProfileHandler extends UserHandler {
 	 * Display form to change user's password.
 	 */
 	function changePassword() {
-		ProfileHandler::validate();
-		ProfileHandler::setupTemplate(true);
+		$this->validate();
+		$this->setupTemplate(true);
 
 		import('user.form.ChangePasswordForm');
 
@@ -89,8 +90,8 @@ class ProfileHandler extends UserHandler {
 	 * Save user's new password.
 	 */
 	function savePassword() {
-		ProfileHandler::setupTemplate();
-		ProfileHandler::validate();
+		$this->setupTemplate();
+		$this->validate();
 
 		import('user.form.ChangePasswordForm');
 
@@ -102,7 +103,7 @@ class ProfileHandler extends UserHandler {
 			Request::redirect(null, Request::getRequestedPage());
 
 		} else {
-			ProfileHandler::setupTemplate(true);
+			$this->setupTemplate(true);
 			$passwordForm->display();
 		}
 	}

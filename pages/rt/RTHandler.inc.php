@@ -17,15 +17,23 @@
 // $Id$
 
 import('rt.harvester2.RTDAO');
-import('core.PKPHandler');
+import('handler.Handler');
 
-class RTHandler extends PKPHandler {
+class RTHandler extends Handler {
+	/** archive associated with this request **/
+	var $archive;
+	
+	/** record associated with this request **/
+	var $record; 
+	
 	function context($args) {
 		$recordId = array_shift($args);
 		$contextId = array_shift($args);
 
-		list($archive, $record) = RTHandler::validate($recordId);
-		RTHandler::setupTemplate();
+		$this->validate($recordId);
+		$archive =& $this->archive;
+		$record =& $this->record;
+		$this->setupTemplate();
 
 		$rtDao =& DAORegistry::getDAO('RTDAO');
 		$context =& $rtDao->getContext($contextId);
@@ -45,9 +53,9 @@ class RTHandler extends PKPHandler {
 		$searchParams = array();
 		foreach ($context->getSearches() as $search) {
 			$params = array();
-			$searchParams += RTHandler::getParameterNames($search->getSearchUrl());
+			$searchParams += $this->getParameterNames($search->getSearchUrl());
 			if ($search->getSearchPost()) {
-				$searchParams += RTHandler::getParameterNames($search->getSearchPost());
+				$searchParams += $this->getParameterNames($search->getSearchPost());
 				$postParams = explode('&', $search->getSearchPost());
 				foreach ($postParams as $param) {
 					// Split name and value from each parameter
@@ -112,7 +120,11 @@ class RTHandler extends PKPHandler {
 			$archiveDao =& DAORegistry::getDAO('ArchiveDAO');
 			$archive =& $archiveDao->getArchive($record->getArchiveId());
 
-			if ($archive && $archive->getEnabled()) return array(&$archive, &$record);
+			if ($archive && $archive->getEnabled()) {
+				$this->archive =& $archive;
+				$this->record =& $record;
+				return true;
+			}
 		}
 		Request::redirect('index');
 	}

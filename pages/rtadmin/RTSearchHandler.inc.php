@@ -17,10 +17,11 @@
 
 
 import('rt.harvester2.HarvesterRTAdmin');
+import('pages.rtadmin.RTAdminHandler'):
 
 class RTSearchHandler extends RTAdminHandler {
 	function createSearch($args) {
-		RTAdminHandler::validate();
+		$this->validate();
 
 		$rtDao =& DAORegistry::getDAO('RTDAO');
 
@@ -41,13 +42,13 @@ class RTSearchHandler extends RTAdminHandler {
 			$searchForm->execute();
 			Request::redirect(null, 'searches', array($archiveId, $versionId, $contextId));
 		} else {
-			RTAdminHandler::setupTemplate(true, $archiveId, $version, $context);
+			$this->setupTemplate(true, $archiveId, $version, $context);
 			$searchForm->display();
 		}
 	}
 
 	function searches($args) {
-		RTAdminHandler::validate();
+		$this->validate();
 
 		$rtDao =& DAORegistry::getDAO('RTDAO');
 		$rangeInfo = PKPHandler::getRangeInfo('searches');
@@ -60,7 +61,7 @@ class RTSearchHandler extends RTAdminHandler {
 		$context =& $rtDao->getContext($contextId);
 
 		if ($context && $version && $context->getVersionId() == $version->getVersionId()) {
-			RTAdminHandler::setupTemplate(true, $archiveId, $version, $context);
+			$this->setupTemplate(true, $archiveId, $version, $context);
 
 			$templateMgr =& TemplateManager::getManager();
 
@@ -76,7 +77,7 @@ class RTSearchHandler extends RTAdminHandler {
 	}
 
 	function editSearch($args) {
-		RTAdminHandler::validate();
+		$this->validate();
 
 		$rtDao =& DAORegistry::getDAO('RTDAO');
 
@@ -91,7 +92,7 @@ class RTSearchHandler extends RTAdminHandler {
 
 		if (isset($version) && isset($context) && isset($search) && $context->getVersionId() == $version->getVersionId() && $search->getContextId() == $context->getContextId()) {
 			import('rt.harvester2.form.SearchForm');
-			RTAdminHandler::setupTemplate(true, $archiveId, $version, $context, $search);
+			$this->setupTemplate(true, $archiveId, $version, $context, $search);
 			// FIXME: Need construction by reference or validation always fails on PHP 4.x
 			$searchForm =& new SearchForm($searchId, $contextId, $versionId, $archiveId);
 			$searchForm->initData();
@@ -101,7 +102,7 @@ class RTSearchHandler extends RTAdminHandler {
 	}
 
 	function deleteSearch($args) {
-		RTAdminHandler::validate();
+		$this->validate();
 
 		$rtDao =& DAORegistry::getDAO('RTDAO');
 
@@ -122,7 +123,7 @@ class RTSearchHandler extends RTAdminHandler {
 	}
 
 	function saveSearch($args) {
-		RTAdminHandler::validate();
+		$this->validate();
 
 		$rtDao =& DAORegistry::getDAO('RTDAO');
 
@@ -147,7 +148,7 @@ class RTSearchHandler extends RTAdminHandler {
 	}
 
 	function moveSearch($args) {
-		RTAdminHandler::validate();
+		$this->validate();
 
 		$rtDao =& DAORegistry::getDAO('RTDAO');
 

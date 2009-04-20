@@ -16,12 +16,12 @@
 // $Id$
 
 
-import('core.PKPHandler');
+import('handler.Handler');
 
-class IndexHandler extends PKPHandler {
+class IndexHandler extends Handler {
 	function index($args) {
-		parent::setupTemplate();
-		parent::validate();
+		$this->setupTemplate();
+		$this->validate();
 		$templateMgr =& TemplateManager::getManager();
 		$site =& Request::getSite();
 

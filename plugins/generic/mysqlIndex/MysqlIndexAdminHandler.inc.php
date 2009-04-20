@@ -15,9 +15,9 @@
 // $Id$
 
 
-import('core.PKPHandler');
+import('handler.Handler');
 
-class MysqlIndexAdminHandler extends PKPHandler {
+class MysqlIndexAdminHandler extends Handler {
 	/**
 	 * Get the Zend Search Plugin object.
 	 */

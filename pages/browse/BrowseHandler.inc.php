@@ -16,14 +16,14 @@
 // $Id$
 
 
-import('core.PKPHandler');
+import('handler.Handler');
 
-class BrowseHandler extends PKPHandler {
+class BrowseHandler extends Handler {
 	/**
 	 * Display record list or archive list.
 	 */
 	function index($args) {
-		BrowseHandler::validate();
+		$this->validate();
 		$templateMgr =& TemplateManager::getManager();
 
 		$archiveDao =& DAORegistry::getDAO('ArchiveDAO');
@@ -32,7 +32,7 @@ class BrowseHandler extends PKPHandler {
 		$archiveId = array_shift($args);
 		$archive = null;
 		if (($archive =& $archiveDao->getArchive($archiveId)) || $archiveId == 'all') {
-			BrowseHandler::setupTemplate($archive, true);
+			$this->setupTemplate($archive, true);
 
 			$rangeInfo = PKPHandler::getRangeInfo('records');
 
@@ -58,7 +58,7 @@ class BrowseHandler extends PKPHandler {
 			$templateMgr->assign_by_ref('archive', $archive);
 			$templateMgr->display('browse/records.tpl');
 		} else {
-			BrowseHandler::setupTemplate($archive);
+			$this->setupTemplate($archive);
 
 			// List archives for the user to browse.
 			$rangeInfo = PKPHandler::getRangeInfo('archives');
@@ -74,7 +74,7 @@ class BrowseHandler extends PKPHandler {
 	 * Display archive info.
 	 */
 	function archiveInfo($args) {
-		BrowseHandler::validate();
+		$this->validate();
 		$templateMgr =& TemplateManager::getManager();
 
 		$archiveDao =& DAORegistry::getDAO('ArchiveDAO');
@@ -83,7 +83,7 @@ class BrowseHandler extends PKPHandler {
 		$archive = null;
 		if (($archive =& $archiveDao->getArchive($archiveId))) {
 			PluginRegistry::loadCategory('harvesters');
-			BrowseHandler::setupTemplate($archive, true);
+			$this->setupTemplate($archive, true);
 
 			$templateMgr->assign_by_ref('archive', $archive);
 			$templateMgr->display('browse/archiveInfo.tpl');

@@ -22,7 +22,7 @@ import('site.Version');
 import('site.VersionCheck');
 import('file.FileManager');
 import('install.Install');
-
+import('pages.admin.AdminHandler');
 
 class PluginManagementHandler extends AdminHandler {
 	
@@ -56,7 +56,7 @@ class PluginManagementHandler extends AdminHandler {
 				Request::redirect(null, 'plugins'); 				
 		}
 	
-		parent::setupTemplate(true);
+		$this->setupTemplate(true);
 	}
 
 	/**
@@ -64,7 +64,7 @@ class PluginManagementHandler extends AdminHandler {
 	 */
 	function showInstallForm() {
 		$templateMgr =& TemplateManager::getManager();
-		parent::setupTemplate(true);
+		$this->setupTemplate(true);
 		
 		$templateMgr->assign('path', 'install');
 		$templateMgr->assign('uploaded', false);
@@ -80,7 +80,7 @@ class PluginManagementHandler extends AdminHandler {
 	 */
 	function showUpgradeForm($plugin) {
 		$templateMgr =& TemplateManager::getManager();
-		parent::setupTemplate(true);
+		$this->setupTemplate(true);
 
 		$templateMgr->assign('path', 'upgrade');
 		$templateMgr->assign('plugin', $plugin);
@@ -96,7 +96,7 @@ class PluginManagementHandler extends AdminHandler {
 	 */
 	function showDeleteForm($plugin) {
 		$templateMgr =& TemplateManager::getManager();
-		parent::setupTemplate(true);
+		$this->setupTemplate(true);
 		
 		$templateMgr->assign('path', 'delete');
 		$templateMgr->assign('plugin', $plugin);
@@ -114,7 +114,7 @@ class PluginManagementHandler extends AdminHandler {
 	 */
 	function uploadPlugin($function) {
 		$templateMgr =& TemplateManager::getManager();
-		parent::setupTemplate(true);
+		$this->setupTemplate(true);
 		
 		$templateMgr->assign('error', false);
 		$templateMgr->assign('uploaded', false);
@@ -298,7 +298,7 @@ class PluginManagementHandler extends AdminHandler {
 	 */
 	function deletePlugin($plugin) {
 		$templateMgr =& TemplateManager::getManager();
-		parent::setupTemplate(true);
+		$this->setupTemplate(true);
 		
 		$templateMgr->assign('path', 'delete');
 		$templateMgr->assign('deleted', false);

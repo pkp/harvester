@@ -15,6 +15,7 @@
 
 // $Id$
 
+import('pages.admin.AdminHandler');
 
 class PluginHandler extends AdminHandler {
 	/**
@@ -25,7 +26,7 @@ class PluginHandler extends AdminHandler {
 		$categories = PluginRegistry::getCategories();
 		
 		$templateMgr =& TemplateManager::getManager();
-		PluginHandler::validate();
+		$this->validate();
 
 		if (isset($category)) {
 			// The user specified a category of plugins to view;
@@ -33,9 +34,9 @@ class PluginHandler extends AdminHandler {
 			$mainPage = false;
 			$plugins =& PluginRegistry::loadCategory($category);
 
-			PluginHandler::setupTemplate(false);
+			$this->setupTemplate(false);
 			$templateMgr->assign('pageTitle', 'plugins.categories.' . $category);
-			$templateMgr->assign('pageHierarchy', PluginHandler::setBreadcrumbs(true));
+			$templateMgr->assign('pageHierarchy', $this->setBreadcrumbs(true));
 		} else {
 			// No plugin specified; display all.
 			$mainPage = true;
@@ -47,9 +48,9 @@ class PluginHandler extends AdminHandler {
 				}
 			}
 			
-			PluginHandler::setupTemplate(true);
+			$this->setupTemplate(true);
 			$templateMgr->assign('pageTitle', 'admin.plugins');
-			$templateMgr->assign('pageHierarchy', PluginHandler::setBreadcrumbs(false));
+			$templateMgr->assign('pageHierarchy', $this->setBreadcrumbs(false));
 		}
 
 		$templateMgr->assign_by_ref('plugins', $plugins);
@@ -68,8 +69,8 @@ class PluginHandler extends AdminHandler {
 		$plugin = array_shift($args);
 		$verb = array_shift($args);
 
-		PluginHandler::validate();
-		PluginHandler::setupTemplate(true);
+		$this->validate();
+		$this->setupTemplate(true);
 
 		$plugins =& PluginRegistry::loadCategory($category);
 		$message = null;
@@ -78,7 +79,7 @@ class PluginHandler extends AdminHandler {
 				$templateMgr =& TemplateManager::getManager();
 				$templateMgr->assign('message', $message);
 			}
-			PluginHandler::plugins(array($category));
+			$this->plugins(array($category));
 		}
 
 	}

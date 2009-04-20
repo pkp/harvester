@@ -16,15 +16,15 @@
 // $Id$
 
 
-import('core.PKPHandler');
+import('handler.Handler');
 
-class SubmitterHandler extends PKPHandler {
+class SubmitterHandler extends Handler {
 	/**
 	 * Display a list of the user's archives
 	 */
 	function index() {
-		SubmitterHandler::validate();
-		SubmitterHandler::setupTemplate();
+		$this->validate();
+		$this->setupTemplate();
 
 		$user =& Request::getUser();
 
@@ -44,7 +44,7 @@ class SubmitterHandler extends PKPHandler {
 	 * Display add page.
 	 */
 	function createArchive() {
-		SubmitterHandler::editArchive();
+		$this->editArchive();
 	}
 
 	/**
@@ -53,8 +53,8 @@ class SubmitterHandler extends PKPHandler {
 	function editArchive($args = array()) {
 		$archiveId = null;
 		if (is_array($args) && !empty($args)) $archiveId = (int) array_shift($args);
-		SubmitterHandler::validate($archiveId);
-		SubmitterHandler::setupTemplate(true);
+		$this->validate($archiveId);
+		$this->setupTemplate(true);
 
 		$site =& Request::getSite();
 		if (!$site->getSetting('enableSubmit')) Request::redirect('index');
@@ -75,8 +75,8 @@ class SubmitterHandler extends PKPHandler {
 		if (empty($archiveId)) $archiveId = null;
 		else $archiveId = (int) $archiveId;
 
-		SubmitterHandler::validate($archiveId);
-		SubmitterHandler::setupTemplate(true);
+		$this->validate($archiveId);
+		$this->setupTemplate(true);
 
 		import('admin.form.ArchiveForm');
 
@@ -112,7 +112,7 @@ class SubmitterHandler extends PKPHandler {
 	 */
 	function deleteArchive($args) {
 		$archiveId = (int) array_shift($args);
-		list($archive) = SubmitterHandler::validate($archiveId);
+		$this->validate($archiveId);
 
 		$archiveDao =& DAORegistry::getDAO('ArchiveDAO');
 
@@ -133,8 +133,8 @@ class SubmitterHandler extends PKPHandler {
 		$plugin = array_shift($args);
 		$verb = array_shift($args);
 
-		SubmitterHandler::validate();
-		SubmitterHandler::setupTemplate(true);
+		$this->validate();
+		$this->setupTemplate(true);
 
 		$plugins =& PluginRegistry::loadCategory($category);
 		if (!isset($plugins[$plugin]) || !$plugins[$plugin]->allowSubmitterManagement($verb, $args) || !$plugins[$plugin]->manage($verb, $args)) {
@@ -143,7 +143,6 @@ class SubmitterHandler extends PKPHandler {
 	}
 	
 	function validate ($archiveId = null) {
-		$returner = null;
 		$user =& Request::getUser();
 		if ($archiveId !== null) {
 			$archiveDao =& DAORegistry::getDAO('ArchiveDAO');
@@ -152,9 +151,10 @@ class SubmitterHandler extends PKPHandler {
 			if (!$archive) Request::redirect('index');
 			if ($archive->getUserId() != $user->getUserId()) Request::redirect('index');
 
-			$returner = array(&$archive);
+			$this->archive =& $archive;
+			return true;
 		}
-		return $returner;
+		return false;
 	}
 
 	/**

@@ -15,6 +15,7 @@
 
 // $Id$
 
+import('pages.admin.AdminHandler');
 
 class AdminLanguagesHandler extends AdminHandler {
 
@@ -22,8 +23,8 @@ class AdminLanguagesHandler extends AdminHandler {
 	 * Display form to modify site language settings.
 	 */
 	function languages() {
-		parent::validate();
-		parent::setupTemplate(true);
+		$this->validate();
+		$this->setupTemplate(true);
 
 		$site =& Request::getSite();
 
@@ -40,8 +41,8 @@ class AdminLanguagesHandler extends AdminHandler {
 	 * Update language settings.
 	 */
 	function saveLanguageSettings() {
-		parent::validate();
-		parent::setupTemplate(true);
+		$this->validate();
+		$this->setupTemplate(true);
 
 		$site =& Request::getSite();
 
@@ -83,7 +84,7 @@ class AdminLanguagesHandler extends AdminHandler {
 	 * Install a new locale.
 	 */
 	function installLocale() {
-		parent::validate();
+		$this->validate();
 
 		$site =& Request::getSite();
 		$installLocale = Request::getUserVar('installLocale');
@@ -110,7 +111,7 @@ class AdminLanguagesHandler extends AdminHandler {
 	 * Uninstall a locale
 	 */
 	function uninstallLocale() {
-		parent::validate();
+		$this->validate();
 
 		$site =& Request::getSite();
 		$locale = Request::getUserVar('locale');
@@ -139,7 +140,7 @@ class AdminLanguagesHandler extends AdminHandler {
 	 * Reload data for an installed locale.
 	 */
 	function reloadLocale() {
-		parent::validate();
+		$this->validate();
 
 		$site =& Request::getSite();
 		$locale = Request::getUserVar('locale');

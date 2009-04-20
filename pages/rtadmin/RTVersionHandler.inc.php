@@ -17,10 +17,11 @@
 
 
 import('rt.harvester2.HarvesterRTAdmin');
+import('pages.rtadmin.RTAdminHandler'):
 
 class RTVersionHandler extends RTAdminHandler {
 	function createVersion($args) {
-		RTAdminHandler::validate();
+		$this->validate();
 
 		$rtDao =& DAORegistry::getDAO('RTDAO');
 
@@ -34,13 +35,13 @@ class RTVersionHandler extends RTAdminHandler {
 			$versionForm->execute();
 			Request::redirect(null, 'versions');
 		} else {
-			RTAdminHandler::setupTemplate(true, $archiveId);
+			$this->setupTemplate(true, $archiveId);
 			$versionForm->display();
 		}
 	}
 
 	function exportVersion($args) {
-		RTAdminHandler::validate();
+		$this->validate();
 
 		$rtDao =& DAORegistry::getDAO('RTDAO');
 
@@ -57,7 +58,7 @@ class RTVersionHandler extends RTAdminHandler {
 	}
 
 	function importVersion() {
-		RTAdminHandler::validate();
+		$this->validate();
 		$fileField = 'versionFile';
 		if (isset($_FILES[$fileField]['tmp_name']) && is_uploaded_file($_FILES[$fileField]['tmp_name'])) {
 			$rtAdmin = new HarvesterRTAdmin($archiveId);
@@ -67,7 +68,7 @@ class RTVersionHandler extends RTAdminHandler {
 	}
 
 	function restoreVersions($args) {
-		RTAdminHandler::validate();
+		$this->validate();
 
 		$archiveId = (int) array_shift($args);
 
@@ -80,8 +81,8 @@ class RTVersionHandler extends RTAdminHandler {
 	function versions($args) {
 		$archiveId = (int) array_shift($args);
 
-		RTAdminHandler::validate();
-		RTAdminHandler::setupTemplate(true, $archiveId);
+		$this->validate();
+		$this->setupTemplate(true, $archiveId);
 
 
 		$rtDao =& DAORegistry::getDAO('RTDAO');
@@ -94,7 +95,7 @@ class RTVersionHandler extends RTAdminHandler {
 	}
 
 	function editVersion($args) {
-		RTAdminHandler::validate();
+		$this->validate();
 
 		$rtDao =& DAORegistry::getDAO('RTDAO');
 
@@ -105,7 +106,7 @@ class RTVersionHandler extends RTAdminHandler {
 
 		if (isset($version)) {
 			import('rt.harvester2.form.VersionForm');
-			RTAdminHandler::setupTemplate(true, $archiveId, $version);
+			$this->setupTemplate(true, $archiveId, $version);
 			// FIXME: Need construction by reference or validation always fails on PHP 4.x
 			$versionForm =& new VersionForm($versionId, $archiveId);
 			$versionForm->initData();
@@ -115,7 +116,7 @@ class RTVersionHandler extends RTAdminHandler {
 	}
 
 	function deleteVersion($args) {
-		RTAdminHandler::validate();
+		$this->validate();
 
 		$rtDao =& DAORegistry::getDAO('RTDAO');
 
@@ -128,7 +129,7 @@ class RTVersionHandler extends RTAdminHandler {
 	}
 
 	function saveVersion($args) {
-		RTAdminHandler::validate();
+		$this->validate();
 
 		$rtDao =& DAORegistry::getDAO('RTDAO');
 
