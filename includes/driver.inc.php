@@ -8,7 +8,7 @@
  *
  * Core system initialization code.
  * This file is loaded before any others.
- * Any system-wide imports or initialization code should be placed here. 
+ * Any system-wide imports or initialization code should be placed here.
  *
  * @package includes
  *
@@ -34,7 +34,7 @@ ini_set('include_path', '.'
 	. ENV_SEPARATOR . BASE_SYS_DIR . '/lib/pkp'
 	. ENV_SEPARATOR . BASE_SYS_DIR . '/lib/pkp/classes'
 	. ENV_SEPARATOR . BASE_SYS_DIR . '/lib/pkp/pages'
-	. ENV_SEPARATOR . BASE_SYS_DIR . '/lib/pkp/lib/phputf8'	
+	. ENV_SEPARATOR . BASE_SYS_DIR . '/lib/pkp/lib/phputf8'
 	. ENV_SEPARATOR . BASE_SYS_DIR . '/lib/pkp/lib/adodb'
 	. ENV_SEPARATOR . BASE_SYS_DIR . '/lib/pkp/lib/smarty'
 	. ENV_SEPARATOR . ini_get('include_path')
@@ -46,6 +46,9 @@ require('functions.inc.php');
 /**
  * System initialization (post-classloading).
  */
+
+import('core.PKPProfiler');
+$pkpProfiler = new PKPProfiler();
 
 import('core.HarvesterApplication');
 $harvesterApplication = new HarvesterApplication();
