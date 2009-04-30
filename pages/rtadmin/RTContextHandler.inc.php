@@ -17,7 +17,7 @@
 
 
 import('rt.harvester2.HarvesterRTAdmin');
-import('pages.rtadmin.RTAdminHandler'):
+import('pages.rtadmin.RTAdminHandler');
 
 class RTContextHandler extends RTAdminHandler {
 	function createContext($args) {

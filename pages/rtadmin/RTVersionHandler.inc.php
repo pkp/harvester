@@ -17,7 +17,7 @@
 
 
 import('rt.harvester2.HarvesterRTAdmin');
-import('pages.rtadmin.RTAdminHandler'):
+import('pages.rtadmin.RTAdminHandler');
 
 class RTVersionHandler extends RTAdminHandler {
 	function createVersion($args) {
