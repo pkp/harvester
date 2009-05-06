@@ -275,7 +275,7 @@ class ArchiveForm extends Form {
 			if ($email->isEnabled()) {
 				$email->assignParams(array(
 					'archiveTitle' => $this->getData('title'),
-					'siteTitle' => $site->getSiteTitle(),
+					'siteTitle' => $site->getLocalizedTitle(),
 					'loginUrl' => Request::url('admin', 'manage', $this->archive->getArchiveId())
 				));
 				$email->addRecipient($site->getLocalizedSetting('contactEmail'), $site->getLocalizedSetting('contactName'));

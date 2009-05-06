@@ -57,14 +57,14 @@ class TemplateManager extends PKPTemplateManager {
 			}
 
 			// Add the site-wide logo, if set for this locale or the primary locale
-			$this->assign('displayPageHeaderTitle', $site->getSitePageHeaderTitle());
+			$this->assign('displayPageHeaderTitle', $site->getLocalizedPageHeaderTitle());
 			
 			$customLogo = $site->getSetting('customLogo');
 			if ($customLogo) {
 				$this->assign('useCustomLogo', $customLogo);
 			}
 
-			$this->assign('siteTitle', $site->getSiteTitle());
+			$this->assign('siteTitle', $site->getLocalizedTitle());
 			$this->assign('enableSubmit', $site->getSetting('enableSubmit'));
 		}
 	}

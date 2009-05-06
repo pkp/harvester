@@ -114,8 +114,8 @@ class ArchiveOAI extends OAI {
 	function &repositoryInfo() {
 		$info = new OAIRepository();
 
-		$info->repositoryName = $this->site->getSiteTitle();
-		$info->adminEmail = $this->site->getSiteContactEmail();
+		$info->repositoryName = $this->site->getLocalizedTitle();
+		$info->adminEmail = $this->site->getLocalizedContactEmail();
 		$info->sampleIdentifier = $this->recordIdToIdentifier(1);
 		$info->earliestDatestamp = $this->dao->getEarliestDatestamp();
 
