@@ -39,7 +39,7 @@ class HandlerValidatorRoles extends HandlerValidator {
 		$user = Request::getUser();
 		if ( !$user ) return false;
 
-		$roleDao = &DAORegistry::getDAO('RoleDAO');
+		$roleDao =& DAORegistry::getDAO('RoleDAO');
 		$returner = true;
 		foreach ( $this->roles as $roleId ) {
 			$sessionManager =& SessionManager::getManager();
