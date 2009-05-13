@@ -29,7 +29,7 @@ class SubmitterHandler extends Handler {
 		$user =& Request::getUser();
 
 		$archiveDao =& DAORegistry::getDAO('ArchiveDAO');
-		$archives =& $archiveDao->getArchivesByUserId($user->getUserId());
+		$archives =& $archiveDao->getArchivesByUserId($user->getId());
 
 		// Load the harvester plugins so we can display names.
 		$plugins =& PluginRegistry::loadCategory('harvesters');
@@ -149,7 +149,7 @@ class SubmitterHandler extends Handler {
 			$archive =& $archiveDao->getArchive((int) $archiveId, false);
 
 			if (!$archive) Request::redirect('index');
-			if ($archive->getUserId() != $user->getUserId()) Request::redirect('index');
+			if ($archive->getUserId() != $user->getId()) Request::redirect('index');
 
 			$this->archive =& $archive;
 			return true;

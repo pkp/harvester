@@ -255,7 +255,7 @@ class PeopleHandler extends AdminHandler {
 		$userId = isset($args[0])?$args[0]:Request::getUserVar('userId');
 		$user =& Request::getUser();
 
-		if ($userId != null && $userId != $user->getUserId()) {
+		if ($userId != null && $userId != $user->getId()) {
 			if (!Validation::canAdminister($userId)) {
 				// We don't have administrative rights
 				// over this user. Display an error.
@@ -289,7 +289,7 @@ class PeopleHandler extends AdminHandler {
 		$userId = isset($args[0])?$args[0]:null;
 		$user =& Request::getUser();
 
-		if ($userId != null && $userId != $user->getUserId()) {
+		if ($userId != null && $userId != $user->getId()) {
 			$userDao =& DAORegistry::getDAO('UserDAO');
 			$user =& $userDao->getUser($userId, true);
 			if ($user) {
@@ -312,7 +312,7 @@ class PeopleHandler extends AdminHandler {
 		$userId = isset($args[0])?$args[0]:null;
 		$user =& Request::getUser();
 
-		if ($userId != null && $userId != $user->getUserId()) {
+		if ($userId != null && $userId != $user->getId()) {
 			$roleDao =& DAORegistry::getDAO('RoleDAO');
 			$roleDao->deleteRoleByUserId($userId);
 		}
@@ -400,7 +400,7 @@ class PeopleHandler extends AdminHandler {
 		} else {
 			$site =& Request::getSite();
 			$roleDao =& DAORegistry::getDAO('RoleDAO');
-			$roles =& $roleDao->getRolesByUserId($user->getUserId());
+			$roles =& $roleDao->getRolesByUserId($user->getId());
 
 			$countryDao =& DAORegistry::getDAO('CountryDAO');
 			$country = null;
@@ -442,7 +442,7 @@ class PeopleHandler extends AdminHandler {
 			$session =& Request::getSession();
 
 			// FIXME Support "stack" of signed-in-as user IDs?
-			if (isset($newUser) && $session->getUserId() != $newUser->getUserId()) {
+			if (isset($newUser) && $session->getUserId() != $newUser->getId()) {
 				$session->setSessionVar('signedInAs', $session->getUserId());
 				$session->setSessionVar('userId', $userId);
 				$session->setUserId($userId);

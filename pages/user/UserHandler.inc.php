@@ -33,7 +33,7 @@ class UserHandler extends Handler {
 		$this->setupTemplate();
 
 		$templateMgr->assign('isSiteAdmin', Validation::isSiteAdmin());
-		$templateMgr->assign('userRoles', $roleDao->getRolesByUserId($user->getUserId()));
+		$templateMgr->assign('userRoles', $roleDao->getRolesByUserId($user->getId()));
 		$templateMgr->assign('enableSubmit', $site->getSetting('enableSubmit'));
 		$templateMgr->display('user/index.tpl');
 	}
@@ -86,7 +86,7 @@ class UserHandler extends Handler {
 		if ($site->getSetting($setting)) {
 			$role = new Role();
 			$role->setRoleId($roleId);
-			$role->setUserId($user->getUserId());
+			$role->setUserId($user->getId());
 
 			$roleDao =& DAORegistry::getDAO('RoleDAO');
 			$roleDao->insertRole($role);

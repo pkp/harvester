@@ -37,7 +37,7 @@ class Request extends PKPRequest {
 	function redirectHome() {
 		$roleDao =& DAORegistry::getDAO('RoleDAO');
 		$user = Request::getUser();
-		$userId = $user->getUserId();
+		$userId = $user->getId();
 
 		$roles =& $roleDao->getRolesByUserId($userId);
 		if(count($roles) == 1) {

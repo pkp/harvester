@@ -43,7 +43,7 @@ class EmailHandler extends UserHandler {
 			ROLE_ID_SITE_ADMIN
 		);
 		$roleDao =& DAORegistry::getDAO('RoleDAO');
-		$roles =& $roleDao->getRolesByUserId($user->getUserId());
+		$roles =& $roleDao->getRolesByUserId($user->getId());
 		foreach ($roles as $role) {
 			if (in_array($role->getRoleId(), $unlimitedEmailRoles)) $canSendUnlimitedEmails = true;
 		}

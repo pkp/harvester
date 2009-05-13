@@ -49,7 +49,7 @@ class HandlerValidatorRoles extends HandlerValidator {
 			if (!$user) return false;
 	
 			$roleDao =& DAORegistry::getDAO('RoleDAO');
-			$exists = $roleDao->roleExists($user->getUserId(), $roleId);
+			$exists = $roleDao->roleExists($user->getId(), $roleId);
 			if ( !$this->all && $exists) return true;
 			$returner = $returner && $exists;
 		} 

@@ -238,7 +238,7 @@ class ArchiveForm extends Form {
 		if (!isset($this->archive)) {
 			$this->archive = new Archive();
 			$user =& Request::getUser();
-			$this->archive->setUserId($user->getUserId());
+			$this->archive->setUserId($user->getId());
 		}
 
 		$this->harvesterPluginName = Request::getUserVar('harvesterPluginName');
