@@ -36,7 +36,7 @@ class AdminHandler extends Handler {
 	 * Redirects to the user index page if not properly authenticated.
 	 */
 	function validate() {
-		$this->addCheck(new HandlerValidatorRoles(&$this, true, null, null, array(ROLE_ID_SITE_ADMIN)));
+		$this->addCheck(new HandlerValidatorRoles($this, true, null, null, array(ROLE_ID_SITE_ADMIN)));
 		parent::validate();
 	}
 
