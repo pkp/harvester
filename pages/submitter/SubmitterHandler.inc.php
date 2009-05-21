@@ -27,9 +27,14 @@ class SubmitterHandler extends Handler {
 		$this->setupTemplate();
 
 		$user =& Request::getUser();
+		
+		$sort = Request::getUserVar('heading');
+		$sort = isset($sort) ? $sort : 'title';
+		$sortDirection = Request::getUserVar('sortDirection');
+		$sortDirection = (isset($sortDirection) && ($sortDirection == 'ASC' || $sortDirection == 'DESC')) ? $sortDirection : 'ASC';
 
 		$archiveDao =& DAORegistry::getDAO('ArchiveDAO');
-		$archives =& $archiveDao->getArchivesByUserId($user->getId());
+		$archives =& $archiveDao->getArchivesByUserId($user->getId(), null, $archiveDao->getSortMapping($sort), $sortDirection);
 
 		// Load the harvester plugins so we can display names.
 		$plugins =& PluginRegistry::loadCategory('harvesters');
@@ -37,6 +42,8 @@ class SubmitterHandler extends Handler {
 		$templateMgr =& TemplateManager::getManager();
 		$templateMgr->assign_by_ref('harvesters', $plugins);
 		$templateMgr->assign_by_ref('archives', $archives);
+		$templateMgr->assign('sort', $sort);
+		$templateMgr->assign('sortDirection', $sortDirection);
 		$templateMgr->display('submitter/archives.tpl');
 	}
 

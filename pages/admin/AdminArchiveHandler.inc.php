@@ -27,17 +27,24 @@ class AdminArchiveHandler extends AdminHandler {
 		$this->setupTemplate();
 
 		$rangeInfo = PKPHandler::getRangeInfo('archives');
+		
+		$sort = Request::getUserVar('heading');
+		$sort = isset($sort) ? $sort : 'title';
+		$sortDirection = Request::getUserVar('sortDirection');
+		$sortDirection = (isset($sortDirection) && ($sortDirection == 'ASC' || $sortDirection == 'DESC')) ? $sortDirection : 'ASC';
 
 		// Load the harvester plugins so we can display names.
 		$plugins =& PluginRegistry::loadCategory('harvesters');
 
 		$archiveDao =& DAORegistry::getDAO('ArchiveDAO');
-		$archives =& $archiveDao->getArchives(false, $rangeInfo);
+		$archives =& $archiveDao->getArchives(false, $rangeInfo, $archiveDao->getSortMapping($sort), $sortDirection);
 
 		$templateMgr =& TemplateManager::getManager();
 		$templateMgr->assign_by_ref('archives', $archives);
 		$templateMgr->assign('harvesters', $plugins);
 		if ($rangeInfo) $templateMgr->assign('archivesPage', $rangeInfo->getPage());
+		$templateMgr->assign('sort', $sort);
+		$templateMgr->assign('sortDirection', $sortDirection);
 		$templateMgr->display('admin/archives.tpl');
 	}
 

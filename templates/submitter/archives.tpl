@@ -22,8 +22,8 @@
 		<td colspan="4" class="headseparator">&nbsp;</td>
 	</tr>
 	<tr valign="top" class="heading">
-		<td width="40%">{translate key="archive.title"}</td>
-		<td width="30%">{translate key="archive.url"}</td>
+		<td width="40%">{sort_heading key="archive.title" heading="title"}</td>
+		<td width="30%">{sort_heading key="archive.url" heading="url"}</td>
 		<td width="5%">{translate key="archive.type"}</td>
 		<td width="15%" align="right">{translate key="common.action"}</td>
 	</tr>

@@ -42,6 +42,11 @@ class PeopleHandler extends AdminHandler {
 			$roleId = 0;
 			$roleName = 'admin.people.allUsers';
 		}
+		
+		$sort = Request::getUserVar('sort');
+		$sort = isset($sort) ? $sort : 'name';
+		$sortDirection = Request::getUserVar('sortDirection');
+		$sortDirection = (isset($sortDirection) && ($sortDirection == 'ASC' || $sortDirection == 'DESC')) ? $sortDirection : 'ASC';
 
 		$templateMgr =& TemplateManager::getManager();
 
@@ -61,7 +66,7 @@ class PeopleHandler extends AdminHandler {
 
 		$rangeInfo = PKPHandler::getRangeInfo('users');
 
-		$users =& $roleDao->getUsersByRoleId($roleId, $searchType, $search, $searchMatch, $rangeInfo);
+		$users =& $roleDao->getUsersByRoleId($roleId, $searchType, $search, $searchMatch, $rangeInfo, $roleDao->getSortMapping($sort), $sortDirection);
 		$templateMgr->assign('roleId', $roleId);
 
 		$templateMgr->assign('currentUrl', Request::url(null, 'people', 'all'));
@@ -85,6 +90,8 @@ class PeopleHandler extends AdminHandler {
 		$templateMgr->assign('rolePath', $roleDao->getRolePath($roleId));
 		$templateMgr->assign('alphaList', explode(' ', Locale::translate('common.alphaList')));
 		$templateMgr->assign('roleSymbolic', $roleSymbolic);
+		$templateMgr->assign('sort', $sort);
+		$templateMgr->assign('sortDirection', $sortDirection);
 		$templateMgr->display('admin/people/enrollment.tpl');
 	}
 
@@ -116,10 +123,15 @@ class PeopleHandler extends AdminHandler {
 			$searchType = USER_FIELD_INITIAL;
 			$search = $searchInitial;
 		}
+		
+		$sort = Request::getUserVar('sort');
+		$sort = isset($sort) ? $sort : 'name';
+		$sortDirection = Request::getUserVar('sortDirection');
+		$sortDirection = (isset($sortDirection) && ($sortDirection == 'ASC' || $sortDirection == 'DESC')) ? $sortDirection : 'ASC';
 
 		$rangeInfo = PKPHandler::getRangeInfo('users');
 
-		$users =& $userDao->getUsersByField($searchType, $searchMatch, $search, true, $rangeInfo);
+		$users =& $userDao->getUsersByField($searchType, $searchMatch, $search, true, $rangeInfo, $roleDao->getSortMapping($sort), $sortDirection);
 
 		$templateMgr->assign('searchField', $searchType);
 		$templateMgr->assign('searchMatch', $searchMatch);
@@ -138,6 +150,8 @@ class PeopleHandler extends AdminHandler {
 		$templateMgr->assign_by_ref('users', $users);
 		$templateMgr->assign_by_ref('thisUser', Request::getUser());
 		$templateMgr->assign('alphaList', explode(' ', Locale::translate('common.alphaList')));
+		$templateMgr->assign('sort', $sort);
+		$templateMgr->assign('sortDirection', $sortDirection);
 		$templateMgr->display('admin/people/searchUsers.tpl');
 	}
 

@@ -205,9 +205,14 @@ class ArchiveDAO extends DAO {
 	 * @param $rangeInfo object
 	 * @return DAOResultFactory containing matching archives
 	 */
-	function &getArchives($onlyEnabled = true, $rangeInfo = null) {
+	function &getArchives($onlyEnabled = true, $rangeInfo = null, $sortBy = null, $sortDirection = 'ASC') {
 		$result =& $this->retrieveRange(
-			'SELECT * FROM archives' . ($onlyEnabled?' WHERE enabled = 1 ORDER BY title':''),
+			'SELECT a.*,
+				u.username AS archive_manager
+			FROM archives a
+				LEFT JOIN users u ON a.user_id = u.user_id' . 
+			($onlyEnabled?' WHERE enabled = 1':'') . 
+			($sortBy?(' ORDER BY ' . $sortBy . ' ' . $sortDirection) : ''),
 			false, $rangeInfo
 		);
 
@@ -221,9 +226,9 @@ class ArchiveDAO extends DAO {
 	 * @param $rangeInfo object
 	 * @return DAOResultFactory containing matching archives
 	 */
-	function &getArchivesByUserId($userId, $rangeInfo = null) {
+	function &getArchivesByUserId($userId, $rangeInfo = null, $sortBy = null, $sortDirection = 'ASC') {
 		$result =& $this->retrieveRange(
-			'SELECT * FROM archives WHERE user_id = ? ORDER BY title',
+			'SELECT * FROM archives WHERE user_id = ?' . ($sortBy?(' ORDER BY ' . $sortBy . ' ' . $sortDirection) : ''),
 			array((int) $userId),
 			$rangeInfo
 		);
@@ -267,6 +272,21 @@ class ArchiveDAO extends DAO {
 		$archive =& $this->getArchiveByPublicArchiveId($publicArchiveId);
 		if ($archive && $archive->getArchiveId() != $excludeArchiveId) return true;
 		return false;
+	}
+			
+	/**
+	 * Map a column heading value to a database value for sorting
+	 * @param string
+	 * @return string
+	 */
+	function getSortMapping($heading) {
+		switch ($heading) {
+			case 'title': return 'title';
+			case 'url': return 'url';
+			case 'manager': return 'archive_manager';
+			case 'type': return '';
+			default: return null;
+		}
 	}
 }
 
