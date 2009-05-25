@@ -31,7 +31,6 @@ class SubmitterHandler extends Handler {
 		$sort = Request::getUserVar('heading');
 		$sort = isset($sort) ? $sort : 'title';
 		$sortDirection = Request::getUserVar('sortDirection');
-		$sortDirection = (isset($sortDirection) && ($sortDirection == 'ASC' || $sortDirection == 'DESC')) ? $sortDirection : 'ASC';
 
 		$archiveDao =& DAORegistry::getDAO('ArchiveDAO');
 		$archives =& $archiveDao->getArchivesByUserId($user->getId(), null, $archiveDao->getSortMapping($sort), $sortDirection);

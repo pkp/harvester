@@ -205,14 +205,14 @@ class ArchiveDAO extends DAO {
 	 * @param $rangeInfo object
 	 * @return DAOResultFactory containing matching archives
 	 */
-	function &getArchives($onlyEnabled = true, $rangeInfo = null, $sortBy = null, $sortDirection = 'ASC') {
+	function &getArchives($onlyEnabled = true, $rangeInfo = null, $sortBy = null, $sortDirection = SORT_DIRECTION_ASC) {
 		$result =& $this->retrieveRange(
 			'SELECT a.*,
 				u.username AS archive_manager
 			FROM archives a
 				LEFT JOIN users u ON a.user_id = u.user_id' . 
 			($onlyEnabled?' WHERE enabled = 1':'') . 
-			($sortBy?(' ORDER BY ' . $sortBy . ' ' . $sortDirection) : ''),
+			($sortBy?(' ORDER BY ' . $sortBy . ' ' . $this->getDirectionMapping($sortDirection)) : ''),
 			false, $rangeInfo
 		);
 
@@ -226,9 +226,9 @@ class ArchiveDAO extends DAO {
 	 * @param $rangeInfo object
 	 * @return DAOResultFactory containing matching archives
 	 */
-	function &getArchivesByUserId($userId, $rangeInfo = null, $sortBy = null, $sortDirection = 'ASC') {
+	function &getArchivesByUserId($userId, $rangeInfo = null, $sortBy = null, $sortDirection = SORT_DIRECTION_ASC) {
 		$result =& $this->retrieveRange(
-			'SELECT * FROM archives WHERE user_id = ?' . ($sortBy?(' ORDER BY ' . $sortBy . ' ' . $sortDirection) : ''),
+			'SELECT * FROM archives WHERE user_id = ?' . ($sortBy?(' ORDER BY ' . $sortBy . ' ' . $this->getDirectionMapping($sortDirection)) : ''),
 			array((int) $userId),
 			$rangeInfo
 		);

@@ -141,7 +141,7 @@ class RoleDAO extends DAO {
 	 * @param $dbResultRange object DBRangeInfo object describing range of results to return
 	 * @return array matching Users
 	 */
-	function &getUsersByRoleId($roleId = null, $searchType = null, $search = null, $searchMatch = null, $dbResultRange = null, $sortBy = null, $sortDirection = 'ASC') {
+	function &getUsersByRoleId($roleId = null, $searchType = null, $search = null, $searchMatch = null, $dbResultRange = null, $sortBy = null, $sortDirection = SORT_DIRECTION_ASC) {
 		$users = array();
 
 		$paramArray = array('interests');
@@ -184,7 +184,7 @@ class RoleDAO extends DAO {
 				break;
 		}
 
-		$searchSql .= ($sortBy?(' ORDER BY ' . $sortBy . ' ' . $sortDirection) : '');
+		$searchSql .= ($sortBy?(' ORDER BY ' . $sortBy . ' ' . $this->getDirectionMapping($sortDirection)) : '');
 
 		$result =& $this->retrieveRange(
 			'SELECT DISTINCT u.* FROM users AS u LEFT JOIN user_settings s ON (u.user_id = s.user_id AND s.setting_name = ?), roles AS r WHERE u.user_id = r.user_id ' . ($roleId?'AND r.role_id = ?':'') . ' ' . $searchSql,
