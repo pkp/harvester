@@ -180,10 +180,12 @@
 
 <p><span class="formRequired">{translate key="common.requiredField"}</span></p>
 
-<a name="privacyStatement">
+
 {if $privacyStatement}
+	<div id="privacyStatement">
 	<h3>{translate key="user.register.privacyStatement"}</h3>
 	<p>{$privacyStatement|nl2br}</p>
+	</div>
 {/if}
 </form>
 </div>

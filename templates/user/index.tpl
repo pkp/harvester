@@ -16,7 +16,7 @@
 
 <h4><a href="{url page="user"}">{$siteTitle|escape}</a></h4>
 
-<ul class="plain">
+<ul id="roles" class="plain">
 	{foreach from=$userRoles item=role}
 		{assign var="hasRole" value=1}
 			<li>&#187; <a href="{url page=$role->getRolePath()}">{translate key=$role->getRoleName()}</a></li>
@@ -35,7 +35,7 @@
 	{/foreach}{* $userRoles *}
 	{call_hook name="Templates::User::Index::Site"}
 </ul>
-
+<div id="myAccount">
 <h3>{translate key="user.myAccount"}</h3>
 <ul class="plain">
 	<li>&#187; <a href="{url page="user" op="profile"}">{translate key="user.editMyProfile"}</a></li>
@@ -43,5 +43,5 @@
 	<li>&#187; <a href="{url page="login" op="signOut"}">{translate key="user.logOut"}</a></li>
 	{call_hook name="Templates::User::Index::MyAccount"}
 </ul>
-
+</div>
 {include file="common/footer.tpl"}

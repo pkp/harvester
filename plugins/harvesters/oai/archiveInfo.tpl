@@ -9,7 +9,7 @@
  * $Id$
  *}
 
-<table class="listing" width="100%">
+<table id="archiveListing" class="listing" width="100%">
 	<tr valign="top">
 		<td width="20%" class="label">{translate key="archive.type"}</td>
 		<td width="80%" colspan="2" class="value">{translate key="plugins.harvesters.oai.protocolName"}</td>

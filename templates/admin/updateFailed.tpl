@@ -13,7 +13,7 @@
 {assign var="helpTopicId" value="admin.manage"}
 {include file="common/header.tpl"}
 {/strip}
-
+<div id="updateFailed">
 <p>{translate key="admin.archive.manage.updateIndex.failure"}</p>
 <ul>
 {foreach from=$errors item=error}
@@ -24,5 +24,5 @@
 </ul>
 
 <a href="{url op="manage" path=$archiveId}">{translate key="admin.archive.manage.updateIndex.return"}</a>
-
+</div>
 {include file="common/footer.tpl"}

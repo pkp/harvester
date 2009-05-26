@@ -14,6 +14,7 @@
 {include file="common/header.tpl"}
 {/strip}
 
+<div id="languageSettings">
 <form method="post" action="{url op="saveLanguageSettings"}">
 
 <h3>{translate key="admin.languages.languageSettings"}</h3>
@@ -50,9 +51,9 @@
 <p><input type="submit" value="{translate key="common.save"}" class="button defaultButton" /> <input type="button" value="{translate key="common.cancel"}" class="button" onclick="document.location.href='{url page="admin"}'" /></p>
 
 </form>
-
+</div>
 <div class="separator"></div>
-
+<div id="installLocale">
 <form method="post" action="{url op="installLocale"}">
 
 <h3>{translate key="admin.languages.installLanguages"}</h3>
@@ -82,5 +83,5 @@
 {/if}
 
 </form>
-
+</div>
 {include file="common/footer.tpl"}

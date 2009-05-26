@@ -14,6 +14,7 @@
 {include file="common/header.tpl"}
 {/strip}
 
+<div id="siteManagement">
 <h3>{translate key="admin.siteManagement"}</h3>
 
 <ul class="plain">
@@ -25,7 +26,9 @@
 	<li>&#187; <a href="{url op="sortOrders"}">{translate key="admin.sortOrders"}</a></li>
 	{call_hook name="Template::Admin::Index::SiteManagement"}
 </ul>
+</div>
 
+<div id="archives">
 <h3>{translate key="admin.archives"}</h3>
 
 <ul class="plain">
@@ -42,7 +45,9 @@
 	<li>&#187; <a href="{url op="people" path="submitters"}">{translate key="user.role.submitters"}</a></li>
 	{call_hook name="Templates::Manager::Index::Users"}
 </ul>
+</div>
 
+<div id="adminFunctions">
 <h3>{translate key="admin.adminFunctions"}</h3>
 
 <ul class="plain">
@@ -52,5 +57,6 @@
 	<li>&#187; <a href="{url op="clearTemplateCache"}" onclick="return confirm('{translate|escape:"jsparam" key="admin.confirmClearTemplateCache"}')">{translate key="admin.clearTemplateCache"}</a></li>
 	{call_hook name="Template::Admin::Index::AdminFunctions"}
 </ul>
+</div>
 
 {include file="common/footer.tpl"}

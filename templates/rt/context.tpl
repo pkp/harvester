@@ -69,7 +69,7 @@
 // -->
 {/literal}
 </script>
-
+<div id="contextInfo">
 <h3>"{$record->getTitle()|strip_unsafe_html}"</h3>
 
 
@@ -125,7 +125,7 @@
 	{/foreach}
 	</form>
 </table>
-
+</div>
 <div class="separator"></div>
 
 <table class="listing" width="100%">

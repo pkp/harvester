@@ -13,7 +13,7 @@
 {assign var="helpTopicId" value="admin.rtAdmin"}
 {include file="common/header.tpl"}
 {/strip}
-
+<div id="status">
 <h3>{translate key="rt.admin.status"}</h3>
 <form action="{url op="selectVersion" path=$archiveId}" method="post">
 <p>{translate key="rt.admin.selectedVersion"}:&nbsp;<select name="versionId" class="selectMenu" id="versionId">
@@ -23,7 +23,8 @@
 	{/iterate}
 </select>&nbsp;&nbsp;<input type="submit" class="button defaultButton" value="{translate key="common.save"}"/></p>
 </form>
-
+</div>
+<div id="config">
 <p>{translate key="rt.admin.rtEnable"}</p>
 
 <h3>{translate key="rt.admin.configuration"}</h3>
@@ -35,5 +36,5 @@
 <ul class="plain">
 	<li>&#187; <a href="{url op="validateUrls" path="all"|to_array:$archiveId}">{translate key="rt.admin.validateUrls"}</a></li>
 </ul>
-
+</div>
 {include file="common/footer.tpl"}

@@ -18,7 +18,7 @@
 <form method="post" action="{url op="savePassword"}">
 
 {include file="common/formErrors.tpl"}
-
+<div id="changePassword">
 <p><span class="instruct">{translate key="user.profile.changePasswordInstructions"}</span></p>
 
 <table class="data" width="100%">
@@ -42,5 +42,5 @@
 
 <p><input type="submit" value="{translate key="common.save"}" class="button defaultButton" /> <input type="button" value="{translate key="common.cancel"}" class="button" onclick="document.location.href='{url page="user" escape=false}'" /></p>
 </form>
-
+</div>
 {include file="common/footer.tpl"}

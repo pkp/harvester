@@ -101,6 +101,7 @@ function prepBlockFields() {
 
 {* There are no localized settings on this page.
 {if count($formLocales) > 1}
+<div id="locales">
 <table width="100%" class="data">
 	<tr valign="top">
 		<td width="20%" class="label">{fieldLabel name="formLocale" key="form.formLanguage"}</td>
@@ -111,6 +112,7 @@ function prepBlockFields() {
 		</td>
 	</tr>
 </table>
+</div>
 {/if}
 *}
 

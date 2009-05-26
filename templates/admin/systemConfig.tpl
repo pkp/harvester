@@ -18,6 +18,7 @@
 <p>{translate key="admin.editSystemConfigInstructions"}</p>
 
 {foreach from=$configData key=sectionName item=sectionData}
+<div id="sectionData">
 <h3>{$sectionName}</h3>
 <table class="data" width="100%">
 {foreach from=$sectionData key=settingName item=settingValue}
@@ -29,6 +30,7 @@
 </table>
 
 <br />
+</div>
 {/foreach}
 </table>
 

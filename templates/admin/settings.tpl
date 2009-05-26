@@ -16,7 +16,7 @@
 
 <form method="post" action="{url op="saveSettings"}" enctype="multipart/form-data">
 {include file="common/formErrors.tpl"}
-
+<div id="general">
 <h3>{translate key="admin.settings.general"}</h3>
 
 <table class="data" width="100%">
@@ -80,9 +80,9 @@
 		</td>
 	</tr>
 </table>
-
+</div>
 <div class="separator"></div>
-
+<div id="administration">
 <h3>{translate key="admin.settings.administration"}</h3>
 
 <table class="data" width="100%">
@@ -108,7 +108,7 @@
 		</td>
 	</tr>
 </table>
-
+</div>
 <p><input type="submit" value="{translate key="common.save"}" class="button defaultButton" /> <input type="button" value="{translate key="common.cancel"}" class="button" onclick="document.location.href='{url page="admin"}'" /></p>
 
 </form>
