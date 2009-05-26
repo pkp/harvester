@@ -337,6 +337,7 @@ class PeopleHandler extends AdminHandler {
 	 */
 	function updateUser() {
 		$this->validate();
+		$this->setupTemplate(true);
 
 		$userId = Request::getUserVar('userId');
 
@@ -346,7 +347,7 @@ class PeopleHandler extends AdminHandler {
 			$templateMgr =& TemplateManager::getManager();
 			$templateMgr->assign('pageTitle', 'admin.people');
 			$templateMgr->assign('errorMsg', 'admin.people.noAdministrativeRights');
-			$templateMgr->assign('backLink', Request::url(null, null, 'people', 'all'));
+			$templateMgr->assign('backLink', Request::url(null, 'people', 'all'));
 			$templateMgr->assign('backLinkLabel', 'admin.people.allUsers');
 			return $templateMgr->display('common/error.tpl');
 		}
@@ -362,7 +363,7 @@ class PeopleHandler extends AdminHandler {
 
 			if (Request::getUserVar('createAnother')) {
 				$templateMgr =& TemplateManager::getManager();
-				$templateMgr->assign('currentUrl', Request::url(null, null, 'people', 'all'));
+				$templateMgr->assign('currentUrl', Request::url(null, 'people', 'all'));
 				$templateMgr->assign('userCreated', true);
 				// FIXME: Need construction by reference or validation always fails on PHP 4.x
 				$userForm =& new UserManagementForm();
