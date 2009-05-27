@@ -23,7 +23,6 @@ body {
 }
 
 div {
-	line-height: 140%;
 	text-align: left;
 }
 
@@ -127,7 +126,6 @@ input.defaultButton {
 	width:100% !important;
 	min-width: 750px !important;
 	margin: 0px auto;
-	line-height: 125%;
 	text-align: center;
 }
 
@@ -148,7 +146,6 @@ input.defaultButton {
 	padding: 0.5em 0 0.25em 10%;
 	font-family: Georgia,'Times New Roman',Times,serif;
 	font-weight: normal;
-	line-height: 130%;
 }
 
 #footer {
@@ -181,7 +178,6 @@ input.defaultButton {
 	padding-top: 0.5em;
 	font-family: Georgia,'Times New Roman',Times,serif;
 	font-weight: normal;
-	line-height: 130%;
 }
 
 #main h3 {
@@ -216,7 +212,6 @@ input.defaultButton {
 	font-family: Georgia,'Times New Roman',Times,serif;
 	font-weight: normal;
 	font-size: 1.8em;
-	line-height: 1.35em;
 }
 
 #content h4 {
@@ -360,7 +355,6 @@ table.listing tr.heading td, table.listing td.heading, table.info td.heading {
 	font-size: 0.85em;
 	text-transform: uppercase;
 	font-weight: normal;
-	line-height: 120%;
 	padding: 0.75em 1.5em 1em 0.5em;
 }
 
