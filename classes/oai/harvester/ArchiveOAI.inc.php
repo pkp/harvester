@@ -178,7 +178,7 @@ class ArchiveOAI extends OAI {
 	function &records($metadataPrefix, $from, $until, $set, $offset, $limit, &$total) {
 		$archiveId = null;
 		if (isset($set)) {
-			list($archiveId) = $this->setSpecToArchiveId($set);
+			$archiveId = $this->setSpecToArchiveId($set);
 		}
 		$records =& $this->dao->getRecords($metadataPrefix, $archiveId, $from, $until, $offset, $limit, $total);
 		return $records;
@@ -190,7 +190,7 @@ class ArchiveOAI extends OAI {
 	function &identifiers($metadataPrefix, $from, $until, $set, $offset, $limit, &$total) {
 		$archiveId = null;
 		if (isset($set)) {
-			list($archiveId) = $this->setSpecToArchiveId($set);
+			$archiveId = $this->setSpecToArchiveId($set);
 		}
 		$records =& $this->dao->getIdentifiers($metadataPrefix, $archiveId, $from, $until, $offset, $limit, $total);
 		return $records;
