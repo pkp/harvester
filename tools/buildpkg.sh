@@ -16,7 +16,6 @@
 CVSROOT=:pserver:anonymous@pkp.sfu.ca:/cvs
 HARVESTERMODULE=harvester2
 PKPMODULE=pkp
-PRECOMPILE=0
 
 if [ -z "$1" ]; then
 	echo "Usage: $0 <version> [<tag>] [<patch_dir>]";
@@ -61,12 +60,6 @@ mkdir plugins/postprocessors
 find . -name .cvsignore -exec rm {} \;
 rm -r $EXCLUDE
 echo "Done"
-
-if [ ! -z "$PRECOMPILE" ]; then
-	echo -n "Precompiling templates and cache files ... "
-	php tools/preCompile.php
-	echo "Done"
-fi
 
 cd ..
 
