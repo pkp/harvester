@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE data SYSTEM "../../../lib/pkp/dtd/xmlData.dtd">
+
+<!--
+  * 2.3.1_update.xml
+  *
+  * Copyright (c) 2005-2009 Alec Smecher and John Willinsky
+  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
+  *
+  * 2.3.1 database updates XML file, applied after DB schema descriptors.
+  *
+  * $Id$
+  -->
+
+<data>
+	<!-- Bug #3694: Abstract user_settings functionality -->
+	<sql>
+		<query>UPDATE user_settings SET assoc_id = 0, assoc_type = 0</query>
+	</sql>
+</data>

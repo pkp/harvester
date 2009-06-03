@@ -26,18 +26,24 @@
 		     deprecated columns containing information to migrate -->
 		<schema file="dbscripts/xml/harvester2_schema_stage1.xml" />
 		<data file="dbscripts/xml/upgrade/2.3_preupdate.xml" />
+	</upgrade>
 
-		<!-- PKP schema components -->
-		<schema file="lib/pkp/xml/schema/common.xml" />
+	<!-- PKP schema components -->
+	<schema file="lib/pkp/xml/schema/common.xml" />
 
-		<!-- Harvester schema -->
-		<schema file="dbscripts/xml/harvester2_schema.xml" />
+	<!-- Harvester schema -->
+	<schema file="dbscripts/xml/harvester2_schema.xml" />
 
+	<upgrade minversion="2.0.0.0" maxversion="2.3.0.0">
 		<!-- Other upgrade tasks -->
 		<data file="dbscripts/xml/upgrade/2.3_update.xml" />
 		<code function="updateArchivePluginNames" />
 		<code function="installSchemaAliases" />
 
 		<code function="clearDataCache" />
+	</upgrade>
+
+	<upgrade minversion="2.0.0.0" maxversion="2.3.0.0">
+		<data file="dbscripts/xml/upgrade/2.3.1_update.xml" />
 	</upgrade>
 </install>
