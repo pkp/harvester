@@ -33,7 +33,7 @@ class SubmitterHandler extends Handler {
 		$sortDirection = Request::getUserVar('sortDirection');
 
 		$archiveDao =& DAORegistry::getDAO('ArchiveDAO');
-		$archives =& $archiveDao->getArchivesByUserId($user->getId(), null, $archiveDao->getSortMapping($sort), $sortDirection);
+		$archives =& $archiveDao->getArchivesByUserId($user->getId(), null, $sort, $sortDirection);
 
 		// Load the harvester plugins so we can display names.
 		$plugins =& PluginRegistry::loadCategory('harvesters');

@@ -36,7 +36,7 @@ class AdminArchiveHandler extends AdminHandler {
 		$plugins =& PluginRegistry::loadCategory('harvesters');
 
 		$archiveDao =& DAORegistry::getDAO('ArchiveDAO');
-		$archives =& $archiveDao->getArchives(false, $rangeInfo, $archiveDao->getSortMapping($sort), $sortDirection);
+		$archives =& $archiveDao->getArchives(false, $rangeInfo, $sort, $sortDirection);
 
 		$templateMgr =& TemplateManager::getManager();
 		$templateMgr->assign_by_ref('archives', $archives);

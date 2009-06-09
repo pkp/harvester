@@ -65,7 +65,7 @@ class PeopleHandler extends AdminHandler {
 
 		$rangeInfo = PKPHandler::getRangeInfo('users');
 
-		$users =& $roleDao->getUsersByRoleId($roleId, $searchType, $search, $searchMatch, $rangeInfo, $roleDao->getSortMapping($sort), $sortDirection);
+		$users =& $roleDao->getUsersByRoleId($roleId, $searchType, $search, $searchMatch, $rangeInfo, $sort, $sortDirection);
 		$templateMgr->assign('roleId', $roleId);
 
 		$templateMgr->assign('currentUrl', Request::url(null, 'people', 'all'));
@@ -129,7 +129,7 @@ class PeopleHandler extends AdminHandler {
 
 		$rangeInfo = PKPHandler::getRangeInfo('users');
 
-		$users =& $userDao->getUsersByField($searchType, $searchMatch, $search, true, $rangeInfo, $roleDao->getSortMapping($sort), $sortDirection);
+		$users =& $userDao->getUsersByField($searchType, $searchMatch, $search, true, $rangeInfo, $sort, $sortDirection);
 
 		$templateMgr->assign('searchField', $searchType);
 		$templateMgr->assign('searchMatch', $searchMatch);

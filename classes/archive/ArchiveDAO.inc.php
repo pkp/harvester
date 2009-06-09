@@ -212,7 +212,7 @@ class ArchiveDAO extends DAO {
 			FROM archives a
 				LEFT JOIN users u ON a.user_id = u.user_id' . 
 			($onlyEnabled?' WHERE enabled = 1':'') . 
-			($sortBy?(' ORDER BY ' . $sortBy . ' ' . $this->getDirectionMapping($sortDirection)) : ''),
+			($sortBy?(' ORDER BY ' . $this->getSortMapping($sortBy) . ' ' . $this->getDirectionMapping($sortDirection)) : ''),
 			false, $rangeInfo
 		);
 
@@ -228,7 +228,7 @@ class ArchiveDAO extends DAO {
 	 */
 	function &getArchivesByUserId($userId, $rangeInfo = null, $sortBy = null, $sortDirection = SORT_DIRECTION_ASC) {
 		$result =& $this->retrieveRange(
-			'SELECT * FROM archives WHERE user_id = ?' . ($sortBy?(' ORDER BY ' . $sortBy . ' ' . $this->getDirectionMapping($sortDirection)) : ''),
+			'SELECT * FROM archives WHERE user_id = ?' . ($sortBy?(' ORDER BY ' . $this->getSortMapping($sortBy) . ' ' . $this->getDirectionMapping($sortDirection)) : ''),
 			array((int) $userId),
 			$rangeInfo
 		);
