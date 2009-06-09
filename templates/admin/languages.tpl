@@ -39,11 +39,21 @@
 		{foreach from=$installedLocales item=localeKey}
 		<tr valign="top">
 			<td width="5%"><input type="checkbox" name="supportedLocales[]" id="supportedLocales-{$localeKey}" value="{$localeKey}"{if in_array($localeKey, $supportedLocales)} checked="checked"{/if} /></td>
-			<td width="95%"><label for="supportedLocales-{$localeKey}">{$localeNames.$localeKey|escape}</label></td>
+ 			<td width="95%">
+ 				<label for="supportedLocales-{$localeKey|escape}">{$localeNames.$localeKey|escape}</label>
+ 				{if !$localesComplete[$localeKey]}
+ 					<span class="formError">*</span>
+ 					{assign var=incompleteLocaleFound value=1}
+ 				{/if}
+ 			</td>
 		</tr>
 		{/foreach}
 		</table>
 		<span class="instruct">{translate key="admin.languages.supportedLocalesInstructions"}</span>
+ 		{if $incompleteLocaleFound}
+ 			<br/>
+ 			<span class="formError">*</span>&nbsp;{translate key="admin.locale.maybeIncomplete"}
+ 		{/if}{* $incompleteLocaleFound *}
 	</td>
 </tr>
 </table>

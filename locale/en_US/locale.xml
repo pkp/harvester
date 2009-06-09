@@ -422,6 +422,7 @@ You may optionally provide the user with a reason for disabling their account.</
 	<message key="admin.languages.reload">Reload Locale</message>
 	<message key="admin.languages.confirmReload">Are you sure you want to reload this locale? This will erase any existing locale-specific data such as customized email templates.</message>
 	<message key="admin.languages.uninstall">Uninstall Locale</message>
+	<message key="admin.locale.maybeIncomplete">Marked locales may be incomplete.</message>
 	<message key="admin.languages.confirmUninstall">Are you sure you want to uninstall this locale?</message>
 	<message key="admin.languages.installNewLocales">Install New Locales</message>
 	<message key="admin.languages.installNewLocalesInstructions">Select any additional locales to install support for in this system. See the Harvester2 documentation for information on adding support for new languages.</message>
