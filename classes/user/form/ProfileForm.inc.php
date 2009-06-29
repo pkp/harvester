@@ -111,6 +111,9 @@ class ProfileForm extends Form {
 
 		$countryDao =& DAORegistry::getDAO('CountryDAO');
 		$countries =& $countryDao->getCountries();
+		
+		$userDao =& DAORegistry::getDAO('UserDAO');
+		$templateMgr->assign('genderOptions', $userDao->getGenderOptions());
 
 		$templateMgr->assign_by_ref('countries', $countries);
 
