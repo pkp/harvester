@@ -39,6 +39,14 @@ class Locale extends PKPLocale {
 	}
 
 	/**
+	 * Get the supported form locales
+	 * @return array
+	 */
+	function getSupportedFormLocales() {
+		return Locale::getSupportedLocales();
+	}
+
+	/**
 	 * Return the key name of the user's currently selected locale (default
 	 * is "en_US" for U.S. English).
 	 * @return string 
