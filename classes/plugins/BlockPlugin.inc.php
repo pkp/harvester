@@ -149,7 +149,7 @@ class BlockPlugin extends Plugin {
 	function getContents(&$templateMgr) {
 		$blockTemplateFilename = $this->getBlockTemplateFilename();
 		if ($blockTemplateFilename === null) return '';
-		return $templateMgr->fetch($this->getTemplatePath() . '/' . $blockTemplateFilename);
+		return $templateMgr->fetch($this->getTemplatePath() . $blockTemplateFilename);
 	}
 
 	function callback($hookName, &$args) {
