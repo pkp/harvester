@@ -313,7 +313,10 @@ class PluginManagementHandler extends AdminHandler {
 			$pluginType = explode(".", $installedPlugin->getProductType());
 			$pluginDest = Core::getBaseDir() . DIRECTORY_SEPARATOR . 'plugins' . DIRECTORY_SEPARATOR . $pluginType[1] . DIRECTORY_SEPARATOR . $plugin;
 			
-			FileManager::rmtree($pluginDest);
+			//make sure plugin type is valid and then delete the files
+			if (in_array($pluginType[1], PluginRegistry::getCategories())) {
+				FileManager::rmtree($pluginDest);
+			}
 			if(FileManager::fileExists($pluginDest, 'dir')) {
 				$templateMgr->assign('error', true);
 				$templateMgr->assign('message', 'manager.plugins.deleteError');

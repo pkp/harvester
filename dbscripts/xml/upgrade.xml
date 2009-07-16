@@ -45,5 +45,6 @@
 
 	<upgrade minversion="2.0.0.0" maxversion="2.3.0.0">
 		<data file="dbscripts/xml/upgrade/2.3.1_update.xml" />
+		<code function="addPluginVersions" />
 	</upgrade>
 </install>

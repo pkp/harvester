@@ -113,6 +113,25 @@ class Install extends PKPInstall {
 			// Install the schema aliases
 			$schemaAliasDao =& DAORegistry::getDAO('SchemaAliasDAO');
 			$schemaAliasDao->installSchemaAliases();
+			
+			// Add initial plugin data to versions table
+			$versionDao =& DAORegistry::getDAO('VersionDAO'); 
+			import('site.VersionCheck');
+			$categories = PluginRegistry::getCategories();
+			foreach ($categories as $category) {
+				PluginRegistry::loadCategory($category, true);
+				$plugins = PluginRegistry::getPlugins($category);
+				foreach ($plugins as $plugin) {
+					$versionFile = $plugin->getPluginPath() . '/version.xml';
+		
+					if (FileManager::fileExists($versionFile)) {
+						$versionInfo =& VersionCheck::parseVersionXML($versionFile);
+						$pluginVersion = $versionInfo['version'];		
+						$pluginVersion->setCurrent(1);
+						$versionDao->insertVersion($pluginVersion);
+					} 
+				}
+			}
 		}
 
 		return true;
