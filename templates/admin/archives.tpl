@@ -22,9 +22,9 @@
 		<td colspan="5" class="headseparator">&nbsp;</td>
 	</tr>
 	<tr valign="top" class="heading">
-		<td width="40%">{sort_heading key="archive.title" heading="title"}</td>
-		<td width="30%">{sort_heading key="archive.url" heading="url"}</td>
-		<td width="10%">{sort_heading key="user.role.submitter" heading="manager"}</td>
+		<td width="40%">{sort_heading key="archive.title" sort="title"}</td>
+		<td width="30%">{sort_heading key="archive.url" sort="url"}</td>
+		<td width="10%">{sort_heading key="user.role.submitter" sort="manager"}</td>
 		<td width="5%">{translate key="archive.type"}</td>
 		<td width="15%" align="right">{translate key="common.action"}</td>
 	</tr>
