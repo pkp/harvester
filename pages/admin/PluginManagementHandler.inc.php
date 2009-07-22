@@ -69,7 +69,9 @@ class PluginManagementHandler extends AdminHandler {
 		$templateMgr->assign('path', 'install');
 		$templateMgr->assign('uploaded', false);
 		$templateMgr->assign('error', false);
-		$templateMgr->assign('pageHierarchy', PluginManagementHandler::setBreadcrumbs(true));
+		
+		$category = $this->getPluginCategory($plugin);
+		$templateMgr->assign('pageHierarchy', $this->setBreadcrumbs(true, $category));
 
 		$templateMgr->display('admin/managePlugins.tpl');
 	}
@@ -85,7 +87,9 @@ class PluginManagementHandler extends AdminHandler {
 		$templateMgr->assign('path', 'upgrade');
 		$templateMgr->assign('plugin', $plugin);
 		$templateMgr->assign('uploaded', false);
-		$templateMgr->assign('pageHierarchy', PluginManagementHandler::setBreadcrumbs(true));
+		
+		$category = $this->getPluginCategory($plugin);
+		$templateMgr->assign('pageHierarchy', $this->setBreadcrumbs(true, $category));
 
 		$templateMgr->display('admin/managePlugins.tpl');
 	}
@@ -102,7 +106,9 @@ class PluginManagementHandler extends AdminHandler {
 		$templateMgr->assign('plugin', $plugin);
 		$templateMgr->assign('deleted', false);
 		$templateMgr->assign('error', false);
-		$templateMgr->assign('pageHierarchy', PluginManagementHandler::setBreadcrumbs(true));
+		
+		$category = $this->getPluginCategory($plugin);
+		$templateMgr->assign('pageHierarchy', $this->setBreadcrumbs(true, $category));
 
 		$templateMgr->display('admin/managePlugins.tpl');
 	}
@@ -173,13 +179,13 @@ class PluginManagementHandler extends AdminHandler {
 		
 		$pluginVersion = $versionInfo['version'];
 		$pluginName = $pluginVersion->getProduct();
-		$pluginType = explode(".", $pluginVersion->getProductType());
+		$category = $this->getPluginCategory($plugin);
  
 		$versionDao =& DAORegistry::getDAO('VersionDAO'); 
 		$installedPlugin = $versionDao->getCurrentVersion($pluginName);
 		
 		if(!$installedPlugin) {
-			$pluginDest = Core::getBaseDir() . DIRECTORY_SEPARATOR . 'plugins' . DIRECTORY_SEPARATOR . $pluginType[1] . DIRECTORY_SEPARATOR . $pluginName;
+			$pluginDest = Core::getBaseDir() . DIRECTORY_SEPARATOR . 'plugins' . DIRECTORY_SEPARATOR . $category . DIRECTORY_SEPARATOR . $pluginName;
 
 			if(!FileManager::copyDir($path, $pluginDest)) {
 				$templateMgr->assign('message', 'manager.plugins.copyError');
@@ -307,14 +313,15 @@ class PluginManagementHandler extends AdminHandler {
 
 		$versionDao =& DAORegistry::getDAO('VersionDAO'); 
 		$installedPlugin = $versionDao->getCurrentVersion($plugin);
+		$category = $this->getPluginCategory($plugin);
 		
 		if ($installedPlugin) {
 			
 			$pluginType = explode(".", $installedPlugin->getProductType());
-			$pluginDest = Core::getBaseDir() . DIRECTORY_SEPARATOR . 'plugins' . DIRECTORY_SEPARATOR . $pluginType[1] . DIRECTORY_SEPARATOR . $plugin;
+			$pluginDest = Core::getBaseDir() . DIRECTORY_SEPARATOR . 'plugins' . DIRECTORY_SEPARATOR . $category . DIRECTORY_SEPARATOR . $plugin;
 			
 			//make sure plugin type is valid and then delete the files
-			if (in_array($pluginType[1], PluginRegistry::getCategories())) {
+			if (in_array($category, PluginRegistry::getCategories())) {
 				FileManager::rmtree($pluginDest);
 			}
 			if(FileManager::fileExists($pluginDest, 'dir')) {
@@ -370,7 +377,29 @@ class PluginManagementHandler extends AdminHandler {
 			);
 		}
 
+		if ($category) {
+			$pageCrumbs[] = array(
+				Request::url(null, 'manager', 'plugins', $category),
+				"plugins.categories.$category",
+				false
+			);
+		}
+		
 		return $pageCrumbs;
+	}
+
+	/**
+	 * Get the plugin category from the version.
+	 * @param string
+	 * @return string
+	 */
+	function getPluginCategory($plugin) {
+		$versionDao =& DAORegistry::getDAO('VersionDAO'); 
+		$installedPlugin = $versionDao->getCurrentVersion($plugin);
+		
+		$pluginType = explode(".", $installedPlugin->getProductType());
+		
+		return $pluginType[1];
 	}
 	
 	/**
