@@ -59,7 +59,7 @@
 	{else}
 		<tr>
 			<td colspan="2" align="left">{page_info iterator=$archives}</td>
-			<td colspan="2" align="right">{page_links anchor="archives" name="archives" iterator=$archives}</td>
+			<td colspan="2" align="right">{page_links anchor="archives" name="archives" iterator=$archives sort=$sort sortDirection=$sortDirection}</td>
 		</tr>
 	{/if}
 </table>
