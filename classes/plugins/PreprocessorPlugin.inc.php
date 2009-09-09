@@ -29,7 +29,7 @@ class PreprocessorPlugin extends Plugin {
 		return $result;
 	}
 
-	function _preprocessEntry($hookName, &$args) {
+	function _preprocessEntry($hookName, $args) {
 		$archive =& $args[0];
 		$record =& $args[1];
 		$field =& $args[2];

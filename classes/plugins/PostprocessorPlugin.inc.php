@@ -30,7 +30,7 @@ class PostprocessorPlugin extends Plugin {
 		return $result;
 	}
 
-	function _postprocessEntry($hookName, &$args) {
+	function _postprocessEntry($hookName, $args) {
 		$archive =& $args[0];
 		$record =& $args[1];
 		$field =& $args[2];
