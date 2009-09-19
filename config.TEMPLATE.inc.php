@@ -288,9 +288,6 @@ font_location = /usr/share/fonts/truetype/freefont/FreeSerif.ttf
 ; proxy_username = username
 ; proxy_password = password
 
-; Display an error message when an email is not successfully sent
-display_errors = On
-
 
 ;;;;;;;;;;;;;;;;;;
 ; Debug Settings ;
@@ -305,4 +302,7 @@ show_stats =  Off
 ; Note that this may expose private information and should be disabled
 ; for any production system.
 show_stacktrace = Off
+
+; Display an error message when something goes wrong.
+display_errors = Off
 
