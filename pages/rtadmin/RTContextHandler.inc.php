@@ -32,8 +32,7 @@ class RTContextHandler extends RTAdminHandler {
 		$version =& $rtDao->getVersion($versionId, $archiveId);
 
 		import('rt.harvester2.form.ContextForm');
-		// FIXME: Need construction by reference or validation always fails on PHP 4.x
-		$contextForm =& new ContextForm(null, $versionId, $archiveId);
+		$contextForm = new ContextForm(null, $versionId, $archiveId);
 
 		if ($save === 'save') {
 			$contextForm->readInputData();
@@ -87,8 +86,7 @@ class RTContextHandler extends RTAdminHandler {
 		if (isset($version) && isset($context) && $context->getVersionId() == $version->getVersionId()) {
 			import('rt.harvester2.form.ContextForm');
 			$this->setupTemplate(true, $archiveId, $version, $context);
-			// FIXME: Need construction by reference or validation always fails on PHP 4.x
-			$contextForm =& new ContextForm($contextId, $versionId, $archiveId);
+			$contextForm = new ContextForm($contextId, $versionId, $archiveId);
 			$contextForm->initData();
 			$contextForm->display();
 		}
@@ -130,8 +128,7 @@ class RTContextHandler extends RTAdminHandler {
 
 		if (isset($version) && isset($context) && $context->getVersionId() == $version->getVersionId()) {
 			import('rt.harvester2.form.ContextForm');
-			// FIXME: Need construction by reference or validation always fails on PHP 4.x
-			$contextForm =& new ContextForm($contextId, $versionId, $archiveId);
+			$contextForm = new ContextForm($contextId, $versionId, $archiveId);
 			$contextForm->readInputData();
 			$contextForm->execute();
 		}

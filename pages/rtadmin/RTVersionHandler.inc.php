@@ -27,8 +27,7 @@ class RTVersionHandler extends RTAdminHandler {
 
 		import('rt.harvester2.form.VersionForm');
 		$archiveId = (int) Request::getUserVar('archiveId');
-		// FIXME: Need construction by reference or validation always fails on PHP 4.x
-		$versionForm =& new VersionForm(null, $archiveId);
+		$versionForm = new VersionForm(null, $archiveId);
 
 		if (isset($args[0]) && $args[0]=='save') {
 			$versionForm->readInputData();
@@ -107,8 +106,7 @@ class RTVersionHandler extends RTAdminHandler {
 		if (isset($version)) {
 			import('rt.harvester2.form.VersionForm');
 			$this->setupTemplate(true, $archiveId, $version);
-			// FIXME: Need construction by reference or validation always fails on PHP 4.x
-			$versionForm =& new VersionForm($versionId, $archiveId);
+			$versionForm = new VersionForm($versionId, $archiveId);
 			$versionForm->initData();
 			$versionForm->display();
 		}
@@ -139,8 +137,7 @@ class RTVersionHandler extends RTAdminHandler {
 
 		if (isset($version)) {
 			import('rt.harvester2.form.VersionForm');
-			// FIXME: Need construction by reference or validation always fails on PHP 4.x
-			$versionForm =& new VersionForm($versionId, $archiveId);
+			$versionForm = new VersionForm($versionId, $archiveId);
 			$versionForm->readInputData();
 			$versionForm->execute();
 		}

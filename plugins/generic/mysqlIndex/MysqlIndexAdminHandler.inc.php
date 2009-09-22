@@ -52,8 +52,7 @@ class MysqlIndexAdminHandler extends Handler {
 		$plugin =& MysqlIndexAdminHandler::getPlugin();
 		$plugin->import('CrosswalkForm');
 
-		// FIXME: Need construction by reference or validation always fails on PHP 4.x
-		$crosswalkForm =& new CrosswalkForm(Request::getUserVar('crosswalkId'));
+		$crosswalkForm = new CrosswalkForm(Request::getUserVar('crosswalkId'));
 		$crosswalkForm->initData();
 		$crosswalkForm->display();
 	}
@@ -67,8 +66,7 @@ class MysqlIndexAdminHandler extends Handler {
 		$plugin =& MysqlIndexAdminHandler::getPlugin();
 		$plugin->import('CrosswalkForm');
 
-		// FIXME: Need construction by reference or validation always fails on PHP 4.x
-		$crosswalkForm =& new CrosswalkForm(Request::getUserVar('crosswalkId'));
+		$crosswalkForm = new CrosswalkForm(Request::getUserVar('crosswalkId'));
 		$crosswalkForm->initData();
 		$crosswalkForm->readInputData();
 

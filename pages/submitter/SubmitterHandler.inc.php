@@ -67,8 +67,7 @@ class SubmitterHandler extends Handler {
 
 		import('admin.form.ArchiveForm');
 
-		// FIXME: Need construction by reference or validation always fails on PHP 4.x
-		$archiveForm =& new ArchiveForm($archiveId);
+		$archiveForm = new ArchiveForm($archiveId);
 		$archiveForm->initData();
 		$archiveForm->display();
 	}
@@ -86,8 +85,7 @@ class SubmitterHandler extends Handler {
 
 		import('admin.form.ArchiveForm');
 
-		// FIXME: Need construction by reference or validation always fails on PHP 4.x
-		$archiveForm =& new ArchiveForm($archiveId);
+		$archiveForm = new ArchiveForm($archiveId);
 		$archiveForm->initData();
 		$archiveForm->readInputData();
 

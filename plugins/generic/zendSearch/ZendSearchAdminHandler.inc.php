@@ -102,8 +102,7 @@ class ZendSearchAdminHandler extends Handler {
 		$plugin =& ZendSearchAdminHandler::getPlugin();
 		$plugin->import('SearchFormElementForm');
 
-		// FIXME: Need construction by reference or validation always fails on PHP 4.x
-		$searchFormElementForm =& new SearchFormElementForm(!isset($args) || empty($args) ? null : (int) $args[0]);
+		$searchFormElementForm = new SearchFormElementForm(!isset($args) || empty($args) ? null : (int) $args[0]);
 		if ($searchFormElementForm->isLocaleResubmit()) {
 			$searchFormElementForm->readInputData();
 		} else {
@@ -123,8 +122,7 @@ class ZendSearchAdminHandler extends Handler {
 
 		$searchFormElementId = (int) Request::getUserVar('searchFormElementId');
 
-		// FIXME: Need construction by reference or validation always fails on PHP 4.x
-		$searchFormElementForm =& new SearchFormElementForm($searchFormElementId);
+		$searchFormElementForm = new SearchFormElementForm($searchFormElementId);
 		$searchFormElementForm->initData();
 		$searchFormElementForm->readInputData();
 
