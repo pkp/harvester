@@ -95,6 +95,7 @@ class ProfileHandler extends UserHandler {
 
 		import('user.form.ChangePasswordForm');
 
+		// FIXME: Need construction by reference or validation always fails on PHP 4.x
 		$passwordForm =& new ChangePasswordForm();
 		$passwordForm->readInputData();
 
