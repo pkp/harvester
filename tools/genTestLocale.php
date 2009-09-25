@@ -77,25 +77,52 @@ class genTestLocale extends CommandLineTool {
 	 * Create the test locale file.
 	 */
 	function execute() {
-		$localeData = Locale::loadLocale($this->inLocale);
+		Locale::initialize();
+		$localeFiles = Locale::makeComponentMap($this->inLocale);
+		
+		foreach($localeFiles as $localeFilePath) {
+			$localeFile = basename($localeFilePath);
+			$outFile = dirname(dirname($localeFilePath)) . '/' . $this->outLocale . '/' . $localeFile;
+			$this->generateLocaleFile($localeFile, $localeFilePath, $outFile);
+		}
+	}
+	
+	/**
+	 * Perform message string munging.
+	 * @param $localeFile string
+	 * @param $localeFilePath string
+	 * @param $outFile string
+	 */
+	function generateLocaleFile($localeFile, $localeFilePath, $outFile) {
+		$localeData = LocaleFile::load($localeFilePath);
 
 		if (!isset($localeData)) {
 			printf('Invalid locale \'%s\'', $this->inLocale);
 			exit(1);
 		}
 
-		$outFile = sprintf('locale/%s/locale.xml', $this->outLocale);
+		$destDir = dirname($outFile);
+		if (!file_exists($destDir)) {
+			import('file.FileManager');
+			if (!FileManager::mkdir($destDir)) {
+				printf('Failed to createDirectory \'%s\'', $destDir);
+				exit(1);
+			}
+		}
+		
 		$fp = fopen($outFile, 'wb');
 		if (!$fp) {
 			printf('Failed to write to \'%s\'', $outFile);
 			exit(1);
 		}
+		
+		$dtdLocation = substr($localeFilePath, 0, 3) == 'lib' ? '../../dtd/locale.dtd' : '../../lib/pkp/dtd/locale.dtd';
 
 		fwrite($fp,
 					"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" .
-					"<!DOCTYPE locale SYSTEM \"../../lib/pkp/dtd/locale.dtd\">\n\n" .
+					"<!DOCTYPE locale SYSTEM \"$dtdLocation\">\n\n" .
 					"<!--\n" .
-					"  * locale.xml\n" .
+					"  * $localeFile\n" .
 					"  *\n" .
 					"  * Copyright (c) 2005-2009 Alec Smecher and John Willinsky\n" .
 					"  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.\n" .
@@ -119,7 +146,7 @@ class genTestLocale extends CommandLineTool {
 
 		fwrite($fp, "</locale>\n");
 
-		fclose($fp);
+		fclose($fp);	
 	}
 
 	/**
