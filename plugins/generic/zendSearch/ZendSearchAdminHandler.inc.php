@@ -102,7 +102,11 @@ class ZendSearchAdminHandler extends Handler {
 		$plugin =& ZendSearchAdminHandler::getPlugin();
 		$plugin->import('SearchFormElementForm');
 
-		$searchFormElementForm = new SearchFormElementForm(!isset($args) || empty($args) ? null : (int) $args[0]);
+		if (checkPhpVersion('5.0.0')) { // WARNING: This form needs $this in constructor
+			$searchFormElementForm = new SearchFormElementForm(!isset($args) || empty($args) ? null : (int) $args[0]);
+		} else {
+			$searchFormElementForm =& new SearchFormElementForm(!isset($args) || empty($args) ? null : (int) $args[0]);
+		}
 		if ($searchFormElementForm->isLocaleResubmit()) {
 			$searchFormElementForm->readInputData();
 		} else {
@@ -122,7 +126,11 @@ class ZendSearchAdminHandler extends Handler {
 
 		$searchFormElementId = (int) Request::getUserVar('searchFormElementId');
 
-		$searchFormElementForm = new SearchFormElementForm($searchFormElementId);
+		if (checkPhpVersion('5.0.0')) { // WARNING: This form needs $this in constructor
+			$searchFormElementForm = new SearchFormElementForm($searchFormElementId);
+		} else {
+			$searchFormElementForm =& new SearchFormElementForm($searchFormElementId);
+		}
 		$searchFormElementForm->initData();
 		$searchFormElementForm->readInputData();
 

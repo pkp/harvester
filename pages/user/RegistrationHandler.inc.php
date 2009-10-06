@@ -27,7 +27,11 @@ class RegistrationHandler extends UserHandler {
 
 		import('user.form.RegistrationForm');
 
-		$regForm = new RegistrationForm();
+		if (checkPhpVersion('5.0.0')) { // WARNING: This form needs $this in constructor
+			$regForm = new RegistrationForm();
+		} else {
+			$regForm =& new RegistrationForm();
+		}
 		if ($regForm->isLocaleResubmit()) {
 			$regForm->readInputData();
 		} else {
@@ -43,7 +47,11 @@ class RegistrationHandler extends UserHandler {
 		$this->validate();
 		import('user.form.RegistrationForm');
 
-		$regForm = new RegistrationForm();
+		if (checkPhpVersion('5.0.0')) { // WARNING: This form needs $this in constructor
+			$regForm = new RegistrationForm();
+		} else {
+			$regForm =& new RegistrationForm();
+		}
 		$regForm->readInputData();
 
 		if ($regForm->validate()) {
