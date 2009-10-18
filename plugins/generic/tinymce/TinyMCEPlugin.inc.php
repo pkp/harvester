@@ -70,6 +70,7 @@ class TinyMCEPlugin extends GenericPlugin {
 				$fields[] = 'description';
 				break;
 			case 'user/profile':
+			case 'user/saveProfile':
 			case 'user/register':
 			case 'admin/createUser':
 			case 'admin/updateUser':
