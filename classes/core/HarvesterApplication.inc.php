@@ -28,7 +28,18 @@ class HarvesterApplication extends PKPApplication {
 		PKPApplication::initialize($application);
 
 		import('i18n.Locale');
-		import('core.Request');
+	}
+
+	/**
+	 * Get the dispatcher implementation singleton
+	 * @return Dispatcher
+	 */
+	function &getDispatcher() {
+		$dispatcher =& parent::getDispatcher();
+
+		// Inject application-specific configuration
+		$dispatcher->addRouterName('core.HarvesterPageRouter', 'page');
+		return $dispatcher;
 	}
 
 	/**
@@ -44,7 +55,7 @@ class HarvesterApplication extends PKPApplication {
 
 	/**
 	 * Get the list of the contexts available for this application
-	 * i.e. the various parameters that are needed to represent the 
+	 * i.e. the various parameters that are needed to represent the
 	 * (e.g. array('journal') or array('conference', 'schedConf'))
 	 * @return Array
 	 */
@@ -59,7 +70,7 @@ class HarvesterApplication extends PKPApplication {
 	function getNameKey() {
 		return('common.harvester2');
 	}
-	
+
 	/**
 	 * Get the symbolic name of this application
 	 * @return string

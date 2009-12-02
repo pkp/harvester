@@ -28,32 +28,28 @@ class Request extends PKPRequest {
 	 * @param $anchor string Name of desired anchor on the target page
 	 */
 	function redirect($page = null, $op = null, $path = null, $params = null, $anchor = null) {
-		Request::redirectUrl(Request::url($page, $op, $path, $params, $anchor));
+		$_this =& PKPRequest::_checkThis();
+		$_this->redirectUrl($_this->url($page, $op, $path, $params, $anchor));
 	}
-	
-	/**
-	 * Redirect to user home page (or the role home page if the user has one role).
-	 */
-	function redirectHome() {
-		$roleDao =& DAORegistry::getDAO('RoleDAO');
-		$user = Request::getUser();
-		$userId = $user->getId();
 
-		$roles =& $roleDao->getRolesByUserId($userId);
-		if(count($roles) == 1) {
-			$role = array_shift($roles);
-			Request::redirect($role->getRolePath());
-		} else {
-			Request::redirect('user');
-		}
-	}
-	
 	/**
-	 * Build a URL into Harvester2.
+	 * Deprecated
+	 * @see PKPPageRouter::url()
 	 */
 	function url($page = null,
 			$op = null, $path = null, $params = null, $anchor = null, $escape = false) {
-		return parent::url(null, $page, $op, $path, $params, $anchor, $escape);
+		$_this =& PKPRequest::_checkThis();
+		return $_this->_delegateToRouter('url', null, $page, $op, $path,
+			$params, $anchor, $escape);
+	}
+
+	/**
+	 * Deprecated
+	 * @see HarvesterPageRouter::redirectHome()
+	 */
+	function redirectHome() {
+		$_this =& PKPRequest::_checkThis();
+		return $_this->_delegateToRouter('redirectHome');
 	}
 }
 

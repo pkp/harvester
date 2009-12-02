@@ -16,8 +16,7 @@
 // $Id$
 
 
-define('INDEX_FILE_LOCATION', dirname(dirname(__FILE__)) . '/index.php');
-require(dirname(dirname(__FILE__)) . '/lib/pkp/classes/cliTool/CliTool.inc.php');
+require(dirname(__FILE__) . '/bootstrap.inc.php');
 
 define('MASTER_LOCALE', 'en_US');
 
@@ -95,7 +94,7 @@ class localeCheck extends CommandLineTool {
 
 		// Pass 1: For all translated emails, check that they match
 		// against reference translations.
-		for ($emailIndex = 0; ($email =& $emailsTable->getChildByName('row', $emailIndex)) !== null; $emailIndex++) { 
+		for ($emailIndex = 0; ($email =& $emailsTable->getChildByName('row', $emailIndex)) !== null; $emailIndex++) {
 			// Extract the fields from the email to be tested.
 			$fields = $this->extractFields($email);
 

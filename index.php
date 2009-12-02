@@ -6,10 +6,11 @@
  * Welcome to the PKP Harvester API Reference. This resource contains
  * documentation generated automatically from the Harvester source code.
  *
- * The design of PKP Harvester 2.x is heavily structured for maintainability,
- * flexibility and robustness. For this reason it may seem complex when first
- * approached. Those familiar with Sun's Enterprise Java Beans technology or
- * the Model-View-Controller (MVC) pattern will note many similarities.
+ * The design of PKP %Harvester 2.x is heavily structured for
+ * maintainability, flexibility and robustness. For this reason it may seem
+ * complex when first approached. Those familiar with Sun's Enterprise Java
+ * Beans technology or the Model-View-Controller (MVC) pattern will note many
+ * similarities.
  *
  * As in a MVC structure, data storage and representation, user interface
  * presentation, and control are separated into different layers. The major
@@ -49,66 +50,18 @@
  *
  * @ingroup index
  *
- * Front controller for the Harvester site. Loads required files and dispatches
- * requests to the appropriate handler.
+ * Bootstrap code for the Harvester site. Loads required files and then calls the
+ * dispatcher to delegate to the appropriate request handler.
  */
 
 // $Id$
 
-
+// Initialize global environment
 define('INDEX_FILE_LOCATION', __FILE__);
+require('lib/pkp/includes/driver.inc.php');
 
-/**
- * Handle a new request.
- */
-function handleRequest() {
-	if (!Config::getVar('general', 'installed')) {
-		define('SESSION_DISABLE_INIT', 1);
-		if (pageRequiresInstall()) {
-			// Redirect to installer if application has not been
-			// installed
-			Request::redirect('install');
-		}
-	}
-
-	// Determine the handler for this request
-	$page = Request::getRequestedPage();
-	$op = Request::getRequestedOp();
-	$sourceFile = sprintf('pages/%s/index.php', $page);
-
-	// If a hook has been registered to handle this page, give it the
-	// opportunity to load required resources and set HANDLER_CLASS.
-	if (!HookRegistry::call('LoadHandler', array(&$page, &$op, &$sourceFile))) {
-		if (file_exists($sourceFile) || file_exists('lib/pkp/'.$sourceFile)) require($sourceFile);
-		elseif (empty($page)) require('pages/index/index.php');
-		else PKPRequest::handle404();
-	}
-
-	if (!defined('SESSION_DISABLE_INIT')) {
-		// Initialize session
-		$sessionManager =& SessionManager::getManager();
-		$session =& $sessionManager->getUserSession();
-	}
-
-	$methods = array_map('strtolower', get_class_methods(HANDLER_CLASS));
-
-	if (in_array(strtolower($op), $methods)) {
-		// Call a specific operation
-		$HandlerClass = HANDLER_CLASS;
-		$handler = new $HandlerClass;
-		$handler->$op(Request::getRequestedArgs());
-
-	} elseif (empty($op)) {
-		// Call the selected handler's index operation
-		$HandlerClass = HANDLER_CLASS;
-		$handler = new $HandlerClass;
-		$handler->index(Request::getRequestedArgs());
-	} else PKPRequest::handle404();
-}
-
-// Initialize system and handle the current request
-require('includes/driver.inc.php');
-initSystem();
-handleRequest();
-
+// Initialize the application environment
+import('core.HarvesterApplication');
+$application = new HarvesterApplication();
+$application->execute();
 ?>

@@ -16,8 +16,7 @@
 // $Id$
 
 
-define('INDEX_FILE_LOCATION', dirname(dirname(__FILE__)) . '/index.php');
-require(dirname(dirname(__FILE__)) . '/lib/pkp/classes/cliTool/CliTool.inc.php');
+require(dirname(__FILE__) . '/bootstrap.inc.php');
 
 define('DEFAULT_IN_LOCALE', 'en_US');
 define('DEFAULT_OUT_LOCALE', 'te_ST');
@@ -79,14 +78,14 @@ class genTestLocale extends CommandLineTool {
 	function execute() {
 		Locale::initialize();
 		$localeFiles = Locale::makeComponentMap($this->inLocale);
-		
+
 		foreach($localeFiles as $localeFilePath) {
 			$localeFile = basename($localeFilePath);
 			$outFile = dirname(dirname($localeFilePath)) . '/' . $this->outLocale . '/' . $localeFile;
 			$this->generateLocaleFile($localeFile, $localeFilePath, $outFile);
 		}
 	}
-	
+
 	/**
 	 * Perform message string munging.
 	 * @param $localeFile string
@@ -109,13 +108,13 @@ class genTestLocale extends CommandLineTool {
 				exit(1);
 			}
 		}
-		
+
 		$fp = fopen($outFile, 'wb');
 		if (!$fp) {
 			printf('Failed to write to \'%s\'', $outFile);
 			exit(1);
 		}
-		
+
 		$dtdLocation = substr($localeFilePath, 0, 3) == 'lib' ? '../../dtd/locale.dtd' : '../../lib/pkp/dtd/locale.dtd';
 
 		fwrite($fp,
@@ -146,7 +145,7 @@ class genTestLocale extends CommandLineTool {
 
 		fwrite($fp, "</locale>\n");
 
-		fclose($fp);	
+		fclose($fp);
 	}
 
 	/**
