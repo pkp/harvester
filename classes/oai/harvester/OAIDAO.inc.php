@@ -105,7 +105,7 @@ class OAIDAO extends DAO {
 	 */
 	function &getRecord($recordId) {
 		$result =& $this->retrieve(
-			'SELECT	r.*
+			'SELECT	r.*, a.*
 			FROM	records r,
 				archives a
 			WHERE	r.archive_id = a.archive_id AND
