@@ -198,7 +198,7 @@ class PeopleHandler extends AdminHandler {
 			$roleDao->deleteRoleByUserId(Request::getUserVar('userId'), $roleId);
 		}
 
-		Request::redirect(null, 'people');
+		Request::redirect(null, 'people', $roleDao->getRolePath($roleId) . 's');
 	}
 
 	/**
