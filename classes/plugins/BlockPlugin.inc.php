@@ -19,6 +19,10 @@ define('BLOCK_CONTEXT_LEFT_SIDEBAR',		0x00000001);
 define('BLOCK_CONTEXT_RIGHT_SIDEBAR', 		0x00000002);
 
 class BlockPlugin extends Plugin {
+	function BlockPlugin() {
+		parent::Plugin();
+	}
+
 	function register($category, $path) {
 		$success = parent::register($category, $path);
 		if ($success && $this->getEnabled()) {
