@@ -38,7 +38,7 @@ class HarvesterApplication extends PKPApplication {
 		$dispatcher =& parent::getDispatcher();
 
 		// Inject application-specific configuration
-		$dispatcher->addRouterName('core.HarvesterPageRouter', 'page');
+		$dispatcher->addRouterName('core.HarvesterPageRouter', ROUTE_PAGE);
 		return $dispatcher;
 	}
 
