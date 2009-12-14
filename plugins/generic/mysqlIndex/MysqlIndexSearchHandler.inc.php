@@ -20,6 +20,15 @@ import('handler.Handler');
 
 class MysqlIndexSearchHandler extends Handler {
 	/**
+	 * Constructor
+	 */
+	function MysqlIndexSearchHandler() {
+		parent::Handler();
+
+		$this->addCheck(new HandlerValidatorRoles($this, true, null, null, array(ROLE_ID_SITE_ADMIN)));
+	}	
+	
+	/**
 	 * Get the Zend Search Plugin object.
 	 */
 	function &getPlugin() {
@@ -32,8 +41,8 @@ class MysqlIndexSearchHandler extends Handler {
 	 * Display site search page.
 	 */
 	function index() {
-		MysqlIndexSearchHandler::validate();
-		list($crosswalks, $fields, $archives) = MysqlIndexSearchHandler::setupTemplate();
+		$this->validate();
+		list($crosswalks, $fields, $archives) = $this->setupTemplate();
 
 		$templateMgr =& TemplateManager::getManager();
 
@@ -46,7 +55,7 @@ class MysqlIndexSearchHandler extends Handler {
 		if (empty($archiveIds)) $archiveIds = null;
 		elseif (!is_array($archiveIds)) $archiveIds = array($archiveIds);
 
-		$plugin =& MysqlIndexSearchHandler::getPlugin();
+		$plugin =& $this->getPlugin();
 		$templateMgr->display($plugin->getTemplatePath() . 'search.tpl');
 	}
 
@@ -54,10 +63,10 @@ class MysqlIndexSearchHandler extends Handler {
 	 * Display search results.
 	 */
 	function results($args) {
-		MysqlIndexSearchHandler::validate();
-		list($crosswalks, $fields, $archives) = MysqlIndexSearchHandler::setupTemplate();
+		$this->validate();
+		list($crosswalks, $fields, $archives) = $this->setupTemplate();
 
-		$plugin =& MysqlIndexSearchHandler::getPlugin();
+		$plugin =& $this->getPlugin();
 		$plugin->import('Search');
 		$rangeInfo = PKPHandler::getRangeInfo('search');
 
@@ -147,7 +156,7 @@ class MysqlIndexSearchHandler extends Handler {
 		$templateMgr->assign('forwardParams', $forwardParams); // Field importance
 
 		$templateMgr->assign_by_ref('results', $results);
-		$plugin =& MysqlIndexSearchHandler::getPlugin();
+		$plugin =& $this->getPlugin();
 		$templateMgr->display($plugin->getTemplatePath() . 'results.tpl');
 	}
 
@@ -155,9 +164,9 @@ class MysqlIndexSearchHandler extends Handler {
 	 * Display search results from a URL-based search.
 	 */
 	function byUrl($args) {
-		MysqlIndexSearchHandler::validate();
-		list($crosswalks, $fields, $archives) = MysqlIndexSearchHandler::setupTemplate();
-		$plugin =& MysqlIndexSearchHandler::getPlugin();
+		$this->validate();
+		list($crosswalks, $fields, $archives) = $this->setupTemplate();
+		$plugin =& $this->getPlugin();
 		$plugin->import('Search');
 		$rangeInfo = PKPHandler::getRangeInfo('search');
 
@@ -245,7 +254,7 @@ class MysqlIndexSearchHandler extends Handler {
 		$templateMgr->assign('forwardParams', $forwardParams);
 
 		$templateMgr->assign_by_ref('results', $results);
-		$plugin =& MysqlIndexSearchHandler::getPlugin();
+		$plugin =& $this->getPlugin();
 		$templateMgr->display($plugin->getTemplatePath() . 'results.tpl');
 	}
 
