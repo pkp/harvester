@@ -19,6 +19,15 @@ import('handler.Handler');
 
 class ZendSearchAdminHandler extends Handler {
 	/**
+	 * Constructor
+	 */
+	function ZendSearchAdminHandler() {
+		parent::Handler();
+
+		$this->addCheck(new HandlerValidatorRoles($this, true, null, null, array(ROLE_ID_SITE_ADMIN)));
+	}
+	
+	/**
 	 * Get the Zend Search Plugin object.
 	 */
 	function &getPlugin() {
@@ -30,10 +39,10 @@ class ZendSearchAdminHandler extends Handler {
 	 * Administer the search form.
 	 */
 	function index($args) {
-		ZendSearchAdminHandler::validate();
-		ZendSearchAdminHandler::setupTemplate(true);
+		$this->validate();
+		$this->setupTemplate(true);
 		$templateMgr =& TemplateManager::getManager();
-		$plugin =& ZendSearchAdminHandler::getPlugin();
+		$plugin =& $this->getPlugin();
 
 		$rangeInfo = PKPHandler::getRangeInfo('searchFormElements');
 		$searchFormElementDao =& DAORegistry::getDAO('SearchFormElementDAO');
@@ -47,10 +56,10 @@ class ZendSearchAdminHandler extends Handler {
 	 * Display the settings form
 	 */
 	function settings() {
-		ZendSearchAdminHandler::validate();
-		ZendSearchAdminHandler::setupTemplate(true);
+		$this->validate();
+		$this->setupTemplate(true);
 
-		$plugin =& ZendSearchAdminHandler::getPlugin();
+		$plugin =& $this->getPlugin();
 		$plugin->import('ZendSearchSettingsForm');
 
 		$zendSearchSettingsForm = new ZendSearchSettingsForm();
@@ -66,9 +75,9 @@ class ZendSearchAdminHandler extends Handler {
 	 * Save changes to plugin settings.
 	 */
 	function saveSettings() {
-		ZendSearchAdminHandler::validate();
+		$this->validate();
 
-		$plugin =& ZendSearchAdminHandler::getPlugin();
+		$plugin =& $this->getPlugin();
 		$plugin->import('ZendSearchSettingsForm');
 
 		$zendSearchSettingsForm = new ZendSearchSettingsForm();
@@ -79,7 +88,7 @@ class ZendSearchAdminHandler extends Handler {
 			$zendSearchSettingsForm->execute();
 			Request::redirect(null, 'index');
 		} else {
-			ZendSearchAdminHandler::setupTemplate(true);
+			$this->setupTemplate(true);
 			$zendSearchSettingsForm->display();
 		}
 	}
@@ -88,7 +97,7 @@ class ZendSearchAdminHandler extends Handler {
 	 * Display form to create a new search form element.
 	 */
 	function createSearchFormElement() {
-		ZendSearchAdminHandler::editSearchFormElement();
+		$this->editSearchFormElement();
 	}
 
 	/**
@@ -96,10 +105,10 @@ class ZendSearchAdminHandler extends Handler {
 	 * @param $args array optional, if set the first parameter is the ID of the search form element to edit
 	 */
 	function editSearchFormElement($args = array()) {
-		ZendSearchAdminHandler::validate();
-		ZendSearchAdminHandler::setupTemplate(true);
+		$this->validate();
+		$this->setupTemplate(true);
 
-		$plugin =& ZendSearchAdminHandler::getPlugin();
+		$plugin =& $this->getPlugin();
 		$plugin->import('SearchFormElementForm');
 
 		if (checkPhpVersion('5.0.0')) { // WARNING: This form needs $this in constructor
@@ -119,9 +128,9 @@ class ZendSearchAdminHandler extends Handler {
 	 * Save changes to a search form element's settings.
 	 */
 	function updateSearchFormElement() {
-		ZendSearchAdminHandler::validate();
+		$this->validate();
 
-		$plugin =& ZendSearchAdminHandler::getPlugin();
+		$plugin =& $this->getPlugin();
 		$plugin->import('SearchFormElementForm');
 
 		$searchFormElementId = (int) Request::getUserVar('searchFormElementId');
@@ -138,7 +147,7 @@ class ZendSearchAdminHandler extends Handler {
 			$searchFormElementForm->execute();
 			Request::redirect(null, 'index');
 		} else {
-			ZendSearchAdminHandler::setupTemplate(true);
+			$this->setupTemplate(true);
 			$searchFormElementForm->display();
 		}
 	}
@@ -148,7 +157,7 @@ class ZendSearchAdminHandler extends Handler {
 	 * @param $args array first parameter is the ID of the search form element to delete
 	 */
 	function deleteSearchFormElement($args) {
-		ZendSearchAdminHandler::validate();
+		$this->validate();
 
 		$searchFormElementDao =& DAORegistry::getDAO('SearchFormElementDAO');
 
@@ -162,17 +171,6 @@ class ZendSearchAdminHandler extends Handler {
 		}
 
 		Request::redirect(null, 'index', null, array('searchFormElementPage' => Request::getUserVar('searchFormElementPage')));
-	}
-
-	/**
-	 * Validate that user has admin privileges
-	 * Redirects to the user index page if not properly authenticated.
-	 */
-	function validate() {
-		parent::validate();
-		if (!Validation::isSiteAdmin()) {
-			Validation::redirectLogin();
-		}
 	}
 
 	/**
