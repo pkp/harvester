@@ -106,9 +106,13 @@ switch ($op) {
 		define('HANDLER_CLASS', 'PluginManagementHandler');
 		import('pages.admin.PluginManagementHandler');
 		break;
-	default:	
+	case 'index':
+	case 'layout':
+	case 'saveLayout':
+	case 'viewCaptcha':
 		define('HANDLER_CLASS', 'AdminHandler');
 		import('pages.admin.AdminHandler');
+		break;
 }
 
 ?>

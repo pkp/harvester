@@ -44,7 +44,11 @@ switch ($op) {
 		define('HANDLER_CLASS', 'EmailHandler');
 		import('pages.user.EmailHandler');
 		break;
-	default:
+	case 'index':
+	case 'setLocale':
+	case 'become':
+	case 'viewCaptcha':
+	case 'viewPublicProfile':
 		define('HANDLER_CLASS', 'UserHandler');
 		import('pages.user.UserHandler');
 }
