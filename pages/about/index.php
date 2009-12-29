@@ -10,11 +10,18 @@
  *
  * @package pages.about
  *
- * $Id$
  */
 
-define('HANDLER_CLASS', 'AboutHandler');
+// $Id$
 
-import('pages.about.AboutHandler');
+
+switch ($op) {
+	case 'index':
+	case 'contact':
+	case 'harvester':
+		define('HANDLER_CLASS', 'AboutHandler');
+		import('pages.about.AboutHandler');
+		break;
+}
 
 ?>

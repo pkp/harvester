@@ -10,11 +10,17 @@
  *
  * @package pages.browse
  *
- * $Id$
  */
 
-define('HANDLER_CLASS', 'BrowseHandler');
+// $Id$
 
-import('pages.browse.BrowseHandler');
+
+switch ($op) {
+	case 'index':
+	case 'archiveInfo':
+		define('HANDLER_CLASS', 'BrowseHandler');
+		import('pages.browse.BrowseHandler');
+		break;
+}
 
 ?>

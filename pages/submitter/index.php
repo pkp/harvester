@@ -10,11 +10,21 @@
  *
  * @package pages.add
  *
- * $Id$
  */
 
-define('HANDLER_CLASS', 'SubmitterHandler');
+// $Id$
 
-import('pages.submitter.SubmitterHandler');
+
+switch ($op) {
+	case 'index':
+	case 'createArchive':
+	case 'editArchive':
+	case 'updateArchive':
+	case 'deleteArchive':
+	case 'plugin':
+		define('HANDLER_CLASS', 'SubmitterHandler');
+		import('pages.submitter.SubmitterHandler');
+		break;
+}
 
 ?>

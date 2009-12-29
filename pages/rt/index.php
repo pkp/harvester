@@ -10,11 +10,16 @@
  *
  * @package pages.rt
  *
- * $Id$
  */
 
-define('HANDLER_CLASS', 'RTHandler');
+// $Id$
 
-import('pages.rt.RTHandler');
+
+switch ($op) {
+	case 'context':
+		define('HANDLER_CLASS', 'RTHandler');
+		import('pages.rt.RTHandler');
+		break;
+}
 
 ?>

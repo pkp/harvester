@@ -10,11 +10,17 @@
  *
  * @package pages.record
  *
- * $Id$
  */
 
-define('HANDLER_CLASS', 'RecordHandler');
+// $Id$
 
-import('pages.record.RecordHandler');
+
+switch ($op) {
+	case 'index':
+	case 'view':
+		define('HANDLER_CLASS', 'RecordHandler');
+		import('pages.record.RecordHandler');
+		break;
+}
 
 ?>

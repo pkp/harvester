@@ -10,11 +10,17 @@
  *
  * @package pages.index
  *
- * $Id$
  */
 
-define('HANDLER_CLASS', 'IndexHandler');
+// $Id$
 
-import('pages.index.IndexHandler');
+
+switch ($op) {
+	case 'index':
+	case 'setLocale':
+		define('HANDLER_CLASS', 'IndexHandler');
+		import('pages.index.IndexHandler');
+		break;
+}
 
 ?>
