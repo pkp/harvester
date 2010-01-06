@@ -9,7 +9,7 @@
  * @class ProfileHandler
  * @ingroup pages_user
  *
- * @brief Handle requests for modifying user profiles. 
+ * @brief Handle requests for modifying user profiles.
  */
 
 // $Id$
@@ -103,12 +103,12 @@ class ProfileHandler extends UserHandler {
 		}
 		$passwordForm->readInputData();
 
+		$this->setupTemplate(true);
 		if ($passwordForm->validate()) {
 			$passwordForm->execute();
 			Request::redirect(null, Request::getRequestedPage());
 
 		} else {
-			$this->setupTemplate(true);
 			$passwordForm->display();
 		}
 	}
