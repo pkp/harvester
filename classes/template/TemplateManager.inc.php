@@ -44,7 +44,7 @@ class TemplateManager extends PKPTemplateManager {
 
 			// assign an empty home context
 			$this->assign('homeContext', array());
-			
+
 			$siteStyleFilename = PublicFileManager::getSiteFilesPath() . '/' . $site->getSiteStyleFilename();
 			if (file_exists($siteStyleFilename)) $this->addStyleSheet(Request::getBaseUrl() . '/' . $siteStyleFilename);
 
@@ -58,7 +58,7 @@ class TemplateManager extends PKPTemplateManager {
 
 			// Add the site-wide logo, if set for this locale or the primary locale
 			$this->assign('displayPageHeaderTitle', $site->getLocalizedPageHeaderTitle());
-			
+
 			$customLogo = $site->getSetting('customLogo');
 			if ($customLogo) {
 				$this->assign('useCustomLogo', $customLogo);
@@ -115,32 +115,6 @@ class TemplateManager extends PKPTemplateManager {
 			$text = isset($params['text']) ? $params['text'] : '';
 			return "<a href=\"$link\">$text</a>";
 		}
-	}
-
-	/**
-	 * Generate a URL into Harvester2. (This is a wrapper around Request::url to make it available to Smarty templates.)
-	 */
-	function smartyUrl($params, &$smarty) {
-		// Extract the variables named in $paramList, and remove them
-		// from the params array. Variables remaining in params will be
-		// passed along to Request::url as extra parameters.
-		$context = array();
-		// the ContextList is empty in the harvester, but syntax here is left for consistency 
-		// with OCS and OJS and in case contexts are added in the future
-		$contextList = HarvesterApplication::getContextList();
-
-		if ( !isset($params['context']) ) {
-			foreach ($contextList as $contextName) {
-				if (isset($params[$contextName])) {
-					$context[$contextName] = $params[$contextName];
-					unset($params[$contextName]);
-				} else {
-					$context[$contextName] = null;				
-				}
-			}
-		}
-
-		return parent::smartyUrl($params, $smarty);
 	}
 
 	/**
