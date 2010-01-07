@@ -1,12 +1,12 @@
 <?php
 
 /**
- * @file classes/core/HarvesterApplication.inc.php
+ * @file classes/core/Application.inc.php
  *
  * Copyright (c) 2005-2009 Alec Smecher and John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
- * @class HarvesterApplication
+ * @class Application
  * @ingroup core
  * @see PKPApplication
  *
@@ -19,27 +19,9 @@
 
 import('core.PKPApplication');
 
-class HarvesterApplication extends PKPApplication {
-	function HarvesterApplication() {
+class Application extends PKPApplication {
+	function Application() {
 		parent::PKPApplication();
-	}
-
-	function initialize(&$application) {
-		PKPApplication::initialize($application);
-
-		import('i18n.Locale');
-	}
-
-	/**
-	 * Get the dispatcher implementation singleton
-	 * @return Dispatcher
-	 */
-	function &getDispatcher() {
-		$dispatcher =& parent::getDispatcher();
-
-		// Inject application-specific configuration
-		$dispatcher->addRouterName('core.HarvesterPageRouter', ROUTE_PAGE);
-		return $dispatcher;
 	}
 
 	/**

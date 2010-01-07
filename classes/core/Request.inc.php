@@ -45,7 +45,7 @@ class Request extends PKPRequest {
 
 	/**
 	 * Deprecated
-	 * @see HarvesterPageRouter::redirectHome()
+	 * @see PageRouter::redirectHome()
 	 */
 	function redirectHome() {
 		$_this =& PKPRequest::_checkThis();
