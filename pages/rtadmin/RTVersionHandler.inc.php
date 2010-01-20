@@ -3,7 +3,7 @@
 /**
  * @file pages/rtadmin/RTVersionHandler.inc.php
  *
- * Copyright (c) 2005-2009 Alec Smecher and John Willinsky
+ * Copyright (c) 2005-2010 Alec Smecher and John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @package pages.rtadmin
