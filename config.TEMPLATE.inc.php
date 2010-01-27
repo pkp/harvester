@@ -79,6 +79,8 @@ xslt_command = ""
 ; data source has a throttling policy.
 ; throttling_delay = 3500
 
+; Allow javascript files to be served through a content delivery network (set to off to use local files)
+enable_cdn = On
 
 ;;;;;;;;;;;;;;;;;;;;;
 ; Database Settings ;
