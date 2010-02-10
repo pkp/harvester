@@ -67,14 +67,6 @@ allow_url_fopen = Off
 ; See FAQ for more details.
 restful_urls = Off
 
-; On systems that do not have PHP4's Sablotron/xsl or PHP5's libxsl/xslt
-; libraries installed, or for those who require a specific XSLT processor,
-; you may enter the complete path to the XSLT renderer tool, with any
-; required arguments. Use %xsl to substitute the location of the XSL
-; stylesheet file, and %xml for the location of the XML source file; eg:
-; /usr/bin/java -jar ~/java/xalan.jar -HTML -IN %xml -XSL %xsl
-xslt_command = ""
-
 ; Impose a minimum number of seconds between requests. Useful if a
 ; data source has a throttling policy.
 ; throttling_delay = 3500
@@ -291,6 +283,14 @@ perl = /usr/bin/perl
 
 ; tar (used in backup plugin, translation packaging)
 tar = /bin/tar
+
+; On systems that do not have PHP4's Sablotron/xsl or PHP5's libxsl/xslt
+; libraries installed, or for those who require a specific XSLT processor,
+; you may enter the complete path to the XSLT renderer tool, with any
+; required arguments. Use %xsl to substitute the location of the XSL
+; stylesheet file, and %xml for the location of the XML source file; eg:
+; /usr/bin/java -jar ~/java/xalan.jar -HTML -IN %xml -XSL %xsl
+xslt_command = ""
 
 
 ;;;;;;;;;;;;;;;;;;
