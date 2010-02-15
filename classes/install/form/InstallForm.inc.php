@@ -18,8 +18,6 @@ import('install.Install');
 import('site.VersionCheck');
 import('form.Form');
 
-define('PHP_REQUIRED_VERSION', '4.2.0');
-
 class InstallForm extends Form {
 
 	/** @var array locales supported by this system */
@@ -143,7 +141,7 @@ class InstallForm extends Form {
 			'databaseCharset' => '',
 			'encryption' => 'md5',
 			'filesDir' =>  $cwd . '/files',
-			'skipFilesDir' =>  0,			
+			'skipFilesDir' =>  0,
 			'databaseDriver' => 'mysql',
 			'databaseHost' => 'localhost',
 			'databaseUsername' => 'harvester2',
@@ -222,7 +220,7 @@ class InstallForm extends Form {
 	/**
 	 * Check if database drivers have the required PHP module loaded.
 	 * The names of drivers that appear to be unavailable are bracketed.
-	 * @return array 
+	 * @return array
 	 */
 	function checkDBDrivers() {
 		$dbDrivers = array();

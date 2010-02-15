@@ -19,6 +19,8 @@
 
 import('core.PKPApplication');
 
+define('PHP_REQUIRED_VERSION', '4.2.0');
+
 class Application extends PKPApplication {
 	function Application() {
 		parent::PKPApplication();
