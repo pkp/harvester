@@ -39,8 +39,8 @@
 		<td class="value"><textarea name="intro[{$formLocale|escape}]" id="intro" cols="40" rows="10" class="textArea">{$intro[$formLocale]|escape}</textarea></td>
 	</tr>
 	<tr valign="top">
-		<td class="label">{fieldLabel name="about" key="admin.settings.aboutDescription"}</td>
-		<td class="value"><textarea name="about[{$formLocale|escape}]" id="about" cols="40" rows="10" class="textArea">{$about[$formLocale]|escape}</textarea></td>
+		<td class="label">{fieldLabel name="aboutField" key="admin.settings.aboutDescription"}</td>
+		<td class="value"><textarea name="about[{$formLocale|escape}]" id="aboutField" cols="40" rows="10" class="textArea">{$about[$formLocale]|escape}</textarea></td>
 	</tr>
 	<tr valign="top">
 		<td width="20%" class="label">{fieldLabel for="customLogo" key="admin.settings.customLogo"}</td>

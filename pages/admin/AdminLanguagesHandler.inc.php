@@ -21,12 +21,14 @@ class AdminLanguagesHandler extends AdminHandler {
 
 	/**
 	 * Display form to modify site language settings.
+	 * @param $args array
+	 * @param $request object
 	 */
-	function languages() {
+	function languages($args, &$request) {
 		$this->validate();
 		$this->setupTemplate(true);
 
-		$site =& Request::getSite();
+		$site =& $request->getSite();
 
 		$templateMgr =& TemplateManager::getManager();
 		$templateMgr->assign('localeNames', Locale::getAllLocales());
@@ -45,15 +47,17 @@ class AdminLanguagesHandler extends AdminHandler {
 
 	/**
 	 * Update language settings.
+	 * @param $args array
+	 * @param $request object
 	 */
-	function saveLanguageSettings() {
+	function saveLanguageSettings($args, &$request) {
 		$this->validate();
 		$this->setupTemplate(true);
 
-		$site =& Request::getSite();
+		$site =& $request->getSite();
 
-		$primaryLocale = Request::getUserVar('primaryLocale');
-		$supportedLocales = Request::getUserVar('supportedLocales');
+		$primaryLocale = $request->getUserVar('primaryLocale');
+		$supportedLocales = $request->getUserVar('supportedLocales');
 
 		if (Locale::isLocaleValid($primaryLocale)) {
 			$site->setPrimaryLocale($primaryLocale);
@@ -75,25 +79,23 @@ class AdminLanguagesHandler extends AdminHandler {
 		$siteDao =& DAORegistry::getDAO('SiteDAO');
 		$siteDao->updateObject($site);
 
-		$templateMgr =& TemplateManager::getManager();
-		$templateMgr->assign(array(
-			'currentUrl' => Request::url('admin', 'languages'),
-			'pageTitle' => 'common.languages',
-			'message' => 'common.changesSaved',
-			'backLink' => Request::url('admin'),
-			'backLinkLabel' => 'admin.siteAdmin'
-		));
-		$templateMgr->display('common/message.tpl');
+		import('notification.NotificationManager');
+		$notificationManager = new NotificationManager();
+		$notificationManager->createTrivialNotification('notification.notification', 'common.changesSaved');
+ 
+		$request->redirect(null, 'index');
 	}
 
 	/**
 	 * Install a new locale.
+	 * @param $args array
+	 * @param $request object
 	 */
-	function installLocale() {
+	function installLocale($args, &$request) {
 		$this->validate();
 
-		$site =& Request::getSite();
-		$installLocale = Request::getUserVar('installLocale');
+		$site =& $request->getSite();
+		$installLocale = $request->getUserVar('installLocale');
 
 		if (isset($installLocale) && is_array($installLocale)) {
 			$installedLocales = $site->getInstalledLocales();
@@ -110,17 +112,19 @@ class AdminLanguagesHandler extends AdminHandler {
 			$siteDao->updateObject($site);
 		}
 
-		Request::redirect('admin', 'languages');
+		$request->redirect('admin', 'languages');
 	}
 
 	/**
 	 * Uninstall a locale
+	 * @param $args array
+	 * @param $request object
 	 */
-	function uninstallLocale() {
+	function uninstallLocale($args, &$request) {
 		$this->validate();
 
-		$site =& Request::getSite();
-		$locale = Request::getUserVar('locale');
+		$site =& $request->getSite();
+		$locale = $request->getUserVar('locale');
 
 		if (isset($locale) && !empty($locale) && $locale != $site->getPrimaryLocale()) {
 			$installedLocales = $site->getInstalledLocales();
@@ -139,23 +143,25 @@ class AdminLanguagesHandler extends AdminHandler {
 			}
 		}
 
-		Request::redirect('admin', 'languages');
+		$request->redirect('admin', 'languages');
 	}
 
-	/*
+	/**
 	 * Reload data for an installed locale.
+	 * @param $args array
+	 * @param $request object
 	 */
-	function reloadLocale() {
+	function reloadLocale($args, &$request) {
 		$this->validate();
 
-		$site =& Request::getSite();
-		$locale = Request::getUserVar('locale');
+		$site =& $request->getSite();
+		$locale = $request->getUserVar('locale');
 
 		if (in_array($locale, $site->getInstalledLocales())) {
 			Locale::reloadLocale($locale);
 		}
 
-		Request::redirect('admin', 'languages');
+		$request->redirect('admin', 'languages');
 	}
 }
 

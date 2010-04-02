@@ -13,7 +13,7 @@
 		<li id="about"><a href="{url page="about"}">{translate key="navigation.about"}</a></li>
 
 		{if $isUserLoggedIn}
-			<li id="home"><a href="{url page="user"}">{translate key="navigation.userHome"}</a></li>
+			<li id="userHome"><a href="{url page="user"}">{translate key="navigation.userHome"}</a></li>
 		{elseif $enableSubmit}
 			<li id="login"><a href="{url page="login"}">{translate key="navigation.login"}</a></li>
 			<li id="register"><a href="{url page="user" op="register"}">{translate key="navigation.register"}</a></li>

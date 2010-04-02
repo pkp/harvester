@@ -35,8 +35,10 @@ class AdminSettingsHandler extends AdminHandler {
 
 	/**
 	 * Validate and save changes to site settings.
+	 * @param $args array
+	 * @param $request object
 	 */
-	function saveSettings() {
+	function saveSettings($args, &$request) {
 		$this->validate();
 		$this->setupTemplate(true);
 
@@ -47,44 +49,35 @@ class AdminSettingsHandler extends AdminHandler {
 
 		$editData = false;
 
-		if (Request::getUserVar('uploadStyleSheet')) {
+		if ($request->getUserVar('uploadStyleSheet')) {
 			if ($settingsForm->uploadStyleSheet('styleSheet')) {
 				$editData = true;
 			} else {
 				$settingsForm->addError('styleSheet', Locale::translate('admin.settings.styleSheet.invalid'));
 			}
-		} elseif (Request::getUserVar('deleteStyleSheet')) {
+		} elseif ($request->getUserVar('deleteStyleSheet')) {
 			$editData = true;
 			$settingsForm->deleteImage('styleSheet');
-		} elseif (Request::getUserVar('uploadCustomLogo')) {
+		} elseif ($request->getUserVar('uploadCustomLogo')) {
 			if ($settingsForm->uploadImage('customLogo')) {
 				$editData = true;
 			} else {
 				$settingsForm->addError('customLogo', Locale::translate('admin.settings.customLogo.invalid'));
 			}
-		} elseif (Request::getUserVar('deleteCustomLogo')) {
+		} elseif ($request->getUserVar('deleteCustomLogo')) {
 			$editData = true;
 			$settingsForm->deleteImage('customLogo');
 		}
 
 		if (!$editData && $settingsForm->validate()) {
 			$settingsForm->execute();
-
-			$templateMgr =& TemplateManager::getManager();
-			$templateMgr->assign(array(
-				'currentUrl' => 'admin/settings',
-				'pageTitle' => 'admin.siteSettings',
-				'message' => 'common.changesSaved',
-				'backLink' => Request::url('admin'),
-				'backLinkLabel' => 'admin.siteAdmin'
-			));
-			$templateMgr->display('common/message.tpl');
-
-		} else {
-			$settingsForm->display();
+			import('notification.NotificationManager');
+			$notificationManager = new NotificationManager();
+			$notificationManager->createTrivialNotification('notification.notification', 'common.changesSaved');
+			$request->redirect(null, 'index');
 		}
+		$settingsForm->display();
 	}
-
 }
 
 ?>
