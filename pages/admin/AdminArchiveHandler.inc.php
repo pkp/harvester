@@ -21,16 +21,18 @@ class AdminArchiveHandler extends AdminHandler {
 
 	/**
 	 * Display a list of the archives hosted on the site.
+	 * @param $args array
+	 * @param $request object
 	 */
-	function archives() {
+	function archives($args, &$request) {
 		$this->validate();
 		$this->setupTemplate();
 
 		$rangeInfo = PKPHandler::getRangeInfo('archives');
 		
-		$sort = Request::getUserVar('sort');
+		$sort = $request->getUserVar('sort');
 		$sort = isset($sort) ? $sort : 'title';
-		$sortDirection = Request::getUserVar('sortDirection');
+		$sortDirection = $request->getUserVar('sortDirection');
 
 		// Load the harvester plugins so we can display names.
 		$plugins =& PluginRegistry::loadCategory('harvesters');
@@ -71,14 +73,16 @@ class AdminArchiveHandler extends AdminHandler {
 
 	/**
 	 * Save changes to a archive's settings.
+	 * @param $args array
+	 * @param $request object
 	 */
-	function updateArchive() {
+	function updateArchive($args, &$request) {
 		$this->validate();
 		$this->setupTemplate();
 
 		import('admin.form.ArchiveForm');
 
-		$archiveId = (int) Request::getUserVar('archiveId');
+		$archiveId = (int) $request->getUserVar('archiveId');
 
 		$archiveForm = new ArchiveForm($archiveId, true);
 		$archiveForm->initData();
@@ -86,20 +90,22 @@ class AdminArchiveHandler extends AdminHandler {
 
 		$dataModified = false;
 
-		if (Request::getUserVar('uploadArchiveImage')) {
+		if ($request->getUserVar('uploadArchiveImage')) {
 			if (!$archiveForm->uploadArchiveImage()) {
 				$archiveForm->addError('archiveImage', Locale::translate('archive.image.profileImageInvalid'));
 			}
 			$dataModified = true;
-		} else if (Request::getUserVar('deleteArchiveImage')) {
+		} else if ($request->getUserVar('deleteArchiveImage')) {
 			$archiveForm->deleteArchiveImage();
 			$dataModified = true;
 		}
 
 		if (!$dataModified && $archiveForm->validate()) {
 			$archiveForm->execute();
-			Request::redirect('admin', 'manage', $archiveId);
-
+			import('notification.NotificationManager');
+			$notificationManager = new NotificationManager();
+			$notificationManager->createTrivialNotification('notification.notification', 'common.changesSaved');
+			$request->redirect(null, 'archives');
 		} else {
 			$this->setupTemplate(true);
 			$archiveForm->display();
@@ -109,8 +115,9 @@ class AdminArchiveHandler extends AdminHandler {
 	/**
 	 * Delete a archive.
 	 * @param $args array first parameter is the ID of the archive to delete
+	 * @param $request object
 	 */
-	function deleteArchive($args) {
+	function deleteArchive($args, &$request) {
 		$this->validate();
 
 		$archiveDao =& DAORegistry::getDAO('ArchiveDAO');
@@ -124,13 +131,15 @@ class AdminArchiveHandler extends AdminHandler {
 			$archiveDao->deleteArchiveById($archiveId);
 		}
 
-		Request::redirect('admin', 'archives', null, array('archivesPage' => Request::getUserVar('archivesPage')));
+		$request->redirect('admin', 'archives', null, array('archivesPage' => $request->getUserVar('archivesPage')));
 	}
 
 	/**
 	 * Manage an archive.
+	 * @param $args array
+	 * @param $request object
 	 */
-	function manage($args) {
+	function manage($args, &$request) {
 		$this->validate();
 		$this->setupTemplate(true);
 
@@ -145,13 +154,15 @@ class AdminArchiveHandler extends AdminHandler {
 				return;
 			}
 		}
-		Request::redirect('admin', 'archives');
+		$request->redirect('admin', 'archives');
 	}
 
 	/**
 	 * Update the metadata index for an archive.
+	 * @param $args array
+	 * @param $request object
 	 */
-	function updateIndex($args) {
+	function updateIndex($args, &$request) {
 		$this->validate();
 		$this->setupTemplate(true);
 
@@ -160,7 +171,7 @@ class AdminArchiveHandler extends AdminHandler {
 		if (isset($args) && isset($args[0])) {
 			$archiveId = (int) $args[0];
 			$archive =& $archiveDao->getArchive($archiveId, false);
-			if (!$archive) Request::redirect('admin', 'archives');
+			if (!$archive) $request->redirect('admin', 'archives');
 
 			// Disable timeout, as this operation may take
 			// a long time.
@@ -169,7 +180,7 @@ class AdminArchiveHandler extends AdminHandler {
 			// Get the harvester for this archive
 			$plugins =& PluginRegistry::loadCategory('harvesters');
 			$pluginName = $archive->getHarvesterPluginName();
-			if (!isset($plugins[$pluginName])) Request::redirect('admin', 'manage', $archive->getArchiveId());
+			if (!isset($plugins[$pluginName])) $request->redirect('admin', 'manage', $archive->getArchiveId());
 			$plugin = $plugins[$pluginName];
 			$params = $plugin->readUpdateParams($archive);
 
@@ -181,7 +192,7 @@ class AdminArchiveHandler extends AdminHandler {
 						'recordCount' => $recordDao->getRecordCount($archiveId)
 					))
 				);
-				$templateMgr->assign('backLink', Request::url('admin', 'archives'));
+				$templateMgr->assign('backLink', $request->url('admin', 'archives'));
 				$templateMgr->assign('backLinkLabel', 'admin.archives');
 				$templateMgr->assign('pageTitle', 'admin.archives.manage.updateIndex');
 				return $templateMgr->display('common/message.tpl');
@@ -191,15 +202,17 @@ class AdminArchiveHandler extends AdminHandler {
 				$templateMgr->assign('archiveId', $archiveId);
 				return $templateMgr->display('admin/updateFailed.tpl');
 			}
-			Request::redirect('admin', 'manage', $archiveId);
+			$request->redirect('admin', 'manage', $archiveId);
 		}
-		Request::redirect('admin', 'archives');
+		$request->redirect('admin', 'archives');
 	}
 
 	/**
 	 * Flush the metadata index for an archive.
+	 * @param $args array
+	 * @param $request object
 	 */
-	function flushIndex($args) {
+	function flushIndex($args, &$request) {
 		$this->validate();
 		$this->setupTemplate(true);
 
@@ -214,9 +227,9 @@ class AdminArchiveHandler extends AdminHandler {
 				$archive->setLastIndexedDate(null);
 				$archive->updateRecordCount();
 			}
-			Request::redirect('admin', 'manage', $archiveId);
+			$request->redirect('admin', 'manage', $archiveId);
 		}
-		Request::redirect('admin', 'archives');
+		$request->redirect('admin', 'archives');
 	}
 
 	/**
