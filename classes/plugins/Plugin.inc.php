@@ -25,22 +25,8 @@ class Plugin extends PKPPlugin {
 		parent::PKPPlugin();
 	}
 
-	function getTemplatePath() {
-		$basePath = dirname(dirname(dirname(__FILE__)));
-		return "file:$basePath/" . $this->getPluginPath() . '/';
-	}
-
 	function getSetting($name) {
-		if (!Config::getVar('general', 'installed')) return null;
-		if (defined('RUNNING_UPGRADE')) {
-			// Bug #2504: Make sure plugin_settings table is not
-			// used if it's not available.
-			$versionDao =& DAORegistry::getDAO('VersionDAO');
-			$version =& $versionDao->getCurrentVersion(null, true);
-			if ($version->compare('2.1.0') < 0) return null;
-		}
-		$pluginSettingsDao =& DAORegistry::getDAO('PluginSettingsDAO');
-		return $pluginSettingsDao->getSetting($this->getName(), $name);
+		return parent::getSetting(array(), $name);
 	}
 
 	/**
@@ -50,43 +36,7 @@ class Plugin extends PKPPlugin {
 	 * @param $type string optional
 	 */
 	function updateSetting($name, $value, $type = null) {
-		$pluginSettingsDao =& DAORegistry::getDAO('PluginSettingsDAO');
-		$pluginSettingsDao->updateSetting($this->getName(), $name, $value, $type);
-	}
-
-	/**
-	 * Callback used to install settings on system install.
-	 * @param $hookName string
-	 * @param $args array
-	 * @return boolean
-	 */
-	function installSiteSettings($hookName, $args) {
-		$installer =& $args[0];
-		$result =& $args[1];
-
-		// Settings are only installed during automated installs. FIXME!
-		if (!$installer->getParam('manualInstall')) {
-			$pluginSettingsDao =& DAORegistry::getDAO('PluginSettingsDAO');
-			$pluginSettingsDao->installSettings($this->getName(), $this->getInstallSitePluginSettingsFile());
-		}
-
-		return false;
-	}
-	
-	/**
-	 * Get the current version of this plugin
-	 * @return object Version
-	 */
-	function getCurrentVersion() {
-		$versionDao =& DAORegistry::getDAO('VersionDAO'); 
-		$product = basename($this->getPluginPath());
-		$installedPlugin = $versionDao->getCurrentVersion($product);
-		
-		if ($installedPlugin) {
-			return $installedPlugin;
-		} else {
-			return false;
-		}
+		parent::updateSetting(array(), $name, $value, $type);
 	}
 }
 
