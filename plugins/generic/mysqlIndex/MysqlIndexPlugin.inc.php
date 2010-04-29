@@ -20,7 +20,7 @@ import('classes.plugins.GenericPlugin');
 class MysqlIndexPlugin extends GenericPlugin {
 	/** @var $index object */
 	var $index;
-	 
+
 	/**
 	 * Register the plugin, if enabled
 	 * @param $category string
@@ -29,7 +29,6 @@ class MysqlIndexPlugin extends GenericPlugin {
 	 */
 	function register($category, $path) {
 		if (parent::register($category, $path)) {
-			$this->addLocaleData();
 			// HookRegistry::register('Installer::postInstall',array(&$this, 'postInstallCallback'));
 			if ($this->getEnabled()) {
 				$this->addHelpData();
@@ -77,14 +76,6 @@ class MysqlIndexPlugin extends GenericPlugin {
 	}
 
 	/**
-	 * Get the symbolic name of this plugin
-	 * @return string
-	 */
-	function getName() {
-		return 'MysqlIndexPlugin';
-	}
-
-	/**
 	 * Get the display name of this plugin
 	 * @return string
 	 */
@@ -101,14 +92,6 @@ class MysqlIndexPlugin extends GenericPlugin {
 	}
 
 	/**
-	 * Check whether or not this plugin is enabled
-	 * @return boolean
-	 */
-	function getEnabled() {
-		return $this->getSetting('enabled');
-	}
-
-	/**
 	 * Get a list of available management verbs for this plugin
 	 * @return array
 	 */
@@ -116,11 +99,8 @@ class MysqlIndexPlugin extends GenericPlugin {
 		$verbs = array();
 		if ($this->getEnabled()) {
 			$verbs[] = array('adminCrosswalks', Locale::translate('plugins.generic.mysqlIndex.crosswalks'));
-			$verbs[] = array('disable', Locale::translate('manager.plugins.disable'));
-		} else {
-			$verbs[] = array('enable', Locale::translate('manager.plugins.enable'));
 		}
-		return $verbs;
+		return parent::getManagementVerbs($verbs);
 	}
 
  	/*
@@ -131,20 +111,16 @@ class MysqlIndexPlugin extends GenericPlugin {
  	 * @return boolean
  	 */
 	function manage($verb, $args, &$message) {
+		if (!parent::manage($verb, $args, $message)) return false;
 		switch ($verb) {
-			case 'enable':
-				$this->updateSetting('enabled', true);
-				$message = Locale::translate('plugins.generic.mysqlIndex.enabled');
-				break;
-			case 'disable':
-				$this->updateSetting('enabled', false);
-				$message = Locale::translate('plugins.generic.mysqlIndex.disabled');
-				break;
 			case 'adminCrosswalks':
 				Request::redirect('mysqlIndexAdmin', 'adminCrosswalks');
-				break;
+				return false;
+			default:
+				// Unknown management verb
+				assert(false);
+				return false;
 		}
-		return false;
 	}
 
 	/**
@@ -242,19 +218,6 @@ class MysqlIndexPlugin extends GenericPlugin {
 
 		return false;
 	}
-
-/*	function postInstallCallback($hookName, $args) {
-		// Include Zend Framework in include path
-		ini_set('include_path', BASE_SYS_DIR . '/lib/pkp/lib/ZendFramework/library' . ENV_SEPARATOR . ini_get('include_path'));
-		require_once('lib/pkp/lib/ZendFramework/library/Zend/Search/Lucene.php');
-
-		// If the indexes do not exist, create them.
-		$indexPath = $this->getIndexPath();
-		if (!file_exists($indexPath)) {
-			$index = Zend_Search_Lucene::create($indexPath);
-		}
-		return false;
-	}*/
 
 	/**
 	 * Flush the entire index prior to rebuilding it.

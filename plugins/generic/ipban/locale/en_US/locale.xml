@@ -15,7 +15,4 @@
 <locale name="en_US" full_name="U.S. English">
 	<message key="plugins.generic.ipban.name">IP Banning Plugin</message>
 	<message key="plugins.generic.ipban.description">This plugin allows the administrator to list IP addresses in plugins/generic/ipban/ips.txt from which requests can be denied.</message>
-	<message key="plugins.generic.ipban.enabled">The IP Banning Plugin has been enabled.</message>
-	<message key="plugins.generic.ipban.disabled">The IP Banning Plugin has been disabled.</message>
-
 </locale>

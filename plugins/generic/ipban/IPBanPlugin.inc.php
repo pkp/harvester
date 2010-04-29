@@ -20,16 +20,13 @@ import('plugins.GenericPlugin');
 
 class IPBanPlugin extends GenericPlugin {
 	/**
-	 * Register the plugin.
+	 * @see PKPPlugin::register()
 	 */
 	function register($category, $path) {
 		if (!Config::getVar('general', 'installed')) return false;
 		$success = parent::register($category, $path);
-		$this->addLocaleData();
 		if ($success) {
-			if ($this->isEnabled()) {
-				HookRegistry::register('LoadHandler', array(&$this, '_loadHandlerCallback'));
-			}
+			HookRegistry::register('LoadHandler', array(&$this, '_loadHandlerCallback'));
 		}
 		return $success;
 	}
@@ -42,10 +39,6 @@ class IPBanPlugin extends GenericPlugin {
 		@$ips = array_map('rtrim',file(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'ips.txt'));
 		if (is_array($ips) && in_array(Request::getRemoteAddr(), $ips)) exit();
 		return false;
-	}
-
-	function getName() {
-		return 'IPBanPlugin';
 	}
 
 	/**
@@ -61,39 +54,6 @@ class IPBanPlugin extends GenericPlugin {
 	 */
 	function getDescription() {
 		return Locale::translate('plugins.generic.ipban.description');
-	}
-
-	function getManagementVerbs() {
-		if ($this->isEnabled()) return array(
-			array('disable', Locale::translate('common.disable'))
-		);
-		else return array(
-			array('enable', Locale::translate('common.enable'))
-		);
-	}
-
- 	/*
- 	 * Execute a management verb on this plugin
- 	 * @param $verb string
- 	 * @param $args array
-	 * @param $message string Location for the plugin to put a result msg
- 	 * @return boolean
- 	 */
-	function manage($verb, $args, &$message) {
-		switch ($verb) {
-			case 'enable':
-				$this->updateSetting('enabled', true);
-				$message = Locale::translate('plugins.generic.ipban.enabled');
-				break;
-			case 'disable':
-				$this->updateSetting('enabled', false);
-				$message = Locale::translate('plugins.generic.ipban.disabled');
-				break;
-		}
-	}
-
-	function isEnabled() {
-		return $this->getSetting('enabled');
 	}
 }
 

@@ -12,8 +12,6 @@
  * @brief Abstract class for plugins
  */
 
-// $Id$
-
 
 import('plugins.PKPPlugin');
 
@@ -25,18 +23,30 @@ class Plugin extends PKPPlugin {
 		parent::PKPPlugin();
 	}
 
+	/**
+	 * Backwards compatible convenience version of
+	 * the generic getContextSpecificSetting() method.
+	 *
+	 * @see PKPPlugin::getContextSpecificSetting()
+	 *
+	 * @param $name
+	 */
 	function getSetting($name) {
-		return parent::getSetting(array(), $name);
+		return $this->getContextSpecificSetting(array(), $name);
 	}
 
 	/**
-	 * Update a plugin setting.
+	 * Backwards compatible convenience version of
+	 * the generic updateContextSpecificSetting() method.
+	 *
+	 * @see PKPPlugin::updateContextSpecificSetting()
+	 *
 	 * @param $name string The name of the setting
 	 * @param $value mixed
 	 * @param $type string optional
 	 */
 	function updateSetting($name, $value, $type = null) {
-		parent::updateSetting(array(), $name, $value, $type);
+		$this->updateContextSpecificSetting(array(), $name, $value, $type);
 	}
 }
 

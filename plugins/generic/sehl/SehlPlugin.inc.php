@@ -24,9 +24,7 @@ class SehlPlugin extends GenericPlugin {
 	function register($category, $path) {
 		if (parent::register($category, $path)) {
 			if (!Config::getVar('general', 'installed')) return false;
-			$isEnabled = $this->getEnabled();
 
-			$this->addLocaleData();
 			HookRegistry::register('SchemaPlugin::displayRecordSummary',array(&$this, 'displayTemplateCallback'));
 			HookRegistry::register('SchemaPlugin::displayRecord',array(&$this, 'displayTemplateCallback'));
 
@@ -140,49 +138,12 @@ class SehlPlugin extends GenericPlugin {
 		return ($output);
 	}
 
-	function getName() {
-		return 'SehlPlugin';
-	}
-
 	function getDisplayName() {
 		return Locale::translate('plugins.generic.sehl.name');
 	}
 
 	function getDescription() {
 		return Locale::translate('plugins.generic.sehl.description');
-	}
-
-	function getEnabled() {
-		return $this->getSetting('enabled');
-	}
-
-	function getManagementVerbs() {
-		return array(array(
-			($this->getEnabled()?'disable':'enable'),
-			Locale::translate($this->getEnabled()?'manager.plugins.disable':'manager.plugins.enable')
-		));
-	}
-
- 	/*
- 	 * Execute a management verb on this plugin
- 	 * @param $verb string
- 	 * @param $args array
-	 * @param $message string Location for the plugin to put a result msg
- 	 * @return boolean
- 	 */
-	function manage($verb, $args, &$message) {
-		switch ($verb) {
-			case 'enable':
-				$this->updateSetting('enabled', true);
-				$message = Locale::translate('plugins.generic.sehl.enabled');
-				break;
-			case 'disable':
-				$this->updateSetting('enabled', false);
-				$message = Locale::translate('plugins.generic.sehl.disabled');
-				break;
-		}
-		
-		return false;
 	}
 }
 

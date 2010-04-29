@@ -38,8 +38,7 @@ class PKPDublinCorePlugin extends GenericPlugin {
 		if (!Config::getVar('general', 'installed')) return false;
 		$success = parent::register($category, $path);
 		if ($success) {
-			$this->addLocaleData();
-			if ($this->isEnabled()) {
+			if ($this->getEnabled()) {
 				HookRegistry::register('DublinCorePlugin::getFieldList', array(&$this, '_getFieldListCallback'));
 				HookRegistry::register('DublinCorePlugin::getFieldType', array(&$this, '_getFieldTypeCallback'));
 				HookRegistry::register('Harvester::insertEntry', array(&$this, '_insertEntryCallback'));
@@ -202,10 +201,6 @@ class PKPDublinCorePlugin extends GenericPlugin {
 		}
 	}
 
-	function getName() {
-		return 'PKPDublinCorePlugin';
-	}
-
 	/**
 	 * Get the display name of this plugin's protocol.
 	 * @return String
@@ -219,40 +214,6 @@ class PKPDublinCorePlugin extends GenericPlugin {
 	 */
 	function getDescription() {
 		return Locale::translate('plugins.generic.pkpdc.description');
-	}
-
-	function getManagementVerbs() {
-		if ($this->isEnabled()) return array(
-			array('disable', Locale::translate('common.disable'))
-		);
-		else return array(
-			array('enable', Locale::translate('common.enable'))
-		);
-	}
-
- 	/*
- 	 * Execute a management verb on this plugin
- 	 * @param $verb string
- 	 * @param $args array
-	 * @param $message string Location for the plugin to put a result msg
- 	 * @return boolean
- 	 */
-	function manage($verb, $args, &$message) {
-		switch ($verb) {
-			case 'enable':
-				$this->updateSetting('enabled', true);
-				$message = Locale::translate('plugins.generic.pkpdc.enabled');
-				break;
-			case 'disable':
-				$this->updateSetting('enabled', false);
-				$message = Locale::translate('plugins.generic.pkpdc.enabled');
-				break;
-		}
-		
-	}
-
-	function isEnabled() {
-		return $this->getSetting(null, 'enabled');
 	}
 }
 

@@ -42,6 +42,4 @@
 	<message key="plugins.generic.zendSearch.formElement.type.date.recalculateRange">Recalculate Range</message>
 	<message key="plugins.generic.zendSearch.formElement.type.select.recalculateOptions">Recalculate Field Options</message>
 	<message key="plugins.generic.zendSearch.formElement.includeFields">Include Fields</message>
-	<message key="plugins.generic.zendSearch.enabled">The ZEND Framework Search Plugin has been enabled.</message>
-	<message key="plugins.generic.zendSearch.disabled">The ZEND Framework Search Plugin has been disabled.</message>
 </locale>

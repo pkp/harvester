@@ -20,8 +20,6 @@
 	<message key="plugins.generic.pkpdc.archive.form.pkpDcHandling.disable">Non-OJS / Disable</message>
 	<message key="plugins.generic.pkpdc.archive.form.pkpDcHandling.1x">OJS 1.x</message>
 	<message key="plugins.generic.pkpdc.archive.form.pkpDcHandling.2x">OJS 2.x</message>
-	<message key="plugins.generic.pkpdc.enabled">The PKP Dublin Core Extender Plugin has been enabled.</message>
-	<message key="plugins.generic.pkpdc.disabled">The PKP Dublin Core Extender Plugin has been disabled.</message>
 
 	<message key="plugins.schemas.dc.fields.discipline.name">Discipline</message>
 	<message key="plugins.schemas.dc.fields.discipline.description">(OJS Extension) Academic discipline and sub-disciplines</message>

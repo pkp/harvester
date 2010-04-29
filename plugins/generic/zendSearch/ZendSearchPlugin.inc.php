@@ -32,7 +32,6 @@ class ZendSearchPlugin extends GenericPlugin {
 	 */
 	function register($category, $path) {
 		if (parent::register($category, $path)) {
-			$this->addLocaleData();
 			HookRegistry::register('Installer::postInstall',array(&$this, 'postInstallCallback'));
 			if ($this->getEnabled()) {
 				$this->addHelpData();
@@ -88,14 +87,6 @@ class ZendSearchPlugin extends GenericPlugin {
 	}
 
 	/**
-	 * Get the symbolic name of this plugin
-	 * @return string
-	 */
-	function getName() {
-		return 'ZendSearchPlugin';
-	}
-
-	/**
 	 * Get the display name of this plugin
 	 * @return string
 	 */
@@ -112,14 +103,6 @@ class ZendSearchPlugin extends GenericPlugin {
 	}
 
 	/**
-	 * Check whether or not this plugin is enabled
-	 * @return boolean
-	 */
-	function getEnabled() {
-		return $this->getSetting('enabled');
-	}
-
-	/**
 	 * Get a list of available management verbs for this plugin
 	 * @return array
 	 */
@@ -128,11 +111,8 @@ class ZendSearchPlugin extends GenericPlugin {
 		if ($this->getEnabled()) {
 			$verbs[] = array('adminSearchForm', Locale::translate('plugins.generic.zendSearch.searchForm'));
 			$verbs[] = array('adminSettings', Locale::translate('plugins.generic.zendSearch.settings'));
-			$verbs[] = array('disable', Locale::translate('manager.plugins.disable'));
-		} else {
-			$verbs[] = array('enable', Locale::translate('manager.plugins.enable'));
 		}
-		return $verbs;
+		return parent::getManagementVerbs($verbs);
 	}
 
  	/*
@@ -143,31 +123,26 @@ class ZendSearchPlugin extends GenericPlugin {
  	 * @return boolean
  	 */
 	function manage($verb, $args, &$message) {
+		if (!parent::manage($verb, $args, $message) && $verb != 'enable') return false;
 		switch ($verb) {
 			case 'enable':
-				if (checkPhpVersion('5.0.0')) {
-					$this->updateSetting('enabled', true);
-					$message = Locale::translate('plugins.generic.zendSearch.enabled');
-				} else {
-					$this->updateSetting('enabled', true);
-					$message = Locale::translate('plugins.generic.zendSearch.enabled');
+				if (!checkPhpVersion('5.0.0')) {
 					if (!$this->isUsingSolr()) {
 						Request::redirect('zendSearchAdmin', 'settings');
 					}
 				}
-				break;
-			case 'disable':
-				$this->updateSetting('enabled', false);
-				$message = Locale::translate('plugins.generic.zendSearch.disabled');
-				break;
+				return false;
 			case 'adminSearchForm':
 				Request::redirect('zendSearchAdmin', 'index');
-				break;
+				return false;
 			case 'adminSettings':
 				Request::redirect('zendSearchAdmin', 'settings');
-				break;
+				return false;
+			default:
+				// Unknown management verb
+				assert(false);
+				return false;
 		}
-		return false;
 	}
 
 	/**
@@ -435,8 +410,8 @@ class ZendSearchPlugin extends GenericPlugin {
 	function postInstallCallback($hookName, $args) {
 		// Include Zend Framework in include path
 		ini_set('include_path', BASE_SYS_DIR . '/lib/pkp/lib/ZendFramework/library' . ENV_SEPARATOR . ini_get('include_path'));
-		if(checkPhpVersion('5.0.0')) { 
-			require_once('lib/pkp/lib/ZendFramework/library/Zend/Search/Lucene.php'); 
+		if(checkPhpVersion('5.0.0')) {
+			require_once('lib/pkp/lib/ZendFramework/library/Zend/Search/Lucene.php');
 			// If the indexes do not exist, create them.
 			$indexPath = $this->getIndexPath();
 			if (!file_exists($indexPath)) {
@@ -444,10 +419,10 @@ class ZendSearchPlugin extends GenericPlugin {
 			}
 		} else {
 			// Disable plugin until user sets a SOLR URL
-			$this->updateSetting('enabled', false);
+			$this->setEnabled(false);
 		}
 
-	
+
 		return false;
 	}
 
