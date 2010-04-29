@@ -17,4 +17,11 @@
 	<sql>
 		<query>UPDATE user_settings SET assoc_id = 0, assoc_type = 0</query>
 	</sql>
+	<!-- Bug #5268: Performance optimization: lazy load for plug-ins -->
+	<sql>
+		<query>UPDATE versions SET lazy_load = 0, product_class_name = '' WHERE product_type = 'core'</query>
+	</sql>
+	<sql>
+		<query>DELETE FROM versions WHERE product_type = 'plugins.generic' AND product = 'jquery'</query>
+	</sql>
 </data>

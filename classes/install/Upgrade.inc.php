@@ -22,7 +22,7 @@ class Upgrade extends Installer {
 	 * Constructor.
 	 * @param $params array installer parameters
 	 * @param $descriptor string descriptor path
-	 * @param $isPlugin boolean true iff a plugin is being installed	
+	 * @param $isPlugin boolean true iff a plugin is being installed
 	 */
 	function Upgrade($params, $installFile = 'upgrade.xml', $isPlugin = false) {
 		parent::Installer($installFile, $params, $isPlugin);
@@ -71,13 +71,13 @@ class Upgrade extends Installer {
 		$schemaAliasDao->installSchemaAliases();
 		return true;
 	}
-	
+
 	/**
 	 * For 2.3 upgrade:  Add initial plugin data to versions table
 	 * @return boolean
 	 */
 	function addPluginVersions() {
-		$versionDao =& DAORegistry::getDAO('VersionDAO'); 
+		$versionDao =& DAORegistry::getDAO('VersionDAO');
 		import('site.VersionCheck');
 		$categories = PluginRegistry::getCategories();
 		foreach ($categories as $category) {
@@ -85,24 +85,17 @@ class Upgrade extends Installer {
 			$plugins = PluginRegistry::getPlugins($category);
 			foreach ($plugins as $plugin) {
 				$versionFile = $plugin->getPluginPath() . '/version.xml';
-				
+
 				if (FileManager::fileExists($versionFile)) {
 					$versionInfo =& VersionCheck::parseVersionXML($versionFile);
-					$pluginVersion = $versionInfo['version'];		
-					$pluginVersion->setCurrent(1);
-					$versionDao->insertVersion($pluginVersion);
+					$pluginVersion = $versionInfo['version'];
 				}  else {
-					$pluginVersion = new Version();
-					$pluginVersion->setMajor(1);
-					$pluginVersion->setMinor(0);
-					$pluginVersion->setRevision(0);
-					$pluginVersion->setBuild(0);
-					$pluginVersion->setDateInstalled(Core::getCurrentDate());
-					$pluginVersion->setCurrent(1);
-					$pluginVersion->setProductType('plugins.' . $category);
-					$pluginVersion->setProduct(basename($plugin->getPluginPath()));
-					$versionDao->insertVersion($pluginVersion);
+					$pluginVersion = new Version(
+						1, 0, 0, 0, Core::getCurrentDate(), 1,
+						'plugins.'.$category, basename($plugin->getPluginPath()), '', 0
+					);
 				}
+				$versionDao->insertVersion($pluginVersion, true);
 			}
 		}
 	}
