@@ -18,11 +18,9 @@ Harvester release:
     docs/release-notes/README-<VERSION>
 
 
-3. Generate CVS ChangeLog for the release:
+3. Generate ChangeLog for the release:
 
-    perl lib/pkp/classes/cliTool/cvs2cl.pl --delta <OLD-TAG>:<CURRENT-TAG> -f \
-        docs/release-notes/ChangeLog-<VERSION>
-
+    see e.g. http://github.com/jwiegley/git-scripts/blob/master/git-changelog
 
 4. Copy the current changelog and release notes to docs/:
 
@@ -30,11 +28,14 @@ Harvester release:
     cp docs/release-notes/README-<VERSION> docs/RELEASE
 
 
-5. After committing any pending modifications, tag the release in CVS (both the
+5. After committing any pending modifications, tag the release in git (both the
 Harvester codebase and the PKP library to be distributed with it):
 
-    cvs rtag harvester-<MAJOR>_<MINOR>_<REVISION>-<BUILD> harvester2
-    cvs rtag harvester-<MAJOR>_<MINOR>_<REVISION>-<BUILD> pkp
+	cd lib/pkp
+    git tag harvester-<MAJOR>_<MINOR>_<REVISION>-<BUILD>
+    cd ../..
+    git tag harvester-<MAJOR>_<MINOR>_<REVISION>-<BUILD>
+    git push --tags
 
 
 6. Build the Harvester package and patch files:
