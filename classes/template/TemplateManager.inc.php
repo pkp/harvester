@@ -24,9 +24,17 @@ class TemplateManager extends PKPTemplateManager {
 	/**
 	 * Constructor.
 	 * Initialize template engine and assign basic template variables.
+	 * @param $request PKPRequest FIXME: is optional for backwards compatibility only - make mandatory
 	 */
-	function TemplateManager() {
-		parent::PKPTemplateManager();
+	function TemplateManager($request = null) {
+		// FIXME: for backwards compatibility only - remove
+		if (!isset($request)) {
+			if (Config::getVar('debug', 'deprecation_warnings')) trigger_error('Deprecated function call.');
+			$request =& Registry::get('request');
+		}
+		assert(is_a($request, 'PKPRequest'));
+
+		parent::PKPTemplateManager($request);
 
 		if (!defined('SESSION_DISABLE_INIT')) {
 			/**
@@ -35,9 +43,9 @@ class TemplateManager extends PKPTemplateManager {
 			 * installer pages).
 			 */
 
-			$site =& Request::getSite();
+			$site =& $request->getSite();
 
-			$siteFilesDir = Request::getBaseUrl() . '/' . PublicFileManager::getSiteFilesPath();
+			$siteFilesDir = $request->getBaseUrl() . '/' . PublicFileManager::getSiteFilesPath();
 			$this->assign('sitePublicFilesDir', $siteFilesDir);
 			$this->assign('publicFilesDir', $siteFilesDir);
 			$this->assign('isAdmin', Validation::isSiteAdmin());
@@ -46,7 +54,7 @@ class TemplateManager extends PKPTemplateManager {
 			$this->assign('homeContext', array());
 
 			$siteStyleFilename = PublicFileManager::getSiteFilesPath() . '/' . $site->getSiteStyleFilename();
-			if (file_exists($siteStyleFilename)) $this->addStyleSheet(Request::getBaseUrl() . '/' . $siteStyleFilename);
+			if (file_exists($siteStyleFilename)) $this->addStyleSheet($request->getBaseUrl() . '/' . $siteStyleFilename);
 
 			// Load and apply theme plugin, if chosen
 			$themePluginPath = $site->getSetting('theme');
@@ -66,6 +74,10 @@ class TemplateManager extends PKPTemplateManager {
 
 			$this->assign('siteTitle', $site->getLocalizedTitle());
 			$this->assign('enableSubmit', $site->getSetting('enableSubmit'));
+
+			// Add java script for notifications
+			$user =& $request->getUser();
+			if ($user) $this->addJavaScript('lib/pkp/js/jquery.pnotify.js');
 		}
 	}
 
