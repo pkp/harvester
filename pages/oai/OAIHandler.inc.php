@@ -9,7 +9,7 @@
  * @class OAIHandler
  * @ingroup pages_oai
  *
- * @brief Handle OAI protocol requests. 
+ * @brief Handle OAI protocol requests.
  */
 
 // $Id$
@@ -23,7 +23,7 @@ import('handler.Handler');
 class OAIHandler extends Handler {
 	function index() {
 		$this->validate();
-		PluginRegistry::loadCategory('schemas', true);
+		PluginRegistry::loadCategory('schemas');
 
 		$oai = new ArchiveOAI(new OAIConfig(Request::getRequestUrl(), Config::getVar('oai', 'repository_id')));
 		$oai->execute();

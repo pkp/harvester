@@ -39,7 +39,7 @@ class LayoutForm extends Form {
 	/**
 	 * Read user input.
 	 */
-	function readInputData() {		
+	function readInputData() {
 		$this->readUserVars(array('theme'));
 	}
 
@@ -49,7 +49,7 @@ class LayoutForm extends Form {
 	function display() {
 		$site =& Request::getSite();
 
-		$allThemes =& PluginRegistry::loadCategory('themes', true);
+		$allThemes =& PluginRegistry::loadCategory('themes');
 		$siteThemes = array();
 		foreach ($allThemes as $key => $junk) {
 			$plugin =& $allThemes[$key]; // by ref

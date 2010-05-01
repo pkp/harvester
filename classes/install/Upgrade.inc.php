@@ -81,7 +81,7 @@ class Upgrade extends Installer {
 		import('site.VersionCheck');
 		$categories = PluginRegistry::getCategories();
 		foreach ($categories as $category) {
-			PluginRegistry::loadCategory($category, true);
+			PluginRegistry::loadCategory($category);
 			$plugins = PluginRegistry::getPlugins($category);
 			foreach ($plugins as $plugin) {
 				$versionFile = $plugin->getPluginPath() . '/version.xml';

@@ -108,7 +108,7 @@ class SiteSettingsForm extends PKPSiteSettingsForm {
 		$site =& Request::getSite();
 		$templateMgr =& TemplateManager::getManager();
 		$templateMgr->assign('customLogo', $site->getSetting('customLogo'));
-		$allThemes =& PluginRegistry::loadCategory('themes', true);
+		$allThemes =& PluginRegistry::loadCategory('themes');
 		$themes = array();
 		foreach ($allThemes as $key => $junk) {
 			$plugin =& $allThemes[$key]; // by ref
@@ -136,7 +136,7 @@ class SiteSettingsForm extends PKPSiteSettingsForm {
 			}
 
 			$uploadName = $settingName . '.css';
-			if($fileManager->uploadSiteFile($settingName, $uploadName)) {			
+			if($fileManager->uploadSiteFile($settingName, $uploadName)) {
 				$value = array(
 					'name' => $fileManager->getUploadedFileName($settingName),
 					'uploadName' => $uploadName,
