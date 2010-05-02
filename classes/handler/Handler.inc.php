@@ -14,7 +14,6 @@
 
 
 import('handler.PKPHandler');
-import('handler.validation.HandlerValidatorRoles');
 
 class Handler extends PKPHandler {
 	function Handler() {
