@@ -16,7 +16,7 @@
 // $Id$
 
 
-import('core.ArrayItemIterator');
+import('lib.pkp.classes.core.ArrayItemIterator');
 
 class ZendSearchResultIterator extends ArrayItemIterator {
 	/* @var $recordDao object */

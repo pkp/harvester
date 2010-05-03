@@ -16,8 +16,8 @@
 
 // $Id$
 
-import('rt.harvester2.RTDAO');
-import('handler.Handler');
+import('classes.rt.harvester2.RTDAO');
+import('classes.handler.Handler');
 
 class RTHandler extends Handler {
 	/** archive associated with this request **/

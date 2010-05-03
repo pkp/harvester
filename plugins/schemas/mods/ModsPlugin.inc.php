@@ -14,7 +14,7 @@
  * $Id$
  */
 
-import('plugins.SchemaPlugin');
+import('classes.plugins.SchemaPlugin');
 
 class ModsPlugin extends SchemaPlugin {
 	/**

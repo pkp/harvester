@@ -31,7 +31,7 @@ class ArchiveSettingsDAO extends DAO {
 			$settingCache = array();
 		}
 		if (!isset($settingCache[$archiveId])) {
-			import('cache.CacheManager');
+			import('lib.pkp.classes.cache.CacheManager');
 			$cacheManager =& CacheManager::getManager();
 			$settingCache[$archiveId] = $cacheManager->getCache(
 				'archiveSettings', $archiveId,

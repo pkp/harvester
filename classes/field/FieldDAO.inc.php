@@ -17,7 +17,7 @@
 // $Id$
 
 
-import ('field.Field');
+import ('classes.field.Field');
 
 class FieldDAO extends DAO {
 	/** @var $cachingEnabled boolean */

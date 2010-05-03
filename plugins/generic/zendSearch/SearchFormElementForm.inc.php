@@ -16,7 +16,7 @@
 // $Id$
 
 
-import('form.Form');
+import('lib.pkp.classes.form.Form');
 
 class SearchFormElementForm extends Form {
 	/** @var searchFormElementId int the ID of the form element being edited */
@@ -182,7 +182,7 @@ class SearchFormElementForm extends Form {
 			$recordDao =& DAORegistry::getDAO('RecordDAO');
 			$archives =& $archiveDao->getArchives();
 			while ($archive =& $archives->next()) {
-				import('sortOrder.SortOrderDAO');
+				import('classes.sortOrder.SortOrderDAO');
 				$schemaPluginName = $archive->getSchemaPluginName();
 				if (isset($fields[$schemaPluginName])) {
 					$schemaFields =& $fields[$schemaPluginName];
@@ -209,7 +209,7 @@ class SearchFormElementForm extends Form {
 			$recordDao =& DAORegistry::getDAO('RecordDAO');
 			$archives =& $archiveDao->getArchives();
 			while ($archive =& $archives->next()) {
-				import('sortOrder.SortOrderDAO');
+				import('classes.sortOrder.SortOrderDAO');
 				$schemaPluginName = $archive->getSchemaPluginName();
 				if (isset($fields[$schemaPluginName])) {
 					$schemaFields =& $fields[$schemaPluginName];

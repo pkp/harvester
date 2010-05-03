@@ -14,7 +14,7 @@
  * $Id$
  */
 
-import('mail.PKPMailTemplate');
+import('lib.pkp.classes.mail.PKPMailTemplate');
 
 class MailTemplate extends PKPMailTemplate {
 	/**

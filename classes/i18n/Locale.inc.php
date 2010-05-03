@@ -16,7 +16,7 @@
 // $Id$
 
 
-import('i18n.PKPLocale');
+import('lib.pkp.classes.i18n.PKPLocale');
 
 define('LOCALE_COMPONENT_APPLICATION_COMMON',	0x00000101);
 

@@ -61,7 +61,7 @@ class EmailHandler extends UserHandler {
 			}
 		}
 
-		import('mail.MailTemplate');
+		import('classes.mail.MailTemplate');
 		$email = new MailTemplate($template);
 
 		if (Request::getUserVar('send') && !$email->hasErrors()) {

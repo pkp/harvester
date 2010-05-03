@@ -20,7 +20,7 @@ switch ($op) {
 	case 'settings':
 	case 'saveSettings':
 		define('HANDLER_CLASS', 'RTSetupHandler');	
-		import('pages.rtadmin.RTSetupHandler');
+		import('lib.pkp.pages.rtadmin.RTSetupHandler');
 		break;
 	//
 	// Versions

@@ -14,8 +14,8 @@
  * $Id$
  */
 
-import('rt.RTAdmin');
-import('rt.harvester2.RTDAO');
+import('lib.pkp.classes.rt.RTAdmin');
+import('classes.rt.harvester2.RTDAO');
 
 define('RT_DIRECTORY', 'rt');
 
@@ -34,7 +34,7 @@ class HarvesterRTAdmin extends RTAdmin {
 	}
 
 	function restoreVersions($deleteBeforeLoad = true) {
-		import('rt.RTXMLParser');
+		import('lib.pkp.classes.rt.RTXMLParser');
 		$parser = new RTXMLParser();
 
 		if ($deleteBeforeLoad) $this->dao->deleteVersionsByArchiveId($this->archiveId);
@@ -46,7 +46,7 @@ class HarvesterRTAdmin extends RTAdmin {
 	}
 
 	function importVersion($filename) {
-		import ('rt.RTXMLParser');
+		import ('lib.pkp.classes.rt.RTXMLParser');
 		$parser = new RTXMLParser();
 
 		$version =& $parser->parse($filename);

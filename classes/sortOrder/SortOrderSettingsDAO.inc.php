@@ -22,7 +22,7 @@ class SortOrderSettingsDAO extends DAO {
 			$settingCache = array();
 		}
 		if (!isset($settingCache[$sortOrderId])) {
-			import('cache.CacheManager');
+			import('lib.pkp.classes.cache.CacheManager');
 			$cacheManager =& CacheManager::getManager();
 			$settingCache[$sortOrderId] = $cacheManager->getCache(
 				'sortOrderSettings', $sortOrderId,

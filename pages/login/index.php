@@ -30,7 +30,7 @@ switch ($op) {
 	case 'changePassword':
 	case 'savePassword':
 		define('HANDLER_CLASS', 'PKPLoginHandler');
-		import('pages.login.PKPLoginHandler');
+		import('lib.pkp.pages.login.PKPLoginHandler');
 		break;
 }
 

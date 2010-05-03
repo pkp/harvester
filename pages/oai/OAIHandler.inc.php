@@ -17,8 +17,8 @@
 
 define('SESSION_DISABLE_INIT', 1); // FIXME?
 
-import('oai.harvester.ArchiveOAI');
-import('handler.Handler');
+import('classes.oai.harvester.ArchiveOAI');
+import('classes.handler.Handler');
 
 class OAIHandler extends Handler {
 	function index() {

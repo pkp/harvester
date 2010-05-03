@@ -14,7 +14,7 @@
  * $Id$
  */
 
-import('plugins.HarvesterPlugin');
+import('classes.plugins.HarvesterPlugin');
 
 define('OAI_INDEX_METHOD_LIST_RECORDS', 0x00001);
 define('OAI_INDEX_METHOD_LIST_IDENTIFIERS', 0x00002);
@@ -218,7 +218,7 @@ class OAIHarvesterPlugin extends HarvesterPlugin {
 				$oaiHarvester = new OAIHarvester($archive);
 				$metadata = $oaiHarvester->getMetadata($harvesterUrl, Request::getUserVar('isStatic'));
 
-				import('admin.form.ArchiveForm');
+				import('classes.admin.form.ArchiveForm');
 				$archiveForm = new ArchiveForm($archiveId);
 				$archiveForm->initData();
 				$archiveForm->readInputData();

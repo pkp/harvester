@@ -16,7 +16,7 @@
 // $Id$
 
 
-import('rt.harvester2.HarvesterRTAdmin');
+import('classes.rt.harvester2.HarvesterRTAdmin');
 import('pages.rtadmin.RTAdminHandler');
 
 class RTSearchHandler extends RTAdminHandler {
@@ -33,7 +33,7 @@ class RTSearchHandler extends RTAdminHandler {
 		$version =& $rtDao->getVersion($versionId, $archiveId);
 		$context =& $rtDao->getContext($contextId);
 
-		import('rt.harvester2.form.SearchForm');
+		import('classes.rt.harvester2.form.SearchForm');
 		$searchForm = new SearchForm(null, $contextId, $versionId, $archiveId);
 
 		if ($save === 'save') {
@@ -67,7 +67,7 @@ class RTSearchHandler extends RTAdminHandler {
 			$templateMgr->assign('archiveId', $archiveId);
 			$templateMgr->assign_by_ref('version', $version);
 			$templateMgr->assign_by_ref('context', $context);
-			import('core.ArrayItemIterator');
+			import('lib.pkp.classes.core.ArrayItemIterator');
 			$templateMgr->assign_by_ref('searches', new ArrayItemIterator($context->getSearches(), $rangeInfo->getPage(), $rangeInfo->getCount()));
 
 			$templateMgr->display('rtadmin/searches.tpl');
@@ -90,7 +90,7 @@ class RTSearchHandler extends RTAdminHandler {
 		$search =& $rtDao->getSearch($searchId);
 
 		if (isset($version) && isset($context) && isset($search) && $context->getVersionId() == $version->getVersionId() && $search->getContextId() == $context->getContextId()) {
-			import('rt.harvester2.form.SearchForm');
+			import('classes.rt.harvester2.form.SearchForm');
 			$this->setupTemplate(true, $archiveId, $version, $context, $search);
 			$searchForm = new SearchForm($searchId, $contextId, $versionId, $archiveId);
 			$searchForm->initData();
@@ -135,7 +135,7 @@ class RTSearchHandler extends RTAdminHandler {
 		$search =& $rtDao->getSearch($searchId);
 
 		if (isset($version) && isset($context) && isset($search) && $context->getVersionId() == $version->getVersionId() && $search->getContextId() == $context->getContextId()) {
-			import('rt.harvester2.form.SearchForm');
+			import('classes.rt.harvester2.form.SearchForm');
 			$searchForm = new SearchForm($searchId, $contextId, $versionId, $archiveId);
 			$searchForm->readInputData();
 			$searchForm->execute();

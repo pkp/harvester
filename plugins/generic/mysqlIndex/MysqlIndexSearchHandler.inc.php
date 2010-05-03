@@ -16,7 +16,7 @@
 // $Id$
 
 
-import('handler.Handler');
+import('classes.handler.Handler');
 
 class MysqlIndexSearchHandler extends Handler {
 	/**
@@ -85,7 +85,7 @@ class MysqlIndexSearchHandler extends Handler {
 			'crosswalk' => array()
 		);
 
-		import('field.Field');
+		import('classes.field.Field');
 
 		if (is_array($fields)) foreach ($fields as $field) switch ($field->getType()) {
 			case FIELD_TYPE_DATE:
@@ -185,7 +185,7 @@ class MysqlIndexSearchHandler extends Handler {
 			'crosswalk' => array()
 		);
 
-		import('field.Field');
+		import('classes.field.Field');
 
 		if (is_array($fields)) foreach ($fields as $field) switch ($field->getType()) {
 			case FIELD_TYPE_DATE:
@@ -316,7 +316,7 @@ class MysqlIndexSearchHandler extends Handler {
 			array_unique($schemaList)
 		);
 
-		import('field.Field');
+		import('classes.field.Field');
 
 		if (count($schemaList) == 1) {
 			// There is a single schema being searched; make use of all its

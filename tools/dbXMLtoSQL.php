@@ -17,12 +17,12 @@
 
 require(dirname(__FILE__) . '/bootstrap.inc.php');
 
-import('cliTool.XmlToSqlTool');
+import('lib.pkp.classes.cliTool.XmlToSqlTool');
 
 /** Default XML file to parse if none is specified */
 define('DATABASE_XML_FILE', 'dbscripts/xml/harvester2_schema.xml');
 
-import('db.DBDataXMLParser');
+import('lib.pkp.classes.db.DBDataXMLParser');
 
 class dbXMLtoSQL extends XmlToSqlTool {
 	/**

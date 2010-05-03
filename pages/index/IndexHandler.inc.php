@@ -16,7 +16,7 @@
 // $Id$
 
 
-import('handler.Handler');
+import('classes.handler.Handler');
 
 class IndexHandler extends Handler {
 	function index($args) {

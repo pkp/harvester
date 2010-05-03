@@ -51,7 +51,7 @@ class AdminSortOrdersHandler extends AdminHandler {
 		$this->validate();
 		$this->setupTemplate(true);
 
-		import('admin.form.SortOrderForm');
+		import('classes.admin.form.SortOrderForm');
 
 		$sortOrderForm = new SortOrderForm(!isset($args) || empty($args) ? null : (int) $args[0]);
 		$sortOrderForm->initData();
@@ -65,7 +65,7 @@ class AdminSortOrdersHandler extends AdminHandler {
 		$this->validate();
 		$this->setupTemplate(true);
 		
-		import('admin.form.SortOrderForm');
+		import('classes.admin.form.SortOrderForm');
 
 		$sortOrderId = (int) Request::getUserVar('sortOrderId');
 

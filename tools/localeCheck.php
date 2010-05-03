@@ -53,7 +53,7 @@ class localeCheck extends CommandLineTool {
 	function execute() {
 		// Flush the file cache just to be certain we're using
 		// the most recent stuff
-		import('cache.CacheManager');
+		import('lib.pkp.classes.cache.CacheManager');
 		$cacheManager =& CacheManager::getManager();
 		$cacheManager->flush('locale');
 
@@ -76,7 +76,7 @@ class localeCheck extends CommandLineTool {
 	}
 
 	function testEmails($locale, $referenceLocale) {
-		import('install.Installer'); // Bring in data dir
+		import('lib.pkp.classes.install.Installer'); // Bring in data dir
 
 		$errors = array(
 		);

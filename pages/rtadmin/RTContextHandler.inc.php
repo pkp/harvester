@@ -16,7 +16,7 @@
 // $Id$
 
 
-import('rt.harvester2.HarvesterRTAdmin');
+import('classes.rt.harvester2.HarvesterRTAdmin');
 import('pages.rtadmin.RTAdminHandler');
 
 class RTContextHandler extends RTAdminHandler {
@@ -31,7 +31,7 @@ class RTContextHandler extends RTAdminHandler {
 
 		$version =& $rtDao->getVersion($versionId, $archiveId);
 
-		import('rt.harvester2.form.ContextForm');
+		import('classes.rt.harvester2.form.ContextForm');
 		$contextForm = new ContextForm(null, $versionId, $archiveId);
 
 		if ($save === 'save') {
@@ -63,7 +63,7 @@ class RTContextHandler extends RTAdminHandler {
 			$templateMgr->assign('archiveId', $archiveId);
 			$templateMgr->assign_by_ref('version', $version);
 
-			import('core.ArrayItemIterator');
+			import('lib.pkp.classes.core.ArrayItemIterator');
 			$templateMgr->assign_by_ref('contexts', new ArrayItemIterator($version->getContexts(), $rangeInfo->getPage(), $rangeInfo->getCount()));
 
 			$templateMgr->display('rtadmin/contexts.tpl');
@@ -84,7 +84,7 @@ class RTContextHandler extends RTAdminHandler {
 		$context =& $rtDao->getContext($contextId);
 
 		if (isset($version) && isset($context) && $context->getVersionId() == $version->getVersionId()) {
-			import('rt.harvester2.form.ContextForm');
+			import('classes.rt.harvester2.form.ContextForm');
 			$this->setupTemplate(true, $archiveId, $version, $context);
 			$contextForm = new ContextForm($contextId, $versionId, $archiveId);
 			$contextForm->initData();
@@ -127,7 +127,7 @@ class RTContextHandler extends RTAdminHandler {
 		$context =& $rtDao->getContext($contextId);
 
 		if (isset($version) && isset($context) && $context->getVersionId() == $version->getVersionId()) {
-			import('rt.harvester2.form.ContextForm');
+			import('classes.rt.harvester2.form.ContextForm');
 			$contextForm = new ContextForm($contextId, $versionId, $archiveId);
 			$contextForm->readInputData();
 			$contextForm->execute();

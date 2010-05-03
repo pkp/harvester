@@ -16,7 +16,7 @@
 // $Id$
 
 
-import('sortOrder.SortOrder');
+import('classes.sortOrder.SortOrder');
 
 class SortOrderDAO extends DAO {
 	/**

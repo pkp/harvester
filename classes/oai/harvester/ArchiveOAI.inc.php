@@ -22,8 +22,8 @@
 // $Id$
 
 
-import('oai.OAI');
-import('oai.harvester.OAIDAO');
+import('lib.pkp.classes.oai.OAI');
+import('classes.oai.harvester.OAIDAO');
 
 class ArchiveOAI extends OAI {
 	/** @var $site Site associated site object */

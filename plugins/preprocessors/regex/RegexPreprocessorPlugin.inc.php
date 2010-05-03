@@ -10,7 +10,7 @@
 **/
 
 
-import('plugins.PreprocessorPlugin');
+import('classes.plugins.PreprocessorPlugin');
 
 class RegexPreprocessorPlugin extends PreprocessorPlugin {
 	/**

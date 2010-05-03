@@ -14,7 +14,7 @@
  * $Id$
  */
 
-import('install.Installer');
+import('lib.pkp.classes.install.Installer');
 
 class Upgrade extends Installer {
 
@@ -78,7 +78,7 @@ class Upgrade extends Installer {
 	 */
 	function addPluginVersions() {
 		$versionDao =& DAORegistry::getDAO('VersionDAO');
-		import('site.VersionCheck');
+		import('lib.pkp.classes.site.VersionCheck');
 		$categories = PluginRegistry::getCategories();
 		foreach ($categories as $category) {
 			PluginRegistry::loadCategory($category);

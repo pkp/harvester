@@ -16,7 +16,7 @@
 // $Id$
 
 
-import('core.VirtualArrayIterator');
+import('lib.pkp.classes.core.VirtualArrayIterator');
 
 class SolrResultIterator extends VirtualArrayIterator {
 	/* @var $recordDao object */

@@ -16,8 +16,8 @@
 // $Id$
 
 
-import('rt.harvester2.HarvesterRTAdmin');
-import('handler.Handler');
+import('classes.rt.harvester2.HarvesterRTAdmin');
+import('classes.handler.Handler');
 
 class RTAdminHandler extends Handler {
 
@@ -96,12 +96,12 @@ class RTAdminHandler extends Handler {
 	//
 
 	function settings() {
-		import('pages.rtadmin.RTSetupHandler');
+		import('lib.pkp.pages.rtadmin.RTSetupHandler');
 		RTSetupHandler::settings();
 	}
 
 	function saveSettings() {
-		import('pages.rtadmin.RTSetupHandler');
+		import('lib.pkp.pages.rtadmin.RTSetupHandler');
 		RTSetupHandler::saveSettings();
 	}
 
@@ -118,7 +118,7 @@ class RTAdminHandler extends Handler {
 		if ($version) {
 			// Validate the URLs for a single version
 			$versions = array(&$version);
-			import('core.ArrayItemIterator');
+			import('lib.pkp.classes.core.ArrayItemIterator');
 			$versions = new ArrayItemIterator($versions, 1, 1);
 		} else {
 			// Validate all URLs for this archive

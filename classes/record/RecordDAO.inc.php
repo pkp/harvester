@@ -15,7 +15,7 @@
  * $Id$
  */
 
-import ('record.Record');
+import ('classes.record.Record');
 
 define('RECORD_SORT_NONE', 0x000001);
 define('RECORD_SORT_DATE', 0x000002);

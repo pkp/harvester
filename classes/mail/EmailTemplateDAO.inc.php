@@ -15,7 +15,7 @@
  * $Id$
  */
 
-import('mail.EmailTemplate');
+import('classes.mail.EmailTemplate');
 
 class EmailTemplateDAO extends DAO {
 

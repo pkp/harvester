@@ -17,7 +17,7 @@
 // $Id$
 
 
-import('core.PKPApplication');
+import('lib.pkp.classes.core.PKPApplication');
 
 define('PHP_REQUIRED_VERSION', '4.2.0');
 
@@ -78,20 +78,20 @@ class Application extends PKPApplication {
 	 */
 	function getDAOMap() {
 		return array_merge(parent::getDAOMap(), array(
-			'ArchiveDAO' => 'archive.ArchiveDAO',
-			'ArchiveSettingsDAO' => 'archive.ArchiveSettingsDAO',
-			'EmailTemplateDAO' => 'mail.EmailTemplateDAO',
-			'FieldDAO' => 'field.FieldDAO',
-			'OAIDAO' => 'oai.harvester.OAIDAO',
-			'PluginSettingsDAO' => 'plugins.PluginSettingsDAO',
-			'RecordDAO' => 'record.RecordDAO',
-			'RoleDAO' => 'security.RoleDAO',
-			'RTDAO' => 'rt.harvester2.RTDAO',
-			'SchemaDAO' => 'schema.SchemaDAO',
-			'SchemaAliasDAO' => 'schema.SchemaAliasDAO',
-			'SortOrderDAO' => 'sortOrder.SortOrderDAO',
-			'UserDAO' => 'user.UserDAO',
-			'UserSettingsDAO' => 'user.UserSettingsDAO'
+			'ArchiveDAO' => 'classes.archive.ArchiveDAO',
+			'ArchiveSettingsDAO' => 'classes.archive.ArchiveSettingsDAO',
+			'EmailTemplateDAO' => 'classes.mail.EmailTemplateDAO',
+			'FieldDAO' => 'classes.field.FieldDAO',
+			'OAIDAO' => 'classes.oai.harvester.OAIDAO',
+			'PluginSettingsDAO' => 'classes.plugins.PluginSettingsDAO',
+			'RecordDAO' => 'classes.record.RecordDAO',
+			'RoleDAO' => 'classes.security.RoleDAO',
+			'RTDAO' => 'classes.rt.harvester2.RTDAO',
+			'SchemaDAO' => 'classes.schema.SchemaDAO',
+			'SchemaAliasDAO' => 'classes.schema.SchemaAliasDAO',
+			'SortOrderDAO' => 'classes.sortOrder.SortOrderDAO',
+			'UserDAO' => 'classes.user.UserDAO',
+			'UserSettingsDAO' => 'classes.user.UserSettingsDAO'
 		));
 	}
 
@@ -116,7 +116,7 @@ class Application extends PKPApplication {
 	 * @return object
 	 */
 	function &instantiateHelp() {
-		import('help.Help');
+		import('classes.help.Help');
 		$help = new Help();
 		return $help;
 	}

@@ -26,7 +26,7 @@ class AdminSettingsHandler extends AdminHandler {
 		$this->validate();
 		$this->setupTemplate(true);
 
-		import('admin.form.SiteSettingsForm');
+		import('classes.admin.form.SiteSettingsForm');
 
 		$settingsForm = new SiteSettingsForm();
 		$settingsForm->initData();
@@ -42,7 +42,7 @@ class AdminSettingsHandler extends AdminHandler {
 		$this->validate();
 		$this->setupTemplate(true);
 
-		import('admin.form.SiteSettingsForm');
+		import('classes.admin.form.SiteSettingsForm');
 
 		$settingsForm = new SiteSettingsForm();
 		$settingsForm->readInputData();
@@ -71,7 +71,7 @@ class AdminSettingsHandler extends AdminHandler {
 
 		if (!$editData && $settingsForm->validate()) {
 			$settingsForm->execute();
-			import('notification.NotificationManager');
+			import('lib.pkp.classes.notification.NotificationManager');
 			$notificationManager = new NotificationManager();
 			$notificationManager->createTrivialNotification('notification.notification', 'common.changesSaved');
 			$request->redirect(null, 'index');

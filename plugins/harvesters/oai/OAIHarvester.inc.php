@@ -14,7 +14,7 @@
  * $Id$
  */
 
-import('harvester.Harvester');
+import('classes.harvester.Harvester');
 
 class OAIHarvester extends Harvester {
 	/** @var $oaiUrl string */

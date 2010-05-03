@@ -75,7 +75,7 @@ class SearchDAO extends DAO {
 	function &getPhraseResults($phrase, $dates, $archiveIds, $type, $id, $limit = 500, $cacheHours = 24) {
 		if (empty($phrase)) {
 			$results = false;
-			import('db.DBRowIterator');
+			import('lib.pkp.classes.db.DBRowIterator');
 			$returner = new DBRowIterator($results);
 			return $returner;
 		}
@@ -171,7 +171,7 @@ class SearchDAO extends DAO {
 			3600 * $cacheHours // Cache for 24 hours
 		);
 
-		import('db.DBRowIterator');
+		import('lib.pkp.classes.db.DBRowIterator');
 		$returner = new DBRowIterator($result);
 		return $returner;
 	}

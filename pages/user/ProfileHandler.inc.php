@@ -25,7 +25,7 @@ class ProfileHandler extends UserHandler {
 		$this->validate();
 		$this->setupTemplate(true);
 
-		import('user.form.ProfileForm');
+		import('classes.user.form.ProfileForm');
 
 		$profileForm = new ProfileForm();
 		if ($profileForm->isLocaleResubmit()) {
@@ -44,7 +44,7 @@ class ProfileHandler extends UserHandler {
 		$this->setupTemplate();
 		$dataModified = false;
 
-		import('user.form.ProfileForm');
+		import('classes.user.form.ProfileForm');
 
 		$profileForm = new ProfileForm();
 		$profileForm->readInputData();
@@ -76,7 +76,7 @@ class ProfileHandler extends UserHandler {
 		$this->validate();
 		$this->setupTemplate(true);
 
-		import('user.form.ChangePasswordForm');
+		import('classes.user.form.ChangePasswordForm');
 
 		if (checkPhpVersion('5.0.0')) { // WARNING: This form needs $this in constructor
 			$passwordForm = new ChangePasswordForm();
@@ -94,7 +94,7 @@ class ProfileHandler extends UserHandler {
 		$this->setupTemplate();
 		$this->validate();
 
-		import('user.form.ChangePasswordForm');
+		import('classes.user.form.ChangePasswordForm');
 
 		if (checkPhpVersion('5.0.0')) { // WARNING: This form needs $this in constructor
 			$passwordForm = new ChangePasswordForm();

@@ -16,7 +16,7 @@
 // $Id$
 
 
-import('handler.Handler');
+import('classes.handler.Handler');
 
 class SubmitterHandler extends Handler {
 	/**
@@ -65,7 +65,7 @@ class SubmitterHandler extends Handler {
 		$site =& Request::getSite();
 		if (!$site->getSetting('enableSubmit')) Request::redirect('index');
 
-		import('admin.form.ArchiveForm');
+		import('classes.admin.form.ArchiveForm');
 
 		$archiveForm = new ArchiveForm($archiveId);
 		$archiveForm->initData();
@@ -83,7 +83,7 @@ class SubmitterHandler extends Handler {
 		$this->validate($archiveId);
 		$this->setupTemplate(true);
 
-		import('admin.form.ArchiveForm');
+		import('classes.admin.form.ArchiveForm');
 
 		$archiveForm = new ArchiveForm($archiveId);
 		$archiveForm->initData();

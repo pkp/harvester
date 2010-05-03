@@ -16,7 +16,7 @@
 // $Id$
 
 
-import('plugins.GenericPlugin');
+import('lib.pkp.classes.plugins.GenericPlugin');
 
 class PKPDublinCorePlugin extends GenericPlugin {
 	/** @var $currentRecord object */

@@ -15,7 +15,7 @@
 // $Id$
 
 
-import('handler.Handler');
+import('classes.handler.Handler');
 
 class MysqlIndexAdminHandler extends Handler {
 	/**

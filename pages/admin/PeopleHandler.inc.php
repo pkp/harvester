@@ -243,7 +243,7 @@ class PeopleHandler extends AdminHandler {
 			return $templateMgr->display('common/error.tpl');
 		}
 
-		import('admin.form.UserManagementForm');
+		import('classes.admin.form.UserManagementForm');
 
 		$templateMgr->assign('currentUrl', Request::url(null, 'people', 'all'));
 		if (checkPhpVersion('5.0.0')) { // WARNING: This form needs $this in constructor
@@ -355,7 +355,7 @@ class PeopleHandler extends AdminHandler {
 			return $templateMgr->display('common/error.tpl');
 		}
 
-		import('admin.form.UserManagementForm');
+		import('classes.admin.form.UserManagementForm');
 
 		if (checkPhpVersion('5.0.0')) { // WARNING: This form needs $this in constructor
 			$userForm = new UserManagementForm($userId);

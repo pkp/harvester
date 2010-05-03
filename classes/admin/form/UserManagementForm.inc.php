@@ -15,7 +15,7 @@
 // $Id$
 
 
-import('form.Form');
+import('lib.pkp.classes.form.Form');
 
 class UserManagementForm extends Form {
 
@@ -319,7 +319,7 @@ class UserManagementForm extends Form {
 
 			if ($sendNotify) {
 				// Send welcome email to user
-				import('mail.MailTemplate');
+				import('classes.mail.MailTemplate');
 				$mail = new MailTemplate('USER_REGISTER');
 				$mail->setFrom($site->getLocalizedSetting('contactEmail'), $site->getLocalizedSetting('contactName'));
 				$mail->assignParams(array('username' => $this->getData('username'), 'password' => $password, 'userFullName' => $user->getFullName()));

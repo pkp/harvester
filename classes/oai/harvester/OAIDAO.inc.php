@@ -16,8 +16,8 @@
 // $Id$
 
 
-import('oai.OAI');
-import('harvester.Harvester');
+import('lib.pkp.classes.oai.OAI');
+import('classes.harvester.Harvester');
 
 class OAIDAO extends DAO {
  	/** @var $oai ArchiveOAI parent OAI object */

@@ -16,7 +16,7 @@
 // $Id$
 
 
-import('admin.form.PKPSiteSettingsForm');
+import('lib.pkp.classes.admin.form.PKPSiteSettingsForm');
 
 class SiteSettingsForm extends PKPSiteSettingsForm {
 	/**
@@ -57,7 +57,7 @@ class SiteSettingsForm extends PKPSiteSettingsForm {
 		$site =& Request::getSite();
 		$settingsDao =& DAORegistry::getDAO('SiteSettingsDAO');
 
-		import('file.PublicFileManager');
+		import('classes.file.PublicFileManager');
 		$fileManager = new PublicFileManager();
 		if ($fileManager->uploadedFileExists($settingName)) {
 			$type = $fileManager->getUploadedFileType($settingName);
@@ -95,7 +95,7 @@ class SiteSettingsForm extends PKPSiteSettingsForm {
 		$settingsDao =& DAORegistry::getDAO('SiteSettingsDAO');
 		$setting = $settingsDao->getSetting($settingName);
 
-		import('file.PublicFileManager');
+		import('classes.file.PublicFileManager');
 		$fileManager = new PublicFileManager();
 	 	if ($fileManager->removeSiteFile($setting['uploadName'])) {
 			return $settingsDao->deleteSetting($settingName);
@@ -127,7 +127,7 @@ class SiteSettingsForm extends PKPSiteSettingsForm {
 		$site =& Request::getSite();
 		$settingsDao =& DAORegistry::getDAO('SiteSettingsDAO');
 
-		import('file.PublicFileManager');
+		import('classes.file.PublicFileManager');
 		$fileManager = new PublicFileManager();
 		if ($fileManager->uploadedFileExists($settingName)) {
 			$type = $fileManager->getUploadedFileType($settingName);

@@ -79,7 +79,7 @@ class AdminLanguagesHandler extends AdminHandler {
 		$siteDao =& DAORegistry::getDAO('SiteDAO');
 		$siteDao->updateObject($site);
 
-		import('notification.NotificationManager');
+		import('lib.pkp.classes.notification.NotificationManager');
 		$notificationManager = new NotificationManager();
 		$notificationManager->createTrivialNotification('notification.notification', 'common.changesSaved');
  

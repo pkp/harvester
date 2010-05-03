@@ -24,7 +24,7 @@
 define('INSTALLER_DEFAULT_SITE_TITLE', 'common.harvester2');
 define('INSTALLER_DEFAULT_MIN_PASSWORD_LENGTH', 6);
 
-import('install.PKPInstall');
+import('lib.pkp.classes.install.PKPInstall');
 
 class Install extends PKPInstall {
 
@@ -116,7 +116,7 @@ class Install extends PKPInstall {
 
 			// Add initial plugin data to versions table
 			$versionDao =& DAORegistry::getDAO('VersionDAO');
-			import('site.VersionCheck');
+			import('lib.pkp.classes.site.VersionCheck');
 			$categories = PluginRegistry::getCategories();
 			foreach ($categories as $category) {
 				PluginRegistry::loadCategory($category);

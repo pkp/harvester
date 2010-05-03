@@ -16,7 +16,7 @@
 // $Id$
 
 
-import('form.Form');
+import('lib.pkp.classes.form.Form');
 
 
 class SortOrderForm extends Form {
@@ -41,7 +41,7 @@ class SortOrderForm extends Form {
 		$this->addCheck(new FormValidatorLocale($this, 'name', 'required', 'admin.sortOrders.form.nameRequired'));
 
 		// Sort order type is valid
-		import('sortOrder.SortOrder');
+		import('classes.sortOrder.SortOrder');
 		$this->addCheck(new FormValidatorInSet($this, 'type', 'required', 'admin.sortOrders.form.typeRequired', array_keys(SortOrder::getTypeOptions())));
 		$this->addCheck(new FormValidatorPost($this));
 
@@ -63,7 +63,7 @@ class SortOrderForm extends Form {
 	function display() {
 		$templateMgr =& TemplateManager::getManager();
 		$templateMgr->assign('sortOrderId', $this->sortOrderId);
-		import('sortOrder.SortOrder');
+		import('classes.sortOrder.SortOrder');
 		$templateMgr->assign('typeOptions', SortOrder::getTypeOptions());
 
 		$schemaPlugins =& PluginRegistry::loadCategory('schemas');

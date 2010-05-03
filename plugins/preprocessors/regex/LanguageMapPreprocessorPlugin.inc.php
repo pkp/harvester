@@ -14,7 +14,7 @@
  * $Id$
  */
 
-import('plugins.PreprocessorPlugin');
+import('classes.plugins.PreprocessorPlugin');
 
 define('LANGUAGE_MAP_FILE', 'mapping.xml');
 
@@ -60,7 +60,7 @@ class LanguageMapPreprocessorPlugin extends PreprocessorPlugin {
 	function &_getMapCache() {
 		static $cache;
 		if (!isset($cache)) {
-			import('cache.CacheManager');
+			import('lib.pkp.classes.cache.CacheManager');
 			$cacheManager =& CacheManager::getManager();
 			$cache = $cacheManager->getFileCache(
 				$this->getName(), 'mapping',

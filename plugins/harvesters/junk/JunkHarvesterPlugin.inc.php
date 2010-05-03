@@ -14,7 +14,7 @@
  * $Id$
  */
 
-import('plugins.HarvesterPlugin');
+import('classes.plugins.HarvesterPlugin');
 
 class JunkHarvesterPlugin extends HarvesterPlugin {
 	/**

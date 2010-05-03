@@ -17,7 +17,7 @@
 // $Id$
 
 
-import ('archive.Archive');
+import ('classes.archive.Archive');
 
 class ArchiveDAO extends DAO {
 	/**

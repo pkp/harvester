@@ -42,7 +42,7 @@ class harvest extends CommandLineTool {
 			$archive =& $archiveDao->getArchive((int) $this->firstParam, false);
 			if ($archive) {
 				$archives = array(&$archive);
-				import('core.ArrayItemIterator');
+				import('lib.pkp.classes.core.ArrayItemIterator');
 				$this->archives = new ArrayItemIterator($archives);
 			} else {
 				$this->archives = null; // Invalid ID specified

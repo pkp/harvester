@@ -15,7 +15,7 @@
 // $Id$
 
 
-import('classes.plugins.GenericPlugin');
+import('lib.pkp.classes.plugins.GenericPlugin');
 
 define('SOLR_DTD_ID', null);
 define('SOLR_DTD_URL', null);
@@ -254,7 +254,7 @@ class ZendSearchPlugin extends GenericPlugin {
 		if (!$isUsingSolr) {
 			$doc = new Zend_Search_Lucene_Document();
 		} else {
-			import('xml.XMLCustomWriter');
+			import('lib.pkp.classes.xml.XMLCustomWriter');
 			$doc =& XMLCustomWriter::createDocument('add', SOLR_DTD_ID, SOLR_DTD_URL);
 			$addNode =& XMLCustomWriter::createElement($doc, 'add');
 			XMLCustomWriter::appendChild($doc, $addNode);
@@ -462,7 +462,7 @@ class ZendSearchPlugin extends GenericPlugin {
 		}
 
 		if ($this->isUsingSolr()) {
-			import('xml.XMLCustomWriter');
+			import('lib.pkp.classes.xml.XMLCustomWriter');
 			$doc =& XMLCustomWriter::createDocument('commit', SOLR_DTD_ID, SOLR_DTD_URL);
 			$docNode =& XMLCustomWriter::createElement($doc, 'commit');
 			XMLCustomWriter::appendChild($doc, $docNode);

@@ -14,9 +14,9 @@
  * $Id$
  */
 
-import('field.Field');
-import('db.DBDataXMLParser');
-import('form.Form');
+import('classes.field.Field');
+import('lib.pkp.classes.db.DBDataXMLParser');
+import('lib.pkp.classes.form.Form');
 
 class CrosswalkForm extends Form {
 	/** The ID of the crosswalk being edited */

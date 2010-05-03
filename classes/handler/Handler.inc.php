@@ -13,7 +13,7 @@
  */
 
 
-import('handler.PKPHandler');
+import('lib.pkp.classes.handler.PKPHandler');
 
 class Handler extends PKPHandler {
 	function Handler() {

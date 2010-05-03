@@ -16,7 +16,7 @@
 // $Id$
 
 
-import('handler.Handler');
+import('classes.handler.Handler');
 
 class AdminHandler extends Handler {
 
@@ -62,7 +62,7 @@ class AdminHandler extends Handler {
 		$this->setupTemplate();
 		$this->validate();
 
-		import('admin.form.LayoutForm');
+		import('classes.admin.form.LayoutForm');
 		$layoutForm = new LayoutForm();
 		if ($layoutForm->isLocaleResubmit()) {
 			$layoutForm->readInputData();
@@ -76,7 +76,7 @@ class AdminHandler extends Handler {
 		$this->setupTemplate();
 		$this->validate();
 
-		import('admin.form.LayoutForm');
+		import('classes.admin.form.LayoutForm');
 		$layoutForm = new LayoutForm();
 		$layoutForm->readInputData();
 		if ($layoutForm->validate()) {
@@ -93,7 +93,7 @@ class AdminHandler extends Handler {
 
 	function viewCaptcha($args) {
 		$captchaId = (int) array_shift($args);
-		import('captcha.CaptchaManager');
+		import('lib.pkp.classes.captcha.CaptchaManager');
 		$captchaManager = new CaptchaManager();
 		if ($captchaManager->isEnabled()) {
 			$captchaDao =& DAORegistry::getDAO('CaptchaDAO');

@@ -64,7 +64,7 @@ class AdminArchiveHandler extends AdminHandler {
 		$this->validate();
 		$this->setupTemplate(true);
 
-		import('admin.form.ArchiveForm');
+		import('classes.admin.form.ArchiveForm');
 
 		$archiveForm = new ArchiveForm(!isset($args) || empty($args) ? null : (int) $args[0], true);
 		$archiveForm->initData();
@@ -80,7 +80,7 @@ class AdminArchiveHandler extends AdminHandler {
 		$this->validate();
 		$this->setupTemplate();
 
-		import('admin.form.ArchiveForm');
+		import('classes.admin.form.ArchiveForm');
 
 		$archiveId = (int) $request->getUserVar('archiveId');
 
@@ -102,7 +102,7 @@ class AdminArchiveHandler extends AdminHandler {
 
 		if (!$dataModified && $archiveForm->validate()) {
 			$archiveForm->execute();
-			import('notification.NotificationManager');
+			import('lib.pkp.classes.notification.NotificationManager');
 			$notificationManager = new NotificationManager();
 			$notificationManager->createTrivialNotification('notification.notification', 'common.changesSaved');
 			$request->redirect(null, 'archives');

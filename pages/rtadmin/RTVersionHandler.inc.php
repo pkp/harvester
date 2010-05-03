@@ -16,7 +16,7 @@
 // $Id$
 
 
-import('rt.harvester2.HarvesterRTAdmin');
+import('classes.rt.harvester2.HarvesterRTAdmin');
 import('pages.rtadmin.RTAdminHandler');
 
 class RTVersionHandler extends RTAdminHandler {
@@ -25,7 +25,7 @@ class RTVersionHandler extends RTAdminHandler {
 
 		$rtDao =& DAORegistry::getDAO('RTDAO');
 
-		import('rt.harvester2.form.VersionForm');
+		import('classes.rt.harvester2.form.VersionForm');
 		$archiveId = (int) Request::getUserVar('archiveId');
 		$versionForm = new VersionForm(null, $archiveId);
 
@@ -104,7 +104,7 @@ class RTVersionHandler extends RTAdminHandler {
 		$version =& $rtDao->getVersion($versionId, $archiveId);
 
 		if (isset($version)) {
-			import('rt.harvester2.form.VersionForm');
+			import('classes.rt.harvester2.form.VersionForm');
 			$this->setupTemplate(true, $archiveId, $version);
 			$versionForm = new VersionForm($versionId, $archiveId);
 			$versionForm->initData();
@@ -136,7 +136,7 @@ class RTVersionHandler extends RTAdminHandler {
 		$version =& $rtDao->getVersion($versionId, $archiveId);
 
 		if (isset($version)) {
-			import('rt.harvester2.form.VersionForm');
+			import('classes.rt.harvester2.form.VersionForm');
 			$versionForm = new VersionForm($versionId, $archiveId);
 			$versionForm->readInputData();
 			$versionForm->execute();

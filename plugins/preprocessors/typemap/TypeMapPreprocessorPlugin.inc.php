@@ -12,7 +12,7 @@
 **/
 
 
-import('plugins.PreprocessorPlugin');
+import('classes.plugins.PreprocessorPlugin');
 
 class TypeMapPreprocessorPlugin extends PreprocessorPlugin {
 	/** @var $languageCrosswalk object */
@@ -56,7 +56,7 @@ class TypeMapPreprocessorPlugin extends PreprocessorPlugin {
 	function &_getMapCache(&$archive) {
 		static $cache;
 		if (!isset($cache)) {
-			import('cache.CacheManager');
+			import('lib.pkp.classes.cache.CacheManager');
 			$cacheManager =& CacheManager::getManager();
 			$cache = $cacheManager->getFileCache(
 				$this->getName(), $archive->getArchiveId(),

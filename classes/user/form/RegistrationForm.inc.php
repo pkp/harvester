@@ -19,7 +19,7 @@
 // $Id$
 
 
-import('form.Form');
+import('lib.pkp.classes.form.Form');
 
 class RegistrationForm extends Form {
 	/** @var AuthPlugin default authentication source, if specified */
@@ -34,7 +34,7 @@ class RegistrationForm extends Form {
 	function RegistrationForm() {
 		parent::Form('user/register.tpl');
 
-		import('captcha.CaptchaManager');
+		import('lib.pkp.classes.captcha.CaptchaManager');
 		$captchaManager = new CaptchaManager();
 		$this->captchaEnabled = ($captchaManager->isEnabled() && Config::getVar('captcha', 'captcha_on_register'))?true:false;
 
@@ -74,7 +74,7 @@ class RegistrationForm extends Form {
 		$site =& Request::getSite();
 		$templateMgr->assign('minPasswordLength', $site->getMinPasswordLength());
 		if ($this->captchaEnabled) {
-			import('captcha.CaptchaManager');
+			import('lib.pkp.classes.captcha.CaptchaManager');
 			$captchaManager = new CaptchaManager();
 			$captcha =& $captchaManager->createCaptcha();
 			if ($captcha) {
@@ -221,10 +221,10 @@ class RegistrationForm extends Form {
 			}
 		}
 
-		import('mail.MailTemplate');
+		import('classes.mail.MailTemplate');
 		if ($requireValidation) {
 			// Create an access key
-			import('security.AccessKeyManager');
+			import('lib.pkp.classes.security.AccessKeyManager');
 			$accessKeyManager = new AccessKeyManager();
 			$accessKey = $accessKeyManager->createKey('RegisterContext', $user->getId(), null, Config::getVar('email', 'validation_timeout'));
 

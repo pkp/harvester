@@ -15,7 +15,7 @@
  * $Id$
  */
 
-import ('schema.Schema');
+import ('classes.schema.Schema');
 
 class SchemaDAO extends DAO {
 	/** @var $cachingEnabled boolean */
