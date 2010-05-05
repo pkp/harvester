@@ -83,13 +83,13 @@ class Upgrade extends Installer {
 		foreach ($categories as $category) {
 			PluginRegistry::loadCategory($category);
 			$plugins = PluginRegistry::getPlugins($category);
-			foreach ($plugins as $plugin) {
+			if (is_array($plugins)) foreach ($plugins as $plugin) {
 				$versionFile = $plugin->getPluginPath() . '/version.xml';
 
 				if (FileManager::fileExists($versionFile)) {
 					$versionInfo =& VersionCheck::parseVersionXML($versionFile);
 					$pluginVersion = $versionInfo['version'];
-				}  else {
+				} else {
 					$pluginVersion = new Version(
 						1, 0, 0, 0, Core::getCurrentDate(), 1,
 						'plugins.'.$category, basename($plugin->getPluginPath()), '', 0
@@ -98,6 +98,8 @@ class Upgrade extends Installer {
 				$versionDao->insertVersion($pluginVersion, true);
 			}
 		}
+
+		return true;
 	}
 }
 
