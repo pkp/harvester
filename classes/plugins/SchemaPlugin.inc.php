@@ -10,11 +10,12 @@
  * @class SchemaPlugin
  *
  * @brief Abstract class for schema plugins
- *
  */
 
 // $Id$
 
+
+import('classes.plugins.Plugin');
 
 class SchemaPlugin extends Plugin {
 	function SchemaPlugin() {

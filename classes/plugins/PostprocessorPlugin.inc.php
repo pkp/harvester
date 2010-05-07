@@ -17,6 +17,8 @@
 // $Id$
 
 
+import('classes.plugins.Plugin');
+
 class PostprocessorPlugin extends Plugin {
 	function PostprocessorPlugin() {
 		parent::Plugin();

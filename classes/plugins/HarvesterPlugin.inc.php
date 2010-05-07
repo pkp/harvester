@@ -16,6 +16,8 @@
 // $Id$
 
 
+import('classes.plugins.Plugin');
+
 class HarvesterPlugin extends Plugin {
 	/** @var $errors array */
 	var $errors;

@@ -10,9 +10,12 @@
  * @class IndexerPlugin
  *
  * Abstract class for harvester plugins
- *
- * $Id$
  */
+
+// $Id$
+
+
+import('classes.plugins.Plugin');
 
 class IndexerPlugin extends Plugin {
 	function IndexerPlugin() {

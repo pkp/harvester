@@ -10,11 +10,12 @@
  * @class PreprocessorPlugin
  *
  * Abstract class for preprocessor plugins
- *
  */
 
 // $Id$
 
+
+import('classes.plugins.Plugin');
 
 class PreprocessorPlugin extends Plugin {
 	function PreprocessorPlugin() {
