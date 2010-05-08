@@ -24,7 +24,7 @@ class PluginHandler extends AdminHandler {
 	function plugins($args) {
 		$category = isset($args[0])?$args[0]:null;
 		$categories = PluginRegistry::getCategories();
-		
+
 		$templateMgr =& TemplateManager::getManager();
 		$this->validate();
 
@@ -47,7 +47,7 @@ class PluginHandler extends AdminHandler {
 					$plugins = array_merge($plugins, PluginRegistry::loadCategory($category));
 				}
 			}
-			
+
 			$this->setupTemplate(true);
 			$templateMgr->assign('pageTitle', 'admin.plugins');
 			$templateMgr->assign('pageHierarchy', $this->setBreadcrumbs(false));
@@ -57,7 +57,7 @@ class PluginHandler extends AdminHandler {
 		$templateMgr->assign_by_ref('categories', $categories);
 		$templateMgr->assign('mainPage', $mainPage);
 		$templateMgr->assign('isSiteAdmin', Validation::isSiteAdmin());
-		
+
 		$templateMgr->display('admin/plugins.tpl');
 	}
 
@@ -66,7 +66,7 @@ class PluginHandler extends AdminHandler {
 	 */
 	function plugin($args) {
 		$category = array_shift($args);
-		$plugin = array_shift($args);
+		$plugin = String::strtolower(array_shift($args));
 		$verb = array_shift($args);
 
 		$this->validate();
@@ -83,7 +83,7 @@ class PluginHandler extends AdminHandler {
 		}
 
 	}
-	
+
 	/**
 	 * Set the page's breadcrumbs
 	 * @param $subclass boolean
@@ -97,7 +97,7 @@ class PluginHandler extends AdminHandler {
 				false
 			)
 		);
-		
+
 		if ($subclass) {
 			$pageCrumbs[] = array(
 				Request::url(null, 'plugins'),
