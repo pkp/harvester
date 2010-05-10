@@ -35,7 +35,7 @@
 	<schema file="dbscripts/xml/harvester2_schema.xml" />
 
 	<!-- Other upgrade tasks -->
-	<upgrade minversion="2.0.0.0" maxversion="2.3.0.0">
+	<upgrade minversion="2.0.0.0" maxversion="2.2.9.0">
 		<data file="dbscripts/xml/upgrade/2.3_update.xml" />
 		<code function="updateArchivePluginNames" />
 		<code function="installSchemaAliases" />
