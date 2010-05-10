@@ -154,7 +154,7 @@ class MysqlIndexPlugin extends GenericPlugin {
 		switch ($category) {
 			case 'blocks':
 				$this->import('MysqlIndexBlockPlugin');
-				$blockPlugin = new MysqlIndexBlockPlugin();
+				$blockPlugin = new MysqlIndexBlockPlugin($this->getName());
 				$plugins[$blockPlugin->getSeq()][$blockPlugin->getPluginPath()] =& $blockPlugin;
 				break;
 		}

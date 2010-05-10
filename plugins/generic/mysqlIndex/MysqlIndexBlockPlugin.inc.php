@@ -18,6 +18,17 @@
 import('lib.pkp.classes.plugins.BlockPlugin');
 
 class MysqlIndexBlockPlugin extends BlockPlugin {
+	/** @var $parentPluginName string Name of MysqlIndexPlugin */
+	var $parentPluginName;
+
+	/**
+	 * Constructor.
+	 */
+	function MysqlIndexBlockPlugin($parentPluginName) {
+		parent::BlockPlugin();
+		$this->parentPluginName = $parentPluginName;
+	}
+
 	/**
 	 * Get the display name of this plugin.
 	 * @return String
@@ -38,7 +49,7 @@ class MysqlIndexBlockPlugin extends BlockPlugin {
 	 * @return object
 	 */
 	function &getMysqlIndexPlugin() {
-		$plugin =& PluginRegistry::getPlugin('generic', 'MysqlIndexPlugin');
+		$plugin =& PluginRegistry::getPlugin('generic', $this->parentPluginName);
 		return $plugin;
 	}
 
