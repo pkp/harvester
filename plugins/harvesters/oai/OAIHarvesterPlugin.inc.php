@@ -191,8 +191,7 @@ class OAIHarvesterPlugin extends HarvesterPlugin {
 		$templateMgr->assign('title', $archive->getTitle());
 		$templateMgr->assign('archiveId', $archive->getArchiveId());
 		$templateMgr->assign_by_ref('archive', $archive);
-
-		$templateMgr->display($this->getTemplatePath() . '/management.tpl');
+		$templateMgr->display($this->getTemplatePath() . 'management.tpl');
 	}
 
 	function allowSubmitterManagement($verb, $args) {

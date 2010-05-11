@@ -121,13 +121,7 @@ class ModsPlugin extends SchemaPlugin {
 		$result =& $xmlParser->parseText($contents);
 		$returner = array();
 
-		$modsNode =& $result->getChildByName(array('oai_mods:mods', 'mods:mods', 'mods'));
-		if (!isset($modsNode)) {
-			$returner = null;
-			return $returner;
-		}
-
-		$returner =& $this->handleRootNode($modsNode);
+		$returner =& $this->handleRootNode($result);
 
 		$result->destroy();
 		$xmlParser->destroy();
