@@ -32,7 +32,7 @@ class MysqlIndexSearchHandler extends Handler {
 	 * Get the Zend Search Plugin object.
 	 */
 	function &getPlugin() {
-		$plugin =& PluginRegistry::getPlugin('generic', 'MysqlIndexPlugin');
+		$plugin =& PluginRegistry::getPlugin('generic', MYSQL_PLUGIN_NAME);
 		return $plugin;
 	}
 

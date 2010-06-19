@@ -30,11 +30,12 @@ class SearchFormElementForm extends Form {
 
 	/**
 	 * Constructor
-	 * @param searchFormElementId int leave as default for new sort order
+	 * @param $parentPluginName string Name of parent plugin
+	 * @param $searchFormElementId int leave as default for new sort order
 	 */
-	function SearchFormElementForm($searchFormElementId = null) {
+	function SearchFormElementForm($parentPluginName, $searchFormElementId = null) {
 		$this->searchFormElementId = isset($searchFormElementId) ? (int) $searchFormElementId : null;
-		$plugin =& PluginRegistry::getPlugin('generic', 'ZendSearchPlugin');
+		$plugin =& PluginRegistry::getPlugin('generic', $parentPluginName);
 		parent::Form($plugin->getTemplatePath() . 'searchFormElementForm.tpl');
 
 		// Title is required

@@ -31,7 +31,7 @@ class ZendSearchAdminHandler extends Handler {
 	 * Get the Zend Search Plugin object.
 	 */
 	function &getPlugin() {
-		$plugin =& PluginRegistry::getPlugin('generic', 'ZendSearchPlugin');
+		$plugin =& PluginRegistry::getPlugin('generic', ZEND_SEARCH_PLUGIN_NAME);
 		return $plugin;
 	}
 
@@ -62,7 +62,7 @@ class ZendSearchAdminHandler extends Handler {
 		$plugin =& $this->getPlugin();
 		$plugin->import('ZendSearchSettingsForm');
 
-		$zendSearchSettingsForm = new ZendSearchSettingsForm();
+		$zendSearchSettingsForm = new ZendSearchSettingsForm(ZEND_SEARCH_PLUGIN_NAME);
 		if ($zendSearchSettingsForm->isLocaleResubmit()) {
 			$zendSearchSettingsForm->readInputData();
 		} else {
@@ -80,7 +80,7 @@ class ZendSearchAdminHandler extends Handler {
 		$plugin =& $this->getPlugin();
 		$plugin->import('ZendSearchSettingsForm');
 
-		$zendSearchSettingsForm = new ZendSearchSettingsForm();
+		$zendSearchSettingsForm = new ZendSearchSettingsForm(ZEND_SEARCH_PLUGIN_NAME);
 		$zendSearchSettingsForm->initData();
 		$zendSearchSettingsForm->readInputData();
 
@@ -112,9 +112,9 @@ class ZendSearchAdminHandler extends Handler {
 		$plugin->import('SearchFormElementForm');
 
 		if (checkPhpVersion('5.0.0')) { // WARNING: This form needs $this in constructor
-			$searchFormElementForm = new SearchFormElementForm(!isset($args) || empty($args) ? null : (int) $args[0]);
+			$searchFormElementForm = new SearchFormElementForm($plugin->getName(), !isset($args) || empty($args) ? null : (int) $args[0]);
 		} else {
-			$searchFormElementForm =& new SearchFormElementForm(!isset($args) || empty($args) ? null : (int) $args[0]);
+			$searchFormElementForm =& new SearchFormElementForm($plugin->getName(), !isset($args) || empty($args) ? null : (int) $args[0]);
 		}
 		if ($searchFormElementForm->isLocaleResubmit()) {
 			$searchFormElementForm->readInputData();
@@ -136,9 +136,9 @@ class ZendSearchAdminHandler extends Handler {
 		$searchFormElementId = (int) Request::getUserVar('searchFormElementId');
 
 		if (checkPhpVersion('5.0.0')) { // WARNING: This form needs $this in constructor
-			$searchFormElementForm = new SearchFormElementForm($searchFormElementId);
+			$searchFormElementForm = new SearchFormElementForm($plugin->getName(), $searchFormElementId);
 		} else {
-			$searchFormElementForm =& new SearchFormElementForm($searchFormElementId);
+			$searchFormElementForm =& new SearchFormElementForm($plugin->getName(), $searchFormElementId);
 		}
 		$searchFormElementForm->initData();
 		$searchFormElementForm->readInputData();

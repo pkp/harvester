@@ -27,10 +27,11 @@ class CrosswalkForm extends Form {
 
 	/**
 	 * Constructor.
+	 * @param $parentPluginName string Name of parent plugin
 	 * @param $crosswalkId omit for a new crosswalk
 	 */
-	function CrosswalkForm($crosswalkId = null) {
-		$plugin =& PluginRegistry::getPlugin('generic', 'MysqlIndexPlugin');
+	function CrosswalkForm($parentPluginName, $crosswalkId = null) {
+		$plugin =& PluginRegistry::getPlugin('generic', $parentPluginName);
 		parent::Form($plugin->getTemplatePath() . 'crosswalkForm.tpl');
 
 		$this->crosswalkId = isset($crosswalkId) ? (int) $crosswalkId : null;

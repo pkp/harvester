@@ -107,7 +107,7 @@ function changeElementType() {
 		{foreach from=$schemaPlugins item="schemaPlugin" name="schemaPlugins"}
 		{assign var="schema" value=$schemaPlugin->getSchema()}
 		{assign var="schemaId" value=$schema->getSchemaId()}
-			<strong>{$schemaPlugin->getDisplayName()|escape}</strong><br />
+			<strong>{$schemaPlugin->getSchemaDisplayName()|escape}</strong><br />
 			<select multiple="multiple" size="5" name="fieldNames[{$schemaId|escape}][]" id="fields-{$schemaId|escape}">
 				{foreach from=$schemaPlugin->getFieldList() item="fieldSymbolic"}
 					{assign var="schema" value=$schemaPlugin->getSchema()}

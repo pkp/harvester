@@ -171,6 +171,7 @@ class MysqlIndexPlugin extends GenericPlugin {
 				$methods = array_map('strtolower', get_class_methods('MysqlIndexSearchHandler'));
 				if (in_array(strtolower($op), $methods)) {
 					define('HANDLER_CLASS', 'MysqlIndexSearchHandler');
+					define('MYSQL_PLUGIN_NAME', $this->getName()); // Kludge
 					return true;
 				}
 				break;
@@ -179,6 +180,7 @@ class MysqlIndexPlugin extends GenericPlugin {
 				$methods = array_map('strtolower', get_class_methods('MysqlIndexAdminHandler'));
 				if (in_array(strtolower($op), $methods)) {
 					define('HANDLER_CLASS', 'MysqlIndexAdminHandler');
+					define('MYSQL_PLUGIN_NAME', $this->getName()); // Kludge
 					return true;
 				}
 				break;

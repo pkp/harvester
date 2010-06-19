@@ -22,7 +22,7 @@ class MysqlIndexAdminHandler extends Handler {
 	 * Get the Zend Search Plugin object.
 	 */
 	function &getPlugin() {
-		$plugin =& PluginRegistry::getPlugin('generic', 'MysqlIndexPlugin');
+		$plugin =& PluginRegistry::getPlugin('generic', MYSQL_PLUGIN_NAME);
 		return $plugin;
 	}
 
@@ -52,7 +52,7 @@ class MysqlIndexAdminHandler extends Handler {
 		$plugin =& MysqlIndexAdminHandler::getPlugin();
 		$plugin->import('CrosswalkForm');
 
-		$crosswalkForm = new CrosswalkForm(Request::getUserVar('crosswalkId'));
+		$crosswalkForm = new CrosswalkForm(MYSQL_PLUGIN_NAME, Request::getUserVar('crosswalkId'));
 		$crosswalkForm->initData();
 		$crosswalkForm->display();
 	}
@@ -66,7 +66,7 @@ class MysqlIndexAdminHandler extends Handler {
 		$plugin =& MysqlIndexAdminHandler::getPlugin();
 		$plugin->import('CrosswalkForm');
 
-		$crosswalkForm = new CrosswalkForm(Request::getUserVar('crosswalkId'));
+		$crosswalkForm = new CrosswalkForm(MYSQL_PLUGIN_NAME, Request::getUserVar('crosswalkId'));
 		$crosswalkForm->initData();
 		$crosswalkForm->readInputData();
 

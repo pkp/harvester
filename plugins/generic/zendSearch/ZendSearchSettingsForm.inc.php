@@ -19,11 +19,15 @@
 import('lib.pkp.classes.form.Form');
 
 class ZendSearchSettingsForm extends Form {
+	/** @var $parentPluginName string Name of parent plugin */
+	var $parentPluginName;
+
 	/**
 	 * Constructor
 	 */
-	function ZendSearchSettingsForm() {
-		$plugin =& PluginRegistry::getPlugin('generic', 'ZendSearchPlugin');
+	function ZendSearchSettingsForm($parentPluginName) {
+		$this->parentPluginName = $parentPluginName;
+		$plugin =& PluginRegistry::getPlugin('generic', $parentPluginName);
 		parent::Form($plugin->getTemplatePath() . 'zendSearchSettingsForm.tpl');
 		
 		$this->addCheck(new FormValidatorPost($this));
@@ -37,7 +41,7 @@ class ZendSearchSettingsForm extends Form {
 	 * Initialize form data from current search form element.
 	 */
 	function initData() {
-		$plugin =& PluginRegistry::getPlugin('generic', 'ZendSearchPlugin');
+		$plugin =& PluginRegistry::getPlugin('generic', $this->parentPluginName);
 		$this->_data = array(
 			'solrUrl' => $plugin->getSetting('solrUrl')
 		);
@@ -54,7 +58,7 @@ class ZendSearchSettingsForm extends Form {
 	 * Save sort order. 
 	 */
 	function execute() {
-		$plugin =& PluginRegistry::getPlugin('generic', 'ZendSearchPlugin');
+		$plugin =& PluginRegistry::getPlugin('generic', $this->parentPluginName);
 		$plugin->updateSetting('solrUrl', $this->getData('solrUrl'));
 	}
 }

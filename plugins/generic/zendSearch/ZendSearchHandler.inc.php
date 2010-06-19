@@ -23,7 +23,7 @@ class ZendSearchHandler extends Handler {
 	 */
 	function index() {
 		ZendSearchHandler::setupTemplate();
-		$plugin =& PluginRegistry::getPlugin('generic', 'ZendSearchPlugin');
+		$plugin =& PluginRegistry::getPlugin('generic', ZEND_SEARCH_PLUGIN_NAME);
 
 		$searchFormElementDao =& DAORegistry::getDAO('SearchFormElementDAO');
 		$searchFormElements =& $searchFormElementDao->getSearchFormElements();
@@ -42,7 +42,7 @@ class ZendSearchHandler extends Handler {
 	 */
 	function searchResults() {
 		ZendSearchHandler::setupTemplate();
-		$plugin =& PluginRegistry::getPlugin('generic', 'ZendSearchPlugin');
+		$plugin =& PluginRegistry::getPlugin('generic', ZEND_SEARCH_PLUGIN_NAME);
 		$isUsingSolr = $plugin->isUsingSolr();
 
 		if ($isUsingSolr) {

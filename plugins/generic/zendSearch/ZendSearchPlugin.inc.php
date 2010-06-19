@@ -188,7 +188,7 @@ class ZendSearchPlugin extends GenericPlugin {
 		switch ($category) {
 			case 'blocks':
 				$this->import('ZendSearchBlockPlugin');
-				$blockPlugin = new ZendSearchBlockPlugin();
+				$blockPlugin = new ZendSearchBlockPlugin($this->getName());
 				$plugins[$blockPlugin->getSeq()][$blockPlugin->getPluginPath()] =& $blockPlugin;
 				break;
 		}
@@ -212,6 +212,7 @@ class ZendSearchPlugin extends GenericPlugin {
 				$this->import('ZendSearchHandler');
 				if (is_callable(array('ZendSearchHandler', $op))) {
 					define('HANDLER_CLASS', 'ZendSearchHandler');
+					define('ZEND_SEARCH_PLUGIN_NAME', $this->getName());
 					return true;
 				}
 				break;
@@ -219,6 +220,7 @@ class ZendSearchPlugin extends GenericPlugin {
 				$this->import('ZendSearchAdminHandler');
 				if (is_callable(array('ZendSearchAdminHandler', $op))) {
 					define('HANDLER_CLASS', 'ZendSearchAdminHandler');
+					define('ZEND_SEARCH_PLUGIN_NAME', $this->getName());
 					return true;
 				}
 				break;

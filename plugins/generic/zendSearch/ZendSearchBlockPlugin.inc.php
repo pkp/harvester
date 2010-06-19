@@ -18,6 +18,17 @@
 import('lib.pkp.classes.plugins.BlockPlugin');
 
 class ZendSearchBlockPlugin extends BlockPlugin {
+	/** @var $parentPluginName string Name of parent plugin */
+	var $parentPluginName;
+
+	/**
+	 * Constructor
+	 */
+	function ZendSearchBlockPlugin($parentPluginName) {
+		$this->parentPluginName = $parentPluginName;
+		parent::BlockPlugin();
+	}
+
 	/**
 	 * Get the display name of this plugin.
 	 * @return String
@@ -38,7 +49,7 @@ class ZendSearchBlockPlugin extends BlockPlugin {
 	 * @return object
 	 */
 	function &getZendSearchPlugin() {
-		$plugin =& PluginRegistry::getPlugin('generic', 'ZendSearchPlugin');
+		$plugin =& PluginRegistry::getPlugin('generic', $this->parentPluginName);
 		return $plugin;
 	}
 
