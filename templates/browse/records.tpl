@@ -32,7 +32,7 @@
 	{else}
 		&nbsp;|&nbsp;
 	{/if}
-	<a class="action" href="{url op="browse" path=$archiveId sortOrderId=$sortOrder->getSortOrderId()}">{$sortOrder->getSortOrderName()|escape}</a>
+	<a class="action" href="{url path=$archiveId sortOrderId=$sortOrder->getSortOrderId()}">{$sortOrder->getSortOrderName()|escape}</a>
 {/iterate}
 </p>
 
