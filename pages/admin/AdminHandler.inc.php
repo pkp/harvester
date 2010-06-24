@@ -9,7 +9,7 @@
  * @package pages.admin
  * @class AdminHandler
  *
- * Handle requests for site administration functions. 
+ * Handle requests for site administration functions.
  *
  */
 
@@ -19,6 +19,12 @@
 import('classes.handler.Handler');
 
 class AdminHandler extends Handler {
+	/**
+	 * Constructor
+	 **/
+	function AdminHandler() {
+		parent::Handler();
+	}
 
 	/**
 	 * Display site admin index page.

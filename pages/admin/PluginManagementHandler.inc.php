@@ -12,8 +12,6 @@
  * @brief Handle requests for installing/upgrading/deleting plugins.
  */
 
-// $Id$
-
 define('VERSION_FILE', '/version.xml');
 define('INSTALL_FILE', '/install.xml');
 define('UPGRADE_FILE', '/upgrade.xml');
@@ -26,6 +24,12 @@ import('classes.install.Upgrade');
 import('pages.admin.AdminHandler');
 
 class PluginManagementHandler extends AdminHandler {
+	/**
+	 * Constructor
+	 **/
+	function PluginManagementHandler() {
+		parent::AdminHandler();
+	}
 
 	/**
 	 * Display a list of plugins along with management options.
@@ -128,41 +132,60 @@ class PluginManagementHandler extends AdminHandler {
 		$templateMgr->assign('path', $function);
 		$templateMgr->assign('pageHierarchy', $this->setBreadcrumbs(true));
 
+		$errorMsg = '';
 		if (Request::getUserVar('uploadPlugin')) {
 			import('classes.file.PublicFileManager');
 			$publicFileManager = new PublicFileManager();
-			$pluginFile = $_FILES['newPlugin']['name'];
-			$pluginName = basename($pluginFile, '.tar.gz');
+			$pluginFile = Core::getBaseDir() . DIRECTORY_SEPARATOR . $publicFileManager->getSiteFilesPath() . DIRECTORY_SEPARATOR . $_FILES['newPlugin']['name'];
+			// tar archive basename (less potential version number) must equal plugin directory name
+			// and plugin files must be in a directory named after the plug-in.
+			$matches = array();
+			String::regexp_match_get('/^[a-zA-Z0-9]+/', basename($pluginFile, '.tar.gz'), $matches);
+			$pluginName = array_pop($matches);
+		} else {
+			$errorMsg = 'manager.plugins.fileSelectError';
+		}
 
-			if ($publicFileManager->uploadSiteFile('newPlugin', $pluginFile)) {
-				// tar archive basename must equal plugin directory name, and plugin files must be in root directory
-				$pluginDir = Core::getBaseDir() . DIRECTORY_SEPARATOR . $publicFileManager->getSiteFilesPath();
-
-				// Test whether the tar binary is available for the export to work
-				$tarBinary = Config::getVar('cli', 'tar');
-				if (!empty($tarBinary) && file_exists($tarBinary)) {
-					exec($tarBinary.' -xzf ' . escapeshellarg($pluginDir . DIRECTORY_SEPARATOR . $pluginFile) . ' -C ' . escapeshellarg($pluginDir));
-
-					if ($function == 'install') {
-						$this->installPlugin($pluginDir . DIRECTORY_SEPARATOR . $pluginName, $templateMgr);
-					} else if ($function == 'upgrade') {
-						$this->upgradePlugin($pluginDir . DIRECTORY_SEPARATOR . $pluginName, $templateMgr);
-					}
-
-					$publicFileManager->removeSiteFile($pluginFile);
-				} else {
-					$templateMgr->assign('error', true);
-					$templateMgr->assign('message', 'manager.plugins.tarCommandNotFound');
-				}
+		if (empty($errorMsg)) {
+			if ($publicFileManager->uploadSiteFile('newPlugin', basename($pluginFile))) {
+				// Create random dirname to avoid symlink attacks.
+				$pluginDir = Core::getBaseDir() . DIRECTORY_SEPARATOR . $publicFileManager->getSiteFilesPath() . DIRECTORY_SEPARATOR . $pluginName . substr(md5(mt_rand()), 0, 10);
+				mkdir($pluginDir);
 			} else {
-				$templateMgr->assign('error', true);
-				$templateMgr->assign('message', 'manager.plugins.uploadError');
+				$errorMsg = 'manager.plugins.uploadError';
 			}
-		} else if (Request::getUserVar('installPlugin')) {
-			if(Request::getUserVar('pluginUploadLocation') == '') {
-				$templateMgr->assign('error', true);
-				$templateMgr->assign('message', 'manager.plugins.fileSelectError');
+		}
+
+		if (empty($errorMsg)) {
+			// Test whether the tar binary is available for the export to work
+			$tarBinary = Config::getVar('cli', 'tar');
+			if (!empty($tarBinary) && file_exists($tarBinary)) {
+				exec($tarBinary.' -xzf ' . escapeshellarg($pluginFile) . ' -C ' . escapeshellarg($pluginDir));
+			} else {
+				$errorMsg = 'manager.plugins.tarCommandNotFound';
 			}
+		}
+
+		if (empty($errorMsg)) {
+			// We should now find a directory named after the
+			// plug-in within the extracted archive.
+			$pluginDir .= DIRECTORY_SEPARATOR . $pluginName;
+			if (is_dir($pluginDir)) {
+				if ($function == 'install') {
+					$this->installPlugin($pluginDir, $templateMgr);
+				} else if ($function == 'upgrade') {
+					$this->upgradePlugin($pluginDir, $templateMgr);
+				}
+
+				$publicFileManager->removeSiteFile(basename($pluginFile));
+			} else {
+				$errorMsg = 'manager.plugins.invalidPluginArchive';
+			}
+		}
+
+		if (!empty($errorMsg)) {
+			$templateMgr->assign('error', true);
+			$templateMgr->assign('message', $errorMsg);
 		}
 
 		$templateMgr->display('admin/managePlugins.tpl');
