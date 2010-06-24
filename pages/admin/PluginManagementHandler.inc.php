@@ -75,8 +75,7 @@ class PluginManagementHandler extends AdminHandler {
 		$templateMgr->assign('uploaded', false);
 		$templateMgr->assign('error', false);
 
-		$category = $this->getPluginCategory($plugin);
-		$templateMgr->assign('pageHierarchy', $this->setBreadcrumbs(true, $category));
+		$templateMgr->assign('pageHierarchy', $this->setBreadcrumbs(true));
 
 		$templateMgr->display('admin/managePlugins.tpl');
 	}
