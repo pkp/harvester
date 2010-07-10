@@ -35,6 +35,7 @@ class PluginManagementHandler extends AdminHandler {
 	 * Display a list of plugins along with management options.
 	 */
 	function managePlugins($args) {
+		$this->validate();
 		$path = isset($args[0])?$args[0]:null;
 		$plugin = isset($args[1])?$args[1]:null;
 
@@ -68,6 +69,7 @@ class PluginManagementHandler extends AdminHandler {
 	 * Show plugin installation form.
 	 */
 	function showInstallForm() {
+		$this->validate();
 		$templateMgr =& TemplateManager::getManager();
 		$this->setupTemplate(true);
 
@@ -85,6 +87,7 @@ class PluginManagementHandler extends AdminHandler {
 	 * @param plugin string
 	 */
 	function showUpgradeForm($plugin) {
+		$this->validate();
 		$templateMgr =& TemplateManager::getManager();
 		$this->setupTemplate(true);
 
@@ -103,6 +106,7 @@ class PluginManagementHandler extends AdminHandler {
 	 * @param plugin string
 	 */
 	function showDeleteForm($plugin) {
+		$this->validate();
 		$templateMgr =& TemplateManager::getManager();
 		$this->setupTemplate(true);
 
@@ -123,6 +127,7 @@ class PluginManagementHandler extends AdminHandler {
 	 * $param function string type of operation to perform after upload ('upgrade' or 'install')
 	 */
 	function uploadPlugin($function) {
+		$this->validate();
 		$templateMgr =& TemplateManager::getManager();
 		$this->setupTemplate(true);
 
@@ -197,6 +202,7 @@ class PluginManagementHandler extends AdminHandler {
 	 * @return boolean
 	 */
 	function installPlugin($path, &$templateMgr) {
+		$this->validate();
 		$versionFile = $path . VERSION_FILE;
 		$templateMgr->assign('error', true);
 		$templateMgr->assign('path', 'install');
@@ -256,6 +262,7 @@ class PluginManagementHandler extends AdminHandler {
 	 * @return boolean
 	 */
 	function upgradePlugin($path, &$templateMgr) {
+		$this->validate();
 		$versionFile = $path . VERSION_FILE;
 		$templateMgr->assign('error', true);
 		$templateMgr->assign('path', 'upgrade');
@@ -315,6 +322,7 @@ class PluginManagementHandler extends AdminHandler {
 	 * @param plugin string
 	 */
 	function deletePlugin($plugin) {
+		$this->validate();
 		$templateMgr =& TemplateManager::getManager();
 		$this->setupTemplate(true);
 
