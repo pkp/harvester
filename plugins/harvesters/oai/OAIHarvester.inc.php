@@ -253,99 +253,97 @@ class OAIHarvester extends Harvester {
 	 * @return int Number or records, or false iff error condition
 	 */
 	function updateRecords($params = array(), $resumptionToken = null, $recordOffset = 0) {
-		// Allow the harvesting of multiple sets by looping through
-		if (isset($params['set']) && is_array($params['set'])) {
-			$count = 0;
-			foreach ($params['set'] as $setSpec) {
-				$newParams = $params;
-				$newParams['set'] = $setSpec;
-				$count += $this->updateRecords($newParams, null, null);
+		do {
+			// Allow the harvesting of multiple sets by looping through
+			if (isset($params['set']) && is_array($params['set'])) {
+				$count = 0;
+				foreach ($params['set'] as $setSpec) {
+					$newParams = $params;
+					$newParams['set'] = $setSpec;
+					$count += $this->updateRecords($newParams, null, null);
+				}
+				return $count;
 			}
-			return $count;
-		}
-
-		// Otherwise, harvest a single set (or all records)
-		$verb = $this->getHarvestingMethod();
-		$parser = new XMLParser();
-		$archive =& $this->getArchive();
-
-		if ($archive->getSetting('isStatic')) {
-			$harvestUrl = $this->oaiUrl;
-		} else {
-			$harvestingParams = array();
-			$harvestingParams['verb'] = $verb;
-			if ($resumptionToken !== null) {
-				$harvestingParams['resumptionToken'] = $resumptionToken;
+	
+			// Otherwise, harvest a single set (or all records)
+			$verb = $this->getHarvestingMethod();
+			$parser = new XMLParser();
+			$archive =& $this->getArchive();
+	
+			if ($archive->getSetting('isStatic')) {
+				$harvestUrl = $this->oaiUrl;
 			} else {
-				$harvestingParams['metadataPrefix'] = $this->getMetadataFormat();
-				foreach (array('from', 'until') as $name) {
-					if (isset($params[$name]) && $params[$name] == 'now') {
-						$params[$name] = date('Y-m-d');
-					} else if (isset($params[$name]) && $params[$name] == 'last') {
-						$lastHarvested = $this->archive->getLastIndexedDate();
-						if (empty($lastHarvested)) {
-							unset($params[$name]);
-						} else {
-							$params[$name] = date('Y-m-d', strtotime($lastHarvested));
+				$harvestingParams = array();
+				$harvestingParams['verb'] = $verb;
+				if ($resumptionToken !== null) {
+					$harvestingParams['resumptionToken'] = $resumptionToken;
+				} else {
+					$harvestingParams['metadataPrefix'] = $this->getMetadataFormat();
+					foreach (array('from', 'until') as $name) {
+						if (isset($params[$name]) && $params[$name] == 'now') {
+							$params[$name] = date('Y-m-d');
+						} else if (isset($params[$name]) && $params[$name] == 'last') {
+							$lastHarvested = $this->archive->getLastIndexedDate();
+							if (empty($lastHarvested)) {
+								unset($params[$name]);
+							} else {
+								$params[$name] = date('Y-m-d', strtotime($lastHarvested));
+							}
 						}
 					}
+					foreach (array('set', 'from', 'until') as $name) {
+						if (isset($params[$name])) $harvestingParams[$name] = $params[$name];
+					}
 				}
-				foreach (array('set', 'from', 'until') as $name) {
-					if (isset($params[$name])) $harvestingParams[$name] = $params[$name];
+				$harvestUrl = $this->addParameters($this->oaiUrl, $harvestingParams);
+			}
+			if (isset($params['verbose'])) echo "Harvest URL: $harvestUrl\n";
+			$this->throttle();
+			$result =& $parser->parse($harvestUrl);
+			if (!$parser->getStatus()) {
+				foreach ($parser->getErrors() as $error) {
+					$this->addError($error);
 				}
 			}
-			$harvestUrl = $this->addParameters($this->oaiUrl, $harvestingParams);
-		}
-		if (isset($params['verbose'])) echo "Harvest URL: $harvestUrl\n";
-		$this->throttle();
-		$result =& $parser->parse($harvestUrl);
-		if (!$parser->getStatus()) {
-			foreach ($parser->getErrors() as $error) {
-				$this->addError($error);
+			if (!$result) return false;
+	
+			$parser->destroy();
+			unset($parser);
+	
+			if ($errorNode =& $result->getChildByName('error')) {
+				$this->addError ($errorNode->getValue());
+				return false;
 			}
-		}
-		if (!$result) return false;
-
-		$parser->destroy();
-		unset($parser);
-
-		if ($errorNode =& $result->getChildByName('error')) {
-			$this->addError ($errorNode->getValue());
-			return false;
-		}
-
-		$token = null;
-
-		$verbNode =& $result->getChildByName($verb);
-		if ($verbNode) foreach ($verbNode->getChildren() as $node) {
-			switch ($node->getName()) {
-				case 'header':
-				case 'oai:header':
-					$identifierNode =& $node->getChildByName('identifier');
-					$this->updateRecord($identifierNode->getValue(), $params);
-					unset($identifierNode);
-					$recordOffset++;
-					break;
-				case 'record':
-				case 'oai:record':
-					$this->handleRecordNode($node);
-					$recordOffset++;
-					break;
-				case 'resumptionToken':
-				case 'oai:resumptionToken':
-					$token = $node->getValue();
-					break;
-				default:
-					$this->addError('Unknown node ' . $node->getName());
+	
+			$resumptionToken = null;
+	
+			$verbNode =& $result->getChildByName($verb);
+			if ($verbNode) foreach ($verbNode->getChildren() as $node) {
+				switch ($node->getName()) {
+					case 'header':
+					case 'oai:header':
+						$identifierNode =& $node->getChildByName('identifier');
+						$this->updateRecord($identifierNode->getValue(), $params);
+						unset($identifierNode);
+						$recordOffset++;
+						break;
+					case 'record':
+					case 'oai:record':
+						$this->handleRecordNode($node);
+						$recordOffset++;
+						break;
+					case 'resumptionToken':
+					case 'oai:resumptionToken':
+						$resumptionToken = $node->getValue();
+						break;
+					default:
+						$this->addError('Unknown node ' . $node->getName());
+				}
 			}
-		}
-		$result->destroy();
-		unset($verbNode, $result, $node); // Free memory
+			$result->destroy();
+			unset($verbNode, $result, $node); // Free memory
+		} while ($resumptionToken);
 
-		if ($token) {
-			$returner = $this->updateRecords($params, $token, $recordOffset);
-			return $returner;
-		}
 		if (!$this->getStatus()) return false; // Error
 		return $recordOffset;
 	}
