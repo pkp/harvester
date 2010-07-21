@@ -14,7 +14,7 @@
 
 <topic id="index/topic/000001" locale="en_US" title="Searching" toc="index/toc/000000" key="index.search">
 	<section>
-		<![CDATA[<p>Searching material stored in Harvester2 depends on the type of search plugin being used by the system, but generally the overall search pattern and options are the same. There are two search options:</p>
+		<![CDATA[<p>Searching material stored in Open Harvester Systems depends on the type of search plugin being used by the system, but generally the overall search pattern and options are the same. There are two search options:</p>
 		<ul>
 			<li>A basic search against all material indexed by the available search plugin, available on the sidebar (to search, simply enter your search criteria into the field and press the Search button);</li>
 			<li>A more comprehensive search available from the top navigation bar. Clicking the topmost Search link will take the user to the advanced search page, where multiple types of search fields are available. These fields are Administrator-managed, and may be different depending on which search plugin is in use, and how it has been configured.</li>

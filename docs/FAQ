@@ -1,9 +1,10 @@
 Frequently Asked Questions
 --------------------------
 
-This document contains frequently asked questions about Harvester2, primarily
-dealing with common technical and support questions. For information about using
-or interacting with Harvester2, consult the system's built-in help.
+This document contains frequently asked questions about Open Harvester Systems,
+primarily dealing with common technical and support questions. For information
+about using or interacting with Open Harvester Systems, consult the system's
+built-in help.
 
 
 =================
@@ -15,93 +16,100 @@ General Questions
 A: A support forum is available at <http://pkp.sfu.ca/support/forum/>.  Bugs or
    feature requests can be reported at <http://pkp.sfu.ca/bugzilla/>.  Although
    the forum is the preferred method of contact, email inquiries regarding
-   Harvester2 can be sent to <pkp.contact@gmail.com>.
+   Open Harvester Systems can be sent to <pkp.contact@gmail.com>.
    
    Although we will try our best to help you and fix any bugs found in the
-   system, please note that Harvester2 comes with no warranty or guarantee of
-   support.
+   system, please note that Open Harvester Systems comes with no warranty or
+   guarantee of support.
 
    -----------------------------------------------------------------------------
    
-   2) Can I modify the Harvester2 code?
+   2) Can I modify the Open Harvester Systems code?
    
-A: As Harvester2 is an open source program, you are free to make any code
-   changes that you like. We welcome any code submissions or patches to be
-   posted on the Development Forum at <http://pkp.sfu.ca/support/forum/> if
+A: As Open Harvester Systems is an open source program, you are free to make any
+   code changes that you like. We welcome any code submissions or patches to be
+   posted on the Development Forum at <http://pkp.sfu.ca/support/forum> if
    you think your changes may be beneficial to other users.
 
-   Please note that if you plan on redistributing Harvester2 (either in original
-   or a modified form), you must do so according to the terms of the GNU General
-   Public License v2. See docs/COPYING for the complete terms of this license.
-
+   Please note that if you plan on redistributing Open Harvester Systems (either
+   in original or a modified form), you must do so according to the terms of the
+   GNU General Public License v2. See docs/COPYING for the complete terms of
+   this license.
 
 
 ===================================
 Server Configuration and Management
 ===================================
 
-   1) Will Harvester2 work with PHP as a CGI instead of as an Apache module?
+   1) Will Open Harvester Systems work with PHP as a CGI instead of as an Apache
+      module?
 
-A: Harvester2 is known to work reasonably well with PHP as a CGI using Apache's
-   mod_actions. Since there are a number of different ways to configure Apache
-   to use the CGI version of PHP (e.g., through FastCGI, etc.), your mileage may
-   vary with other deployments (feedback is welcomed).
+A: Open Harvester Systems is known to work reasonably well with PHP as a CGI
+   using Apache's mod_actions. Since there are a number of different ways to
+   configure Apache to use the CGI version of PHP (e.g., through FastCGI, etc.),
+   your mileage may vary with other deployments (feedback is welcomed).
 
    On PHP 4 it may be necessary to add "cgi.fix_pathinfo = 1" to the server's
    php.ini to avoid fatal "No input file specified" errors. This parameter is
    enabled by default on PHP 5.
    
-   Harvester2 may not function correctly if the base directory is located
-   outside of the virtual host's DocumentRoot directory (e.g., when using
-   mod_alias or mod_userdir). This is due to a bug/feature in the method PHP
-   uses to determine the SCRIPT_NAME environment variable by stripping the
+   Open Harvester Systems may not function correctly if the base directory is
+   located outside of the virtual host's DocumentRoot directory (e.g., when
+   using mod_alias or mod_userdir). This is due to a bug/feature in the method
+   PHP uses to determine the SCRIPT_NAME environment variable by stripping the
    DOCUMENT_ROOT from SCRIPT_FILENAME.
 
    -----------------------------------------------------------------------------
 
-   2) Will Harvester2 work correctly in PHP's "safe mode"?
+   2) Will Open Harvester Systems work correctly in PHP's "safe mode"?
 
-A: Harvester2 is known to work reasonably well with PHP's safe mode restrictions
-   (including open_basedir) enabled. Testing has not been extensive, so there
-   may be unknown issues, in particular with very restrictive configurations
-   that disable PHP functions relied on by Harvester2 (feedback is welcomed).
+A: Open Harvester Systems is known to work reasonably well with PHP's safe mode
+   restrictions (including open_basedir) enabled. Testing has not been
+   extensive, so there may be unknown issues, in particular with very
+   restrictive configurations that disable PHP functions relied on by Open
+   Harvester Systems (feedback is welcomed).
 
    -----------------------------------------------------------------------------
 
-   3) Will Harvester2 work in a Microsoft IIS environment, or on other
-      non-Apache web servers?
+   3) Will Open Harvester Systems work in a Microsoft IIS environment, or on
+      other non-Apache web servers?
 
 A: While Harvester 2.x has not been tested on Microsoft IIS servers, it is based
    on the Open Journal Systems 2.x codebase, which has been tested on Microsoft
    Windows Server 2003 with IIS 6.0 on PHP 5.x. Additional standard environments
    should also be supported; we welcome feedback from users who have
-   successfully installed and used Harvester2 in other server environments.
+   successfully installed and used Open Harvester Systems in other server
+   environments.
 
    -----------------------------------------------------------------------------
 
-   4) How can I create a backup of a Harvester2 site?
+   4) How can I create a backup of an Open Harvester Systems installation?
 
-A: It is recommended that a Harvester2 system be periodically backed up to
-   guard against a failure in Harvester2 or the server software or hardware that
-   could result in data loss.
+A: It is recommended that Open Harvester Systems be periodically backed up to
+   guard against a failure in Open Harvester Systems or the server software or
+   hardware that could result in data loss.
    
-   To properly backup a Harvester2 system, the following should be backed up:
+   To properly backup an Open Harvester Systems installation, the following
+   should be backed up:
      - The database, using the tools provided by your DBMS (e.g.,
        mysqldump for MySQL, pg_dump for PostgreSQL)
-     - The base Harvester2 directory
+     - The base Open Harvester Systems directory
        
    This backup procedure can be easily integrated into any automated backup
    mechanism.
 
    -----------------------------------------------------------------------------
 
-   5) How can I move an existing Harvester2 installation to a different server?
+   5) How can I move an existing Open Harvester Systems installation to a
+      different server?
 
-A: To move a Harvester2 system from one server to another, you will need to:
+A: To move an Open Harvester Systems installation from one server to another,
+   you will need to:
 
    - Copy the database data, and import it into the new server (e.g., using the
      command-line tools provided by the DBMS)
-   - Copy the base Harvester2 directory and non-public files directory
+   - Copy the base Open Harvester Systems directory and non-public files
+     directory
    - Update config.inc.php with any changed settings for the new server
      (typically, the base URL, database authentication/access, email, and files
      settings will differ between servers)
@@ -112,8 +120,9 @@ A: To move a Harvester2 system from one server to another, you will need to:
 Common Technical Issues
 =======================
 
-   1) When I try to access my Harvester2 site this error message is displayed:
-      "Warning: Smarty error: problem creating directory '/./templates' in
+   1) When I try to access my Open Harvester Systems site this error message is
+      displayed:
+      "Warning: Smarty error: problem creating directory './templates' in
       ./lib/smarty/Smarty.class.php"
 
 A: This can occur if a higher level directory has execute permission but not
@@ -128,7 +137,8 @@ A: This can occur if a higher level directory has execute permission but not
 
    3) Emails sent out by the system are never received.
 
-A: By default, Harvester2 sends mail through PHP's built-in mail() facility.
+A: By default, Open Harvester Systems sends mail through PHP's built-in mail()
+   facility.
 
    On Windows PHP needs to be configured to send email through a SMTP server
    (running either on the same machine or on another machine).
@@ -140,13 +150,13 @@ A: By default, Harvester2 sends mail through PHP's built-in mail() facility.
    See <http://www.php.net/mail> for more details on configuring PHP's mail
    functionality.
    
-   Harvester2 can also be configured to use an SMTP server as specified in
-   config.inc.php, either with or without authentication.
+   Open Harvester Systems can also be configured to use an SMTP server as
+   specified in config.inc.php, either with or without authentication.
 
    -----------------------------------------------------------------------------
 
-   4) I am using Apache 2.0.x, and Harvester2 pages fail to load, producing an
-      error like "File does not exist: .../index.php/index/...".
+   4) I am using Apache 2.0.x, and Open Harvester Systems pages fail to load,
+      producing an error like "File does not exist: .../index.php/index/...".
 
 A: With some versions or configurations of Apache 2.0.x, it may be necessarily
    to explicitly enable the AcceptPathInfo directive in your Apache
@@ -157,9 +167,9 @@ A: With some versions or configurations of Apache 2.0.x, it may be necessarily
 
    -----------------------------------------------------------------------------
 
-   5) Harvester2 installation fails with the MySQL error "Client does not
-      support authentication protocol requested by server; consider upgrading
-      MySQL client".
+   5) Open Harvester Systems installation fails with the MySQL error "Client
+      does not support authentication protocol requested by server; consider
+      upgrading MySQL client".
 
 A: This problem is caused by a change in the MySQL authentication protocol in
    MySQL 4.1, and can occur if your system is using an older MySQL client
@@ -172,11 +182,11 @@ A: This problem is caused by a change in the MySQL authentication protocol in
 
    6) "Warning: ini_set(): A session is active. You cannot change the session
        module's ini settings at this time" messages appear when I load
-       Harvester2.
+       Open Harvester Systems.
 
 A: Check if session.auto_start is enabled in your php.ini configuration.
-   Harvester2 requires this setting to be disabled, which is the default
-   behaviour in current versions of PHP.
+   Open Harvester Systems requires this setting to be disabled, which is the
+   default behaviour in current versions of PHP.
 
    -----------------------------------------------------------------------------
 
@@ -188,8 +198,9 @@ A: This may indicate that your server does not have the selected PHP database
    of phpinfo() to see if the required database support exists -- see
    http://php.net/phpinfo).
    
-   The Harvester2 installer lists database drivers for which the required PHP
-   extension does not appear to be loaded in brackets (e.g., "[MySQL]").
+   The Open Harvester Systems installer lists database drivers for which the
+   required PHP extension does not appear to be loaded in brackets (e.g.,
+   "[MySQL]").
    
    Most Linux distributions offer a separate package that can be installed for
    each supported PHP database module -- e.g., php4-mysql or php-mysql (for
@@ -201,17 +212,18 @@ A: This may indicate that your server does not have the selected PHP database
 
    -----------------------------------------------------------------------------
 
-   8) How can I remove "index.php" from the URLs in Harvester2?
+   8) How can I remove "index.php" from the URLs in Open Harvester Systems?
 
-A: Harvester2 uses a REST-style URL syntax for all of its links.  To force Harvester2
-   to remove the "index.php" portion of all URLs, edit config.inc.php and set
-   "restful_urls" to "On".
+A: Open Harvester Systems uses a REST-style URL syntax for all of its links. To
+   force Open Harvester Systems to remove the "index.php" portion of all URLs,
+   edit config.inc.php and set "restful_urls" to "On".
    
-   In addition, your server will have to support URL rewriting in order to recognize
-   the new URLs.  Apache servers use the mod_rewrite plugin, which must be enabled
-   in your httpd.conf, and the following section added to the correct section of either
-   your httpd.conf or an .htaccess file (preferred) in your Harvester2 root directory 
-   (the same location as config.inc.php):
+   In addition, your server will have to support URL rewriting in order to
+   recognize the new URLs.  Apache servers use the mod_rewrite plugin, which
+   must be enabled in your httpd.conf, and the following section added to the
+   correct section of either your httpd.conf or an .htaccess file (preferred) in
+   your Open Harvester Systems root directory (the same location as
+   config.inc.php):
    
    <IfModule mod_rewrite.c>
    RewriteEngine on

@@ -9,7 +9,7 @@
  * @package rt.harvester2
  * @class RTDAO
  *
- * DAO operations for the Harvester2 Reading Tools interface.
+ * DAO operations for the Open Harvester Systems Reading Tools interface.
  *
  * $Id$
  */

@@ -20,7 +20,7 @@ import('lib.pkp.classes.core.PKPRequest');
 
 class Request extends PKPRequest {
 	/**
-	 * Redirect to the specified page within Harvester2. Shorthand for a common call to Request::redirect(Request::url(...)).
+	 * Redirect to the specified page within Open Harvesting Systems. Shorthand for a common call to Request::redirect(Request::url(...)).
 	 * @param $page string The name of the op to redirect to.
 	 * @param $op string optional The name of the op to redirect to.
 	 * @param $path mixed string or array containing path info for redirect.

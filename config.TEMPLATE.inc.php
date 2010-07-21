@@ -10,7 +10,7 @@
 ; Copyright (c) 2005-2010 Alec Smecher and John Willinsky
 ; Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
 ;
-; Harvester2 Configuration settings.
+; Open Harvester Systems Configuration settings.
 ; Rename config.TEMPLATE.inc.php to config.inc.php to use.
 ;
 ; $Id$
@@ -101,7 +101,7 @@ debug = Off
 
 ; Path to the directory to store public uploaded files
 ; (This directory should be web-accessible and the specified path
-; should be relative to the base Harvester2 directory)
+; should be relative to the base Open Harvester Systems directory)
 public_files_dir = public
 
 ; Permissions mask for created files and directories

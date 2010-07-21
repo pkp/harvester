@@ -15,11 +15,11 @@
 <topic id="management/topic/000001" locale="en_US" title="Add Archive" toc="management/toc/000000" key="management.archives">
 	<section>
 		<![CDATA[<p>When creating a new archive or editing an existing archive, the Administrator will be presented with a form where the critical information about a repository can be entered. This includes title, description, a site URL, harvester type, and several additional fields depending on the harvester being used.</p>
-		<p>When using the Open Archives Initiative (OAI) Harvester2, the following additional fields are available:
+		<p>When using the Open Archives Initiative (OAI) Open Harvester Systems, the following additional fields are available:
 		<ul>
 		<li><strong>OAI Base URL</strong>: This is the base URL that will be used to harvest OAI information. This URL is generally provided by the application generating the OAI data, such as the Public Knowledge Project's <a href="http://pkp.sfu.ca/ojs" target="_new">Open Journal Systems</a> application.</li>
 		<li><strong>Index Method</strong>: You may choose whether to harvest an OAI repository using the ListRecords or ListIdentifiers methods. ListRecords will generally be faster, but ListIdentifiers may be useful in some cases with repositories that are not 100% compatible. See <a href="http://www.openarchives.org" target="_new">www.openarchives.org</a> for more information.</li>
-		<li><strong>Metadata Format</strong>: Many OAI-compliant applications can deliver metadata in a number of metadata formats, such as Dublin Core, MARC, and MODS. Once the administrator has entered the OAI Base URL, a list of supported metadata formats can be fetched using the "Refresh" button. Any metadata format supported by both the OAI data source and the Harvester2 will be listed.</li>
+		<li><strong>Metadata Format</strong>: Many OAI-compliant applications can deliver metadata in a number of metadata formats, such as Dublin Core, MARC, and MODS. Once the administrator has entered the OAI Base URL, a list of supported metadata formats can be fetched using the "Refresh" button. Any metadata format supported by both the OAI data source and the Open Harvester Systems will be listed.</li>
 		</ul></p>]]>
 	</section>
 </topic>

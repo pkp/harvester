@@ -15,7 +15,7 @@
 <topic id="admin/topic/000014" locale="en_US" title="Users" toc="admin/toc/000000" key="admin.Users">
   <section>
     <![CDATA[<p>It is the Site Administrator's responsibility to manage users in the Harvester system. This includes creating users, disabling accounts, managing roles, etc. The Site Administrator can browse and add to existing enrollments, modify profiles, and contact groups of users.</p>
-    <p>There are currently only two roles included in the Harvester: Site Administrator, of which there can be only one (the person who originally installed the Harvester2 platform); and Archive Manager, of which there can be as many as desired or needed. The Site Administrator has all the powers of an Archive Manager.</p>
+    <p>There are currently only two roles included in the Harvester: Site Administrator, of which there can be only one (the person who originally installed the Open Harvester Systems platform); and Archive Manager, of which there can be as many as desired or needed. The Site Administrator has all the powers of an Archive Manager.</p>
 
 <p><em>All Users</em>. This list includes everyone who is registered with the Harvester in some capacity. The Site Administrator has the ability to sign in as any registered user. This can be extremely helpful when trying to provide the user with assistance at a distance, because it allows the Site Administrator to gain a more precise sense of what may be going wrong.</p>
 

@@ -6,11 +6,11 @@
 Contributing Code
 _________________
 
-The PKP team is happy to accept patches in the public "Harvester2 Development"
-forum at <http://pkp.sfu.ca/support/forum/viewforum.php?f=11>. If you would like
-to have your patch included in the Harvester2 codebase, we suggest discussing it
-with the Harvester2 team before implementation to ensure that it suits upcoming
-development plans.
+The PKP team is happy to accept patches in the public "Open Harvester Systems
+Development" forum at <http://pkp.sfu.ca/support/forum/viewforum.php?f=11>. If
+you would like to have your patch included in the Open Harvester Systems
+codebase, we suggest discussing it with the Harvester2 team before
+implementation to ensure that it suits upcoming development plans.
 
 For code that is intended for inclusion in the main codebase:
 * Patches against a current git clone are preferred; alternately, patches
@@ -21,18 +21,19 @@ For code that is intended for inclusion in the main codebase:
 * The feature should be suitable for situations where very distinct journals are
   hosted within the same deployment; i.e. settings should generally be journal-
   level, not system-level.
-* The design patterns used in Harvester2 should be understood and adhered to.
+* The design patterns used in Open Harvester Systems should be understood and
+  adhered to.
 * Localization standards should be maintained.
 * Database IDs should be checked as in the current codebase.
 * XSS (cross-site scripting) attacks should be checked as in the current
   codebase.
 * Contributors are responsible for writing code compatible with the primary
   platforms listed in README.
-* Contributions should be delivered to the team via the public "Harvester2
-  Development" forum as a patch.
-* Harvester2 management features should be kept in mind, such as upgrade and
-  installation; all database schema information should be maintained in the
-  dbscripts/xml/harvester2_schema.xml file; etc.
+* Contributions should be delivered to the team via the public "Open Harvester
+  Systems Development" forum as a patch.
+* Open Harvester Systems management features should be kept in mind, such as
+  upgrade and installation; all database schema information should be maintained
+  in the dbscripts/xml/harvester2_schema.xml file; etc.
 * The development team is happy to review contributed patches, but we have a
   limited amount of time to spend integrating patches with the codebase or
   modifying contributed code. If aspects of the code need work, we would rather
@@ -40,8 +41,8 @@ For code that is intended for inclusion in the main codebase:
 
 For contributions that are distributed separately as patches or plugins:
 * If contributors haven't met all the conditions above, they are welcome to
-  distribute additional features as patches or plugins. However, the Harvester2
-  team won't be able to provide support in this case.
+  distribute additional features as patches or plugins. However, the Open
+  Harvester Systems team won't be able to provide support in this case.
 * If the option is available, coding a feature as a plugin is the preferred
   method.
 
@@ -171,8 +172,8 @@ SQL
   that does get used (e.g., by filing a bug report).
 
 
-Harvester2 Conventions
-_______________
+Open Harvester Systems Conventions
+__________________________________
 
 git
 ---
@@ -285,5 +286,5 @@ Other Tips
 ----------
 * Use $request->redirectUrl(...), or better yet, $request->redirect(...) for
   HTTP redirects instead of header('Location: ...');
-* For additional coding convention information, see the Harvester2 Design
-  Document at <http://pkp.sfu.ca/harvester2/TechnicalReference.pdf>.
+* For additional coding convention information, see the Open Harvester Systems
+  Design Document at <http://pkp.sfu.ca/harvester2/TechnicalReference.pdf>.

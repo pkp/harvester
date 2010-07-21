@@ -9,7 +9,7 @@
  * @class installTool
  * @ingroup tools
  *
- * @brief CLI tool for installing Harvester2.
+ * @brief CLI tool for installing Open Harvester Systems.
  *
  */
 

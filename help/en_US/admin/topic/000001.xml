@@ -17,10 +17,10 @@
 		<![CDATA[<p>On the Site Settings page, the Administrator enters basic information about the site including its description and contact information. Site Settings are split into two sections:</p>]]>
 	<section title="General">
 		<![CDATA[<ul>
-		<li><strong>Site Title</strong>: This is the primary title of the Harvester2 installation.</li>
-		<li><strong>Introduction</strong>: This message is displayed on the Harvester2 home page. Unfiltered HTML tags may be used.</li>
+		<li><strong>Site Title</strong>: This is the primary title of the Open Harvester Systems installation.</li>
+		<li><strong>Introduction</strong>: This message is displayed on the Open Harvester Systems home page. Unfiltered HTML tags may be used.</li>
 		<li><strong>About the Site description</strong>: This message is displayed under the "About" page.</li>
-		<li><strong>Custom Logo</strong>: A custom logo can be uploaded to override the default Harvester2 logo here.</li>
+		<li><strong>Custom Logo</strong>: A custom logo can be uploaded to override the default Open Harvester Systems logo here.</li>
 		<li><strong>Minimum Password Length</strong>: this sets the smallest acceptable password length for all users on the system.</li>
 		<li><strong>Theme</strong>: This allows the Site Administrator to choose from among the themes that have been uploaded to the site. Themes are handled as plugins, and can be administered from the Plugins page. </li>
 		<li><strong>Style sheet</strong>: The Site Administrator can upload a custom style sheet to replace the default styles/common.css style sheet.</li>

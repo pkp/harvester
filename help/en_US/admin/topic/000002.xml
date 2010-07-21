@@ -14,6 +14,6 @@
 
 <topic id="admin/topic/000002" locale="en_US" title="Languages" toc="admin/toc/000000" key="admin.languages">
 	<section>
-		<![CDATA[<p>The Languages page allows the Administrator to designate the supported locales for the Harvester2 installation, including the primary locale and additional supported locales. If more than one locale is supported, users will be presented with a Language pulldown on the right-hand side of Harvester2 pages.</p><p>The languages appearing under "Langage Settings" are installed and, when enabled, ready for use. To add languages to this list, they must be installed under the "Install Languages" heading. See the README file for additional information on translations.</p>]]>
+		<![CDATA[<p>The Languages page allows the Administrator to designate the supported locales for the Open Harvester Systems installation, including the primary locale and additional supported locales. If more than one locale is supported, users will be presented with a Language pulldown on the right-hand side of Open Harvester Systems pages.</p><p>The languages appearing under "Langage Settings" are installed and, when enabled, ready for use. To add languages to this list, they must be installed under the "Install Languages" heading. See the README file for additional information on translations.</p>]]>
 	</section>
 </topic>

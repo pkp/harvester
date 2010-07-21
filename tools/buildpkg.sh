@@ -6,7 +6,7 @@
 # Copyright (c) 2005-2010 Alec Smecher and John Willinsky
 # Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
 #
-# Script to create a Harvester2 package for distribution.
+# Script to create an Open Harvester Systems package for distribution.
 #
 # Usage: buildpkg.sh <version> [<tag>] [<patch_dir>]
 #

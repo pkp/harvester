@@ -14,7 +14,7 @@
 
 <topic id="index/topic/000002" locale="en_US" title="Browsing" toc="index/toc/000000" key="index.browse">
 	<section>
-		<![CDATA[<p>The Browse feature allows users to examine the PKP Harvester2 contents on a record-by-record basis. You may either browse by choosing a specific repository, or you may browse all records.</p>
+		<![CDATA[<p>The Browse feature allows users to examine Open Harvester Systems contents on a record-by-record basis. You may either browse by choosing a specific repository, or you may browse all records.</p>
 		<p>Note that the Search feature allows users to choose specific archives to search, if you wish to browse records meeting specific criteria.</p>]]>
 	</section>
 </topic>

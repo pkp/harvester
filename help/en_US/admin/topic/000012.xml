@@ -26,6 +26,6 @@
     
     <p>Context <strong>Searches</strong> are internet-accessible search engines, collections, and scholarly databases. When they are created they must include a Title (eg. <em>Google Scholar</em>); URL (<em>http://scholar.google.com</em>); Search URL <em>http://scholar.google.com/scholar?ie=UTF-8&oe=UTF-8&hl=eng&as_sauthors={$formKeywords}</em>); Post Data, if necessary; and can include a description.</p>
     
-    <p>Versions and Contexts can be imported and exported between the Harvester and other compatible systems (other Harvester2 installations as well as OJS and OCS); searches should be validated to ensure that they work properly.</p>]]>
+    <p>Versions and Contexts can be imported and exported between the Harvester and other compatible systems (other Open Harvester Systems installations as well as OJS and OCS); searches should be validated to ensure that they work properly.</p>]]>
   </section>
 </topic>

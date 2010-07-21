@@ -14,15 +14,14 @@
 
 <topic id="admin/topic/000013" locale="en_US" title="Sort Orders" toc="admin/toc/000000" key="admin.sortOrders">
 	<section>
-		<![CDATA[<p>The Site Administrator can create custom sort orders for each archive, which will then be available
-		to users from the Harvester2 Browse page. Multiple sort orders can be created to sort different metadata fields alphabetically, numerically, or by date.</p>]]>
+		<![CDATA[<p>The Site Administrator can create custom sort orders for each archive, which will then be available to users from the Open Harvester Systems Browse page. Multiple sort orders can be created to sort different metadata fields alphabetically, numerically, or by date.</p>]]>
 	</section>
 	<section title="Creating a Sort Order">
 		 <![CDATA[<p>Sort order configuration options are as follows:</p>
 		<ul>
 		<li><strong>Name</strong>: New sort orders must be given a title. This appears as a clickable link on individual repository Browse pages.</li>
 		<li><strong>Type</strong>: A sort type must be chosen. Choices are between <em>Text</em>, <em>Number</em>, and <em>Date</em>, and must match the type of content being sorted. Text types will sort material alphabetically; Number types will sort material numerically; and Date types will sort dates. If a Sort By Title option was being created, <em>Text</em> would be a reasonable choice.</li>
-		<li><strong>Fields</strong>: One field for each supported schema type can be chosen to sort against. Not only should the schema be supported by Harvester2 itself (available schemas only will appear in the fields list): records of that type should also be available from the repositories in question. For example, if a Sort by Title option was being created, it would be reasonable to choose the Title field for any relevant schema type (eg. Dublin Core) that is supported by the system; but this only makes sense if the system is harvesting Dublin Core metadata from any given provider.</li>
+		<li><strong>Fields</strong>: One field for each supported schema type can be chosen to sort against. Not only should the schema be supported by Open Harvester Systems itself (available schemas only will appear in the fields list): records of that type should also be available from the repositories in question. For example, if a Sort by Title option was being created, it would be reasonable to choose the Title field for any relevant schema type (eg. Dublin Core) that is supported by the system; but this only makes sense if the system is harvesting Dublin Core metadata from any given provider.</li>
 		</ul>]]>
 	</section>
 	<section title="Managing Sort Orders">

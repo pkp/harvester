@@ -12,8 +12,8 @@
   * $Id$
   -->
 
-<toc id="index/toc/000000" locale="en_US" title="Harvester2 Help" parent_topic="index/topic/000000">
-	<topic id="index/topic/000000" title="Introduction to Harvester2" />
+<toc id="index/toc/000000" locale="en_US" title="Open Harvester Systems Help" parent_topic="index/topic/000000">
+	<topic id="index/topic/000000" title="Introduction to Open Harvester Systems" />
 	<topic id="index/topic/000001" title="Searching" />
 	<topic id="index/topic/000002" title="Browsing" />
 	<topic id="user/topic/000000" title="User Home"/>

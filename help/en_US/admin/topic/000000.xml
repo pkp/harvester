@@ -14,6 +14,6 @@
 
 <topic id="admin/topic/000000" locale="en_US" title="Administration" toc="index/toc/000000" key="admin.index" subtoc="admin/toc/000000">
 	<section>
-		<![CDATA[<p>Welcome to PKP Harvester2 Administration. Using the Administration tools, the Administrator can configure the system, add, delete, and manage archives, configure crosswalks and sort orders, and more. These features are described in depth in the next sections.</p>]]>
+		<![CDATA[<p>Welcome to PKP Open Harvester Systems Administration. Using the Administration tools, the Administrator can configure the system, add, delete, and manage archives, configure crosswalks and sort orders, and more. These features are described in depth in the next sections.</p>]]>
 	</section>
 </topic>

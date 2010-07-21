@@ -15,6 +15,6 @@
 <topic id="admin/topic/000008" locale="en_US" title="Crosswalks" toc="admin/toc/000000" key="admin.crosswalks">
 	<section>
 		<![CDATA[<p>Crosswalks are used to allow searches to span multiple metadata formats. For example, if one archive is harvested in the Dublin Core metadata format and another is harvested in the MARC metadata format, a Crosswalk connects the various fields in each format so that they can be searched together.</p><p>Generally, crosswalks are used to identify fields containing such information as Titles and Authors in various metadata formats.</p><p>Two kinds of crosswalks are supported: Date crosswalks and Text crosswalks.</p>
-		<p>PKP Harvester2 ships with several default crosswalks; to reset the current crosswalk list to the default set, use the "Reset to Defaults" link at the bottom of the crosswalk list. This will permanently delete all existing crosswalks; use with caution.</p>]]>
+		<p>PKP Open Harvester Systems ships with several default crosswalks; to reset the current crosswalk list to the default set, use the "Reset to Defaults" link at the bottom of the crosswalk list. This will permanently delete all existing crosswalks; use with caution.</p>]]>
 	</section>
 </topic>
