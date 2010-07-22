@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE data SYSTEM "../../../lib/pkp/dtd/xmlData.dtd">
+
+<!--
+  * 2.3.1_preupdate.xml
+  *
+  * Copyright (c) 2005-2010 Alec Smecher and John Willinsky
+  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
+  *
+  * 2.3.1 database updates XML file, applied before DB schema descriptors.
+  *
+  * $Id$
+  -->
+
+<data>
+	<!-- Bug #5550: make affiliations localized -->
+	<sql>
+		<query>
+			INSERT INTO user_settings (user_id, setting_name, setting_type, setting_value, locale) SELECT u.user_id, 'affiliation', 'string', u.affiliation, s.primary_locale FROM users u, site s
+		</query>
+	</sql>
+</data>

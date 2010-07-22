@@ -17,6 +17,7 @@
 
 	<!-- PKP schema components -->
 	<schema file="lib/pkp/xml/schema/common.xml" />
+	<schema file="lib/pkp/xml/schema/controlledVocab.xml" />
 
 	<!-- Harvester schema -->
 	<schema file="dbscripts/xml/harvester2_schema.xml" />

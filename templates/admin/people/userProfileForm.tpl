@@ -188,7 +188,7 @@
 	
 	<tr valign="top">
 		<td class="label">{fieldLabel name="affiliation" key="user.affiliation"}</td>
-		<td class="value"><textarea name="affiliation" id="affiliation" rows="5" cols="40" class="textArea">{$affiliation|escape}</textarea></td>
+		<td class="value"><textarea name="affiliation[{$formLocale|escape}]" id="affiliation" rows="5" cols="40" class="textArea">{$affiliation[$formLocale]|escape}</textarea></td>
 	</tr>
 	<tr valign="top">
 		<td class="label">{fieldLabel name="signature" key="user.signature"}</td>

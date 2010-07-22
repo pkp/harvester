@@ -61,7 +61,7 @@ class ProfileHandler extends UserHandler {
 
 		if (!$dataModified && $profileForm->validate()) {
 			$profileForm->execute();
-			Request::redirect(null, Request::getRequestedPage());
+			Request::redirect(Request::getRequestedPage());
 
 		} else {
 			$this->setupTemplate(true);
