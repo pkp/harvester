@@ -1,8 +1,8 @@
-Harvester Release Procedure
----------------------
+Open Harvesting Systems Release Procedure
+-----------------------------------------
 
 The following steps (subject to change) are typically performed to prepare a new
-Harvester release:
+OHS release:
 
 
 1. Update version, installation, and upgrade descriptor files:
@@ -10,6 +10,26 @@ Harvester release:
     dbscripts/xml/version.xml
     dbscripts/xml/install.xml
     dbscripts/xml/upgrade.xml
+
+    Commands that may be helpful in determining what bugs have been closed
+    since the last release (whose tag is specified in place of <last-tag>:
+
+	git log --pretty=oneline <last-tag>..HEAD # Generate a log from the last release
+        | egrep -o "(#|\*)([0-9]+)(#|\*)"     # Look for bug IDs in the commit notes
+        | sed -r "s/(#|\*)//g"                # Remove the octothorpes
+        | sort -nu                            # Get a unique sorted list
+        > bug_ids.txt                         # Dump to a file
+
+    The titles of these bugs can be fetched as follows:
+
+    for id in `cat bug_ids.txt`; do
+        wget -O - "http://pkp.sfu.ca/bugzilla/show_bug.cgi?id=$id"
+        | grep -o -e "<title>.*<\/title>"
+    ; done
+
+    This can be done both for the application and for the PKP repository to
+    ensure that all relevant commits (and all related bugs) are noted in the
+    release notes.
 
 
 2. Update release documentation:
@@ -22,6 +42,7 @@ Harvester release:
 
     see e.g. http://github.com/jwiegley/git-scripts/blob/master/git-changelog
 
+
 4. Copy the current changelog and release notes to docs/:
 
     cp docs/release-notes/ChangeLog-<VERSION> docs/ChangeLog
@@ -29,25 +50,27 @@ Harvester release:
 
 
 5. After committing any pending modifications, tag the release in git (both the
-Harvester codebase and the PKP library to be distributed with it):
+OHS codebase and the PKP library to be distributed with it):
 
 	cd lib/pkp
-    git tag harvester-<MAJOR>_<MINOR>_<REVISION>-<BUILD>
+    git tag ohs-<MAJOR>_<MINOR>_<REVISION>-<BUILD>
     cd ../..
-    git tag harvester-<MAJOR>_<MINOR>_<REVISION>-<BUILD>
+    git tag ohs-<MAJOR>_<MINOR>_<REVISION>-<BUILD>
     git push --tags
 
 
-6. Build the Harvester package and patch files:
+6. Build the OHS package and patch files:
 
     sh tools/buildpkg.sh <VERSION> <TAG>-<BRANCH> <PATCH_DIR>
     
-    (<PATCH_DIR> is the path to a directory containing previous Harvester
-    release packages against which to build patches)
+    (<PATCH_DIR> is the path to a directory containing previous OHS release
+     packages against which to build patches)
 
 
-7. Place the new package, patches, and version descriptor on the Harvester site:
+7. Place the new package, patches, version descriptor, and Doxygen docs on the
+   OHS web site:
 
     http://pkp.sfu.ca/harvester2/download/
     http://pkp.sfu.ca/harvester2/download/patch/
-    http://pkp.sfu.ca/harvester2/harvester2-version.xml
+    http://pkp.sfu.ca/harvester2/xml/harvester2-version.xml
+    http://pkp.sfu.ca/ojs/doxygen

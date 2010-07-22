@@ -23,7 +23,7 @@ fi
 VERSION=$1
 TAG=$2
 PATCHDIR=${3-}
-PREFIX=harvester
+PREFIX=ohs
 BUILD=$PREFIX-$VERSION
 TMPDIR=`mktemp -d $PREFIX.XXXXXX` || exit 1
 
@@ -51,7 +51,6 @@ echo "Done"
 
 echo -n "Preparing package ... "
 cp config.TEMPLATE.inc.php config.inc.php
-mkdir cache/t_cache
 find . \( -name .gitignore -o -name .gitmodules -o -name .keepme \) -exec rm '{}' \;
 rm -rf $EXCLUDE
 echo "Done"
