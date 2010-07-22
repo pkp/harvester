@@ -1,0 +1,173 @@
+Open Harvester Systems 2.3.1 Release Notes
+CVS tag: ohs-2_3_1-0
+Release date: July 22, 2010
+=================================
+
+New Features
+------------
+	#5234# Add support for a JQuery-based notification system
+	#5268# Performance optimization: lazy load for plug-ins (hook subscription cache)
+	#3917# Integrate jQuery into codebase
+	#3928# Add markup to templates to signify sections and subsections
+	#4118# Add salutations to emails
+	#4219# Integrate PHP Quick Profiler for debug logging
+	#4244# Request for further TinyMCE features in limited cases
+	#4833# Develop tool for PHP compatibility check
+	#4857# Add "batch merge" option
+	#5601# Convert recursive updateRecords function to a loop
+	#5020# Add URI validator
+	#5148# Add UTF8-aware ucfirst function to String class
+	#5178# Improve cache header support
+	#5180# Optimize major pages
+	#5315# Upgrade TinyMCE and paste plugin to latest versions
+	#5550# Make Affilitation multilingual
+
+Bug Fixes
+---------
+	#1848# W3C Validator complaints
+	#3542# Update to latest TinyMCE
+	#3608# Abstract common code from PKP applications
+	#3694# Abstract User functionality
+	#3704# Extract common CSS
+	#3747# Italics in titles causing issues with reading tools display.
+	#3850# Use PHP's set_error_handler() to present errors more cleanly
+	#3932# Remove precompiled templates from distribution
+	#3944# Split up schema descriptor
+	#4039# Fix breadcrumb / POST form URL problems
+	#4108# Fix warning on mbstring check
+	#4114# Report error(s) if mail isn't being sent
+	#4123# Harvesting MODS archives produces "Invalid argument supplied for foreach()"
+	#4126# Smarty truncate crashes when validating RT URLs
+	#4132# Duplicated p tag in site.tpl
+	#4134# Reference error in OAIHarvester.inc.php
+	#4136# Escape urls in Smarty page_links function
+	#4145# FormValidatorArrayCustom::isValid incorrect return values
+	#4153# translation plugin needs to pull up data.xml files in other plugins
+	#4155# Abstract MailTemplate
+	#4156# Abstract MassMail
+	#4181# Correct potential javascript bugs WRT font sizer
+	#4185# Abstract TemporaryFileManager
+	#4205# Overhaul of Handler Validation and Announcement Abstraction
+	#4209# PHP 4.x/5.x compatibility fixes
+	#4211# Add XSLT class and settings into WAL
+	#4223# Add utf8_strip_ascii_ctrl to Core::cleanVar() to ensure exported XML is parseable
+	#4245# Tracking issue for coding practice updates
+	#4303# Abstract LoginHandler in OCS and fix $mail->getFrom in all apps
+	#4396# Add visual indication of language status (complete/incomplete) in apps
+	#4407# String::utf8Clean or String::utf8_bad_strip can hang on valid UTF8 content
+	#4463# Update RFC2822 compliance for email processing
+	#4476# Site Admin Title Image upload broken
+	#4496# plugin management urls not working
+	#4507# phpInfo link redirects to user home page
+	#4525# OAI response does not properly escape included base URL in <response> tag
+	#4528# Double slashes in BlockPlugin.inc.php
+	#4531# Responses for non-existent pages or operations should result in 404 errors.
+	#4542# 404 Not Found Error when logging out
+	#4547# the need for class Plugin in apps using PKP WAL
+	#4603# System information is incorrect?
+	#4609# Find & fix space-based indents
+	#4610# xml:lang attributes are not RFC4646 compliant
+	#4630# SFU links not "linked" properly
+	#4641# Add WAL-level plugin support
+	#4675# Error messages on failed uploads
+	#4743# Editing User Created Email Not Possible if Email Key not initially created
+	#4749# Make affiliation field consistent for all forms
+	#4756# Upgrade error: column "int4" of relation "versions" does not exist
+	#4764# Cache / t_compile directory permission problems should lead to error message
+	#4771# Custom error handler results in numerous calls to determine MySQL version
+	#4772# Review & correct problems in the warning log
+	#4773# Enable test locale and fix genTestLocale script
+	#4798# email templates: from to to to
+	#4810# Plugin Installation Fails
+	#4818# Typo in Captcha class description
+	#4829# Adding/Deleting profile image removes TinyMCE
+	#4836# Web error log floods with undefined index errors from Smarty templates
+	#4837# db error on manual installation
+	#4847# Add tar configuration parameter to config.inc.php
+	#4861# Incorrect version update in manual install
+	#4870# Create dispatcher class to replace handle_request() in index.php
+	#4892# after unenrolling a user from a specific role sent back to all roles page
+	#4915# Use cleanFileVar() when path info disabled
+	#4925# Use consistent error reporting for abstract methods
+	#4926# GetRecord verb not working: call to member function on non-object
+	#4933# Use defined constants instead of strings for the $dispatcher->url(...) function
+	#4934# Convert legacy Request calls to new router architecture
+	#4935# Refactor smarty url plugin to create component-level URLs within templates
+	#4938# Version descriptor XML (dbscripts/xml/version.xml) should reference external DTD
+	#4940# TinyMCE insert image button broken
+	#4941# Image/css file upload problems
+	#4942# Change index.php page wrappers into full whitelists
+	#4947# Site Admin header image Alternate Text not being saved
+	#4950# 404 not found when trying to log in in Harvester
+	#4951# get*Context*() do not correctly handle depth = 0
+	#4952# Move pages and components under a common controller directory
+	#4954# Constructor by reference
+	#4960# Default value for reference parameter
+	#4961# there exist some instances where Handler Validation is done statically
+	#4967# PHP 5.3 Deprecation Errors
+	#4968# move all javascript to a js folder with a lib subfolder for externals
+	#4989# Language toggle block generates unescaped entities
+	#4990# URL escaping and validation problems
+	#4994# Return value of new by reference is deprecated
+	#4996# Missing translation in Change Password Form
+	#5010# Review & fix setupTemplate / form validation problems
+	#5014# Rename XxxApplication and XxxPageRouter to Application/PageRouter
+	#5023# Refactor form validators so they can be used outside a form context
+	#5026# review DAOResultFactory::nextWithKey
+	#5029# isset($someArray['key1']['key2']) doesn't behave as expected
+	#5033# session_id in table sessions must be varchar(40) instead of varchar(32)
+	#5071# 404 errors related to CSS cleanup
+	#5080# Update copyright dates
+	#5081# Put tests in correct doxygen groups
+	#5103# othvsRedundant jQuery copies in pkp-lib
+	#5107# confirm() JS function should be renamed to avoid namespace conflict
+	#5109# Error handling infinite loop with strict reporting
+	#5118# PageRouter::url does not respect config.inc.php base_url[path] setting
+	#5137# size attribute for smarty form tags does not work
+	#5165# Cleanly separate app-specific code
+	#5179# Migrate build script from CVS to git
+	#5183# User agent needs length check in sessions table
+	#5196# Update or replace jquery throbber
+	#5197# Update to full jQuery UI 1.8 upon release
+	#5212# Fix page layout for Reading Tools (too wide)
+	#5216# DBResultRange.inc.php setCount method input variable missing
+	#5218# Validator refactoring not 100% PHP4 compatible
+	#5228# Remove duplicated mock classes from unit tests.
+	#5249# array_clean should be renamed, clean meta-data before adding to description
+	#5253# Some versions of PHP5.3 have a buggy call_user_func() implementation when pass by ref
+	#5256# Reduce include path to a single entry and change all import statements
+	#5260# Unknown class XCacheCache being referenced in CacheManager
+	#5261# Correct erroneous import statements in unit tests
+	#5264# PluginSettingsDAO uses undeclared $this->settingsCache
+	#5265# smartyUrl mistakenly defaulting escape parameter to true
+	#5271# Form language default incorrect when current locale not a supported form locale
+	#5276# Fix RT display layout
+	#5280# E-mail attachment losing extension
+	#5288# HTTPFileWrapper sends an invalid Host header
+	#5290# Reorganize controllers
+	#5301# Remove .cvsignore entries from repository
+	#5304# Create infrastructure for plug-ins in the PKP library
+	#5311# Change contact email to pkp.contact@gmail.com
+	#5335# Update jQueryUI CSS and implement jQueryUI's Autocomplete
+	#5336# Page titles aligned center when both sidebars used
+	#5338# Small font size accidentally being set on some actions
+	#5357# Implement jQuery UI's buttons
+	#5376# Remove jQuery-PlugIn and move jQuery- and JS-inclusion to pkp library.
+	#5378# docs folder needs upgrade to git
+	#5389# Remove duplicate classes as a pre-condition for unified include path
+	#5393# Implement generic meta-data validation.
+	#5410# Add plugin class import to all subclasses
+	#5411# Rename Harvester / Harvester2 / etc. to "Open Harvesting Systems" / "OHS"
+	#5413# Remove error truncation
+	#5418# make upgrade idempotent
+	#5421# MySQL index block plugin call on non-object
+	#5426# MODS schema parsing not working
+	#5458# remove $fetch parameter from Form::display
+	#5505# GenericPlugin.inc.php load error
+	#5506# Fatal error when attempting to administer crosswalks
+	#5508# Move all generic instantiation, i.e. import($...) - new $...() to a common function
+	#5519# Several bugs in plugin install
+	#5520# Make deprecation warnings useful again
+	#5521# fix for pages only half-loading in Firefox
+	#5523# Rewrite database unit-test class with PHPUnit_Extensions_Database_TestCase as base
+	#5563# Audit validation of plugin manager handlers
