@@ -18,6 +18,11 @@
 import('classes.handler.Handler');
 
 class MysqlIndexAdminHandler extends Handler {
+	function MysqlIndexAdminHandler() {
+		parent::Handler();
+		$this->addCheck(new HandlerValidatorRoles($this, true, null, null, array(ROLE_ID_SITE_ADMIN)));
+	}
+
 	/**
 	 * Get the Zend Search Plugin object.
 	 */

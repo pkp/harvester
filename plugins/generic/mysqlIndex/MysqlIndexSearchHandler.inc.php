@@ -24,8 +24,6 @@ class MysqlIndexSearchHandler extends Handler {
 	 */
 	function MysqlIndexSearchHandler() {
 		parent::Handler();
-
-		$this->addCheck(new HandlerValidatorRoles($this, true, null, null, array(ROLE_ID_SITE_ADMIN)));
 	}	
 	
 	/**
