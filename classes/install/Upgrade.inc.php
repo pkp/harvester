@@ -64,6 +64,52 @@ class Upgrade extends Installer {
 	}
 
 	/**
+	 * Drop indexes to deal with AUTONUM / PRIMARY KEY wierdness (primarily MySQL / ADODB)
+	 * @return boolean
+	 */
+	function dropAllIndexes() {
+		$siteDao =& DAORegistry::getDAO('SiteDAO');
+		$dict = NewDataDictionary($siteDao->_dataSource);
+		$dropIndexSql = array();
+
+		// This is a list of tables that were used in 2.1.1 (i.e.
+		// before the way indexes were used was changed). All indexes
+		// from these tables will be dropped.
+		$tables = array(
+			'versions', 'site', 'site_settings', 'scheduled_tasks',
+			'sessions', 'plugin_settings', 'roles',
+			'email_templates_default_data', 'email_templates_data',
+			'oai_resumption_tokens'
+		);
+
+		// Assemble a list of indexes to be dropped
+		foreach ($tables as $tableName) {
+			$indexes = $dict->MetaIndexes($tableName);
+			if (is_array($indexes)) foreach ($indexes as $indexName => $indexData) {
+				$dropIndexSql = array_merge($dropIndexSql, $dict->DropIndexSQL($indexName, $tableName));
+			}
+		}
+
+		// Execute the DROP INDEX statements.
+		foreach ($dropIndexSql as $sql) {
+			$siteDao->update($sql);
+		}
+
+		// Second run: Only return primary indexes. This is necessary
+		// so that primary indexes can be dropped by MySQL.
+		foreach ($tables as $tableName) {
+			$indexes = $dict->MetaIndexes($tableName, true);
+			if (!empty($indexes)) switch(Config::getVar('database', 'driver')) {
+				case 'mysql':
+					$siteDao->update("ALTER TABLE $tableName DROP PRIMARY KEY");
+					break;
+			}
+		}
+
+		return true;
+	}
+
+	/**
 	 * Install the schema aliases (during upgrade)
 	 */
 	function installSchemaAliases() {

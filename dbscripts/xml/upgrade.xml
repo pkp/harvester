@@ -28,6 +28,12 @@
 		<data file="dbscripts/xml/upgrade/2.3_preupdate.xml" />
 	</upgrade>
 
+	<upgrade minversion="2.0.0.0" maxversion="2.3.0.9">
+		<!-- Drop all indexes. Necessary e.g. for the versions table,
+		     which needs to be indexed on the "product" column for 2.3.1+. -->
+		<code function="dropAllIndexes" />
+	</upgrade>
+
 	<upgrade minversion="2.3.0.0" maxversion="2.3.0.9">
 		<!-- 2.3.0 to 2.3.1 -->
 		<data file="dbscripts/xml/upgrade/2.3.1_preupdate.xml" />
@@ -52,6 +58,6 @@
 		<data file="dbscripts/xml/upgrade/2.3.1_update.xml" />
 		<code function="addPluginVersions" />
 		<code function="clearDataCache" />
-		<note file="dbscripts/xml/release-notes/README-2.3.1" />
+		<note file="docs/dev/release-notes/README-2.3.1" />
 	</upgrade>
 </install>
