@@ -16,6 +16,10 @@
 	<!-- Bug #5550: make affiliations localized -->
 	<sql>
 		<query>
+			<!-- Make the process idempotent -->
+			DELETE FROM user_settings WHERE setting_name = 'affiliation'
+		</query>
+		<query>
 			INSERT INTO user_settings (user_id, setting_name, setting_type, setting_value, locale) SELECT u.user_id, 'affiliation', 'string', u.affiliation, s.primary_locale FROM users u, site s
 		</query>
 	</sql>
