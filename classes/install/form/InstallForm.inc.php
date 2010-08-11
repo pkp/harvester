@@ -144,9 +144,9 @@ class InstallForm extends Form {
 			'skipFilesDir' =>  0,
 			'databaseDriver' => 'mysql',
 			'databaseHost' => 'localhost',
-			'databaseUsername' => 'harvester2',
+			'databaseUsername' => 'ohs',
 			'databasePassword' => '',
-			'databaseName' => 'harvester2',
+			'databaseName' => 'ohs',
 			'createDatabase' => 1
 		);
 	}
