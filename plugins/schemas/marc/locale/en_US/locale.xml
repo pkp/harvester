@@ -13,8 +13,8 @@
   -->
  
 <locale name="en_US" full_name="U.S. English">
-	<message key="plugins.schemas.marc.schemaName">Marc</message>
-	<message key="plugins.schemas.marc.description">This schema supports the Marc metadata format.</message>
+	<message key="plugins.schemas.marc.schemaName">MARC</message>
+	<message key="plugins.schemas.marc.description">This schema supports the MARC metadata format.</message>
 	<message key="plugins.schemas.marc.fields.leader.name">Leader</message>
 	<message key="plugins.schemas.marc.fields.leader.description">This is the record leader.</message>
 	<message key="plugins.schemas.marc.fields.001.name">Control Number</message>
