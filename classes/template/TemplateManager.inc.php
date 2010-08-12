@@ -70,7 +70,7 @@ class TemplateManager extends PKPTemplateManager {
 
 			$customLogo = $site->getSetting('customLogo');
 			if ($customLogo) {
-				$this->assign('useCustomLogo', $customLogo);
+				$this->assign('displayPageHeaderLogo', $customLogo);
 			}
 
 			$this->assign('siteTitle', $site->getLocalizedTitle());

@@ -10,6 +10,5 @@
  *}
 {strip}
 {translate|assign:"applicationName" key="common.harvester2"}
-{assign var="customLogoTemplate" value="common/customLogoTemplate.tpl"}
 {include file="core:common/header.tpl"}
 {/strip}
