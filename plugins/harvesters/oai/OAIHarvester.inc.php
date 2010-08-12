@@ -75,7 +75,7 @@ class OAIHarvester extends Harvester {
 		$supportedFormats = OAIHarvester::getMetadataFormats($archive->getSetting('harvesterUrl'), $archive->getSetting('isStatic'));
 		// Return the first common format between the aliases for this
 		// plugin and the archive's supported formats.
-		$this->metadataFormat = array_shift(array_intersect($aliases, $supportedFormats));
+		$this->metadataFormat = array_shift(array_intersect((array) $aliases, (array) $supportedFormats));
 		if (empty($this->metadataFormat)) $this->metadataFormat = $default;
 		return $this->metadataFormat;
 	}
