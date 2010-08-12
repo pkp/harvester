@@ -2,8 +2,8 @@
 	=== PKP Harvester
 	=== The Public Knowledge Project
 	=== Version: 2.3.1
-	=== CVS tag: harvester-2_3_1-0
-	=== Release date: July 21, 2010
+	=== GIT tag: harvester-2_3_1-0
+	=== Release date: Aug 12, 2010
 	===================================
 
 
@@ -115,6 +115,7 @@ localized and placed in an appropriately named directory (using ISO locale
 codes, e.g. "fr_FR", is recommended):
 
 	* locale/en_US
+	* lib/pkp/locale/en_US
 	* dbscripts/xml/data/locale/en_US
 	* help/en_US
 	* rt/en_US

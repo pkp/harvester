@@ -16,7 +16,7 @@
 	<type>core</type>
 	<release>2.3.1.0</release>
 	<tag>harvester-2_3_1-0</tag>
-	<date>2010-07-21</date>
+	<date>2010-08-12</date>
 	<info>http://pkp.sfu.ca/harvester2/</info>
 	<package>http://pkp.sfu.ca/harvester2/download/harvester-2.3.0.tar.gz</package>
 	<patch from="2.0.0.0">http://pkp.sfu.ca/harvester2/download/patch/harvester-2.0_to_2.3.1.patch.gz</patch>
