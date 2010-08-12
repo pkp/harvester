@@ -103,7 +103,9 @@ class SehlPlugin extends GenericPlugin {
 			}
 		}
 
+		// Catch a couple of common POST for request variables too
 		if (($q = Request::getUserVar('q')) != '') $this->queryTerms[] = $q;
+		if (($q = Request::getUserVar('query')) != '') $this->queryTerms[] = $q;
 
 		if (empty($this->queryTerms)) return false;
 
