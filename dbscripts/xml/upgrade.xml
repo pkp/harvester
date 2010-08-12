@@ -58,6 +58,6 @@
 		<data file="dbscripts/xml/upgrade/2.3.1_update.xml" />
 		<code function="addPluginVersions" />
 		<code function="clearDataCache" />
-		<note file="docs/dev/release-notes/README-2.3.1" />
+		<note file="docs/release-notes/README-2.3.1" />
 	</upgrade>
 </install>
