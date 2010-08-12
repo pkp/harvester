@@ -106,7 +106,7 @@ class ProfileHandler extends UserHandler {
 		$this->setupTemplate(true);
 		if ($passwordForm->validate()) {
 			$passwordForm->execute();
-			Request::redirect(null, Request::getRequestedPage());
+			Request::redirect(Request::getRequestedPage());
 
 		} else {
 			$passwordForm->display();
