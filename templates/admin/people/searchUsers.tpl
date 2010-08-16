@@ -1,3 +1,5 @@
+<!-- templates/admin/people/searchUsers.tpl -->
+
 {**
  * searchUsers.tpl
  *
@@ -146,3 +148,6 @@ function sortSearch(heading, direction) {
 {/if}
 
 {include file="common/footer.tpl"}
+
+<!-- / templates/admin/people/searchUsers.tpl -->
+

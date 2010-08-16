@@ -1,3 +1,5 @@
+<!-- templates/admin/languages.tpl -->
+
 {**
  * languages.tpl
  *
@@ -95,3 +97,6 @@
 </form>
 </div>
 {include file="common/footer.tpl"}
+
+<!-- / templates/admin/languages.tpl -->
+

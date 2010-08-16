@@ -1,3 +1,5 @@
+<!-- templates/admin/people/enrollment.tpl -->
+
 {**
  * enrollment.tpl
  *
@@ -155,3 +157,6 @@ function sortSearch(heading, direction) {
 <a href="{if $roleId}{url op="createUser" roleId=$roleId source=$enrollmentUrl}{else}{url op="createUser" source=$enrollmentUrl}{/if}" class="action">{translate key="admin.people.createUser"}</a>
 </div>
 {include file="common/footer.tpl"}
+
+<!-- / templates/admin/people/enrollment.tpl -->
+

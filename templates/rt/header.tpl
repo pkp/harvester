@@ -1,3 +1,5 @@
+<!-- templates/rt/header.tpl -->
+
 {**
  * header.tpl
  *
@@ -67,3 +69,6 @@
 <h2>{$pageTitleTranslated}</h2>
 
 <div id="content">
+
+<!-- / templates/rt/header.tpl -->
+

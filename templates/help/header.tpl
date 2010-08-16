@@ -1,3 +1,5 @@
+<!-- templates/help/header.tpl -->
+
 {**
  * header.tpl
  *
@@ -13,3 +15,5 @@
 {translate|assign:"applicationHelpTranslated" key="help.harvesterHelp" siteTitle=$siteTitle|default:$defaultTitle}
 {include file="core:help/header.tpl"}
 {/strip}
+<!-- / templates/help/header.tpl -->
+

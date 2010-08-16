@@ -1,3 +1,5 @@
+<!-- templates/browse/records.tpl -->
+
 {**
  * records.tpl
  *
@@ -45,3 +47,6 @@
 	{page_info iterator=$records}&nbsp;&nbsp;&nbsp;&nbsp;{page_links anchor="records" name="records" sortOrderId=$sortOrderId iterator=$records}
 </div>
 {include file="common/footer.tpl"}
+
+<!-- / templates/browse/records.tpl -->
+

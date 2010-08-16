@@ -1,3 +1,5 @@
+<!-- templates/common/header.tpl -->
+
 {**
  * header.tpl
  *
@@ -12,3 +14,6 @@
 {translate|assign:"applicationName" key="common.harvester2"}
 {include file="core:common/header.tpl"}
 {/strip}
+
+<!-- / templates/common/header.tpl -->
+

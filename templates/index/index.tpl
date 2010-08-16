@@ -1,3 +1,5 @@
+<!-- templates/index/index.tpl -->
+
 {**
  * index.tpl
  *
@@ -18,3 +20,6 @@
 {if $intro}{$intro|nl2br}{/if}
 
 {include file="common/footer.tpl"}
+
+<!-- / templates/index/index.tpl -->
+

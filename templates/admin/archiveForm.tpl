@@ -1,3 +1,5 @@
+<!-- templates/admin/archiveForm.tpl -->
+
 {**
  * archiveForm.tpl
  *
@@ -134,3 +136,6 @@ function selectHarvester() {
 <p><span class="formRequired">{translate key="common.requiredField"}</span></p>
 </div>
 {include file="common/footer.tpl"}
+
+<!-- / templates/admin/archiveForm.tpl -->
+

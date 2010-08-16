@@ -1,3 +1,5 @@
+<!-- templates/rtadmin/search.tpl -->
+
 {**
  * search.tpl
  *
@@ -45,3 +47,6 @@
 </form>
 
 {include file="common/footer.tpl"}
+
+<!-- / templates/rtadmin/search.tpl -->
+

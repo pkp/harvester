@@ -1,3 +1,5 @@
+<!-- templates/rt/rt.tpl -->
+
 {**
  * rt.tpl
  *
@@ -34,3 +36,6 @@
 
 </div>
 {/if}
+
+<!-- / templates/rt/rt.tpl -->
+

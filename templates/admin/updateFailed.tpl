@@ -1,3 +1,5 @@
+<!-- templates/admin/updateFailed.tpl -->
+
 {**
  * updateFailed.tpl
  *
@@ -26,3 +28,6 @@
 <a href="{url op="manage" path=$archiveId}">{translate key="admin.archive.manage.updateIndex.return"}</a>
 </div>
 {include file="common/footer.tpl"}
+
+<!-- / templates/admin/updateFailed.tpl -->
+

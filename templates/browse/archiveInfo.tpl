@@ -1,3 +1,5 @@
+<!-- templates/browse/archiveInfo.tpl -->
+
 {**
  * archiveInfo.tpl
  *
@@ -31,3 +33,6 @@
 <br/>
 <a href="{url op="index" path=$archive->getArchiveId()}" class="action">{translate key="browse.browseRecords"}</a>
 {include file="common/footer.tpl"}
+
+<!-- / templates/browse/archiveInfo.tpl -->
+

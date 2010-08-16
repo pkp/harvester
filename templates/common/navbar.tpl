@@ -1,3 +1,5 @@
+<!-- templates/common/navbar.tpl -->
+
 {**
  * navbar.tpl
  *
@@ -32,3 +34,6 @@
 		<li id="help"><a href="javascript:openHelp('{if $helpTopicId}{get_help_id key="$helpTopicId" url="true"}{else}{url page="help"}{/if}')">{translate key="help.help"}</a></li>
 	</ul>
 </div>
+
+<!-- / templates/common/navbar.tpl -->
+

@@ -1,3 +1,5 @@
+<!-- templates/install/installComplete.tpl -->
+
 {**
  * installComplete.tpl
  *
@@ -13,3 +15,5 @@
 {assign var="pageTitle" value="installer.harvester2Installation"}
 {include file="core:install/installComplete.tpl"}
 {/strip}
+<!-- / templates/install/installComplete.tpl -->
+
