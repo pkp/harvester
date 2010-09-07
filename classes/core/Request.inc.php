@@ -13,14 +13,13 @@
  * Requests are assumed to be in the format http://host.tld/index.php/<page_name>/<operation_name>/<arguments...>
  */
 
-// $Id$
-
 
 import('lib.pkp.classes.core.PKPRequest');
 
 class Request extends PKPRequest {
 	/**
-	 * Redirect to the specified page within Open Harvesting Systems. Shorthand for a common call to Request::redirect(Request::url(...)).
+	 * Redirect to the specified page within Open Harvesting Systems.
+	 * Shorthand for a common call to $request->redirect($dispatcher->url($request, ROUTE_PAGE, ...)).
 	 * @param $page string The name of the op to redirect to.
 	 * @param $op string optional The name of the op to redirect to.
 	 * @param $path mixed string or array containing path info for redirect.
@@ -28,8 +27,7 @@ class Request extends PKPRequest {
 	 * @param $anchor string Name of desired anchor on the target page
 	 */
 	function redirect($page = null, $op = null, $path = null, $params = null, $anchor = null) {
-		$_this =& PKPRequest::_checkThis();
-		$_this->redirectUrl($_this->url($page, $op, $path, $params, $anchor));
+		parent::redirect(null, $page, $op, $path, $params, $anchor);
 	}
 
 	/**
