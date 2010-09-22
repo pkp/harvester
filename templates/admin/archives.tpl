@@ -1,5 +1,3 @@
-<!-- templates/admin/archives.tpl -->
-
 {**
  * archives.tpl
  *
@@ -78,6 +76,4 @@
 <p><a href="{url op="createArchive"}" class="action">{translate key="admin.archives.addArchive"}</a></p>
 </div>
 {include file="common/footer.tpl"}
-
-<!-- / templates/admin/archives.tpl -->
 

@@ -1,5 +1,3 @@
-<!-- templates/admin/plugins.tpl -->
-
 {**
  * plugins.tpl
  *
@@ -77,6 +75,4 @@
 {/if}
 
 {include file="common/footer.tpl"}
-
-<!-- / templates/admin/plugins.tpl -->
 

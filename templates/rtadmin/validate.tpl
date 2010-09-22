@@ -1,5 +1,3 @@
-<!-- templates/rtadmin/validate.tpl -->
-
 {**
  * validate.tpl
  *
@@ -42,6 +40,4 @@
 <p>{translate key="rt.admin.validateUrls.complete"}</p>
 </div>
 {include file="common/footer.tpl"}
-
-<!-- / templates/rtadmin/validate.tpl -->
 

@@ -1,5 +1,3 @@
-<!-- templates/user/register.tpl -->
-
 {**
  * register.tpl
  *
@@ -197,6 +195,4 @@
 </div>
 
 {include file="common/footer.tpl"}
-
-<!-- / templates/user/register.tpl -->
 

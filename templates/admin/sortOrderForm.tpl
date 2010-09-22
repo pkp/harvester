@@ -1,5 +1,3 @@
-<!-- templates/admin/sortOrderForm.tpl -->
-
 {**
  * sortOrderForm.tpl
  *
@@ -95,6 +93,4 @@
 <p><span class="formRequired">{translate key="common.requiredField"}</span></p>
 
 {include file="common/footer.tpl"}
-
-<!-- / templates/admin/sortOrderForm.tpl -->
 

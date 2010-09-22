@@ -1,5 +1,3 @@
-<!-- templates/about/harvester.tpl -->
-
 {**
  * harvester.tpl
  *
@@ -18,6 +16,4 @@
 {translate|nl2br key="about.harvester.description"}
 
 {include file="common/footer.tpl"}
-
-<!-- / templates/about/harvester.tpl -->
 

@@ -1,5 +1,3 @@
-<!-- templates/common/footer.tpl -->
-
 {**
  * footer.tpl
  *
@@ -42,6 +40,4 @@
 {/if}{* systemNotifications *}
 </body>
 </html>
-
-<!-- / templates/common/footer.tpl -->
 

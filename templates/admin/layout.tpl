@@ -1,5 +1,3 @@
-<!-- templates/admin/layout.tpl -->
-
 {**
  * layout.tpl
  *
@@ -178,6 +176,4 @@ function prepBlockFields() {
 </form>
 
 {include file="common/footer.tpl"}
-
-<!-- / templates/admin/layout.tpl -->
 

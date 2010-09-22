@@ -1,5 +1,3 @@
-<!-- templates/help/searchResults.tpl -->
-
 {**
  * searchResults.tpl
  *
@@ -15,5 +13,3 @@
 {translate|assign:"applicationHelpTranslated" key="help.harvesterHelp" siteTitle=$siteTitle|default:$defaultTitle}
 {include file="core:help/searchResults.tpl"}
 {/strip}
-<!-- / templates/help/searchResults.tpl -->
-

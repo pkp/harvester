@@ -78,5 +78,3 @@
 
 <div id="content">
 
-<!-- / templates/rt/header.tpl -->
-

@@ -1,5 +1,3 @@
-<!-- templates/about/index.tpl -->
-
 {**
  * index.tpl
  *
@@ -22,6 +20,4 @@
 <a href="{url op="harvester"}">{translate key="about.harvester"}</a>
 
 {include file="common/footer.tpl"}
-
-<!-- / templates/about/index.tpl -->
 

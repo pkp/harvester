@@ -1,5 +1,3 @@
-<!-- templates/admin/sortOrders.tpl -->
-
 {**
  * sortOrders.tpl
  *
@@ -67,6 +65,4 @@
 </div>
 
 {include file="common/footer.tpl"}
-
-<!-- / templates/admin/sortOrders.tpl -->
 

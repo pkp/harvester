@@ -1,5 +1,3 @@
-<!-- templates/common/formErrors.tpl -->
-
 {**
  * formErrors.tpl
  *
@@ -30,6 +28,4 @@ window.location.hash="formErrors";
 {/literal}
 </script>
 {/if}
-
-<!-- / templates/common/formErrors.tpl -->
 

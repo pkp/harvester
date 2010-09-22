@@ -1,5 +1,3 @@
-<!-- templates/install/install.tpl -->
-
 {**
  * install.tpl
  *
@@ -16,5 +14,3 @@
 {assign var="skipMiscSettings" value=1}
 {include file="core:install/install.tpl"}
 {/strip}
-<!-- / templates/install/install.tpl -->
-

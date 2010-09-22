@@ -1,5 +1,3 @@
-<!-- templates/help/helpToc.tpl -->
-
 {**
  * helpToc.tpl
  *
@@ -15,5 +13,3 @@
 {translate|assign:"applicationHelpTranslated" key="help.harvesterHelp" siteTitle=$siteTitle|default:$defaultTitle}
 {include file="core:help/helpToc.tpl"}
 {/strip}
-<!-- / templates/help/helpToc.tpl -->
-

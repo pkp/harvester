@@ -1,5 +1,3 @@
-<!-- templates/rtadmin/archives.tpl -->
-
 {**
  * archives.tpl
  *
@@ -33,6 +31,4 @@
 {/if}
 </div>
 {include file="common/footer.tpl"}
-
-<!-- / templates/rtadmin/archives.tpl -->
 
