@@ -10,19 +10,10 @@
   *
   * This file lists all locales available to the system.
   * (i.e., existing under the locales/ directory)
-  *
-  * $Id$
   -->
 
-<!DOCTYPE locales [
-	<!ELEMENT locales (locale+)>
-	<!ELEMENT locale EMPTY>
-		<!ATTLIST locale
-			key CDATA #REQUIRED
-			name CDATA #REQUIRED
-			stylesheet CDATA #IMPLIED>
-]>
+<!DOCTYPE locales SYSTEM "../lib/pkp/dtd/locales.dtd">
 
 <locales>
-	<locale key="en_US" name="English"/>
+	<locale key="en_US" name="English" iso639-2b="eng" />
 </locales>
