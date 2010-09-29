@@ -87,7 +87,7 @@ password = harvester2
 name = harvester2
 
 ; Enable persistent connections (recommended)
-persistent = On
+persistent = Off
 
 ; Enable database debug output (very verbose!)
 debug = Off
