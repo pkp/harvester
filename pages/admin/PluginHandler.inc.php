@@ -6,14 +6,12 @@
  * Copyright (c) 2005-2010 Alec Smecher and John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
- * @package pages.admin
  * @class PluginHandler
+ * @ingroup pages_admin
  *
- * Handle requests for plugin management functions.
- *
+ * @brief Handle requests for plugin management functions.
  */
 
-// $Id$
 
 import('pages.admin.AdminHandler');
 
@@ -24,7 +22,7 @@ class PluginHandler extends AdminHandler {
 	function plugins($args) {
 		$category = isset($args[0])?$args[0]:null;
 		$categories = PluginRegistry::getCategories();
-		
+
 		$templateMgr =& TemplateManager::getManager();
 		$this->validate();
 
@@ -47,7 +45,7 @@ class PluginHandler extends AdminHandler {
 					$plugins = array_merge($plugins, PluginRegistry::loadCategory($category));
 				}
 			}
-			
+
 			$this->setupTemplate(true);
 			$templateMgr->assign('pageTitle', 'admin.plugins');
 			$templateMgr->assign('pageHierarchy', $this->setBreadcrumbs(false));
@@ -57,7 +55,7 @@ class PluginHandler extends AdminHandler {
 		$templateMgr->assign_by_ref('categories', $categories);
 		$templateMgr->assign('mainPage', $mainPage);
 		$templateMgr->assign('isSiteAdmin', Validation::isSiteAdmin());
-		
+
 		$templateMgr->display('admin/plugins.tpl');
 	}
 
@@ -83,7 +81,7 @@ class PluginHandler extends AdminHandler {
 		}
 
 	}
-	
+
 	/**
 	 * Set the page's breadcrumbs
 	 * @param $subclass boolean
@@ -97,7 +95,7 @@ class PluginHandler extends AdminHandler {
 				false
 			)
 		);
-		
+
 		if ($subclass) {
 			$pageCrumbs[] = array(
 				Request::url(null, 'plugins'),
