@@ -18,8 +18,8 @@
 		{if !$uploaded}
 			<p>{translate key="manager.plugins.installDescription"}</p>
 		{/if}
-		
-		<form method="post" action="{url path="installPlugin"}" enctype="multipart/form-data">	
+
+		<form method="post" action="{url path="installPlugin"}" enctype="multipart/form-data">
 			{if $error}
 				<span class="formError">{translate key="form.errorsOccurred"}:</span>
 				<ul class="formErrorList">
@@ -43,7 +43,7 @@
 					</li>
 				</ul>
 			{/if}
-	
+
 			<br />
 			<table class="data" width="100%">
 			<tr>
@@ -64,8 +64,8 @@
 		{if !$uploaded}
 			<p>{translate key="manager.plugins.upgradeDescription"}</p>
 		{/if}
-		
-		<form method="post" action="{url path="upgradePlugin"|to_array:$category:$plugin}" enctype="multipart/form-data">		
+
+		<form method="post" action="{url path="upgradePlugin"|to_array:$category:$plugin}" enctype="multipart/form-data">
 			{if $error}
 				<span class="formError">{translate key="form.errorsOccurred"}:</span>
 				<ul class="formErrorList">
@@ -87,7 +87,7 @@
 					</li>
 				</ul>
 			{/if}
-			
+
 			<br />
 			<table class="data" width="100%">
 			<tr>
@@ -108,16 +108,16 @@
 		{if !$deleted}
 			<p>{translate key="manager.plugins.deleteDescription"}</p>
 		{/if}
-		
+
 		{if !$deleted}
 			{if !$error}
 				<ul class="formErrorList">
 					<li>{translate key="manager.plugins.deleteConfirm"}</li>
 				</ul>
 			{/if}
-		
+
 			<br />
-			<form method="post" action="{url path="deletePlugin"|to_array:$category:$plugin}" enctype="multipart/form-data">		
+			<form method="post" action="{url path="deletePlugin"|to_array:$category:$plugin}" enctype="multipart/form-data">
 				{if $error}
 					<span class="formError">{translate key="form.errorsOccurred"}:</span>
 					<ul class="formErrorList">
