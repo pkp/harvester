@@ -178,7 +178,7 @@ class Validation {
 		if (!$user) return false;
 
 		$roleDao =& DAORegistry::getDAO('RoleDAO');
-		return $roleDao->roleExists($user->getId(), $roleId);
+		return $roleDao->userHasRole($user->getId(), $roleId);
 	}
 
 	/**
