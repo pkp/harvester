@@ -65,6 +65,12 @@ class Install extends PKPInstall {
 			$this->executeSQL(sprintf('INSERT INTO users (user_id, username, first_name, last_name, password, email, date_registered, date_last_login) VALUES (%d, \'%s\', \'%s\', \'%s\', \'%s\', \'%s\', \'%s\', \'%s\')', 1, $this->getParam('adminUsername'), $this->getParam('adminUsername'), $this->getParam('adminUsername'), Validation::encryptCredentials($this->getParam('adminUsername'), $this->getParam('adminPassword'), $this->getParam('encryption')), $this->getParam('adminEmail'), Core::getCurrentDate(), Core::getCurrentDate()));
 			$this->executeSQL(sprintf('INSERT INTO roles (user_id, role_id) VALUES (%d, %d)', 0, 1, ROLE_ID_SITE_ADMIN));
 
+			// Install email template list and data for each locale
+			$emailTemplateDao =& DAORegistry::getDAO('EmailTemplateDAO');
+			$this->executeSQL($emailTemplateDao->installEmailTemplates($emailTemplateDao->getMainEmailTemplatesFilename(), true));
+			foreach ($this->installedLocales as $locale) {
+				$this->executeSQL($emailTemplateDao->installEmailTemplateData($emailTemplateDao->getMainEmailTemplateDataFilename($locale), true));
+			}
 		} else {
 			// Add initial site data
 			$locale = $this->getParam('locale');
@@ -78,6 +84,13 @@ class Install extends PKPInstall {
 			if (!$siteDao->insertSite($site)) {
 				$this->setError(INSTALLER_ERROR_DB, $this->dbconn->errorMsg());
 				return false;
+			}
+
+			// Install email template list and data for each locale
+			$emailTemplateDao =& DAORegistry::getDAO('EmailTemplateDAO');
+			$emailTemplateDao->installEmailTemplates($emailTemplateDao->getMainEmailTemplatesFilename());
+			foreach ($this->installedLocales as $locale) {
+				$emailTemplateDao->installEmailTemplateData($emailTemplateDao->getMainEmailTemplateDataFilename($locale));
 			}
 
 			// Install site settings

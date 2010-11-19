@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE emails SYSTEM "../../lib/pkp/dtd/emailTemplates.dtd">
+<!--
+  * registry/emailTemplates.xml
+  *
+  * Copyright (c) 2005-2010 Alec Smecher and John Willinsky
+  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
+  *
+  * Email templates XML file.
+  *
+  -->
+<emails>
+	<email key="PASSWORD_RESET_CONFIRM" can_edit="1" can_disable="0"/>
+	<email key="PASSWORD_RESET" can_edit="1" can_disable="0"/>
+	<email key="USER_REGISTER" can_edit="1" can_disable="0"/>
+	<email key="USER_VALIDATE" can_edit="1" can_disable="0"/>
+	<email key="NEW_ARCHIVE_NOTIFY" can_edit="1" can_disable="1"/>
+</emails>

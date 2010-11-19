@@ -1,167 +1,54 @@
 <?php
 
 /**
- * @file EmailTemplateDAO.inc.php
+ * @file classes/mail/EmailTemplateDAO.inc.php
  *
  * Copyright (c) 2005-2010 Alec Smecher and John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
- * @package mail
  * @class EmailTemplateDAO
+ * @ingroup mail
+ * @see EmailTemplate
  *
- * Class for Email Template DAO.
- * Operations for retrieving and modifying Email Template objects.
- *
- * $Id$
+ * @brief Operations for retrieving and modifying Email Template objects.
  */
 
-import('classes.mail.EmailTemplate');
+// $Id$
 
-class EmailTemplateDAO extends DAO {
 
-	/**
-	 * Constructor.
-	 */
-	function EmailTemplateDAO() {
-		parent::DAO();
-	}
+import('lib.pkp.classes.mail.PKPEmailTemplateDAO');
+import('lib.pkp.classes.mail.EmailTemplate');
 
+class EmailTemplateDAO extends PKPEmailTemplateDAO {
 	/**
 	 * Retrieve a base email template by key.
 	 * @param $emailKey string
 	 * @return BaseEmailTemplate
 	 */
-	function &getEmailTemplate($emailKey) {
-		$result =& $this->retrieve(
-			'SELECT d.email_key, d.can_edit, d.can_disable, d.enabled
-			FROM email_templates AS d
-			WHERE d.email_key = ?',
-			$emailKey
-		);
-
-		$returner = null;
-		if ($result->RecordCount() != 0) {
-			$returner =& $this->_returnEmailTemplateFromRow($result->GetRowAssoc(false));
-		}
-
-		$result->Close();
-		unset($result);
-
+	function &getBaseEmailTemplate($emailKey) {
+		$returner =& parent::getBaseEmailTemplate($emailKey, 0, 0);
 		return $returner;
 	}
 
 	/**
-	 * Internal function to return an email template object from a row.
-	 * @param $row array
+	 * Retrieve localized email template by key.
+	 * @param $emailKey string
+	 * @return LocaleEmailTemplate
+	 */
+	function &getLocaleEmailTemplate($emailKey) {
+		$returner =& parent::getLocaleEmailTemplate($emailKey, 0, 0);
+		return $returner;
+	}
+
+	/**
+	 * Retrieve an email template by key.
+	 * @param $emailKey string
+	 * @param $locale string
 	 * @return EmailTemplate
 	 */
-	function &_returnEmailTemplateFromRow(&$row) {
-		$emailTemplate = new EmailTemplate();
-		$emailTemplate->setEmailKey($row['email_key']);
-		$emailTemplate->setEnabled($row['enabled']);
-		$emailTemplate->setCanDisable($row['can_disable']);
-
-		if (!HookRegistry::call('EmailTemplateDAO::_returnEmailTemplateFromRow', array(&$emailTemplate, &$row))) {
-			$result =& $this->retrieve(
-				'SELECT d.locale, d.description, d.subject, d.body
-				FROM email_templates_data AS d
-				WHERE d.email_key = ?',
-				$row['email_key']
-			);
-
-			while (!$result->EOF) {
-				$dataRow =& $result->GetRowAssoc(false);
-				$emailTemplate->addLocale($dataRow['locale']);
-				$emailTemplate->setSubject($dataRow['locale'], $dataRow['subject']);
-				$emailTemplate->setBody($dataRow['locale'], $dataRow['body']);
-				$emailTemplate->setDescription($dataRow['locale'], $dataRow['description']);
-				$result->MoveNext();
-			}
-			$result->Close();
-			unset($result);
-		}
-
-		return $emailTemplate;
-	}
-
-	/**
-	 * Insert a new base email template.
-	 * @param $emailTemplate BaseEmailTemplate
-	 */	
-	function insertBaseEmailTemplate(&$emailTemplate) {
-		return $this->update(
-			'INSERT INTO email_templates
-				(email_key, enabled)
-				VALUES
-				(?, ?)',
-			array(
-				$emailTemplate->getEmailKey(),
-				$emailTemplate->getEnabled() == null ? 0 : 1
-			)
-		);
-		$emailTemplate->setEmailId($this->getInsertEmailId());
-		return $emailTemplate->getEmailId();
-	}
-
-	/**
-	 * Update an existing base email template.
-	 * @param $emailTemplate BaseEmailTemplate
-	 */
-	function updateBaseEmailTemplate(&$emailTemplate) {
-		return $this->update(
-			'UPDATE email_templates
-				SET	enabled = ?
-				WHERE email_key = ?',
-			array(
-				$emailTemplate->getEnabled() == null ? 0 : 1,
-				$emailTemplate->getEmailKey()
-			)
-		);
-	}
-
-	/**
-	 * Insert a new localized email template.
-	 * @param $emailTemplate EmailTemplate
-	 */	
-	function insertEmailTemplate(&$emailTemplate) {
-		$this->insertBaseEmailTemplate($emailTemplate);
-		return $this->updateEmailTemplateData($emailTemplate);
-	}
-
-	/**
-	 * Insert/update locale-specific email template data.
-	 * @param $emailTemplate LocaleEmailTemplate
-	 */
-	function updateEmailTemplateData(&$emailTemplate) {
-		foreach ($emailTemplate->getLocales() as $locale) {
-			$result =& $this->retrieve(
-				'SELECT COUNT(*) FROM email_templates_data
-				WHERE email_key = ? AND locale = ?',
-				array($emailTemplate->getEmailKey(), $locale)
-			);
-
-			if ($result->fields[0] == 0) {
-				$this->update(
-					'INSERT INTO email_templates_data
-					(email_key, locale, subject, body)
-					VALUES
-					(?, ?, ?, ?)',
-					array($emailTemplate->getEmailKey(), $locale, $emailTemplate->getSubject($locale), $emailTemplate->getBody($locale))
-				);
-
-			} else {
-				$this->update(
-					'UPDATE email_templates_data
-					SET subject = ?,
-						body = ?
-					WHERE email_key = ? AND locale = ?',
-					array($emailTemplate->getSubject($locale), $emailTemplate->getBody($locale), $emailTemplate->getEmailKey(), $locale)
-				);
-			}
-
-			$result->Close();
-			unset($result);
-		}
+	function &getEmailTemplate($emailKey, $locale) {
+		$returner =& parent::getEmailTemplate($emailKey, $locale, 0, 0);
+		return $returner;
 	}
 
 	/**
@@ -169,38 +56,36 @@ class EmailTemplateDAO extends DAO {
 	 * @param $emailKey string
 	 */
 	function deleteEmailTemplateByKey($emailKey) {
-		return $this->update(
-			'DELETE FROM email_templates WHERE email_key = ?',
-			$emailKey
-		);
+		return parent::deleteEmailTemplateByKey($emailKey, 0, 0);
 	}
 
 	/**
-	 * Get the ID of the last inserted email template.
-	 * @return int
-	 */
-	function getInsertEmailId() {
-		return $this->getInsertId('email_templates', 'emailId');
-	}
-
-	/**
-	 * Delete all email templates for a specific locale.
+	 * Retrieve all email templates.
 	 * @param $locale string
+	 * @param $rangeInfo object optional
+	 * @return array Email templates
 	 */
-	function deleteEmailTemplatesByLocale($locale) {
-		$this->update(
-			'DELETE FROM email_templates_data WHERE locale = ?', $locale
-		);
+	function &getEmailTemplates($locale, $rangeInfo = null) {
+		$returner =& parent::getEmailTemplates($locale, 0, 0, $rangeInfo);
+		return $returner;
 	}
 
 	/**
-	 * Delete all default email templates for a specific locale.
-	 * @param $locale string
+	 * Check if a template exists with the given email key.
+	 * @param $emailKey string
+	 * @return boolean
 	 */
-	function deleteDefaultEmailTemplatesByLocale($locale) {
-		/*$this->update(
-			'DELETE FROM email_templates_default_data WHERE locale = ?', $locale
-		);*/ // Not used in Harvester, but called from PKP. FIXME
+	function templateExistsByKey($emailKey) {
+		return parent::templateExistsByKey($emailKey, 0, 0);
+	}
+
+	/**
+	 * Check if a custom template exists with the given email key for a journal.
+	 * @param $emailKey string
+	 * @return boolean
+	 */
+	function customTemplateExistsByKey($emailKey) {
+		return parent::customTemplateExistsByKey($emailKey, 0, 0);
 	}
 }
 
