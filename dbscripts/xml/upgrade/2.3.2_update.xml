@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE data SYSTEM "../../../lib/pkp/dtd/xmlData.dtd">
+
+<!--
+  * 2.3.2_update.xml
+  *
+  * Copyright (c) 2005-2010 Alec Smecher and John Willinsky
+  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
+  *
+  * 2.3.2 database updates XML file, applied after DB schema descriptors.
+  -->
+
+<data>
+	<!-- Bug #6257: normalize plug-in names to lowercase
+	     NB: LOWER() is compatible with both MySQL and PostreSQL. -->
+	<sql>
+		<query>UPDATE plugin_settings SET plugin_name = LOWER(plugin_name);</query>
+	</sql>
+</data>

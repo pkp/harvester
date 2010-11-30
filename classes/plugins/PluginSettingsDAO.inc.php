@@ -13,8 +13,6 @@
  * @brief Operations for retrieving and modifying plugin settings.
  */
 
-// $Id$
-
 
 class PluginSettingsDAO extends DAO {
 
@@ -27,6 +25,7 @@ class PluginSettingsDAO extends DAO {
 
 	function &_getCache($pluginName) {
 		static $settingCache;
+
 		if (!isset($settingCache)) {
 			$settingCache = array();
 		}
@@ -48,6 +47,10 @@ class PluginSettingsDAO extends DAO {
 	 * @return mixed
 	 */
 	function getSetting($pluginName, $name) {
+		// Normalize the plug-in name to lower case.
+		$pluginName = strtolower($pluginName);
+
+		// Retrieve the setting.
 		$cache =& $this->_getCache($pluginName);
 		return $cache->get($name);
 	}
@@ -55,6 +58,8 @@ class PluginSettingsDAO extends DAO {
 	function _cacheMiss(&$cache, $id) {
 		$settings =& $this->getPluginSettings($cache->getCacheId());
 		if (!isset($settings[$id])) {
+			// Make sure that even null values are cached
+			$cache->setCache($id, null);
 			return null;
 		}
 		return $settings[$id];
@@ -66,12 +71,14 @@ class PluginSettingsDAO extends DAO {
 	 * @return array
 	 */
 	function &getPluginSettings($pluginName) {
-		$pluginSettings = array();
+		// Normalize plug-in name to lower case.
+		$pluginName = strtolower($pluginName);
 
 		$result =& $this->retrieve(
 			'SELECT setting_name, setting_value, setting_type FROM plugin_settings WHERE plugin_name = ?', array($pluginName)
 		);
 
+		$pluginSettings = array();
 		while (!$result->EOF) {
 			$row =& $result->getRowAssoc(false);
 			$pluginSettings[$row['setting_name']] = $this->convertFromDB($row['setting_value'], $row['setting_type']);
@@ -80,6 +87,7 @@ class PluginSettingsDAO extends DAO {
 		$result->Close();
 		unset($result);
 
+		// Update the cache.
 		$cache =& $this->_getCache($pluginName);
 		$cache->setEntireCache($pluginSettings);
 
@@ -94,6 +102,9 @@ class PluginSettingsDAO extends DAO {
 	 * @param $type string data type of the setting. If omitted, type will be guessed
 	 */
 	function updateSetting($pluginName, $name, $value, $type = null) {
+		// Normalize the plug-in name to lower case.
+		$pluginName = strtolower($pluginName);
+
 		$cache =& $this->_getCache($pluginName);
 		$cache->setCache($name, $value);
 
@@ -133,6 +144,9 @@ class PluginSettingsDAO extends DAO {
 	 * @param $name string
 	 */
 	function deleteSetting($pluginName, $name) {
+		// Normalize the plug-in name to lower case.
+		$pluginName = strtolower($pluginName);
+
 		$cache =& $this->_getCache($pluginName);
 		$cache->setCache($name, null);
 
@@ -147,11 +161,14 @@ class PluginSettingsDAO extends DAO {
 	 * @param $pluginName string
 	 */
 	function deleteSettingsByPlugin($pluginName) {
+		// Normalize the plug-in name to lower case.
+		$pluginName = strtolower($pluginName);
+
 		$cache =& $this->_getCache($pluginName);
 		$cache->flush();
 
 		return $this->update(
-			'DELETE FROM plugin_settings WHERE plugin_name = ?', 
+			'DELETE FROM plugin_settings WHERE plugin_name = ?',
 			array($pluginName)
 		);
 	}
