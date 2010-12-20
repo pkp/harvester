@@ -5,7 +5,7 @@
  */
 
 /**
- * @file index.php
+ * @file pages/login/index.php
  *
  * Copyright (c) 2005-2010 John Willinsky and Alec Smecher
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
