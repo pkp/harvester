@@ -14,7 +14,7 @@
  * $Id$
  */
 
-define('SEARCH_STOPWORDS_FILE', 'registry/stopwords.txt');
+define('SEARCH_STOPWORDS_FILE', 'lib/pkp/registry/stopwords.txt');
 
 class SearchIndex {
 
