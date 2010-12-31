@@ -15,7 +15,7 @@
 {include file="common/header.tpl"}
 {/strip}
 
-<form name="profile" method="post" action="{url op="saveProfile"}" enctype="multipart/form-data">
+<form id="profile" method="post" action="{url op="saveProfile"}" enctype="multipart/form-data">
 
 {include file="common/formErrors.tpl"}
 
@@ -58,7 +58,7 @@
 	<td class="value">
 		<select name="gender" id="gender" size="1" class="selectMenu">
 			{html_options_translate options=$genderOptions selected=$gender}
-		</select> 			
+		</select>
  	</td>
 </tr>
 <tr valign="top">

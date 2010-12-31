@@ -45,7 +45,7 @@ function selectHarvester() {
 </script>
 
 <div id="archiveForm">
-<form name="archiveForm" method="post" action="{url op="updateArchive"}" enctype="multipart/form-data">
+<form id="archiveForm" method="post" action="{url op="updateArchive"}" enctype="multipart/form-data">
 {if $archiveId}
 <input type="hidden" name="archiveId" value="{$archiveId}" />
 {/if}
@@ -82,7 +82,7 @@ function selectHarvester() {
 			{translate key="admin.archives.form.url.description"}
 		</td>
 	</tr>
-	
+
 	{if $isUserLoggedIn}{* Only administrators are allowed to set enabled/disabled for archives *}
 		<tr valign="top">
 			<td class="label">&nbsp;</td>

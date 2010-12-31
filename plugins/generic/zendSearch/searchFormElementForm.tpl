@@ -36,7 +36,7 @@ function changeElementType() {
 
 <br/>
 
-<form name="searchFormElement" method="post" action="{url op="updateSearchFormElement"}">
+<form id="searchFormElement" method="post" action="{url op="updateSearchFormElement"}">
 {if $searchFormElementId}
 <input type="hidden" name="searchFormElementId" value="{$searchFormElementId|escape}" />
 {/if}

@@ -70,7 +70,7 @@
 
 <h3>{if $userId}{translate key="admin.people.editProfile"}{else}{translate key="admin.people.createUser"}{/if}</h3>
 
-<form name="userForm" method="post" action="{url op="updateUser"}" onsubmit="enablePasswordFields()">
+<form id="userForm" method="post" action="{url op="updateUser"}" onsubmit="enablePasswordFields()">
 <input type="hidden" name="source" value="{$source|escape}" />
 {if $userId}
 <input type="hidden" name="userId" value="{$userId|escape}" />
@@ -118,7 +118,7 @@
 		<td class="value"><input type="text" name="initials" id="initials" value="{$initials|escape}" size="5" maxlength="5" class="textField" />&nbsp;&nbsp;{translate key="user.initialsExample"}</td>
 	</tr>
 	{if not $userId}
-	<tr valign="top">	
+	<tr valign="top">
 		<td class="label">{fieldLabel name="enrollAs" key="admin.people.enrollUserAs"}</td>
 		<td class="value">
 			<select name="enrollAs[]" id="enrollAs" multiple="multiple" size="11" class="selectMenu">
@@ -143,7 +143,7 @@
 	</tr>
 	{/if}
 	{if $authSourceOptions}
-	<tr valign="top">	
+	<tr valign="top">
 		<td class="label">{fieldLabel name="authId" key="admin.people.authSource"}</td>
 		<td class="value"><select name="authId" id="authId" size="1" class="selectMenu">
 			<option value=""></option>
@@ -151,7 +151,7 @@
 		</select></td>
 	</tr>
 	{/if}
-	
+
 	{if !$implicitAuth}
 		<tr valign="top">
 			<td class="label">{fieldLabel name="password" required=$passwordRequired key="user.password"}</td>
@@ -185,7 +185,7 @@
 			<td class="value"><input type="checkbox" name="mustChangePassword" id="mustChangePassword" value="1"{if $mustChangePassword} checked="checked"{/if} /> <label for="mustChangePassword">{translate key="admin.people.userMustChangePassword"}</label></td>
 		</tr>
 	{/if}{* !$implicitAuth *}
-	
+
 	<tr valign="top">
 		<td class="label">{fieldLabel name="affiliation" key="user.affiliation"}</td>
 		<td class="value"><textarea name="affiliation[{$formLocale|escape}]" id="affiliation" rows="5" cols="40" class="textArea">{$affiliation[$formLocale]|escape}</textarea></td>

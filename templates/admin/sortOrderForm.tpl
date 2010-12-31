@@ -22,7 +22,7 @@
 
 <br/>
 
-<form name="sortOrder" method="post" action="{url op="updateSortOrder"}">
+<form id="sortOrder" method="post" action="{url op="updateSortOrder"}">
 {if $sortOrderId}
 <input type="hidden" name="sortOrderId" value="{$sortOrderId|escape}" />
 {/if}

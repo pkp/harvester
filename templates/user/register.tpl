@@ -13,7 +13,7 @@
 {include file="common/header.tpl"}
 {/strip}
 
-<form name="register" method="post" action="{url op="registerUser"}">
+<form id="register" method="post" action="{url op="registerUser"}">
 
 <p>{translate key="user.register.completeForm"}</p>
 
