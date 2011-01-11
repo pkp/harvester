@@ -23,7 +23,7 @@
 		var searchForm = document.forms[formIndex];
 
 		// Get a list of search terms
-		var elements = document.terms.elements;
+		var elements = document.getElementById('terms').elements;
 		for (var i=0; i<elements.length; i++) {
 			if (elements[i].type=='text') {
 				var value = elements[i].value;
@@ -43,7 +43,7 @@
 		var newAction = searchForm.action;
 		newAction = newAction.replace(/{\$formKeywords}/g, termsGet);
 		{/literal}{foreach from=$searchParams item=param}{literal}
-		newAction = newAction.replace(/{\${/literal}{$param}{literal}}/g, document.additionalParams.{/literal}{$param}{literal}.value.replace(/ /g,'+'));
+		newAction = newAction.replace(/{\${/literal}{$param}{literal}}/g, document.getElementById('additionalParams').{/literal}{$param}{literal}.value.replace(/ /g,'+'));
 		{/literal}{/foreach}{literal}
 		searchForm.action = newAction;
 
@@ -53,7 +53,7 @@
 			if (elements[i].type=='hidden') {
 				elements[i].value = elements[i].value.replace(/{\$formKeywords}/g, termsPost);
 				{/literal}{foreach from=$searchParams item=param}{literal}
-				elements[i].value = elements[i].value.replace(/{\${/literal}{$param}{literal}}/g, document.additionalParams.{/literal}{$param}{literal}.value);
+				elements[i].value = elements[i].value.replace(/{\${/literal}{$param}{literal}}/g, document.getElementById('additionalParams').{/literal}{$param}{literal}.value);
 				{/literal}{/foreach}{literal}
 			}
 		}

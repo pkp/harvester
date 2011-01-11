@@ -18,8 +18,8 @@
 function handleArchiveSelect() {
 	// Specific fields are currently displayed; the field set should be
 	// updated.
-	document.search.action = "{/literal}{url page="misearch" escape="false"}{literal}";
-	document.search.submit();
+	document.getElementById('search').action = "{/literal}{url page="misearch" escape="false"}{literal}";
+	document.getElementById('search').submit();
 	return true;
 }
 
@@ -82,7 +82,7 @@ function handleArchiveSelect() {
 						{/if}{/foreach}
 					</select>
 				</td>
-			
+
 		{else}{* FIELD_TYPE_TEXT *}
 			{assign var=crosswalkValueVar value=crosswalk-$crosswalkId}
 			<tr valign="top">
@@ -121,7 +121,7 @@ function handleArchiveSelect() {
 						{/if}{/foreach}
 					</select>
 				</td>
-			
+
 		{else}
 			<tr valign="top">
 				<td class="label"><label for="field-{$fieldId}">{$field->getDisplayName()|escape}</label></td>

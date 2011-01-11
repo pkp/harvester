@@ -11,7 +11,7 @@
 	<tr valign="top">
 		<td class="label">{fieldLabel name="harvesterUrl" key="plugins.harvesters.oai.archive.form.harvesterUrl" required="true"}</td>
 		<td class="value">
-			<input type="text" id="harvesterUrl" name="harvesterUrl" value="{$harvesterUrl|escape}" size="40" maxlength="120" class="textField" />&nbsp;<input type="button" value="{translate key="plugins.harvesters.oai.archive.form.fetchMetadata"}" class="button" onclick="if (confirm('{translate|escape:"jsparam" key="plugins.harvesters.oai.archive.form.fetchMetadata.warning"}')) {literal}{{/literal}document.archiveForm.action='{url|escape:"quotes" op="plugin" path="harvesters"|to_array:$harvesterPluginName:"fetchArchiveInfo":$archiveId}';document.archiveForm.submit();{literal}}{/literal}" />
+			<input type="text" id="harvesterUrl" name="harvesterUrl" value="{$harvesterUrl|escape}" size="40" maxlength="120" class="textField" />&nbsp;<input type="button" value="{translate key="plugins.harvesters.oai.archive.form.fetchMetadata"}" class="button" onclick="if (confirm('{translate|escape:"jsparam" key="plugins.harvesters.oai.archive.form.fetchMetadata.warning"}')) {literal}{{/literal}document.getElementById('archiveForm').action='{url|escape:"quotes" op="plugin" path="harvesters"|to_array:$harvesterPluginName:"fetchArchiveInfo":$archiveId}';document.getElementById('archiveForm').submit();{literal}}{/literal}" />
 			<br/>
 			{translate key="plugins.harvesters.oai.archive.form.harvesterUrl.description"}
 		</td>
@@ -36,10 +36,10 @@
 				// Make sure the static checkbox indicates this in the UI.
 				function selectStatic(control) {
 					if (control.checked) {
-						document.archiveForm.oaiIndexMethod.selectedIndex = 0;
-						document.archiveForm.oaiIndexMethod.disabled = true;
+						document.getElementById('archiveForm').oaiIndexMethod.selectedIndex = 0;
+						document.getElementById('archiveForm').oaiIndexMethod.disabled = true;
 					} else {
-						document.archiveForm.oaiIndexMethod.disabled = false;
+						document.getElementById('archiveForm').oaiIndexMethod.disabled = false;
 					}
 				}
 				{/literal}

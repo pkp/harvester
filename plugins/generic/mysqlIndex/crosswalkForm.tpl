@@ -21,8 +21,8 @@
 <!--
 function refreshForm() {
 {/literal}
-	document.crosswalkForm.action='{url}';
-	document.crosswalkForm.submit();
+	document.getElementById('crosswalkForm').action='{url}';
+	document.getElementById('crosswalkForm').submit();
 {literal}
 }
 -->

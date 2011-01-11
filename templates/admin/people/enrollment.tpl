@@ -22,7 +22,7 @@
 {literal}
 <!--
 function toggleChecked() {
-	var elements = document.people.elements;
+	var elements = document.getElementById('people').elements;
 	for (var i=0; i < elements.length; i++) {
 		if (elements[i].name == 'bcc[]') {
 			elements[i].checked = !elements[i].checked;
@@ -33,17 +33,18 @@ function toggleChecked() {
 function confirmAndPrompt(userId) {
 	var reason = prompt('{/literal}{translate|escape:"javascript" key="admin.people.confirmDisable"}{literal}');
 	if (reason == null) return;
+	var disableUserForm = document.getElementById('disableUser');
+	disableUserForm.reason.value = reason;
+	disableUserForm.userId.value = userId;
 
-	document.disableUser.reason.value = reason;
-	document.disableUser.userId.value = userId;
-
-	document.disableUser.submit();
+	disableUserForm.submit();
 }
 
 function sortSearch(heading, direction) {
-	document.submit.sort.value = heading;
-	document.submit.sortDirection.value = direction;
-	document.submit.submit();
+	var submitForm = document.getElementById('submit');
+	submitForm.sort.value = heading;
+	submitForm.sortDirection.value = direction;
+	submitForm.submit();
 }
 // -->
 {/literal}

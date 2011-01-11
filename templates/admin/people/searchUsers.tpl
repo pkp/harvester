@@ -25,17 +25,18 @@
 function confirmAndPrompt(userId) {
 	var reason = prompt('{/literal}{translate|escape:"javascript" key="admin.people.confirmDisable"}{literal}');
 	if (reason == null) return;
+	var disableUserForm = document.getElementById('disableUser');
+	disableUserForm.reason.value = reason;
+	disableUserForm.userId.value = userId;
 
-	document.disableUser.reason.value = reason;
-	document.disableUser.userId.value = userId;
-
-	document.disableUser.submit();
+	disableUserForm.submit();
 }
 
 function sortSearch(heading, direction) {
-	document.submit.sort.value = heading;
-	document.submit.sortDirection.value = direction;
-	document.submit.submit();
+	var submitForm = document.getElementById('submit');
+	submitForm.sort.value = heading;
+	submitForm.sortDirection.value = direction;
+	submitForm.submit();
 }
 // -->
 {/literal}
@@ -69,12 +70,13 @@ function sortSearch(heading, direction) {
 	<script type="text/javascript">
 	<!--
 	function enrollUser(userId) {ldelim}
+		var enrollForm = document.getElementById('enroll');
 		var fakeUrl = '{url op="enroll" path="ROLE_ID" userId="USER_ID"}';
-		if (document.enroll.roleId.options[document.enroll.roleId.selectedIndex].value == '') {ldelim}
+		if (enrollForm.roleId.options[enrollForm.roleId.selectedIndex].value == '') {ldelim}
 			alert("{translate|escape:"javascript" key="admin.people.mustChooseRole"}");
 			return false;
 		{rdelim}
-		fakeUrl = fakeUrl.replace('ROLE_ID', document.enroll.roleId.options[document.enroll.roleId.selectedIndex].value);
+		fakeUrl = fakeUrl.replace('ROLE_ID', enrollForm.roleId.options[enrollForm.roleId.selectedIndex].value);
 		fakeUrl = fakeUrl.replace('USER_ID', userId);
 		location.href = fakeUrl;
 	{rdelim}

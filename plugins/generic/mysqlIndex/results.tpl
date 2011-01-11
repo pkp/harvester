@@ -22,11 +22,11 @@
 {literal}
 <!--
 function ensureKeyword() {
-	if (document.search.query.value == '') {
+	if (document.getElementById('search').query.value == '') {
 		alert({/literal}'{translate|escape:"jsparam" key="search.noKeywordError"}'{literal});
 		return false;
 	}
-	document.search.submit();
+	document.getElementById('search').submit();
 	return true;
 }
 // -->

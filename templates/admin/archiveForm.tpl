@@ -36,8 +36,8 @@
 
 {literal}
 function selectHarvester() {
-	document.archiveForm.action="{/literal}{if $archiveId}{url op="editArchive" anchor="archiveForm" path=$archiveId escape=false}{else}{url op="editArchive" anchor="archiveForm" escape=false}{/if}{literal}";
-	document.archiveForm.submit();
+	document.getElementById('archiveForm').action="{/literal}{if $archiveId}{url op="editArchive" anchor="archiveForm" path=$archiveId escape=false}{else}{url op="editArchive" anchor="archiveForm" escape=false}{/if}{literal}";
+	document.getElementById('archiveForm').submit();
 }
 
 {/literal}
