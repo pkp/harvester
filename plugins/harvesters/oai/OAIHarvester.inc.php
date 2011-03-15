@@ -513,6 +513,7 @@ class OAIHarvester extends Harvester {
 				break;
 			case 'parse':
 				fwrite($fp, $data);
+				break;
 			case 'close':
 				fclose($fp);
 				break;
