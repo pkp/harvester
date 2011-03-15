@@ -299,7 +299,15 @@ class OAIHarvester extends Harvester {
 			}
 			if (isset($params['verbose'])) echo "Harvest URL: $harvestUrl\n";
 			$this->throttle();
-			$result =& $parser->parse($harvestUrl);
+
+			// Dump harvested data if requested
+			if (isset($params['dump'])) {
+				$dataCallback = array(&$this, 'dataCallback');
+			} else {
+				$dataCallback = null;
+			}
+
+			$result =& $parser->parse($harvestUrl, $dataCallback);
 			if (!$parser->getStatus()) {
 				foreach ($parser->getErrors() as $error) {
 					$this->addError($error);
@@ -493,6 +501,22 @@ class OAIHarvester extends Harvester {
 			$separator = '&';
 		}
 		return $url;
+	}
+
+	function dataCallback($operation, $wrapper, $data = null) {
+		static $fp;
+		switch ($operation) {
+			case 'open':
+				$filename = tempnam('.', 'dump');
+				$fp = fopen($filename, 'w');
+				echo "Dumping into \"$filename\".\n";
+				break;
+			case 'parse':
+				fwrite($fp, $data);
+			case 'close':
+				fclose($fp);
+				break;
+		}
 	}
 }
 
