@@ -41,6 +41,7 @@
 
 	<message key="plugins.harvesters.oai.toolUsage"><![CDATA[The following additional flags are available for the OAI Harvester:
 	skipExistingEntries: When set, existing records will not be updated
+	dump: When set, dump harvested data to local files for debugging
 	from=YYYY-MM-DD: Harvest records at least as new as the specified date (use "now" for current date, "last" for date of last harvest)
 	until=YYYY-MM-DD: Harvest records at least as old as the specified date (use "now" for current date)
 	set=setSpec: Harvest records from the specified set (may be specified multiple times)
