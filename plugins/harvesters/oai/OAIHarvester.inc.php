@@ -248,7 +248,7 @@ class OAIHarvester extends Harvester {
 	/**
 	 * Update the records for this archive.
 	 * The $params variable is an associative array that can include
-	 * "set", "from", "until", "skipIndexing", and "verbose" as keys.
+	 * "set", "from", "until", and "verbose" as keys.
 	 * @param $params array
 	 * @return int Number or records, or false iff error condition
 	 */

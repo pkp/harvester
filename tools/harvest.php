@@ -86,7 +86,6 @@ class harvest extends CommandLineTool {
 			. "\tverbose: Display status information during the harvest.\n"
 			. "\tflush: Flush the contents of the archive before harvesting.\n"
 			. "\tusage: Display additional usage information for the particular archive\n"
-			. "\tskipIndexing: Skip flushing and creation of search indexing\n"
 			. "Additional flags for each harvester can be listed using:\n"
 			. "\t{$this->scriptName} [archive ID] usage\n\n"
 			. "For example, to update all records using the OAI harvester:\n"
