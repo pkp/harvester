@@ -44,10 +44,10 @@ function selectHarvester() {
 // -->
 </script>
 
-<div id="archiveForm">
+<div id="archiveFormContainer">
 <form id="archiveForm" method="post" action="{url op="updateArchive"}" enctype="multipart/form-data">
 {if $archiveId}
-<input type="hidden" name="archiveId" value="{$archiveId}" />
+<input type="hidden" name="archiveId" value="{$archiveId|escape}" />
 {/if}
 
 {include file="common/formErrors.tpl"}
@@ -119,7 +119,7 @@ function selectHarvester() {
 		<td class="label">{fieldLabel name="harvesterPluginName" key="archive.type" required="true"}</td>
 		<td><select onchange="selectHarvester()" name="harvesterPluginName" id="harvesterPluginName" size="1" class="selectMenu">
 			{foreach from=$harvesters item=harvester}
-				<option {if $harvester->getName() == $harvesterPluginName}selected="selected" {/if}value="{$harvester->getName()}">{$harvester->getProtocolDisplayName()}</option>
+				<option {if $harvester->getName() == $harvesterPluginName}selected="selected" {/if}value="{$harvester->getName()|escape}">{$harvester->getProtocolDisplayName()}</option>
 			{/foreach}
 		</select></td>
 	</tr>
