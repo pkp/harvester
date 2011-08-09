@@ -171,8 +171,7 @@ class InstallForm extends Form {
 			'databaseUsername',
 			'databasePassword',
 			'databaseName',
-			'createDatabase',
-			'manualInstall'
+			'createDatabase'
 		));
 
 		if ($this->getData('additionalLocales') == null || !is_array($this->getData('additionalLocales'))) {
@@ -190,11 +189,6 @@ class InstallForm extends Form {
 		// FIXME Use logger?
 
 		if ($installer->execute()) {
-			if ($this->getData('manualInstall')) {
-				// Display SQL statements that would have been executed during installation
-				$templateMgr->assign(array('manualInstall' => true, 'installSql' => $installer->getSQL()));
-
-			}
 			if (!$installer->wroteConfig()) {
 				// Display config file contents for manual replacement
 				$templateMgr->assign(array('writeConfigFailed' => true, 'configFileContents' => $installer->getConfigContents()));
