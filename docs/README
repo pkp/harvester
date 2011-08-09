@@ -90,10 +90,6 @@ To install the Harvester:
 	   directory. (Note: with the CLI installer you may need to chown/chmod
 	   the public and uploaded files directories after installation, if the
 	   Apache user is different from the user running the tool.)
-	   
-	   The installer also offers a "manual installation" option that will
-	   display the SQL statements necessary to create the Harvester database
-	   but not execute them.
 	 
 	4. Recommended additional steps post-installation:
 	
