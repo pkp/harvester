@@ -40,7 +40,7 @@ class HarvesterInstallTool extends InstallTool {
 
 		parent::readParams();
 
-		$this->readParamBoolean('install', 'installer.installHarvester2');
+		$this->readParamBoolean('install', 'installer.installApplication');
 
 		return $this->params['install'];
 	}
