@@ -35,14 +35,14 @@ class JunkHarvesterPlugin extends HarvesterPlugin {
 	 * @return String
 	 */
 	function getProtocolDisplayName() {
-		return Locale::translate('plugins.harvesters.junk.protocolName');
+		return __('plugins.harvesters.junk.protocolName');
 	}
 
 	/**
 	 * Get a description of the plugin.
 	 */
 	function getDescription() {
-		return Locale::translate('plugins.harvesters.junk.description');
+		return __('plugins.harvesters.junk.description');
 	}
 
 	function addArchiveFormChecks(&$form) {

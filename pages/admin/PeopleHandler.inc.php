@@ -87,7 +87,7 @@ class PeopleHandler extends AdminHandler {
 		);
 		$templateMgr->assign('fieldOptions', $fieldOptions);
 		$templateMgr->assign('rolePath', $roleDao->getRolePath($roleId));
-		$templateMgr->assign('alphaList', explode(' ', Locale::translate('common.alphaList')));
+		$templateMgr->assign('alphaList', explode(' ', __('common.alphaList')));
 		$templateMgr->assign('roleSymbolic', $roleSymbolic);
 		$templateMgr->assign('sort', $sort);
 		$templateMgr->assign('sortDirection', $sortDirection);
@@ -147,7 +147,7 @@ class PeopleHandler extends AdminHandler {
 		$templateMgr->assign('fieldOptions', $fieldOptions);
 		$templateMgr->assign_by_ref('users', $users);
 		$templateMgr->assign_by_ref('thisUser', Request::getUser());
-		$templateMgr->assign('alphaList', explode(' ', Locale::translate('common.alphaList')));
+		$templateMgr->assign('alphaList', explode(' ', __('common.alphaList')));
 		$templateMgr->assign('sort', $sort);
 		$templateMgr->assign('sortDirection', $sortDirection);
 		$templateMgr->display('admin/people/searchUsers.tpl');
@@ -434,7 +434,7 @@ class PeopleHandler extends AdminHandler {
 
 			$templateMgr->assign_by_ref('user', $user);
 			$templateMgr->assign_by_ref('userRoles', $roles);
-			$templateMgr->assign('localeNames', Locale::getAllLocales());
+			$templateMgr->assign('localeNames', AppLocale::getAllLocales());
 			$templateMgr->display('admin/people/userProfile.tpl');
 		}
 	}

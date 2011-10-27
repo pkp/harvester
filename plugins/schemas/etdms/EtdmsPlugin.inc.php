@@ -35,14 +35,14 @@ class EtdmsPlugin extends SchemaPlugin {
 	 * @return String
 	 */
 	function getSchemaDisplayName() {
-		return Locale::translate('plugins.schemas.etdms.schemaName');
+		return __('plugins.schemas.etdms.schemaName');
 	}
 
 	/**
 	 * Get a description of the plugin.
 	 */
 	function getDescription() {
-		return Locale::translate('plugins.schemas.etdms.description');
+		return __('plugins.schemas.etdms.description');
 	}
 
 	function getFieldList() {
@@ -104,11 +104,11 @@ class EtdmsPlugin extends SchemaPlugin {
 	}
 
 	function getFieldName($fieldSymbolic, $locale = null) {
-		return Locale::translate("plugins.schemas.etdms.fields.$fieldSymbolic.name", $locale);
+		return __("plugins.schemas.etdms.fields.$fieldSymbolic.name", $locale);
 	}
 
 	function getFieldDescription($fieldSymbolic, $locale = null) {
-		return Locale::translate("plugins.schemas.etdms.fields.$fieldSymbolic.description", $locale);
+		return __("plugins.schemas.etdms.fields.$fieldSymbolic.description", $locale);
 	}
 
 	/**

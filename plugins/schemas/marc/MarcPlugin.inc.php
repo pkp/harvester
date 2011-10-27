@@ -59,14 +59,14 @@ class MarcPlugin extends SchemaPlugin {
 	 * @return String
 	 */
 	function getSchemaDisplayName() {
-		return Locale::translate('plugins.schemas.marc.schemaName');
+		return __('plugins.schemas.marc.schemaName');
 	}
 
 	/**
 	 * Get a description of the plugin.
 	 */
 	function getDescription() {
-		return Locale::translate('plugins.schemas.marc.description');
+		return __('plugins.schemas.marc.description');
 	}
 
 	function getFieldList() {
@@ -78,11 +78,11 @@ class MarcPlugin extends SchemaPlugin {
 	}
 
 	function getFieldName($fieldSymbolic, $locale = null) {
-		return Locale::translate("plugins.schemas.marc.fields.$fieldSymbolic.name", $locale);
+		return __("plugins.schemas.marc.fields.$fieldSymbolic.name", $locale);
 	}
 
 	function getFieldDescription($fieldSymbolic, $locale = null) {
-		return Locale::translate("plugins.schemas.marc.fields.$fieldSymbolic.description", $locale);
+		return __("plugins.schemas.marc.fields.$fieldSymbolic.description", $locale);
 	}
 
 	/**

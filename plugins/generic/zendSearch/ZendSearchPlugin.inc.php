@@ -91,7 +91,7 @@ class ZendSearchPlugin extends GenericPlugin {
 	 * @return string
 	 */
 	function getDisplayName() {
-		return Locale::translate('plugins.generic.zendSearch.name');
+		return __('plugins.generic.zendSearch.name');
 	}
 
 	/**
@@ -99,7 +99,7 @@ class ZendSearchPlugin extends GenericPlugin {
 	 * @return string
 	 */
 	function getDescription() {
-		return Locale::translate('plugins.generic.zendSearch.description');
+		return __('plugins.generic.zendSearch.description');
 	}
 
 	/**
@@ -109,8 +109,8 @@ class ZendSearchPlugin extends GenericPlugin {
 	function getManagementVerbs() {
 		$verbs = array();
 		if ($this->getEnabled()) {
-			$verbs[] = array('adminSearchForm', Locale::translate('plugins.generic.zendSearch.searchForm'));
-			$verbs[] = array('adminSettings', Locale::translate('plugins.generic.zendSearch.settings'));
+			$verbs[] = array('adminSearchForm', __('plugins.generic.zendSearch.searchForm'));
+			$verbs[] = array('adminSettings', __('plugins.generic.zendSearch.settings'));
 		}
 		return parent::getManagementVerbs($verbs);
 	}
@@ -162,7 +162,7 @@ class ZendSearchPlugin extends GenericPlugin {
 	 */
 	function navBarCallback($hookName, $args) {
 		$output =& $args[2];
-		$output .= '<li><a href="' . Request::url('search', 'index') . '">' . Locale::translate('navigation.search') . '</a></li>';
+		$output .= '<li><a href="' . Request::url('search', 'index') . '">' . __('navigation.search') . '</a></li>';
 		return false;
 	}
 
@@ -171,7 +171,7 @@ class ZendSearchPlugin extends GenericPlugin {
 	 */
 	function siteManagementCallback($hookName, $args) {
 		$output =& $args[2];
-		$output .= '<li>&#187;&nbsp;<a href="' . Request::url('admin', 'plugin', array('generic', $this->getName(), 'adminSearchForm')) . '">' . Locale::translate('plugins.generic.zendSearch.searchForm') . '</a></li>';
+		$output .= '<li>&#187;&nbsp;<a href="' . Request::url('admin', 'plugin', array('generic', $this->getName(), 'adminSearchForm')) . '">' . __('plugins.generic.zendSearch.searchForm') . '</a></li>';
 		return false;
 	}
 

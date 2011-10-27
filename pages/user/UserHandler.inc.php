@@ -47,7 +47,7 @@ class UserHandler extends Handler {
 
 		$site =& Request::getSite();
 
-		if (Locale::isLocaleValid($setLocale) && in_array($setLocale, $site->getSupportedLocales())) {
+		if (AppLocale::isLocaleValid($setLocale) && in_array($setLocale, $site->getSupportedLocales())) {
 			$session =& Request::getSession();
 			$session->setSessionVar('currentLocale', $setLocale);
 		}

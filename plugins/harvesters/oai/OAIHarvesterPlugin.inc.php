@@ -41,14 +41,14 @@ class OAIHarvesterPlugin extends HarvesterPlugin {
 	 * @return String
 	 */
 	function getProtocolDisplayName() {
-		return Locale::translate('plugins.harvesters.oai.protocolName');
+		return __('plugins.harvesters.oai.protocolName');
 	}
 
 	/**
 	 * Get a description of the plugin.
 	 */
 	function getDescription() {
-		return Locale::translate('plugins.harvesters.oai.description');
+		return __('plugins.harvesters.oai.description');
 	}
 
 	function addArchiveFormChecks(&$form) {
@@ -92,8 +92,8 @@ class OAIHarvesterPlugin extends HarvesterPlugin {
 
 		parent::displayArchiveForm($form, $templateMgr);
 		$templateMgr->assign('oaiIndexMethods', array(
-			OAI_INDEX_METHOD_LIST_RECORDS => Locale::translate('plugins.harvesters.oai.archive.form.oaiIndexMethod.ListRecords'),
-			OAI_INDEX_METHOD_LIST_IDENTIFIERS => Locale::translate('plugins.harvesters.oai.archive.form.oaiIndexMethod.ListIdentifiers')
+			OAI_INDEX_METHOD_LIST_RECORDS => __('plugins.harvesters.oai.archive.form.oaiIndexMethod.ListRecords'),
+			OAI_INDEX_METHOD_LIST_IDENTIFIERS => __('plugins.harvesters.oai.archive.form.oaiIndexMethod.ListIdentifiers')
 		));
 
 		// Build a list of supported metadata formats.
@@ -171,7 +171,7 @@ class OAIHarvesterPlugin extends HarvesterPlugin {
 	 * @return String
 	 */
 	function describeOptions() {
-		echo Locale::translate('plugins.harvesters.oai.toolUsage') . "\n";
+		echo __('plugins.harvesters.oai.toolUsage') . "\n";
 	}
 
 	function displayManagementPage(&$archive) {
