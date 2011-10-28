@@ -130,7 +130,7 @@ class CrosswalkForm extends Form {
 		$publicCrosswalkId = $this->getData('publicCrosswalkId');
 		$crosswalkDao =& DAORegistry::getDAO('CrosswalkDAO');
 		if ($publicCrosswalkId != '' && $crosswalkDao->crosswalkExistsByPublicCrosswalkId($publicCrosswalkId, $this->crosswalkId)) {
-			$this->addError('publicCrosswalkId', Locale::translate('plugins.generic.mysqlIndex.form.publicCrosswalkIdExists'));
+			$this->addError('publicCrosswalkId', __('plugins.generic.mysqlIndex.form.publicCrosswalkIdExists'));
 			$this->addErrorField('publicCrosswalkId');
 		}
 		return parent::validate();

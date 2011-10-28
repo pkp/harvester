@@ -46,14 +46,14 @@ class IPBanPlugin extends GenericPlugin {
 	 * @return String
 	 */
 	function getDisplayName() {
-		return Locale::translate('plugins.generic.ipban.name');
+		return __('plugins.generic.ipban.name');
 	}
 
 	/**
 	 * Get a description of the plugin.
 	 */
 	function getDescription() {
-		return Locale::translate('plugins.generic.ipban.description');
+		return __('plugins.generic.ipban.description');
 	}
 }
 

@@ -34,14 +34,14 @@ class MysqlIndexBlockPlugin extends BlockPlugin {
 	 * @return String
 	 */
 	function getDisplayName() {
-		return Locale::translate('plugins.generic.mysqlIndex.blockDisplayName');
+		return __('plugins.generic.mysqlIndex.blockDisplayName');
 	}
 
 	/**
 	 * Get a description of the plugin.
 	 */
 	function getDescription() {
-		return Locale::translate('plugins.generic.mysqlIndex.blockDescription');
+		return __('plugins.generic.mysqlIndex.blockDescription');
 	}
 
 	/**

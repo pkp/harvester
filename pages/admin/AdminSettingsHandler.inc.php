@@ -53,7 +53,7 @@ class AdminSettingsHandler extends AdminHandler {
 			if ($settingsForm->uploadStyleSheet('styleSheet')) {
 				$editData = true;
 			} else {
-				$settingsForm->addError('styleSheet', Locale::translate('admin.settings.styleSheet.invalid'));
+				$settingsForm->addError('styleSheet', __('admin.settings.styleSheet.invalid'));
 			}
 		} elseif ($request->getUserVar('deleteStyleSheet')) {
 			$editData = true;
@@ -62,7 +62,7 @@ class AdminSettingsHandler extends AdminHandler {
 			if ($settingsForm->uploadImage('customLogo')) {
 				$editData = true;
 			} else {
-				$settingsForm->addError('customLogo', Locale::translate('admin.settings.customLogo.invalid'));
+				$settingsForm->addError('customLogo', __('admin.settings.customLogo.invalid'));
 			}
 		} elseif ($request->getUserVar('deleteCustomLogo')) {
 			$editData = true;

@@ -35,14 +35,14 @@ class ModsPlugin extends SchemaPlugin {
 	 * @return String
 	 */
 	function getSchemaDisplayName() {
-		return Locale::translate('plugins.schemas.mods.schemaName');
+		return __('plugins.schemas.mods.schemaName');
 	}
 
 	/**
 	 * Get a description of the plugin.
 	 */
 	function getDescription() {
-		return Locale::translate('plugins.schemas.mods.description');
+		return __('plugins.schemas.mods.description');
 	}
 
 	function getFieldList() {
@@ -104,11 +104,11 @@ class ModsPlugin extends SchemaPlugin {
 	}
 
 	function getFieldName($fieldSymbolic, $locale = null) {
-		return Locale::translate("plugins.schemas.mods.fields.$fieldSymbolic.name", $locale);
+		return __("plugins.schemas.mods.fields.$fieldSymbolic.name", $locale);
 	}
 
 	function getFieldDescription($fieldSymbolic, $locale = null) {
-		return Locale::translate("plugins.schemas.mods.fields.$fieldSymbolic.description", $locale);
+		return __("plugins.schemas.mods.fields.$fieldSymbolic.description", $locale);
 	}
 
 	/**

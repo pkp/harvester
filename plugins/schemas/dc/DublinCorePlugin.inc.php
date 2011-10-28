@@ -35,14 +35,14 @@ class DublinCorePlugin extends SchemaPlugin {
 	 * @return String
 	 */
 	function getSchemaDisplayName() {
-		return Locale::translate('plugins.schemas.dc.schemaName');
+		return __('plugins.schemas.dc.schemaName');
 	}
 
 	/**
 	 * Get a description of the plugin.
 	 */
 	function getDescription() {
-		return Locale::translate('plugins.schemas.dc.description');
+		return __('plugins.schemas.dc.description');
 	}
 
 	function getFieldList() {
@@ -100,11 +100,11 @@ class DublinCorePlugin extends SchemaPlugin {
 	}
 
 	function getFieldName($fieldSymbolic, $locale = null) {
-		return Locale::translate("plugins.schemas.dc.fields.$fieldSymbolic.name", $locale);
+		return __("plugins.schemas.dc.fields.$fieldSymbolic.name", $locale);
 	}
 
 	function getFieldDescription($fieldSymbolic, $locale = null) {
-		return Locale::translate("plugins.schemas.dc.fields.$fieldSymbolic.description", $locale);
+		return __("plugins.schemas.dc.fields.$fieldSymbolic.description", $locale);
 	}
 
 	/**

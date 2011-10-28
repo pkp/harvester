@@ -65,7 +65,7 @@ class localeCheck extends CommandLineTool {
 			if (is_array($morePlugins)) $plugins += $morePlugins;
 		}
 
-		foreach (Locale::getAllLocales() as $locale => $name) {
+		foreach (AppLocale::getAllLocales() as $locale => $name) {
 			if (!empty($this->locales) && !in_array($locale, $this->locales)) continue;
 			if ($locale != MASTER_LOCALE) {
 				echo "Testing locale \"$name\" ($locale) against reference locale " . MASTER_LOCALE . ".\n";
@@ -196,8 +196,8 @@ class localeCheck extends CommandLineTool {
 			LOCALE_ERROR_DIFFERING_PARAMS => array()
 		);
 
-		$localeCache =& Locale::_getCache($locale);
-		$referenceLocaleCache =& Locale::_getCache($referenceLocale);
+		$localeCache =& AppLocale::_getCache($locale);
+		$referenceLocaleCache =& AppLocale::_getCache($referenceLocale);
 
 		$localeContents =& $localeCache->getContents();
 		$referenceContents =& $referenceLocaleCache->getContents();

@@ -66,7 +66,7 @@ class SortOrder extends DataObject {
 	 */
 	function getSortOrderTypeName() {
 		$options = SortOrder::getTypeOptions();
-		return Locale::translate($options[$this->getType()]);
+		return __($options[$this->getType()]);
 	}
 
 	/**

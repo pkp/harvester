@@ -31,14 +31,14 @@ class RTBlockPlugin extends BlockPlugin {
 	 * @return String
 	 */
 	function getDisplayName() {
-		return Locale::translate('plugins.block.rt.displayName');
+		return __('plugins.block.rt.displayName');
 	}
 
 	/**
 	 * Get a description of the plugin.
 	 */
 	function getDescription() {
-		return Locale::translate('plugins.block.rt.description');
+		return __('plugins.block.rt.description');
 	}
 
 	function getContents(&$templateMgr) {

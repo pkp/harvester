@@ -98,7 +98,7 @@ class TinyMCEPlugin extends GenericPlugin {
 			$baseUrl = $templateManager->get_template_vars('baseUrl');
 			$additionalHeadData = $templateManager->get_template_vars('additionalHeadData');
 			$enableFields = join(',', $enableFields);
-			$allLocales = Locale::getAllLocales();
+			$allLocales = AppLocale::getAllLocales();
 			$localeList = array();
 			foreach ($allLocales as $key => $locale) {
 				$localeList[] = String::substr($key, 0, 2);
@@ -119,7 +119,7 @@ class TinyMCEPlugin extends GenericPlugin {
 				tinyMCE.init({
 					plugins : "paste,ibrowser,fullscreen",
 					mode : "exact",
-					language : "' . String::substr(Locale::getLocale(), 0, 2) . '",
+					language : "' . String::substr(AppLocale::getLocale(), 0, 2) . '",
 					elements : "' . $enableFields . '",
 					relative_urls : false,
 					forced_root_block : false,
@@ -141,7 +141,7 @@ class TinyMCEPlugin extends GenericPlugin {
 	 * @return string
 	 */
 	function getDisplayName() {
-		return Locale::translate('plugins.generic.tinymce.name');
+		return __('plugins.generic.tinymce.name');
 	}
 
 	/**
@@ -149,8 +149,8 @@ class TinyMCEPlugin extends GenericPlugin {
 	 * @return string
 	 */
 	function getDescription() {
-		if ($this->isMCEInstalled()) return Locale::translate('plugins.generic.tinymce.description');
-		return Locale::translate('plugins.generic.tinymce.descriptionDisabled', array('tinyMcePath' => TINYMCE_INSTALL_PATH));
+		if ($this->isMCEInstalled()) return __('plugins.generic.tinymce.description');
+		return __('plugins.generic.tinymce.descriptionDisabled', array('tinyMcePath' => TINYMCE_INSTALL_PATH));
 	}
 
 	/**

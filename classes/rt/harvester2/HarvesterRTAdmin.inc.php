@@ -39,7 +39,7 @@ class HarvesterRTAdmin extends RTAdmin {
 
 		if ($deleteBeforeLoad) $this->dao->deleteVersionsByArchiveId($this->archiveId);
 
-		$versions = $parser->parseAll(RT_DIRECTORY . '/' . Locale::getLocale()); // FIXME?
+		$versions = $parser->parseAll(RT_DIRECTORY . '/' . AppLocale::getLocale()); // FIXME?
 		foreach ($versions as $version) {
 			$this->dao->insertVersion($this->archiveId, $version);
 		}

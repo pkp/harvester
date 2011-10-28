@@ -93,7 +93,7 @@ class SubmitterHandler extends Handler {
 
 		if (Request::getUserVar('uploadArchiveImage')) {
 			if (!$archiveForm->uploadArchiveImage()) {
-				$archiveForm->addError('archiveImage', Locale::translate('archive.image.profileImageInvalid'));
+				$archiveForm->addError('archiveImage', __('archive.image.profileImageInvalid'));
 			}
 			$dataModified = true;
 		} else if (Request::getUserVar('deleteArchiveImage')) {

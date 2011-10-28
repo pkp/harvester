@@ -237,7 +237,7 @@ class SortOrderSettingsDAO extends DAO {
 				$this->updateSetting(
 					$sortOrderId,
 					$name,
-					$isLocaleField?array(Locale::getLocale() => $value):$value,
+					$isLocaleField?array(AppLocale::getLocale() => $value):$value,
 					$type,
 					$isLocaleField
 				);
@@ -260,7 +260,7 @@ class SortOrderSettingsDAO extends DAO {
 																	// this only translates from mail locale file 
 																	create_function('$matches', 
 																		'$locale = "' . $locale . '";'.
-																		'$localeFileName = Locale::getMainLocaleFilename($locale);'.
+																		'$localeFileName = AppLocale::getMainLocaleFilename($locale);'.
 																		'$localeFile = new LocaleFile($locale, $localeFileName);'. 
 																		'return $localeFile->translate($matches[1]);'
 																		),
@@ -351,7 +351,7 @@ class SortOrderSettingsDAO extends DAO {
  * Used internally by sort order setting installation code to perform translation function.
  */
 function _installer_regexp_callback($matches) {
-	return Locale::translate($matches[1]);
+	return __($matches[1]);
 }
 
 ?>

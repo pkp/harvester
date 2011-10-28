@@ -124,14 +124,14 @@ class TypeMapPreprocessorPlugin extends PreprocessorPlugin {
 	 * Get a display name for the plugin.
 	 */
 	function getDisplayName() {
-		return Locale::translate('plugins.preprocessors.typemap.displayName');
+		return __('plugins.preprocessors.typemap.displayName');
 	}
 
 	/**
 	 * Get a description of the plugin.
 	 */
 	function getDescription() {
-		return Locale::translate('plugins.preprocessors.typemap.description');
+		return __('plugins.preprocessors.typemap.description');
 	}
 
 	/**
@@ -158,10 +158,10 @@ class TypeMapPreprocessorPlugin extends PreprocessorPlugin {
 	 */
 	function getManagementVerbs() {
 		if ($this->isEnabled()) return array(
-			array('disable', Locale::translate('common.disable'))
+			array('disable', __('common.disable'))
 		);
 		else return array(
-			array('enable', Locale::translate('common.enable'))
+			array('enable', __('common.enable'))
 		);
 	}
 

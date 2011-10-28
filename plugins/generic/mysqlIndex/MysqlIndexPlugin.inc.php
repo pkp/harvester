@@ -80,7 +80,7 @@ class MysqlIndexPlugin extends GenericPlugin {
 	 * @return string
 	 */
 	function getDisplayName() {
-		return Locale::translate('plugins.generic.mysqlIndex.name');
+		return __('plugins.generic.mysqlIndex.name');
 	}
 
 	/**
@@ -88,7 +88,7 @@ class MysqlIndexPlugin extends GenericPlugin {
 	 * @return string
 	 */
 	function getDescription() {
-		return Locale::translate('plugins.generic.mysqlIndex.description');
+		return __('plugins.generic.mysqlIndex.description');
 	}
 
 	/**
@@ -98,7 +98,7 @@ class MysqlIndexPlugin extends GenericPlugin {
 	function getManagementVerbs() {
 		$verbs = array();
 		if ($this->getEnabled()) {
-			$verbs[] = array('adminCrosswalks', Locale::translate('plugins.generic.mysqlIndex.crosswalks'));
+			$verbs[] = array('adminCrosswalks', __('plugins.generic.mysqlIndex.crosswalks'));
 		}
 		return parent::getManagementVerbs($verbs);
 	}
@@ -128,7 +128,7 @@ class MysqlIndexPlugin extends GenericPlugin {
 	 */
 	function navBarCallback($hookName, $args) {
 		$output =& $args[2];
-		$output .= '<li><a href="' . Request::url('misearch', 'index') . '">' . Locale::translate('navigation.search') . '</a></li>';
+		$output .= '<li><a href="' . Request::url('misearch', 'index') . '">' . __('navigation.search') . '</a></li>';
 		return false;
 	}
 
@@ -137,7 +137,7 @@ class MysqlIndexPlugin extends GenericPlugin {
 	 */
 	function siteManagementCallback($hookName, $args) {
 		$output =& $args[2];
-		$output .= '<li>&#187;&nbsp;<a href="' . Request::url('admin', 'plugin', array('generic', $this->getName(), 'adminCrosswalks')) . '">' . Locale::translate('plugins.generic.mysqlIndex.crosswalks') . '</a></li>';
+		$output .= '<li>&#187;&nbsp;<a href="' . Request::url('admin', 'plugin', array('generic', $this->getName(), 'adminCrosswalks')) . '">' . __('plugins.generic.mysqlIndex.crosswalks') . '</a></li>';
 		return false;
 	}
 

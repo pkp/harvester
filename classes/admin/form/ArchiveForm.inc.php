@@ -213,7 +213,7 @@ class ArchiveForm extends Form {
 	function validate() {
 		// Check to ensure that the plugin name is valid
 		if (!isset($this->harvesters[(string) $this->harvesterPluginName])) {
-			$this->addError('harvesterPluginName', Locale::translate('archive.type.invalid'));
+			$this->addError('harvesterPluginName', __('archive.type.invalid'));
 			return false;
 		}
 
@@ -222,7 +222,7 @@ class ArchiveForm extends Form {
 			$publicArchiveId = $this->getData('publicArchiveId');
 			$archiveDao =& DAORegistry::getDAO('ArchiveDAO');
 			if ($publicArchiveId != '' && $archiveDao->archiveExistsByPublicArchiveId($publicArchiveId, $this->archiveId)) {
-				$this->addError('publicArchiveId', Locale::translate('admin.archives.form.publicArchiveIdExists'));
+				$this->addError('publicArchiveId', __('admin.archives.form.publicArchiveIdExists'));
 				$this->addErrorField('publicArchiveId');
 			}
 		}

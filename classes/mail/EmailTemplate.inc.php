@@ -157,7 +157,7 @@ class EmailTemplate extends BaseEmailTemplate {
 	 * @return string
 	 */
 	function getSubject($locale = null) {
-		if ($locale === null) $locale = Locale::getLocale();
+		if ($locale === null) $locale = AppLocale::getLocale();
 		return isset($this->localeData[$locale]['subject']) ? $this->localeData[$locale]['subject'] : '';
 	}
 
@@ -176,7 +176,7 @@ class EmailTemplate extends BaseEmailTemplate {
 	 * @return string
 	 */
 	function getBody($locale = null) {
-		if ($locale === null) $locale = Locale::getLocale();
+		if ($locale === null) $locale = AppLocale::getLocale();
 		return isset($this->localeData[$locale]['body']) ? $this->localeData[$locale]['body'] : '';
 	}
 

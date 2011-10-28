@@ -294,7 +294,7 @@ class ArchiveSettingsDAO extends DAO {
  * Used internally by archive setting installation code to perform translation function.
  */
 function _installer_archive_regexp_callback($matches) {
-	return Locale::translate($matches[1]);
+	return __($matches[1]);
 }
 
 ?>

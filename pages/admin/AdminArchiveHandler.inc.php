@@ -92,7 +92,7 @@ class AdminArchiveHandler extends AdminHandler {
 
 		if ($request->getUserVar('uploadArchiveImage')) {
 			if (!$archiveForm->uploadArchiveImage()) {
-				$archiveForm->addError('archiveImage', Locale::translate('archive.image.profileImageInvalid'));
+				$archiveForm->addError('archiveImage', __('archive.image.profileImageInvalid'));
 			}
 			$dataModified = true;
 		} else if ($request->getUserVar('deleteArchiveImage')) {
@@ -188,7 +188,7 @@ class AdminArchiveHandler extends AdminHandler {
 				$recordDao =& DAORegistry::getDAO('RecordDAO');
 				$templateMgr =& TemplateManager::getManager();
 				$templateMgr->assign('messageTranslated',
-					Locale::translate('admin.archive.manage.updateIndex.success', array(
+					__('admin.archive.manage.updateIndex.success', array(
 						'recordCount' => $recordDao->getRecordCount($archiveId)
 					))
 				);
