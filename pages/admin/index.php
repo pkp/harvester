@@ -85,8 +85,6 @@ switch ($op) {
 	// Administrative functions
 	//
 	case 'systemInfo':
-	case 'editSystemConfig':
-	case 'saveSystemConfig':
 	case 'phpinfo':
 	case 'expireSessions':
 	case 'clearTemplateCache':
