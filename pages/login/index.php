@@ -7,7 +7,7 @@
 /**
  * @file pages/login/index.php
  *
- * Copyright (c) 2005-2011 John Willinsky and Alec Smecher
+ * Copyright (c) 2005-2012 John Willinsky and Alec Smecher
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @brief Handle login/logout requests.

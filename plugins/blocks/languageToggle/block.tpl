@@ -1,7 +1,7 @@
 {**
  * plugins/blocks/languageToggle/block.tpl
  *
- * Copyright (c) 2005-2011 Alec Smecher and John Willinsky
+ * Copyright (c) 2005-2012 Alec Smecher and John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * Common site sidebar menu -- language toggle.

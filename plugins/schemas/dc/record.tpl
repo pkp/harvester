@@ -1,7 +1,7 @@
 {**
  * plugins/schemas/dc/record.tpl
  *
- * Copyright (c) 2005-2011 Alec Smecher and John Willinsky
+ * Copyright (c) 2005-2012 Alec Smecher and John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * View a Dublin Core record.
