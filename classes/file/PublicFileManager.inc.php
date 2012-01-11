@@ -18,6 +18,13 @@
 import('lib.pkp.classes.file.PKPPublicFileManager');
 
 class PublicFileManager extends PKPPublicFileManager {
+	/**
+	 * Constructor
+	 */
+	function PublicFileManager() {
+		parent::PKPPublicFileManager();
+	}
+
 	// No extension for now
 }
 
