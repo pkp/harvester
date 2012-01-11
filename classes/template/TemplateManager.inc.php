@@ -46,7 +46,8 @@ class TemplateManager extends PKPTemplateManager {
 
 			$site =& $request->getSite();
 
-			$siteFilesDir = $request->getBaseUrl() . '/' . PublicFileManager::getSiteFilesPath();
+			$publicFileManager = new PublicFileManager();
+			$siteFilesDir = $request->getBaseUrl() . '/' . $publicFileManager->getSiteFilesPath();
 			$this->assign('sitePublicFilesDir', $siteFilesDir);
 			$this->assign('publicFilesDir', $siteFilesDir);
 			$this->assign('isAdmin', Validation::isSiteAdmin());
@@ -54,7 +55,7 @@ class TemplateManager extends PKPTemplateManager {
 			// assign an empty home context
 			$this->assign('homeContext', array());
 
-			$siteStyleFilename = PublicFileManager::getSiteFilesPath() . '/' . $site->getSiteStyleFilename();
+			$siteStyleFilename = $publicFileManager->getSiteFilesPath() . '/' . $site->getSiteStyleFilename();
 			if (file_exists($siteStyleFilename)) $this->addStyleSheet($request->getBaseUrl() . '/' . $siteStyleFilename);
 
 			// Load and apply theme plugin, if chosen
