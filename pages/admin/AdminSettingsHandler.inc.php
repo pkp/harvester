@@ -9,7 +9,7 @@
  * @package pages.admin
  * @class AdminSettingsHandler
  *
- * Handle requests for changing site admin settings. 
+ * Handle requests for changing site admin settings.
  *
  */
 
@@ -71,7 +71,7 @@ class AdminSettingsHandler extends AdminHandler {
 
 		if (!$editData && $settingsForm->validate()) {
 			$settingsForm->execute();
-			import('lib.pkp.classes.notification.NotificationManager');
+			import('classes.notification.NotificationManager');
 			$notificationManager = new NotificationManager();
 			$notificationManager->createTrivialNotification('notification.notification', 'common.changesSaved');
 			$request->redirect(null, 'index');
