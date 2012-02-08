@@ -87,6 +87,7 @@ class Application extends PKPApplication {
 			'RTDAO' => 'classes.rt.harvester2.RTDAO',
 			'SchemaDAO' => 'classes.schema.SchemaDAO',
 			'SchemaAliasDAO' => 'classes.schema.SchemaAliasDAO',
+			'SignoffDAO' => 'classes.signoff.SignoffDAO',
 			'SortOrderDAO' => 'classes.sortOrder.SortOrderDAO',
 			'UserDAO' => 'classes.user.UserDAO',
 			'UserSettingsDAO' => 'classes.user.UserSettingsDAO'
