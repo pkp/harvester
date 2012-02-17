@@ -100,7 +100,7 @@ class ArchiveOAI extends OAI {
 		$schemaPluginName = $record->getData('schemaPluginName');
 		$plugin =& PluginRegistry::getPlugin('schemas', $schemaPluginName);
 		$formatClass = $plugin->getFormatClass();
-		$metadata = call_user_func(array($formatClass, 'toXml'), $record, $format);
+		$metadata = call_user_func_array(array($formatClass, 'toXml'), array(&$record, $format));
 		return $metadata;
 	}
 
