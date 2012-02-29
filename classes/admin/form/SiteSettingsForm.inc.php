@@ -136,11 +136,11 @@ class SiteSettingsForm extends PKPSiteSettingsForm {
 			}
 
 			$uploadName = $settingName . '.css';
-			if($fileManager->uploadSiteFile($settingName, $uploadName)) {
+			if($fileManager->uploadSiteFile($settingName, $site->getSiteStyleFilename())) {
 				$value = array(
 					'name' => $fileManager->getUploadedFileName($settingName),
 					'uploadName' => $uploadName,
-					'dateUploaded' => date("Y-m-d g:i:s")
+					'dateUploaded' => Core::getCurrentDate()
 				);
 
 				return $settingsDao->updateSetting($settingName, $value, 'object');
