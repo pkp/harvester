@@ -13,8 +13,6 @@
 ; Open Harvester Systems Configuration settings.
 ; Rename config.TEMPLATE.inc.php to config.inc.php to use.
 ;
-; $Id$
-;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
@@ -176,6 +174,17 @@ session_check_ip = On
 ; Valid values are: md5, sha1
 ; Note that sha1 requires PHP >= 4.3.0
 encryption = md5
+
+; Allowed HTML tags for fields that permit restricted HTML.
+; For PHP 5.0.5 and greater, allowed attributes must be specified individually
+; e.g. <img src alt> to allow "src" and "alt" attributes. Unspecified
+; attributes will be stripped. For PHP below 5.0.5 attributes may not be
+; specified in this way.
+allowed_html = "<a> <em> <strong> <cite> <code> <ul> <ol> <li> <dl> <dt> <dd> <b> <i> <u> <img src|alt><sup> <sub> <br> <p>"
+
+; Prevent VIM from attempting to highlight the rest of the config file
+; with unclosed tags:
+; </p></sub></sup></u></i></b></dd></dt></dl></li></ol></ul></code></cite></strong></em></a>
 
 
 ;;;;;;;;;;;;;;;;;;
