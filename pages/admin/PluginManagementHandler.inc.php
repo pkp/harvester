@@ -209,7 +209,7 @@ class PluginManagementHandler extends AdminHandler {
 		$templateMgr->assign('error', true);
 		$templateMgr->assign('pageHierarchy', $this->setBreadcrumbs(true));
 
-		$pluginVersion =& VersionCheck::getValidPluginVersionInfo($versionFile, $templateMgr);
+		$pluginVersion =& VersionCheck::getValidPluginVersionInfo($versionFile);
 		if (is_null($pluginVersion)) return false;
 		assert(is_a($pluginVersion, 'Version'));
 
@@ -290,7 +290,7 @@ class PluginManagementHandler extends AdminHandler {
 		$templateMgr->assign('error', true);
 		$templateMgr->assign('pageHierarchy', $this->setBreadcrumbs(true, $category));
 
-		$pluginVersion =& VersionCheck::getValidPluginVersionInfo($versionFile, $templateMgr);
+		$pluginVersion =& VersionCheck::getValidPluginVersionInfo($versionFile);
 		if (is_null($pluginVersion)) return false;
 		assert(is_a($pluginVersion, 'Version'));
 
