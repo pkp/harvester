@@ -9,10 +9,9 @@
   *
   * Installation descriptor file.
   *
-  * $Id$
   -->
 
-<install version="2.3.1.0">
+<install version="2.3.2.0">
 	<code function="createDatabase" />
 
 	<!-- PKP schema components -->
