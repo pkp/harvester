@@ -541,6 +541,10 @@ You may optionally provide the user with a reason for disabling their account.</
 	<message key="help.searchFor">Search help topics for</message>
 	<message key="help.searchResultsFor">Results for</message>
 
+	<!-- Installation upgrade warnings -->
+	<message key="site.upgradeAvailable.admin"><![CDATA[There is a new version of The Harvester available! You are currently using version {$currentVersion}. The most recent version is {$latestVersion}. Please visit <a href="http://pkp.sfu.ca/harvester_download" target="_new">this page</a> to download the most recent version and find upgrade instructions.]]></message>
+
+
 	<!-- Plugin categories and descriptions -->
 	<message key="plugins.categories.generic">Generic Plugins</message>
 	<message key="plugins.categories.generic.description">This category contains general-purpose plugins that are not better suited to other categories.</message>
