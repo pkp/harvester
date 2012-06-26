@@ -15,9 +15,6 @@
  * @ingroup pages_login
  */
 
-// $Id$
-
-
 switch ($op) {
 	case 'index':
 	case 'implicitAuthLogin':
@@ -29,8 +26,8 @@ switch ($op) {
 	case 'resetPassword':
 	case 'changePassword':
 	case 'savePassword':
-		define('HANDLER_CLASS', 'PKPLoginHandler');
-		import('lib.pkp.pages.login.PKPLoginHandler');
+		define('HANDLER_CLASS', 'LoginHandler');
+		import('pages.login.LoginHandler');
 		break;
 }
 

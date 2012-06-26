@@ -16,7 +16,13 @@
 import('lib.pkp.pages.login.PKPLoginHandler');
 
 class LoginHandler extends PKPLoginHandler {
-	// Nothing for now
+	/**
+	 * Get the log in URL.
+	 * @param $request PKPRequest
+	 */
+	function _getLoginUrl($request) {
+		return $request->url('login', 'signIn');
+	}
 }
 
 ?>
