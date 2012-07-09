@@ -168,8 +168,8 @@ class MysqlIndexPlugin extends GenericPlugin {
 		switch ($page) {
 			case 'misearch':
 				$this->import('MysqlIndexSearchHandler');
-				$methods = array_map('strtolower', get_class_methods('MysqlIndexSearchHandler'));
-				if (in_array(strtolower($op), $methods)) {
+				$methods = array_map('strtolower_codesafe', get_class_methods('MysqlIndexSearchHandler'));
+				if (in_array(strtolower_codesafe($op), $methods)) {
 					define('HANDLER_CLASS', 'MysqlIndexSearchHandler');
 					define('MYSQL_PLUGIN_NAME', $this->getName()); // Kludge
 					return true;
@@ -177,8 +177,8 @@ class MysqlIndexPlugin extends GenericPlugin {
 				break;
 			case 'mysqlIndexAdmin':
 				$this->import('MysqlIndexAdminHandler');
-				$methods = array_map('strtolower', get_class_methods('MysqlIndexAdminHandler'));
-				if (in_array(strtolower($op), $methods)) {
+				$methods = array_map('strtolower_codesafe', get_class_methods('MysqlIndexAdminHandler'));
+				if (in_array(strtolower_codesafe($op), $methods)) {
 					define('HANDLER_CLASS', 'MysqlIndexAdminHandler');
 					define('MYSQL_PLUGIN_NAME', $this->getName()); // Kludge
 					return true;
