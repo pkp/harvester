@@ -6,7 +6,6 @@
  *
  * Display a summary of a Marc record.
  *
- * $Id$
  *}
 <span class="title">{$record->getTitle()|escape|truncate:90:"...":false:false:false|default:"&mdash"}</span><br />
 <div class="recordContents">

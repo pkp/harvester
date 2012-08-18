@@ -13,7 +13,6 @@
  * @brief OAI metadata format class -- ETDMS.
  */
 
-// $Id$
 
 
 class OAIMetadataFormat_ETDMS extends OAIMetadataFormat {

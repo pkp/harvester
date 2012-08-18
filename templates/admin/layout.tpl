@@ -6,7 +6,6 @@
  *
  * Layout page for setup.
  *
- * $Id$
  *}
 {strip}
 {assign var="pageTitle" value="admin.layout"}

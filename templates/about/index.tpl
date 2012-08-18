@@ -6,7 +6,6 @@
  *
  * About the site.
  *
- * $Id$
  *}
 {strip}
 {assign var="pageTitle" value="navigation.about"}

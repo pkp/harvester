@@ -13,7 +13,6 @@
  *
  */
 
-// $Id$
 
 
 class SearchDAO extends DAO {

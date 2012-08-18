@@ -11,7 +11,6 @@
  *
  * Dublin Core schema plugin
  *
- * $Id$
  */
 
 import('classes.plugins.SchemaPlugin');

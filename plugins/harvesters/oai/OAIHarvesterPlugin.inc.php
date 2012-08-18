@@ -11,7 +11,6 @@
  *
  * OAI Harvester plugin
  *
- * $Id$
  */
 
 import('classes.plugins.HarvesterPlugin');

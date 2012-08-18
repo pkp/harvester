@@ -6,7 +6,6 @@
  *
  * Archive statistics & management page
  *
- * $Id$
  *}
 {strip}
 {assign var="pageTitle" value="admin.archives.manage"}

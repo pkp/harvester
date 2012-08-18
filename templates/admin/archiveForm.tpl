@@ -6,7 +6,6 @@
  *
  * Basic archive settings under site administration.
  *
- * $Id$
  *}
 {strip}
 {if $archiveId}

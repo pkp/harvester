@@ -10,7 +10,6 @@
  *
  * @package plugins.generic.ipban
  *
- * $Id$
  */
 
 require_once('IPBanPlugin.inc.php');

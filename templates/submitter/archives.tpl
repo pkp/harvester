@@ -6,7 +6,6 @@
  *
  * Display list of archives for a particular user.
  *
- * $Id$
  *}
 {strip}
 {assign var="pageTitle" value="admin.archives"}

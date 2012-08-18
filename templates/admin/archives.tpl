@@ -6,7 +6,6 @@
  *
  * Display list of archives in site administration.
  *
- * $Id$
  *}
 {strip}
 {assign var="pageTitle" value="admin.archives"}

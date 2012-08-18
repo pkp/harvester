@@ -7,7 +7,6 @@
  * Generic message page.
  * Displays a simple message and (optionally) a return link.
  *
- * $Id$
  *}
 {strip}
 {include file="common/header.tpl"}

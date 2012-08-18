@@ -12,7 +12,6 @@
  * Class for Schema DAO.
  * Operations for retrieving and modifying Schema objects.
  *
- * $Id$
  */
 
 import ('classes.schema.Schema');

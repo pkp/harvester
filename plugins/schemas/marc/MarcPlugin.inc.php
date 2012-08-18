@@ -11,7 +11,6 @@
  *
  * Marc schema plugin
  *
- * $Id$
  */
 
 import('classes.plugins.SchemaPlugin');

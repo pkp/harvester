@@ -14,7 +14,6 @@
  *
  */
 
-// $Id$
 
 define('FIELD_TYPE_STRING',	0x00000001);
 define('FIELD_TYPE_DATE',	0x00000002);

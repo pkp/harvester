@@ -12,7 +12,6 @@
  * Schema class.
  * Describes basic schema properties.
  *
- * $Id$
  */
 
 class Schema extends DataObject {

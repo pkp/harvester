@@ -13,7 +13,6 @@
  * @brief OAI metadata format class -- MODS.
  */
 
-// $Id$
 
 
 class OAIMetadataFormat_MODS extends OAIMetadataFormat {

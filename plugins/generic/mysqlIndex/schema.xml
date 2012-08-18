@@ -9,7 +9,6 @@
   *
   * Database schema in XML for the MySQL indexing plugin.
   *
-  * $Id$
   -->
 
 <schema version="0.2">

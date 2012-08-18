@@ -14,7 +14,6 @@
  *
  */
 
-// $Id$
 
 
 class Archive extends DataObject {

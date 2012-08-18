@@ -12,7 +12,6 @@
  * @brief Form for layout setup.
  */
 
-//$Id$
 
 
 import('lib.pkp.classes.form.Form');

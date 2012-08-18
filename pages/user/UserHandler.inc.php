@@ -12,7 +12,6 @@
  * @brief Handle requests for user functions.
  */
 
-// $Id$
 
 
 import('classes.handler.Handler');

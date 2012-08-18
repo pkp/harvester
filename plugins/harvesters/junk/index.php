@@ -10,7 +10,6 @@
  *
  * @package plugins.harvesters.junk
  *
- * $Id$
  */
 
 require_once('JunkHarvesterPlugin.inc.php');

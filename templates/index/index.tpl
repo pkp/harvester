@@ -6,7 +6,6 @@
  *
  * Site index.
  *
- * $Id$
  *}
 {strip}
 {assign var=pageTitleTranslated value=$title}

@@ -6,7 +6,6 @@
  *
  * Form to edit system configuration.
  *
- * $Id$
  *}
 {strip}
 {assign var="pageTitle" value="admin.systemConfiguration"}

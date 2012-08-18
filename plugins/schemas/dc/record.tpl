@@ -6,7 +6,6 @@
  *
  * View a Dublin Core record.
  *
- * $Id$
  *}
 {strip}
 {assign var="pageTitle" value="record.viewRecord"}

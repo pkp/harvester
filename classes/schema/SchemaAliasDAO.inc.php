@@ -13,7 +13,6 @@
  *
  */
 
-// $Id$
 
 
 define('SCHEMA_MAP_REGISTRY_FILE', Config::getVar('general', 'registry_dir') . '/schemaMap.xml');

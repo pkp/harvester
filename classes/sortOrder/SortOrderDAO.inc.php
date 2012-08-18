@@ -13,7 +13,6 @@
  * @brief Operations for retrieving and modifying SortOrder objects.
  */
 
-// $Id$
 
 
 import('classes.sortOrder.SortOrder');

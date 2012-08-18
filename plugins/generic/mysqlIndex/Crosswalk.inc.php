@@ -14,7 +14,6 @@
  *
  */
 
-// $Id$
 
 
 class Crosswalk extends DataObject {

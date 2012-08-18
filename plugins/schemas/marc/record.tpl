@@ -6,7 +6,6 @@
  *
  * View a Marc record.
  *
- * $Id$
  *}
 {strip}
 {assign var="pageTitle" value="record.viewRecord"}

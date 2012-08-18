@@ -13,7 +13,6 @@
  *
  */
 
-// $Id$
 
 import('pages.admin.AdminHandler');
 

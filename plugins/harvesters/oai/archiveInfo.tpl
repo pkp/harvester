@@ -6,7 +6,6 @@
  *
  * Public archive info page (extends the default template)
  *
- * $Id$
  *}
 
 <table id="archiveListing" class="listing" width="100%">

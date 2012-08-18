@@ -11,7 +11,6 @@
  *
  * Form for site administrator to edit crosswalk settings.
  *
- * $Id$
  */
 
 import('classes.field.Field');

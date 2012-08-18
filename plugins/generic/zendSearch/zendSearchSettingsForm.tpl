@@ -6,7 +6,6 @@
  *
  * Zend Search settings form.
  *
- * $Id$
  *}
 {strip}
 {assign var="pageTitle" value="plugins.generic.zendSearch.settings"}

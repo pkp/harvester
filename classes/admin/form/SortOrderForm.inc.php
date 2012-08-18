@@ -13,7 +13,6 @@
  * @brief Form for administrator to create/edit sort orderings.
  */
 
-// $Id$
 
 
 import('lib.pkp.classes.form.Form');

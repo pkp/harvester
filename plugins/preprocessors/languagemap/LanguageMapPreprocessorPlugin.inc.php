@@ -11,7 +11,6 @@
  *
  * Test preprocessor plugin
  *
- * $Id$
  */
 
 import('classes.plugins.PreprocessorPlugin');

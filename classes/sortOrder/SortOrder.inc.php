@@ -17,7 +17,6 @@
  * @brief Basic class describing a sorting order.
  */
 
-// $Id$
 
 
 define('SORT_ORDER_TYPE_STRING',	0x00000001);

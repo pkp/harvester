@@ -10,7 +10,6 @@
  *
  * @package pages.admin
  *
- * $Id$
  */
 
 switch ($op) {

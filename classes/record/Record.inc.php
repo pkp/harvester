@@ -12,7 +12,6 @@
  * Record class.
  * Describes basic record properties.
  *
- * $Id$
  */
 
 class Record extends DataObject {

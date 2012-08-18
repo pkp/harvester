@@ -6,7 +6,6 @@
  *
  * About the harvester.
  *
- * $Id$
  *}
 {strip}
 {assign var="pageTitle" value="about.harvester"}

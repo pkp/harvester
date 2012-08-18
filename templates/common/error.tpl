@@ -7,7 +7,6 @@
  * Generic error page.
  * Displays a simple error message and (optionally) a return link.
  *
- * $Id$
  *}
 {strip}
 {include file="common/header.tpl"}

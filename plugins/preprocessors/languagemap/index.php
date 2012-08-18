@@ -10,7 +10,6 @@
  *
  * @package plugins.preprocessors.languagemap
  *
- * $Id$
  */
 
 // require_once('LanguageMapPreprocessorPlugin.inc.php');

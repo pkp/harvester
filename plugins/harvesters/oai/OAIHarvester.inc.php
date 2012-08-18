@@ -11,7 +11,6 @@
  *
  * OAI Harvester
  *
- * $Id$
  */
 
 import('classes.harvester.Harvester');

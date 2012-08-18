@@ -11,7 +11,6 @@
  *
  * Form for site administrator to edit archive settings.
  *
- * $Id$
  */
 
 import('lib.pkp.classes.db.DBDataXMLParser');

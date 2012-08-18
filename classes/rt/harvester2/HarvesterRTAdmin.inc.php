@@ -11,7 +11,6 @@
  *
  * OJS-specific Reading Tools administration interface.
  *
- * $Id$
  */
 
 import('lib.pkp.classes.rt.RTAdmin');

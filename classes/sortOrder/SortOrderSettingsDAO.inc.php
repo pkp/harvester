@@ -12,7 +12,6 @@
  * @brief Operations for retrieving and modifying sorting order settings.
  */
 
-// $Id$
 
 
 class SortOrderSettingsDAO extends DAO {

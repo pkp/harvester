@@ -12,7 +12,6 @@
  * Abstract class for preprocessor plugins
  */
 
-// $Id$
 
 
 import('classes.plugins.Plugin');

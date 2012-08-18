@@ -11,7 +11,6 @@
  *
  * Class to add content to the search index.
  *
- * $Id$
  */
 
 define('SEARCH_STOPWORDS_FILE', 'lib/pkp/registry/stopwords.txt');

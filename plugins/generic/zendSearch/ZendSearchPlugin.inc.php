@@ -12,7 +12,6 @@
  * @brief Zend Framework Search (PHP Lucene) implementation for the Harvester
  */
 
-// $Id$
 
 
 import('lib.pkp.classes.plugins.GenericPlugin');

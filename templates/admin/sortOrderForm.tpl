@@ -6,7 +6,6 @@
  *
  * Sort order management form.
  *
- * $Id$
  *}
 {strip}
 {assign var="pageCrumbTitle" value="$sortOrderTitle"}

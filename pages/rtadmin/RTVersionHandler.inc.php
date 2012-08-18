@@ -13,7 +13,6 @@
  *
  */
 
-// $Id$
 
 
 import('classes.rt.harvester2.HarvesterRTAdmin');

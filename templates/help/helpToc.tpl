@@ -6,7 +6,6 @@
  *
  * Display the help table of contents
  *
- * $Id$
  *}
 {strip}
 {translate|assign:"defaultTitle" key="common.harvester2"}

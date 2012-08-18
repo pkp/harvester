@@ -6,7 +6,6 @@
  *
  * Search page for Zend Framework's Lucene implementation.
  *
- * $Id$
  *}
 {strip}
 {assign var="pageTitle" value="navigation.search"}

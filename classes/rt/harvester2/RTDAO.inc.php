@@ -11,7 +11,6 @@
  *
  * DAO operations for the Open Harvester Systems Reading Tools interface.
  *
- * $Id$
  */
 
 import('lib.pkp.classes.rt.RTStruct');

@@ -10,7 +10,6 @@
  *
  * @package plugins.schemas.mods
  *
- * $Id$
  */
 
 require_once('ModsPlugin.inc.php');

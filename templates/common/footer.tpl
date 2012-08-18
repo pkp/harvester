@@ -6,7 +6,6 @@
  *
  * Common site footer.
  *
- * $Id$
  *}
 {if $pageFooter}
 <br /><br />

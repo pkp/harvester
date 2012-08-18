@@ -6,7 +6,6 @@
  *
  * Browse page for a specific archive or all records in all archives.
  *
- * $Id$
  *}
 {* Make the quick search form limit itself to this archive by default *}
 {strip}

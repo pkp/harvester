@@ -6,7 +6,6 @@
  *
  * Display a summary of a Dublin Core record.
  *
- * $Id$
  *}
 <span class="title">{$record->getTitle()|strip_unsafe_html|truncate:90:"...":false:false:false|default:"&mdash"}</span><br />
 <div class="recordContents">

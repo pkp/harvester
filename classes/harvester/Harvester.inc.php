@@ -13,7 +13,6 @@
  *
  */
 
-// $Id$
 
 
 define('DUBLIN_CORE_METADATA_PREFIX', 'oai_dc');

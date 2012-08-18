@@ -6,7 +6,6 @@
  *
  * Search results for Zend Framework's Lucene implementation.
  *
- * $Id$
  *}
 {strip}
 {url|assign:"currentUrl" op="searchResults" q=$q}

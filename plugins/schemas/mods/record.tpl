@@ -6,7 +6,6 @@
  *
  * View a MODS record.
  *
- * $Id$
  *}
 {strip}
 {assign var="pageTitle" value="record.viewRecord"}

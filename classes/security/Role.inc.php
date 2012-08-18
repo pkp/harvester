@@ -13,7 +13,6 @@
  * @brief Describes user roles within the system and the associated permissions.
  */
 
-// $Id$
 
 
 /** ID codes for all user roles */

@@ -6,7 +6,6 @@
  *
  * Search form construction for Zend Framework's Lucene implementation.
  *
- * $Id$
  *}
 {strip}
 {assign var="pageTitle" value="plugins.generic.zendSearch.searchForm"}

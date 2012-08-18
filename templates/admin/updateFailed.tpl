@@ -6,7 +6,6 @@
  *
  * Display a "metadata index update failed" message with details
  *
- * $Id$
  *}
 {strip}
 {assign var="pageTitle" value="admin.archives.manage.updateIndex"}

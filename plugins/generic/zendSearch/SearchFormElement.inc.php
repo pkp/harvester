@@ -14,7 +14,6 @@
  *
  */
 
-// $Id$
 
 
 define('SEARCH_FORM_ELEMENT_TYPE_STRING',	0x00000001);

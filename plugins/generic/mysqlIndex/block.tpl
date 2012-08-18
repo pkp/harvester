@@ -6,7 +6,6 @@
  *
  * Search block for sidebar
  *
- * $Id$
  *}
 <div class="block" id="sidebarNavigation">
 	<span class="blockTitle">{translate key="navigation.search"}</span>

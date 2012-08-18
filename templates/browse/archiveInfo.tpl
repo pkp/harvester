@@ -6,7 +6,6 @@
  *
  * Archive information page.
  *
- * $Id$
  *}
 {strip}
 {assign var="pageTitle" value="browse.archiveInfo"}

@@ -10,7 +10,6 @@
  *
  * @package plugins.schemas.etdms
  *
- * $Id$
  */
 
 require_once('EtdmsPlugin.inc.php');

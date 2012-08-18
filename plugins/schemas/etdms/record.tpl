@@ -6,7 +6,6 @@
  * Edited and modified by Kennedy Onyancha - DoKS (KHK Kempen) (2007)
  * View Etdms record.
  *
- * $Id$
  *}
 {strip}
 {assign var="pageTitle" value="record.viewRecord"}

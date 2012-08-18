@@ -11,7 +11,6 @@
  *
  * Subclass of PKPMailTemplate for mailing a template email.
  *
- * $Id$
  */
 
 import('lib.pkp.classes.mail.PKPMailTemplate');

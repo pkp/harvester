@@ -14,7 +14,6 @@
  *
  */
 
-// $Id$
 
 
 class CrosswalkDAO extends DAO {

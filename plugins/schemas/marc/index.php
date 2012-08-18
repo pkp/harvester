@@ -10,7 +10,6 @@
  *
  * @package plugins.schemas.marc
  *
- * $Id$
  */
 
 require_once('MarcPlugin.inc.php');

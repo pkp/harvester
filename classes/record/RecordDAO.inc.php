@@ -12,7 +12,6 @@
  * Class for Record DAO.
  * Operations for retrieving and modifying Record objects.
  *
- * $Id$
  */
 
 import ('classes.record.Record');

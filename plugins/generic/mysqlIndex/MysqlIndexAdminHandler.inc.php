@@ -12,7 +12,6 @@
  * @brief Handle requests for search administration functions
  */
 
-// $Id$
 
 
 import('classes.handler.Handler');

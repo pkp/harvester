@@ -11,7 +11,6 @@
  *
  * MODS schema plugin
  *
- * $Id$
  */
 
 import('classes.plugins.SchemaPlugin');

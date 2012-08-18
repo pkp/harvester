@@ -6,7 +6,6 @@
  *
  * Reading Tool Administrator index.
  *
- * $Id$
  *}
 {strip}
 {assign var="pageTitle" value="admin.rtAdmin"}

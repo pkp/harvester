@@ -6,7 +6,6 @@
  *
  * Search form.
  *
- * $Id$
  *}
 {assign var="pageTitle" value="navigation.search"}
 {assign var="helpTopicId" value="plugins.generic.mysqlIndex.search"}

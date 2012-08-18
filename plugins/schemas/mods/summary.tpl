@@ -6,7 +6,6 @@
  *
  * Display a summary of a MODS record.
  *
- * $Id$
  *}
 {assign var=contents value=$record->getParsedContents()}
 <span class="title">{$contents.title|escape|default:"&mdash"}</span><br />

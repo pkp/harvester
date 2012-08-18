@@ -6,6 +6,5 @@
  *
  * RT sidebar block
  *
- * $Id$
  *}
 {include file="rt/rt.tpl"}

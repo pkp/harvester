@@ -12,7 +12,6 @@
  * Abstract class for harvester plugins
  */
 
-// $Id$
 
 
 import('classes.plugins.Plugin');

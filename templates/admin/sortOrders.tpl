@@ -6,7 +6,6 @@
  *
  * Display list of sort orders for management.
  *
- * $Id$
  *}
 {strip}
 {assign var="pageTitle" value="admin.sortOrders"}

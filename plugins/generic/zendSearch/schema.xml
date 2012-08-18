@@ -9,7 +9,6 @@
   *
   * Database schema in XML for the Zend Search plugin.
   *
-  * $Id$
   -->
 
 <schema version="0.2">

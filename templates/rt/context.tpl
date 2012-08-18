@@ -6,7 +6,6 @@
  *
  * Reading tools -- context page.
  *
- * $Id$
  *}
 {strip}
 {assign var=pageTitleTranslated value=$context->getTitle()}

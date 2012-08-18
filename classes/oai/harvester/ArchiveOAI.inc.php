@@ -19,7 +19,6 @@
  *
  */
 
-// $Id$
 
 
 import('lib.pkp.classes.oai.OAI');

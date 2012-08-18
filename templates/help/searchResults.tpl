@@ -6,7 +6,6 @@
  *
  * Show help search results.
  *
- * $Id$
  *}
 {strip}
 {translate|assign:"defaultTitle" key="common.harvester2"}

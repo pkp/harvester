@@ -10,7 +10,6 @@
  *
  * @package plugins.schemas.dc
  *
- * $Id$
  */
 
 require_once('DublinCorePlugin.inc.php');

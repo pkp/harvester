@@ -6,7 +6,6 @@
  *
  * Provide an archive list for RT administration.
  *
- * $Id$
  *}
 {strip}
 {assign var="pageTitle" value="admin.rtAdmin"}

@@ -12,7 +12,6 @@
  *
  * Form to change metadata information for an RT context.
  *
- * $Id$
  */
 
 import('lib.pkp.classes.form.Form');

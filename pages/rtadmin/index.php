@@ -10,7 +10,6 @@
  *
  * @package pages.rtadmin
  *
- * $Id$
  */
 
 switch ($op) {

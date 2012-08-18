@@ -6,7 +6,6 @@
  *
  * Browse page.
  *
- * $Id$
  *}
 {strip}
 {assign var="pageTitle" value="navigation.browse"}

@@ -12,7 +12,6 @@
  * @brief Harvester subclass for Notifications
  */
 
-// $Id$
 
 
 import('lib.pkp.classes.notification.PKPNotification');

@@ -10,7 +10,6 @@
  *
  * @package plugins.harvesters.oai
  *
- * $Id$
  */
 
 require_once('OAIHarvesterPlugin.inc.php');

@@ -13,7 +13,6 @@
  *
  */
 
-// $Id$
 
 
 require(dirname(__FILE__) . '/bootstrap.inc.php');

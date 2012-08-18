@@ -11,7 +11,6 @@
  *
  * Form for system upgrades.
  *
- * $Id$
  */
 
 import('classes.install.Upgrade');

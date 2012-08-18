@@ -5,7 +5,6 @@
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  * Edited and modified by Kennedy Onyancha - DoKS (KHK Kempen) (2007)
  *
- * $Id$
  *}
 <span class="title">{$record->getTitle()|strip_unsafe_html|truncate:90:"...":false:false:false|default:"&mdash"}</span><br />
 <div class="recordContents">

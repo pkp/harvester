@@ -13,7 +13,6 @@
  * @brief Form for administrator to create/edit search form.
  */
 
-// $Id$
 
 
 import('lib.pkp.classes.form.Form');

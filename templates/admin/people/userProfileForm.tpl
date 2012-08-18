@@ -6,7 +6,6 @@
  *
  * User profile form under administration
  *
- * $Id$
  *}
 {strip}
 {url|assign:"currentUrl" op="people" path="all"}

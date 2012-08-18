@@ -6,7 +6,6 @@
  *
  * Display list of searchable fields in site administration.
  *
- * $Id$
  *}
 {assign var="pageTitle" value="plugins.generic.mysqlIndex.crosswalks"}
 {assign var="helpTopicId" value="plugins.generic.mysqlIndex.crosswalks"}

@@ -12,7 +12,6 @@
  * @brief MySQL search index implementation for the Harvester
  */
 
-// $Id$
 
 
 import('lib.pkp.classes.plugins.GenericPlugin');

@@ -12,7 +12,6 @@
  * PublicFileManager class.
  * Wrapper class for uploading files to a site's public directory.
  *
- * $Id$
  */
 
 import('lib.pkp.classes.file.PKPPublicFileManager');

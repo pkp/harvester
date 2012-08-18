@@ -12,7 +12,6 @@
  * @brief Class for search block plugin
  */
 
-// $Id$
 
 
 import('lib.pkp.classes.plugins.BlockPlugin');

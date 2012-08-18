@@ -6,7 +6,6 @@
  *
  * Basic crosswalk settings under site administration.
  *
- * $Id$
  *}
 {if $crosswalkId}
 {assign var="pageTitle" value="plugins.generic.mysqlIndex.editCrosswalk"}

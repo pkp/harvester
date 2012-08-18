@@ -14,7 +14,6 @@
  *
  */
 
-// $Id$
 
 
 class SearchFormElementDAO extends DAO {

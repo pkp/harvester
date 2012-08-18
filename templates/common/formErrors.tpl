@@ -6,7 +6,6 @@
  *
  * List errors that occurred during form processing.
  *
- * $Id$
  *}
 {if $isError}
 <p>

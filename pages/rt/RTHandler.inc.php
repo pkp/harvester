@@ -14,7 +14,6 @@
  */
 
 
-// $Id$
 
 import('classes.rt.harvester2.RTDAO');
 import('classes.handler.Handler');

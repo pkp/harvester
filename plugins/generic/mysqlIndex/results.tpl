@@ -6,7 +6,6 @@
  *
  * Display search results.
  *
- * $Id$
  *}
 {strip}
 {* Make the list of selected archives available to the quick search sidebar *}
