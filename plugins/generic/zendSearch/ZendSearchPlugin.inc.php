@@ -35,7 +35,7 @@ class ZendSearchPlugin extends GenericPlugin {
 			if ($this->getEnabled()) {
 				$this->addHelpData();
 				// Include Zend Framework in include path
-				if (!$this->isUsingSolr() && checkPhpVersion('5.0.0')) {
+				if (!$this->isUsingSolr()) {
 					ini_set('include_path', BASE_SYS_DIR . '/lib/pkp/lib/ZendFramework/library' . ENV_SEPARATOR . ini_get('include_path'));
 					require_once('lib/pkp/lib/ZendFramework/library/Zend/Search/Lucene.php');
 				}
@@ -125,11 +125,6 @@ class ZendSearchPlugin extends GenericPlugin {
 		if (!parent::manage($verb, $args, $message) && $verb != 'enable') return false;
 		switch ($verb) {
 			case 'enable':
-				if (!checkPhpVersion('5.0.0')) {
-					if (!$this->isUsingSolr()) {
-						Request::redirect('zendSearchAdmin', 'settings');
-					}
-				}
 				return false;
 			case 'adminSearchForm':
 				Request::redirect('zendSearchAdmin', 'index');
@@ -411,18 +406,12 @@ class ZendSearchPlugin extends GenericPlugin {
 	function postInstallCallback($hookName, $args) {
 		// Include Zend Framework in include path
 		ini_set('include_path', BASE_SYS_DIR . '/lib/pkp/lib/ZendFramework/library' . ENV_SEPARATOR . ini_get('include_path'));
-		if(checkPhpVersion('5.0.0')) {
-			require_once('lib/pkp/lib/ZendFramework/library/Zend/Search/Lucene.php');
-			// If the indexes do not exist, create them.
-			$indexPath = $this->getIndexPath();
-			if (!file_exists($indexPath)) {
-				$index = Zend_Search_Lucene::create($indexPath);
-			}
-		} else {
-			// Disable plugin until user sets a SOLR URL
-			$this->setEnabled(false);
+		require_once('lib/pkp/lib/ZendFramework/library/Zend/Search/Lucene.php');
+		// If the indexes do not exist, create them.
+		$indexPath = $this->getIndexPath();
+		if (!file_exists($indexPath)) {
+			$index = Zend_Search_Lucene::create($indexPath);
 		}
-
 
 		return false;
 	}

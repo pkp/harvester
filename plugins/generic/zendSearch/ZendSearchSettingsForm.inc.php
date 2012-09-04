@@ -30,9 +30,6 @@ class ZendSearchSettingsForm extends Form {
 		parent::Form($plugin->getTemplatePath() . 'zendSearchSettingsForm.tpl');
 		
 		$this->addCheck(new FormValidatorPost($this));
-		if(!checkPhpVersion('5.0.0') && $this->readUserVars(array('solrUrl')) == '') {
-			$this->addCheck(new FormValidator($this, 'solrUrl', 'required', 'plugins.generic.zendSearch.solrMustExist'));
-		}
 		$this->addCheck(new FormValidatorUrl($this, 'solrUrl', 'optional', 'plugins.generic.zendSearch.solrUrl.invalid'));
 	}
 
