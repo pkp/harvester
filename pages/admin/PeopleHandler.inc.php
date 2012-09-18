@@ -172,7 +172,7 @@ class PeopleHandler extends AdminHandler {
 
 		if ($users != null && is_array($users) && $rolePath != '' && $rolePath != 'admin') {
 			for ($i=0; $i<count($users); $i++) {
-				if (!$roleDao->roleExists($users[$i], $roleId)) {
+				if (!$roleDao->userHasRole($users[$i], $roleId)) {
 					$role = new Role();
 					$role->setUserId($users[$i]);
 					$role->setRoleId($roleId);
