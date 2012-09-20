@@ -277,7 +277,7 @@ class PeopleHandler extends AdminHandler {
 				return $templateMgr->display('common/error.tpl');
 			}
 			$userDao =& DAORegistry::getDAO('UserDAO');
-			$user =& $userDao->getUser($userId);
+			$user =& $userDao->getById($userId);
 			if ($user) {
 				$user->setDisabled(1);
 				$user->setDisabledReason(Request::getUserVar('reason'));
@@ -301,7 +301,7 @@ class PeopleHandler extends AdminHandler {
 
 		if ($userId != null && $userId != $user->getId()) {
 			$userDao =& DAORegistry::getDAO('UserDAO');
-			$user =& $userDao->getUser($userId, true);
+			$user =& $userDao->getById($userId, true);
 			if ($user) {
 				$user->setDisabled(0);
 			}
@@ -393,9 +393,9 @@ class PeopleHandler extends AdminHandler {
 		$userId = isset($args[0]) ? $args[0] : 0;
 		if (is_numeric($userId)) {
 			$userId = (int) $userId;
-			$user = $userDao->getUser($userId);
+			$user = $userDao->getById($userId);
 		} else {
-			$user = $userDao->getUserByUsername($userId);
+			$user = $userDao->getByUsername($userId);
 		}
 
 
@@ -448,7 +448,7 @@ class PeopleHandler extends AdminHandler {
 			}
 
 			$userDao =& DAORegistry::getDAO('UserDAO');
-			$newUser =& $userDao->getUser($userId);
+			$newUser =& $userDao->getById($userId);
 			$session =& Request::getSession();
 
 			// FIXME Support "stack" of signed-in-as user IDs?
@@ -476,7 +476,7 @@ class PeopleHandler extends AdminHandler {
 			$signedInAs = (int)$signedInAs;
 
 			$userDao =& DAORegistry::getDAO('UserDAO');
-			$oldUser =& $userDao->getUser($signedInAs);
+			$oldUser =& $userDao->getById($signedInAs);
 
 			$session->unsetSessionVar('signedInAs');
 

@@ -65,7 +65,7 @@ class UserManagementForm extends Form {
 		$templateMgr->assign('userId', $this->userId);
 		if (isset($this->userId)) {
 			$userDao =& DAORegistry::getDAO('UserDAO');
-			$user =& $userDao->getUser($this->userId);
+			$user =& $userDao->getById($this->userId);
 			$templateMgr->assign('username', $user->getUsername());
 		}
 	
@@ -122,7 +122,7 @@ class UserManagementForm extends Form {
 	function initData() {
 		if (isset($this->userId)) {
 			$userDao =& DAORegistry::getDAO('UserDAO');
-			$user =& $userDao->getUser($this->userId);
+			$user =& $userDao->getById($this->userId);
 
 			if ($user != null) {
 				$this->_data = array(
@@ -218,7 +218,7 @@ class UserManagementForm extends Form {
 		$userDao =& DAORegistry::getDAO('UserDAO');
 
 		if (isset($this->userId)) {
-			$user =& $userDao->getUser($this->userId);
+			$user =& $userDao->getById($this->userId);
 		}
 
 		if (!isset($user)) {

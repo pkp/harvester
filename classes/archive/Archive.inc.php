@@ -157,7 +157,7 @@ class Archive extends DataObject {
 	 */
 	function &getUser() {
 		$userDao =& DAORegistry::getDAO('UserDAO');
-		$user =& $userDao->getUser($this->getUserId());
+		$user =& $userDao->getById($this->getUserId());
 		return $user;
 	}
 
