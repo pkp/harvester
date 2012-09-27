@@ -88,9 +88,10 @@ class TinyMCEPlugin extends GenericPlugin {
 	 */
 	function callback($hookName, $args) {
 		$templateManager =& $args[0];
+		$request =& $this->getRequest();
 
-		$page = Request::getRequestedPage();
-		$op = Request::getRequestedOp();
+		$page = $request->getRequestedPage();
+		$op = $request->getRequestedOp();
 		$enableFields = $this->getEnableFields($templateManager, $page, $op);
 
 		if (!empty($enableFields)) {

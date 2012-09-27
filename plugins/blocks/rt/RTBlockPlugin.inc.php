@@ -40,9 +40,15 @@ class RTBlockPlugin extends BlockPlugin {
 		return __('plugins.block.rt.description');
 	}
 
-	function getContents(&$templateMgr) {
-		if (Request::getRequestedPage() . '/' . Request::getRequestedOp() !== 'record/view') return '';
-		return parent::getContents($templateMgr);
+	/**
+	 * Get the HTML contents for this block.
+	 * @param $templateMgr PKPTemplateManager
+	 * @param $request PKPRequest
+	 * @return String
+	 */
+	function getContents(&$templateMgr, &$request) {
+		if ($request->getRequestedPage() . '/' . $request->getRequestedOp() !== 'record/view') return '';
+		return parent::getContents($templateMgr, $request);
 	}
 }
 

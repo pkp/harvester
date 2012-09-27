@@ -35,8 +35,9 @@ class IPBanPlugin extends GenericPlugin {
 	 */
 	function _loadHandlerCallback($hookName, $args) {
 		$ips = array();
+		$request =& $this->getRequest();
 		@$ips = array_map('rtrim',file(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'ips.txt'));
-		if (is_array($ips) && in_array(Request::getRemoteAddr(), $ips)) exit();
+		if (is_array($ips) && in_array($request->getRemoteAddr(), $ips)) exit();
 		return false;
 	}
 

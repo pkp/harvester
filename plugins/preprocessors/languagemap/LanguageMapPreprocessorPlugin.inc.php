@@ -171,6 +171,7 @@ class LanguageMapPreprocessorPlugin extends PreprocessorPlugin {
 	 * @param $params array
 	 */
 	function manage($verb, $params) {
+		$request =& $this->getRequest();
 		switch ($verb) {
 			case 'enable':
 				$this->updateSetting('enabled', true);
@@ -179,7 +180,7 @@ class LanguageMapPreprocessorPlugin extends PreprocessorPlugin {
 				$this->updateSetting('enabled', false);
 				break;
 		}
-		Request::redirect('admin', 'plugins');
+		$request->redirect('admin', 'plugins');
 	}
 
 	/**

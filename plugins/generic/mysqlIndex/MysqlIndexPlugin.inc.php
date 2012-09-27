@@ -102,18 +102,19 @@ class MysqlIndexPlugin extends GenericPlugin {
 		return parent::getManagementVerbs($verbs);
 	}
 
- 	/*
- 	 * Execute a management verb on this plugin
- 	 * @param $verb string
- 	 * @param $args array
+	/**
+	 * Execute a management verb on this plugin
+	 * @param $verb string
+	 * @param $args array
 	 * @param $message string Location for the plugin to put a result msg
- 	 * @return boolean
- 	 */
+	 * @return boolean
+	 */
 	function manage($verb, $args, &$message) {
 		if (!parent::manage($verb, $args, $message)) return false;
+		$request =& $this->getRequest();
 		switch ($verb) {
 			case 'adminCrosswalks':
-				Request::redirect('mysqlIndexAdmin', 'adminCrosswalks');
+				$request->redirect('mysqlIndexAdmin', 'adminCrosswalks');
 				return false;
 			default:
 				// Unknown management verb
@@ -127,7 +128,8 @@ class MysqlIndexPlugin extends GenericPlugin {
 	 */
 	function navBarCallback($hookName, $args) {
 		$output =& $args[2];
-		$output .= '<li><a href="' . Request::url('misearch', 'index') . '">' . __('navigation.search') . '</a></li>';
+		$request =& $this->getRequest();
+		$output .= '<li><a href="' . $request->url('misearch', 'index') . '">' . __('navigation.search') . '</a></li>';
 		return false;
 	}
 
@@ -136,7 +138,8 @@ class MysqlIndexPlugin extends GenericPlugin {
 	 */
 	function siteManagementCallback($hookName, $args) {
 		$output =& $args[2];
-		$output .= '<li>&#187;&nbsp;<a href="' . Request::url('admin', 'plugin', array('generic', $this->getName(), 'adminCrosswalks')) . '">' . __('plugins.generic.mysqlIndex.crosswalks') . '</a></li>';
+		$request =& $this->getRequest();
+		$output .= '<li>&#187;&nbsp;<a href="' . $request->url('admin', 'plugin', array('generic', $this->getName(), 'adminCrosswalks')) . '">' . __('plugins.generic.mysqlIndex.crosswalks') . '</a></li>';
 		return false;
 	}
 

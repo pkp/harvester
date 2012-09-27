@@ -28,7 +28,8 @@ class SehlPlugin extends GenericPlugin {
 			HookRegistry::register('SchemaPlugin::displayRecord',array(&$this, 'displayTemplateCallback'));
 
 			$templateMgr =& TemplateManager::getManager();
-			$templateMgr->addStylesheet(Request::getBaseUrl() . '/' . $this->getPluginPath() . '/sehl.css');
+			$request =& $this->getRequest();
+			$templateMgr->addStylesheet($request->getBaseUrl() . '/' . $this->getPluginPath() . '/sehl.css');
 
 			return true;
 		}
@@ -79,6 +80,7 @@ class SehlPlugin extends GenericPlugin {
 	function displayTemplateCallback($hookName, $args) {
 		$templateMgr =& $args[0];
 		$template =& $args[1];
+		$request =& $this->getRequest();
 
 		// Determine the query terms to use.
 		$queryVariableNames = array(
@@ -103,8 +105,8 @@ class SehlPlugin extends GenericPlugin {
 		}
 
 		// Catch a couple of common POST for request variables too
-		if (($q = Request::getUserVar('q')) != '') $this->queryTerms[] = $q;
-		if (($q = Request::getUserVar('query')) != '') $this->queryTerms[] = $q;
+		if (($q = $request->getUserVar('q')) != '') $this->queryTerms[] = $q;
+		if (($q = $request->getUserVar('query')) != '') $this->queryTerms[] = $q;
 
 		if (empty($this->queryTerms)) return false;
 

@@ -70,11 +70,14 @@ class LanguageToggleBlockPlugin extends BlockPlugin {
 
 	/**
 	 * Get the HTML contents for this block.
+	 * @param $templateMgr PKPTemplateManager
+	 * @param $request PKPRequest
+	 * @return String
 	 */
-	function getContents(&$templateMgr) {
-		$templateMgr->assign('isPostRequest', Request::isPost());
+	function getContents(&$templateMgr, &$request) {
+		$templateMgr->assign('isPostRequest', $request->isPost());
 		if (!defined('SESSION_DISABLE_INIT')) {
-			$site =& Request::getSite();
+			$site =& $request->getSite();
 			$locales =& $site->getSupportedLocaleNames();
 		} else {
 			$locales =& AppLocale::getAllLocales();
@@ -86,7 +89,7 @@ class LanguageToggleBlockPlugin extends BlockPlugin {
 			$templateMgr->assign('languageToggleLocales', $locales);
 		}
 
-		return parent::getContents($templateMgr);
+		return parent::getContents($templateMgr, $request);
 	}
 }
 

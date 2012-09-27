@@ -123,14 +123,15 @@ class ZendSearchPlugin extends GenericPlugin {
  	 */
 	function manage($verb, $args, &$message) {
 		if (!parent::manage($verb, $args, $message) && $verb != 'enable') return false;
+		$request =& $this->getRequest();
 		switch ($verb) {
 			case 'enable':
 				return false;
 			case 'adminSearchForm':
-				Request::redirect('zendSearchAdmin', 'index');
+				$request->redirect('zendSearchAdmin', 'index');
 				return false;
 			case 'adminSettings':
-				Request::redirect('zendSearchAdmin', 'settings');
+				$request->redirect('zendSearchAdmin', 'settings');
 				return false;
 			default:
 				// Unknown management verb
@@ -156,7 +157,8 @@ class ZendSearchPlugin extends GenericPlugin {
 	 */
 	function navBarCallback($hookName, $args) {
 		$output =& $args[2];
-		$output .= '<li><a href="' . Request::url('search', 'index') . '">' . __('navigation.search') . '</a></li>';
+		$request =& $this->getRequest();
+		$output .= '<li><a href="' . $request->url('search', 'index') . '">' . __('navigation.search') . '</a></li>';
 		return false;
 	}
 
@@ -165,7 +167,8 @@ class ZendSearchPlugin extends GenericPlugin {
 	 */
 	function siteManagementCallback($hookName, $args) {
 		$output =& $args[2];
-		$output .= '<li>&#187;&nbsp;<a href="' . Request::url('admin', 'plugin', array('generic', $this->getName(), 'adminSearchForm')) . '">' . __('plugins.generic.zendSearch.searchForm') . '</a></li>';
+		$request =& $this->getRequest();
+		$output .= '<li>&#187;&nbsp;<a href="' . $request->url('admin', 'plugin', array('generic', $this->getName(), 'adminSearchForm')) . '">' . __('plugins.generic.zendSearch.searchForm') . '</a></li>';
 		return false;
 	}
 

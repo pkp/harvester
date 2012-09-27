@@ -4,7 +4,7 @@
  *
  * @class RegexPreprocessorPlugin
  *
- * Based on OJS 2.0's LanguageMapPreprocessorPlugin.inc.php 
+ * Based on OJS 2.0's LanguageMapPreprocessorPlugin.inc.php
  *
  *
 **/
@@ -63,7 +63,7 @@ class RegexPreprocessorPlugin extends PreprocessorPlugin {
 		 * This example removes periods from the ends of subject elements:
 		 *
 		 * if ($field->getName() == 'subject') {
-		 *    $value = preg_replace('/\.$/', '', $value);  
+		 *    $value = preg_replace('/\.$/', '', $value);
 		 * }
 		 */
 
@@ -90,6 +90,7 @@ class RegexPreprocessorPlugin extends PreprocessorPlugin {
 	 * @param $params array
 	 */
 	function manage($verb, $params) {
+		$request =& $this->getRequest();
 		switch ($verb) {
 			case 'enable':
 				$this->updateSetting('enabled', true);
@@ -98,7 +99,7 @@ class RegexPreprocessorPlugin extends PreprocessorPlugin {
 				$this->updateSetting('enabled', false);
 				break;
 		}
-		Request::redirect('admin', 'plugins');
+		$request->redirect('admin', 'plugins');
 	}
 
 	/**

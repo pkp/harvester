@@ -53,12 +53,13 @@ class OAIHarvesterPlugin extends HarvesterPlugin {
 	function addArchiveFormChecks(&$form) {
 		$this->import('OAIHarvester');
 		$oaiHarvester = new OAIHarvester($this->archive);
+		$request =& $this->getRequest();
 
 		$form->addCheck(new FormValidator($form, 'harvesterUrl', 'required', 'plugins.harvesters.oai.archive.form.harvesterUrlRequired'));
 		$form->addCheck(new FormValidatorInSet($form, 'oaiIndexMethod', 'optional', 'plugins.harvesters.oai.archive.form.oaiIndexMethodRequired', array(OAI_INDEX_METHOD_LIST_RECORDS, OAI_INDEX_METHOD_LIST_IDENTIFIERS)));
-		$form->addCheck(new FormValidatorCustom($form, 'harvesterUrl', 'required', 'plugins.harvester.oai.archive.form.harvesterUrlInvalid', array(&$oaiHarvester, 'validateHarvesterURL'), array(Request::getUserVar('isStatic'))));
+		$form->addCheck(new FormValidatorCustom($form, 'harvesterUrl', 'required', 'plugins.harvester.oai.archive.form.harvesterUrlInvalid', array(&$oaiHarvester, 'validateHarvesterURL'), array($request->getUserVar('isStatic'))));
 		$form->addCheck(new FormValidatorEmail($form, 'adminEmail', Validation::isSiteAdmin()?'optional':'required', 'plugins.harvesters.oai.archive.form.adminEmailInvalid'));
-		$form->addCheck(new FormValidatorCustom($form, 'harvesterUrl', 'required', 'plugins.harvester.oai.archive.form.harvesterUrlDuplicate', array(&$this, 'duplicateHarvesterUrlDoesNotExist'), array(Request::getUserVar('archiveId'))));
+		$form->addCheck(new FormValidatorCustom($form, 'harvesterUrl', 'required', 'plugins.harvester.oai.archive.form.harvesterUrlDuplicate', array(&$this, 'duplicateHarvesterUrlDoesNotExist'), array($request->getUserVar('archiveId'))));
 	}
 
 	/**
@@ -98,7 +99,7 @@ class OAIHarvesterPlugin extends HarvesterPlugin {
 		// Build a list of supported metadata formats.
 		$schemaDao =& DAORegistry::getDAO('SchemaDAO');
 		$aliases =& $schemaDao->getSchemaAliases();
-		
+
 		$plugins =& PluginRegistry::loadCategory('schemas');
 		$archive =& $form->_data['archive'];
 		$oaiHarvester = new OAIHarvester($archive);
@@ -119,7 +120,8 @@ class OAIHarvesterPlugin extends HarvesterPlugin {
 
 	function executeArchiveForm(&$form, &$archive) {
 		// Save the schema plugin info
-		$archive->setSchemaPluginName(Request::getUserVar('metadataFormat'));
+		$request =& $this->getRequest();
+		$archive->setSchemaPluginName($request->getUserVar('metadataFormat'));
 		$archiveDao =& DAORegistry::getDAO('ArchiveDAO');
 		$archiveDao->updateArchive($archive);
 
@@ -201,11 +203,12 @@ class OAIHarvesterPlugin extends HarvesterPlugin {
 	}
 
 	function manage($verb, $args) {
+		$request =& $this->getRequest();
 		switch ($verb) {
 			case 'fetchArchiveInfo':
 				// The user has requested that the archive form be filled out given
 				// the OAI URL.
-				$harvesterUrl = Request::getUserVar('harvesterUrl');
+				$harvesterUrl = $request->getUserVar('harvesterUrl');
 				$archiveId = (int) array_shift($args);
 
 				$archiveDao =& DAORegistry::getDAO('ArchiveDAO');
@@ -214,7 +217,7 @@ class OAIHarvesterPlugin extends HarvesterPlugin {
 				$this->import('OAIHarvester');
 
 				$oaiHarvester = new OAIHarvester($archive);
-				$metadata = $oaiHarvester->getMetadata($harvesterUrl, Request::getUserVar('isStatic'));
+				$metadata = $oaiHarvester->getMetadata($harvesterUrl, $request->getUserVar('isStatic'));
 
 				import('classes.admin.form.ArchiveForm');
 				$archiveForm = new ArchiveForm($archiveId);
@@ -249,15 +252,16 @@ class OAIHarvesterPlugin extends HarvesterPlugin {
 	 */
 	function readUpdateParams(&$archive) {
 		$this->import('OAIHarvester');
+		$request =& $this->getRequest();
 
 		$returner = array();
-		$set = Request::getUserVar('set');
+		$set = $request->getUserVar('set');
 		if (count($set) == 1 && $set[0] == '') $set = null;
 
 		$returner['set'] = $set;
 
-		$dateFrom = Request::getUserDateVar('from', 1, 1);
-		$dateTo = Request::getUserDateVar('until', 32, 12, null, 23, 59, 59);
+		$dateFrom = $request->getUserDateVar('from', 1, 1);
+		$dateTo = $request->getUserDateVar('until', 32, 12, null, 23, 59, 59);
 		if (!empty($dateFrom)) $returner['from'] = OAIHarvester::UTCDate($dateFrom);
 		if (!empty($dateTo)) $returner['until'] = OAIHarvester::UTCDate($dateTo);
 
