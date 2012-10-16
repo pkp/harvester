@@ -22,7 +22,7 @@
 
 <br />
 
-<form action="{if $contextId}{url op="saveContext" path=$archiveId|to_array:$versionId:$contextId}{else}{url op="createContext" path=$archiveId|to_array:$versionId:"save"}{/if}" method="post">
+<form class="pkp_form" action="{if $contextId}{url op="saveContext" path=$archiveId|to_array:$versionId:$contextId}{else}{url op="createContext" path=$archiveId|to_array:$versionId:"save"}{/if}" method="post">
 <table class="data" width="100%">
 	<tr valign="top">
 		<td class="label" width="20%"><label for="title">{translate key="rt.context.title"}</label></td>

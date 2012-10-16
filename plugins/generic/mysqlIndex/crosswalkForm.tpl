@@ -31,7 +31,7 @@ function refreshForm() {
 <br />
 
 <div id="crosswalkForm">
-<form id="crosswalkForm" method="post" action="{url op="updateCrosswalk"}">
+<form class="pkp_form" id="crosswalkForm" method="post" action="{url op="updateCrosswalk"}">
 {if $crosswalkId}
 <input type="hidden" name="crosswalkId" value="{$crosswalkId}" />
 {/if}

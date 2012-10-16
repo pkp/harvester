@@ -13,7 +13,7 @@
 {include file="common/header.tpl"}
 {/strip}
 
-<form method="post" action="{url op="saveSystemConfig"}">
+<form class="pkp_form" method="post" action="{url op="saveSystemConfig"}">
 <p>{translate key="admin.editSystemConfigInstructions"}</p>
 
 {foreach from=$configData key=sectionName item=sectionData}

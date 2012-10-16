@@ -35,7 +35,7 @@ function ensureKeyword() {
 <br/>
 
 {if $isAdvanced}
-	<form method="post" name="revise" action="{url op="index"}">
+	<form class="pkp_form" method="post" name="revise" action="{url op="index"}">
 		<input type="hidden" name="importance" value="{$importance|escape}"/>
 		<input type="hidden" name="query" value="{$query|escape}"/>
 		{if is_array($archiveIds)}

@@ -44,7 +44,7 @@ function selectHarvester() {
 </script>
 
 <div id="archiveFormContainer">
-<form id="archiveForm" method="post" action="{url op="updateArchive"}" enctype="multipart/form-data">
+<form class="pkp_form" id="archiveForm" method="post" action="{url op="updateArchive"}" enctype="multipart/form-data">
 {if $archiveId}
 <input type="hidden" name="archiveId" value="{$archiveId|escape}" />
 {/if}

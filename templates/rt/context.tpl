@@ -75,7 +75,7 @@
 <p>{if $context->getDefineTerms()}{translate key="rt.context.defineTermsDescription"}{elseif $context->getAuthorTerms()}{translate key="rt.context.authorTermsDescription"}{elseif $context->getCitedBy()}{translate key="rt.context.citesContextDescription}{else}{translate key="rt.context.searchDescription"}{/if}</p>
 
 <table class="data" width="100%">
-	<form id="terms">
+	<form class="pkp_form" id="terms">
 	{if $context->getDefineTerms()}
 		<tr valign="top">
 			<td width="20%" class="label">{translate key="rt.context.termToDefine"}</td>
@@ -109,7 +109,7 @@
 	</form>
 
 
-	<form id="additionalParams">
+	<form class="pkp_form" id="additionalParams">
 	{foreach from=$searchValues key=paramKey item=value}
 		<tr valign="top">
 			<td width="20%" class="label">
@@ -129,7 +129,7 @@
 
 <table class="listing" width="100%">
 	{foreach from=$searches item=search key=key name=searches}
-	<form id="search{$key+1}form" method="{if $search->getSearchPost()}post{else}get{/if}" action="{$search->getSearchUrl()|escape}">
+	<form class="pkp_form" id="search{$key+1}form" method="{if $search->getSearchPost()}post{else}get{/if}" action="{$search->getSearchUrl()|escape}">
 	{foreach from=$search->postParams item=postParam}
 		<input type="hidden" name="{$postParam.name|escape}" value="{$postParam.value|escape}" />
 	{/foreach}

@@ -20,7 +20,7 @@
 			{/if}
 		</ul>
 	{else}
-		<form method="post" action="{url page="login" op="signIn"}">
+		<form class="pkp_form" method="post" action="{url page="login" op="signIn"}">
 			<table>
 				<tr>
 					<td><label for="sidebar-username">{translate key="user.username"}</label></td>

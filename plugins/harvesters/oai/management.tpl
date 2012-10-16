@@ -20,7 +20,7 @@
 
 <br />
 
-<form method="post" action="{url op="updateIndex" path=$archiveId}">
+<form class="pkp_form" method="post" action="{url op="updateIndex" path=$archiveId}">
 <table class="listing" width="100%">
 	<tr valign="top"><td colspan="3" class="headseparator">&nbsp;</td></tr>
 	<tr valign="top">

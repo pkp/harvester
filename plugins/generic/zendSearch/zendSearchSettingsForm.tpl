@@ -26,7 +26,7 @@ function changeElementType() {
 
 <br/>
 
-<form id="zendSearchSettings" method="post" action="{url op="saveSettings"}">
+<form class="pkp_form" id="zendSearchSettings" method="post" action="{url op="saveSettings"}">
 
 {include file="common/formErrors.tpl"}
 

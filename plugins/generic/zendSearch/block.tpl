@@ -9,7 +9,7 @@
  *}
 <div class="block" id="sidebarNavigation">
 	<span class="blockTitle">{translate key="navigation.search"}</span>
-	<form method="post" action="{url page="search" op="searchResults"}">
+	<form class="pkp_form" method="post" action="{url page="search" op="searchResults"}">
 	<table>
 	<tr>
 		<td><input type="text" id="q" name="q" size="15" maxlength="255" value="{$q|escape}" class="textField" /></td>

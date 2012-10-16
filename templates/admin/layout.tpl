@@ -95,7 +95,7 @@ function prepBlockFields() {
 {/literal}
 </script>
 
-<form id="setupForm" method="post" action="{url op="saveLayout"}">
+<form class="pkp_form" id="setupForm" method="post" action="{url op="saveLayout"}">
 {include file="common/formErrors.tpl"}
 
 {* There are no localized settings on this page.

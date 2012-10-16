@@ -12,7 +12,7 @@
 {include file="common/header.tpl"}
 {/strip}
 
-<form id="disableUser" method="post" action="{url op="disableUser"}">
+<form class="pkp_form" id="disableUser" method="post" action="{url op="disableUser"}">
 	<input type="hidden" name="reason" value=""/>
 	<input type="hidden" name="userId" value=""/>
 </form>
@@ -50,7 +50,7 @@ function sortSearch(heading, direction) {
 </script>
 
 <h3>{translate key=$roleName}</h3>
-<form id="submit" method="post" action="{url path=$roleSymbolic}">
+<form class="pkp_form" id="submit" method="post" action="{url path=$roleSymbolic}">
 	<input type="hidden" name="sort" value="id"/>
 	<input type="hidden" name="sortDirection" value="ASC"/>
 	<select name="roleSymbolic" class="selectMenu">
@@ -80,7 +80,7 @@ function sortSearch(heading, direction) {
 <p><a href="{url path="all"}" class="action">{translate key="admin.people.allUsers"}</a></p>
 {/if}
 
-<form id="people" action="{url page="user" op="email"}" method="post">
+<form class="pkp_form" id="people" action="{url page="user" op="email"}" method="post">
 <input type="hidden" name="redirectUrl" value="{url path=$roleSymbolic}"/>
 
 <div id="users">

@@ -13,7 +13,7 @@
 {include file="common/header.tpl"}
 {/strip}
 
-<form method="post" action="{url op="saveSettings"}" enctype="multipart/form-data">
+<form class="pkp_form" method="post" action="{url op="saveSettings"}" enctype="multipart/form-data">
 {include file="common/formErrors.tpl"}
 <div id="general">
 <h3>{translate key="admin.settings.general"}</h3>

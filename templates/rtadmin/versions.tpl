@@ -53,7 +53,7 @@
 <br/>
 <br/>
 
-<form method="post" action="{url op="importVersion" path=$archiveId|default:0}" enctype="multipart/form-data">
+<form class="pkp_form" method="post" action="{url op="importVersion" path=$archiveId|default:0}" enctype="multipart/form-data">
 	<input type="file" class="uploadField" name="versionFile" />
 	<input type="submit" class="button" value="{translate key="rt.admin.versions.importVersion"}" />
 </form>

@@ -13,7 +13,7 @@
 {include file="common/header.tpl"}
 {/strip}
 
-<form action="{if $searchId}{url op="saveSearch" path=$archiveId|to_array:$versionId:$contextId:$searchId}{else}{url op="createSearch" path=$archiveId|to_array:$versionId:$contextId:"save"}{/if}" method="post">
+<form class="pkp_form" action="{if $searchId}{url op="saveSearch" path=$archiveId|to_array:$versionId:$contextId:$searchId}{else}{url op="createSearch" path=$archiveId|to_array:$versionId:$contextId:"save"}{/if}" method="post">
 <table class="data" width="100%">
 	<tr valign="top">
 		<td class="label" width="20%"><label for="title">{translate key="rt.search.title"}</label></td>

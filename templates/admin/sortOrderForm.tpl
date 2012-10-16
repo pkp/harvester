@@ -21,7 +21,7 @@
 
 <br/>
 
-<form id="sortOrder" method="post" action="{url op="updateSortOrder"}">
+<form class="pkp_form" id="sortOrder" method="post" action="{url op="updateSortOrder"}">
 {if $sortOrderId}
 <input type="hidden" name="sortOrderId" value="{$sortOrderId|escape}" />
 {/if}

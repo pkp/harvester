@@ -13,7 +13,7 @@
 {include file="common/header.tpl"}
 {/strip}
 
-<form method="post" action="{url op="searchResults"}">
+<form class="pkp_form" method="post" action="{url op="searchResults"}">
 	
 <table class="data" width="100%">
 	<tr valign="top">
