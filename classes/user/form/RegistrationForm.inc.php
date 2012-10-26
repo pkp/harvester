@@ -33,9 +33,7 @@ class RegistrationForm extends Form {
 	function RegistrationForm() {
 		parent::Form('user/register.tpl');
 
-		import('lib.pkp.classes.captcha.CaptchaManager');
-		$captchaManager = new CaptchaManager();
-		$this->captchaEnabled = ($captchaManager->isEnabled() && Config::getVar('captcha', 'captcha_on_register'))?true:false;
+		$this->captchaEnabled = Config::getVar('captcha', 'captcha_on_register') && Config::getVar('captcha', 'recaptcha');
 
 		// Validation checks for this form
 		$this->addCheck(new FormValidator($this, 'username', 'required', 'user.profile.form.usernameRequired'));
@@ -73,13 +71,12 @@ class RegistrationForm extends Form {
 		$site =& Request::getSite();
 		$templateMgr->assign('minPasswordLength', $site->getMinPasswordLength());
 		if ($this->captchaEnabled) {
-			import('lib.pkp.classes.captcha.CaptchaManager');
-			$captchaManager = new CaptchaManager();
-			$captcha =& $captchaManager->createCaptcha();
-			if ($captcha) {
-				$templateMgr->assign('captchaEnabled', $this->captchaEnabled);
-				$this->setData('captchaId', $captcha->getId());
-			}
+			import('lib.pkp.lib.recaptcha.recaptchalib');
+			$publicKey = Config::getVar('captcha', 'recaptcha_public_key');
+			$useSSL = Config::getVar('security', 'force_ssl')?true:false;
+			$reCaptchaHtml = recaptcha_get_html($publicKey, null, $useSSL);
+			$templateMgr->assign('reCaptchaHtml', $reCaptchaHtml);
+			$templateMgr->assign('captchaEnabled', true);
 		}
 
 		$countryDao =& DAORegistry::getDAO('CountryDAO');
@@ -123,8 +120,8 @@ class RegistrationForm extends Form {
 			'registerAsSubmitter', 'sendPassword'
 		);
 		if ($this->captchaEnabled) {
-			$userVars[] = 'captchaId';
-			$userVars[] = 'captcha';
+			$userVars[] = 'recaptcha_challenge_field';
+			$userVars[] = 'recaptcha_response_field';
 		}
 
 		$this->readUserVars($userVars);
@@ -252,7 +249,6 @@ class RegistrationForm extends Form {
 			unset($mail);
 		}
 	}
-
 }
 
 ?>

@@ -51,11 +51,9 @@ class ArchiveForm extends Form {
 		$this->addCheck(new FormValidator($this, 'url', 'required', 'admin.archives.form.urlRequired'));
 		$this->addCheck(new FormValidatorPost($this));
 
-		import('lib.pkp.classes.captcha.CaptchaManager');
-		$captchaManager = new CaptchaManager();
-		$this->captchaEnabled = $captchaManager->isEnabled();
+		$this->captchaEnabled = Config::getVar('captcha', 'captcha_on_submit') && Config::getVar('captcha', 'recaptcha');
 		if ($this->captchaEnabled && !Validation::isSiteAdmin()) {
-			$this->addCheck(new FormValidatorCaptcha($this, 'captcha', 'captchaId', 'common.captchaField.badCaptcha'));
+			$this->addCheck(new FormValidatorReCaptcha($this, 'recaptcha_challenge_field', 'recaptcha_response_field', Request::getRemoteAddr(), 'common.captchaField.badCaptcha'));
 		}
 
 		$this->harvesterPluginName = Request::getUserVar('harvesterPluginName');
@@ -135,13 +133,12 @@ class ArchiveForm extends Form {
 		$templateMgr =& TemplateManager::getManager();
 		$templateMgr->assign('archiveId', $this->archiveId);
 		if ($this->captchaEnabled && !Validation::isSiteAdmin()) {
-			import('lib.pkp.classes.captcha.CaptchaManager');
-			$captchaManager = new CaptchaManager();
-			$captcha =& $captchaManager->createCaptcha();
-			if ($captcha) {
-				$templateMgr->assign('captchaEnabled', $this->captchaEnabled);
-				$this->setData('captchaId', $captcha->getId());
-			}
+			import('lib.pkp.lib.recaptcha.recaptchalib');
+			$publicKey = Config::getVar('captcha', 'recaptcha_public_key');
+			$useSSL = Config::getVar('security', 'force_ssl')?true:false;
+			$reCaptchaHtml = recaptcha_get_html($publicKey, null, $useSSL);
+			$templateMgr->assign('reCaptchaHtml', $reCaptchaHtml);
+			$templateMgr->assign('captchaEnabled', true);
 		}
 		if ($this->archive) $templateMgr->assign('archiveImage', $this->archive->getSetting('archiveImage'));
 		$templateMgr->assign_by_ref('harvesters', PluginRegistry::getPlugins('harvesters'));
@@ -193,8 +190,8 @@ class ArchiveForm extends Form {
 		$parameterNames = array('title', 'description', 'url', 'enabled');
 
 		if ($this->captchaEnabled && !Validation::isSiteAdmin()) {
-			$parameterNames[] = 'captchaId';
-			$parameterNames[] = 'captcha';
+			$parameterNames[] = 'recaptcha_challenge_field';
+			$parameterNames[] = 'recaptcha_response_field';
 		}
 
 		if (Validation::isSiteAdmin()) $parameterNames[] = 'publicArchiveId';

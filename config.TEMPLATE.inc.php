@@ -13,6 +13,8 @@
 ; Open Harvester Systems Configuration settings.
 ; Rename config.TEMPLATE.inc.php to config.inc.php to use.
 ;
+; $Id$
+;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
@@ -27,7 +29,7 @@
 installed = Off
 
 ; The canonical URL to the harvester installation (excluding the trailing slash)
-base_url = "http://pkp.sfu.ca/harvester2"
+base_url = "http://pkp.sfu.ca/ohs"
 
 ; Path to the registry directory (containing various settings files)
 ; Although the files in this directory generally do not contain any
@@ -72,9 +74,6 @@ restful_urls = Off
 ; Allow javascript files to be served through a content delivery network (set to off to use local files)
 enable_cdn = On
 
-; Display a message on the site admin and journal manager user home pages if there is an upgrade available
-show_upgrade_warning = On
-
 ;;;;;;;;;;;;;;;;;;;;;
 ; Database Settings ;
 ;;;;;;;;;;;;;;;;;;;;;
@@ -88,7 +87,7 @@ password = harvester2
 name = harvester2
 
 ; Enable persistent connections (recommended)
-persistent = Off
+persistent = On
 
 ; Enable database debug output (very verbose!)
 debug = Off
@@ -175,19 +174,14 @@ session_check_ip = On
 
 ; The encryption (hashing) algorithm to use for encrypting user passwords
 ; Valid values are: md5, sha1
-; Note that sha1 requires PHP >= 4.3.0
-encryption = md5
+encryption = sha1
 
 ; Allowed HTML tags for fields that permit restricted HTML.
 ; For PHP 5.0.5 and greater, allowed attributes must be specified individually
 ; e.g. <img src alt> to allow "src" and "alt" attributes. Unspecified
 ; attributes will be stripped. For PHP below 5.0.5 attributes may not be
 ; specified in this way.
-allowed_html = "<a href|target> <em> <strong> <cite> <code> <ul> <ol> <li> <dl> <dt> <dd> <b> <i> <u> <img src|alt><sup> <sub> <br> <p>"
-
-; Prevent VIM from attempting to highlight the rest of the config file
-; with unclosed tags:
-; </p></sub></sup></u></i></b></dd></dt></dl></li></ol></ul></code></cite></strong></em></a>
+allowed_html = "a[href|target],em,strong,cite,code,ul,ol,li,dl,dt,dd,b,i,u,img[src|alt],sup,sub,br,p"
 
 
 ;;;;;;;;;;;;;;;;;;
@@ -269,14 +263,20 @@ page_links = 10
 
 [captcha]
 
-; Whether or not to enable Captcha features
-captcha = on
+; Whether or not to enable ReCaptcha
+recaptcha = off
+
+; Public key for reCaptcha (see http://www.google.com/recaptcha)
+recaptcha_public_key = your_public_key
+
+; Private key for reCaptcha (see http://www.google.com/recaptcha)
+recaptcha_private_key = your_private_key
 
 ; Whether or not to use Captcha on user registration
 captcha_on_register = on
 
-; Font location for font to use in Captcha images
-font_location = /usr/share/fonts/truetype/freefont/FreeSerif.ttf
+; Whether or not to use Captcha on user archive submission
+captcha_on_submit = on
 
 
 ;;;;;;;;;;;;;;;;;;;;;

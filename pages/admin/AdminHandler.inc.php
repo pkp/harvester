@@ -105,25 +105,6 @@ class AdminHandler extends Handler {
 			$layoutForm->display();
 		}
 	}
-
-	//
-	// Captcha
-	//
-
-	function viewCaptcha($args) {
-		$captchaId = (int) array_shift($args);
-		import('lib.pkp.classes.captcha.CaptchaManager');
-		$captchaManager = new CaptchaManager();
-		if ($captchaManager->isEnabled()) {
-			$captchaDao =& DAORegistry::getDAO('CaptchaDAO');
-			$captcha =& $captchaDao->getCaptcha($captchaId);
-			if ($captcha) {
-				$captchaManager->generateImage($captcha);
-				exit();
-			}
-		}
-		Request::redirect('index');
-	}
 }
 
 ?>

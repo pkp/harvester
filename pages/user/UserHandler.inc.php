@@ -121,26 +121,6 @@ class UserHandler extends Handler {
 		}
 	}
 
-
-	//
-	// Captcha
-	//
-
-	function viewCaptcha($args) {
-		$captchaId = (int) array_shift($args);
-		import('lib.pkp.classes.captcha.CaptchaManager');
-		$captchaManager = new CaptchaManager();
-		if ($captchaManager->isEnabled()) {
-			$captchaDao =& DAORegistry::getDAO('CaptchaDAO');
-			$captcha =& $captchaDao->getCaptcha($captchaId);
-			if ($captcha) {
-				$captchaManager->generateImage($captcha);
-				exit();
-			}
-		}
-		Request::redirect(null, 'user');
-	}
-
 	/**
 	 * View the public user profile for a user, specified by user ID,
 	 * if that user should be exposed for public view.
