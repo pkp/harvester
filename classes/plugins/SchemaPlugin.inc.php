@@ -43,6 +43,14 @@ class SchemaPlugin extends Plugin {
 	}
 
 	/**
+	 * Get the plugin display name.
+	 * @return string
+	 */
+	function getDisplayName() {
+		return $this->getSchemaDisplayName();
+	}
+
+	/**
 	 * Get the symbolic name of this plugin. Should be unique within
 	 * the category.
 	 */

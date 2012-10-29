@@ -54,6 +54,14 @@ class HarvesterPlugin extends Plugin {
 	}
 
 	/**
+	 * Get the plugin display name.
+	 * @return string
+	 */
+	function getDisplayName() {
+		return $this->getProtocolDisplayName();
+	}
+
+	/**
 	 * Get the symbolic name of this plugin. Should be unique within
 	 * the category.
 	 */
