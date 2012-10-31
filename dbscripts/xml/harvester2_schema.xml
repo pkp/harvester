@@ -93,6 +93,9 @@
 		<field name="datestamp" type="T"/>
 		<field name="contents" type="X"/>
 		<field name="parsed_contents" type="X"/>
+		<index name="record_archive_id">
+			<col>archive_id</col>
+		</index>
 		<index name="record_identifier">
 			<col>identifier</col>
 			<UNIQUE/>
