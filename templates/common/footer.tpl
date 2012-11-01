@@ -16,9 +16,6 @@
 </div><!-- main -->
 </div><!-- body -->
 
-{get_debug_info}
-{if $enableDebugStats}{include file=$pqpTemplate}{/if}
-
 </div><!-- container -->
 {if !empty($systemNotifications)}
 	{translate|assign:"defaultTitleText" key="notification.notification"}
