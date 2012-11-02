@@ -21,15 +21,15 @@ class UserHandler extends Handler {
 	/**
 	 * Display user index page.
 	 */
-	function index() {
+	function index($args, &$request) {
 		$this->validate();
 
 		$templateMgr =& TemplateManager::getManager();
 		$roleDao =& DAORegistry::getDAO('RoleDAO');
-		$user =& Request::getUser();
-		$site =& Request::getSite();
+		$user =& $request->getUser();
+		$site =& $request->getSite();
 
-		$this->setupTemplate();
+		$this->setupTemplate($request);
 
 		$templateMgr->assign('isSiteAdmin', Validation::isSiteAdmin());
 		$templateMgr->assign('userRoles', $roleDao->getRolesByUserId($user->getId()));
@@ -41,35 +41,35 @@ class UserHandler extends Handler {
 	 * Change the locale for the current user.
 	 * @param $args array first parameter is the new locale
 	 */
-	function setLocale($args) {
+	function setLocale($args, $request) {
 		$setLocale = isset($args[0]) ? $args[0] : null;
 
-		$site =& Request::getSite();
+		$site =& $request->getSite();
 
 		if (AppLocale::isLocaleValid($setLocale) && in_array($setLocale, $site->getSupportedLocales())) {
-			$session =& Request::getSession();
+			$session =& $request->getSession();
 			$session->setSessionVar('currentLocale', $setLocale);
 		}
 
 		if(isset($_SERVER['HTTP_REFERER'])) {
-			Request::redirectUrl($_SERVER['HTTP_REFERER']);
+			$request->redirectUrl($_SERVER['HTTP_REFERER']);
 		}
 
-		$source = Request::getUserVar('source');
+		$source = $request->getUserVar('source');
 		if (isset($source) && !empty($source)) {
-			Request::redirectUrl(Request::getProtocol() . '://' . Request::getServerHost() . $source, false);
+			$request->redirectUrl($request->getProtocol() . '://' . $request->getServerHost() . $source, false);
 		}
 
-		Request::redirect(null, 'index');
+		$request->redirect(null, 'index');
 	}
 
 	/**
 	 * Become a given role.
 	 */
-	function become($args) {
+	function become($args, &$request) {
 		parent::validate(true);
 
-		$user =& Request::getUser();
+		$user =& $request->getUser();
 
 		switch (array_shift($args)) {
 			case 'submitter':
@@ -78,10 +78,10 @@ class UserHandler extends Handler {
 				$deniedKey = 'user.noRoles.enableSubmitClosed';
 				break;
 			default:
-				Request::redirect('index');
+				$request->redirect('index');
 		}
 
-		$site =& Request::getSite();
+		$site =& $request->getSite();
 		if ($site->getSetting($setting)) {
 			$role = new Role();
 			$role->setRoleId($roleId);
@@ -89,7 +89,7 @@ class UserHandler extends Handler {
 
 			$roleDao =& DAORegistry::getDAO('RoleDAO');
 			$roleDao->insertRole($role);
-			Request::redirectUrl(Request::getUserVar('source'));
+			$request->redirectUrl(Request::getUserVar('source'));
 		} else {
 			$templateMgr =& TemplateManager::getManager();
 			$templateMgr->assign('message', $deniedKey);
@@ -113,11 +113,11 @@ class UserHandler extends Handler {
 	 * Setup common template variables.
 	 * @param $subclass boolean set to true if caller is below this handler in the hierarchy
 	 */
-	function setupTemplate($subclass = false) {
+	function setupTemplate($request, $subclass = false) {
 		parent::setupTemplate();
 		$templateMgr =& TemplateManager::getManager();
 		if ($subclass) {
-			$templateMgr->assign('pageHierarchy', array(array(Request::url(null, 'user'), 'navigation.user')));
+			$templateMgr->assign('pageHierarchy', array(array($request->url(null, 'user'), 'navigation.user')));
 		}
 	}
 
@@ -125,7 +125,7 @@ class UserHandler extends Handler {
 	 * View the public user profile for a user, specified by user ID,
 	 * if that user should be exposed for public view.
 	 */
-	function viewPublicProfile($args) {
+	function viewPublicProfile($args, &$request) {
 		$this->validate(false);
 		$templateMgr =& TemplateManager::getManager();
 		$userId = (int) array_shift($args);
@@ -140,7 +140,7 @@ class UserHandler extends Handler {
 			$accountIsVisible = true;
 		}
 
-		if(!$accountIsVisible) Request::redirect(null, 'index');
+		if (!$accountIsVisible) $request->redirect(null, 'index');
 
 		$userDao =& DAORegistry::getDAO('UserDAO');
 		$user =& $userDao->getById($userId);

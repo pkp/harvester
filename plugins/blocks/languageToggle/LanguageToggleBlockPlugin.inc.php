@@ -74,7 +74,7 @@ class LanguageToggleBlockPlugin extends BlockPlugin {
 	 * @param $request PKPRequest
 	 * @return String
 	 */
-	function getContents(&$templateMgr, &$request) {
+	function getContents(&$templateMgr, $request = null) {
 		$templateMgr->assign('isPostRequest', $request->isPost());
 		if (!defined('SESSION_DISABLE_INIT')) {
 			$site =& $request->getSite();

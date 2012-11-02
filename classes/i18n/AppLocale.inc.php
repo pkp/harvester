@@ -30,7 +30,7 @@ class AppLocale extends PKPLocale {
 			if (defined('SESSION_DISABLE_INIT') || !Config::getVar('general', 'installed')) {
 				$supportedLocales = AppLocale::getAllLocales();
 			} else {
-				$site =& Request::getSite();
+				$site =& self::$request->getSite();
 				$supportedLocales = $site->getSupportedLocaleNames();
 			}
 		}
@@ -57,17 +57,17 @@ class AppLocale extends PKPLocale {
 				// If the locale is specified in the URL, allow
 				// it to override. (Necessary when locale is
 				// being set, as cookie will not yet be re-set)
-				$locale = Request::getUserVar('setLocale');
-				if (empty($locale) || !in_array($locale, array_keys(AppLocale::getSupportedLocales()))) $locale = Request::getCookieVar('currentLocale');
+				$locale = self::$request->getUserVar('setLocale');
+				if (empty($locale) || !in_array($locale, array_keys(AppLocale::getSupportedLocales()))) $locale = self::$request->getCookieVar('currentLocale');
 			} else {
 				$sessionManager =& SessionManager::getManager();
 				$session =& $sessionManager->getUserSession();
 				$locale = $session->getSessionVar('currentLocale');
 
-				$site =& Request::getSite();
+				$site =& self::$request->getSite();
 
 				if (!isset($locale)) {
-					$locale = Request::getCookieVar('currentLocale');
+					$locale = self::$request->getCookieVar('currentLocale');
 				}
 
 				if (isset($locale)) {
@@ -102,7 +102,7 @@ class AppLocale extends PKPLocale {
 		if (!isset($localePrecedence)) {
 			$localePrecedence = array(AppLocale::getLocale());
 
-			$site =& Request::getSite();
+			$site =& self::$request->getSite();
 			if ($site && !in_array($site->getPrimaryLocale(), $localePrecedence)) $localePrecedence[] = $site->getPrimaryLocale();
 		}
 		return $localePrecedence;
@@ -118,7 +118,7 @@ class AppLocale extends PKPLocale {
 
 		if (defined('SESSION_DISABLE_INIT') || !Config::getVar('general', 'installed')) return $locale = LOCALE_DEFAULT;
 
-		$site =& Request::getSite();
+		$site =& self::$request->getSite();
 		$locale = $site->getPrimaryLocale();
 
 		if (!isset($locale) || !AppLocale::isLocaleValid($locale)) {

@@ -16,19 +16,19 @@
 import('pages.user.UserHandler');
 
 class EmailHandler extends UserHandler {
-	function email($args) {
+	function email($args, $request) {
 		$this->validate();
 
-		$this->setupTemplate(true);
+		$this->setupTemplate($request, true);
 
 		$templateMgr =& TemplateManager::getManager();
 
 		$userDao =& DAORegistry::getDAO('UserDAO');
 
-		$user =& Request::getUser();
+		$user =& $request->getUser();
 
 		// See if this is the Editor or Manager and an email template has been chosen
-		$template = Request::getUserVar('template');
+		$template = $request->getUserVar('template');
 		if (empty($template) || (
 			!Validation::isSiteAdmin()
 		)) {
@@ -63,7 +63,7 @@ class EmailHandler extends UserHandler {
 		import('classes.mail.MailTemplate');
 		$email = new MailTemplate($template);
 
-		if (Request::getUserVar('send') && !$email->hasErrors()) {
+		if ($request->getUserVar('send') && !$email->hasErrors()) {
 			$recipients = $email->getRecipients();
 			$ccs = $email->getCcs();
 			$bccs = $email->getBccs();
@@ -83,13 +83,13 @@ class EmailHandler extends UserHandler {
 				return $templateMgr->display('common/message.tpl');
 			}
 			$email->send();
-			$redirectUrl = Request::getUserVar('redirectUrl');
-			if (empty($redirectUrl)) $redirectUrl = Request::url(null, 'user');
+			$redirectUrl = $request->getUserVar('redirectUrl');
+			if (empty($redirectUrl)) $redirectUrl = $request->url(null, 'user');
 			$user->setDateLastEmail(Core::getCurrentDate());
 			$userDao->updateObject($user);
-			Request::redirectUrl($redirectUrl);
+			$request->redirectUrl($redirectUrl);
 		} else {
-			$email->displayEditForm(Request::url(null, null, 'email'), array('redirectUrl' => Request::getUserVar('redirectUrl')), null, array('disableSkipButton' => true));
+			$email->displayEditForm($request->url(null, null, 'email'), array('redirectUrl' => $request->getUserVar('redirectUrl')), null, array('disableSkipButton' => true));
 		}
 	}
 }

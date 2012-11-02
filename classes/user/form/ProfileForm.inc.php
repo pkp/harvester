@@ -12,32 +12,30 @@
  * @brief Form to edit user profile.
  */
 
-
-
 import('lib.pkp.classes.form.Form');
 
 class ProfileForm extends Form {
-
-	/** @var $user object */
+	/** @var $user User */
 	var $user;
+
+	/** @var $site Site */
+	var $site;
 
 	/**
 	 * Constructor.
 	 */
-	function ProfileForm() {
+	function ProfileForm($user, $site) {
 		parent::Form('user/profile.tpl');
 
-		$user =& Request::getUser();
 		$this->user =& $user;
-
-		$site =& Request::getSite();
+		$this->site =& $site;
 
 		// Validation checks for this form
 		$this->addCheck(new FormValidator($this, 'firstName', 'required', 'user.profile.form.firstNameRequired'));
 		$this->addCheck(new FormValidator($this, 'lastName', 'required', 'user.profile.form.lastNameRequired'));
 		$this->addCheck(new FormValidatorUrl($this, 'userUrl', 'optional', 'user.profile.form.urlInvalid'));
 		$this->addCheck(new FormValidatorEmail($this, 'email', 'required', 'user.profile.form.emailRequired'));
-		$this->addCheck(new FormValidatorCustom($this, 'email', 'required', 'user.register.form.emailExists', array(DAORegistry::getDAO('UserDAO'), 'userExistsByEmail'), array($user->getId(), true), true));
+		$this->addCheck(new FormValidatorCustom($this, 'email', 'required', 'user.register.form.emailExists', array(DAORegistry::getDAO('UserDAO'), 'userExistsByEmail'), array($this->user->getId(), true), true));
 		$this->addCheck(new FormValidatorPost($this));
 	}
 
@@ -45,14 +43,13 @@ class ProfileForm extends Form {
 	 * Deletes a profile image.
 	 */
 	function deleteProfileImage() {
-		$user =& Request::getUser();
-		$profileImage = $user->getSetting('profileImage');
+		$profileImage = $this->user->getSetting('profileImage');
 		if (!$profileImage) return false;
 
 		import('classes.file.PublicFileManager');
 		$fileManager = new PublicFileManager();
 		if ($fileManager->removeSiteFile($profileImage['uploadName'])) {
-			return $user->updateSetting('profileImage', null);
+			return $this->user->updateSetting('profileImage', null);
 		} else {
 			return false;
 		}
@@ -62,13 +59,11 @@ class ProfileForm extends Form {
 		import('classes.file.PublicFileManager');
 		$fileManager = new PublicFileManager();
 
-		$user =& $this->user;
-
 		$type = $fileManager->getUploadedFileType('profileImage');
 		$extension = $fileManager->getImageExtension($type);
 		if (!$extension) return false;
 
-		$uploadName = 'profileImage-' . (int) $user->getId() . $extension;
+		$uploadName = 'profileImage-' . (int) $this->user->getId() . $extension;
 		if (!$fileManager->uploadSiteFile('profileImage', $uploadName)) return false;
 
 		$filePath = $fileManager->getSiteFilesPath();
@@ -76,7 +71,7 @@ class ProfileForm extends Form {
 
 		if ($width > 150 || $height > 150 || $width <= 0 || $height <= 0) {
 			$userSetting = null;
-			$user->updateSetting('profileImage', $userSetting);
+			$this->user->updateSetting('profileImage', $userSetting);
 			$fileManager->removeSiteFile($filePath);
 			return false;
 		}
@@ -89,7 +84,7 @@ class ProfileForm extends Form {
 			'dateUploaded' => Core::getCurrentDate()
 		);
 
-		$user->updateSetting('profileImage', $userSetting);
+		$this->user->updateSetting('profileImage', $userSetting);
 		return true;
 	}
 
@@ -97,13 +92,10 @@ class ProfileForm extends Form {
 	 * Display the form.
 	 */
 	function display() {
-		$user =& Request::getUser();
-
 		$templateMgr =& TemplateManager::getManager();
-		$templateMgr->assign('username', $user->getUsername());
+		$templateMgr->assign('username', $this->user->getUsername());
 
-		$site =& Request::getSite();
-		$templateMgr->assign('availableLocales', $site->getSupportedLocaleNames());
+		$templateMgr->assign('availableLocales', $this->site->getSupportedLocaleNames());
 
 		$roleDao =& DAORegistry::getDAO('RoleDAO');
 		$userSettingsDao =& DAORegistry::getDAO('UserSettingsDAO');
@@ -116,7 +108,7 @@ class ProfileForm extends Form {
 
 		$templateMgr->assign_by_ref('countries', $countries);
 
-		$templateMgr->assign('profileImage', $user->getSetting('profileImage'));
+		$templateMgr->assign('profileImage', $this->user->getSetting('profileImage'));
 
 		parent::display();
 	}
@@ -130,8 +122,7 @@ class ProfileForm extends Form {
 	 * Initialize form data from current settings.
 	 */
 	function initData() {
-		$user =& Request::getUser();
-
+		$user =& $this->user;
 		$this->_data = array(
 			'salutation' => $user->getSalutation(),
 			'firstName' => $user->getFirstName(),
@@ -189,7 +180,7 @@ class ProfileForm extends Form {
 	 * Save profile settings.
 	 */
 	function execute() {
-		$user =& Request::getUser();
+		$user =& $this->_user;
 
 		$user->setSalutation($this->getData('salutation'));
 		$user->setFirstName($this->getData('firstName'));
@@ -208,8 +199,7 @@ class ProfileForm extends Form {
 		$user->setBiography($this->getData('biography'), null); // Localized
 		$user->setInterests($this->getData('interests'), null); // Localized
 
-		$site =& Request::getSite();
-		$availableLocales = $site->getSupportedLocales();
+		$availableLocales = $this->site->getSupportedLocales();
 
 		$locales = array();
 		foreach ($this->getData('userLocales') as $locale) {

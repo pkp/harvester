@@ -18,11 +18,11 @@
 import('classes.handler.Handler');
 
 class IndexHandler extends Handler {
-	function index($args) {
+	function index($args, &$request) {
 		$this->setupTemplate();
 		$this->validate();
 		$templateMgr =& TemplateManager::getManager();
-		$site =& Request::getSite();
+		$site =& $request->getSite();
 
 		$templateMgr->assign('intro', $site->getLocalizedIntro());
 		$templateMgr->assign('title', $site->getLocalizedTitle());
@@ -42,26 +42,26 @@ class IndexHandler extends Handler {
 	 * Change the locale for the current user.
 	 * @param $args array first parameter is the new locale
 	 */
-	function setLocale($args) {
+	function setLocale($args, &$request) {
 		$setLocale = isset($args[0]) ? $args[0] : null;
 
-		$site =& Request::getSite();
+		$site =& $request->getSite();
 
 		if (AppLocale::isLocaleValid($setLocale) && in_array($setLocale, $site->getSupportedLocales())) {
-			$session =& Request::getSession();
+			$session =& $request->getSession();
 			$session->setSessionVar('currentLocale', $setLocale);
 		}
 
 		if(isset($_SERVER['HTTP_REFERER'])) {
-			Request::redirectUrl($_SERVER['HTTP_REFERER']);
+			$request->redirectUrl($_SERVER['HTTP_REFERER']);
 		}
 
-		$source = Request::getUserVar('source');
+		$source = $request->getUserVar('source');
 		if (isset($source) && !empty($source)) {
-			Request::redirectUrl(Request::getProtocol() . '://' . Request::getServerHost() . $source, false);
+			$request->redirectUrl($request->getProtocol() . '://' . $request->getServerHost() . $source, false);
 		}
 
-		Request::redirect('index');		
+		$request->redirect('index');		
 	}
 }
 

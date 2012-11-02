@@ -20,9 +20,9 @@ class RegistrationHandler extends UserHandler {
 	/**
 	 * Display registration form for new users.
 	 */
-	function register() {
-		$this->validate();
-		$this->setupTemplate(true);
+	function register($args, &$request) {
+		$this->validate($request);
+		$this->setupTemplate($request, true);
 
 		import('classes.user.form.RegistrationForm');
 
@@ -38,8 +38,8 @@ class RegistrationHandler extends UserHandler {
 	/**
 	 * Validate user registration information and register new user.
 	 */
-	function registerUser() {
-		$this->validate();
+	function registerUser($args, &$request) {
+		$this->validate($request);
 		import('classes.user.form.RegistrationForm');
 
 		$regForm = new RegistrationForm();
@@ -50,7 +50,7 @@ class RegistrationHandler extends UserHandler {
 			if (Config::getVar('email', 'require_validation')) {
 				// Send them home; they need to deal with the
 				// registration email.
-				Request::redirect(null, 'index');
+				$request->redirect(null, 'index');
 			}
 
 			$reason = null;
@@ -58,22 +58,20 @@ class RegistrationHandler extends UserHandler {
 			Validation::login($regForm->getData('username'), $regForm->getData('password'), $reason);
 
 			if ($reason !== null) {
-				$this->setupTemplate(true);
+				$this->setupTemplate($request, true);
 				$templateMgr =& TemplateManager::getManager();
 				$templateMgr->assign('pageTitle', 'user.login');
 				$templateMgr->assign('errorMsg', $reason==''?'user.login.accountDisabled':'user.login.accountDisabledWithReason');
 				$templateMgr->assign('errorParams', array('reason' => $reason));
-				$templateMgr->assign('backLink', Request::url('login'));
+				$templateMgr->assign('backLink', $request->url('login'));
 				$templateMgr->assign('backLinkLabel', 'user.login');
 				return $templateMgr->display('common/error.tpl');
 			}
-			if($source = Request::getUserVar('source'))
-				Request::redirectUrl($source);
-
-			else Request::redirect('login');
-
+			if($source = $request->getUserVar('source'))
+				$request->redirectUrl($source);
+			else $request->redirect('login');
 		} else {
-			$this->setupTemplate(true);
+			$this->setupTemplate($request, true);
 			$regForm->display();
 		}
 	}
@@ -81,12 +79,12 @@ class RegistrationHandler extends UserHandler {
 	/**
 	 * Show error message if user registration is not allowed.
 	 */
-	function registrationDisabled() {
-		$this->setupTemplate(true);
+	function registrationDisabled($args, &$request) {
+		$this->setupTemplate($request, true);
 		$templateMgr =& TemplateManager::getManager();
 		$templateMgr->assign('pageTitle', 'user.register');
 		$templateMgr->assign('errorMsg', 'user.register.registrationDisabled');
-		$templateMgr->assign('backLink', Request::url('login'));
+		$templateMgr->assign('backLink', $request->url('login'));
 		$templateMgr->assign('backLinkLabel', 'user.login');
 		$templateMgr->display('common/error.tpl');
 	}
@@ -95,13 +93,13 @@ class RegistrationHandler extends UserHandler {
 	 * Check credentials and activate a new user
 	 * @author Marc Bria <marc.bria@uab.es>
 	 */
-	function activateUser($args) {
+	function activateUser($args, &$request) {
 		$username = array_shift($args);
 		$accessKeyCode = array_shift($args);
 
 		$userDao =& DAORegistry::getDAO('UserDAO');
 		$user =& $userDao->getByUsername($username);
-		if (!$user) Request::redirect(null, 'login');
+		if (!$user) $request->redirect(null, 'login');
 
 		// Checks user & token
 		import('lib.pkp.classes.security.AccessKeyManager');
@@ -124,16 +122,16 @@ class RegistrationHandler extends UserHandler {
 			$templateMgr->assign('message', 'user.login.activated');
 			return $templateMgr->display('common/message.tpl');
 		}
-		Request::redirect(null, 'login');
+		$request->redirect(null, 'login');
 	}
 
 	/**
 	 * Validation check.
 	 * Checks if site allows user registration.
 	 */	
-	function validate() {
+	function validate($request) {
 		parent::validate();
-		$site =& Request::getSite();
+		$site =& $request->getSite();
 		if (!$site->getSetting('enableSubmit')) {
 			// Users cannot register themselves
 			$this->registrationDisabled();

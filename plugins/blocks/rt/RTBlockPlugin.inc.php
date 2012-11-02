@@ -46,7 +46,7 @@ class RTBlockPlugin extends BlockPlugin {
 	 * @param $request PKPRequest
 	 * @return String
 	 */
-	function getContents(&$templateMgr, &$request) {
+	function getContents(&$templateMgr, $request = null) {
 		if ($request->getRequestedPage() . '/' . $request->getRequestedOp() !== 'record/view') return '';
 		return parent::getContents($templateMgr, $request);
 	}

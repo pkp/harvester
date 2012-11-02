@@ -21,14 +21,16 @@ class AboutHandler extends Handler {
 
 	/**
 	 * Display about index page.
+	 * @param $args array
+	 * @param $request PKPRequest
 	 */
-	function index() {
+	function index($args, &$request) {
 		$this->setupTemplate();
 		$this->validate();
 
 		$templateMgr =& TemplateManager::getManager();
 
-		$site =& Request::getSite();
+		$site =& $request->getSite();
 		$templateMgr->assign('about', $site->getLocalizedSetting('about'));
 
 		$templateMgr->display('about/index.tpl');
@@ -49,13 +51,15 @@ class AboutHandler extends Handler {
 
 	/**
 	 * Display contact page.
+	 * @param $args
+	 * @param $request
 	 */
-	function contact() {
+	function contact($args, &$request) {
 		$this->validate();
 
 		$this->setupTemplate(true);
 
-		$site =& Request::getSite();
+		$site =& $request->getSite();
 
 		$templateMgr =& TemplateManager::getManager();
 		$templateMgr->display('about/contact.tpl');
