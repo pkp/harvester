@@ -231,7 +231,7 @@ class OAIDAO extends DAO {
 	 * @param $row array
 	 * @return OAIRecord
 	 */
-	function &_returnRecordFromRow(&$row) {
+	function &_returnRecordFromRow($row) {
 		$oaiRecord = new OAIRecord();
 
 		$record =& $this->recordDao->_returnRecordFromRow($row);
@@ -253,7 +253,7 @@ class OAIDAO extends DAO {
 	 * @param $row array
 	 * @return OAIIdentifier
 	 */
-	function &_returnIdentifierFromRow(&$row) {
+	function &_returnIdentifierFromRow($row) {
 		$oaiRecord = new OAIRecord();
 
 		$oaiRecord->identifier = $this->oai->recordIdToIdentifier($row['record_id']);

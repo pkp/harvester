@@ -130,7 +130,7 @@ class FieldDAO extends DAO {
 	 * @param $row array
 	 * @return Field
 	 */
-	function &_returnFieldFromRow(&$row) {
+	function &_returnFieldFromRow($row) {
 		$field = new Field();
 		$field->setFieldId($row['raw_field_id']);
 		$field->setSchemaId($row['schema_plugin_id']);

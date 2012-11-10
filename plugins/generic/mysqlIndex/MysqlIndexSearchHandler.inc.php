@@ -37,18 +37,18 @@ class MysqlIndexSearchHandler extends Handler {
 	/**
 	 * Display site search page.
 	 */
-	function index() {
+	function index($args, &$request) {
 		$this->validate();
-		list($crosswalks, $fields, $archives) = $this->setupTemplate();
+		list($crosswalks, $fields, $archives) = $this->setupTemplate($request);
 
-		$templateMgr =& TemplateManager::getManager();
+		$templateMgr =& TemplateManager::getManager($request);
 
 		$archiveDao =& DAORegistry::getDAO('ArchiveDAO');
 		$templateMgr->assign('archives', $archiveDao->getArchives());
 
 		// Populate the select options for fields and crosswalks
 		$recordDao =& DAORegistry::getDAO('RecordDAO');
-		$archiveIds = Request::getUserVar('archiveIds');
+		$archiveIds = $request->getUserVar('archiveIds');
 		if (empty($archiveIds)) $archiveIds = null;
 		elseif (!is_array($archiveIds)) $archiveIds = array($archiveIds);
 
@@ -59,15 +59,15 @@ class MysqlIndexSearchHandler extends Handler {
 	/**
 	 * Display search results.
 	 */
-	function results($args) {
+	function results($args, &$request) {
 		$this->validate();
-		list($crosswalks, $fields, $archives) = $this->setupTemplate();
+		list($crosswalks, $fields, $archives) = $this->setupTemplate($request);
 
 		$plugin =& $this->getPlugin();
 		$plugin->import('Search');
 		$rangeInfo = PKPHandler::getRangeInfo('search');
 
-		$query = Request::getUserVar('query');
+		$query = $request->getUserVar('query');
 		$forwardParams = array();
 
 		$keywords = array(
@@ -90,18 +90,18 @@ class MysqlIndexSearchHandler extends Handler {
 				$dateFromName = "$varName-from";
 				$dateToName = "$varName-to";
 
-				$dateFrom = Request::getUserDateVar($dateFromName, 1, 1);
-				$dateTo = Request::getUserDateVar($dateToName, 32, 12, null, 23, 59, 59);
+				$dateFrom = $request->getUserDateVar($dateFromName, 1, 1);
+				$dateTo = $request->getUserDateVar($dateToName, 32, 12, null, 23, 59, 59);
 				$dates['field'][$field->getFieldId()] = array($dateFrom, $dateTo);
 				foreach (array('Month', 'Day', 'Year') as $datePart) {
-					$forwardParams[$dateFromName . $datePart] = Request::getUserVar($dateFromName . $datePart);
-					$forwardParams[$dateToName . $datePart] = Request::getUserVar($dateToName . $datePart);
+					$forwardParams[$dateFromName . $datePart] = $request->getUserVar($dateFromName . $datePart);
+					$forwardParams[$dateToName . $datePart] = $request->getUserVar($dateToName . $datePart);
 				}
 				break;
 			case FIELD_TYPE_STRING:
 			case FIELD_TYPE_SELECT:
 				$varName = 'field-' . $field->getFieldId();
-				$value = Request::getUserVar($varName);
+				$value = $request->getUserVar($varName);
 				if (!empty($value)) {
 					$forwardParams[$varName] = $value;
 					if (is_array($value)) $value = '"' . implode('" OR "', $value) . '"';
@@ -116,19 +116,19 @@ class MysqlIndexSearchHandler extends Handler {
 				$dateFromName = "$varName-from";
 				$dateToName = "$varName-to";
 
-				$dateFrom = Request::getUserDateVar($dateFromName, 1, 1);
-				$dateTo = Request::getUserDateVar($dateToName, 32, 12, null, 23, 59, 59);
+				$dateFrom = $request->getUserDateVar($dateFromName, 1, 1);
+				$dateTo = $request->getUserDateVar($dateToName, 32, 12, null, 23, 59, 59);
 				$dates['crosswalk'][$crosswalk->getCrosswalkId()] = array($dateFrom, $dateTo);
 				foreach (array('Month', 'Day', 'Year') as $datePart) {
-					$forwardParams[$dateFromName . $datePart] = Request::getUserVar($dateFromName . $datePart);
-					$forwardParams[$dateToName . $datePart] = Request::getUserVar($dateToName . $datePart);
+					$forwardParams[$dateFromName . $datePart] = $request->getUserVar($dateFromName . $datePart);
+					$forwardParams[$dateToName . $datePart] = $request->getUserVar($dateToName . $datePart);
 				}
 				break;
 			case FIELD_TYPE_SELECT:
 			case FIELD_TYPE_STRING:
 			default:
 				$varName = 'crosswalk-' . $crosswalk->getCrosswalkId();
-				$value = Request::getUserVar($varName);
+				$value = $request->getUserVar($varName);
 				if (!empty($value)) {
 					$forwardParams[$varName] = $value;
 					if (is_array($value)) $value = '"' . implode('" OR "', $value) . '"';
@@ -143,11 +143,11 @@ class MysqlIndexSearchHandler extends Handler {
 		}
 		$results =& Search::retrieveResults($keywords, $dates, $archiveIds, $rangeInfo);
 
-		$templateMgr =& TemplateManager::getManager();
+		$templateMgr =& TemplateManager::getManager($request);
 
 		// Give the results page access to the search parameters
-		$templateMgr->assign('isAdvanced', Request::getUserVar('isAdvanced'));
-		$templateMgr->assign('importance', Request::getUserVar('importance')); // Field importance
+		$templateMgr->assign('isAdvanced', $request->getUserVar('isAdvanced'));
+		$templateMgr->assign('importance', $request->getUserVar('importance')); // Field importance
 
 		foreach ($forwardParams as $key => $value) if ($value == '') unset($forwardParams[$key]);
 		$templateMgr->assign('forwardParams', $forwardParams); // Field importance
@@ -160,14 +160,14 @@ class MysqlIndexSearchHandler extends Handler {
 	/**
 	 * Display search results from a URL-based search.
 	 */
-	function byUrl($args) {
+	function byUrl($args, &$request) {
 		$this->validate();
-		list($crosswalks, $fields, $archives) = $this->setupTemplate();
+		list($crosswalks, $fields, $archives) = $this->setupTemplate($request);
 		$plugin =& $this->getPlugin();
 		$plugin->import('Search');
 		$rangeInfo = PKPHandler::getRangeInfo('search');
 
-		$query = Request::getUserVar('query');
+		$query = $request->getUserVar('query');
 		$forwardParams = array();
 
 		$keywords = array(
@@ -190,17 +190,17 @@ class MysqlIndexSearchHandler extends Handler {
 				$dateFromName = "$varName-from";
 				$dateToName = "$varName-to";
 
-				$dateFrom = Request::getUserVar($dateFromName);
-				$dateTo = Request::getUserVar($dateToName);
+				$dateFrom = $request->getUserVar($dateFromName);
+				$dateTo = $request->getUserVar($dateToName);
 				$dates['field'][$field->getFieldId()] = array($dateFrom, $dateTo);
 				foreach (array('Month', 'Day', 'Year') as $datePart) {
-					$forwardParams[$dateFromName . $datePart] = Request::getUserVar($dateFromName . $datePart);
-					$forwardParams[$dateToName . $datePart] = Request::getUserVar($dateToName . $datePart);
+					$forwardParams[$dateFromName . $datePart] = $request->getUserVar($dateFromName . $datePart);
+					$forwardParams[$dateToName . $datePart] = $request->getUserVar($dateToName . $datePart);
 				}
 				break;
 			case FIELD_TYPE_STRING:
 			case FIELD_TYPE_SELECT:
-				$value = Request::getUserVar($field->getName());
+				$value = $request->getUserVar($field->getName());
 				if (!empty($value)) {
 					$forwardParams[$field->getName()] = $value;
 					if (is_array($value)) $value = '"' . implode('" OR "', $value) . '"';
@@ -215,17 +215,17 @@ class MysqlIndexSearchHandler extends Handler {
 				$dateFromName = "$varName-from";
 				$dateToName = "$varName-to";
 
-				$dateFrom = Request::getUserVar($dateFromName);
-				$dateTo = Request::getUserVar($dateToName);
+				$dateFrom = $request->getUserVar($dateFromName);
+				$dateTo = $request->getUserVar($dateToName);
 				$dates['crosswalk'][$crosswalk->getCrosswalkId()] = array($dateFrom, $dateTo);
 				foreach (array('Month', 'Day', 'Year') as $datePart) {
-					$forwardParams[$dateFromName . $datePart] = Request::getUserVar($dateFromName . $datePart);
-					$forwardParams[$dateToName . $datePart] = Request::getUserVar($dateToName . $datePart);
+					$forwardParams[$dateFromName . $datePart] = $request->getUserVar($dateFromName . $datePart);
+					$forwardParams[$dateToName . $datePart] = $request->getUserVar($dateToName . $datePart);
 				}
 				break;
 			case FIELD_TYPE_SELECT:
 			case FIELD_TYPE_STRING:
-				$value = Request::getUserVar($crosswalk->getPublicCrosswalkId());
+				$value = $request->getUserVar($crosswalk->getPublicCrosswalkId());
 				if (!empty($value)) {
 					$forwardParams[$crosswalk->getPublicCrosswalkId()] = $value;
 					if (is_array($value)) $value = '"' . implode('" OR "', $value) . '"';
@@ -241,11 +241,11 @@ class MysqlIndexSearchHandler extends Handler {
 
 		$results =& Search::retrieveResults($keywords, $dates, $archiveIds, $rangeInfo);
 
-		$templateMgr =& TemplateManager::getManager();
+		$templateMgr =& TemplateManager::getManager($request);
 
 		// Give the results page access to the search parameters
-		$templateMgr->assign('isAdvanced', Request::getUserVar('isAdvanced'));
-		$templateMgr->assign('importance', Request::getUserVar('importance')); // Field importance
+		$templateMgr->assign('isAdvanced', $request->getUserVar('isAdvanced'));
+		$templateMgr->assign('importance', $request->getUserVar('importance')); // Field importance
 
 		foreach ($forwardParams as $key => $value) if ($value == '') unset($forwardParams[$key]);
 		$templateMgr->assign('forwardParams', $forwardParams);
@@ -257,24 +257,25 @@ class MysqlIndexSearchHandler extends Handler {
 
 	/**
 	 * Setup common template variables.
+	 * @param $request PKPRequest
 	 * @param $subclass boolean set to true if caller is below this handler in the hierarchy
 	 */
-	function setupTemplate($subclass = false) {
-		parent::setupTemplate();
-		$templateMgr =& TemplateManager::getManager();
+	function setupTemplate($request, $subclass = false) {
+		parent::setupTemplate($request);
+		$templateMgr =& TemplateManager::getManager($request);
 		if ($subclass) {
 			$templateMgr->assign('pageHierarchy',
-				array(array(Request::url('search'), 'navigation.search'))
+				array(array($request->url('search'), 'navigation.search'))
 			);
 		}
 
 		// Assign prior values, if supplied, to form fields
-		$templateMgr->assign('query', Request::getUserVar('query'));
+		$templateMgr->assign('query', $request->getUserVar('query'));
 
 		// Determine the list of schemas that must be supported by the search form
-		$publicArchiveIds = Request::getUserVar('archive');
+		$publicArchiveIds = $request->getUserVar('archive');
 		if (!is_array($publicArchiveIds) && !empty($publicArchiveIds)) $publicArchiveIds = array($publicArchiveIds);
-		$archiveIds = Request::getUserVar('archiveIds');
+		$archiveIds = $request->getUserVar('archiveIds');
 		$archiveDao =& DAORegistry::getDAO('ArchiveDAO');
 		$schemaList = array();
 		$archives = array();
@@ -328,18 +329,18 @@ class MysqlIndexSearchHandler extends Handler {
 					$dateFromName = "$varName-from";
 					$dateToName = "$varName-to";
 
-					$dateFrom = Request::getUserDateVar($dateFromName, 1, 1);
-					if (empty($dateFrom)) $dateFrom = Request::getUserVar($dateFromName);
+					$dateFrom = $request->getUserDateVar($dateFromName, 1, 1);
+					if (empty($dateFrom)) $dateFrom = $request->getUserVar($dateFromName);
 					$templateMgr->assign($dateFromName, $dateFrom);
 
-					$dateTo = Request::getUserDateVar($dateToName, 32, 12, null, 23, 59, 59);
-					if (empty($dateTo)) $dateTo = Request::getUserVar($dateToName);
+					$dateTo = $request->getUserDateVar($dateToName, 32, 12, null, 23, 59, 59);
+					if (empty($dateTo)) $dateTo = $request->getUserVar($dateToName);
 					$templateMgr->assign($dateToName, $dateTo);
 					break;
 				case FIELD_TYPE_SELECT:
 				case FIELD_TYPE_STRING:
 					$varName = 'field-' . $field->getFieldId();
-					$templateMgr->assign($varName, Request::getUserVar($varName));
+					$templateMgr->assign($varName, $request->getUserVar($varName));
 					break;
 			}
 			$templateMgr->assign_by_ref('fields', $fields);
@@ -356,19 +357,19 @@ class MysqlIndexSearchHandler extends Handler {
 					$dateFromName = "$varName-from";
 					$dateToName = "$varName-to";
 
-					$dateFrom = Request::getUserDateVar($dateFromName, 1, 1);
-					if (empty($dateFrom)) $dateFrom = Request::getUserVar($dateFromName);
+					$dateFrom = $request->getUserDateVar($dateFromName, 1, 1);
+					if (empty($dateFrom)) $dateFrom = $request->getUserVar($dateFromName);
 					$templateMgr->assign($dateFromName, $dateFrom);
 
-					$dateTo = Request::getUserDateVar($dateToName, 32, 12, null, 23, 59, 59);
-					if (empty($dateTo)) $dateTo = Request::getUserVar($dateToName);
+					$dateTo = $request->getUserDateVar($dateToName, 32, 12, null, 23, 59, 59);
+					if (empty($dateTo)) $dateTo = $request->getUserVar($dateToName);
 					$templateMgr->assign($dateToName, $dateTo);
 					break;
 				case FIELD_TYPE_SELECT:
 				case FIELD_TYPE_STRING:
 				default:
 					$varName = 'crosswalk-' . $crosswalk->getCrosswalkId();
-					$templateMgr->assign($varName, Request::getUserVar($varName));
+					$templateMgr->assign($varName, $request->getUserVar($varName));
 			}
 			$templateMgr->assign_by_ref('crosswalks', $crosswalks);
 			$fields = null; // Won't be using fields
@@ -377,7 +378,7 @@ class MysqlIndexSearchHandler extends Handler {
 			$crosswalks = null;
 		}
 
-		$templateMgr->assign('archiveIds', Request::getUserVar('archiveIds'));
+		$templateMgr->assign('archiveIds', $request->getUserVar('archiveIds'));
 
 		return array($crosswalks, $fields, $archives);
 	}

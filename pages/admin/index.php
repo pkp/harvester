@@ -99,10 +99,6 @@ switch ($op) {
 		define('HANDLER_CLASS', 'PluginHandler');
 		import('pages.admin.PluginHandler');
 		break;
-	case 'managePlugins':
-		define('HANDLER_CLASS', 'PluginManagementHandler');
-		import('pages.admin.PluginManagementHandler');
-		break;
 	case 'index':
 	case 'layout':
 	case 'saveLayout':

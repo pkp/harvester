@@ -13,7 +13,6 @@
  *
  */
 
-
 import('pages.admin.AdminHandler');
 
 class AdminSettingsHandler extends AdminHandler {
@@ -21,9 +20,9 @@ class AdminSettingsHandler extends AdminHandler {
 	/**
 	 * Display form to modify site settings.
 	 */
-	function settings() {
+	function settings($args, &$request) {
 		$this->validate();
-		$this->setupTemplate(true);
+		$this->setupTemplate($request, true);
 
 		import('classes.admin.form.SiteSettingsForm');
 
@@ -39,7 +38,7 @@ class AdminSettingsHandler extends AdminHandler {
 	 */
 	function saveSettings($args, &$request) {
 		$this->validate();
-		$this->setupTemplate(true);
+		$this->setupTemplate($request, true);
 
 		import('classes.admin.form.SiteSettingsForm');
 

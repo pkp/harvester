@@ -147,7 +147,7 @@ class RecordDAO extends DAO {
 	 * @param $row array
 	 * @return Record
 	 */
-	function &_returnRecordFromRow(&$row) {
+	function &_returnRecordFromRow($row) {
 		$record = new Record();
 		$record->setRecordId($row['record_id']);
 		$record->setArchiveId($row['archive_id']);
@@ -273,7 +273,7 @@ class RecordDAO extends DAO {
 
 		$count = 0;
 		if ($result->RecordCount() != 0) {
-			$row =& $result->GetRowAssoc(false);
+			$row = $result->GetRowAssoc(false);
 			$count = $row['count'];
 		}
 		$result->Close();

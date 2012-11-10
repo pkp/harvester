@@ -20,16 +20,16 @@ class AdminSortOrdersHandler extends AdminHandler {
 	/**
 	 * Display a list of the sort orders configured on the site.
 	 */
-	function sortOrders() {
+	function sortOrders($args, &$request) {
 		$this->validate();
-		$this->setupTemplate();
+		$this->setupTemplate($request);
 
 		$rangeInfo = PKPHandler::getRangeInfo('sortOrders');
 
 		$sortOrderDao =& DAORegistry::getDAO('SortOrderDAO');
 		$sortOrders =& $sortOrderDao->getSortOrders($rangeInfo);
 
-		$templateMgr =& TemplateManager::getManager();
+		$templateMgr =& TemplateManager::getManager($request);
 		$templateMgr->assign_by_ref('sortOrders', $sortOrders);
 		if ($rangeInfo) $templateMgr->assign('sortOrderPage', $rangeInfo->getPage());
 		$templateMgr->display('admin/sortOrders.tpl');
@@ -38,17 +38,17 @@ class AdminSortOrdersHandler extends AdminHandler {
 	/**
 	 * Display form to create a new sort order.
 	 */
-	function createSortOrder() {
-		$this->editSortOrder();
+	function createSortOrder($args, &$request) {
+		$this->editSortOrder($args, $request);
 	}
 
 	/**
 	 * Display form to create/edit a sort order.
 	 * @param $args array optional, if set the first parameter is the ID of the sort order to edit
 	 */
-	function editSortOrder($args = array()) {
+	function editSortOrder($args, &$request) {
 		$this->validate();
-		$this->setupTemplate(true);
+		$this->setupTemplate($request, true);
 
 		import('classes.admin.form.SortOrderForm');
 
@@ -60,13 +60,13 @@ class AdminSortOrdersHandler extends AdminHandler {
 	/**
 	 * Save changes to a sort order's settings.
 	 */
-	function updateSortOrder() {
+	function updateSortOrder($args, &$request) {
 		$this->validate();
-		$this->setupTemplate(true);
+		$this->setupTemplate($request, true);
 		
 		import('classes.admin.form.SortOrderForm');
 
-		$sortOrderId = (int) Request::getUserVar('sortOrderId');
+		$sortOrderId = (int) $request->getUserVar('sortOrderId');
 
 		$sortOrderForm = new SortOrderForm($sortOrderId);
 		$sortOrderForm->initData();
@@ -74,9 +74,9 @@ class AdminSortOrdersHandler extends AdminHandler {
 
 		if ($sortOrderForm->validate()) {
 			$sortOrderForm->execute();
-			Request::redirect('admin', 'sortOrders');
+			$request->redirect('admin', 'sortOrders');
 		} else {
-			$this->setupTemplate(true);
+			$this->setupTemplate($request, true);
 			$sortOrderForm->display();
 		}
 	}
@@ -85,7 +85,7 @@ class AdminSortOrdersHandler extends AdminHandler {
 	 * Delete a sort order.
 	 * @param $args array first parameter is the ID of the sort order to delete
 	 */
-	function deleteSortOrder($args) {
+	function deleteSortOrder($args, &$request) {
 		$this->validate();
 
 		$sortOrderDao =& DAORegistry::getDAO('SortOrderDAO');
@@ -99,21 +99,21 @@ class AdminSortOrdersHandler extends AdminHandler {
 			$sortOrderDao->deleteSortOrderById($sortOrderId);
 		}
 
-		Request::redirect('admin', 'sortOrders', null, array('sortOrderPage' => Request::getUserVar('sortOrderPage')));
+		$request->redirect('admin', 'sortOrders', null, array('sortOrderPage' => $request->getUserVar('sortOrderPage')));
 	}
 
 	/**
 	 * Setup common template variables.
 	 * @param $subclass boolean set to true if caller is below this handler in the hierarchy
 	 */
-	function setupTemplate($subclass = false) {
-		parent::setupTemplate();
-		$templateMgr =& TemplateManager::getManager();
+	function setupTemplate($request, $subclass = false) {
+		parent::setupTemplate($request);
+		$templateMgr =& TemplateManager::getManager($request);
 		$pageHierarchy = array(
-			array(Request::url('admin'), 'admin.siteAdmin')
+			array($request->url('admin'), 'admin.siteAdmin')
 		);
 		if ($subclass) {
-			$pageHierarchy[] = array(Request::url('admin', 'sortOrders'), 'admin.sortOrders');
+			$pageHierarchy[] = array($request->url('admin', 'sortOrders'), 'admin.sortOrders');
 		}
 		$templateMgr->assign('pageHierarchy', $pageHierarchy);
 	}

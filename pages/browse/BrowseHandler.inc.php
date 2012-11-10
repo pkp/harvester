@@ -21,9 +21,9 @@ class BrowseHandler extends Handler {
 	/**
 	 * Display record list or archive list.
 	 */
-	function index($args) {
+	function index($args, &$request) {
 		$this->validate();
-		$templateMgr =& TemplateManager::getManager();
+		$templateMgr =& TemplateManager::getManager($request);
 
 		$archiveDao =& DAORegistry::getDAO('ArchiveDAO');
 		$recordDao =& DAORegistry::getDAO('RecordDAO');
@@ -31,12 +31,12 @@ class BrowseHandler extends Handler {
 		$archiveId = array_shift($args);
 		$archive = null;
 		if (($archive =& $archiveDao->getArchive($archiveId)) || $archiveId == 'all') {
-			$this->setupTemplate($archive, true);
+			$this->setupTemplate($request, $archive, true);
 
 			$rangeInfo = PKPHandler::getRangeInfo('records');
 
 			$sortOrderDao =& DAORegistry::getDAO('SortOrderDAO');
-			$sortOrderId = Request::getUserVar('sortOrderId');
+			$sortOrderId = $request->getUserVar('sortOrderId');
 			$sortOrder =& $sortOrderDao->getSortOrder($sortOrderId);
 			if ($sortOrder) {
 				$templateMgr->assign('sortOrderId', $sortOrderId);
@@ -57,7 +57,7 @@ class BrowseHandler extends Handler {
 			$templateMgr->assign_by_ref('archive', $archive);
 			$templateMgr->display('browse/records.tpl');
 		} else {
-			$this->setupTemplate($archive);
+			$this->setupTemplate($request, $archive);
 
 			// List archives for the user to browse.
 			$rangeInfo = PKPHandler::getRangeInfo('archives');
@@ -72,9 +72,9 @@ class BrowseHandler extends Handler {
 	/**
 	 * Display archive info.
 	 */
-	function archiveInfo($args) {
+	function archiveInfo($args, &$request) {
 		$this->validate();
-		$templateMgr =& TemplateManager::getManager();
+		$templateMgr =& TemplateManager::getManager($request);
 
 		$archiveDao =& DAORegistry::getDAO('ArchiveDAO');
 
@@ -82,29 +82,30 @@ class BrowseHandler extends Handler {
 		$archive = null;
 		if (($archive =& $archiveDao->getArchive($archiveId))) {
 			PluginRegistry::loadCategory('harvesters');
-			$this->setupTemplate($archive, true);
+			$this->setupTemplate($request, $archive, true);
 
 			$templateMgr->assign_by_ref('archive', $archive);
 			$templateMgr->display('browse/archiveInfo.tpl');
 		} else {
-			Request::redirect('browse');
+			$request->redirect('browse');
 		}
 	}
 
 	/**
 	 * Setup common template variables.
+	 * @param $request PKPRequest
 	 * @param $archive object optional
 	 * @param $isSubclass boolean optional
 	 */
-	function setupTemplate(&$archive, $isSubclass = null) {
-		parent::setupTemplate();
-		$templateMgr =& TemplateManager::getManager();
+	function setupTemplate($request, &$archive, $isSubclass = null) {
+		parent::setupTemplate($request);
+		$templateMgr =& TemplateManager::getManager($request);
 		$hierarchy = array();
 		if ($isSubclass) {
-			$hierarchy[] = array(Request::url('browse'), 'navigation.browse');
+			$hierarchy[] = array($request->url('browse'), 'navigation.browse');
 		}
 		if ($archive) {
-			$hierarchy[] = array(Request::url('browse', 'index', $archive->getArchiveId()), $archive->getTitle(), true);
+			$hierarchy[] = array($request->url('browse', 'index', $archive->getArchiveId()), $archive->getTitle(), true);
 		}
 		$templateMgr->assign('pageHierarchy', $hierarchy);
 	}

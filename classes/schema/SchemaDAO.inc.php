@@ -109,7 +109,7 @@ class SchemaDAO extends DAO {
 	 * @param $row array
 	 * @return Schema
 	 */
-	function &_returnSchemaFromRow(&$row) {
+	function &_returnSchemaFromRow($row) {
 		$schema = new Schema();
 		$schema->setSchemaId($row['schema_plugin_id']);
 		$schema->setPluginName($row['schema_plugin']);

@@ -25,7 +25,7 @@ class AdminArchiveHandler extends AdminHandler {
 	 */
 	function archives($args, &$request) {
 		$this->validate();
-		$this->setupTemplate();
+		$this->setupTemplate($request);
 
 		$rangeInfo = PKPHandler::getRangeInfo('archives');
 		
@@ -39,7 +39,7 @@ class AdminArchiveHandler extends AdminHandler {
 		$archiveDao =& DAORegistry::getDAO('ArchiveDAO');
 		$archives =& $archiveDao->getArchives(false, $rangeInfo, $sort, $sortDirection);
 
-		$templateMgr =& TemplateManager::getManager();
+		$templateMgr =& TemplateManager::getManager($request);
 		$templateMgr->assign_by_ref('archives', $archives);
 		$templateMgr->assign('harvesters', $plugins);
 		if ($rangeInfo) $templateMgr->assign('archivesPage', $rangeInfo->getPage());
@@ -51,17 +51,17 @@ class AdminArchiveHandler extends AdminHandler {
 	/**
 	 * Display form to create a new archive.
 	 */
-	function createArchive() {
-		$this->editArchive();
+	function createArchive($args, &$request) {
+		$this->editArchive($args, $request);
 	}
 
 	/**
 	 * Display form to create/edit a archive.
 	 * @param $args array optional, if set the first parameter is the ID of the archive to edit
 	 */
-	function editArchive($args = array()) {
+	function editArchive($args, &$request) {
 		$this->validate();
-		$this->setupTemplate(true);
+		$this->setupTemplate($request, true);
 
 		import('classes.admin.form.ArchiveForm');
 
@@ -77,7 +77,7 @@ class AdminArchiveHandler extends AdminHandler {
 	 */
 	function updateArchive($args, &$request) {
 		$this->validate();
-		$this->setupTemplate();
+		$this->setupTemplate($request);
 
 		import('classes.admin.form.ArchiveForm');
 
@@ -106,7 +106,7 @@ class AdminArchiveHandler extends AdminHandler {
 			$notificationManager->createTrivialNotification('notification.notification', 'common.changesSaved');
 			$request->redirect(null, 'archives');
 		} else {
-			$this->setupTemplate(true);
+			$this->setupTemplate($request, true);
 			$archiveForm->display();
 		}
 	}
@@ -140,7 +140,7 @@ class AdminArchiveHandler extends AdminHandler {
 	 */
 	function manage($args, &$request) {
 		$this->validate();
-		$this->setupTemplate(true);
+		$this->setupTemplate($request, true);
 
 		$archiveDao =& DAORegistry::getDAO('ArchiveDAO');
 
@@ -163,7 +163,7 @@ class AdminArchiveHandler extends AdminHandler {
 	 */
 	function updateIndex($args, &$request) {
 		$this->validate();
-		$this->setupTemplate(true);
+		$this->setupTemplate($request, true);
 
 		$archiveDao =& DAORegistry::getDAO('ArchiveDAO');
 
@@ -185,7 +185,7 @@ class AdminArchiveHandler extends AdminHandler {
 
 			if ($plugin->updateIndex($archive, $params)) {
 				$recordDao =& DAORegistry::getDAO('RecordDAO');
-				$templateMgr =& TemplateManager::getManager();
+				$templateMgr =& TemplateManager::getManager($request);
 				$templateMgr->assign('messageTranslated',
 					__('admin.archive.manage.updateIndex.success', array(
 						'recordCount' => $recordDao->getRecordCount($archiveId)
@@ -196,7 +196,7 @@ class AdminArchiveHandler extends AdminHandler {
 				$templateMgr->assign('pageTitle', 'admin.archives.manage.updateIndex');
 				return $templateMgr->display('common/message.tpl');
 			} else {
-				$templateMgr =& TemplateManager::getManager();
+				$templateMgr =& TemplateManager::getManager($request);
 				$templateMgr->assign('errors', array_unique($plugin->getErrors()));
 				$templateMgr->assign('archiveId', $archiveId);
 				return $templateMgr->display('admin/updateFailed.tpl');
@@ -213,7 +213,7 @@ class AdminArchiveHandler extends AdminHandler {
 	 */
 	function flushIndex($args, &$request) {
 		$this->validate();
-		$this->setupTemplate(true);
+		$this->setupTemplate($request, true);
 
 		$archiveDao =& DAORegistry::getDAO('ArchiveDAO');
 
@@ -235,14 +235,14 @@ class AdminArchiveHandler extends AdminHandler {
 	 * Setup common template variables.
 	 * @param $subclass boolean set to true if caller is below this handler in the hierarchy
 	 */
-	function setupTemplate($subclass = false) {
-		parent::setupTemplate();
-		$templateMgr =& TemplateManager::getManager();
+	function setupTemplate($request, $subclass = false) {
+		parent::setupTemplate($request);
+		$templateMgr =& TemplateManager::getManager($request);
 		$pageHierarchy = array(
-			array(Request::url('admin'), 'admin.siteAdmin')
+			array($request->url('admin'), 'admin.siteAdmin')
 		);
 		if ($subclass) {
-			$pageHierarchy[] = array(Request::url('admin', 'archives'), 'admin.archives');
+			$pageHierarchy[] = array($request->url('admin', 'archives'), 'admin.archives');
 		}
 		$templateMgr->assign('pageHierarchy', $pageHierarchy);
 	}

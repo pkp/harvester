@@ -37,10 +37,10 @@ class ZendSearchAdminHandler extends Handler {
 	/**
 	 * Administer the search form.
 	 */
-	function index($args) {
+	function index($args, &$request) {
 		$this->validate();
-		$this->setupTemplate(true);
-		$templateMgr =& TemplateManager::getManager();
+		$this->setupTemplate($request, true);
+		$templateMgr =& TemplateManager::getManager($request);
 		$plugin =& $this->getPlugin();
 
 		$rangeInfo = PKPHandler::getRangeInfo('searchFormElements');
@@ -54,9 +54,9 @@ class ZendSearchAdminHandler extends Handler {
 	/**
 	 * Display the settings form
 	 */
-	function settings() {
+	function settings($args, &$request) {
 		$this->validate();
-		$this->setupTemplate(true);
+		$this->setupTemplate($request, true);
 
 		$plugin =& $this->getPlugin();
 		$plugin->import('ZendSearchSettingsForm');
@@ -73,7 +73,7 @@ class ZendSearchAdminHandler extends Handler {
 	/**
 	 * Save changes to plugin settings.
 	 */
-	function saveSettings() {
+	function saveSettings($args, &$request) {
 		$this->validate();
 
 		$plugin =& $this->getPlugin();
@@ -85,9 +85,9 @@ class ZendSearchAdminHandler extends Handler {
 
 		if ($zendSearchSettingsForm->validate()) {
 			$zendSearchSettingsForm->execute();
-			Request::redirect(null, 'index');
+			$request->redirect(null, 'index');
 		} else {
-			$this->setupTemplate(true);
+			$this->setupTemplate($request, true);
 			$zendSearchSettingsForm->display();
 		}
 	}
@@ -95,17 +95,17 @@ class ZendSearchAdminHandler extends Handler {
 	/**
 	 * Display form to create a new search form element.
 	 */
-	function createSearchFormElement() {
-		$this->editSearchFormElement();
+	function createSearchFormElement($args, &$request) {
+		$this->editSearchFormElement($args, $request);
 	}
 
 	/**
 	 * Display form to create/edit a search form element.
 	 * @param $args array optional, if set the first parameter is the ID of the search form element to edit
 	 */
-	function editSearchFormElement($args = array()) {
+	function editSearchFormElement($args, &$request) {
 		$this->validate();
-		$this->setupTemplate(true);
+		$this->setupTemplate($request, true);
 
 		$plugin =& $this->getPlugin();
 		$plugin->import('SearchFormElementForm');
@@ -122,13 +122,13 @@ class ZendSearchAdminHandler extends Handler {
 	/**
 	 * Save changes to a search form element's settings.
 	 */
-	function updateSearchFormElement() {
+	function updateSearchFormElement($args, &$request) {
 		$this->validate();
 
 		$plugin =& $this->getPlugin();
 		$plugin->import('SearchFormElementForm');
 
-		$searchFormElementId = (int) Request::getUserVar('searchFormElementId');
+		$searchFormElementId = (int) $request->getUserVar('searchFormElementId');
 
 		$searchFormElementForm = new SearchFormElementForm($plugin->getName(), $searchFormElementId);
 		$searchFormElementForm->initData();
@@ -136,9 +136,9 @@ class ZendSearchAdminHandler extends Handler {
 
 		if ($searchFormElementForm->validate()) {
 			$searchFormElementForm->execute();
-			Request::redirect(null, 'index');
+			$request->redirect(null, 'index');
 		} else {
-			$this->setupTemplate(true);
+			$this->setupTemplate($request, true);
 			$searchFormElementForm->display();
 		}
 	}
@@ -147,7 +147,7 @@ class ZendSearchAdminHandler extends Handler {
 	 * Delete a search form element.
 	 * @param $args array first parameter is the ID of the search form element to delete
 	 */
-	function deleteSearchFormElement($args) {
+	function deleteSearchFormElement($args, &$request) {
 		$this->validate();
 
 		$searchFormElementDao =& DAORegistry::getDAO('SearchFormElementDAO');
@@ -161,17 +161,17 @@ class ZendSearchAdminHandler extends Handler {
 			$searchFormElementDao->deleteSearchFormElementById($searchFormElementId);
 		}
 
-		Request::redirect(null, 'index', null, array('searchFormElementPage' => Request::getUserVar('searchFormElementPage')));
+		$request->redirect(null, 'index', null, array('searchFormElementPage' => $request->getUserVar('searchFormElementPage')));
 	}
 
 	/**
 	 * Setup common template variables.
 	 */
-	function setupTemplate() {
-		parent::setupTemplate();
-		$templateMgr =& TemplateManager::getManager();
+	function setupTemplate($request) {
+		parent::setupTemplate($request);
+		$templateMgr =& TemplateManager::getManager($request);
 		$templateMgr->assign('pageHierarchy', array(
-			array(Request::url('admin'), 'admin.settings.administration')
+			array($request->url('admin'), 'admin.settings.administration')
 		));
 	}
 }

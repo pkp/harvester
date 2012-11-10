@@ -18,42 +18,43 @@
 import('classes.handler.Handler');
 
 class RecordHandler extends Handler {
-	function index() {
-		Request::redirect('browse');
+	function index($args, &$request) {
+		$request->redirect('browse');
 	}
 
-	function view($args) {
+	function view($args, &$request) {
 		$this->validate();
 
 		$recordDao =& DAORegistry::getDAO('RecordDAO');
 
 		$recordId = (int) array_shift($args);
 		$record =& $recordDao->getRecord($recordId);
-		if (!$record) Request::redirect('index');
+		if (!$record) $request->redirect('index');
 
 		$archive =& $record->getArchive();
-		if (!$archive || !$archive->getEnabled()) Request::redirect('index');
+		if (!$archive || !$archive->getEnabled()) $request->redirect('index');
 
-		$this->setupTemplate($record, true);
+		$this->setupTemplate($request, $record, true);
 		$record->display();
 	}
 
 	/**
 	 * Setup common template variables.
+	 * @param $request PKPRequest
 	 * @param $record object optional
 	 * @param $subclass boolean set to true if caller is below this handler in the hierarchy
 	 */
-	function setupTemplate(&$record, $subclass = false) {
-		parent::setupTemplate();
-		$templateMgr =& TemplateManager::getManager();
+	function setupTemplate($request, &$record, $subclass = false) {
+		parent::setupTemplate($request);
+		$templateMgr =& TemplateManager::getManager($request);
 		$hierarchy = array();
 		if ($subclass) {
-			$hierarchy[] = array(Request::url('browse'), 'navigation.browse');
+			$hierarchy[] = array($request->url('browse'), 'navigation.browse');
 		}
 		if ($record) {
 			$archiveDao =& DAORegistry::getDAO('ArchiveDAO');
 			$archive =& $archiveDao->getArchive($record->getArchiveId(), false);
-			$hierarchy[] = array(Request::url('browse', 'index', $archive->getArchiveId()), $archive->getTitle(), true);
+			$hierarchy[] = array($request->url('browse', 'index', $archive->getArchiveId()), $archive->getTitle(), true);
 		}
 		$templateMgr->assign('pageHierarchy', $hierarchy);
 		$templateMgr->assign('theseArchiveIds', array($archive->getArchiveId()));

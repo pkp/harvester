@@ -19,7 +19,7 @@ import('classes.rt.harvester2.HarvesterRTAdmin');
 import('pages.rtadmin.RTAdminHandler');
 
 class RTContextHandler extends RTAdminHandler {
-	function createContext($args) {
+	function createContext($args, &$request) {
 		$this->validate();
 
 		$rtDao =& DAORegistry::getDAO('RTDAO');
@@ -36,14 +36,14 @@ class RTContextHandler extends RTAdminHandler {
 		if ($save === 'save') {
 			$contextForm->readInputData();
 			$contextForm->execute();
-			Request::redirect(null, 'contexts', array($archiveId, $versionId));
+			$request->redirect(null, 'contexts', array($archiveId, $versionId));
 		} else {
-			$this->setupTemplate(true, $archiveId, $version);
+			$this->setupTemplate($request, true, $archiveId, $version);
 			$contextForm->display();
 		}
 	}
 
-	function contexts($args) {
+	function contexts($args, &$request) {
 		$this->validate();
 
 		$rtDao =& DAORegistry::getDAO('RTDAO');
@@ -55,9 +55,9 @@ class RTContextHandler extends RTAdminHandler {
 		$version =& $rtDao->getVersion($versionId, $archiveId);
 
 		if ($version) {
-			$this->setupTemplate(true, $archiveId, $version);
+			$this->setupTemplate($request, true, $archiveId, $version);
 
-			$templateMgr =& TemplateManager::getManager();
+			$templateMgr =& TemplateManager::getManager($request);
 
 			$templateMgr->assign('archiveId', $archiveId);
 			$templateMgr->assign_by_ref('version', $version);
@@ -67,10 +67,10 @@ class RTContextHandler extends RTAdminHandler {
 
 			$templateMgr->display('rtadmin/contexts.tpl');
 		}
-		else Request::redirect(null, 'versions');
+		else $request->redirect(null, 'versions');
 	}
 
-	function editContext($args) {
+	function editContext($args, &$request) {
 		$this->validate();
 
 		$rtDao =& DAORegistry::getDAO('RTDAO');
@@ -84,17 +84,15 @@ class RTContextHandler extends RTAdminHandler {
 
 		if (isset($version) && isset($context) && $context->getVersionId() == $version->getVersionId()) {
 			import('classes.rt.harvester2.form.ContextForm');
-			$this->setupTemplate(true, $archiveId, $version, $context);
+			$this->setupTemplate($request, true, $archiveId, $version, $context);
 			$contextForm = new ContextForm($contextId, $versionId, $archiveId);
 			$contextForm->initData();
 			$contextForm->display();
 		}
-		else Request::redirect(null, 'contexts', array($archiveId, $versionId));
-
-
+		else $request->redirect(null, 'contexts', array($archiveId, $versionId));
 	}
 
-	function deleteContext($args) {
+	function deleteContext($args, &$request) {
 		$this->validate();
 
 		$rtDao =& DAORegistry::getDAO('RTDAO');
@@ -110,10 +108,10 @@ class RTContextHandler extends RTAdminHandler {
 			$rtDao->deleteContext($contextId, $versionId);
 		}
 
-		Request::redirect(null, 'contexts', array($archiveId, $versionId));
+		$request->redirect(null, 'contexts', array($archiveId, $versionId));
 	}
 
-	function saveContext($args) {
+	function saveContext($args, &$request) {
 		$this->validate();
 
 		$rtDao =& DAORegistry::getDAO('RTDAO');
@@ -132,10 +130,10 @@ class RTContextHandler extends RTAdminHandler {
 			$contextForm->execute();
 		}
 
-		Request::redirect(null, 'contexts', array($archiveId, $versionId));
+		$request->redirect(null, 'contexts', array($archiveId, $versionId));
 	}
 
-	function moveContext($args) {
+	function moveContext($args, &$request) {
 		$this->validate();
 
 		$rtDao =& DAORegistry::getDAO('RTDAO');
@@ -148,13 +146,13 @@ class RTContextHandler extends RTAdminHandler {
 		$context =& $rtDao->getContext($contextId);
 
 		if (isset($version) && isset($context) && $context->getVersionId() == $version->getVersionId()) {
-			$isDown = Request::getUserVar('dir')=='d';
+			$isDown = $request->getUserVar('dir')=='d';
 			$context->setOrder($context->getOrder()+($isDown?1.5:-1.5));
 			$rtDao->updateContext($context);
 			$rtDao->resequenceContexts($version->getVersionId());
 		}
 
-		Request::redirect(null, 'contexts', array($archiveId, $versionId));
+		$request->redirect(null, 'contexts', array($archiveId, $versionId));
 	}
 }
 

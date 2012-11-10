@@ -21,15 +21,15 @@ class SubmitterHandler extends Handler {
 	/**
 	 * Display a list of the user's archives
 	 */
-	function index() {
+	function index($args, &$request) {
 		$this->validate();
-		$this->setupTemplate();
+		$this->setupTemplate($request);
 
-		$user =& Request::getUser();
+		$user =& $request->getUser();
 		
-		$sort = Request::getUserVar('sort');
+		$sort = $request->getUserVar('sort');
 		$sort = isset($sort) ? $sort : 'title';
-		$sortDirection = Request::getUserVar('sortDirection');
+		$sortDirection = $request->getUserVar('sortDirection');
 
 		$archiveDao =& DAORegistry::getDAO('ArchiveDAO');
 		$archives =& $archiveDao->getArchivesByUserId($user->getId(), null, $sort, $sortDirection);
@@ -48,21 +48,21 @@ class SubmitterHandler extends Handler {
 	/**
 	 * Display add page.
 	 */
-	function createArchive() {
-		$this->editArchive();
+	function createArchive($args, &$request) {
+		$this->editArchive($args, $request);
 	}
 
 	/**
 	 * Display add/edit page.
 	 */
-	function editArchive($args = array()) {
+	function editArchive($args, &$request) {
 		$archiveId = null;
 		if (is_array($args) && !empty($args)) $archiveId = (int) array_shift($args);
 		$this->validate($archiveId);
-		$this->setupTemplate(true);
+		$this->setupTemplate($request, true);
 
-		$site =& Request::getSite();
-		if (!$site->getSetting('enableSubmit')) Request::redirect('index');
+		$site =& $request->getSite();
+		if (!$site->getSetting('enableSubmit')) $request->redirect('index');
 
 		import('classes.admin.form.ArchiveForm');
 
@@ -74,13 +74,13 @@ class SubmitterHandler extends Handler {
 	/**
 	 * Save changes to an archive's settings.
 	 */
-	function updateArchive() {
-		$archiveId = Request::getUserVar('archiveId');
+	function updateArchive($args, &$request) {
+		$archiveId = $request->getUserVar('archiveId');
 		if (empty($archiveId)) $archiveId = null;
 		else $archiveId = (int) $archiveId;
 
 		$this->validate($archiveId);
-		$this->setupTemplate(true);
+		$this->setupTemplate($request, true);
 
 		import('classes.admin.form.ArchiveForm');
 
@@ -90,19 +90,19 @@ class SubmitterHandler extends Handler {
 
 		$dataModified = false;
 
-		if (Request::getUserVar('uploadArchiveImage')) {
+		if ($request->getUserVar('uploadArchiveImage')) {
 			if (!$archiveForm->uploadArchiveImage()) {
 				$archiveForm->addError('archiveImage', __('archive.image.profileImageInvalid'));
 			}
 			$dataModified = true;
-		} else if (Request::getUserVar('deleteArchiveImage')) {
+		} else if ($request->getUserVar('deleteArchiveImage')) {
 			$archiveForm->deleteArchiveImage();
 			$dataModified = true;
 		}
 
 		if (!$dataModified && $archiveForm->validate()) {
 			$archiveForm->execute();
-			Request::redirect('submitter', $archiveId);
+			$request->redirect('submitter', $archiveId);
 
 		} else {
 			$archiveForm->display();
@@ -113,7 +113,7 @@ class SubmitterHandler extends Handler {
 	 * Delete an archive.
 	 * @param $args array first parameter is the ID of the archive to delete
 	 */
-	function deleteArchive($args) {
+	function deleteArchive($args, &$request) {
 		$archiveId = (int) array_shift($args);
 		$this->validate($archiveId);
 
@@ -125,23 +125,23 @@ class SubmitterHandler extends Handler {
 
 		$archiveDao->deleteArchiveById($archiveId);
 
-		Request::redirect('submitter');
+		$request->redirect('submitter');
 	}
 
 	/**
 	 * Perform plugin-specific management functions.
 	 */
-	function plugin($args) {
+	function plugin($args, &$request) {
 		$category = array_shift($args);
 		$plugin = array_shift($args);
 		$verb = array_shift($args);
 
 		$this->validate();
-		$this->setupTemplate(true);
+		$this->setupTemplate($request, true);
 
 		$plugins =& PluginRegistry::loadCategory($category);
 		if (!isset($plugins[$plugin]) || !$plugins[$plugin]->allowSubmitterManagement($verb, $args) || !$plugins[$plugin]->manage($verb, $args)) {
-			Request::redirect(null, 'plugins');
+			$request->redirect(null, 'plugins');
 		}
 	}
 	
@@ -164,14 +164,14 @@ class SubmitterHandler extends Handler {
 	 * Setup common template variables.
 	 * @param $subclass boolean set to true if caller is below this handler in the hierarchy
 	 */
-	function setupTemplate($subclass = false) {
-		parent::setupTemplate();
+	function setupTemplate($request, $subclass = false) {
+		parent::setupTemplate($request);
 		$templateMgr =& TemplateManager::getManager();
 		$pageHierarchy = array(
-			array(Request::url('submitter'), 'user.role.submitter')
+			array($request->url('submitter'), 'user.role.submitter')
 		);
 		if ($subclass) {
-			$pageHierarchy[] = array(Request::url('submitter'), 'admin.archives');
+			$pageHierarchy[] = array($request->url('submitter'), 'admin.archives');
 		}
 		$templateMgr->assign('pageHierarchy', $pageHierarchy);
 	}

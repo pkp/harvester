@@ -19,7 +19,7 @@ import('classes.rt.harvester2.HarvesterRTAdmin');
 import('pages.rtadmin.RTAdminHandler');
 
 class RTSearchHandler extends RTAdminHandler {
-	function createSearch($args) {
+	function createSearch($args, &$request) {
 		$this->validate();
 
 		$rtDao =& DAORegistry::getDAO('RTDAO');
@@ -38,14 +38,14 @@ class RTSearchHandler extends RTAdminHandler {
 		if ($save === 'save') {
 			$searchForm->readInputData();
 			$searchForm->execute();
-			Request::redirect(null, 'searches', array($archiveId, $versionId, $contextId));
+			$request->redirect(null, 'searches', array($archiveId, $versionId, $contextId));
 		} else {
-			$this->setupTemplate(true, $archiveId, $version, $context);
+			$this->setupTemplate($request, true, $archiveId, $version, $context);
 			$searchForm->display();
 		}
 	}
 
-	function searches($args) {
+	function searches($args, &$request) {
 		$this->validate();
 
 		$rtDao =& DAORegistry::getDAO('RTDAO');
@@ -59,9 +59,9 @@ class RTSearchHandler extends RTAdminHandler {
 		$context =& $rtDao->getContext($contextId);
 
 		if ($context && $version && $context->getVersionId() == $version->getVersionId()) {
-			$this->setupTemplate(true, $archiveId, $version, $context);
+			$this->setupTemplate($request, true, $archiveId, $version, $context);
 
-			$templateMgr =& TemplateManager::getManager();
+			$templateMgr =& TemplateManager::getManager($request);
 
 			$templateMgr->assign('archiveId', $archiveId);
 			$templateMgr->assign_by_ref('version', $version);
@@ -71,10 +71,10 @@ class RTSearchHandler extends RTAdminHandler {
 
 			$templateMgr->display('rtadmin/searches.tpl');
 		}
-		else Request::redirect(null, 'versions', $archiveId);
+		else $request->redirect(null, 'versions', $archiveId);
 	}
 
-	function editSearch($args) {
+	function editSearch($args, &$request) {
 		$this->validate();
 
 		$rtDao =& DAORegistry::getDAO('RTDAO');
@@ -90,15 +90,15 @@ class RTSearchHandler extends RTAdminHandler {
 
 		if (isset($version) && isset($context) && isset($search) && $context->getVersionId() == $version->getVersionId() && $search->getContextId() == $context->getContextId()) {
 			import('classes.rt.harvester2.form.SearchForm');
-			$this->setupTemplate(true, $archiveId, $version, $context, $search);
+			$this->setupTemplate($request, true, $archiveId, $version, $context, $search);
 			$searchForm = new SearchForm($searchId, $contextId, $versionId, $archiveId);
 			$searchForm->initData();
 			$searchForm->display();
 		}
-		else Request::redirect(null, 'searches', array($archiveId, $versionId, $contextId));
+		else $request->redirect(null, 'searches', array($archiveId, $versionId, $contextId));
 	}
 
-	function deleteSearch($args) {
+	function deleteSearch($args, &$request) {
 		$this->validate();
 
 		$rtDao =& DAORegistry::getDAO('RTDAO');
@@ -116,10 +116,10 @@ class RTSearchHandler extends RTAdminHandler {
 			$rtDao->deleteSearch($searchId, $contextId);
 		}
 
-		Request::redirect(null, 'searches', array($archiveId, $versionId, $contextId));
+		$request->redirect(null, 'searches', array($archiveId, $versionId, $contextId));
 	}
 
-	function saveSearch($args) {
+	function saveSearch($args, &$request) {
 		$this->validate();
 
 		$rtDao =& DAORegistry::getDAO('RTDAO');
@@ -140,10 +140,10 @@ class RTSearchHandler extends RTAdminHandler {
 			$searchForm->execute();
 		}
 
-		Request::redirect(null, 'searches', array($archiveId, $versionId, $contextId));
+		$request->redirect(null, 'searches', array($archiveId, $versionId, $contextId));
 	}
 
-	function moveSearch($args) {
+	function moveSearch($args, &$request) {
 		$this->validate();
 
 		$rtDao =& DAORegistry::getDAO('RTDAO');
@@ -158,13 +158,13 @@ class RTSearchHandler extends RTAdminHandler {
 		$search =& $rtDao->getSearch($searchId);
 
 		if (isset($version) && isset($context) && isset($search) && $context->getVersionId() == $version->getVersionId() && $search->getContextId() == $context->getContextId()) {
-			$isDown = Request::getUserVar('dir')=='d';
+			$isDown = $request->getUserVar('dir')=='d';
 			$search->setOrder($search->getOrder()+($isDown?1.5:-1.5));
 			$rtDao->updateSearch($search);
 			$rtDao->resequenceSearches($context->getContextId());
 		}
 
-		Request::redirect(null, 'searches', array($archiveId, $versionId, $contextId));
+		$request->redirect(null, 'searches', array($archiveId, $versionId, $contextId));
 	}
 }
 

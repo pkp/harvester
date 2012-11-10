@@ -102,7 +102,7 @@ class ArchiveDAO extends DAO {
 	 * @param $row array
 	 * @return Archive
 	 */
-	function &_returnArchiveFromRow(&$row) {
+	function &_returnArchiveFromRow($row) {
 		$archive = new Archive();
 		$archive->setArchiveId($row['archive_id']);
 		$archive->setUserId($row['user_id']);
@@ -253,7 +253,7 @@ class ArchiveDAO extends DAO {
 
 		$count = 0;
 		if ($result->RecordCount() != 0) {
-			$row =& $result->GetRowAssoc(false);
+			$row = $result->GetRowAssoc(false);
 			$count = $row['count'];
 		}
 		$result->Close();

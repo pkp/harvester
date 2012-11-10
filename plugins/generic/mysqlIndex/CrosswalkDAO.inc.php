@@ -71,7 +71,7 @@ class CrosswalkDAO extends DAO {
 	 * @param $row array
 	 * @return Crosswalk
 	 */
-	function &_returnCrosswalkFromRow(&$row) {
+	function &_returnCrosswalkFromRow($row) {
 		$crosswalk = new Crosswalk();
 		$crosswalk->setCrosswalkId($row['crosswalk_id']);
 		$crosswalk->setPublicCrosswalkId($row['public_crosswalk_id']);

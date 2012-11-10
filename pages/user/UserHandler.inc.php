@@ -114,7 +114,7 @@ class UserHandler extends Handler {
 	 * @param $subclass boolean set to true if caller is below this handler in the hierarchy
 	 */
 	function setupTemplate($request, $subclass = false) {
-		parent::setupTemplate();
+		parent::setupTemplate($request);
 		$templateMgr =& TemplateManager::getManager();
 		if ($subclass) {
 			$templateMgr->assign('pageHierarchy', array(array($request->url(null, 'user'), 'navigation.user')));

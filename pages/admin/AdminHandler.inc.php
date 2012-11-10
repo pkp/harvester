@@ -13,8 +13,6 @@
  *
  */
 
-
-
 import('classes.handler.Handler');
 
 class AdminHandler extends Handler {
@@ -28,9 +26,9 @@ class AdminHandler extends Handler {
 	/**
 	 * Display site admin index page.
 	 */
-	function index() {
+	function index($args, &$request) {
 		$this->validate();
-		$this->setupTemplate();
+		$this->setupTemplate($request);
 
 		$templateMgr =& TemplateManager::getManager();
 
@@ -63,12 +61,12 @@ class AdminHandler extends Handler {
 	 * Setup common template variables.
 	 * @param $subclass boolean set to true if caller is below this handler in the hierarchy
 	 */
-	function setupTemplate($subclass = false) {
-		parent::setupTemplate();
+	function setupTemplate($request, $subclass = false) {
+		parent::setupTemplate($request);
 		$templateMgr =& TemplateManager::getManager();
 		if ($subclass) {
 			$templateMgr->assign('pageHierarchy',
-				array(array(Request::url('admin'), 'admin.siteAdmin'))
+				array(array($request->url('admin'), 'admin.siteAdmin'))
 			);
 		}
 	}
@@ -77,8 +75,8 @@ class AdminHandler extends Handler {
 	// Layout
 	//
 
-	function layout() {
-		$this->setupTemplate();
+	function layout($args, &$request) {
+		$this->setupTemplate($request);
 		$this->validate();
 
 		import('classes.admin.form.LayoutForm');
@@ -91,8 +89,8 @@ class AdminHandler extends Handler {
 		$layoutForm->display();
 	}
 
-	function saveLayout() {
-		$this->setupTemplate();
+	function saveLayout($args, &$request) {
+		$this->setupTemplate($request);
 		$this->validate();
 
 		import('classes.admin.form.LayoutForm');
@@ -100,7 +98,7 @@ class AdminHandler extends Handler {
 		$layoutForm->readInputData();
 		if ($layoutForm->validate()) {
 			$layoutForm->execute();
-			Request::redirect('admin');
+			$request->redirect('admin');
 		} else {
 			$layoutForm->display();
 		}

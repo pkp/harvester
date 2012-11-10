@@ -19,26 +19,26 @@ import('classes.rt.harvester2.HarvesterRTAdmin');
 import('pages.rtadmin.RTAdminHandler');
 
 class RTVersionHandler extends RTAdminHandler {
-	function createVersion($args) {
+	function createVersion($args, &$request) {
 		$this->validate();
 
 		$rtDao =& DAORegistry::getDAO('RTDAO');
 
 		import('classes.rt.harvester2.form.VersionForm');
-		$archiveId = (int) Request::getUserVar('archiveId');
+		$archiveId = (int) $request->getUserVar('archiveId');
 		$versionForm = new VersionForm(null, $archiveId);
 
 		if (isset($args[0]) && $args[0]=='save') {
 			$versionForm->readInputData();
 			$versionForm->execute();
-			Request::redirect(null, 'versions');
+			$request->redirect(null, 'versions');
 		} else {
-			$this->setupTemplate(true, $archiveId);
+			$this->setupTemplate($request, true, $archiveId);
 			$versionForm->display();
 		}
 	}
 
-	function exportVersion($args) {
+	function exportVersion($args, &$request) {
 		$this->validate();
 
 		$rtDao =& DAORegistry::getDAO('RTDAO');
@@ -47,25 +47,25 @@ class RTVersionHandler extends RTAdminHandler {
 		$version =& $rtDao->getVersion($versionId);
 
 		if ($version) {
-			$templateMgr =& TemplateManager::getManager();
+			$templateMgr =& TemplateManager::getManager($request);
 			$templateMgr->assign_by_ref('version', $version);
 
 			$templateMgr->display('rtadmin/exportXml.tpl', 'application/xml');
 		}
-		else Request::redirect(null, 'versions');
+		else $request->redirect(null, 'versions');
 	}
 
-	function importVersion() {
+	function importVersion($args, &$request) {
 		$this->validate();
 		$fileField = 'versionFile';
 		if (isset($_FILES[$fileField]['tmp_name']) && is_uploaded_file($_FILES[$fileField]['tmp_name'])) {
 			$rtAdmin = new HarvesterRTAdmin($archiveId);
 			$rtAdmin->importVersion($_FILES[$fileField]['tmp_name']);
 		}
-		Request::redirect(null, 'versions');
+		$request->redirect(null, 'versions');
 	}
 
-	function restoreVersions($args) {
+	function restoreVersions($args, &$request) {
 		$this->validate();
 
 		$archiveId = (int) array_shift($args);
@@ -73,26 +73,26 @@ class RTVersionHandler extends RTAdminHandler {
 		$rtAdmin = new HarvesterRTAdmin($archiveId);
 		$rtAdmin->restoreVersions();
 
-		Request::redirect(null, 'versions');
+		$request->redirect(null, 'versions');
 	}
 
-	function versions($args) {
+	function versions($args, &$request) {
 		$archiveId = (int) array_shift($args);
 
 		$this->validate();
-		$this->setupTemplate(true, $archiveId);
+		$this->setupTemplate($request, true, $archiveId);
 
 
 		$rtDao =& DAORegistry::getDAO('RTDAO');
 		$rangeInfo = PKPHandler::getRangeInfo('versions');
 
-		$templateMgr =& TemplateManager::getManager();
+		$templateMgr =& TemplateManager::getManager($request);
 		$templateMgr->assign_by_ref('versions', $rtDao->getVersions($archiveId, $rangeInfo));
 		$templateMgr->assign('archiveId', $archiveId);
 		$templateMgr->display('rtadmin/versions.tpl');
 	}
 
-	function editVersion($args) {
+	function editVersion($args, &$request) {
 		$this->validate();
 
 		$rtDao =& DAORegistry::getDAO('RTDAO');
@@ -104,15 +104,15 @@ class RTVersionHandler extends RTAdminHandler {
 
 		if (isset($version)) {
 			import('classes.rt.harvester2.form.VersionForm');
-			$this->setupTemplate(true, $archiveId, $version);
+			$this->setupTemplate($request, true, $archiveId, $version);
 			$versionForm = new VersionForm($versionId, $archiveId);
 			$versionForm->initData();
 			$versionForm->display();
 		}
-		else Request::redirect(null, 'versions');
+		else $request->redirect(null, 'versions');
 	}
 
-	function deleteVersion($args) {
+	function deleteVersion($args, &$request) {
 		$this->validate();
 
 		$rtDao =& DAORegistry::getDAO('RTDAO');
@@ -122,16 +122,16 @@ class RTVersionHandler extends RTAdminHandler {
 
 		$rtDao->deleteVersion($versionId, $archiveId);
 
-		Request::redirect(null, 'versions', array($archiveId));
+		$request->redirect(null, 'versions', array($archiveId));
 	}
 
-	function saveVersion($args) {
+	function saveVersion($args, &$request) {
 		$this->validate();
 
 		$rtDao =& DAORegistry::getDAO('RTDAO');
 
 		$versionId = (int) array_shift($args);
-		$archiveId = (int) Request::getUserVar('archiveId');
+		$archiveId = (int) $request->getUserVar('archiveId');
 		$version =& $rtDao->getVersion($versionId, $archiveId);
 
 		if (isset($version)) {
@@ -141,7 +141,7 @@ class RTVersionHandler extends RTAdminHandler {
 			$versionForm->execute();
 		}
 
-		Request::redirect(null, 'versions', $archiveId);
+		$request->redirect(null, 'versions', $archiveId);
 	}
 }
 

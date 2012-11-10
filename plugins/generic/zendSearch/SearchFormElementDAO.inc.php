@@ -66,7 +66,7 @@ class SearchFormElementDAO extends DAO {
 	 * @param $row array
 	 * @return Archive
 	 */
-	function &_returnSearchFormElementFromRow(&$row) {
+	function &_returnSearchFormElementFromRow($row) {
 		$searchFormElement = new SearchFormElement();
 		$searchFormElement->setSearchFormElementId($row['search_form_element_id']);
 		$searchFormElement->setType($row['element_type']);
@@ -335,7 +335,7 @@ class SearchFormElementDAO extends DAO {
 	/**
 	 * Get a search form element option value from a row.
 	 */
-	function _returnSearchFormElementOptionFromRow(&$row) {
+	function _returnSearchFormElementOptionFromRow($row) {
 		return $row['value'];
 	}
 

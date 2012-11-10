@@ -56,7 +56,7 @@ class RoleDAO extends DAO {
 	 * @param $row array
 	 * @return Role
 	 */
-	function &_returnRoleFromRow(&$row) {
+	function &_returnRoleFromRow($row) {
 		$role = new Role();
 		$role->setUserId($row['user_id']);
 		$role->setRoleId($row['role_id']);
@@ -120,7 +120,7 @@ class RoleDAO extends DAO {
 		);
 
 		while (!$result->EOF) {
-			$roles[] =& $this->_returnRoleFromRow($result->GetRowAssoc(false));
+			$roles[] = $this->_returnRoleFromRow($result->GetRowAssoc(false));
 			$result->moveNext();
 		}
 

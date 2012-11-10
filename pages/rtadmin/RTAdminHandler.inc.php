@@ -23,17 +23,17 @@ class RTAdminHandler extends Handler {
 	/**
 	 * Display the index page for RT administration tasks.
 	 */
-	function index($args = array()) {
+	function index($args, &$request) {
 		$this->validate();
-		$templateMgr =& TemplateManager::getManager();
+		$templateMgr =& TemplateManager::getManager($request);
 
 		$archiveId = (int) array_shift($args);
 		$archiveDao =& DAORegistry::getDAO('ArchiveDAO');
 
-		$this->setupTemplate(false, $archiveId);
+		$this->setupTemplate($request, false, $archiveId);
 
 		if ($archive =& $archiveDao->getArchive($archiveId, false) || $archiveId == 0) {
-			$site =& Request::getSite();
+			$site =& $request->getSite();
 			$rtDao =& DAORegistry::getDAO('RTDAO');
 
 			$version = $rtDao->getVersion(
@@ -42,7 +42,7 @@ class RTAdminHandler extends Handler {
 			);
 
 			// Display the administration menu for this archive.
-			$templateMgr =& TemplateManager::getManager();
+			$templateMgr =& TemplateManager::getManager($request);
 			$templateMgr->assign_by_ref('version', $version);
 			$templateMgr->assign_by_ref('archiveId', $archiveId);
 			$templateMgr->assign_by_ref('versions', $rtDao->getVersions($archive?$archive->getArchiveId():null));
@@ -61,10 +61,10 @@ class RTAdminHandler extends Handler {
 	/**
 	 * Save the selected choice of version.
 	 */
-	function selectVersion($args) {
+	function selectVersion($args, &$request) {
 		$this->validate();
 		$archiveId = (int) array_shift($args);
-		$versionId = Request::getUserVar('versionId');
+		$versionId = $request->getUserVar('versionId');
 
 		$archiveDao =& DAORegistry::getDAO('ArchiveDAO');
 		$archive =& $archiveDao->getArchive($archiveId, false);
@@ -75,17 +75,17 @@ class RTAdminHandler extends Handler {
 		if ($archive) {
 			$archive->updateSetting('rtVersionId', $version?$version->getVersionId():null);
 		} else {
-			$site =& Request::getSite();
+			$site =& $request->getSite();
 			$site->updateSetting('rtVersionId', $version?$version->getVersionId():null);
 		}
-		Request::redirect('rtadmin', 'index', $archiveId);
+		$request->redirect('rtadmin', 'index', $archiveId);
 	}
 
 	/**
 	 * Ensure that this page is available to the user.
 	 */
 	function validate() {
-		$this->addCheck(new HandlerValidatorRoles(&$this, true, null, null, array(ROLE_ID_SITE_ADMIN)));		
+		$this->addCheck(new HandlerValidatorRoles($this, true, null, null, array(ROLE_ID_SITE_ADMIN)));		
 		parent::validate();
 	}
 
@@ -94,17 +94,17 @@ class RTAdminHandler extends Handler {
 	// General
 	//
 
-	function settings() {
+	function settings($args, &$request) {
 		import('lib.pkp.pages.rtadmin.RTSetupHandler');
-		RTSetupHandler::settings();
+		RTSetupHandler::settings($args, $request);
 	}
 
-	function saveSettings() {
+	function saveSettings($args, &$request) {
 		import('lib.pkp.pages.rtadmin.RTSetupHandler');
-		RTSetupHandler::saveSettings();
+		RTSetupHandler::saveSettings($args, $request);
 	}
 
-	function validateUrls($args) {
+	function validateUrls($args, $request) {
 		$this->validate();
 
 		$rtDao =& DAORegistry::getDAO('RTDAO');
@@ -124,8 +124,8 @@ class RTAdminHandler extends Handler {
 			$versions = $rtDao->getVersions($archiveId);
 		}
 
-		$this->setupTemplate(true, $archiveId, $version);
-		$templateMgr =& TemplateManager::getManager();
+		$this->setupTemplate($request, true, $archiveId, $version);
+		$templateMgr =& TemplateManager::getManager($request);
 		$templateMgr->register_modifier('validate_url', 'smarty_rtadmin_validate_url');
 		$templateMgr->assign_by_ref('versions', $versions);
 		$templateMgr->display('rtadmin/validate.tpl');
@@ -138,23 +138,23 @@ class RTAdminHandler extends Handler {
 	 * @param $context object The current context, if applicable
 	 * @param $search object The current search, if applicable
 	 */
-	function setupTemplate($subclass = false, $archiveId = 0, $version = null, $context = null, $search = null) {
-		parent::setupTemplate();
-		$templateMgr =& TemplateManager::getManager();
+	function setupTemplate($request, $subclass = false, $archiveId = 0, $version = null, $context = null, $search = null) {
+		parent::setupTemplate($request);
+		$templateMgr =& TemplateManager::getManager($request);
 
-		$pageHierarchy = array(array(Request::url('admin'), 'admin.siteAdmin'));
+		$pageHierarchy = array(array($request->url('admin'), 'admin.siteAdmin'));
 
-		if ($subclass) $pageHierarchy[] = array(Request::url('rtadmin'), 'admin.rtAdmin');
+		if ($subclass) $pageHierarchy[] = array($request->url('rtadmin'), 'admin.rtAdmin');
 
 		if ($version) {
-			$pageHierarchy[] = array(Request::url('rtadmin', 'versions', array($archiveId)), 'rt.versions');
-			$pageHierarchy[] = array(Request::url('rtadmin', 'editVersion', array($archiveId, $version->getVersionId())), $version->getTitle(), true);
+			$pageHierarchy[] = array($request->url('rtadmin', 'versions', array($archiveId)), 'rt.versions');
+			$pageHierarchy[] = array($request->url('rtadmin', 'editVersion', array($archiveId, $version->getVersionId())), $version->getTitle(), true);
 			if ($context) {
-				$pageHierarchy[] = array(Request::url('rtadmin', 'contexts', array($archiveId, $version->getVersionId())), 'rt.contexts');
-				$pageHierarchy[] = array(Request::url('rtadmin', 'editContext', array($archiveId, $version->getVersionId(), $context->getContextId())), $context->getAbbrev(), true);
+				$pageHierarchy[] = array($request->url('rtadmin', 'contexts', array($archiveId, $version->getVersionId())), 'rt.contexts');
+				$pageHierarchy[] = array($request->url('rtadmin', 'editContext', array($archiveId, $version->getVersionId(), $context->getContextId())), $context->getAbbrev(), true);
 				if ($search) {
-					$pageHierarchy[] = array(Request::url('rtadmin', 'searches', array($archiveId, $version->getVersionId(), $context->getContextId())), 'rt.searches');
-					$pageHierarchy[] = array(Request::url('rtadmin', 'editSearch', array($archiveId, $version->getVersionId(), $context->getContextId(), $search->getSearchId())), $search->getTitle(), true);
+					$pageHierarchy[] = array($request->url('rtadmin', 'searches', array($archiveId, $version->getVersionId(), $context->getContextId())), 'rt.searches');
+					$pageHierarchy[] = array($request->url('rtadmin', 'editSearch', array($archiveId, $version->getVersionId(), $context->getContextId(), $search->getSearchId())), $search->getTitle(), true);
 				}
 			}
 		}

@@ -20,14 +20,14 @@ class ZendSearchHandler extends Handler {
 	/**
 	 * Display search form
 	 */
-	function index() {
-		ZendSearchHandler::setupTemplate();
+	function index($args, &$request) {
+		$this->setupTemplate($request);
 		$plugin =& PluginRegistry::getPlugin('generic', ZEND_SEARCH_PLUGIN_NAME);
 
 		$searchFormElementDao =& DAORegistry::getDAO('SearchFormElementDAO');
 		$searchFormElements =& $searchFormElementDao->getSearchFormElements();
 
-		$templateMgr =& TemplateManager::getManager();
+		$templateMgr =& TemplateManager::getManager($request);
 		$templateMgr->assign_by_ref('searchFormElements', $searchFormElements);
 		$templateMgr->display($plugin->getTemplatePath() . 'search.tpl');
 	}
@@ -39,8 +39,8 @@ class ZendSearchHandler extends Handler {
 	/**
 	 * Display search results.
 	 */
-	function searchResults() {
-		ZendSearchHandler::setupTemplate();
+	function searchResults($args, &$request) {
+		ZendSearchHandler::setupTemplate($request);
 		$plugin =& PluginRegistry::getPlugin('generic', ZEND_SEARCH_PLUGIN_NAME);
 		$isUsingSolr = $plugin->isUsingSolr();
 
@@ -60,7 +60,7 @@ class ZendSearchHandler extends Handler {
 			$query = new Zend_Search_Lucene_Search_Query_Boolean();
 		}
 
-		$q = Request::getUserVar('q');
+		$q = $request->getUserVar('q');
 		if (!empty($q)) {
 			if ($isUsingSolr) {
 				$query .= 'text:"' . ZendSearchHandler::luceneEscape($q) . '" ';
@@ -77,7 +77,7 @@ class ZendSearchHandler extends Handler {
 			switch ($searchFormElement->getType()) {
 				case SEARCH_FORM_ELEMENT_TYPE_SELECT:
 				case SEARCH_FORM_ELEMENT_TYPE_STRING:
-					$term = Request::getUserVar($symbolic);
+					$term = $request->getUserVar($symbolic);
 					if (!empty($term)) {
 						if ($isUsingSolr) {
 							$query .= $symbolic . ':"' . ZendSearchHandler::luceneEscape($term) . '" ';
@@ -87,8 +87,8 @@ class ZendSearchHandler extends Handler {
 					}
 					break;
 				case SEARCH_FORM_ELEMENT_TYPE_DATE:
-					$from = Request::getUserDateVar($symbolic . '-from');
-					$to = Request::getUserDateVar($symbolic . '-to');
+					$from = $request->getUserDateVar($symbolic . '-from');
+					$to = $request->getUserDateVar($symbolic . '-to');
 					if (!empty($from) && !empty($to)) {
 						if ($isUsingSolr) {
 							$query .= $symbolic . ':[' . strftime('%Y-%m-%dT%H:%M:%SZ', $from) . ' TO ' . strftime('%Y-%m-%dT%H:%M:%SZ', $to) . '] ';
@@ -138,7 +138,7 @@ class ZendSearchHandler extends Handler {
 			unset($resultsArray);
 		}
 
-		$templateMgr =& TemplateManager::getManager();
+		$templateMgr =& TemplateManager::getManager($request);
 		$templateMgr->assign_by_ref('recordDao', DAORegistry::getDAO('RecordDAO'));
 		$templateMgr->assign_by_ref('results', $resultsIterator);
 		$templateMgr->assign_by_ref('q', $q);
@@ -148,13 +148,13 @@ class ZendSearchHandler extends Handler {
 	/**
 	 * Setup common template variables.
 	 */
-	function setupTemplate() {
-		parent::setupTemplate();
+	function setupTemplate($request) {
+		parent::setupTemplate($request);
 		parent::validate();
 
-		$templateMgr =& TemplateManager::getManager();
+		$templateMgr =& TemplateManager::getManager($request);
 		$templateMgr->assign('pageHierachy', array(
-			array(Request::url('search'), 'navigation.search')
+			array($request->url('search'), 'navigation.search')
 		));
 	}
 }

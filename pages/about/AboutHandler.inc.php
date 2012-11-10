@@ -28,7 +28,7 @@ class AboutHandler extends Handler {
 		$this->setupTemplate();
 		$this->validate();
 
-		$templateMgr =& TemplateManager::getManager();
+		$templateMgr =& TemplateManager::getManager($request);
 
 		$site =& $request->getSite();
 		$templateMgr->assign('about', $site->getLocalizedSetting('about'));
@@ -41,11 +41,11 @@ class AboutHandler extends Handler {
 	 * Setup common template variables.
 	 * @param $subclass boolean set to true if caller is below this handler in the hierarchy
 	 */
-	function setupTemplate($subclass = false) {
-		parent::setupTemplate();
+	function setupTemplate($request, $subclass = false) {
+		parent::setupTemplate($request);
 		$this->validate();
 
-		$templateMgr =& TemplateManager::getManager();
+		$templateMgr =& TemplateManager::getManager($request);
 		if ($subclass) $templateMgr->assign('pageHierarchy', array(array('about', 'navigation.about')));
 	}
 
@@ -57,23 +57,23 @@ class AboutHandler extends Handler {
 	function contact($args, &$request) {
 		$this->validate();
 
-		$this->setupTemplate(true);
+		$this->setupTemplate($request, true);
 
 		$site =& $request->getSite();
 
-		$templateMgr =& TemplateManager::getManager();
+		$templateMgr =& TemplateManager::getManager($request);
 		$templateMgr->display('about/contact.tpl');
 	}
 
 	/**
 	 * Display about the harvester page.
 	 */
-	function harvester() {
+	function harvester($args, &$request) {
 		$this->validate();
 
-		$this->setupTemplate(true);
+		$this->setupTemplate($request, true);
 
-		$templateMgr =& TemplateManager::getManager();
+		$templateMgr =& TemplateManager::getManager($request);
 		$templateMgr->display('about/harvester.tpl');
 	}
 }

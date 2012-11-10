@@ -65,7 +65,7 @@ class SortOrderDAO extends DAO {
 	 * @param $row array
 	 * @return SortOrder
 	 */
-	function &_returnSortOrderFromRow(&$row) {
+	function &_returnSortOrderFromRow($row) {
 		$sortOrder = new SortOrder();
 		$sortOrder->setSortOrderId($row['sort_order_id']);
 		$sortOrder->setType($row['order_type']);

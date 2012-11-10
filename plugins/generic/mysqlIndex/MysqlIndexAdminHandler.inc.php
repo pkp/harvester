@@ -33,11 +33,11 @@ class MysqlIndexAdminHandler extends Handler {
 	/**
 	 * Display indexing information.
 	 */
-	function adminCrosswalks() {
+	function adminCrosswalks($args, &$request) {
 		parent::validate();
-		MysqlIndexAdminHandler::setupTemplate(false);
+		$this->setupTemplate($request, false);
 
-		$rangeInfo = PKPHandler::getRangeInfo('crosswalks');
+		$rangeInfo = $this->getRangeInfo('crosswalks');
 
 		$crosswalkDao =& DAORegistry::getDAO('CrosswalkDAO');
 		$crosswalks =& $crosswalkDao->getCrosswalks($rangeInfo);
@@ -45,18 +45,18 @@ class MysqlIndexAdminHandler extends Handler {
 		$templateMgr =& TemplateManager::getManager();
 		$templateMgr->assign_by_ref('crosswalks', $crosswalks);
 
-		$plugin =& MysqlIndexAdminHandler::getPlugin();
+		$plugin =& $this->getPlugin();
 		$templateMgr->display($plugin->getTemplatePath() . 'crosswalks.tpl');
 	}
 
-	function editCrosswalk() {
+	function editCrosswalk($args, &$request) {
 		parent::validate();
-		MysqlIndexAdminHandler::setupTemplate(true);
+		$this->setupTemplate($request, true);
 
-		$plugin =& MysqlIndexAdminHandler::getPlugin();
+		$plugin =& $this->getPlugin();
 		$plugin->import('CrosswalkForm');
 
-		$crosswalkForm = new CrosswalkForm(MYSQL_PLUGIN_NAME, Request::getUserVar('crosswalkId'));
+		$crosswalkForm = new CrosswalkForm(MYSQL_PLUGIN_NAME, $request->getUserVar('crosswalkId'));
 		$crosswalkForm->initData();
 		$crosswalkForm->display();
 	}
@@ -64,27 +64,27 @@ class MysqlIndexAdminHandler extends Handler {
 	/**
 	 * Save changes to a searchable field's settings.
 	 */
-	function updateCrosswalk() {
+	function updateCrosswalk($args, &$request) {
 		parent::validate();
 
-		$plugin =& MysqlIndexAdminHandler::getPlugin();
+		$plugin =& $this->getPlugin();
 		$plugin->import('CrosswalkForm');
 
-		$crosswalkForm = new CrosswalkForm(MYSQL_PLUGIN_NAME, Request::getUserVar('crosswalkId'));
+		$crosswalkForm = new CrosswalkForm(MYSQL_PLUGIN_NAME, $request->getUserVar('crosswalkId'));
 		$crosswalkForm->initData();
 		$crosswalkForm->readInputData();
 
 		if ($crosswalkForm->validate()) {
 			$crosswalkForm->execute();
-			Request::redirect(null, 'adminCrosswalks');
+			$request->redirect(null, 'adminCrosswalks');
 
 		} else {
-			MysqlIndexAdminHandler::setupTemplate(true);
+			$this->setupTemplate($request, true);
 			$crosswalkForm->display();
 		}
 	}
 
-	function deleteCrosswalk($args) {
+	function deleteCrosswalk($args, &$request) {
 		parent::validate();
 
 		$crosswalkDao =& DAORegistry::getDAO('CrosswalkDAO');
@@ -92,17 +92,17 @@ class MysqlIndexAdminHandler extends Handler {
 			$crosswalkId = $args[0];
 			$crosswalkDao->deleteCrosswalkById($crosswalkId);
 		}
-		Request::redirect(null, 'adminCrosswalks');
+		$request->redirect(null, 'adminCrosswalks');
 	}
 
-	function createCrosswalk() {
-		MysqlIndexAdminHandler::editCrosswalk();
+	function createCrosswalk($args, &$request) {
+		$this->editCrosswalk($args, $request);
 	}
 
 	/**
 	 * Reset crosswalks to the installation default.
 	 */
-	function resetCrosswalks() {
+	function resetCrosswalks($args, &$request) {
 		parent::validate();
 
 		$crosswalkDao =& DAORegistry::getDAO('CrosswalkDAO');
@@ -112,7 +112,7 @@ class MysqlIndexAdminHandler extends Handler {
 			unset($crosswalk);
 		}
 		$crosswalkDao->installCrosswalks('registry/crosswalks.xml');
-		Request::redirect(null, 'adminCrosswalks');
+		$request->redirect(null, 'adminCrosswalks');
 	}
 	/**
 	 * Validate that user has admin privileges
@@ -128,11 +128,11 @@ class MysqlIndexAdminHandler extends Handler {
 	/**
 	 * Setup common template variables.
 	 */
-	function setupTemplate() {
-		parent::setupTemplate();
+	function setupTemplate($request) {
+		parent::setupTemplate($request);
 		$templateMgr =& TemplateManager::getManager();
 		$templateMgr->assign('pageHierarchy', array(
-			array(Request::url('admin'), 'admin.settings.administration')
+			array($request->url('admin'), 'admin.settings.administration')
 		));
 	}
 }

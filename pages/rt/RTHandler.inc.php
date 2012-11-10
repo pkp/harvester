@@ -25,20 +25,20 @@ class RTHandler extends Handler {
 	/** record associated with this request **/
 	var $record; 
 	
-	function context($args) {
+	function context($args, &$request) {
 		$recordId = array_shift($args);
 		$contextId = array_shift($args);
 
 		$this->validate($recordId);
 		$archive =& $this->archive;
 		$record =& $this->record;
-		$this->setupTemplate();
+		$this->setupTemplate($request);
 
 		$rtDao =& DAORegistry::getDAO('RTDAO');
 		$context =& $rtDao->getContext($contextId);
 
 		if (!$context) {
-			Request::redirect('index');
+			$request->redirect('index');
 		}
 
 		// Deal with the post and URL parameters for each search
@@ -92,13 +92,13 @@ class RTHandler extends Handler {
 				break;
 		}
 
-		$templateMgr =& TemplateManager::getManager();
+		$templateMgr =& TemplateManager::getManager($request);
 		$templateMgr->assign_by_ref('context', $context);
 		$templateMgr->assign_by_ref('record', $record);
 		$templateMgr->assign_by_ref('searches', $searches);
 		$templateMgr->assign('searchParams', $searchParams);
 		$templateMgr->assign('searchValues', $searchValues);
-		$templateMgr->assign('defineTerm', Request::getUserVar('defineTerm'));
+		$templateMgr->assign('defineTerm', $request->getUserVar('defineTerm'));
 		$templateMgr->display('rt/context.tpl');
 	}
 

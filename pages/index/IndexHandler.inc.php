@@ -19,7 +19,7 @@ import('classes.handler.Handler');
 
 class IndexHandler extends Handler {
 	function index($args, &$request) {
-		$this->setupTemplate();
+		$this->setupTemplate($request);
 		$this->validate();
 		$templateMgr =& TemplateManager::getManager();
 		$site =& $request->getSite();
