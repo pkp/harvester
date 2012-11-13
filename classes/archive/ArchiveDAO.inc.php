@@ -241,7 +241,7 @@ class ArchiveDAO extends DAO {
 	 * @return int
 	 */
 	function getInsertArchiveId() {
-		return $this->getInsertId('archives', 'archive_id');
+		return $this->_getInsertId('archives', 'archive_id');
 	}
 
 	/**

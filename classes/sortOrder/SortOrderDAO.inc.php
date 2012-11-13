@@ -250,7 +250,7 @@ class SortOrderDAO extends DAO {
 	 * @return int
 	 */
 	function getInsertSortOrderId() {
-		return $this->getInsertId('sort_orders', 'sort_order_id');
+		return $this->_getInsertId('sort_orders', 'sort_order_id');
 	}
 
 	/**

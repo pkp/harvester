@@ -257,7 +257,7 @@ class RecordDAO extends DAO {
 	 * @return int
 	 */
 	function getInsertRecordId() {
-		return $this->getInsertId('records', 'record_id');
+		return $this->_getInsertId('records', 'record_id');
 	}
 
 	/**

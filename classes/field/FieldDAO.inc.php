@@ -279,7 +279,7 @@ class FieldDAO extends DAO {
 	 * @return int
 	 */
 	function getInsertFieldId() {
-		return $this->getInsertId('raw_fields', 'raw_field_id');
+		return $this->_getInsertId('raw_fields', 'raw_field_id');
 	}
 }
 

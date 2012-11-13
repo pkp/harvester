@@ -195,7 +195,7 @@ class CrosswalkDAO extends DAO {
 	 * @return int
 	 */
 	function getInsertCrosswalkId() {
-		return $this->getInsertId('crosswalks', 'crosswalk_id');
+		return $this->_getInsertId('crosswalks', 'crosswalk_id');
 	}
 
 	/**

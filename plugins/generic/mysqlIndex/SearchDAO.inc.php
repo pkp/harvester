@@ -43,7 +43,7 @@ class SearchDAO extends DAO {
 				true,
 				false // Do not die on error
 			)) {
-				$keywordId = $this->getInsertId('search_keyword_list', 'keyword_id');
+				$keywordId = $this->_getInsertId('search_keyword_list', 'keyword_id');
 			} else {
 				$keywordId = null; // Error with this keyword (see #2324)
 			}
@@ -231,7 +231,7 @@ class SearchDAO extends DAO {
 					$fieldId
 				)
 			);
-			$objectId = $this->getInsertId('search_objects', 'object_id');
+			$objectId = $this->_getInsertId('search_objects', 'object_id');
 			$pos = 0;
 		} else {
 			$objectId = $result->fields[0];

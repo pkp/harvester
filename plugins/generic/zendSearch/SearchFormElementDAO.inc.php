@@ -344,7 +344,7 @@ class SearchFormElementDAO extends DAO {
 	 * @return int
 	 */
 	function getInsertSearchFormElementId() {
-		return $this->getInsertId('search_form_elements', 'search_form_element_id');
+		return $this->_getInsertId('search_form_elements', 'search_form_element_id');
 	}
 }
 

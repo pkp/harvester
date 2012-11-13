@@ -262,7 +262,7 @@ class SchemaDAO extends DAO {
 	 * @return int
 	 */
 	function getInsertSchemaId() {
-		return $this->getInsertId('schema_plugins', 'schema_plugin_id');
+		return $this->_getInsertId('schema_plugins', 'schema_plugin_id');
 	}
 
 }
