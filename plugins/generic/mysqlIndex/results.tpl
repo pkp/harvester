@@ -17,25 +17,10 @@
 {include file="common/header.tpl"}
 {/strip}
 
-<script type="text/javascript">
-{literal}
-<!--
-function ensureKeyword() {
-	if (document.getElementById('search').query.value == '') {
-		alert({/literal}'{translate|escape:"jsparam" key="search.noKeywordError"}'{literal});
-		return false;
-	}
-	document.getElementById('search').submit();
-	return true;
-}
-// -->
-{/literal}
-</script>
-
 <br/>
 
 {if $isAdvanced}
-	<form class="pkp_form" method="post" name="revise" action="{url op="index"}">
+	<form class="pkp_form" method="post" name="reviseForm" action="{url op="index"}">
 		<input type="hidden" name="importance" value="{$importance|escape}"/>
 		<input type="hidden" name="query" value="{$query|escape}"/>
 		{if is_array($archiveIds)}
@@ -68,7 +53,7 @@ function ensureKeyword() {
 			{/if}
 		{/foreach}
 	</form>
-	<a href="javascript:document.revise.submit()" class="action">{translate key="search.reviseSearch"}</a><br />&nbsp;
+	<a href="javascript:document.getElementById('reviseForm').submit()" class="action">{translate key="search.reviseSearch"}</a><br />&nbsp;
 {/if}
 
 <div id="records">
@@ -81,7 +66,7 @@ function ensureKeyword() {
 	</ul>
 {else}
 	</ul>
-	{page_info iterator=$results}&nbsp;&nbsp;&nbsp;&nbsp;{page_links anchor="records" iterator=$results name="search" query=$query archiveIds=$archiveIds isAdvanced=$isAdvanced params=$forwardParams}
+	{page_info iterator=$results}&nbsp;&nbsp;&nbsp;&nbsp;{page_links anchor="records" iterator=$results name="reviseForm" query=$query archiveIds=$archiveIds isAdvanced=$isAdvanced params=$forwardParams}
 {/if}
 </div>
 

@@ -17,8 +17,8 @@
 function handleArchiveSelect() {
 	// Specific fields are currently displayed; the field set should be
 	// updated.
-	document.getElementById('search').action = "{/literal}{url page="misearch" escape="false"}{literal}";
-	document.getElementById('search').submit();
+	document.getElementById('searchForm').action = "{/literal}{url page="misearch" escape="false"}{literal}";
+	document.getElementById('searchForm').submit();
 	return true;
 }
 
@@ -26,7 +26,7 @@ function handleArchiveSelect() {
 {/literal}
 </script>
 
-<form class="pkp_form" method="post" name="search" action="{url op="results"}">
+<form class="pkp_form" method="post" id="searchForm" action="{url op="results"}">
 <input type="hidden" name="isAdvanced" value="1"/>
 
 <table class="data" width="100%">
