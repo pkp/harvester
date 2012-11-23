@@ -393,6 +393,7 @@ You may optionally provide the user with a reason for disabling their account.</
 	<message key="admin.archives.form.publicArchiveId.description">This unique identifier can be used in URL-based searches to identify this archive.</message>
 	
 	<!-- Languages -->
+	<message key="admin.languages.confirmDisable">Are you sure you want to disable this locale?</message>
 	<message key="admin.languages.languageSettings">Language Settings</message>
 	<message key="admin.languages.installLanguages">Install Languages</message>
 	<message key="admin.languages.primaryLocaleInstructions">This will be the default language for the site.</message>
