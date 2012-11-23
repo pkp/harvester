@@ -236,7 +236,7 @@ class RoleDAO extends DAO {
 	 * @param $plural boolean get the plural form of the name
 	 * @return string
 	 */
-	function getRoleName($roleId, $plural = false) {
+	static function getRoleName($roleId, $plural = false) {
 		switch ($roleId) {
 			case ROLE_ID_SITE_ADMIN:
 				return 'user.role.siteAdmin' . ($plural ? 's' : '');
@@ -252,7 +252,7 @@ class RoleDAO extends DAO {
 	 * @param $roleId int
 	 * @return string
 	 */
-	function getRolePath($roleId) {
+	static function getRolePath($roleId) {
 		switch ($roleId) {
 			case ROLE_ID_SITE_ADMIN:
 				return 'admin';
