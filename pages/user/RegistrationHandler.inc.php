@@ -130,7 +130,6 @@ class RegistrationHandler extends UserHandler {
 	 * Checks if site allows user registration.
 	 */	
 	function validate($request) {
-		parent::validate();
 		$site =& $request->getSite();
 		if (!$site->getSetting('enableSubmit')) {
 			// Users cannot register themselves
