@@ -58,7 +58,7 @@ function selectHarvester() {
 	</tr>
 	<tr valign="top">
 		<td class="label">{fieldLabel name="description" key="archive.description"}</td>
-		<td class="value"><textarea name="description" id="description" cols="40" rows="10" class="textArea">{$description|escape}</textarea></td>
+		<td class="value"><textarea name="description" id="description" cols="40" rows="10" class="textArea richContent">{$description|escape}</textarea></td>
 	</tr>
 	<tr valign="top">
 		<td class="label">

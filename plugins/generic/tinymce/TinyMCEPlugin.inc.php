@@ -46,41 +46,6 @@ class TinyMCEPlugin extends GenericPlugin {
 	}
 
 	/**
-	 * Given a $page and $op, return a list of field names for which
-	 * the plugin should be used.
-	 * @param $templateMgr object
-	 * @param $page string The requested page
-	 * @param $op string The requested operation
-	 * @return array
-	 */
-	function getEnableFields(&$templateMgr, $page, $op) {
-		$formLocale = $templateMgr->get_template_vars('formLocale');
-		$fields = array();
-		switch ("$page/$op") {
-			case 'admin/settings':
-			case 'admin/saveSettings':
-				$fields[] = 'intro';
-				$fields[] = 'aboutField';
-				break;
-			case 'admin/createArchive':
-			case 'admin/editArchive':
-			case 'admin/updateArchive':
-				$fields[] = 'description';
-				break;
-			case 'user/profile':
-			case 'user/saveProfile':
-			case 'user/register':
-			case 'admin/createUser':
-			case 'admin/updateUser':
-				$fields[] = 'mailingAddress';
-				$fields[] = 'biography';
-				break;
-		}
-		HookRegistry::call('TinyMCEPlugin::getEnableFields', array(&$this, &$fields));
-		return $fields;
-	}
-
-	/**
 	 * Hook callback function for TemplateManager::display
 	 * @param $hookName string
 	 * @param $args array
@@ -92,48 +57,43 @@ class TinyMCEPlugin extends GenericPlugin {
 
 		$page = $request->getRequestedPage();
 		$op = $request->getRequestedOp();
-		$enableFields = $this->getEnableFields($templateManager, $page, $op);
-
-		if (!empty($enableFields)) {
-			$baseUrl = $templateManager->get_template_vars('baseUrl');
-			$additionalHeadData = $templateManager->get_template_vars('additionalHeadData');
-			$enableFields = join(',', $enableFields);
-			$allLocales = AppLocale::getAllLocales();
-			$localeList = array();
-			foreach ($allLocales as $key => $locale) {
-				$localeList[] = String::substr($key, 0, 2);
-			}
-
-			$tinymceScript = '
-			<script language="javascript" type="text/javascript" src="'.$baseUrl.'/'.TINYMCE_JS_PATH.'/tiny_mce_gzip.js"></script>
-			<script language="javascript" type="text/javascript">
-				tinyMCE_GZ.init({
-					relative_urls : "false",
-					plugins : "paste,jbimages,fullscreen",
-					themes : "advanced",
-					languages : "' . join(',', $localeList) . '",
-					disk_cache : true
-				});
-			</script>
-			<script language="javascript" type="text/javascript">
-				tinyMCE.init({
-					entity_encoding : "raw",
-					plugins : "paste,jbimages,fullscreen",
-					mode : "exact",
-					language : "' . String::substr(AppLocale::getLocale(), 0, 2) . '",
-					elements : "' . $enableFields . '",
-					relative_urls : false,
-					forced_root_block : false,
-					apply_source_formatting : false,
-					theme : "advanced",
-					theme_advanced_buttons1 : "cut,copy,paste,pastetext,pasteword,|,bold,italic,underline,bullist,numlist,|,link,unlink,help,code,fullscreen,jbimages",
-					theme_advanced_buttons2 : "",
-					theme_advanced_buttons3 : ""
-				});
-			</script>';
-
-			$templateManager->assign('additionalHeadData', $additionalHeadData."\n".$tinymceScript);
+		$baseUrl = $templateManager->get_template_vars('baseUrl');
+		$additionalHeadData = $templateManager->get_template_vars('additionalHeadData');
+		$allLocales = AppLocale::getAllLocales();
+		$localeList = array();
+		foreach ($allLocales as $key => $locale) {
+			$localeList[] = String::substr($key, 0, 2);
 		}
+
+		$tinymceScript = '
+		<script language="javascript" type="text/javascript" src="'.$baseUrl.'/'.TINYMCE_JS_PATH.'/tiny_mce_gzip.js"></script>
+		<script language="javascript" type="text/javascript">
+			tinyMCE_GZ.init({
+				relative_urls : "false",
+				plugins : "paste,jbimages,fullscreen",
+				themes : "advanced",
+				languages : "' . join(',', $localeList) . '",
+				disk_cache : true
+			});
+		</script>
+		<script language="javascript" type="text/javascript">
+			tinyMCE.init({
+				entity_encoding : "raw",
+				plugins : "paste,jbimages,fullscreen",
+				mode: "specific_textareas",
+				editor_selector: "richContent",
+				language : "' . String::substr(AppLocale::getLocale(), 0, 2) . '",
+				relative_urls : false,
+				forced_root_block : false,
+				apply_source_formatting : false,
+				theme : "advanced",
+				theme_advanced_buttons1 : "cut,copy,paste,pastetext,pasteword,|,bold,italic,underline,bullist,numlist,|,link,unlink,help,code,fullscreen,jbimages",
+				theme_advanced_buttons2 : "",
+				theme_advanced_buttons3 : ""
+			});
+		</script>';
+
+		$templateManager->assign('additionalHeadData', $additionalHeadData."\n".$tinymceScript);
 		return false;
 	}
 

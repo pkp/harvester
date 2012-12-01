@@ -24,9 +24,6 @@ class OAIHarvesterPlugin extends HarvesterPlugin {
 	 */
 	function register($category, $path) {
 		$success = parent::register($category, $path);
-		if ($success) {
-			HookRegistry::register('TinyMCEPlugin::getEnableFields', array(&$this, 'addDescriptionField'));
-		}
 		$this->addLocaleData();
 		return $success;
 	}
@@ -60,16 +57,6 @@ class OAIHarvesterPlugin extends HarvesterPlugin {
 		$form->addCheck(new FormValidatorCustom($form, 'harvesterUrl', 'required', 'plugins.harvester.oai.archive.form.harvesterUrlInvalid', array(&$oaiHarvester, 'validateHarvesterURL'), array($request->getUserVar('isStatic'))));
 		$form->addCheck(new FormValidatorEmail($form, 'adminEmail', Validation::isSiteAdmin()?'optional':'required', 'plugins.harvesters.oai.archive.form.adminEmailInvalid'));
 		$form->addCheck(new FormValidatorCustom($form, 'harvesterUrl', 'required', 'plugins.harvester.oai.archive.form.harvesterUrlDuplicate', array(&$this, 'duplicateHarvesterUrlDoesNotExist'), array($request->getUserVar('archiveId'))));
-	}
-
-	/**
-	 * Add the description field to the TinyMCE list. Used with the
-	 * "fetch archive metadata" button on the archive form.
-	 */
-	function addDescriptionField($hookName, $args) {
-		$fields =& $args[1];
-		if (!in_array('description', $fields)) $fields[] = 'description';
-		return false;
 	}
 
 	function duplicateHarvesterUrlDoesNotExist($harvesterUrl, $archiveId) {
