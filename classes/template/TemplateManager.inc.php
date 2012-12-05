@@ -75,10 +75,6 @@ class TemplateManager extends PKPTemplateManager {
 
 			$this->assign('siteTitle', $site->getLocalizedTitle());
 			$this->assign('enableSubmit', $site->getSetting('enableSubmit'));
-
-			// Add java script for notifications
-			$user =& $request->getUser();
-			if ($user) $this->addJavaScript('lib/pkp/js/lib/jquery/plugins/jquery.pnotify.js');
 		}
 	}
 
