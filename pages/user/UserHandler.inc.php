@@ -12,11 +12,15 @@
  * @brief Handle requests for user functions.
  */
 
+import('lib.pkp.pages.user.PKPUserHandler');
 
-
-import('classes.handler.Handler');
-
-class UserHandler extends Handler {
+class UserHandler extends PKPUserHandler {
+	/**
+	 * Constructor
+	 */
+	function UserHandler() {
+		parent::PKPUserHandler();
+	}
 
 	/**
 	 * Display user index page.
@@ -24,7 +28,7 @@ class UserHandler extends Handler {
 	function index($args, &$request) {
 		$this->validate();
 
-		$templateMgr =& TemplateManager::getManager();
+		$templateMgr =& TemplateManager::getManager($request);
 		$roleDao =& DAORegistry::getDAO('RoleDAO');
 		$user =& $request->getUser();
 		$site =& $request->getSite();
@@ -35,32 +39,6 @@ class UserHandler extends Handler {
 		$templateMgr->assign('userRoles', $roleDao->getRolesByUserId($user->getId()));
 		$templateMgr->assign('enableSubmit', $site->getSetting('enableSubmit'));
 		$templateMgr->display('user/index.tpl');
-	}
-
-	/**
-	 * Change the locale for the current user.
-	 * @param $args array first parameter is the new locale
-	 */
-	function setLocale($args, $request) {
-		$setLocale = isset($args[0]) ? $args[0] : null;
-
-		$site =& $request->getSite();
-
-		if (AppLocale::isLocaleValid($setLocale) && in_array($setLocale, $site->getSupportedLocales())) {
-			$session =& $request->getSession();
-			$session->setSessionVar('currentLocale', $setLocale);
-		}
-
-		if(isset($_SERVER['HTTP_REFERER'])) {
-			$request->redirectUrl($_SERVER['HTTP_REFERER']);
-		}
-
-		$source = $request->getUserVar('source');
-		if (isset($source) && !empty($source)) {
-			$request->redirectUrl($request->getProtocol() . '://' . $request->getServerHost() . $source, false);
-		}
-
-		$request->redirect(null, 'index');
 	}
 
 	/**
@@ -91,7 +69,7 @@ class UserHandler extends Handler {
 			$roleDao->insertRole($role);
 			$request->redirectUrl(Request::getUserVar('source'));
 		} else {
-			$templateMgr =& TemplateManager::getManager();
+			$templateMgr =& TemplateManager::getManager($request);
 			$templateMgr->assign('message', $deniedKey);
 			return $templateMgr->display('common/message.tpl');
 		}
@@ -115,7 +93,7 @@ class UserHandler extends Handler {
 	 */
 	function setupTemplate($request, $subclass = false) {
 		parent::setupTemplate($request);
-		$templateMgr =& TemplateManager::getManager();
+		$templateMgr =& TemplateManager::getManager($request);
 		if ($subclass) {
 			$templateMgr->assign('pageHierarchy', array(array($request->url(null, 'user'), 'navigation.user')));
 		}
@@ -127,7 +105,7 @@ class UserHandler extends Handler {
 	 */
 	function viewPublicProfile($args, &$request) {
 		$this->validate(false);
-		$templateMgr =& TemplateManager::getManager();
+		$templateMgr =& TemplateManager::getManager($request);
 		$userId = (int) array_shift($args);
 
 		$accountIsVisible = false;
