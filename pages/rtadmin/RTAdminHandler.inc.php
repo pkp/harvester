@@ -50,8 +50,8 @@ class RTAdminHandler extends Handler {
 			$templateMgr->display('rtadmin/index.tpl');
 		} else {
 			// List archives for the user administer.
-			$rangeInfo = PKPHandler::getRangeInfo('archives');
-			$archives =& $archiveDao->getArchives(false, $rangeInfo);
+			$rangeInfo = $this->getRangeInfo($request, 'archives');
+			$archives = $archiveDao->getArchives(false, $rangeInfo);
 			$templateMgr->assign_by_ref('archives', $archives);
 			$templateMgr->display('rtadmin/archives.tpl');
 

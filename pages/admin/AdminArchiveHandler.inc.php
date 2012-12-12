@@ -27,7 +27,7 @@ class AdminArchiveHandler extends AdminHandler {
 		$this->validate();
 		$this->setupTemplate($request);
 
-		$rangeInfo = PKPHandler::getRangeInfo('archives');
+		$rangeInfo = $this->getRangeInfo($request, 'archives');
 		
 		$sort = $request->getUserVar('sort');
 		$sort = isset($sort) ? $sort : 'title';

@@ -65,7 +65,7 @@ class MysqlIndexSearchHandler extends Handler {
 
 		$plugin =& $this->getPlugin();
 		$plugin->import('Search');
-		$rangeInfo = PKPHandler::getRangeInfo('search');
+		$rangeInfo = $this->getRangeInfo($request, 'search');
 
 		$query = $request->getUserVar('query');
 		$forwardParams = array();

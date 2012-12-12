@@ -62,9 +62,9 @@ class PeopleHandler extends AdminHandler {
 			$search = $searchInitial;
 		}
 
-		$rangeInfo = PKPHandler::getRangeInfo('users');
+		$rangeInfo = $this->getRangeInfo($request, 'users');
 
-		$users =& $roleDao->getUsersByRoleId($roleId, $searchType, $search, $searchMatch, $rangeInfo, $sort, $sortDirection);
+		$users = $roleDao->getUsersByRoleId($roleId, $searchType, $search, $searchMatch, $rangeInfo, $sort, $sortDirection);
 		$templateMgr->assign('roleId', $roleId);
 
 		$templateMgr->assign('currentUrl', $request->url(null, 'people', 'all'));
@@ -126,9 +126,9 @@ class PeopleHandler extends AdminHandler {
 		$sort = isset($sort) ? $sort : 'name';
 		$sortDirection = $request->getUserVar('sortDirection');
 
-		$rangeInfo = PKPHandler::getRangeInfo('users');
+		$rangeInfo = $this->getRangeInfo($request, 'users');
 
-		$users =& $userDao->getUsersByField($searchType, $searchMatch, $search, true, $rangeInfo, $sort, $sortDirection);
+		$users = $userDao->getUsersByField($searchType, $searchMatch, $search, true, $rangeInfo, $sort, $sortDirection);
 
 		$templateMgr->assign('searchField', $searchType);
 		$templateMgr->assign('searchMatch', $searchMatch);

@@ -40,12 +40,12 @@ class ZendSearchAdminHandler extends Handler {
 	function index($args, &$request) {
 		$this->validate();
 		$this->setupTemplate($request, true);
-		$templateMgr =& TemplateManager::getManager($request);
-		$plugin =& $this->getPlugin();
+		$templateMgr = TemplateManager::getManager($request);
+		$plugin = $this->getPlugin();
 
-		$rangeInfo = PKPHandler::getRangeInfo('searchFormElements');
-		$searchFormElementDao =& DAORegistry::getDAO('SearchFormElementDAO');
-		$searchFormElements =& $searchFormElementDao->getSearchFormElements($rangeInfo);
+		$rangeInfo = $this->getRangeInfo($request, 'searchFormElements');
+		$searchFormElementDao = DAORegistry::getDAO('SearchFormElementDAO');
+		$searchFormElements = $searchFormElementDao->getSearchFormElements($rangeInfo);
 
 		$templateMgr->assign_by_ref('searchFormElements', $searchFormElements);
 		$templateMgr->display($plugin->getTemplatePath() . 'searchForm.tpl');

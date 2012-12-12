@@ -37,15 +37,15 @@ class MysqlIndexAdminHandler extends Handler {
 		parent::validate();
 		$this->setupTemplate($request, false);
 
-		$rangeInfo = $this->getRangeInfo('crosswalks');
+		$rangeInfo = $this->getRangeInfo($request, 'crosswalks');
 
-		$crosswalkDao =& DAORegistry::getDAO('CrosswalkDAO');
-		$crosswalks =& $crosswalkDao->getCrosswalks($rangeInfo);
+		$crosswalkDao = DAORegistry::getDAO('CrosswalkDAO');
+		$crosswalks = $crosswalkDao->getCrosswalks($rangeInfo);
 
-		$templateMgr =& TemplateManager::getManager();
+		$templateMgr = TemplateManager::getManager();
 		$templateMgr->assign_by_ref('crosswalks', $crosswalks);
 
-		$plugin =& $this->getPlugin();
+		$plugin = $this->getPlugin();
 		$templateMgr->display($plugin->getTemplatePath() . 'crosswalks.tpl');
 	}
 

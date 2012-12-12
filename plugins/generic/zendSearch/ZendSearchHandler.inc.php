@@ -105,7 +105,7 @@ class ZendSearchHandler extends Handler {
 			unset($searchFormElement);
 		}
 
-		$rangeInfo =& PKPHandler::getRangeInfo('results');
+		$rangeInfo = $this->getRangeInfo($request, 'results');
 
 		if ($isUsingSolr) {
 			$itemsPerPage = Config::getVar('interface', 'items_per_page');

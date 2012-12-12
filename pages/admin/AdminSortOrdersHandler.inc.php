@@ -24,12 +24,12 @@ class AdminSortOrdersHandler extends AdminHandler {
 		$this->validate();
 		$this->setupTemplate($request);
 
-		$rangeInfo = PKPHandler::getRangeInfo('sortOrders');
+		$rangeInfo = $this->getRangeInfo($request, 'sortOrders');
 
-		$sortOrderDao =& DAORegistry::getDAO('SortOrderDAO');
-		$sortOrders =& $sortOrderDao->getSortOrders($rangeInfo);
+		$sortOrderDao = DAORegistry::getDAO('SortOrderDAO');
+		$sortOrders = $sortOrderDao->getSortOrders($rangeInfo);
 
-		$templateMgr =& TemplateManager::getManager($request);
+		$templateMgr = TemplateManager::getManager($request);
 		$templateMgr->assign_by_ref('sortOrders', $sortOrders);
 		if ($rangeInfo) $templateMgr->assign('sortOrderPage', $rangeInfo->getPage());
 		$templateMgr->display('admin/sortOrders.tpl');

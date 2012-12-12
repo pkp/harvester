@@ -33,11 +33,11 @@ class BrowseHandler extends Handler {
 		if (($archive =& $archiveDao->getArchive($archiveId)) || $archiveId == 'all') {
 			$this->setupTemplate($request, $archive, true);
 
-			$rangeInfo = PKPHandler::getRangeInfo('records');
+			$rangeInfo = $this->getRangeInfo($request, 'records');
 
-			$sortOrderDao =& DAORegistry::getDAO('SortOrderDAO');
+			$sortOrderDao = DAORegistry::getDAO('SortOrderDAO');
 			$sortOrderId = $request->getUserVar('sortOrderId');
-			$sortOrder =& $sortOrderDao->getSortOrder($sortOrderId);
+			$sortOrder = $sortOrderDao->getSortOrder($sortOrderId);
 			if ($sortOrder) {
 				$templateMgr->assign('sortOrderId', $sortOrderId);
 			}
@@ -60,11 +60,11 @@ class BrowseHandler extends Handler {
 			$this->setupTemplate($request, $archive);
 
 			// List archives for the user to browse.
-			$rangeInfo = PKPHandler::getRangeInfo('archives');
+			$rangeInfo = $this->getRangeInfo($request, 'archives');
 
-			$archives =& $archiveDao->getArchives(true, $rangeInfo);
+			$archives = $archiveDao->getArchives(true, $rangeInfo);
 
-			$templateMgr->assign_by_ref('archives', $archives);
+			$templateMgr->assign('archives', $archives);
 			$templateMgr->display('browse/index.tpl');
 		}
 	}

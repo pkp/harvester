@@ -83,10 +83,10 @@ class RTVersionHandler extends RTAdminHandler {
 		$this->setupTemplate($request, true, $archiveId);
 
 
-		$rtDao =& DAORegistry::getDAO('RTDAO');
-		$rangeInfo = PKPHandler::getRangeInfo('versions');
+		$rtDao = DAORegistry::getDAO('RTDAO');
+		$rangeInfo = $this->getRangeInfo($request, 'versions');
 
-		$templateMgr =& TemplateManager::getManager($request);
+		$templateMgr = TemplateManager::getManager($request);
 		$templateMgr->assign_by_ref('versions', $rtDao->getVersions($archiveId, $rangeInfo));
 		$templateMgr->assign('archiveId', $archiveId);
 		$templateMgr->display('rtadmin/versions.tpl');
