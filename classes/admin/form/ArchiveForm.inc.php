@@ -232,7 +232,7 @@ class ArchiveForm extends Form {
 		$archiveDao =& DAORegistry::getDAO('ArchiveDAO');
 
 		if (!isset($this->archive)) {
-			$this->archive = new Archive();
+			$this->archive = $archiveDao->newDataObject();
 			$user =& Request::getUser();
 			$this->archive->setUserId($user->getId());
 		}
@@ -250,9 +250,9 @@ class ArchiveForm extends Form {
 		}
 
 		if ($this->archive->getArchiveId() != null) {
-			$archiveDao->updateArchive($this->archive);
+			$archiveDao->updateObject($this->archive);
 		} else {
-			$archiveId = $archiveDao->insertArchive($this->archive);
+			$archiveId = $archiveDao->insertObject($this->archive);
 
 			// Include the current default set of reading tools.
 			import('classes.rt.harvester2.HarvesterRTAdmin');

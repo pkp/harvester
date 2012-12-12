@@ -75,7 +75,7 @@ class AdminArchiveHandler extends AdminHandler {
 	 * @param $args array
 	 * @param $request object
 	 */
-	function updateArchive($args, &$request) {
+	function updateArchive($args, $request) {
 		$this->validate();
 		$this->setupTemplate($request);
 

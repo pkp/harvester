@@ -165,7 +165,7 @@ class harvest extends CommandLineTool {
 				// be harvested.
 				$archive->setAwaitingHarvest(1);
 				$archiveDao = DAORegistry::getDAO('ArchiveDAO');
-				$archiveDao->updateArchive($archive);
+				$archiveDao->updateObject($archive);
 			}
 			unset($archive);
 		} else {

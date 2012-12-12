@@ -116,7 +116,7 @@ class OAIDAO extends DAO {
 		$returner = null;
 		if ($result->RecordCount() != 0) {
 			$row =& $result->GetRowAssoc(false);
-			$returner =& $this->_returnRecordFromRow($row);
+			$returner = $this->_fromRow($row);
 		}
 
 		$result->Close();
@@ -161,8 +161,8 @@ class OAIDAO extends DAO {
 
 		$result->Move($offset);
 		for ($count = 0; $count < $limit && !$result->EOF; $count++) {
-			$row =& $result->GetRowAssoc(false);
-			$records[] =& $this->_returnRecordFromRow($row);
+			$row = $result->GetRowAssoc(false);
+			$records[] = $this->_fromRow($row);
 			$result->moveNext();
 		}
 
@@ -231,11 +231,11 @@ class OAIDAO extends DAO {
 	 * @param $row array
 	 * @return OAIRecord
 	 */
-	function &_returnRecordFromRow($row) {
+	function _fromRow($row) {
 		$oaiRecord = new OAIRecord();
 
-		$record =& $this->recordDao->_returnRecordFromRow($row);
-		$archive =& $this->archiveDao->_returnArchiveFromRow($row);
+		$record = $this->recordDao->_fromRow($row);
+		$archive = $this->archiveDao->_fromRow($row);
 
 		$oaiRecord->identifier = $this->oai->recordIdToIdentifier($record->getRecordId());
 		$oaiRecord->datestamp = OAIUtils::UTCDate(strtotime($this->datetimeFromDB($row['datestamp'])));

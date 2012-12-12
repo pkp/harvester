@@ -54,7 +54,7 @@ class Upgrade extends Installer {
 		while ($archive =& $archives->next()) {
 			$schemaPluginName = $archive->getSetting('schemaPluginName');
 			$archive->setSchemaPluginName($schemaPluginName);
-			$archiveDao->updateArchive($archive);
+			$archiveDao->updateObject($archive);
 			$archiveSettingsDao->deleteSetting($archive->getArchiveId(), 'schemaPluginName');
 			unset($archive);
 		}

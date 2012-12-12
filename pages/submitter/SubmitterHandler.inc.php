@@ -74,7 +74,7 @@ class SubmitterHandler extends Handler {
 	/**
 	 * Save changes to an archive's settings.
 	 */
-	function updateArchive($args, &$request) {
+	function updateArchive($args, $request) {
 		$archiveId = $request->getUserVar('archiveId');
 		if (empty($archiveId)) $archiveId = null;
 		else $archiveId = (int) $archiveId;

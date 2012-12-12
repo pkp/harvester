@@ -49,12 +49,12 @@ class OAIHarvester extends Harvester {
 	 * @param $metadataFormat string
 	 */
 	function setMetadataFormat($metadataFormat) {
-		$archive =& $this->getArchive();
-		$schemaDao =& DAORegistry::getDAO('SchemaDAO');
+		$archive = $this->getArchive();
+		$schemaDao = DAORegistry::getDAO('SchemaDAO');
 		$aliases = $schemaDao->getSchemaAliases();
 		$archive->setSchemaPluginName($aliases[$metadataFormat]);
-		$archiveDao =& DAORegistry::getDAO('ArchiveDAO');
-		$archiveDao->updateArchive($archive);
+		$archiveDao = DAORegistry::getDAO('ArchiveDAO');
+		$archiveDao->updateObject($archive);
 	}
 
 	/**

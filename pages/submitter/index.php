@@ -12,8 +12,6 @@
  *
  */
 
-
-
 switch ($op) {
 	case 'index':
 	case 'createArchive':

@@ -40,7 +40,7 @@ class RecordDAO extends DAO {
 
 		$returner = null;
 		if ($result->RecordCount() != 0) {
-			$returner =& $this->_returnRecordFromRow($result->GetRowAssoc(false));
+			$returner = $this->_fromRow($result->GetRowAssoc(false));
 		}
 		$result->Close();
 		unset($result);
@@ -119,7 +119,7 @@ class RecordDAO extends DAO {
 			$rangeInfo
 		);
 
-		$returner = new DAOResultFactory($result, $this, '_returnRecordFromRow');
+		$returner = new DAOResultFactory($result, $this, '_fromRow');
 		return $returner;
 	}
 
@@ -135,7 +135,7 @@ class RecordDAO extends DAO {
 
 		$returner = null;
 		if ($result->RecordCount() != 0) {
-			$returner =& $this->_returnRecordFromRow($result->GetRowAssoc(false));
+			$returner = $this->_fromRow($result->GetRowAssoc(false));
 		}
 		$result->Close();
 		unset($result);
@@ -143,12 +143,20 @@ class RecordDAO extends DAO {
 	}
 
 	/**
+	 * Construct a new Record object.
+	 * @return Record
+	 */
+	function newDataObject() {
+		return new Record();
+	}
+
+	/**
 	 * Internal function to return a Record object from a row.
 	 * @param $row array
 	 * @return Record
 	 */
-	function &_returnRecordFromRow($row) {
-		$record = new Record();
+	function _fromRow($row) {
+		$record = $this->newDataObject();
 		$record->setRecordId($row['record_id']);
 		$record->setArchiveId($row['archive_id']);
 		$record->setSchemaId($row['schema_plugin_id']);

@@ -105,12 +105,12 @@ class OAIHarvesterPlugin extends HarvesterPlugin {
 		$templateMgr->assign('metadataFormats', $supportedFormats);
 	}
 
-	function executeArchiveForm(&$form, &$archive) {
+	function executeArchiveForm($form, $archive) {
 		// Save the schema plugin info
-		$request =& $this->getRequest();
+		$request = $this->getRequest();
 		$archive->setSchemaPluginName($request->getUserVar('metadataFormat'));
-		$archiveDao =& DAORegistry::getDAO('ArchiveDAO');
-		$archiveDao->updateArchive($archive);
+		$archiveDao = DAORegistry::getDAO('ArchiveDAO');
+		$archiveDao->updateObject($archive);
 
 		// Save the OAI indexing method
 		if ($form->getData('oaiIndexMethod') == '') $archive->updateSetting('oaiIndexMethod', OAI_INDEX_METHOD_LIST_RECORDS);

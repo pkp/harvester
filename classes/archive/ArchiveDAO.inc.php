@@ -39,7 +39,7 @@ class ArchiveDAO extends DAO {
 
 		$returner = null;
 		if ($result->RecordCount() != 0) {
-			$returner =& $this->_returnArchiveFromRow($result->GetRowAssoc(false));
+			$returner = $this->_fromRow($result->GetRowAssoc(false));
 		}
 		$result->Close();
 		unset($result);
@@ -64,7 +64,7 @@ class ArchiveDAO extends DAO {
 
 		$returner = null;
 		if ($result->RecordCount() != 0) {
-			$returner =& $this->_returnArchiveFromRow($result->GetRowAssoc(false));
+			$returner = $this->_fromRow($result->GetRowAssoc(false));
 		}
 		$result->Close();
 		unset($result);
@@ -89,7 +89,7 @@ class ArchiveDAO extends DAO {
 
 		$returner = null;
 		if ($result->RecordCount() != 0) {
-			$returner =& $this->_returnArchiveFromRow($result->GetRowAssoc(false));
+			$returner = $this->_fromRow($result->GetRowAssoc(false));
 		}
 		$result->Close();
 		unset($result);
@@ -155,7 +155,7 @@ class ArchiveDAO extends DAO {
 				$lockId
 			);
 			if ($result->RecordCount() > 0) {
-				$archive = $this->_returnArchiveFromRow($result->GetRowAssoc(false));
+				$archive = $this->_fromRow($result->GetRowAssoc(false));
 				break;
 			}
 		}
@@ -163,9 +163,17 @@ class ArchiveDAO extends DAO {
 		if (!is_a($archive, 'Archive')) return false;
 
 		// Updating the archive will release the lock.
-		$this->updateArchive($archive);
+		$this->updateObject($archive);
 
 		return $archive;
+	}
+
+	/**
+	 * Construct a new Archive object.
+	 * @return Archive
+	 */
+	function newDataObject() {
+		return new Archive();
 	}
 
 	/**
@@ -173,8 +181,8 @@ class ArchiveDAO extends DAO {
 	 * @param $row array
 	 * @return Archive
 	 */
-	function &_returnArchiveFromRow($row) {
-		$archive = new Archive();
+	function _fromRow($row) {
+		$archive = $this->newDataObject();
 		$archive->setArchiveId($row['archive_id']);
 		$archive->setUserId($row['user_id']);
 		$archive->setPublicArchiveId($row['public_archive_id']);
@@ -195,12 +203,12 @@ class ArchiveDAO extends DAO {
 	 * Insert a new archive.
 	 * @param $archive Archive
 	 */	
-	function insertArchive($archive) {
+	function insertObject($archive) {
 		$this->update(
 			'INSERT INTO archives
-				(user_id, public_archive_id, title, url, schema_plugin, harvester_plugin, enabled, awaiting_harvest, lock_id)
+				(user_id, public_archive_id, title, url, schema_plugin, harvester_plugin, enabled, awaiting_harvest)
 				VALUES
-				(?, ?, ?, ?, ?, ?, ?)',
+				(?, ?, ?, ?, ?, ?, ?, ?)',
 			array(
 				(int) $archive->getUserId(),
 				$archive->getPublicArchiveId(),
@@ -214,7 +222,7 @@ class ArchiveDAO extends DAO {
 			)
 		);
 
-		$archiveId = $this->getInsertArchiveId();
+		$archiveId = $this->getInsertId();
 		$archive->setArchiveId($archiveId);
 
 		return $archive->getArchiveId();
@@ -224,7 +232,7 @@ class ArchiveDAO extends DAO {
 	 * Update an existing archive.
 	 * @param $archive Archive
 	 */
-	function updateArchive(&$archive) {
+	function updateObject($archive) {
 		return $this->update(
 			'UPDATE archives
 				SET
@@ -293,7 +301,7 @@ class ArchiveDAO extends DAO {
 			false, $rangeInfo
 		);
 
-		$returner = new DAOResultFactory($result, $this, '_returnArchiveFromRow');
+		$returner = new DAOResultFactory($result, $this, '_fromRow');
 		return $returner;
 	}
 
@@ -310,7 +318,7 @@ class ArchiveDAO extends DAO {
 			$rangeInfo
 		);
 
-		$returner = new DAOResultFactory($result, $this, '_returnArchiveFromRow');
+		$returner = new DAOResultFactory($result, $this, '_fromRow');
 		return $returner;
 	}
 
@@ -318,7 +326,7 @@ class ArchiveDAO extends DAO {
 	 * Get the ID of the last inserted archive.
 	 * @return int
 	 */
-	function getInsertArchiveId() {
+	function getInsertId() {
 		return $this->_getInsertId('archives', 'archive_id');
 	}
 
@@ -327,7 +335,7 @@ class ArchiveDAO extends DAO {
 	 * @return int
 	 */
 	function getArchiveCount() {
-		$result =& $this->retrieve('SELECT COUNT(*) AS count FROM archives');
+		$result = $this->retrieve('SELECT COUNT(*) AS count FROM archives');
 
 		$count = 0;
 		if ($result->RecordCount() != 0) {
