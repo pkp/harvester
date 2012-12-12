@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @file Archive.inc.php
+ * @file classes/archive/Archive.inc.php
  *
  * Copyright (c) 2005-2012 Alec Smecher and John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
@@ -14,7 +14,7 @@
  *
  */
 
-
+define('PROCESS_TYPE_HARVEST', 0x02);
 
 class Archive extends DataObject {
 	/** Archive settings DAO */
@@ -25,7 +25,7 @@ class Archive extends DataObject {
 	 */
 	function Archive() {
 		parent::DataObject();
-		$this->archiveSettingsDao =& DAORegistry::getDAO('ArchiveSettingsDAO');
+		$this->archiveSettingsDao = DAORegistry::getDAO('ArchiveSettingsDAO');
 	}
 
 	//
@@ -62,6 +62,38 @@ class Archive extends DataObject {
 	 */
 	function setEnabled($enabled) {
 		return $this->setData('enabled',$enabled);
+	}
+
+	/**
+	 * Get "awaiting harvest" flag of archive
+	 * @return boolean
+	 */
+	function getAwaitingHarvest() {
+	 	return $this->getData('awaitingHarvest');
+	}
+
+	/**
+	 * Set "awaiting harvest" flag of archive
+	 * @param $awaitingHarvest boolean
+	 */
+	function setAwaitingHarvest($awaitingHarvest) {
+		return $this->setData('awaitingHarvest', $awaitingHarvest);
+	}
+
+	/**
+	 * Get lock ID of archive (see ProcessDAO)
+	 * @return string
+	 */
+	function getLockId() {
+	 	return $this->getData('lockId');
+	}
+
+	/**
+	 * Set lock ID of archive (see ProcessDAO)
+	 * @param $lockId string
+	 */
+	function setLockId($lockId) {
+		return $this->setData('lockId', $lockId);
 	}
 
 	/**
@@ -157,7 +189,7 @@ class Archive extends DataObject {
 	 */
 	function &getUser() {
 		$userDao =& DAORegistry::getDAO('UserDAO');
-		$user =& $userDao->getById($this->getUserId());
+		$user = $userDao->getById($this->getUserId());
 		return $user;
 	}
 
@@ -233,7 +265,7 @@ class Archive extends DataObject {
 	 * @return int
 	 */
 	function updateRecordCount() {
-		$recordDao =& DAORegistry::getDAO('RecordDAO');
+		$recordDao = DAORegistry::getDAO('RecordDAO');
 		$count = $recordDao->getRecordCount($this->getArchiveId());
 		$this->updateSetting('recordCount', $count, 'int');
 		return $count;
@@ -250,7 +282,7 @@ class Archive extends DataObject {
 	 * Get the schema plugin name for this archive.
 	 */
 	function &getSchemaPlugin() {
-		$plugins =& PluginRegistry::loadCategory('schemas');
+		$plugins = PluginRegistry::loadCategory('schemas');
 		$schemaPluginName = $this->getSchemaPluginName();
 		$returner = null;
 		if (isset($plugins[$schemaPluginName])) {

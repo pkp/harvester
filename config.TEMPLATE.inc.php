@@ -74,6 +74,9 @@ restful_urls = Off
 ; Allow javascript files to be served through a content delivery network (set to off to use local files)
 enable_cdn = On
 
+; Number of parallel process to use when parallel harvesting is selected
+harvesting_max_processes = 10
+
 ;;;;;;;;;;;;;;;;;;;;;
 ; Database Settings ;
 ;;;;;;;;;;;;;;;;;;;;;

@@ -36,11 +36,10 @@ class harvest extends CommandLineTool {
 		$archiveDao =& DAORegistry::getDAO('ArchiveDAO');
 		if ($this->firstParam === 'all') {
 			$this->archives =& $archiveDao->getArchives();
-		}
-		else {
-			$archive =& $archiveDao->getArchive((int) $this->firstParam, false);
+		} else {
+			$archive = $archiveDao->getArchive((int) $this->firstParam, false);
 			if ($archive) {
-				$archives = array(&$archive);
+				$archives = array($archive);
 				import('lib.pkp.classes.core.ArrayItemIterator');
 				$this->archives = new ArrayItemIterator($archives);
 			} else {
@@ -54,6 +53,10 @@ class harvest extends CommandLineTool {
 		foreach ($argv as $arg) switch ($arg) {
 			case 'verbose':
 				$this->params['callback'] = array(&$this, 'statusCallback');
+				break;
+			case 'parallel':
+				$this->params['parallel'] = true;
+				break;
 			default:
 				if (($i = strpos($arg, '=')) !== false) {
 					// Treat the parameter like a name=value pair
@@ -84,6 +87,7 @@ class harvest extends CommandLineTool {
 			. "Flags include:\n"
 			. "\tverbose: Display status information during the harvest.\n"
 			. "\tflush: Flush the contents of the archive before harvesting.\n"
+			. "\tparallel: Harvest archives in parallel.\n"
 			. "\tusage: Display additional usage information for the particular archive\n"
 			. "Additional flags for each harvester can be listed using:\n"
 			. "\t{$this->scriptName} [archive ID] usage\n\n"
@@ -129,31 +133,39 @@ class harvest extends CommandLineTool {
 
 			$fetchStartTime = time();
 
-			echo "Fetching records...\n";
-			$plugin->updateIndex($archive, $this->params);
+			if (!isset($this->params['parallel'])) {
+				echo "Fetching records...\n";
+				$plugin->updateIndex($archive, $this->params);
 
-			$fetchEndTime = time();
-			$timeElapsed = $fetchEndTime - $fetchStartTime;
-			$recordCount = $recordDao->getRecordCount($archive->getArchiveId());
-			$harvestedRecords = $recordCount - $oldRecordCount;
-			if ($timeElapsed > 0) $recordsPerSecond = $harvestedRecords / $timeElapsed;
-			else $recordsPerSecond = 0;
-			$recordsPerSecond = number_format($recordsPerSecond, 2);
+				$fetchEndTime = time();
+				$timeElapsed = $fetchEndTime - $fetchStartTime;
+				$recordCount = $recordDao->getRecordCount($archive->getArchiveId());
+				$harvestedRecords = $recordCount - $oldRecordCount;
+				if ($timeElapsed > 0) $recordsPerSecond = $harvestedRecords / $timeElapsed;
+				else $recordsPerSecond = 0;
+				$recordsPerSecond = number_format($recordsPerSecond, 2);
 
-			echo "Finished:\n";
-			echo "\t$harvestedRecords records indexed\n";
-			echo "\t$timeElapsed seconds elapsed\n";
-			echo "\t$recordsPerSecond records per second\n";
-			echo "\t$oldRecordCount records kept from past harvests\n";
-			echo "\t$recordCount records total.\n";
-			if ($errors = $plugin->getErrors()) {
-				echo "Errors/Warnings:\n";
-				foreach (array_unique($errors) as $error) {
-					echo "\t$error\n";
+				echo "Finished:\n";
+				echo "\t$harvestedRecords records indexed\n";
+				echo "\t$timeElapsed seconds elapsed\n";
+				echo "\t$recordsPerSecond records per second\n";
+				echo "\t$oldRecordCount records kept from past harvests\n";
+				echo "\t$recordCount records total.\n";
+				if ($errors = $plugin->getErrors()) {
+					echo "Errors/Warnings:\n";
+					foreach (array_unique($errors) as $error) {
+						echo "\t$error\n";
+					}
+					$plugin->clearErrors();
+					$hadErrors = true;
+					echo "\n";
 				}
-				$plugin->clearErrors();
-				$hadErrors = true;
-				echo "\n";
+			} else {
+				// Parallel harvesting. Flag archives to
+				// be harvested.
+				$archive->setAwaitingHarvest(1);
+				$archiveDao = DAORegistry::getDAO('ArchiveDAO');
+				$archiveDao->updateArchive($archive);
 			}
 			unset($archive);
 		} else {
@@ -176,6 +188,16 @@ class harvest extends CommandLineTool {
 			}
 			return false;
 		}
+
+		if (isset($this->params['parallel'])) {
+			// Finished flagging archives for parallel harvesting;
+			// kick off the actual harvesting.
+			echo "Beginning parallel harvesting processes.\n";
+			$noOfProcesses = (int)Config::getVar('general', 'harvesting_max_processes');
+			$processDao = DAORegistry::getDAO('ProcessDAO');
+			return $processDao->spawnProcesses(new Request(), 'api.harvester.HarvesterApiHandler', 'harvest', PROCESS_TYPE_HARVEST, $noOfProcesses, $this->params);
+		}
+
 		return !$hadErrors;
 	}
 

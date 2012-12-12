@@ -98,6 +98,77 @@ class ArchiveDAO extends DAO {
 	}
 
 	/**
+	 * Claims the next flagged archive found in the database and
+	 * returns it. This method is idempotent and parallelisable.
+	 * It uses an atomic locking strategy to avoid race conditions.
+	 *
+	 * @param $request Request
+	 * @param $lockId string a globally unique id that
+	 *  identifies the calling process.
+	 * @return mixed Archive if one could be found and locked, otherwise
+	 *  false.
+	 */
+	function getNextFlaggedArchive($request, $lockId) {
+		// NB: We implement an atomic locking strategy to make
+		// sure that no two parallel background processes can claim the
+		// same archive.
+		$archive = null;
+
+		for ($try = 0; $try < 3; $try++) {
+			// We use three statements (read, write, read) rather than
+			// MySQL's UPDATE ... LIMIT ... to guarantee compatibility
+			// with ANSI SQL.
+
+			// Get the ID of the next flagged archive.
+			$result = $this->retrieve(
+				'SELECT archive_id
+				FROM archives
+				WHERE awaiting_harvest = 1
+				LIMIT 1'
+			);
+			if ($result->RecordCount() > 0) {
+				$nextArchive = $result->GetRowAssoc(false);
+				$nextArchiveId = $nextArchive['archive_id'];
+			} else {
+				// Nothing to do.
+				$result->Close();
+				return false;
+			}
+			$result->Close();
+			unset($result);
+
+			// Lock the archive.
+			$this->update(
+				'UPDATE archives
+				SET awaiting_harvest = 0, lock_id = ?
+				WHERE archive_id = ? AND awaiting_harvest = 1',
+				array($lockId, (int) $nextArchiveId)
+			);
+
+			// Make sure that no other concurring process
+			// has claimed this archive before we could
+			// lock it.
+			$result = $this->retrieve(
+				'SELECT *
+				FROM archives
+				WHERE lock_id = ?',
+				$lockId
+			);
+			if ($result->RecordCount() > 0) {
+				$archive = $this->_returnArchiveFromRow($result->GetRowAssoc(false));
+				break;
+			}
+		}
+		$result->Close();
+		if (!is_a($archive, 'Archive')) return false;
+
+		// Updating the archive will release the lock.
+		$this->updateArchive($archive);
+
+		return $archive;
+	}
+
+	/**
 	 * Internal function to return a Archive object from a row.
 	 * @param $row array
 	 * @return Archive
@@ -110,6 +181,8 @@ class ArchiveDAO extends DAO {
 		$archive->setTitle($row['title']);
 		$archive->setEnabled($row['enabled']);
 		$archive->setUrl($row['url']);
+		$archive->setLockId($row['lock_id']);
+		$archive->setAwaitingHarvest($row['awaiting_harvest']);
 		$archive->setHarvesterPluginName($row['harvester_plugin']);
 		$archive->setSchemaPluginName($row['schema_plugin']);
 
@@ -122,10 +195,10 @@ class ArchiveDAO extends DAO {
 	 * Insert a new archive.
 	 * @param $archive Archive
 	 */	
-	function insertArchive(&$archive) {
+	function insertArchive($archive) {
 		$this->update(
 			'INSERT INTO archives
-				(user_id, public_archive_id, title, url, schema_plugin, harvester_plugin, enabled)
+				(user_id, public_archive_id, title, url, schema_plugin, harvester_plugin, enabled, awaiting_harvest, lock_id)
 				VALUES
 				(?, ?, ?, ?, ?, ?, ?)',
 			array(
@@ -135,7 +208,9 @@ class ArchiveDAO extends DAO {
 				$archive->getUrl(),
 				$archive->getSchemaPluginName(),
 				$archive->getHarvesterPluginName(),
-				$archive->getEnabled()?1:0
+				$archive->getEnabled()?1:0,
+				$archive->getAwaitingHarvest()?1:0,
+				$archive->getLockId(),
 			)
 		);
 
@@ -159,7 +234,9 @@ class ArchiveDAO extends DAO {
 					url = ?,
 					schema_plugin = ?,
 					harvester_plugin = ?,
-					enabled = ?
+					enabled = ?,
+					awaiting_harvest = ?,
+					lock_id = NULL
 				WHERE archive_id = ?',
 			array(
 				(int) $archive->getUserId(),
@@ -169,6 +246,7 @@ class ArchiveDAO extends DAO {
 				$archive->getSchemaPluginName(),
 				$archive->getHarvesterPluginName(),
 				$archive->getEnabled()?1:0,
+				$archive->getAwaitingHarvest()?1:0,
 				(int) $archive->getArchiveId()
 			)
 		);
@@ -178,7 +256,7 @@ class ArchiveDAO extends DAO {
 	 * Delete an archive, INCLUDING ALL DEPENDENT ITEMS.
 	 * @param $archive Archive
 	 */
-	function deleteArchive(&$archive) {
+	function deleteArchive($archive) {
 		return $this->deleteArchiveById($archive->getArchiveId());
 	}
 
@@ -187,10 +265,10 @@ class ArchiveDAO extends DAO {
 	 * @param $archiveId int
 	 */
 	function deleteArchiveById($archiveId) {
-		$recordDao =& DAORegistry::getDAO('RecordDAO');
+		$recordDao = DAORegistry::getDAO('RecordDAO');
 		$recordDao->deleteRecordsByArchiveId($archiveId);
 
-		$archiveSettingsDao =& DAORegistry::getDAO('ArchiveSettingsDAO');
+		$archiveSettingsDao = DAORegistry::getDAO('ArchiveSettingsDAO');
 		$archiveSettingsDao->deleteSettingsByArchiveId($archiveId);
 
 		return $this->update(
@@ -205,7 +283,7 @@ class ArchiveDAO extends DAO {
 	 * @return DAOResultFactory containing matching archives
 	 */
 	function &getArchives($onlyEnabled = true, $rangeInfo = null, $sortBy = null, $sortDirection = SORT_DIRECTION_ASC) {
-		$result =& $this->retrieveRange(
+		$result = $this->retrieveRange(
 			'SELECT a.*,
 				u.username AS archive_manager
 			FROM archives a
@@ -226,7 +304,7 @@ class ArchiveDAO extends DAO {
 	 * @return DAOResultFactory containing matching archives
 	 */
 	function &getArchivesByUserId($userId, $rangeInfo = null, $sortBy = null, $sortDirection = SORT_DIRECTION_ASC) {
-		$result =& $this->retrieveRange(
+		$result = $this->retrieveRange(
 			'SELECT * FROM archives WHERE user_id = ?' . ($sortBy?(' ORDER BY ' . $this->getSortMapping($sortBy) . ' ' . $this->getDirectionMapping($sortDirection)) : ''),
 			array((int) $userId),
 			$rangeInfo

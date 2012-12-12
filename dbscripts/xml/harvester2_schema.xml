@@ -52,6 +52,8 @@
 			<KEY/>
 			<AUTOINCREMENT/>
 		</field>
+		<field name="awaiting_harvest" type="I8" />
+		<field name="lock_id" type="C2" size="23" />
 		<field name="harvester_plugin" type="C2" size="80">
 			<NOTNULL/>
 		</field>
