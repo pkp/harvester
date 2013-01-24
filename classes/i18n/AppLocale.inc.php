@@ -17,7 +17,7 @@
 
 import('lib.pkp.classes.i18n.PKPLocale');
 
-define('LOCALE_COMPONENT_APPLICATION_COMMON',	0x00000101);
+define('LOCALE_COMPONENT_APP_COMMON',	0x00000101);
 
 class AppLocale extends PKPLocale {
 	/**
@@ -136,7 +136,7 @@ class AppLocale extends PKPLocale {
 	static function makeComponentMap($locale) {
 		$componentMap = parent::makeComponentMap($locale);
 		$baseDir = "locale/$locale/";
-		$componentMap[LOCALE_COMPONENT_APPLICATION_COMMON] = $baseDir . 'locale.xml';
+		$componentMap[LOCALE_COMPONENT_APP_COMMON] = $baseDir . 'locale.xml';
 		return $componentMap;
 	}
 }
