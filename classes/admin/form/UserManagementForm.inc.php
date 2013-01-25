@@ -36,7 +36,7 @@ class UserManagementForm extends Form {
 			$this->addCheck(new FormValidator($this, 'username', 'required', 'user.profile.form.usernameRequired'));
 			$this->addCheck(new FormValidatorCustom($this, 'username', 'required', 'user.register.form.usernameExists', array(DAORegistry::getDAO('UserDAO'), 'userExistsByUsername'), array($this->userId, true), true));
 			$this->addCheck(new FormValidatorAlphaNum($this, 'username', 'required', 'user.register.form.usernameAlphaNumeric'));
-			
+
 			if (!Config::getVar('security', 'implicit_auth')) {
 				$this->addCheck(new FormValidator($this, 'password', 'required', 'user.profile.form.passwordRequired'));
 			    $this->addCheck(new FormValidatorLength($this, 'password', 'required', 'user.register.form.passwordLengthTooShort', '>=', $site->getMinPasswordLength()));
@@ -68,7 +68,7 @@ class UserManagementForm extends Form {
 			$user =& $userDao->getById($this->userId);
 			$templateMgr->assign('username', $user->getUsername());
 		}
-	
+
 		$activeRoles = array(
 				'' => 'admin.people.doNotEnroll',
 				'submitter' => 'user.role.submitter'
@@ -95,7 +95,7 @@ class UserManagementForm extends Form {
 
 		// Send implicitAuth setting down to template
 		$templateMgr->assign('implicitAuth', Config::getVar('security', 'implicit_auth'));
-		
+
 		$site =& Request::getSite();
 		$templateMgr->assign('availableLocales', $site->getSupportedLocaleNames());
 
@@ -154,7 +154,9 @@ class UserManagementForm extends Form {
 		if (!isset($this->userId)) {
 			$roleDao =& DAORegistry::getDAO('RoleDAO');
 			$roleId = Request::getUserVar('roleId');
-			$roleSymbolic = $roleDao->getRolePath($roleId);
+			$role =& $roleDao->newDataObject();
+			$role->setId($roleId);
+			$roleSymbolic = $role->getPath();
 
 			$this->_data = array(
 				'enrollAs' => array($roleSymbolic)

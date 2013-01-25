@@ -9,7 +9,7 @@
  * @class PeopleHandler
  * @ingroup pages_admin
  *
- * @brief Handle requests for people management functions. 
+ * @brief Handle requests for people management functions.
  */
 
 
@@ -20,7 +20,7 @@ class PeopleHandler extends AdminHandler {
 	/**
 	 * Display list of people in the selected role.
 	 * @param $args array first parameter is the role ID to display
-	 */	
+	 */
 	function people($args, &$request) {
 		$this->validate();
 		$this->setupTemplate($request, true);
@@ -41,7 +41,7 @@ class PeopleHandler extends AdminHandler {
 			$roleId = 0;
 			$roleName = 'admin.people.allUsers';
 		}
-		
+
 		$sort = $request->getUserVar('sort');
 		$sort = isset($sort) ? $sort : 'name';
 		$sortDirection = $request->getUserVar('sortDirection');
@@ -85,7 +85,9 @@ class PeopleHandler extends AdminHandler {
 			USER_FIELD_EMAIL => 'user.email'
 		);
 		$templateMgr->assign('fieldOptions', $fieldOptions);
-		$templateMgr->assign('rolePath', $roleDao->getRolePath($roleId));
+		$role =& $roleDao->newDataObject();
+		$role->setId($roleId);
+		$templateMgr->assign('rolePath', $role->getPath());
 		$templateMgr->assign('alphaList', explode(' ', __('common.alphaList')));
 		$templateMgr->assign('roleSymbolic', $roleSymbolic);
 		$templateMgr->assign('sort', $sort);
@@ -121,7 +123,7 @@ class PeopleHandler extends AdminHandler {
 			$searchType = USER_FIELD_INITIAL;
 			$search = $searchInitial;
 		}
-		
+
 		$sort = $request->getUserVar('sort');
 		$sort = isset($sort) ? $sort : 'name';
 		$sortDirection = $request->getUserVar('sortDirection');
@@ -168,7 +170,9 @@ class PeopleHandler extends AdminHandler {
 		}
 
 		$roleDao =& DAORegistry::getDAO('RoleDAO');
-		$rolePath = $roleDao->getRolePath($roleId);
+		$role =& $roleDao->newDataObject();
+		$role->setId($roleId);
+		$rolePath = $role->getPath();
 
 		if ($users != null && is_array($users) && $rolePath != '' && $rolePath != 'admin') {
 			for ($i=0; $i<count($users); $i++) {
@@ -197,7 +201,9 @@ class PeopleHandler extends AdminHandler {
 			$roleDao->deleteRoleByUserId($request->getUserVar('userId'), $roleId);
 		}
 
-		$request->redirect(null, 'people', $roleDao->getRolePath($roleId) . 's');
+		$role =& $roleDao->newDataObject();
+		$role->setId($roleId);
+		$request->redirect(null, 'people', $role->getPath() . 's');
 	}
 
 	/**

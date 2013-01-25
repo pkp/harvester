@@ -18,7 +18,7 @@
 <ul id="roles" class="plain">
 	{foreach from=$userRoles item=role}
 		{assign var="hasRole" value=1}
-			<li>&#187; <a href="{url page=$role->getRolePath()}">{translate key=$role->getRoleName()}</a></li>
+			<li>&#187; <a href="{url page=$role->getPath()}">{translate key=$role->getRoleName()}</a></li>
 	{foreachelse}
 		<li>
 			{translate key="user.noRoles"}

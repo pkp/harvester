@@ -31,7 +31,7 @@ class PageRouter extends PKPPageRouter {
 		$roles =& $roleDao->getRolesByUserId($userId);
 		if(count($roles) == 1) {
 			$role = array_shift($roles);
-			$request->redirect($role->getRolePath());
+			$request->redirect($role->getPath());
 		} else {
 			$request->redirect('user');
 		}

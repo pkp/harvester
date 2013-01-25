@@ -13,18 +13,19 @@
  * @brief Describes user roles within the system and the associated permissions.
  */
 
-
+import('lib.pkp.classes.security.PKPRole');
 
 /** ID codes for all user roles */
-define('ROLE_ID_SITE_ADMIN',		0x00000001);
 define('ROLE_ID_SUBMITTER',		0x00000002);
 
-class Role extends DataObject {
+class Role extends PKPRole {
 	/**
 	 * Constructor.
+	 * @param $roleId for this role.  Default to null for backwards
+	 * 	compatibility
 	 */
-	function Role() {
-		parent::DataObject();
+	function Role($roleId = null) {
+		parent::PKPRole($roleId);
 	}
 
 	/**
@@ -32,15 +33,25 @@ class Role extends DataObject {
 	 * @return String the key
 	 */
 	function getRoleName() {
-		return RoleDAO::getRoleName($this->getData('roleId'));
+		switch ($this->getId()) {
+			case ROLE_ID_SUBMITTER:
+				return 'user.role.submitter' . ($plural ? 's' : '');
+			default:
+				return parent::getRoleName($plural);
+		}
 	}
 
 	/**
 	 * Get the URL path associated with this role's operations.
 	 * @return String the path
 	 */
-	function getRolePath() {
-		return RoleDAO::getRolePath($this->getData('roleId'));
+	function getPath() {
+		switch ($this->getId()) {
+			case ROLE_ID_SUBMITTER:
+				return ROLE_PATH_SUBMITTER;
+			default:
+				return parent::getPath();
+		}
 	}
 
 	//
@@ -61,22 +72,6 @@ class Role extends DataObject {
 	 */
 	function setUserId($userId) {
 		return $this->setData('userId', $userId);
-	}
-
-	/**
-	 * Get role ID of this role.
-	 * @return int
-	 */
-	function getRoleId() {
-		return $this->getData('roleId');
-	}
-
-	/**
-	 * Set role ID of this role.
-	 * @param $roleId int
-	 */
-	function setRoleId($roleId) {
-		return $this->setData('roleId', $roleId);
 	}
 }
 

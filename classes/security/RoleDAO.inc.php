@@ -26,6 +26,15 @@ class RoleDAO extends DAO {
 	}
 
 	/**
+	 * Create new data object.
+	 * @return Role
+	 */
+	function &newDataObject() {
+		$dataObject = new Role();
+		return $dataObject;
+	}
+
+	/**
 	 * Retrieve a role.
 	 * @param $userId int
 	 * @param $roleId int
@@ -231,39 +240,6 @@ class RoleDAO extends DAO {
 	}
 
 	/**
-	 * Get the i18n key name associated with the specified role.
-	 * @param $roleId int
-	 * @param $plural boolean get the plural form of the name
-	 * @return string
-	 */
-	static function getRoleName($roleId, $plural = false) {
-		switch ($roleId) {
-			case ROLE_ID_SITE_ADMIN:
-				return 'user.role.siteAdmin' . ($plural ? 's' : '');
-			case ROLE_ID_SUBMITTER:
-				return 'user.role.submitter' . ($plural ? 's' : '');
-			default:
-				return '';
-		}
-	}
-
-	/**
-	 * Get the URL path associated with the specified role's operations.
-	 * @param $roleId int
-	 * @return string
-	 */
-	static function getRolePath($roleId) {
-		switch ($roleId) {
-			case ROLE_ID_SITE_ADMIN:
-				return 'admin';
-			case ROLE_ID_SUBMITTER:
-				return 'submitter';
-			default:
-				return '';
-		}
-	}
-
-	/**
 	 * Get a role's ID based on its path.
 	 * @param $rolePath string
 	 * @return int
@@ -278,21 +254,6 @@ class RoleDAO extends DAO {
 				return null;
 		}
 	}
-
-	/**
-	 * Map a column heading value to a database value for sorting
-	 * @param string
-	 * @return string
-	 */
-	function getSortMapping($heading) {
-		switch ($heading) {
-			case 'username': return 'u.username';
-			case 'name': return 'u.last_name';
-			case 'email': return 'u.email';
-			default: return null;
-		}
-	}
-
 }
 
 ?>
