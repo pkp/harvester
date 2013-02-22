@@ -102,6 +102,8 @@ class harvest extends CommandLineTool {
 			$recordDao =& DAORegistry::getDAO('RecordDAO');
 
 			// Get the archive plugin
+			PluginRegistry::loadCategory('preprocessors');
+			PluginRegistry::loadCategory('postprocessors');
 			$plugins =& PluginRegistry::loadCategory('harvesters');
 			$pluginName = $archive->getHarvesterPluginName();
 			if (!isset($plugins[$pluginName])) {

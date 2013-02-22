@@ -2,7 +2,7 @@ Using the PKP Metadata Harvester typemap plugin
 ===============================================
 
 The typemap plugin converts the type element values from an archive to a set of 
-other values. If a "map file" for each archvive being harvested is defined, all
+other values. If a "map file" for each archive being harvested is defined, all
 the archives can share a common set of "type" values in the user interface,
 thereby allowing the user to select from a consistent set of values when
 searching.

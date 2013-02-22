@@ -172,13 +172,15 @@ class Harvester {
 		$record->setSchemaId($schemaId);
 		$record->setArchiveId($this->archive->getArchiveId());
 		$record->setContents($contents);
-		$record->setParsedContents($schemaPlugin->parseContents($contents));
+		HookRegistry::call('Harvester::preprocessRecord', array(&$record, &$this->archive, &$schema));
+		$record->setParsedContents($schemaPlugin->parseContents($record->getContents()));
 		$record->setIdentifier($identifier);
 		$this->recordDao->insertRecord($record);
 
 		$this->indexRecordSorting($record);
 
-		HookRegistry::call('Harvester::insertRecord', array(&$record));
+		HookRegistry::call('Harvester::insertRecord', array(&$record, &$this->archive, &$schema));
+		HookRegistry::call('Harvester::postprocessRecord', array(&$record, &$this->archive, &$schema));
 
 		return true;
 	}

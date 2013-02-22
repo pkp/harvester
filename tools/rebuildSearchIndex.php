@@ -88,7 +88,7 @@ class rebuildSearchIndex extends CommandLineTool {
 			$records =& $recordDao->getRecords($archive->getArchiveId());
 			while ($record =& $records->next()) {
 				$harvester->indexRecordSorting($record);
-				HookRegistry::call('Harvester::insertRecord', array(&$record));
+				HookRegistry::call('Harvester::indexRecord', array(&$record));
 				unset($record);
 			}
 			unset($archive, $records, $harvester);

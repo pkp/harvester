@@ -178,6 +178,8 @@ class AdminArchiveHandler extends AdminHandler {
 			@set_time_limit(0);
 
 			// Get the harvester for this archive
+			PluginRegistry::loadCategory('preprocessors');
+			PluginRegistry::loadCategory('postprocessors');
 			$plugins =& PluginRegistry::loadCategory('harvesters');
 			$pluginName = $archive->getHarvesterPluginName();
 			if (!isset($plugins[$pluginName])) $request->redirect('admin', 'manage', $archive->getArchiveId());
