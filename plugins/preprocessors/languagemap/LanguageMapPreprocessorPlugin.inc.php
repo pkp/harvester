@@ -9,8 +9,6 @@
  * @package plugins.preprocessors.languagemap
  * @class LanguageMapPreprocessorPlugin
  *
- * Test preprocessor plugin
- *
  */
 
 import('classes.plugins.PreprocessorPlugin');
@@ -18,11 +16,18 @@ import('classes.plugins.PreprocessorPlugin');
 define('LANGUAGE_MAP_FILE', 'mapping.xml');
 
 class LanguageMapPreprocessorPlugin extends PreprocessorPlugin {
-	/** @var $languageCrosswalk object */
-	var $languageCrosswalkFieldIds;
+	/** @var $languageCrosswalkFieldNames object */
+	var $languageCrosswalkFieldNames;
 
 	/** @var $mappingCache */
 	var $mappingCache;
+
+	/**
+	 * Constructor
+	 */
+	function LanguageMapPreprocessorPlugin() {
+		parent::PreprocessorPlugin();
+	}
 
 	/**
 	 * Register the plugin.
@@ -31,18 +36,17 @@ class LanguageMapPreprocessorPlugin extends PreprocessorPlugin {
 	 */
 	function register($category, $path) {
 		$success = parent::register($category, $path);
-		$this->languageCrosswalkFieldIds = null;
+		$this->languageCrosswalkFieldNames = array();
 		if ($success && $this->isEnabled()) {
 			// Fetch the list of field IDs that the language
 			// crosswalk uses; we will map all languages mentioned
 			// in these fields.
-			$this->languageCrosswalkFieldIds = array();
 			$crosswalkDao =& DAORegistry::getDAO('CrosswalkDAO');
 			$languageCrosswalk =& $crosswalkDao->getCrosswalkByPublicCrosswalkId('language');
 			if ($languageCrosswalk) {
 				$fields =& $languageCrosswalk->getFields();
 				while ($field =& $fields->next()) {
-					$this->languageCrosswalkFieldIds[] = $field->getFieldId();
+					$this->languageCrosswalkFieldNames[$field->getSchemaId()][] = $field->getName();
 					unset($field);
 				}
 			}
@@ -135,60 +139,24 @@ class LanguageMapPreprocessorPlugin extends PreprocessorPlugin {
 	}
 
 	/**
-	 * This callback implements the actual map and is called before an
-	 * entry is inserted.
-	 * @param $archive object
-	 * @param $record object
-	 * @param $field object
-	 * @param $value string
-	 * @param $attributes array
-	 * @return boolean
+	 * Preprocess a record.
+	 * @param $record Record Record object ready for insertion
+	 * @param $archive Archive
+ 	 * @param $schema Schema
+	 * @return boolean Hook callback status
 	 */
-	function preprocessEntry(&$archive, &$record, &$field, &$value, &$attributes) {
-		if (is_array($this->languageCrosswalkFieldIds) && in_array($field->getFieldId(), $this->languageCrosswalkFieldIds)) {
-			$value = $this->mapLanguage($value);
+	function preprocessRecord(&$record, &$archive, &$schema) {
+		if (isset($this->languageCrosswalkFieldNames[$schema->getSchemaId()])) {
+			$doc = new DOMDocument();
+			$doc->loadXML($record->getContents());
+			foreach($this->languageCrosswalkFieldNames[$schema->getSchemaId()] as $fieldName) {
+				foreach ($doc->getElementsByTagName($fieldName) as $element) {
+					$element->nodeValue = $this->mapLanguage($archive, $element->nodeValue);
+				}
+			}
+			$record->setContents($doc->saveXML());
 		}
 		return false;
-	}
-
-	/**
-	 * Return the set of management verbs supported by this plugin for the
-	 * administration interface.
-	 * @return array
-	 */
-	function getManagementVerbs() {
-		if ($this->isEnabled()) return array(
-			array('disable', __('common.disable'))
-		);
-		else return array(
-			array('enable', __('common.enable'))
-		);
-	}
-
-	/**
-	 * Perform a management function on this plugin.
-	 * @param $verb string
-	 * @param $params array
-	 */
-	function manage($verb, $params) {
-		$request =& $this->getRequest();
-		switch ($verb) {
-			case 'enable':
-				$this->updateSetting('enabled', true);
-				break;
-			case 'disable':
-				$this->updateSetting('enabled', false);
-				break;
-		}
-		$request->redirect('admin', 'plugins');
-	}
-
-	/**
-	 * Determine whether or not this plugin is currently enabled.
-	 * @return boolean
-	 */
-	function isEnabled() {
-		return $this->getSetting('enabled');
 	}
 }
 

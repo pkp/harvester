@@ -52,6 +52,7 @@ class ZendSearchPlugin extends GenericPlugin {
 
 				// Record handling & harvesting
 				HookRegistry::register('Harvester::insertRecord', array(&$this, 'insertRecordCallback'));
+				HookRegistry::register('Harvester::indexRecord', array(&$this, 'insertRecordCallback'));
 				HookRegistry::register('Harvester::updateRecord', array(&$this, 'updateRecordCallback'));
 				HookRegistry::register('Harvester::deleteRecord', array(&$this, 'deleteRecordCallback'));
 

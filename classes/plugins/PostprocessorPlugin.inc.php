@@ -19,25 +19,82 @@
 import('classes.plugins.Plugin');
 
 class PostprocessorPlugin extends Plugin {
+	/**
+	 * Constructor
+	 */
 	function PostprocessorPlugin() {
 		parent::Plugin();
+	}
+
+	/**
+	 * Determine whether or not this plugin is currently enabled.
+	 * @return boolean
+	 */
+	function isEnabled() {
+		return $this->getSetting('enabled');
 	}
 
 	function register($category, $path) {
 		$result = parent::register($category, $path);
 		if ($result) {
-			HookRegistry::register('SchemaPlugin::indexRecord', array(&$this, '_postprocessEntry'));
+			HookRegistry::register('Harvester::postprocessRecord', array(&$this, '_postprocessRecord'));
 		}
 		return $result;
 	}
 
-	function _postprocessEntry($hookName, $args) {
-		$archive =& $args[0];
-		$record =& $args[1];
-		$field =& $args[2];
-		$value =& $args[3];
-		$attributes =& $args[4];
-		return $this->postprocessEntry($archive, $record, $field, $value, $attributes);
+	/**
+	 * Return the set of management verbs supported by this plugin for the
+	 * administration interface.
+	 * @return array
+	 */
+	function getManagementVerbs() {
+		if ($this->isEnabled()) return array(
+			array('disable', __('common.disable'))
+		);
+		else return array(
+			array('enable', __('common.enable'))
+		);
+	}
+
+	/**
+	 * Perform a management function on this plugin.
+	 * @param $verb string
+	 * @param $params array
+	 */
+	function manage($verb, $params) {
+		switch ($verb) {
+			case 'enable':
+				$this->updateSetting('enabled', true);
+				break;
+			case 'disable':
+				$this->updateSetting('enabled', false);
+				break;
+		}
+		Request::redirect('admin', 'plugins');
+	}
+
+	/**
+	 * Wrapper around postprocessRecord to process a record via a hook.
+	 * @param $hookName string
+	 * @param $args array
+	 * @retrn boolean Hook callback status
+	 */
+	function _postprocessRecord($hookName, $args) {
+		$record =& $args[0];
+		$archive =& $args[1];
+		$schema =& $args[2];
+		return $this->postprocessRecord($record, $archive, $schema);
+	}
+
+	/**
+	 * Post-process a record.
+	 * @param $record Record record
+	 * @param $archive Archive Archive in which this record will be inserted
+	 * @param $schema Schema The schema this record is described in
+	 * @return boolean Hook processing status
+	 */
+	function postprocessRecord(&$record, &$archive, &$schema) {
+		assert(false); // Subclasses to override
 	}
 
 	/**
@@ -52,10 +109,6 @@ class PostprocessorPlugin extends Plugin {
 	 * Get a description of the plugin.
 	 */
 	function getDescription() {
-		fatalError('ABSTRACT CLASS');
-	}
-
-	function postprocessEntry(&$archive, &$record, &$field, &$value, &$attributes) {
 		fatalError('ABSTRACT CLASS');
 	}
 }

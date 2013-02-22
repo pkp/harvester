@@ -27,8 +27,6 @@ class SchemaPlugin extends Plugin {
 	function register($category, $path) {
 		$success = parent::register($category, $path);
 		if ($success) {
-			// Make sure postprocessors are loaded.
-			PluginRegistry::loadCategory('postprocessors');
 			HookRegistry::register('OAI::metadataFormats', array(&$this, 'callback_formatRequest'));
 		}
 		return $success;
