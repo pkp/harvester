@@ -299,7 +299,7 @@ class UserManagementForm extends Form {
 			}
 
 			$user->setDateRegistered(Core::getCurrentDate());
-			$userId = $userDao->insertUser($user);
+			$userId = $userDao->insertObject($user);
 
 			$isAdmin = Validation::isSiteAdmin();
 
