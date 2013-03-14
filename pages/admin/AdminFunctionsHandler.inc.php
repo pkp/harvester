@@ -32,7 +32,7 @@ class AdminFunctionsHandler extends AdminHandler {
 		$dbconn =& DBConnection::getConn();
 		$dbServerInfo = $dbconn->ServerInfo();
 
-		$versionDao =& DAORegistry::getDAO('VersionDAO');
+		$versionDao = DAORegistry::getDAO('VersionDAO');
 		$currentVersion =& $versionDao->getCurrentVersion();
 		$versionHistory =& $versionDao->getVersionHistory();
 
@@ -70,7 +70,7 @@ class AdminFunctionsHandler extends AdminHandler {
 	 */
 	function expireSessions($args, &$request) {
 		$this->validate();
-		$sessionDao =& DAORegistry::getDAO('SessionDAO');
+		$sessionDao = DAORegistry::getDAO('SessionDAO');
 		$sessionDao->deleteAllSessions();
 		$request->redirect('admin');
 	}

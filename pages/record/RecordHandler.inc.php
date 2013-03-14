@@ -25,7 +25,7 @@ class RecordHandler extends Handler {
 	function view($args, &$request) {
 		$this->validate();
 
-		$recordDao =& DAORegistry::getDAO('RecordDAO');
+		$recordDao = DAORegistry::getDAO('RecordDAO');
 
 		$recordId = (int) array_shift($args);
 		$record =& $recordDao->getRecord($recordId);
@@ -52,7 +52,7 @@ class RecordHandler extends Handler {
 			$hierarchy[] = array($request->url('browse'), 'navigation.browse');
 		}
 		if ($record) {
-			$archiveDao =& DAORegistry::getDAO('ArchiveDAO');
+			$archiveDao = DAORegistry::getDAO('ArchiveDAO');
 			$archive =& $archiveDao->getArchive($record->getArchiveId(), false);
 			$hierarchy[] = array($request->url('browse', 'index', $archive->getArchiveId()), $archive->getTitle(), true);
 		}

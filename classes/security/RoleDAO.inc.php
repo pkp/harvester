@@ -22,7 +22,7 @@ class RoleDAO extends DAO {
 	 */
 	function RoleDAO() {
 		parent::DAO();
-		$this->userDao =& DAORegistry::getDAO('UserDAO');
+		$this->userDao = DAORegistry::getDAO('UserDAO');
 	}
 
 	/**

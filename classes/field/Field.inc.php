@@ -80,7 +80,7 @@ class Field extends DataObject {
 	}
 
 	function &getSchemaPlugin() {
-		$schemaDao =& DAORegistry::getDAO('SchemaDAO');
+		$schemaDao = DAORegistry::getDAO('SchemaDAO');
 		$schema =& $schemaDao->getSchema($this->getSchemaId());
 		$plugin =& $schema->getPlugin();
 		if (!$plugin) {

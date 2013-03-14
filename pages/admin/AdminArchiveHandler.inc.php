@@ -36,7 +36,7 @@ class AdminArchiveHandler extends AdminHandler {
 		// Load the harvester plugins so we can display names.
 		$plugins =& PluginRegistry::loadCategory('harvesters');
 
-		$archiveDao =& DAORegistry::getDAO('ArchiveDAO');
+		$archiveDao = DAORegistry::getDAO('ArchiveDAO');
 		$archives =& $archiveDao->getArchives(false, $rangeInfo, $sort, $sortDirection);
 
 		$templateMgr =& TemplateManager::getManager($request);
@@ -119,7 +119,7 @@ class AdminArchiveHandler extends AdminHandler {
 	function deleteArchive($args, &$request) {
 		$this->validate();
 
-		$archiveDao =& DAORegistry::getDAO('ArchiveDAO');
+		$archiveDao = DAORegistry::getDAO('ArchiveDAO');
 
 		// Disable timeout, as this operation may take
 		// a long time.
@@ -142,7 +142,7 @@ class AdminArchiveHandler extends AdminHandler {
 		$this->validate();
 		$this->setupTemplate($request, true);
 
-		$archiveDao =& DAORegistry::getDAO('ArchiveDAO');
+		$archiveDao = DAORegistry::getDAO('ArchiveDAO');
 
 		if (isset($args) && isset($args[0])) {
 			$archiveId = $args[0];
@@ -165,7 +165,7 @@ class AdminArchiveHandler extends AdminHandler {
 		$this->validate();
 		$this->setupTemplate($request, true);
 
-		$archiveDao =& DAORegistry::getDAO('ArchiveDAO');
+		$archiveDao = DAORegistry::getDAO('ArchiveDAO');
 
 		if (isset($args) && isset($args[0])) {
 			$archiveId = (int) $args[0];
@@ -186,7 +186,7 @@ class AdminArchiveHandler extends AdminHandler {
 			$params = $plugin->readUpdateParams($archive);
 
 			if ($plugin->updateIndex($archive, $params)) {
-				$recordDao =& DAORegistry::getDAO('RecordDAO');
+				$recordDao = DAORegistry::getDAO('RecordDAO');
 				$templateMgr =& TemplateManager::getManager($request);
 				$templateMgr->assign('messageTranslated',
 					__('admin.archive.manage.updateIndex.success', array(
@@ -217,13 +217,13 @@ class AdminArchiveHandler extends AdminHandler {
 		$this->validate();
 		$this->setupTemplate($request, true);
 
-		$archiveDao =& DAORegistry::getDAO('ArchiveDAO');
+		$archiveDao = DAORegistry::getDAO('ArchiveDAO');
 
 		if (isset($args) && isset($args[0])) {
 			$archiveId = (int) $args[0];
 			$archive =& $archiveDao->getArchive($archiveId, false);
 			if ($archive) {
-				$recordDao =& DAORegistry::getDAO('RecordDAO');
+				$recordDao = DAORegistry::getDAO('RecordDAO');
 				$recordDao->deleteRecordsByArchiveId($archive->getArchiveId());
 				$archive->setLastIndexedDate(null);
 				$archive->updateRecordCount();

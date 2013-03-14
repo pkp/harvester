@@ -77,7 +77,7 @@ class SchemaPlugin extends Plugin {
 	 * Get the ID for a field, building it if necessary.
 	 */
 	function getFieldId($fieldName) {
-		$fieldDao =& DAORegistry::getDAO('FieldDAO');
+		$fieldDao = DAORegistry::getDAO('FieldDAO');
 		$field =& $fieldDao->buildField($fieldName, $this->getName());
 		return $field->getFieldId();
 	}
@@ -114,7 +114,7 @@ class SchemaPlugin extends Plugin {
 	 * Get the schema object associated with this plugin
 	 */
 	function &getSchema() {
-		$schemaDao =& DAORegistry::getDAO('SchemaDAO');
+		$schemaDao = DAORegistry::getDAO('SchemaDAO');
 		$schema =& $schemaDao->buildSchema($this->getName());
 		return $schema;
 	}
@@ -139,7 +139,7 @@ class SchemaPlugin extends Plugin {
 
 	function getRtVersion(&$archive) {
 		// Get the Reading Tools, if any.
-		$rtDao =& DAORegistry::getDAO('RTDAO');
+		$rtDao = DAORegistry::getDAO('RTDAO');
 		$versionId = $archive->getSetting('rtVersionId');
 		$version =& $rtDao->getVersion($versionId, $archive->getArchiveId());
 		$defineTermsContextId = null;

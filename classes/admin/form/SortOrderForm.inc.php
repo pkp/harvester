@@ -44,8 +44,8 @@ class SortOrderForm extends Form {
 		$this->addCheck(new FormValidatorInSet($this, 'type', 'required', 'admin.sortOrders.form.typeRequired', array_keys(SortOrder::getTypeOptions())));
 		$this->addCheck(new FormValidatorPost($this));
 
-		$this->sortOrderDao =& DAORegistry::getDAO('SortOrderDAO');
-		$this->fieldDao =& DAORegistry::getDAO('FieldDAO');
+		$this->sortOrderDao = DAORegistry::getDAO('SortOrderDAO');
+		$this->fieldDao = DAORegistry::getDAO('FieldDAO');
 	}
 
 	/**

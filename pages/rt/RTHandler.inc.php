@@ -34,7 +34,7 @@ class RTHandler extends Handler {
 		$record =& $this->record;
 		$this->setupTemplate($request);
 
-		$rtDao =& DAORegistry::getDAO('RTDAO');
+		$rtDao = DAORegistry::getDAO('RTDAO');
 		$context =& $rtDao->getContext($contextId);
 
 		if (!$context) {
@@ -112,11 +112,11 @@ class RTHandler extends Handler {
 	function validate($recordId) {
 		$returner = array();
 
-		$recordDao =& DAORegistry::getDAO('RecordDAO');
+		$recordDao = DAORegistry::getDAO('RecordDAO');
 		$record =& $recordDao->getRecord($recordId);
 
 		if ($record) {
-			$archiveDao =& DAORegistry::getDAO('ArchiveDAO');
+			$archiveDao = DAORegistry::getDAO('ArchiveDAO');
 			$archive =& $archiveDao->getArchive($record->getArchiveId());
 
 			if ($archive && $archive->getEnabled()) {

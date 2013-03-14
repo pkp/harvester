@@ -37,9 +37,9 @@ class Harvester {
 		$this->errors = array();
 		$this->archive =& $archive;
 
-		$this->recordDao =& DAORegistry::getDAO('RecordDAO');
-		$this->fieldDao =& DAORegistry::getDAO('FieldDAO');
-		$this->sortOrderDao =& DAORegistry::getDAO('SortOrderDAO');
+		$this->recordDao = DAORegistry::getDAO('RecordDAO');
+		$this->fieldDao = DAORegistry::getDAO('FieldDAO');
+		$this->sortOrderDao = DAORegistry::getDAO('SortOrderDAO');
 	}
 
 	/**

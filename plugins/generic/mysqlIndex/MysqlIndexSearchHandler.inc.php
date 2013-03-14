@@ -43,11 +43,11 @@ class MysqlIndexSearchHandler extends Handler {
 
 		$templateMgr =& TemplateManager::getManager($request);
 
-		$archiveDao =& DAORegistry::getDAO('ArchiveDAO');
+		$archiveDao = DAORegistry::getDAO('ArchiveDAO');
 		$templateMgr->assign('archives', $archiveDao->getArchives());
 
 		// Populate the select options for fields and crosswalks
-		$recordDao =& DAORegistry::getDAO('RecordDAO');
+		$recordDao = DAORegistry::getDAO('RecordDAO');
 		$archiveIds = $request->getUserVar('archiveIds');
 		if (empty($archiveIds)) $archiveIds = null;
 		elseif (!is_array($archiveIds)) $archiveIds = array($archiveIds);
@@ -276,7 +276,7 @@ class MysqlIndexSearchHandler extends Handler {
 		$publicArchiveIds = $request->getUserVar('archive');
 		if (!is_array($publicArchiveIds) && !empty($publicArchiveIds)) $publicArchiveIds = array($publicArchiveIds);
 		$archiveIds = $request->getUserVar('archiveIds');
-		$archiveDao =& DAORegistry::getDAO('ArchiveDAO');
+		$archiveDao = DAORegistry::getDAO('ArchiveDAO');
 		$schemaList = array();
 		$archives = array();
 
@@ -320,7 +320,7 @@ class MysqlIndexSearchHandler extends Handler {
 			// There is a single schema being searched; make use of all its
 			// fields.
 			$schema = array_shift($schemaList);
-			$fieldDao =& DAORegistry::getDAO('FieldDAO');
+			$fieldDao = DAORegistry::getDAO('FieldDAO');
 			$fields =& $fieldDao->getFields($schema->getSchemaId());
 			$fields =& $fields->toArray();
 			foreach ($fields as $field) switch ($field->getType()) {
@@ -347,7 +347,7 @@ class MysqlIndexSearchHandler extends Handler {
 			$crosswalks = null; // Won't be using crosswalks
 		} elseif (count($schemaList)>1) {
 			// Multiple schema are being searched; use crosswalks.
-			$crosswalkDao =& DAORegistry::getDAO('CrosswalkDAO');
+			$crosswalkDao = DAORegistry::getDAO('CrosswalkDAO');
 			$crosswalks =& $crosswalkDao->getCrosswalksForSchemas($schemaList);
 			$crosswalks =& $crosswalks->toArray();
 

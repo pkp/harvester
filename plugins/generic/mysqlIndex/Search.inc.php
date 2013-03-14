@@ -176,7 +176,7 @@ class Search {
 		}
 
 		$mergedResults = array();
-		$searchDao =& DAORegistry::getDAO('SearchDAO');
+		$searchDao = DAORegistry::getDAO('SearchDAO');
 		$results =& $searchDao->getPhraseResults(
 			$phrase,
 			$dates,
@@ -220,7 +220,7 @@ class Search {
 	 * results for the title index, and possibly elsewhere.
 	 */
 	function &formatResults(&$results) {
-		$recordDao =& DAORegistry::getDAO('RecordDAO');
+		$recordDao = DAORegistry::getDAO('RecordDAO');
 		$returner = array();
 		foreach ($results as $recordId) {
 			$returner[] =& $recordDao->getRecord($recordId);

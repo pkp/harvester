@@ -31,7 +31,7 @@ class SubmitterHandler extends Handler {
 		$sort = isset($sort) ? $sort : 'title';
 		$sortDirection = $request->getUserVar('sortDirection');
 
-		$archiveDao =& DAORegistry::getDAO('ArchiveDAO');
+		$archiveDao = DAORegistry::getDAO('ArchiveDAO');
 		$archives =& $archiveDao->getArchivesByUserId($user->getId(), null, $sort, $sortDirection);
 
 		// Load the harvester plugins so we can display names.
@@ -117,7 +117,7 @@ class SubmitterHandler extends Handler {
 		$archiveId = (int) array_shift($args);
 		$this->validate($archiveId);
 
-		$archiveDao =& DAORegistry::getDAO('ArchiveDAO');
+		$archiveDao = DAORegistry::getDAO('ArchiveDAO');
 
 		// Disable timeout, as this operation may take
 		// a long time.
@@ -148,7 +148,7 @@ class SubmitterHandler extends Handler {
 	function validate ($archiveId = null) {
 		$user =& Request::getUser();
 		if ($archiveId !== null) {
-			$archiveDao =& DAORegistry::getDAO('ArchiveDAO');
+			$archiveDao = DAORegistry::getDAO('ArchiveDAO');
 			$archive =& $archiveDao->getArchive((int) $archiveId, false);
 
 			if (!$archive) Request::redirect('index');

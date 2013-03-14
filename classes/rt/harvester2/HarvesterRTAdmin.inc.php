@@ -29,7 +29,7 @@ class HarvesterRTAdmin extends RTAdmin {
 
 	function HarvesterRTAdmin($archiveId) {
 		$this->archiveId = $archiveId;
-		$this->dao =& DAORegistry::getDAO('RTDAO');
+		$this->dao = DAORegistry::getDAO('RTDAO');
 	}
 
 	function restoreVersions($deleteBeforeLoad = true) {

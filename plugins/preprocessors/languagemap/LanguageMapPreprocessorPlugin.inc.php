@@ -41,7 +41,7 @@ class LanguageMapPreprocessorPlugin extends PreprocessorPlugin {
 			// Fetch the list of field IDs that the language
 			// crosswalk uses; we will map all languages mentioned
 			// in these fields.
-			$crosswalkDao =& DAORegistry::getDAO('CrosswalkDAO');
+			$crosswalkDao = DAORegistry::getDAO('CrosswalkDAO');
 			$languageCrosswalk =& $crosswalkDao->getCrosswalkByPublicCrosswalkId('language');
 			if ($languageCrosswalk) {
 				$fields =& $languageCrosswalk->getFields();

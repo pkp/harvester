@@ -59,7 +59,7 @@ class ArchiveForm extends Form {
 		$this->harvesterPluginName = Request::getUserVar('harvesterPluginName');
 
 		if ($archiveId) {
-			$archiveDao =& DAORegistry::getDAO('ArchiveDAO');
+			$archiveDao = DAORegistry::getDAO('ArchiveDAO');
 			$this->archive =& $archiveDao->getArchive($this->archiveId, false);
 			if (empty($this->harvesterPluginName) && $this->archive) $this->harvesterPluginName = $this->archive->getHarvesterPluginName();
 		}
@@ -216,7 +216,7 @@ class ArchiveForm extends Form {
 		if (Validation::isSiteAdmin()) {
 			// Check to ensure that the public ID, if specified, is unique
 			$publicArchiveId = $this->getData('publicArchiveId');
-			$archiveDao =& DAORegistry::getDAO('ArchiveDAO');
+			$archiveDao = DAORegistry::getDAO('ArchiveDAO');
 			if ($publicArchiveId != '' && $archiveDao->archiveExistsByPublicArchiveId($publicArchiveId, $this->archiveId)) {
 				$this->addError('publicArchiveId', __('admin.archives.form.publicArchiveIdExists'));
 				$this->addErrorField('publicArchiveId');
@@ -229,7 +229,7 @@ class ArchiveForm extends Form {
 	 * Save archive settings.
 	 */
 	function execute() {
-		$archiveDao =& DAORegistry::getDAO('ArchiveDAO');
+		$archiveDao = DAORegistry::getDAO('ArchiveDAO');
 
 		if (!isset($this->archive)) {
 			$this->archive = $archiveDao->newDataObject();

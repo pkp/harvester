@@ -24,7 +24,7 @@ class SearchIndex {
 	 * @param $position int
 	 */
 	function indexObjectKeywords($objectId, $text, &$position) {
-		$searchDao =& DAORegistry::getDAO('SearchDAO');
+		$searchDao = DAORegistry::getDAO('SearchDAO');
 		$keywords =& SearchIndex::filterKeywords($text);
 		for ($i = 0, $count = count($keywords); $i < $count; $i++) {
 			if ($searchDao->insertObjectKeyword($objectId, $keywords[$i], $position) !== null) {
@@ -41,7 +41,7 @@ class SearchIndex {
 	 * @param $flush boolean Whether or not to flush entries for an existing object
 	 */
 	function updateTextIndex($recordId, $fieldId, $text, $flush = true) {
-		$searchDao =& DAORegistry::getDAO('SearchDAO');
+		$searchDao = DAORegistry::getDAO('SearchDAO');
 		$position = 0;
 		$objectId = $searchDao->insertObject($recordId, $fieldId, $position, null, $flush);
 		SearchIndex::indexObjectKeywords($objectId, $text, $position);
@@ -56,7 +56,7 @@ class SearchIndex {
 	 * @param $flush boolean Whether or not to flush entries for an existing object
 	 */
 	function updateDateIndex($recordId, $fieldId, $date, $text = null, $flush = true) {
-		$searchDao =& DAORegistry::getDAO('SearchDAO');
+		$searchDao = DAORegistry::getDAO('SearchDAO');
 		$position = 0;
 		$objectId = $searchDao->insertObject($recordId, $fieldId, $position, $date, $flush);
 		if (!empty($text)) {
@@ -70,7 +70,7 @@ class SearchIndex {
 	 * @param $fieldId int optional
 	 */
 	function deleteTextIndex($recordId, $fieldId = null) {
-		$searchDao =& DAORegistry::getDAO('SearchDAO');
+		$searchDao = DAORegistry::getDAO('SearchDAO');
 		return $searchDao->deleteRecordObjects($recordId, $fieldId);
 	}
 
@@ -132,7 +132,7 @@ class SearchIndex {
 	 * @param $record Article
 	 */
 	function indexRecord(&$archive, &$record) {
-		$fieldDao =& DAORegistry::getDAO('FieldDAO');
+		$fieldDao = DAORegistry::getDAO('FieldDAO');
 		$schemaPlugin =& $record->getSchemaPlugin();
 		$schemaPlugin->indexRecord($archive, $record);
 	}

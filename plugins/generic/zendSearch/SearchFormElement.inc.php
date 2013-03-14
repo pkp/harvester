@@ -111,7 +111,7 @@ class SearchFormElement extends DataObject {
 	 * @return Object iterator
 	 */
 	function &getOptions() {
-		$searchFormElementDao =& DAORegistry::getDAO('SearchFormElementDAO');
+		$searchFormElementDao = DAORegistry::getDAO('SearchFormElementDAO');
 		$returner =& $searchFormElementDao->getSearchFormElementOptions(
 			$this->getSearchFormElementId()
 		);

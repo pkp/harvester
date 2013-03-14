@@ -22,7 +22,7 @@ class RTContextHandler extends RTAdminHandler {
 	function createContext($args, &$request) {
 		$this->validate();
 
-		$rtDao =& DAORegistry::getDAO('RTDAO');
+		$rtDao = DAORegistry::getDAO('RTDAO');
 
 		$archiveId = array_shift($args);
 		$versionId = array_shift($args);
@@ -73,7 +73,7 @@ class RTContextHandler extends RTAdminHandler {
 	function editContext($args, &$request) {
 		$this->validate();
 
-		$rtDao =& DAORegistry::getDAO('RTDAO');
+		$rtDao = DAORegistry::getDAO('RTDAO');
 
 		$archiveId = array_shift($args);
 		$versionId = array_shift($args);
@@ -95,7 +95,7 @@ class RTContextHandler extends RTAdminHandler {
 	function deleteContext($args, &$request) {
 		$this->validate();
 
-		$rtDao =& DAORegistry::getDAO('RTDAO');
+		$rtDao = DAORegistry::getDAO('RTDAO');
 
 		$archiveId = array_shift($args);
 		$versionId = array_shift($args);
@@ -114,7 +114,7 @@ class RTContextHandler extends RTAdminHandler {
 	function saveContext($args, &$request) {
 		$this->validate();
 
-		$rtDao =& DAORegistry::getDAO('RTDAO');
+		$rtDao = DAORegistry::getDAO('RTDAO');
 
 		$archiveId = array_shift($args);
 		$versionId = array_shift($args);
@@ -136,7 +136,7 @@ class RTContextHandler extends RTAdminHandler {
 	function moveContext($args, &$request) {
 		$this->validate();
 
-		$rtDao =& DAORegistry::getDAO('RTDAO');
+		$rtDao = DAORegistry::getDAO('RTDAO');
 
 		$archiveId = array_shift($args);
 		$versionId = array_shift($args);

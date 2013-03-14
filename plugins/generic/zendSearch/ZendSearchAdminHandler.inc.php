@@ -150,7 +150,7 @@ class ZendSearchAdminHandler extends Handler {
 	function deleteSearchFormElement($args, &$request) {
 		$this->validate();
 
-		$searchFormElementDao =& DAORegistry::getDAO('SearchFormElementDAO');
+		$searchFormElementDao = DAORegistry::getDAO('SearchFormElementDAO');
 
 		// Disable timeout, as this operation may take
 		// a long time.

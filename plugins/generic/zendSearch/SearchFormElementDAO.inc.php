@@ -105,7 +105,7 @@ class SearchFormElementDAO extends DAO {
 			$rangeInfo
 		);
 
-		$fieldDao =& DAORegistry::getDAO('FieldDAO');
+		$fieldDao = DAORegistry::getDAO('FieldDAO');
 		$returner = new DAOResultFactory($result, $fieldDao, '_returnFieldFromRow');
 		return $returner;
 	}
@@ -223,7 +223,7 @@ class SearchFormElementDAO extends DAO {
 	function setSearchFormElementFields($searchFormElementId, $fieldIds) {
 		$this->deleteSearchFormElementFieldsBySearchFormElement($searchFormElementId);
 
-		$fieldDao =& DAORegistry::getDAO('FieldDAO');
+		$fieldDao = DAORegistry::getDAO('FieldDAO');
 		foreach ($fieldIds as $fieldId) {
 			$field =& $fieldDao->getFieldById($fieldId);
 			$this->insertSearchFormElementField($searchFormElementId, $field->getSchemaId(), $fieldId);

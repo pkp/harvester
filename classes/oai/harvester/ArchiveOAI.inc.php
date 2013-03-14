@@ -39,7 +39,7 @@ class ArchiveOAI extends OAI {
 		parent::OAI($config);
 
 		$this->site =& Request::getSite();
-		$this->dao =& DAORegistry::getDAO('OAIDAO');
+		$this->dao = DAORegistry::getDAO('OAIDAO');
 		$this->dao->setOAI($this);
 	}
 
@@ -82,7 +82,7 @@ class ArchiveOAI extends OAI {
 		$tmpArray = split(':', $setSpec);
 		if (count($tmpArray) == 1) {
 			$setSpec = array_shift($tmpArray);
-			$archiveDao =& DAORegistry::getDAO('ArchiveDAO');
+			$archiveDao = DAORegistry::getDAO('ArchiveDAO');
 			$archive =& $archiveDao->getArchiveByTitle($setSpec);
 			if ($archive) return $archive->getArchiveId();
 		}
@@ -150,7 +150,7 @@ class ArchiveOAI extends OAI {
 		// ...and if we need to, check that this record is able to do it
 		if ($identifier !== null) {
 			$recordId = $this->identifierToRecordId($identifier);
-			$recordDao =& DAORegistry::getDAO('RecordDAO');
+			$recordDao = DAORegistry::getDAO('RecordDAO');
 			$schemaPluginName = $recordDao->getRecordSchemaPluginName($recordId);
 		}
 

@@ -24,7 +24,7 @@ class ZendSearchHandler extends Handler {
 		$this->setupTemplate($request);
 		$plugin =& PluginRegistry::getPlugin('generic', ZEND_SEARCH_PLUGIN_NAME);
 
-		$searchFormElementDao =& DAORegistry::getDAO('SearchFormElementDAO');
+		$searchFormElementDao = DAORegistry::getDAO('SearchFormElementDAO');
 		$searchFormElements =& $searchFormElementDao->getSearchFormElements();
 
 		$templateMgr =& TemplateManager::getManager($request);
@@ -69,7 +69,7 @@ class ZendSearchHandler extends Handler {
 			}
 		}
 
-		$searchFormElementDao =& DAORegistry::getDAO('SearchFormElementDAO');
+		$searchFormElementDao = DAORegistry::getDAO('SearchFormElementDAO');
 		$searchFormElements =& $searchFormElementDao->getSearchFormElements();
 		while ($searchFormElement =& $searchFormElements->next()) {
 			$searchFormElementId = $searchFormElement->getSearchFormElementId();

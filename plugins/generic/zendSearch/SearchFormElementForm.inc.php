@@ -47,8 +47,8 @@ class SearchFormElementForm extends Form {
 		$this->addCheck(new FormValidatorInSet($this, 'type', 'required', 'plugins.generic.zendSearch.formElement.type.required', array_keys(SearchFormElement::getTypeMap())));
 		$this->addCheck(new FormValidatorPost($this));
 
-		$this->searchFormElementDao =& DAORegistry::getDAO('SearchFormElementDAO');
-		$this->fieldDao =& DAORegistry::getDAO('FieldDAO');
+		$this->searchFormElementDao = DAORegistry::getDAO('SearchFormElementDAO');
+		$this->fieldDao = DAORegistry::getDAO('FieldDAO');
 	}
 
 	/**
@@ -178,8 +178,8 @@ class SearchFormElementForm extends Form {
 		$rangeStart = null;
 		$rangeEnd = null;
 		if ($searchFormElement->getType() == SEARCH_FORM_ELEMENT_TYPE_DATE && $this->getData('recalculateRange')) {
-			$archiveDao =& DAORegistry::getDAO('ArchiveDAO');
-			$recordDao =& DAORegistry::getDAO('RecordDAO');
+			$archiveDao = DAORegistry::getDAO('ArchiveDAO');
+			$recordDao = DAORegistry::getDAO('RecordDAO');
 			$archives =& $archiveDao->getArchives();
 			while ($archive =& $archives->next()) {
 				import('classes.sortOrder.SortOrderDAO');
@@ -205,8 +205,8 @@ class SearchFormElementForm extends Form {
 			$searchFormElement->setRangeEnd($rangeEnd);
 			$this->searchFormElementDao->updateSearchFormElement($searchFormElement);
 		} elseif ($searchFormElement->getType() == SEARCH_FORM_ELEMENT_TYPE_SELECT && $this->getData('recalculateOptions')) {
-			$archiveDao =& DAORegistry::getDAO('ArchiveDAO');
-			$recordDao =& DAORegistry::getDAO('RecordDAO');
+			$archiveDao = DAORegistry::getDAO('ArchiveDAO');
+			$recordDao = DAORegistry::getDAO('RecordDAO');
 			$archives =& $archiveDao->getArchives();
 			while ($archive =& $archives->next()) {
 				import('classes.sortOrder.SortOrderDAO');

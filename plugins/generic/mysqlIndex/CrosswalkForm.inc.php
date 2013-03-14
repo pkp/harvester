@@ -43,7 +43,7 @@ class CrosswalkForm extends Form {
 		$this->harvesterPlugin = Request::getUserVar('harvesterPlugin');
 
 		if ($crosswalkId) {
-			$crosswalkDao =& DAORegistry::getDAO('CrosswalkDAO');
+			$crosswalkDao = DAORegistry::getDAO('CrosswalkDAO');
 			$this->crosswalk =& $crosswalkDao->getCrosswalkById($this->crosswalkId);
 		}
 
@@ -127,7 +127,7 @@ class CrosswalkForm extends Form {
 	function validate() {
 		// Check to ensure that the public ID, if specified, is unique
 		$publicCrosswalkId = $this->getData('publicCrosswalkId');
-		$crosswalkDao =& DAORegistry::getDAO('CrosswalkDAO');
+		$crosswalkDao = DAORegistry::getDAO('CrosswalkDAO');
 		if ($publicCrosswalkId != '' && $crosswalkDao->crosswalkExistsByPublicCrosswalkId($publicCrosswalkId, $this->crosswalkId)) {
 			$this->addError('publicCrosswalkId', __('plugins.generic.mysqlIndex.form.publicCrosswalkIdExists'));
 			$this->addErrorField('publicCrosswalkId');
@@ -139,7 +139,7 @@ class CrosswalkForm extends Form {
 	 * Save crosswalk settings.
 	 */
 	function execute() {
-		$crosswalkDao =& DAORegistry::getDAO('CrosswalkDAO');
+		$crosswalkDao = DAORegistry::getDAO('CrosswalkDAO');
 
 		if (!isset($this->crosswalk)) {
 			$this->crosswalk = new Crosswalk();
@@ -160,7 +160,7 @@ class CrosswalkForm extends Form {
 		}
 
 		$schemaPlugins =& PluginRegistry::loadCategory('schemas');
-		$fieldDao =& DAORegistry::getDAO('FieldDAO');
+		$fieldDao = DAORegistry::getDAO('FieldDAO');
 
 		$oldFields =& $crosswalkDao->getFieldsByCrosswalkId($crosswalkId);
 		$oldFields = $oldFields->toArray();

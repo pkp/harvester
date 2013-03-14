@@ -29,7 +29,7 @@ class UserHandler extends PKPUserHandler {
 		$this->validate();
 
 		$templateMgr =& TemplateManager::getManager($request);
-		$roleDao =& DAORegistry::getDAO('RoleDAO');
+		$roleDao = DAORegistry::getDAO('RoleDAO');
 		$user =& $request->getUser();
 		$site =& $request->getSite();
 
@@ -65,7 +65,7 @@ class UserHandler extends PKPUserHandler {
 			$role->setRoleId($roleId);
 			$role->setUserId($user->getId());
 
-			$roleDao =& DAORegistry::getDAO('RoleDAO');
+			$roleDao = DAORegistry::getDAO('RoleDAO');
 			$roleDao->insertRole($role);
 			$request->redirectUrl(Request::getUserVar('source'));
 		} else {
@@ -112,7 +112,7 @@ class UserHandler extends PKPUserHandler {
 
 		// Ensure that the user's profile info should be exposed:
 
-		$commentDao =& DAORegistry::getDAO('CommentDAO');
+		$commentDao = DAORegistry::getDAO('CommentDAO');
 		if ($commentDao->attributedCommentsExistForUser($userId)) {
 			// At least one comment is attributed to the user
 			$accountIsVisible = true;
@@ -120,7 +120,7 @@ class UserHandler extends PKPUserHandler {
 
 		if (!$accountIsVisible) $request->redirect(null, 'index');
 
-		$userDao =& DAORegistry::getDAO('UserDAO');
+		$userDao = DAORegistry::getDAO('UserDAO');
 		$user =& $userDao->getById($userId);
 
 		$templateMgr->assign_by_ref('user', $user);

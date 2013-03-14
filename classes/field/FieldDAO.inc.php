@@ -251,7 +251,7 @@ class FieldDAO extends DAO {
 	function &buildField($fieldName, $schemaPluginName) {
 		$field =& $this->getFieldByName($fieldName, $schemaPluginName);
 		if (!$field) {
-			$schemaDao =& DAORegistry::getDAO('SchemaDAO');
+			$schemaDao = DAORegistry::getDAO('SchemaDAO');
 			$schema =& $schemaDao->buildSchema($schemaPluginName);
 
 			$field = new Field();

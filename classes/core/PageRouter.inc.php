@@ -24,7 +24,7 @@ class PageRouter extends PKPPageRouter {
 	 * @param $request PKPRequest the request to be routed
 	 */
 	function redirectHome(&$request) {
-		$roleDao =& DAORegistry::getDAO('RoleDAO');
+		$roleDao = DAORegistry::getDAO('RoleDAO');
 		$user = $request->getUser();
 		$userId = $user->getId();
 

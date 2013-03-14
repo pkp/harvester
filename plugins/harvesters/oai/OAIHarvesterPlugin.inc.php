@@ -60,7 +60,7 @@ class OAIHarvesterPlugin extends HarvesterPlugin {
 	}
 
 	function duplicateHarvesterUrlDoesNotExist($harvesterUrl, $archiveId) {
-		$archiveDao =& DAORegistry::getDAO('ArchiveDAO');
+		$archiveDao = DAORegistry::getDAO('ArchiveDAO');
 		$result =& $archiveDao->retrieve(
 			'SELECT a.archive_id FROM archives a, archive_settings s WHERE s.setting_name = ? AND s.archive_id = a.archive_id AND s.setting_value = ? AND a.archive_id <> ?',
 			array('harvesterUrl', trim($harvesterUrl), (int) $archiveId)
@@ -84,7 +84,7 @@ class OAIHarvesterPlugin extends HarvesterPlugin {
 		));
 
 		// Build a list of supported metadata formats.
-		$schemaDao =& DAORegistry::getDAO('SchemaDAO');
+		$schemaDao = DAORegistry::getDAO('SchemaDAO');
 		$aliases =& $schemaDao->getSchemaAliases();
 
 		$plugins =& PluginRegistry::loadCategory('schemas');
@@ -198,7 +198,7 @@ class OAIHarvesterPlugin extends HarvesterPlugin {
 				$harvesterUrl = $request->getUserVar('harvesterUrl');
 				$archiveId = (int) array_shift($args);
 
-				$archiveDao =& DAORegistry::getDAO('ArchiveDAO');
+				$archiveDao = DAORegistry::getDAO('ArchiveDAO');
 				$archive =& $archiveDao->getArchive($archiveId);
 
 				$this->import('OAIHarvester');

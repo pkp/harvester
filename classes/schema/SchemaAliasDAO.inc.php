@@ -43,7 +43,7 @@ class SchemaAliasDAO extends DAO {
 
 	function installSchemaAliases() {
 		$schemaMap =& $this->parseSchemaMap();
-		$schemaDao =& DAORegistry::getDAO('SchemaDAO');
+		$schemaDao = DAORegistry::getDAO('SchemaDAO');
 		foreach ($schemaMap as $alias => $schemaPluginName) {
 			$schema =& $schemaDao->buildSchema($schemaPluginName);
 			$this->insertSchemaAlias($alias, $schema->getSchemaId());

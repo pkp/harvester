@@ -197,7 +197,7 @@ class MysqlIndexPlugin extends GenericPlugin {
 
 		$schemaPlugin =& $record->getSchemaPlugin();
 		$schemaPluginName = $schemaPlugin->getName();
-		$fieldDao =& DAORegistry::getDAO('FieldDAO');
+		$fieldDao = DAORegistry::getDAO('FieldDAO');
 		foreach ($schemaPlugin->getFieldList() as $fieldName) {
 			$field =& $fieldDao->buildField($fieldName, $schemaPluginName);
 			$fieldValue = $schemaPlugin->getFieldValue($record, $fieldName, SORT_ORDER_TYPE_STRING);
@@ -218,7 +218,7 @@ class MysqlIndexPlugin extends GenericPlugin {
 	function deleteRecordCallback($hookName, $args) {
 		$record =& $args[0];
 
-		$searchDao =& DAORegistry::getDAO('SearchDAO');
+		$searchDao = DAORegistry::getDAO('SearchDAO');
 		$searchDao->deleteRecordObjects($record->getRecordId());
 
 		return false;
@@ -228,7 +228,7 @@ class MysqlIndexPlugin extends GenericPlugin {
 	 * Flush the entire index prior to rebuilding it.
 	 */
 	function callbackFlush($hookName, $args) {
-		$searchDao =& DAORegistry::getDAO('SearchDAO');
+		$searchDao = DAORegistry::getDAO('SearchDAO');
 		$searchDao->flushIndex();
 	}
 

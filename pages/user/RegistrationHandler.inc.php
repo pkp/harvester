@@ -97,7 +97,7 @@ class RegistrationHandler extends UserHandler {
 		$username = array_shift($args);
 		$accessKeyCode = array_shift($args);
 
-		$userDao =& DAORegistry::getDAO('UserDAO');
+		$userDao = DAORegistry::getDAO('UserDAO');
 		$user =& $userDao->getByUsername($username);
 		if (!$user) $request->redirect(null, 'login');
 

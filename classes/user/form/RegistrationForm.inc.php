@@ -54,7 +54,7 @@ class RegistrationForm extends Form {
 			$this->addCheck(new FormValidatorCaptcha($this, 'captcha', 'captchaId', 'common.captchaField.badCaptcha'));
 		}
 
-		$authDao =& DAORegistry::getDAO('AuthSourceDAO');
+		$authDao = DAORegistry::getDAO('AuthSourceDAO');
 		$this->defaultAuth =& $authDao->getDefaultPlugin();
 		if (isset($this->defaultAuth)) {
 			$this->addCheck(new FormValidatorCustom($this, 'username', 'required', 'user.register.form.usernameExists', create_function('$username,$form,$auth', 'return (!$auth->userExists($username) || $auth->authenticate($username, $form->getData(\'password\')));'), array(&$this, $this->defaultAuth)));
@@ -79,11 +79,11 @@ class RegistrationForm extends Form {
 			$templateMgr->assign('captchaEnabled', true);
 		}
 
-		$countryDao =& DAORegistry::getDAO('CountryDAO');
+		$countryDao = DAORegistry::getDAO('CountryDAO');
 		$countries =& $countryDao->getCountries();
 		$templateMgr->assign_by_ref('countries', $countries);
 
-		$userDao =& DAORegistry::getDAO('UserDAO');
+		$userDao = DAORegistry::getDAO('UserDAO');
 		$templateMgr->assign('genderOptions', $userDao->getGenderOptions());
 
 		$templateMgr->assign('source', Request::getUserVar('source'));
@@ -94,7 +94,7 @@ class RegistrationForm extends Form {
 	}
 
 	function getLocaleFieldNames() {
-		$userDao =& DAORegistry::getDAO('UserDAO');
+		$userDao = DAORegistry::getDAO('UserDAO');
 		return $userDao->getLocaleFieldNames();
 	}
 
@@ -201,7 +201,7 @@ class RegistrationForm extends Form {
 		$session =& $sessionManager->getUserSession();
 		$session->setSessionVar('username', $user->getUsername());
 
-		$roleDao =& DAORegistry::getDAO('RoleDAO');
+		$roleDao = DAORegistry::getDAO('RoleDAO');
 
 		// Roles users are allowed to register themselves in
 		$allowedRoles = array('submitter' => 'registerAsSubmitter');

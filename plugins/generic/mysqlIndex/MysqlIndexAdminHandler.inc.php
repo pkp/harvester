@@ -87,7 +87,7 @@ class MysqlIndexAdminHandler extends Handler {
 	function deleteCrosswalk($args, &$request) {
 		parent::validate();
 
-		$crosswalkDao =& DAORegistry::getDAO('CrosswalkDAO');
+		$crosswalkDao = DAORegistry::getDAO('CrosswalkDAO');
 		if (isset($args) && !empty($args) && !empty($args[0])) {
 			$crosswalkId = $args[0];
 			$crosswalkDao->deleteCrosswalkById($crosswalkId);
@@ -105,7 +105,7 @@ class MysqlIndexAdminHandler extends Handler {
 	function resetCrosswalks($args, &$request) {
 		parent::validate();
 
-		$crosswalkDao =& DAORegistry::getDAO('CrosswalkDAO');
+		$crosswalkDao = DAORegistry::getDAO('CrosswalkDAO');
 		$crosswalks =& $crosswalkDao->getCrosswalks();
 		while ($crosswalk =& $crosswalks->next()) {
 			$crosswalkDao->deleteCrosswalk($crosswalk);

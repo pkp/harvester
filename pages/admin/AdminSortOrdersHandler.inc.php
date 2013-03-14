@@ -88,7 +88,7 @@ class AdminSortOrdersHandler extends AdminHandler {
 	function deleteSortOrder($args, &$request) {
 		$this->validate();
 
-		$sortOrderDao =& DAORegistry::getDAO('SortOrderDAO');
+		$sortOrderDao = DAORegistry::getDAO('SortOrderDAO');
 
 		// Disable timeout, as this operation may take
 		// a long time.

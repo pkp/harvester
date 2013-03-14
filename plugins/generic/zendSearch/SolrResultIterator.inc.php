@@ -23,7 +23,7 @@ class SolrResultIterator extends VirtualArrayIterator {
 
 	function SolrResultIterator(&$theArray, $totalItems, $page=-1, $itemsPerPage=-1) {
 		parent::VirtualArrayIterator($theArray, $totalItems, $page, $itemsPerPage);
-		$this->recordDao =& DAORegistry::getDAO('RecordDAO');
+		$this->recordDao = DAORegistry::getDAO('RecordDAO');
 	}
 
 	function &fromRangeInfo(&$theArray, $totalItems, &$theRange) {

@@ -25,7 +25,7 @@ class MailTemplate extends PKPMailTemplate {
 		parent::PKPMailTemplate($emailKey, $locale);
 
 		if (isset($this->emailKey)) {
-			$emailTemplateDao =& DAORegistry::getDAO('EmailTemplateDAO');
+			$emailTemplateDao = DAORegistry::getDAO('EmailTemplateDAO');
 			$emailTemplate =& $emailTemplateDao->getEmailTemplate($this->emailKey, $this->locale);
 		}
 

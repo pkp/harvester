@@ -31,8 +31,8 @@ class OAIDAO extends DAO {
 	 */
 	function OAIDAO() {
 		parent::DAO();
-		$this->archiveDao =& DAORegistry::getDAO('ArchiveDAO');
-		$this->recordDao =& DAORegistry::getDAO('RecordDAO');
+		$this->archiveDao = DAORegistry::getDAO('ArchiveDAO');
+		$this->recordDao = DAORegistry::getDAO('RecordDAO');
 
 		PluginRegistry::loadCategory('schemas');
 	}

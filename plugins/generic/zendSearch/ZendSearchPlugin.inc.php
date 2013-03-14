@@ -230,7 +230,7 @@ class ZendSearchPlugin extends GenericPlugin {
 		// Load a cached list of search form elements for which we will index.
 		static $searchFormElementCache;
 		static $fieldsToSearchFormElements;
-		$searchFormElementDao =& DAORegistry::getDAO('SearchFormElementDAO');
+		$searchFormElementDao = DAORegistry::getDAO('SearchFormElementDAO');
 		if (!isset($searchFormElementCache)) {
 			$searchFormElements =& $searchFormElementDao->getSearchFormElements();
 			while ($searchFormElement =& $searchFormElements->next()) {
@@ -264,7 +264,7 @@ class ZendSearchPlugin extends GenericPlugin {
 
 		$schemaPlugin =& $record->getSchemaPlugin();
 		$schemaPluginName = $schemaPlugin->getName();
-		$fieldDao =& DAORegistry::getDAO('FieldDAO');
+		$fieldDao = DAORegistry::getDAO('FieldDAO');
 		foreach ($schemaPlugin->getFieldList() as $fieldName) {
 			$field =& $fieldDao->buildField($fieldName, $schemaPluginName);
 			if (isset($fieldsToSearchFormElements[$field->getFieldId()])) {
@@ -433,7 +433,7 @@ class ZendSearchPlugin extends GenericPlugin {
 		}
 
 		// Delete the field options
-		$searchFormElementDao =& DAORegistry::getDAO('SearchFormElementDAO');
+		$searchFormElementDao = DAORegistry::getDAO('SearchFormElementDAO');
 		$searchFormElements =& $searchFormElementDao->getSearchFormElements();
 		while ($searchFormElement =& $searchFormElements->next()) {
 			$searchFormElementDao->deleteSearchFormElementOptions(
@@ -447,7 +447,7 @@ class ZendSearchPlugin extends GenericPlugin {
 	 * Index rebuild cleanup: mark select options as clean.
 	 */
 	function callbackFinish($hookName, $args) {
-		$searchFormElementDao =& DAORegistry::getDAO('SearchFormElementDAO');
+		$searchFormElementDao = DAORegistry::getDAO('SearchFormElementDAO');
 		$searchFormElements =& $searchFormElementDao->getSearchFormElements();
 		while ($searchFormElement =& $searchFormElements->next()) {
 			$searchFormElement->setIsClean(true);

@@ -25,8 +25,8 @@ class BrowseHandler extends Handler {
 		$this->validate();
 		$templateMgr =& TemplateManager::getManager($request);
 
-		$archiveDao =& DAORegistry::getDAO('ArchiveDAO');
-		$recordDao =& DAORegistry::getDAO('RecordDAO');
+		$archiveDao = DAORegistry::getDAO('ArchiveDAO');
+		$recordDao = DAORegistry::getDAO('RecordDAO');
 
 		$archiveId = array_shift($args);
 		$archive = null;
@@ -76,7 +76,7 @@ class BrowseHandler extends Handler {
 		$this->validate();
 		$templateMgr =& TemplateManager::getManager($request);
 
-		$archiveDao =& DAORegistry::getDAO('ArchiveDAO');
+		$archiveDao = DAORegistry::getDAO('ArchiveDAO');
 
 		$archiveId = array_shift($args);
 		$archive = null;

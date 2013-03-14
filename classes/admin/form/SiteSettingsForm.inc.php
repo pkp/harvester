@@ -54,7 +54,7 @@ class SiteSettingsForm extends PKPSiteSettingsForm {
 	 */
 	function uploadImage($settingName) {
 		$site =& Request::getSite();
-		$settingsDao =& DAORegistry::getDAO('SiteSettingsDAO');
+		$settingsDao = DAORegistry::getDAO('SiteSettingsDAO');
 
 		import('classes.file.PublicFileManager');
 		$fileManager = new PublicFileManager();
@@ -91,7 +91,7 @@ class SiteSettingsForm extends PKPSiteSettingsForm {
 	 */
 	function deleteImage($settingName) {
 		$site =& Request::getSite();
-		$settingsDao =& DAORegistry::getDAO('SiteSettingsDAO');
+		$settingsDao = DAORegistry::getDAO('SiteSettingsDAO');
 		$setting = $settingsDao->getSetting($settingName);
 
 		import('classes.file.PublicFileManager');
@@ -124,7 +124,7 @@ class SiteSettingsForm extends PKPSiteSettingsForm {
 	 */
 	function uploadStyleSheet($settingName) {
 		$site =& Request::getSite();
-		$settingsDao =& DAORegistry::getDAO('SiteSettingsDAO');
+		$settingsDao = DAORegistry::getDAO('SiteSettingsDAO');
 
 		import('classes.file.PublicFileManager');
 		$fileManager = new PublicFileManager();

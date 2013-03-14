@@ -48,8 +48,8 @@ class Upgrade extends Installer {
 	}
 
 	function updateArchivePluginNames() {
-		$archiveDao =& DAORegistry::getDAO('ArchiveDAO');
-		$archiveSettingsDao =& DAORegistry::getDAO('ArchiveSettingsDAO');
+		$archiveDao = DAORegistry::getDAO('ArchiveDAO');
+		$archiveSettingsDao = DAORegistry::getDAO('ArchiveSettingsDAO');
 		$archives =& $archiveDao->getArchives(false);
 		while ($archive =& $archives->next()) {
 			$schemaPluginName = $archive->getSetting('schemaPluginName');
@@ -66,7 +66,7 @@ class Upgrade extends Installer {
 	 * @return boolean
 	 */
 	function dropAllIndexes() {
-		$siteDao =& DAORegistry::getDAO('SiteDAO');
+		$siteDao = DAORegistry::getDAO('SiteDAO');
 		$dict = NewDataDictionary($siteDao->_dataSource);
 		$dropIndexSql = array();
 
@@ -111,7 +111,7 @@ class Upgrade extends Installer {
 	 * Install the schema aliases (during upgrade)
 	 */
 	function installSchemaAliases() {
-		$schemaAliasDao =& DAORegistry::getDAO('SchemaAliasDAO');
+		$schemaAliasDao = DAORegistry::getDAO('SchemaAliasDAO');
 		$schemaAliasDao->installSchemaAliases();
 		return true;
 	}

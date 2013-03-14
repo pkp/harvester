@@ -28,13 +28,13 @@ class RTAdminHandler extends Handler {
 		$templateMgr =& TemplateManager::getManager($request);
 
 		$archiveId = (int) array_shift($args);
-		$archiveDao =& DAORegistry::getDAO('ArchiveDAO');
+		$archiveDao = DAORegistry::getDAO('ArchiveDAO');
 
 		$this->setupTemplate($request, false, $archiveId);
 
 		if ($archive =& $archiveDao->getArchive($archiveId, false) || $archiveId == 0) {
 			$site =& $request->getSite();
-			$rtDao =& DAORegistry::getDAO('RTDAO');
+			$rtDao = DAORegistry::getDAO('RTDAO');
 
 			$version = $rtDao->getVersion(
 				$archive?$archive->getSetting('rtVersionId'):$site->getSetting('rtVersionId'),
@@ -66,10 +66,10 @@ class RTAdminHandler extends Handler {
 		$archiveId = (int) array_shift($args);
 		$versionId = $request->getUserVar('versionId');
 
-		$archiveDao =& DAORegistry::getDAO('ArchiveDAO');
+		$archiveDao = DAORegistry::getDAO('ArchiveDAO');
 		$archive =& $archiveDao->getArchive($archiveId, false);
 
-		$rtDao =& DAORegistry::getDAO('RTDAO');
+		$rtDao = DAORegistry::getDAO('RTDAO');
 		$version = $rtDao->getVersion($versionId, $archive?$archive->getArchiveId():null);
 
 		if ($archive) {
@@ -107,7 +107,7 @@ class RTAdminHandler extends Handler {
 	function validateUrls($args, $request) {
 		$this->validate();
 
-		$rtDao =& DAORegistry::getDAO('RTDAO');
+		$rtDao = DAORegistry::getDAO('RTDAO');
 
 		$versionId = (int) array_shift($args);
 		$archiveId = (int) array_shift($args);

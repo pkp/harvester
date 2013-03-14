@@ -142,7 +142,7 @@ class SortOrderDAO extends DAO {
 	function setSortOrderFields($sortOrderId, $fieldIds) {
 		$this->deleteSortOrderFieldsBySortOrder($sortOrderId);
 
-		$fieldDao =& DAORegistry::getDAO('FieldDAO');
+		$fieldDao = DAORegistry::getDAO('FieldDAO');
 		foreach ($fieldIds as $fieldId) {
 			$field =& $fieldDao->getFieldById($fieldId);
 			$this->insertSortOrderField($sortOrderId, $field->getSchemaId(), $fieldId);

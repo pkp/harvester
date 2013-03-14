@@ -29,7 +29,7 @@ class User extends PKPUser {
 	 * @return mixed
 	 */
 	function &getSetting($name) {
-		$userSettingsDao =& DAORegistry::getDAO('UserSettingsDAO');
+		$userSettingsDao = DAORegistry::getDAO('UserSettingsDAO');
 		$setting =& $userSettingsDao->getSetting($this->getData('userId'), $name);
 		return $setting;
 	}
@@ -41,7 +41,7 @@ class User extends PKPUser {
 	 * @param $type string optional
 	 */
 	function updateSetting($name, $value, $type = null) {
-		$userSettingsDao =& DAORegistry::getDAO('UserSettingsDAO');
+		$userSettingsDao = DAORegistry::getDAO('UserSettingsDAO');
 		return $userSettingsDao->updateSetting($this->getData('userId'), $name, $value, $type);
 	}
 }

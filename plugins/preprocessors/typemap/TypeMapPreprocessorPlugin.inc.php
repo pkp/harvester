@@ -36,7 +36,7 @@ class TypeMapPreprocessorPlugin extends PreprocessorPlugin {
 			// Fetch the list of field IDs that the type
 			// crosswalk uses; we will map all languages mentioned
 			// in these fields.
-			$crosswalkDao =& DAORegistry::getDAO('CrosswalkDAO');
+			$crosswalkDao = DAORegistry::getDAO('CrosswalkDAO');
 			$typeCrosswalk =& $crosswalkDao->getCrosswalkByPublicCrosswalkId('type');
 			if ($typeCrosswalk) {
 				$fields =& $typeCrosswalk->getFields();

@@ -22,7 +22,7 @@ class RTVersionHandler extends RTAdminHandler {
 	function createVersion($args, &$request) {
 		$this->validate();
 
-		$rtDao =& DAORegistry::getDAO('RTDAO');
+		$rtDao = DAORegistry::getDAO('RTDAO');
 
 		import('classes.rt.harvester2.form.VersionForm');
 		$archiveId = (int) $request->getUserVar('archiveId');
@@ -41,7 +41,7 @@ class RTVersionHandler extends RTAdminHandler {
 	function exportVersion($args, &$request) {
 		$this->validate();
 
-		$rtDao =& DAORegistry::getDAO('RTDAO');
+		$rtDao = DAORegistry::getDAO('RTDAO');
 
 		$versionId = (int) array_shift($args);
 		$version =& $rtDao->getVersion($versionId);
@@ -95,7 +95,7 @@ class RTVersionHandler extends RTAdminHandler {
 	function editVersion($args, &$request) {
 		$this->validate();
 
-		$rtDao =& DAORegistry::getDAO('RTDAO');
+		$rtDao = DAORegistry::getDAO('RTDAO');
 
 		$archiveId = (int) array_shift($args);
 		$versionId = (int) array_shift($args);
@@ -115,7 +115,7 @@ class RTVersionHandler extends RTAdminHandler {
 	function deleteVersion($args, &$request) {
 		$this->validate();
 
-		$rtDao =& DAORegistry::getDAO('RTDAO');
+		$rtDao = DAORegistry::getDAO('RTDAO');
 
 		$archiveId = (int) array_shift($args);
 		$versionId = (int) array_shift($args);
@@ -128,7 +128,7 @@ class RTVersionHandler extends RTAdminHandler {
 	function saveVersion($args, &$request) {
 		$this->validate();
 
-		$rtDao =& DAORegistry::getDAO('RTDAO');
+		$rtDao = DAORegistry::getDAO('RTDAO');
 
 		$versionId = (int) array_shift($args);
 		$archiveId = (int) $request->getUserVar('archiveId');

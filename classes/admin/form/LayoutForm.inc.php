@@ -113,7 +113,7 @@ class LayoutForm extends Form {
 		}
 
 		$site =& Request::getSite();
-		$siteSettingsDao =& DAORegistry::getDAO('SiteSettingsDAO');
+		$siteSettingsDao = DAORegistry::getDAO('SiteSettingsDAO');
 
 		$settings = array('theme');
 

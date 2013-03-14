@@ -25,7 +25,7 @@ class PeopleHandler extends AdminHandler {
 		$this->validate();
 		$this->setupTemplate($request, true);
 
-		$roleDao =& DAORegistry::getDAO('RoleDAO');
+		$roleDao = DAORegistry::getDAO('RoleDAO');
 
 		if ($request->getUserVar('roleSymbolic')!=null) $roleSymbolic = $request->getUserVar('roleSymbolic');
 		else $roleSymbolic = isset($args[0])?$args[0]:'all';
@@ -102,8 +102,8 @@ class PeopleHandler extends AdminHandler {
 	function enrollSearch($args, &$request) {
 		$this->validate();
 
-		$roleDao =& DAORegistry::getDAO('RoleDAO');
-		$userDao =& DAORegistry::getDAO('UserDAO');
+		$roleDao = DAORegistry::getDAO('RoleDAO');
+		$userDao = DAORegistry::getDAO('UserDAO');
 
 		$roleId = (int)(isset($args[0])?$args[0]:$request->getUserVar('roleId'));
 		$templateMgr =& TemplateManager::getManager($request);
@@ -169,7 +169,7 @@ class PeopleHandler extends AdminHandler {
 			$users = array($request->getUserVar('userId'));
 		}
 
-		$roleDao =& DAORegistry::getDAO('RoleDAO');
+		$roleDao = DAORegistry::getDAO('RoleDAO');
 		$role =& $roleDao->newDataObject();
 		$role->setId($roleId);
 		$rolePath = $role->getPath();
@@ -196,7 +196,7 @@ class PeopleHandler extends AdminHandler {
 		$roleId = isset($args[0])?$args[0]:0;
 		$this->validate();
 
-		$roleDao =& DAORegistry::getDAO('RoleDAO');
+		$roleDao = DAORegistry::getDAO('RoleDAO');
 		if ($roleId != $roleDao->getRoleIdFromPath('admin')) {
 			$roleDao->deleteRoleByUserId($request->getUserVar('userId'), $roleId);
 		}
@@ -282,7 +282,7 @@ class PeopleHandler extends AdminHandler {
 				$templateMgr->assign('backLinkLabel', 'admin.people.allUsers');
 				return $templateMgr->display('common/error.tpl');
 			}
-			$userDao =& DAORegistry::getDAO('UserDAO');
+			$userDao = DAORegistry::getDAO('UserDAO');
 			$user =& $userDao->getById($userId);
 			if ($user) {
 				$user->setDisabled(1);
@@ -306,7 +306,7 @@ class PeopleHandler extends AdminHandler {
 		$user =& $request->getUser();
 
 		if ($userId != null && $userId != $user->getId()) {
-			$userDao =& DAORegistry::getDAO('UserDAO');
+			$userDao = DAORegistry::getDAO('UserDAO');
 			$user =& $userDao->getById($userId, true);
 			if ($user) {
 				$user->setDisabled(0);
@@ -329,7 +329,7 @@ class PeopleHandler extends AdminHandler {
 		$user =& $request->getUser();
 
 		if ($userId != null && $userId != $user->getId()) {
-			$roleDao =& DAORegistry::getDAO('RoleDAO');
+			$roleDao = DAORegistry::getDAO('RoleDAO');
 			$roleDao->deleteRoleByUserId($userId);
 		}
 
@@ -395,7 +395,7 @@ class PeopleHandler extends AdminHandler {
 		$templateMgr =& TemplateManager::getManager($request);
 		$templateMgr->assign('currentUrl', $request->url(null, null, 'people', 'all'));
 
-		$userDao =& DAORegistry::getDAO('UserDAO');
+		$userDao = DAORegistry::getDAO('UserDAO');
 		$userId = isset($args[0]) ? $args[0] : 0;
 		if (is_numeric($userId)) {
 			$userId = (int) $userId;
@@ -415,10 +415,10 @@ class PeopleHandler extends AdminHandler {
 
 		} else {
 			$site =& $request->getSite();
-			$roleDao =& DAORegistry::getDAO('RoleDAO');
+			$roleDao = DAORegistry::getDAO('RoleDAO');
 			$roles =& $roleDao->getRolesByUserId($user->getId());
 
-			$countryDao =& DAORegistry::getDAO('CountryDAO');
+			$countryDao = DAORegistry::getDAO('CountryDAO');
 			$country = null;
 			if ($user->getCountry() != '') {
 				$country = $countryDao->getCountry($user->getCountry());
@@ -453,7 +453,7 @@ class PeopleHandler extends AdminHandler {
 				return $templateMgr->display('common/error.tpl');
 			}
 
-			$userDao =& DAORegistry::getDAO('UserDAO');
+			$userDao = DAORegistry::getDAO('UserDAO');
 			$newUser =& $userDao->getById($userId);
 			$session =& $request->getSession();
 
@@ -481,7 +481,7 @@ class PeopleHandler extends AdminHandler {
 		if (isset($signedInAs) && !empty($signedInAs)) {
 			$signedInAs = (int)$signedInAs;
 
-			$userDao =& DAORegistry::getDAO('UserDAO');
+			$userDao = DAORegistry::getDAO('UserDAO');
 			$oldUser =& $userDao->getById($signedInAs);
 
 			$session->unsetSessionVar('signedInAs');

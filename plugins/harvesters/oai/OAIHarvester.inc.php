@@ -69,7 +69,7 @@ class OAIHarvester extends Harvester {
 			return ($this->metadataFormat = $default);
 		}
 
-		$schemaDao =& DAORegistry::getDAO('SchemaDAO');
+		$schemaDao = DAORegistry::getDAO('SchemaDAO');
 		$aliases = array_keys($schemaDao->getSchemaAliases($schemaPluginName));
 		$supportedFormats = OAIHarvester::getMetadataFormats($archive->getSetting('harvesterUrl'), $archive->getSetting('isStatic'));
 		// Return the first common format between the aliases for this
@@ -458,7 +458,7 @@ class OAIHarvester extends Harvester {
 	}
 
 	function &getSchema() {
-		$schemaDao =& DAORegistry::getDAO('SchemaDAO');
+		$schemaDao = DAORegistry::getDAO('SchemaDAO');
 		$aliases = $schemaDao->getSchemaAliases();
 		$metadataFormat = $this->getMetadataFormat();
 		$returner = null;
@@ -469,7 +469,7 @@ class OAIHarvester extends Harvester {
 	}
 
 	function &getSchemaPlugin() {
-		$schemaDao =& DAORegistry::getDAO('SchemaDAO');
+		$schemaDao = DAORegistry::getDAO('SchemaDAO');
 		$aliases = $schemaDao->getSchemaAliases();
 		$metadataFormat = $this->getMetadataFormat();
 		$returner = null;

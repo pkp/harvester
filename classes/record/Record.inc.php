@@ -143,7 +143,7 @@ class Record extends DataObject {
 	 * @return object
 	 */
 	function &getArchive() {
-		$archiveDao =& DAORegistry::getDAO('ArchiveDAO');
+		$archiveDao = DAORegistry::getDAO('ArchiveDAO');
 		return $archiveDao->getArchive($this->getArchiveId(), false);
 	}
 
@@ -163,7 +163,7 @@ class Record extends DataObject {
 	}
 
 	function &getSchemaPlugin() {
-		$schemaDao =& DAORegistry::getDAO('SchemaDAO');
+		$schemaDao = DAORegistry::getDAO('SchemaDAO');
 		$schema =& $schemaDao->getSchema($this->getSchemaId());
 		return $schema->getPlugin();
 	}

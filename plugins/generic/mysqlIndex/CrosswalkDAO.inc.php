@@ -203,7 +203,7 @@ class CrosswalkDAO extends DAO {
 	 * @return DAOResultFactory containing matching crosswalks
 	 */
 	function &getFieldsByCrosswalkId($crosswalkId, $rangeInfo = null) {
-		$fieldDao =& DAORegistry::getDAO('FieldDAO');
+		$fieldDao = DAORegistry::getDAO('FieldDAO');
 
 		$result =& $this->retrieveRange(
 			'SELECT f.* FROM raw_fields f, crosswalk_fields c WHERE f.raw_field_id = c.raw_field_id AND c.crosswalk_id = ?',
@@ -290,8 +290,8 @@ class CrosswalkDAO extends DAO {
 			return false;
 		}
 
-		$schemaDao =& DAORegistry::getDAO('SchemaDAO');
-		$fieldDao =& DAORegistry::getDAO('FieldDAO');
+		$schemaDao = DAORegistry::getDAO('SchemaDAO');
+		$fieldDao = DAORegistry::getDAO('FieldDAO');
 
 		foreach ($tree->getChildren() as $crosswalkNode) {
 			$type = $crosswalkNode->getAttribute('type');

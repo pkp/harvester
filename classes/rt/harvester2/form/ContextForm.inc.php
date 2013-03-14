@@ -38,7 +38,7 @@ class ContextForm extends Form {
 
 		$this->addCheck(new FormValidatorPost($this));
 
-		$rtDao =& DAORegistry::getDAO('RTDAO');
+		$rtDao = DAORegistry::getDAO('RTDAO');
 		$this->context =& $rtDao->getContext($contextId);
 
 		$this->versionId = $versionId;
@@ -110,7 +110,7 @@ class ContextForm extends Form {
 	 * @return int the context ID
 	 */
 	function execute() {
-		$rtDao =& DAORegistry::getDAO('RTDAO');
+		$rtDao = DAORegistry::getDAO('RTDAO');
 
 		$context = $this->context;
 		if (!isset($context)) {

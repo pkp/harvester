@@ -23,7 +23,7 @@ class ZendSearchResultIterator extends ArrayItemIterator {
 
 	function ZendSearchResultIterator(&$theArray, $page=-1, $itemsPerPage=-1) {
 		parent::ArrayItemIterator($theArray, $page, $itemsPerPage);
-		$this->recordDao =& DAORegistry::getDAO('RecordDAO');
+		$this->recordDao = DAORegistry::getDAO('RecordDAO');
 	}
 
 	function &fromRangeInfo(&$theArray, &$theRange) {
