@@ -215,6 +215,14 @@ allowed_html = "<a> <em> <strong> <cite> <code> <ul> <ol> <li> <dl> <dt> <dd> <b
 ; If enabled, email addresses must be validated before login is possible.
 require_validation = Off
 
+; Amount of time required between attempts to send non-editorial emails
+; in seconds. This can be used to help prevent email relaying via OJS.
+time_between_emails = 3600
+
+; Maximum number of recipients that can be included in a single email
+; (either as To:, Cc:, or Bcc: addresses) for a non-priveleged user
+max_recipients = 10
+
 
 ;;;;;;;;;;;;;;;;;;;
 ; Search Settings ;
