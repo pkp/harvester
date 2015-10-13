@@ -45,6 +45,8 @@ class RegistrationHandler extends UserHandler {
 	 */
 	function registerUser() {
 		$this->validate();
+		$this->setupTemplate(true);
+
 		import('classes.user.form.RegistrationForm');
 
 		if (checkPhpVersion('5.0.0')) { // WARNING: This form needs $this in constructor
@@ -67,7 +69,6 @@ class RegistrationHandler extends UserHandler {
 			Validation::login($regForm->getData('username'), $regForm->getData('password'), $reason);
 
 			if ($reason !== null) {
-				$this->setupTemplate(true);
 				$templateMgr =& TemplateManager::getManager();
 				$templateMgr->assign('pageTitle', 'user.login');
 				$templateMgr->assign('errorMsg', $reason==''?'user.login.accountDisabled':'user.login.accountDisabledWithReason');
@@ -82,7 +83,6 @@ class RegistrationHandler extends UserHandler {
 			else Request::redirect('login');
 
 		} else {
-			$this->setupTemplate(true);
 			$regForm->display();
 		}
 	}
