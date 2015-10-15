@@ -72,6 +72,7 @@ class TinyMCEPlugin extends GenericPlugin {
 			case 'user/saveProfile':
 			case 'user/register':
 			case 'admin/createUser':
+			case 'admin/editUser':
 			case 'admin/updateUser':
 				$fields[] = 'mailingAddress';
 				$fields[] = 'biography';
