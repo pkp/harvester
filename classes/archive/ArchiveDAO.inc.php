@@ -247,10 +247,11 @@ class ArchiveDAO extends DAO {
 
 	/**
 	 * Retrieve a count of the archives available.
+	 * @param $onlyEnabled boolean
 	 * @return int
 	 */
-	function getArchiveCount() {
-		$result =& $this->retrieve('SELECT COUNT(*) AS count FROM archives');
+	function getArchiveCount($onlyEnabled = false) {
+		$result =& $this->retrieve('SELECT COUNT(*) AS count FROM archives' . ($onlyEnabled?' WHERE enabled = 1':''));
 
 		$count = 0;
 		if ($result->RecordCount() != 0) {
