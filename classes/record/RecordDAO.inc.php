@@ -264,13 +264,18 @@ class RecordDAO extends DAO {
 	/**
 	 * Retrieve a count of the records available.
 	 * @param $archiveId Specific archive to query (optional)
+	 * @param $onlyEnabled boolean
 	 * @return int
 	 */
-	function getRecordCount($archiveId = null) {
-		$result =& $this->retrieve(
-			'SELECT COUNT(*) AS count FROM records' . (isset($archiveId)?' WHERE archive_id = ?':''),
-			isset($archiveId)?$archiveId:false
-		);
+	function getRecordCount($archiveId = null, $onlyEnabled = false) {
+		$result =& $this->retrieve('
+			SELECT COUNT(*) AS count
+			FROM records r
+			' . ($onlyEnabled?', archives a ':'') . '
+			WHERE 1=1
+			' . ($archiveId?' AND r.archive_id = ?':'') . '
+			' . ($onlyEnabled?' AND r.archive_id = a.archive_id AND a.enabled = 1':''),
+			($archiveId? (int)$archiveId:false));
 
 		$count = 0;
 		if ($result->RecordCount() != 0) {

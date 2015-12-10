@@ -29,10 +29,10 @@ class IndexHandler extends Handler {
 		$templateMgr->assign('title', $site->getLocalizedTitle());
 
 		$archiveDao =& DAORegistry::getDAO('ArchiveDAO');
-		$templateMgr->assign('archiveCount', $archiveDao->getArchiveCount());
+		$templateMgr->assign('archiveCount', $archiveDao->getArchiveCount(true));
 
 		$recordDao =& DAORegistry::getDAO('RecordDAO');
-		$templateMgr->assign('recordCount', $recordDao->getRecordCount());
+		$templateMgr->assign('recordCount', $recordDao->getRecordCount(null, true));
 
 		$templateMgr->assign('enableSubmit', $site->getSetting('enableSubmit'));
 
