@@ -74,20 +74,20 @@ function jumpList(a, b) {
 function prepBlockFields() {
 	var i;
 	var theForm = document.setupForm;
- 
+
 	theForm.elements["blockSelectLeft"].value = "";
 	for (i=0; i<theForm.blockSelectLeftWidget.options.length; i++) {
-		theForm.blockSelectLeft.value += theForm.blockSelectLeftWidget.options[i].value + " ";
+		theForm.blockSelectLeft.value += encodeURI(theForm.blockSelectLeftWidget.options[i].value) + " ";
 	}
- 
+
 	theForm.blockSelectRight.value = "";
 	for (i=0; i<theForm.blockSelectRightWidget.options.length; i++) {
-		theForm.blockSelectRight.value += theForm.blockSelectRightWidget.options[i].value + " ";
+		theForm.blockSelectRight.value += encodeURI(theForm.blockSelectRightWidget.options[i].value) + " ";
 	}
- 
+
 	theForm.blockUnselected.value = "";
 	for (i=0; i<theForm.blockUnselectedWidget.options.length; i++) {
-		theForm.blockUnselected.value += theForm.blockUnselectedWidget.options[i].value + " ";
+		theForm.blockUnselected.value += encodeURI(theForm.blockUnselectedWidget.options[i].value) + " ";
 	}
 	return true;
 }
