@@ -96,7 +96,7 @@ class LayoutForm extends Form {
 		// Save the block plugin layout settings.
 		$blockVars = array('blockSelectLeft', 'blockUnselected', 'blockSelectRight');
 		foreach ($blockVars as $varName) {
-			$$varName = split(' ', Request::getUserVar($varName));
+			$$varName = array_map('urldecode', split(' ', Request::getUserVar($varName)));
 		}
 
 		$plugins =& PluginRegistry::loadCategory('blocks');
