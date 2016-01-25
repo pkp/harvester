@@ -7,43 +7,30 @@
   * Copyright (c) 2005-2012 Alec Smecher and John Willinsky
   * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
   *
-  * Localization strings for the en_US (U.S. English) locale.
+  * Localization strings for the tr_TR (Türkçe) locale.
   *
-  * $Id$
   -->
  
 <locale name="tr_TR" full_name="Türkçe">
 	<message key="plugins.generic.mysqlIndex.name">MySQL İndeks Arama Eklentisi</message>
-	<message key="plugins.generic.mysqlIndex.description">This plugin implements a simple MySQL-based search index.</message>
 	<message key="plugins.generic.mysqlIndex.blockDisplayName">MySQL Arama Bloğu</message>
-	<message key="plugins.generic.mysqlIndex.blockDescription">This block allows searching via the MySQL indexing plugin.</message>
 	<message key="plugins.generic.mysqlIndex.searchForm">Arama Formu</message>
 
 	<!-- Crosswalks -->
 	<message key="plugins.generic.mysqlIndex.crosswalks">Çapraz Geçiş</message>
 	<message key="plugins.generic.mysqlIndex.crosswalk.name">İsim</message>
-	<message key="plugins.generic.mysqlIndex.crosswalk.publicCrosswalkId">Public Crosswalk ID</message>
 	<message key="plugins.generic.mysqlIndex.crosswalk.description">Açıklama</message>
-	<message key="plugins.generic.mysqlIndex.crosswalk.sortableDescription">Allow users to sort records using this crosswalk when browsing records</message>
 	<message key="plugins.generic.mysqlIndex.crosswalk.type">Tür</message>
 	<message key="plugins.generic.mysqlIndex.crosswalk.type.string">Metin</message>
 	<message key="plugins.generic.mysqlIndex.crosswalk.type.select">Seç</message>
 	<message key="plugins.generic.mysqlIndex.crosswalk.type.date">Tarih</message>
 	<message key="plugins.generic.mysqlIndex.crosswalks.noneCreated">None Created</message>
 	<message key="plugins.generic.mysqlIndex.addCrosswalk">Çapraz Geçiş Ekle</message>
-	<message key="plugins.generic.mysqlIndex.reset">Reset To Defaults</message>
-	<message key="plugins.generic.mysqlIndex.confirmReset">Are you sure you wish to reset crosswalks to defaults?</message>
-	<message key="plugins.generic.mysqlIndex.confirmDelete">Are you sure you wish to delete this crosswalk?</message>
 	<message key="plugins.generic.mysqlIndex.addCrosswalk">Çapraz Geçiş Ekle</message>
 	<message key="plugins.generic.mysqlIndex.form.nameRequired">Bir İsim gerekli.</message>
-	<message key="plugins.generic.mysqlIndex.form.descriptionRequired">A description is required.</message>
-	<message key="plugins.generic.mysqlIndex.form.publicCrosswalkIdExists">A crosswalk with the specified public crosswalk ID already exists. Please choose another and try again.</message>
-	<message key="plugins.generic.mysqlIndex.form.publicCrosswalkId.description">When specified, the public crosswalk ID can be used in URL-based searches.</message>
-	<message key="plugins.generic.mysqlIndex.editCrosswalk">Edit Crosswalk</message>
 	<message key="plugins.generic.mysqlIndex.schemaFilter">Şema Filitresi</message>
 	<message key="plugins.generic.mysqlIndex.schemaFilter.all">Tüm Şemalar</message>
 	<message key="plugins.generic.mysqlIndex.schema">Şema</message>
 	<message key="plugins.generic.mysqlIndex.sort">Sıra</message>
 	<message key="plugins.generic.mysqlIndex.search">Ara</message>
-	<message key="plugins.generic.mysqlIndex.crosswalks.description">Crosswalks are used to identify similar fields in different metadata schema so that cross-schema searches can be performed.</message>
 </locale>

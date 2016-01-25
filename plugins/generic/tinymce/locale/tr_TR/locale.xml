@@ -7,14 +7,11 @@
   * Copyright (c) 2005-2012 Alec Smecher and John Willinsky
   * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
   *
-  * Localization strings for the en_US (U.S. English) locale.
+  * Localization strings for the tr_TR (Türkçe) locale.
   *
-  * $Id$
   -->
  
 <locale name="tr_TR" full_name="Türkçe">
 	<message key="plugins.generic.tinymce.name">TinyMCE Eklentisi</message>
-	<message key="plugins.generic.tinymce.description"><![CDATA[This plugin enables WYSIWYG editing of textareas using the <a href="http://tinymce.moxiecode.com" target="_new">TinyMCE</a> content editor.]]></message>
-	<message key="plugins.generic.tinymce.descriptionDisabled"><![CDATA[This plugin enables WYSIWYG editing of OJS textareas using the <a href="http://tinymce.moxiecode.com" target="_new">TinyMCE</a> content editor. <strong>TinyMCE is not currently installed; please install it in {$tinyMcePath}.</strong>]]></message>
 	<message key="plugins.generic.tinymce.settings">Ayarlar</message>
 </locale>

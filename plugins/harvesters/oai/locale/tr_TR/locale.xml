@@ -7,13 +7,11 @@
   * Copyright (c) 2005-2012 Alec Smecher and John Willinsky
   * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
   *
-  * Localization strings for the en_US (U.S. English) locale.
+  * Localization strings for the tr_TR (Türkçe) locale.
   *
-  * $Id$
-  - <locale name="en_US" full_name="U.S. English">
   -->
  
-<locale name="en_US" full_name="U.S. English">
+<locale name="tr_TR" full_name="Türkçe">
 	<message key="plugins.harvesters.oai.protocolName">OAI</message>
 	<message key="plugins.harvesters.oai.description">Bu harmanlama Açık Arşivler Girişimi (OAI) sürüm 1.1 ve 2.0 protokolünü destekler</message>
 	<message key="plugins.harvesters.oai.archive.form.harvesterUrl">Temel OAI adresi (URL)</message>
@@ -40,12 +38,4 @@
 
 	<message key="plugins.harvesters.oai.errors.unknownHeaderTag">Sunucudan bilinmeyen bir başlık  etiketi alındı: {$tag}</message>
 
-	<message key="plugins.harvesters.oai.toolUsage"><![CDATA[The following additional flags are available for the OAI Harvester:
-	skipExistingEntries: When set, existing records will not be updated
-	dump: When set, dump harvested data to local files for debugging
-	from=YYYY-MM-DD: Harvest records at least as new as the specified date (use "now" for current date, "last" for date of last harvest)
-	until=YYYY-MM-DD: Harvest records at least as old as the specified date (use "now" for current date)
-	set=setSpec: Harvest records from the specified set (may be specified multiple times)
-	useLastSets: Harvest using the list of sets used during the last harvest
-]]></message>
 </locale>
