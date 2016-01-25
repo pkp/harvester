@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE locale SYSTEM "../../../../../lib/pkp/dtd/locale.dtd">
+
+<!--
+  * locale.xml
+  *
+  * Copyright (c) 2005-2012 Alec Smecher and John Willinsky
+  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
+  *
+  * Localization strings for the en_US (U.S. English) locale.
+  *
+  * $Id$
+  -->
+ 
+<locale name="en_US" full_name="U.S. English">
+	<message key="plugins.generic.zendSearch.name">ZEND Framework Search Plugin</message>
+	<message key="plugins.generic.zendSearch.description">This plugin implements support for the Zend Framework's search engine, which is a PHP implementation of the Apache Lucene project, or an external Lucene/Solr installation.</message>
+	<message key="plugins.generic.zendSearch.solrUrl">Solr URL</message>
+	<message key="plugins.generic.zendSearch.solrUrl.description">If you are using an external installation of Solr and Lucene, enter the URL to the Solr installation here. It will be used for indexing and queries. If this field is left blank, the built-in ZendSearch implementation of Lucene will be used instead.</message>
+	<message key="plugins.generic.zendSearch.solrUrl.invalid">The Solr URL was not valid.</message>
+	<message key="plugins.generic.zendSearch.blockDisplayName">ZEND Search Block</message>
+	<message key="plugins.generic.zendSearch.blockDescription">This block allows searching via the Zend Framework implementation of the Lucene search engine.</message>
+	<message key="plugins.generic.zendSearch.settings">Settings</message>
+	<message key="plugins.generic.zendSearch.solrMustExist">In order to use this plugin with PHP 4, you must specify a Solr URL.</message>
+	<message key="plugins.generic.zendSearch.searchForm">Search Form</message>
+	<message key="plugins.generic.zendSearch.formElement.confirmDelete">Are you sure you wish to delete this search form element?</message>
+	<message key="plugins.generic.zendSearch.formElement.noneCreated">No search form elements have been created.</message>
+	<message key="plugins.generic.zendSearch.formElement.create">Create Search Form Element</message>
+	<message key="plugins.generic.zendSearch.formElement.edit">Edit Search Form Element</message>
+	<message key="plugins.generic.zendSearch.formElement.status">Status</message>
+	<message key="plugins.generic.zendSearch.formElement.title">Title</message>
+	<message key="plugins.generic.zendSearch.formElement.title.required">A title is required.</message>
+	<message key="plugins.generic.zendSearch.formElement.symbolic">Symbolic Name</message>
+	<message key="plugins.generic.zendSearch.formElement.symbolic.required">Please ensure that a unique symbolic name is specified.</message>
+	<message key="plugins.generic.zendSearch.formElement.type">Type</message>
+	<message key="plugins.generic.zendSearch.formElement.type.required">A type is required.</message>
+	<message key="plugins.generic.zendSearch.formElement.type.string">String</message>
+	<message key="plugins.generic.zendSearch.formElement.type.select">Select</message>
+	<message key="plugins.generic.zendSearch.formElement.type.date">Date</message>
+	<message key="plugins.generic.zendSearch.formElement.type.date.rangeStart">First Date</message>
+	<message key="plugins.generic.zendSearch.formElement.type.date.rangeEnd">Last Date</message>
+	<message key="plugins.generic.zendSearch.formElement.type.date.recalculateRange">Recalculate Range</message>
+	<message key="plugins.generic.zendSearch.formElement.type.select.recalculateOptions">Recalculate Field Options</message>
+	<message key="plugins.generic.zendSearch.formElement.includeFields">Include Fields</message>
+</locale>
