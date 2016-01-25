@@ -78,103 +78,37 @@
 	<message key="installer.harvester2Upgrade">Açık Harmanlama Sistemleri Güncellemesi</message>
 	<message key="installer.installationInstructions"><![CDATA[<h4>PKP Open Harvester Systems Version {$version}</h4>
 
-<p>Thank you for downloading the Public Knowledge Project's <strong>Open Harvester Systems</strong>. Before proceeding, please read the <a href="{$baseUrl}/docs/README">README</a> file included with this software. For more information about the Public Knowledge Project and its software projects, please visit the <a href="http://pkp.sfu.ca/" target="_blank">PKP web site</a>. If you have bug reports or technical support inquiries about Open Harvester Systems, see the <a href="http://pkp.sfu.ca/support/forum" target="_blank">support forum</a> or visit PKP's online <a href="http://pkp.sfu.ca/bugzilla/" target="_blank">bug reporting system</a>. Although the support forum is the preferred method of contact, you can also email the team at <a href="mailto:pkp.contact@gmail.com">pkp.contact@gmail.com</a>.</p>
-
-<h4>Recommended system requirements</h4>
-
-<ul>
-	<li><a href="http://www.php.net/" target="_blank">PHP</a> >= {$phpVersion} (including PHP 5.x); you are currently using PHP {$phpVersion}{$wrongPhpText}</li>
-	<li><a href="http://www.mysql.com/" target="_blank">MySQL</a> >= 3.23.23 (including MySQL 4.x and 5.x)</li>
-	<li><a href="http://httpd.apache.org/" target="_blank">Apache</a> >= 1.3.2x or >= 2.0.4x or Microsoft IIS 6</li>
-	<li>Operating system: Any OS that supports the above software, including <a href="http://www.linux.org/" target="_blank">Linux</a>, <a href="http://www.bsd.org/" target="_blank">BSD</a>, <a href="http://www.sun.com/" target="_blank">Solaris</a>, <a href="http://www.apple.com/" target="_blank">Mac OS X</a>, <a href="http://www.microsoft.com/">Windows</a></li>
-</ul>
-
-<p>As PKP does not have the resources to test every possible combination of software versions and platforms, no guarantee of correct operation or support is implied.</p>
-
-<p>Changes to these settings can be made after installation by editing the file <tt>config.inc.php</tt> in the base Open Harvester Systems directory, or using the site administration web interface.</p>
-
-<h4>Supported database systems</h4>
-
-<p>Open Harvester Systems has currently only been tested on MySQL although other database management systems supported by <a href="http://adodb.sourceforge.net/" target="_blank">ADOdb</a> may work (in full or partially). Compatibility reports and/or code patches for alternative DBMSs can be sent to the Open Harvester Systems team.</p>
-
-<h4>Pre-Installation Steps</h4>
-
-<p>1. The following files and directories (and their contents) must be made writable:</p>
-<ul>
-	<li><tt>config.inc.php</tt> is writable (optional): {$writable_config}</li>
-	<li><tt>cache/</tt> is writable: {$writable_cache}</li>
-	<li><tt>cache/t_cache/</tt> is writable: {$writable_templates_cache}</li>
-	<li><tt>cache/t_compile/</tt> is writable: {$writable_templates_compile}</li>
-	<li><tt>cache/_db</tt> is writable: {$writable_db_cache}</li>
-</ul>]]></message>
-	<message key="installer.installationWrongPhp"><![CDATA[<br/><strong>WARNING: Your current version of PHP does not meet the minimum requirements for installation. It is recommended to upgrade to a more recent release of PHP.</strong>]]></message>
-	<message key="installer.upgradeInstructions"><![CDATA[<h4>Open Harvester Systems Version {$version}</h4>
-	
-<p>Thank you for downloading the Public Knowledge Project's <strong>Open Harvester Systems</strong>. Before proceeding, please read the <a href="{$baseUrl}/docs/README">README</a> and <a href="{$baseUrl}/docs/UPGRADE">UPGRADE</a> files included with this software. For more information about the Public Knowledge Project and its software projects, please visit the <a href="http://pkp.sfu.ca/" target="_blank">PKP web site</a>. If you have bug reports or technical support inquiries about Open Harvester Systems, see the <a href="http://pkp.sfu.ca/support/forum" target="_blank">support forum</a> or visit PKP's online <a href="http://pkp.sfu.ca/bugzilla/" target="_blank">bug reporting system</a>. Although the support forum is the preferred method of contact, you can also email the team at <a href="mailto:pkp.contact@gmail.com">pkp.contact@gmail.com</a>.</p>
-<p>It is <strong>strongly recommended</strong> that you back up your database, files directory, and Open Harvester Systems installation directory before proceeding.</p>
-<p>If you are running in <a href="http://www.php.net/features.safe-mode" target="_blank">PHP Safe Mode</a>, please ensure that the max_execution_time directive in your php.ini configuration file is set to a high limit. If this or any other time limit (e.g. Apache's "Timeout" directive) is reached and the upgrade process is interrupted, manual intervention will be required.</p>]]></message>
 	<message key="installer.localeSettings">Dil Ayarları</message>
-	<message key="installer.localeSettingsInstructions"><![CDATA[For complete Unicode (UTF-8) support, select UTF-8 for all character set settings. Note that this support currently requires a MySQL >= 4.1.1 database server. Please also note that full Unicode support requires PHP >= 4.3.0 compiled with support for the <a href="http://www.php.net/mbstring" target="_blank">mbstring</a> library (enabled by default in most recent PHP installations). You may experience problems using extended character sets if your server does not meet these requirements.
-<br /><br />
-Your server currently supports mbstring: <strong>{$supportsMBString}</strong>]]></message>
-	<message key="installer.localeInstructions">The primary language to use for this system. Please consult the Open Harvester Systems documentation if you are interested in support for languages not listed here.</message>
 	<message key="installer.additionalLocales">Ek diller</message>
-	<message key="installer.additionalLocalesInstructions">Select any additional languages to support in this system. Additional languages can also be installed at any time from the site administration interface.</message>
 	<message key="installer.clientCharset">İstemci karakter seti</message>
-	<message key="installer.clientCharsetInstructions">The encoding to use for data sent to and received from browsers.</message>
 	<message key="installer.connectionCharset">Bağlantı karakter seti</message>
-	<message key="installer.connectionCharsetInstructions">The encoding to use for data sent to and received from the database. This should be the same as the client character set. Note that this capability is only supported with MySQL >= 4.1.1. Select "Not applicable" if your database server does not meet these requirements.</message>
 	<message key="installer.databaseCharset">Veri tabanı karakter seti</message>
-	<message key="installer.databaseCharsetInstructions">The encoding to use for data stored in the database. Note that this capability is only supported with MySQL >= 4.1.1. Select "Not applicable" if your database server does not meet these requirements.</message>
-	<message key="installer.locale">Locale</message>
 	<message key="installer.securitySettings">Güvenlik Ayarları</message>
 	<message key="installer.encryption">Parola şifreleme algoritması</message>
-	<message key="installer.encryptionInstructions">SHA1 is recommended if your system supports it (requires PHP >= 4.3.0).</message>
 	<message key="installer.administratorAccount">Yönetici Hesabı</message>
-	<message key="installer.administratorAccountInstructions">This user account will become the site administrator and have complete access to the system. Additional user accounts can be created after installation.</message>
 	<message key="installer.databaseSettings">Veri Tabanı Ayarları</message>
-	<message key="installer.databaseSettingsInstructions">Open Harvester Systems requires access to a SQL database to store its data. See the system requirements above for a list of supported databases. In the fields below, provide the settings to be used to connect to the database.</message>
 	<message key="installer.databaseDriver">Veri Tabanı Sürücüsü</message>
 	<message key="installer.databaseHost">Barındırma</message>
 	<message key="installer.databaseUsername">Kullanıcı Adı</message>
 	<message key="installer.databasePassword">Şifre</message>
 	<message key="installer.databaseName">Veri Tabanı Adı</message>
-	<message key="installer.databaseDriverInstructions"><![CDATA[<strong>Database drivers listed in brackets do not appear to have the required PHP extension loaded and installation will likely fail if selected.</strong><br />Any unsupported database drivers listed above are listed solely for academic purposes and are unlikely to work.]]></message>
-	<message key="installer.databaseHostInstructions">Leave the hostname blank to connect using domain sockets instead of over TCP/IP. This is not necessary with MySQL, which will automatically use sockets if "localhost" is entered, but is required with some other database servers such as PostgreSQL.</message>
 	<message key="installer.createDatabase">Yeni bir veri tabanı oluştur</message>
-	<message key="installer.createDatabaseInstructions">To use this option your database system must support remote database creation and your user account must have the appropriate permissions to create new databases. If installation fails with this option selected, manually create the database on your server and run the installer again with this option disabled.</message>
 	<message key="installer.installApplication">Açık Harmanlama Sistemlerini Yükle</message>
 	<message key="installer.upgradeApplication">Açık Harmanlama Sistemlerini Güncelle</message>
 	<message key="installer.form.localeRequired">Bir dil seçilmelidir</message>
 	<message key="installer.form.clientCharsetRequired">Bir istemci karakter seti seçilmelidir.</message>
-	<message key="installer.form.filesDirRequired">The directory to be used for storing uploaded files is required.</message>
-	<message key="installer.form.encryptionRequired">The algorithm to use for encrypting user passwords must be selected.</message>
 	<message key="installer.form.databaseDriverRequired">Bir veri tabanı sürücüsü seçilmeldiir.</message>
 	<message key="installer.form.databaseNameRequired">Veri tabanı ismi gereklidir.</message>
 	<message key="installer.form.usernameRequired">Yönetici hesabı için kullanıcı adı gereklidir.</message>
 	<message key="installer.form.passwordRequired">Yönetici hesabı için şifre gereklidir.</message>
-	<message key="installer.form.usernameAlphaNumeric">The administrator username can contain only alphanumeric characters, underscores, and hyphens, and must begin and end with an alphanumeric character.</message>
 	<message key="installer.form.passwordsDoNotMatch">Yönetici şifresi eşleşmedi</message>
 	<message key="installer.form.emailRequired">Yönetici hesabı için geçerli bir e-posta adresi girilmelidir.</message>
 	<message key="installer.form.separateMultiple">Birden çok değeri virgül ile ayırınız</message>
 	<message key="installer.installErrorsOccurred">Yükleme sırasında bir hata oluştu</message>
-	<message key="installer.installFilesDirError">The directory specified for uploaded files does not exist or is not writable.</message>
-	<message key="installer.publicFilesDirError">The public files directory does not exist or is not writable.</message>
-	<message key="installer.installFileError"><![CDATA[The installation file <tt>dbscripts/xml/install.xml</tt> does not exist or is not readable.]]></message>
-	<message key="installer.installParseDBFileError"><![CDATA[Error parsing the database installation file <tt>{$file}</tt>.]]></message>
-	<message key="installer.configFileError"><![CDATA[The configuration file <tt>config.inc.php</tt> does not exist or is not readable.]]></message>
-	<message key="installer.reinstallAfterDatabaseError"><![CDATA[<b>Warning:</b> If installation failed part way through database installation you may need to drop your Open Harvester Systems database or database tables before attempting to reinstall the database.]]></message>
-	<message key="installer.overwriteConfigFileInstructions"><![CDATA[<h4>IMPORTANT!</h4>
-<p>The installer could not automatically overwrite the configuration file. Before attempting to use the system, please open <tt>config.inc.php</tt> in a suitable text editor and replace its contents with the contents of the text field below.</p>]]></message>
 	<message key="installer.contentsOfConfigFile">Konfigürasyon dosyasının içeriği</message>
 	<message key="installer.installerSQLStatements">Yükleme için SQL bildirimleri</message>
-	<message key="installer.installationComplete"><![CDATA[<p>Installation of Open Harvester Systems has completed successfully.</p>
-<p>To begin using the system, <a href="{$loginUrl}">login</a> with the username and password entered on the previous page.</p>]]></message>
-	<message key="installer.upgradeComplete"><![CDATA[<p>Upgrade of Open Harvester Systems to version {$version} has completed successfully.</p>
-<p>Don't forget to set the "installed" setting in your config.inc.php configuration file back to <i>On</i>.</p>]]></message>
 	<message key="installer.releaseNotes">Sürüm Notları</message>
 	<message key="installer.checkYes">Evet</message>
-	<message key="installer.checkNo"><![CDATA[<span class="formError">NO</span>]]></message>
 
 	<!-- Locale messages -->
 	<message key="locale.primary">Birincil Dil</message>
@@ -221,29 +155,16 @@ Your server currently supports mbstring: <strong>{$supportsMBString}</strong>]]>
 	<message key="user.dateLastLogin">Son giriş</message>
 	<message key="user.register.registrationDisabled">Bu site şu halde kullanıcı kaydı kabul etmiyor.</message>
 	<message key="user.register.form.passwordLengthTooShort">Girmiş olduğunuz şifre yeterince uzun değil.</message>
-	<message key="user.register.registerAs">Register as</message>
-	<message key="user.register.completeForm">Fill in this form to register with this journal.</message>
 	<message key="user.register.submitterDescription">Arşiv yöneticileri indeksleme için arşivlerini gönderebilirler.</message>
 	<message key="user.register.repeatPassword">Şifre Tekrarı</message>
-	<message key="user.register.usernameRestriction">The username must contain only lowercase letters, numbers, and hyphens/underscores.</message>
-	<message key="user.register.passwordLengthRestriction">The password must be at least {$length} characters.</message>
-	<message key="user.register.form.usernameExists">The selected username is already in use by another user.</message>
-	<message key="user.register.form.usernameAlphaNumeric">The username can contain only alphanumeric characters, underscores, and hyphens, and must begin and end with an alphanumeric character.</message>
-	<message key="user.register.form.emailExists">The selected email address is already in use by another user.</message>
-	<message key="user.register.form.passwordsDoNotMatch">The passwords do not match.</message>
-	<message key="user.login.loginError">Invalid username or password. Please try again.</message>
 	<message key="user.login.rememberMe">Beni Hatırla</message>
 	<message key="user.login.rememberUsernameAndPassword">Kullanıcı adımı ve şifremi hatırla</message>
 
 	<!-- Forms -->
-	<message key="form.errorsOccurred">Errors occurred processing this form</message>
-	<message key="form.postRequired">The form was not submitted properly.</message>
 	<message key="form.formLanguage">Form Dili</message>
 	<message key="form.formLanguage.description">Başka dillerde veri girmek için önce dil seçin.</message>
 
-	<message key="user.noRoles">Your account does not currently have any roles. Please choose from the actions below:</message>
 	<message key="user.noRoles.submitArchive">Bir arşiv gönder</message>
-	<message key="user.noRoles.enableSubmitClosed">Registration as an archive submitter is currently disabled.</message>
 
 	<!-- Roles -->
 	<message key="user.role.siteAdmin">Site Yöneticisi</message>
@@ -266,22 +187,11 @@ Your server currently supports mbstring: <strong>{$supportsMBString}</strong>]]>
 	<!-- Site Administration -->
 	<message key="admin.siteAdmin">Site Yöneticisi</message>
 	<message key="admin.siteSettings">Site Ayarları</message>
-	<message key="admin.layout">Layout</message>
-	<message key="admin.sortOrders">Sort Orders</message>
 	<message key="admin.archives">Arşivler</message>
 	<message key="admin.plugins">Eklentiler</message>
 	<message key="admin.rtAdmin">Okuma Araçları</message>
 
 	<message key="admin.archives.manage">Arşiv Yönet</message>
-	<message key="admin.archives.manage.numRecords">Number of Papers Indexed</message>
-	<message key="admin.archives.manage.updateIndex">Update Metadata Index</message>
-	<message key="admin.archives.manage.flush">Flush Metadata</message>
-	<message key="admin.archives.manage.updateIndex.confirm">Are you sure you wish to update the metadata index? This operation may take several minutes, depending on the size of the archive.</message>
-	<message key="admin.archives.confirmDelete">Are you sure you wish to delete this archive and all of its records?</message>
-	<message key="admin.archive.manage.updateIndex.success">The metadata index has been updated. {$recordCount} records are currently indexed.</message>
-	<message key="admin.archive.manage.updateIndex.failure">The metadata index could not be updated. The following error(s) occurred:</message>
-	<message key="admin.archive.manage.updateIndex.return">Return to management</message>
-	<message key="admin.archive.manage.updateIndex.failure.generic">An unknown error occurred.</message>
 
 	<message key="admin.settings.general">Genel</message>
 	<message key="admin.settings.administration">Yönetim</message>
@@ -292,9 +202,7 @@ Your server currently supports mbstring: <strong>{$supportsMBString}</strong>]]>
 	<message key="admin.settings.form.titleRequired">Bir başlık gerekli.</message>
 	<message key="admin.settings.styleSheet">Biçim sayfası</message>
 	<message key="admin.settings.theme">Tema</message>
-	<message key="admin.settings.styleSheet.invalid">Invalid stylesheet format. Accepted format is .css.</message>
 	<message key="admin.settings.customLogo">Özel logo</message>
-	<message key="admin.settings.customLogo.invalid">Invalid custom logo format. Accepted formats are .gif, .jpg, and .png.</message>
 	<message key="admin.settings.contactName">Site yöneticisi adı</message>
 	<message key="admin.settings.contactEmail">Site yöneticisi e-posta</message>
 	<message key="admin.settings.minPasswordLength">Minumum şifre uzunluğu</message>
@@ -318,50 +226,16 @@ Your server currently supports mbstring: <strong>{$supportsMBString}</strong>]]>
 
 	<!-- Users -->
 	<message key="admin.users">Kullanıcılar</message>
-	<message key="admin.people">People</message>
 	<message key="admin.people.allUsers">Tüm Kullanıcılar</message>
 	<message key="admin.people.createUser">Kullanıcı Oluştur</message>
-	<message key="admin.people.noAdministrativeRights"><![CDATA[Sorry, you do not have administrative rights over this user. This may be because:
-		<ul>
-			<li>The user is a site administrator</li>
-			<li>The user is active in journals you do not manage</li>
-		</ul>
-	This task must be performed by a site administrator.
-	]]></message>
-	<message key="admin.people.mustChooseRole">Please select a role at the top of the page before clicking "Enroll User".</message>
 	<message key="admin.people.editUser">Kullanıcı Düzelt</message>
 	<message key="admin.people.enrollExistingUser">Tüm Kayıtlı Kullanıcılar</message>
-	<message key="admin.people.enroll">Enroll User</message>
-	<message key="admin.people.enrollment">Enrollment</message>
-	<message key="admin.people.roleEnrollment">{$role} Enrollment</message>
-	<message key="admin.people.unenroll">Unenroll</message>
-	<message key="admin.people.confirmUnenroll">Unenroll this user?</message>
-	<message key="admin.people.mergeUsers.confirm">Are you sure you wish to merge the account with the username "{$oldUsername}" into the account with the username "{$newUsername}"? The account with the username "{$oldUsername}" will not exist afterwards. This action is not reversible.</message>
-	<message key="admin.people.confirmRemove">Remove this user from this journal? This action will unenroll the user from all roles within this journal.</message>
-	<message key="admin.people.confirmDisable">Disable this user? This will prevent the user from logging into the system.
-
-You may optionally provide the user with a reason for disabling their account.</message>
-	<message key="admin.people.noneEnrolled">No enrolled users.</message>
-	<message key="admin.people.enrollSelected">Enroll Selected Users</message>
-	<message key="admin.people.noMatchingUsers">No matching users.</message>
 	<message key="admin.people.saveAndCreateAnotherUser">Kaydet ve Yenisini Oluştur</message>
-	<message key="admin.people.userCreatedSuccessfully">User created successfully.</message>
-	<message key="admin.people.authSource">Authentication source</message>
 	<message key="admin.people.enrollUserAs">Kullanıcı Yetkileri</message>
 	<message key="admin.people.doNotEnroll">Yetkisiz</message>
-	<message key="admin.people.enrollUserAsDescription">Users can be assigned to, or removed from, a role at any point.</message>
-	<message key="admin.people.invalidUser">Sorry, the requested user does not exist.</message>
-	<message key="admin.people.createUserGeneratePassword">Generate a random password.</message>
-	<message key="admin.people.createUserSendNotify">Send the user a welcome email containing their username and password.</message>
-	<message key="admin.people.mustProvideName">Please provide at least a last name for the user first.</message>
-	<message key="admin.people.userMustChangePassword">Require the user to change their password the next time they log in.</message>
 	<message key="admin.people.disable">Pasifleştir</message>
 	<message key="admin.people.enable">Etkinleştir</message>
 	<message key="admin.people.remove">Sil</message>
-	<message key="admin.people.emailUsers">Email Users</message>
-	<message key="admin.people.emailUsers.emailSelectedUsers">Email selected users</message>
-	<message key="admin.people.emailUsers.emailUsersEnrolledAs">Email users enrolled as</message>
-	<message key="admin.people.emailUsers.selectUsers">Select the users you would like to email by checking the boxes beside their names</message>
 	<message key="admin.people.emailUsers.selectTemplate">Bir Şablon Seçiniz</message>
 	<message key="admin.people.emailUsers.selectLocale">Bir dil seçiniz</message>
 
@@ -398,9 +272,6 @@ You may optionally provide the user with a reason for disabling their account.</
 	<message key="admin.archives.noneCreated">Arşiv Oluşturulamadı</message>
 	<message key="admin.archives.form.titleRequired">Bir başlık gerekli.</message>
 	<message key="admin.archives.form.urlRequired">URL alanı gerekli.</message>
-	<message key="admin.archives.form.publicArchiveIdExists">Another archive already exists with the specified public archive ID. Please choose another.</message>
-	<message key="admin.archives.form.url.description">e.g. http://www.yourarchive.com</message>
-	<message key="admin.archives.form.publicArchiveId.description">This unique identifier can be used in URL-based searches to identify this archive.</message>
 	
 	<!-- Languages -->
 	<message key="admin.languages.languageSettings">Dil Ayarları</message>
@@ -431,8 +302,6 @@ You may optionally provide the user with a reason for disabling their account.</
 	<message key="admin.versionRevision">REvizyon</message>
 	<message key="admin.versionBuild">İnşaa</message>
 	<message key="admin.dateInstalled">Yüklendiği tarih</message>
-	<message key="admin.systemConfigurationDescription"><![CDATA[Open Harvester Systems configuration settings from <tt>config.inc.php</tt>.]]></message>
-	<message key="admin.serverInformationDescription"><![CDATA[Basic operating system and server software versions. Click on <span class="highlight">Extended PHP Information</span> to view extended details of this server's PHP configuration.]]></message>
 	<message key="admin.phpInfo">Genişletilmiş PHP Bilgisi</message>
 	<message key="admin.server.platform">OS platformu</message>
 	<message key="admin.server.phpVersion">PHP sürümü</message>
@@ -440,40 +309,12 @@ You may optionally provide the user with a reason for disabling their account.</
 	<message key="admin.server.dbDriver">Veri Tabanı sürücüsü</message>
 	<message key="admin.server.dbVersion">Veri Tabanı sunucu sürümü</message>
 	<message key="admin.displayNewSystemConfig">Yeni konfigürasyonu görüntüle</message>
-	<message key="admin.systemConfigFileReadError"><![CDATA[The configuration file <tt>config.inc.php</tt> does not exist, is not readable, or is invalid.]]></message>
-	<message key="admin.overwriteConfigFileInstructions"><![CDATA[<h4>NOTE!</div>
-<p>The system could not automatically overwrite the configuration file. To apply your configuration changes you must open <tt>config.inc.php</tt> in a suitable text editor and replace its contents with the contents of the text field below.</p>]]></message>
-	<message key="admin.displayConfigFileInstructions"><![CDATA[The contents of your updated configuration are displayed below. To apply the configuration changes you must open <tt>config.inc.php</tt> in a suitable text editor and replace its contents with the contents of the text field below.]]></message>
-	<message key="admin.configFileUpdatedInstructions"><![CDATA[Your configuration file has been successfully updated. Please note that if your site no longer functions correctly you may need to manually fix your configuration by editing <tt>config.inc.php</tt> directly.]]></message>
-	<message key="admin.contentsOfConfigFile">Contents of configuration file</message>
-	<message key="admin.version.checkForUpdates">Check for updates</message>
-	<message key="admin.version.latest">Latest version</message>
-	<message key="admin.version.upToDate">Your system is up-to-date</message>
-	<message key="admin.version.updateAvailable">An updated version is available</message>
-	<message key="admin.version.downloadPackage">Download</message>
-	<message key="admin.version.downloadPatch">Download Patch</message>
-	<message key="admin.version.moreInfo">More Information</message>
 	
 	<!-- Sidebar Messages -->
-	<message key="sidebar.harvesterStats">{$siteTitle} Stats</message>
-	<message key="sidebar.harvesterStats.description"><![CDATA[{$siteTitle} currently has <strong>{$recordCount}</strong> papers from <strong>{$archiveCount}</strong> archive(s) indexed.]]></message>
 	<message key="sidebar.addYourArchive">Arşivinizi Ekleyin</message>
-	<message key="sidebar.addYourArchive.description"><![CDATA[<a href="{$addUrl}">Click here</a> to add your system to our index.]]></message>
 
 	<!-- Defaults -->
-	<message key="default.siteIntro"><![CDATA[<strong>Welcome to the Public Knowledge Project's metadata archive...</strong>
-	
-	To improve the accuracy of searching within the PKP System, authors have been asked to index their work, where applicable, by discipline(s), topics, genre, method, coverage, and sample. This allows you to search for "empirical" versus "historical" studies, for example, under "index terms." You can also view a document's index terms by selecting the complete record from among the search results.]]></message>
-	<message key="default.emailSignature"><![CDATA[________________________________________________________________________
-	Open Harvester Systems
-	{$indexUrl}
-	]]></message>
-	<message key="default.footer"><![CDATA[&copy; 2005-2009 <a href="http://pkp.sfu.ca/harvester2">Alec Smecher and John Willinsky</a>]]></message>
-
 	<message key="about.harvester">Harmanlama Hakkında</message>
-	<message key="about.harvester.description"><![CDATA[The PKP Open Archives Harvester is a free metadata indexing system developed by the Public Knowledge Project through its federally funded efforts to expand and improve access to research. The PKP OAI Harvester allows you to create a searchable index of the metadata from Open Archives Initiative-compliant archives, such as sites using Open Journal Systems or Open Conference Systems.
-	
-	The PKP OAI Harvester is currently compatible with versions 1.1 and 2.0 of the OAI Harvesting Protocol.]]></message>
 
 	<!-- Search messages -->
 	<message key="search.syntaxInstructions"><![CDATA[Arama İpuçları: <ul>
@@ -517,14 +358,7 @@ You may optionally provide the user with a reason for disabling their account.</
 	<message key="record.records">Kayıtlar</message>
 
 	<!-- Debug messages -->
-	<message key="debug.executionTime">Page generated in</message>
-	<message key="debug.notes.helpMappingLoad">Reloaded XML help mapping file {$filename} in search of {$id}.</message>
-	<message key="debug.databaseQueries">Number of database queries</message>
 	<message key="debug.notes">Notlar:</message>
-	<message key="debug.notes.localeLoad">Loaded locale file "{$localeFile}" from XML</message>
-	<message key="debug.notes.localeListLoad">Loaded locale list "{$localeList}" from XML</message>
-	<message key="debug.notes.missingLocaleKey">Missing locale key "{$key}".</message>
-	<message key="debug.notes.schemaMapLoad">Load schema map "{$schemaMap}" from XML</message>
 
 	<!-- Help messages -->
 	<message key="help.help">Yardım</message>
@@ -532,7 +366,6 @@ You may optionally provide the user with a reason for disabling their account.</
 	<message key="help.toc">İçindekiler Tablosu</message>	
 	<message key="help.searchResults">Arama Sonucu</message>
 	<message key="help.matchesFound">{$matches} eşleşen kayıt bulundu</message>
-	<message key="help.noMatchingTopics">No matching help topics were found.</message>
 	<message key="help.helpIndex">Yardım İndeksi</message>
 	<message key="help.contents">İçindekiler</message>
 	<message key="help.upALevel">Bir Seviye Yukarı</message>	
@@ -543,52 +376,28 @@ You may optionally provide the user with a reason for disabling their account.</
 
 	<!-- Plugin categories and descriptions -->
 	<message key="plugins.categories.generic">Genel Eklentiler</message>
-	<message key="plugins.categories.generic.description">This category contains general-purpose plugins that are not better suited to other categories.</message>
 
 	<message key="plugins.categories.blocks">Blok Eklentileri</message>
-	<message key="plugins.categories.blocks.description">Block Plugins are pluggable UI components, such as the various sidebar tools.</message>
 
 	<message key="plugins.categories.harvesters">Harmanlama Eklentisi</message>
-	<message key="plugins.categories.harvesters.description">This category contains plugins that implement various harvesting protocols such as OAI.</message>
 
 	<message key="plugins.categories.preprocessors">Önişlemci Eklentisi</message>
-	<message key="plugins.categories.preprocessors.description">This category contains plugins that process harvested data before it is added to the Open Harvester Systems repository in its native metadata format.</message>
 
 	<message key="plugins.categories.postprocessors">Önişlemci Eklentisi</message>
-	<message key="plugins.categories.postprocessors.description">This category contains plugins that process harvested data after it has been added to the Open Harvester Systems repository in its native metadata format but before it is indexed for searching.</message>
 
 	<message key="plugins.categories.schemas">Şema Eklentileri</message>
-	<message key="plugins.categories.schemas.description">This category contains plugins that implement various metadata formats.</message>
 
 	<message key="plugins.categories.themes">Tema Eklentileri</message>
-	<message key="plugins.categories.themes.description">Theme Plugins can be used to change the system's appearance.</message>
 
 	<message key="manager.plugins.disable">Pasifleştir</message>
 	<message key="manager.plugins.enable">Aktifleştir</message>
 	
-	<message key="manager.plugins.copyError">Plugin was not successfully copied. This may be a permissions problem. Please make sure that the web server is able to write to the plugins directory (including subdirectories) but don't forget to secure it again later.</message>
 	<message key="manager.plugins.doesNotExist">Eklenti açık değil</message>
 	<message key="manager.plugins.delete">Eklenti Sil</message>
-	<message key="manager.plugins.deleteConfirm">Are you sure you wish to delete this plugin from the system?</message>
-	<message key="manager.plugins.deleteDescription">By clicking delete, you will delete the plugin from the server's file system.</message>
-	<message key="manager.plugins.deleteError">Plugin could not be deleted from the file system. This may be a permissions problem. Please make sure that the web server is able to write to the plugins directory (including subdirectories) but don't forget to secure it again later.</message>
-	<message key="manager.plugins.deleteSuccess">Plugin successfuly deleted</message>
-	<message key="manager.plugins.description">This page allows the Administrator to review and potentially configure the plugins that are currently installed. Plugins are divided into categories, according to their function. The categories are listed below, and within each category, its current set of plugins.</message>
-	<message key="manager.plugins.fileSelectError">Please select a file first</message>
 	<message key="manager.plugins.install">Yeni Bir Eklenti Yükle</message>
-	<message key="manager.plugins.installDescription">This form allows you to upload and install a new plugin.  Please ensure the plugin is compressed as a .tar.gz file.</message>
-	<message key="manager.plugins.installedVersionNewer">Plugin already exists, and is newer or equal to installed version</message>
-	<message key="manager.plugins.installedVersionOlder">Plugin already exists, and is older or equal to the installed version</message>
 	<message key="manager.plugins.installFailed">Yükleme başarısız oldu</message>
 	<message key="manager.plugins.installSuccessful">Sürüm başarıyla yüklendi.</message>
-	<message key="manager.plugins.invalidPluginArchive">The uploaded plugin archive does not contain a folder that corresponds to the plugin name.</message>
-	<message key="manager.plugins.wrongCategory">The uploaded plugin does not fit the category of the upgraded plugin.</message>
-	<message key="manager.plugins.wrongName">The version.xml in the uploaded plugin contains a plugin name that does not fit the name of the upgraded plugin.</message>
-	<message key="manager.plugins.pleaseInstall">Plugin does not exist.  Please Install instead</message>
-	<message key="manager.plugins.pleaseUpgrade">Plugin already exists, but is newer than installed version.  Please upgrade instead</message>
-	<message key="manager.plugins.tarCommandNotFound">The tar command is not available. Please correctly configure it in your "config.inc.php".</message>
 	<message key="manager.plugins.upgrade">Eklenti Güncelle</message>
-	<message key="manager.plugins.upgradeDescription">This form allows you to upgrade a plugin.  Please ensure the plugin is compressed as a .tar.gz file.</message>
 	<message key="manager.plugins.upgradeFailed">Güncelleme başarısız oldu</message>
 	<message key="manager.plugins.upgradeSuccessful">Sürüm başarıyla güncellendi</message>
 	<message key="manager.plugins.uploadError">Yükleme dosyası hatası</message>
@@ -604,35 +413,16 @@ You may optionally provide the user with a reason for disabling their account.</
 	<message key="rt.admin.management">Yönetim</message>
 
 	<!-- RT Settings -->
-	<message key="rt.admin.settings">Settings</message>
-	<message key="rt.admin.desc">Open Harvester Systems allows the Administrator to designate which Reading Tools will be used for each archive. In addition, a site-wide set of Reading Tools can be provided as a default. Please choose the context for which you wish to configure the Reading Tools.</message>
-	<message key="rt.admin.default">Choose Default Reading Tools</message>
 
 	<message key="rt.admin.selectedVersion">Seçilmiş Sürüm</message>
 	<message key="rt.admin.rtDisabled">Pasifleştirildi</message>
-	<message key="rt.admin.rtEnable">Enter Settings to enable the RT or change the selected version.</message>
 
-	<message key="rt.admin.versionDescription">Please select the version of the Reading Tools that best matches the requirements of this archive.</message>
 
 	<message key="rt.admin.options">Seçenekler</message>
 
 	<message key="rt.admin.settings.disable">Okuma Araçlarını Pasifleştir</message>
-	<message key="rt.admin.settings.bibFormat">Bibliographic format for citation capture</message>
-	<message key="rt.admin.settings.captureCite">Bibliographic info (Displays the citation of an article in standard format, with support for the following citation management software: EndNote, Reference Manager, and ProCite)</message>
-	<message key="rt.admin.settings.viewMetadata">Indexing info (Displays an item's indexing information generated by the author and the system)</message>
-	<message key="rt.admin.settings.supplementaryFiles">See supplementary files (Displays a list of any supplementary files that the author included with an item)</message>
-	<message key="rt.admin.settings.printerFriendly">Go to print version (Takes reader to a printer-friendly version of an item)</message>
-	<message key="rt.admin.settings.authorBio">About the author (Displays the bio statements entered by the author)</message>
-	<message key="rt.admin.settings.defineTerms">Definition of terms (Enables readers to double-click on any word in an item and send the word to a dictionary)</message>
-	<message key="rt.admin.settings.addComment">Add comment to item (Enables readers to post comments). Reader Comments must be enabled in Setup</message>
-	<message key="rt.admin.settings.emailAuthor">Email the author (Takes readers to an email template with the author's email)</message>
-	<message key="rt.admin.settings.emailOthers">Send item to colleague (Takes readers to an email template with the title of item as its subject)</message>
 
 	<!-- RT Versions -->
-	<message key="rt.admin.versions.restoreVersions">Restore Versions to Defaults</message>
-	<message key="rt.admin.versions.createVersion">Create Version</message>
-	<message key="rt.admin.versions.confirmRestore">Are you sure you wish to irreversibly restore all versions to their defaults? If so, you will need to choose an active Version on the Settings page.</message>
-	<message key="rt.admin.versions.confirmDelete">Are you sure you wish to delete this Version and all associated Contexts and Searches?</message>
 	<message key="rt.admin.versions.edit.editVersion">Sürümü düzelt</message>
 	<message key="rt.admin.versions.metadata">Üst Veri</message>
 	<message key="rt.admin.versions.export">İhraç</message>
@@ -644,20 +434,12 @@ You may optionally provide the user with a reason for disabling their account.</
 	<message key="rt.admin.contexts.confirmDelete">Are you sure you wish to delete this Context and all associated Searches?</message>
 	<message key="rt.admin.contexts.metadata">Üst Veri</message>
 	<message key="rt.admin.contexts.options">Seçenekler</message>
-	<message key="rt.admin.contexts.options.citedBy">Use author names as default search terms and describe the context as a search for citations to the article.</message>
-	<message key="rt.admin.contexts.options.authorTerms">Use author names as default search terms to enable users to find other works by the authors for this item (e.g., for an "Other Works" context)</message>
-	<message key="rt.admin.contexts.options.geoTerms">Use geographical indexing data as default search terms.</message>
-	<message key="rt.admin.contexts.options.defineTerms">Use the word highlighted by the reader as default search term or be left blank if none has been selected for this item (e.g., for a "Definition of terms" context).</message>
 
 	<!-- RT Searches -->
 	<message key="rt.admin.searches.edit.editSearch">Aramayı Düzelt</message>
 	<message key="rt.admin.searches.confirmDelete">Bu aramayı silmek istediğinizden emin misiniz?</message>
 	<message key="rt.admin.searches.createSearch">Arama Oluştur</message>
 
-	<message key="rt.admin.validateUrls">Validate URLs</message>
-	<message key="rt.admin.validateUrls.description"><![CDATA[Possibly invalid URLs for search sites are displayed below.<br/>
-You should manually verify any URLs marked as invalid, as this test is not 100% accurate.<br/>
-Validation may fail on search URLs that require posted form data.]]></message>
 	<message key="rt.admin.validateUrls.validate">Onyala</message>
 	<message key="rt.admin.validateUrls.urlIsInvalid">{$url} adresi geçerli değil.</message>
 	<message key="rt.admin.validateUrls.ok">EVET</message>
@@ -692,12 +474,6 @@ Validation may fail on search URLs that require posted form data.]]></message>
 
 	<message key="rt.context.searchTerms">Arama Terimleri</message>
 	<message key="rt.context.termToDefine">Tanımlamak için kelime</message>
-	<message key="rt.context.searchDescription">The search terms can be altered or deleted by the reader; two or three short, precise terms or phrases produced the best Boolean (AND) searches. To learn more about the resources searched, click on ABOUT. These resources have been selected for their relevance and open (free) access to all or part of their contents.</message>
-	<message key="rt.context.defineTermsDescription">Double click on any word in the text and it will appear in the Word-to-Define box. You can also type or paste a word into the box. Then use the search function to find a definition for the word. To learn more about the resource searched, click on the information symbol. These resources have been selected because of their relevance and their open (free) access to all or part of their contents.</message>
-	<message key="rt.context.authorTermsDescription">For items with more than one author, leave all names checked to search for similarly co-authored work, or search one at a time by checking only a single name. To learn more about the resource searched, click on the information symbol. These resources have been selected because of their relevance and their open (free) access to all or part of their contents.</message>
-	<message key="rt.context.citesContextDescription">If the article is indexed in Google Scholar, it may be accompanied by a "Cited by X" link, which leads to a list of works that cite it. As well, Google Scholar will list all items quoting the title and author. To access online resources that are only available through your research library, you may be able to go to Scholar Preferences in Google Scholar and activate the Library Links for your institution.</message>
-
-	<message key="rt.context.and">AND</message>
 
 	<!-- Profile -->
 	<message key="user.login.registerNewAccount">Kullanıcı değil misiniz? Bu siteye kayıt olunuz.</message>
@@ -706,20 +482,14 @@ Validation may fail on search URLs that require posted form data.]]></message>
 	<message key="user.profile.form.firstNameRequired">Bir ad gerekli.</message>
 	<message key="user.profile.form.lastNameRequired">Bir soyad gerekli.</message>
 	<message key="user.profile.form.emailRequired">Geçerli bir e-posta adresi gerekli.</message>
-	<message key="user.profile.form.profileImageInvalid">Invalid profile image format or image too big. Accepted formats are .gif, .jpg, or .png, and the image must not exceed 150x150 pixels.</message>
 	<message key="user.profile.form.profileImage">Profil görseli</message>
-	<message key="user.profile.form.urlInvalid">The specified URL is not valid. Please double-check the URL and try again. (Hint: Try adding http:// to the beginning of the URL.)</message>
 	<message key="user.profile.form.usernameRequired">Bir kullanıcı adı gerekli.</message>
 	<message key="user.profile.form.passwordRequired">bir şifre gerekli.</message>
-	<message key="user.profile.leavePasswordBlank">Leave the password fields blank to keep the current password.</message>
 	<message key="user.profile.oldPassword">Mevcut Şifre</message>
 	<message key="user.profile.newPassword">Yeni Şifre</message>
 	<message key="user.profile.repeatNewPassword">Yeni Şifre Tekrarı</message>
-	<message key="user.profile.changePasswordInstructions">Enter your current and new passwords below to change the password for your account.</message>
 	<message key="user.profile.form.oldPasswordInvalid">Girmiş olduğunuz şifre yanlıştır.</message>
 	<message key="user.profile.form.newPasswordRequired">Yeni şifrenizi girmelisiniz.</message>
-	<message key="user.profile.form.publishedNotifications">New issue published email notifications</message>
-	<message key="user.profile.form.openAccessNotifications">Issue open access email notifications</message>
 	<message key="user.profile.publicProfile">Kullanıcı Profili</message>
 	
 	<!--
@@ -727,8 +497,6 @@ Validation may fail on search URLs that require posted form data.]]></message>
 	 * MISC - Entries that do not belong in the other sections.
 	 *
 	 -->
-	<message key="icon.checked.alt">Checked</message>
-	<message key="icon.unchecked.alt">Unchecked</message>
 	<message key="icon.small.alt">Küçük</message>
 	<message key="icon.medium.alt">Orta</message>
 	<message key="icon.large.alt">Büyük</message>
