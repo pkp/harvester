@@ -25,4 +25,5 @@
 
 <locales>
 	<locale key="en_US" name="English"/>
+	<locale key="tr_TR" name="Türkçe"/>
 </locales>
