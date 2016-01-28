@@ -15,5 +15,7 @@
 <!DOCTYPE locales SYSTEM "../lib/pkp/dtd/locales.dtd">
 
 <locales>
+<<<<<<< HEAD
 	<locale key="en_US" name="English" iso639-2b="eng" />
+	<locale key="tr_TR" name="Türkçe" iso639-2b="tur"/>
 </locales>
