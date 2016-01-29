@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE locale SYSTEM "../../../../../lib/pkp/dtd/locale.dtd">
+
+<!--
+  * locale.xml
+  *
+  * Copyright (c) 2005-2016 Alec Smecher and John Willinsky
+  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
+  *
+  * Localization strings for the tr_TR (Türkçe) locale.
+  *
+  -->
+ 
+<locale name="tr_TR" full_name="Türkçe">
+	<message key="plugins.schemas.dc.schemaName">Dublin Core</message>
+	<message key="plugins.schemas.dc.description">Bu şema Dublin Core üst veri biçimini destekler.</message>
+	<message key="plugins.schemas.dc.fields.abstract.name">Özet</message>
+	<message key="plugins.schemas.dc.fields.abstract.description">Kaynağın içerik özeti.</message>
+	<message key="plugins.schemas.dc.fields.identifier.name">Tanımlayıcı</message>
+	<message key="plugins.schemas.dc.fields.identifier.description">Kaynağa belirsiz başvuru.</message>
+	<message key="plugins.schemas.dc.fields.title.name">Başlık</message>
+	<message key="plugins.schemas.dc.fields.title.description">Kaynağa verilen isim.</message>
+	<message key="plugins.schemas.dc.fields.creator.name">Yazar</message>
+	<message key="plugins.schemas.dc.fields.publisher.name">Yayıncı</message>
+	<message key="plugins.schemas.dc.fields.contributor.name">Katkıda Bulunan</message>
+	<message key="plugins.schemas.dc.fields.date.name">Tarih</message>
+	<message key="plugins.schemas.dc.fields.type.name">Tür</message>
+	<message key="plugins.schemas.dc.fields.format.name">Biçim</message>
+	<message key="plugins.schemas.dc.fields.language.name">Dil</message>
+	<message key="plugins.schemas.dc.fields.relation.name">Bağlantı</message>
+	<message key="plugins.schemas.dc.fields.coverage.name">Kapsam</message>
+	<message key="plugins.schemas.dc.fields.rights.name">Haklar</message>
+	<message key="plugins.schemas.dc.fields.subject.name">Konu</message>
+	<message key="plugins.schemas.dc.fields.description.name">Açıklama</message>
+	<message key="plugins.schemas.dc.fields.source.name">Kaynak</message>
+	cale>

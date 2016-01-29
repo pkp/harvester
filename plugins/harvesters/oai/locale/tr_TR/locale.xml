@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE locale SYSTEM "../../../../../lib/pkp/dtd/locale.dtd">
+
+<!--
+  * locale.xml
+  *
+  * Copyright (c) 2005-2016 Alec Smecher and John Willinsky
+  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
+  *
+  * Localization strings for the tr_TR (Türkçe) locale.
+  *
+  -->
+ 
+<locale name="tr_TR" full_name="Türkçe">
+	<message key="plugins.harvesters.oai.protocolName">OAI</message>
+	<message key="plugins.harvesters.oai.description">Bu harmanlama Açık Arşivler Girişimi (OAI) sürüm 1.1 ve 2.0 protokolünü destekler</message>
+	<message key="plugins.harvesters.oai.archive.form.harvesterUrl">Temel OAI adresi (URL)</message>
+	<message key="plugins.harvesters.oai.archive.form.fetchMetadata">Arşiv Üst Verisi Al</message>
+	<message key="plugins.harvesters.oai.archive.form.refreshDescription">Bu arşiv için desteklenen biçimler listesini güncellemek için Yenile düğmesine tıklayın.</message>
+	<message key="plugins.harvesters.oai.archive.form.fetchMetadata.warning">Bu form otomatik olarak OAI arşivden üst veri getirilecek değerlerle doldurulur. Mevcut alan değerleri değiştirilecek. Devam etmek istediğinizden emin misiniz?</message>
+	<message key="plugins.harvesters.oai.archive.form.harvesterUrlRequired">OAI URL alanı gerekli.</message>
+	<message key="plugins.harvester.oai.archive.form.harvesterUrlInvalid">Belirtmiş olduğunuz OAI URL adresi geçerli değil. Lütfen URL adresini kontrol edin ve yeniden deneyin.</message>
+	<message key="plugins.harvester.oai.archive.form.harvesterUrlDuplicate">Belirtmiş olduğunuz OAI URL adresi başka bir arşiv tarafından kullanılmaktadır.</message>
+	<message key="plugins.harvesters.oai.archive.form.harvesterUrl.description">Ör. http://www.arşiviniz.com/oai/index.php</message>
+	<message key="plugins.harvesters.oai.archive.form.adminEmail">Yönetici e-posta adresi</message>
+	<message key="plugins.harvesters.oai.archive.form.adminEmailInvalid">Vermiş olduğunuz yönetici e-posta adresi geçerli değildir.</message>
+	<message key="plugins.harvesters.oai.archive.form.oaiIndexMethod">İndeksleme Yöntemi</message>
+	<message key="plugins.harvesters.oai.archive.form.metadataFormat">Üst Veri Biçimi</message>
+	<message key="plugins.harvesters.oai.archive.form.isStatic">Bu bir OAI statik arşividir</message>
+	<message key="plugins.harvesters.oai.archive.form.options">Seçenekler</message>
+	<message key="plugins.harvesters.oai.archive.form.sets">Bölümler</message>
+	<message key="plugins.harvesters.oai.archive.form.allSets">Tüm Bölümler</message>
+	<message key="plugins.harvesters.oai.archive.form.dates">Kayıt Tarihi</message>
+	<message key="plugins.harvesters.oai.archive.form.oaiIndexMethodRequired">İndeksleme yöntem alanı gereli.</message>
+	<message key="plugins.harvesters.oai.archive.form.metadataFormatRequired">Üst veri biçim alanı gerekli.</message>
+	<message key="plugins.harvesters.oai.archive.form.oaiIndexMethod.ListRecords">KayıtlarListesi</message>
+	<message key="plugins.harvesters.oai.archive.form.oaiIndexMethod.ListIdentifiers">TanımlayıcılarListesi</message>
+
+	<message key="plugins.harvesters.oai.errors.unknownHeaderTag">Sunucudan bilinmeyen bir başlık  etiketi alındı: {$tag}</message>
+
+</locale>

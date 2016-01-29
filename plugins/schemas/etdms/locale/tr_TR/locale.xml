@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE locale SYSTEM "../../../../../lib/pkp/dtd/locale.dtd">
+
+<!--
+  * locale.xml
+  *
+  * Copyright (c) 2005-2016 Alec Smecher and John Willinsky
+  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
+  * * Edited and modified by Kennedy Onyancha - DoKS (KHK Kempen) (2007)
+  * Localization strings for the tr_TR (Türkçe) locale.
+  *
+  -->
+
+<locale name="tr_TR" full_name="Türkçe">
+	<message key="plugins.schemas.etdms.schemaName">ETD-MS</message>
+	<message key="plugins.schemas.etdms.description">Bu şema ETD-MS üst veri biçimi destekler.</message>
+	<message key="plugins.schemas.etdms.fields.abstract.name">Özet</message>
+	<message key="plugins.schemas.etdms.fields.identifier.name">Belirleyici</message>
+	<message key="plugins.schemas.etdms.fields.title.name">Başlık</message>
+	<message key="plugins.schemas.etdms.fields.creator.name">Yazar</message>
+	<message key="plugins.schemas.etdms.fields.publisher.name">Yayıncı</message>
+	<message key="plugins.schemas.etdms.fields.contributor.name">Kadkıda Bulunan</message>
+	<message key="plugins.schemas.etdms.fields.date.name">Tarih</message>
+	<message key="plugins.schemas.etdms.fields.type.name">Tür</message>
+	<message key="plugins.schemas.etdms.fields.format.name">biçim</message>
+	<message key="plugins.schemas.etdms.fields.language.name">Dil</message>
+	<message key="plugins.schemas.etdms.fields.relation.name">Bağlantı</message>
+	<message key="plugins.schemas.etdms.fields.coverage.name">İçerik</message>
+	<message key="plugins.schemas.etdms.fields.rights.name">Haklar</message>
+	<message key="plugins.schemas.etdms.fields.subject.name">Konu</message>
+	<message key="plugins.schemas.etdms.fields.description.name">Tanımlama</message>
+	<message key="plugins.schemas.etdms.fields.source.name">Kaynak</message>
+</locale>

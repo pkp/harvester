@@ -1,0 +1,502 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE locale SYSTEM "../../lib/pkp/dtd/locale.dtd">
+
+<!--
+  * locale/tr_TR/locale.xml
+  *
+  * Copyright (c) 2005-2016 Alec Smecher and John Willinsky
+  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
+  *
+  * Localization strings for the tr_TR (Türkçe) locale.
+  -->
+ 
+<locale name="tr_TR" full_name="Türkçe">
+	<!-- Common Messages -->
+	<message key="common.changesSaved">Değişiklikleriniz kaydedildi.</message>
+	<message key="common.language">Dil</message>
+	<message key="common.languages">Diller</message>
+	<message key="common.notApplicable">Uygulanmaz</message>
+	<message key="common.country">Ülke</message>
+	<message key="common.harvester2">Açık Harmanlama Sistemleri</message>
+	<message key="common.enabled">Etkinleştir</message>
+	<message key="common.disabled">Pasifleştir</message>
+	<message key="common.search">Ara</message>
+	<message key="common.refresh">Yenile</message>
+	<message key="common.saveAndContinue">Kaydet ve devam et</message>
+	<message key="common.close">Kapat</message>
+	<message key="common.delete">Sil</message>
+	<message key="common.yes">Evet</message>
+	<message key="common.no">Hayır</message>
+	<message key="common.on">Aç</message>
+	<message key="common.add">Ekle</message>
+	<message key="common.off">Off</message>
+	<message key="common.upload">Yükle</message>
+	<message key="common.fileName">Dosya Adı</message>
+	<message key="common.edit">Düzlet</message>
+	<message key="common.select">Seç</message>
+	<message key="common.manage">Yönet</message>
+	<message key="common.error.databaseError">Bir veri tabanı hatası oluştu: {$error}</message>
+	<message key="common.mailingAddress">Posta Adresi</message>
+	<message key="common.save">Kayıt</message>
+	<message key="common.cancel">Temizle</message>
+	<message key="common.requiredField">* Zorunlu alanlar</message>
+	<message key="common.action">Eylem</message>
+	<message key="common.from">Başlanğıç</message>
+	<message key="common.until">Bitiş</message>
+	<message key="common.none">Hiçbiri</message>
+	<message key="common.default">Varsayılan</message>
+	<message key="common.enable">Etkinleştir</message>
+	<message key="common.disable">Pasifleştir</message>
+	<message key="common.captchaField">Onaylama</message>
+	<message key="common.captchaField.description">Yukarıdaki resimde gösterilen karakterleri giriniz.</message>
+	<message key="common.captchaField.badCaptcha">Girşim olduğunuz karakterler resimdeki karakterler ile eşleşmedi. Lütfen kontrol ediniz ve yeniden deneyiniz.</message>
+
+	<!-- Navigation Messages -->
+	<message key="navigation.home">Ana Sayfa</message>
+	<message key="navigation.help">Yardım</message>
+	<message key="navigation.about">Hakkında</message>
+	<message key="navigation.user">Kullanıcı</message>
+	<message key="navigation.userHome">Kullanıcı Ana Sayfası</message>
+	<message key="navigation.search">Ara</message>
+	<message key="navigation.browse">Liste</message>
+	<message key="navigation.login">Giriş</message>
+	<message key="navigation.register">Kayıt</message>
+	<message key="navigation.content">İçerik</message>
+	<message key="navigation.loggedInAs">olarak giriş yaptınız......</message>
+	<message key="navigation.logout">Çıkış</message>
+	<message key="navigation.addArchive">Arşiv Ekle</message>
+
+	<message key="navigation.previousPage">&lt;&lt;</message>
+	<message key="navigation.nextPage">&gt;&gt;</message>
+	<message key="navigation.items">Toplam {$total} öğeden {$from} - {$to}</message>
+	<message key="navigation.fontSize">Font Boyutu</message>
+
+	<!-- Harvester messages -->
+	<message key="harvester.error.unknownMetadataField">Bilinmeyen bir {$name} alan üst veri hatası oluştu.</message>
+	<!-- Installation Messages -->
+	<message key="installer.harvester2Installation">PKP Açık Harmanlama Sistemleri Kurulumu</message>
+	<message key="installer.harvester2Upgrade">Açık Harmanlama Sistemleri Güncellemesi</message>
+
+	<message key="installer.localeSettings">Dil Ayarları</message>
+	<message key="installer.additionalLocales">Ek diller</message>
+	<message key="installer.clientCharset">İstemci karakter seti</message>
+	<message key="installer.connectionCharset">Bağlantı karakter seti</message>
+	<message key="installer.databaseCharset">Veri tabanı karakter seti</message>
+	<message key="installer.securitySettings">Güvenlik Ayarları</message>
+	<message key="installer.encryption">Parola şifreleme algoritması</message>
+	<message key="installer.administratorAccount">Yönetici Hesabı</message>
+	<message key="installer.databaseSettings">Veri Tabanı Ayarları</message>
+	<message key="installer.databaseDriver">Veri Tabanı Sürücüsü</message>
+	<message key="installer.databaseHost">Barındırma</message>
+	<message key="installer.databaseUsername">Kullanıcı Adı</message>
+	<message key="installer.databasePassword">Şifre</message>
+	<message key="installer.databaseName">Veri Tabanı Adı</message>
+	<message key="installer.createDatabase">Yeni bir veri tabanı oluştur</message>
+	<message key="installer.installApplication">Açık Harmanlama Sistemlerini Yükle</message>
+	<message key="installer.upgradeApplication">Açık Harmanlama Sistemlerini Güncelle</message>
+	<message key="installer.form.localeRequired">Bir dil seçilmelidir</message>
+	<message key="installer.form.clientCharsetRequired">Bir istemci karakter seti seçilmelidir.</message>
+	<message key="installer.form.databaseDriverRequired">Bir veri tabanı sürücüsü seçilmeldiir.</message>
+	<message key="installer.form.databaseNameRequired">Veri tabanı ismi gereklidir.</message>
+	<message key="installer.form.usernameRequired">Yönetici hesabı için kullanıcı adı gereklidir.</message>
+	<message key="installer.form.passwordRequired">Yönetici hesabı için şifre gereklidir.</message>
+	<message key="installer.form.passwordsDoNotMatch">Yönetici şifresi eşleşmedi</message>
+	<message key="installer.form.emailRequired">Yönetici hesabı için geçerli bir e-posta adresi girilmelidir.</message>
+	<message key="installer.form.separateMultiple">Birden çok değeri virgül ile ayırınız</message>
+	<message key="installer.installErrorsOccurred">Yükleme sırasında bir hata oluştu</message>
+	<message key="installer.contentsOfConfigFile">Konfigürasyon dosyasının içeriği</message>
+	<message key="installer.installerSQLStatements">Yükleme için SQL bildirimleri</message>
+	<message key="installer.releaseNotes">Sürüm Notları</message>
+	<message key="installer.checkYes">Evet</message>
+
+	<!-- Locale messages -->
+	<message key="locale.primary">Birincil Dil</message>
+	<message key="locale.supported">Desteklenen Diller</message>
+
+	<!-- Login Messages -->
+	<message key="user.changePassword">Şifre Değiştir</message>
+	<message key="user.editMyProfile">Profilimi Değiştir</message>
+	<message key="user.changeMyPassword">Şifremi Değiştir</message>
+	<message key="user.myAccount">Hesabım</message>
+	<message key="user.userHome">Kullanıcı Sayfası</message>
+	<message key="user.profile">Profil</message>
+	<message key="user.register">Kayıt</message>
+	<message key="user.login">Giriş</message>
+	<message key="user.logOut">Çıkış</message>
+	<message key="user.username">Kullanıcı adı</message>
+	<message key="user.password">Şifre</message>
+	<message key="user.sendPassword">Onaylama</message>
+	<message key="user.sendPassword.description">Kullanıcı adı ve şifremi içeren bir onaylama mesajı gönder</message>
+	<message key="user.salutation">Ünvan</message>
+	<message key="user.name">İsim</message>
+	<message key="user.firstName">İlk isim</message>
+	<message key="user.middleName">İkinci isim</message>
+	<message key="user.lastName">Soy adı</message>
+	<message key="user.initials">Adın ilk harfleri</message>
+	<message key="user.initialsExample">Ezgi Sima ÇELİK = ESÇ</message>
+	<message key="user.gender">Cinsiyet</message>
+	<message key="user.masculine">M</message>
+	<message key="user.feminine">F</message>
+	<message key="user.title">Ünvan</message>
+	<message key="user.signature">İmza</message>
+	<message key="user.affiliation">Kurum</message>
+	<message key="user.affiliations">Kurumlar</message>
+	<message key="user.email">e-posta</message>
+	<message key="user.url">URL</message>
+	<message key="user.phone">Telefon</message>
+	<message key="user.fax">Faks</message>
+	<message key="user.interests">İlgi alanları</message>
+	<message key="user.mailingAddress">Posta adresi</message>
+	<message key="user.biography">Öz geçmiş</message>
+	<message key="user.biography.description">(Ör., Bölüm ve Kıdem)</message>
+	<message key="user.workingLanguages">Çalışabildiği diller</message>
+	<message key="user.dateRegistered">Kayıt tarihi</message>
+	<message key="user.dateLastLogin">Son giriş</message>
+	<message key="user.register.registrationDisabled">Bu site şu halde kullanıcı kaydı kabul etmiyor.</message>
+	<message key="user.register.form.passwordLengthTooShort">Girmiş olduğunuz şifre yeterince uzun değil.</message>
+	<message key="user.register.submitterDescription">Arşiv yöneticileri indeksleme için arşivlerini gönderebilirler.</message>
+	<message key="user.register.repeatPassword">Şifre Tekrarı</message>
+	<message key="user.login.rememberMe">Beni Hatırla</message>
+	<message key="user.login.rememberUsernameAndPassword">Kullanıcı adımı ve şifremi hatırla</message>
+
+	<!-- Forms -->
+	<message key="form.formLanguage">Form Dili</message>
+	<message key="form.formLanguage.description">Başka dillerde veri girmek için önce dil seçin.</message>
+
+	<message key="user.noRoles.submitArchive">Bir arşiv gönder</message>
+
+	<!-- Roles -->
+	<message key="user.role.siteAdmin">Site Yöneticisi</message>
+	<message key="user.role.submitter">Arşiv Yöneticisi</message>
+	<message key="user.role.submitters">Arşiv Yöneticileri</message>
+
+	<!-- Archive entity messages -->
+	<message key="archive.archives">Arşivler</message>
+	<message key="archive.title">Başlık</message>
+	<message key="archive.image">Arşiv Görseli</message>
+	<message key="archive.image.profileImageInvalid">Arşiv görseli uygun değil. KAbul edilebilir biçimler GIF, JPG ve PNG.</message>
+	<message key="archive.recordCount">Kayıt Sayısı</message>
+	<message key="archive.url">URL</message>
+	<message key="archive.publicArchiveId">Genel ID</message>
+	<message key="archive.description">Açıklama</message>
+	<message key="archive.type">Tür</message>
+	<message key="archive.type.invalid">Geçersiz arşiv türü.</message>
+	<message key="archive.lastIndexed">Son İdeksleme</message>
+
+	<!-- Site Administration -->
+	<message key="admin.siteAdmin">Site Yöneticisi</message>
+	<message key="admin.siteSettings">Site Ayarları</message>
+	<message key="admin.archives">Arşivler</message>
+	<message key="admin.plugins">Eklentiler</message>
+	<message key="admin.rtAdmin">Okuma Araçları</message>
+
+	<message key="admin.archives.manage">Arşiv Yönet</message>
+
+	<message key="admin.settings.general">Genel</message>
+	<message key="admin.settings.administration">Yönetim</message>
+
+	<message key="admin.settings.siteTitle">Site başlığı</message>
+	<message key="admin.settings.introduction">Giriş</message>
+	<message key="admin.settings.aboutDescription">Site açıklaması hakkında</message>
+	<message key="admin.settings.form.titleRequired">Bir başlık gerekli.</message>
+	<message key="admin.settings.styleSheet">Biçim sayfası</message>
+	<message key="admin.settings.theme">Tema</message>
+	<message key="admin.settings.customLogo">Özel logo</message>
+	<message key="admin.settings.contactName">Site yöneticisi adı</message>
+	<message key="admin.settings.contactEmail">Site yöneticisi e-posta</message>
+	<message key="admin.settings.minPasswordLength">Minumum şifre uzunluğu</message>
+	<message key="admin.settings.form.contactNameRequired">Site yönetici adı gerekli.</message>
+	<message key="admin.settings.form.contactEmailRequired">Site yöneticisi e-posta adresi gerekli.</message>
+	<message key="admin.settings.form.minPasswordLengthRequired">En az 6 karakter uzunluğunda şifre girmelisiniz.</message>
+	<message key="admin.settings.passwordCharacters">karakterler</message>
+	<message key="admin.settings.options">Seçenekler</message>
+	<message key="admin.settings.options.enableSubmit">İndeklenmek üzere herhangi bir kişinin arşivini kayıt etmesine ve göndermesine izin ver.</message>
+	<message key="admin.settings.options.disableSubmissions">Gönderileri varsayılan olarak devre dışı bırak ve yöneticisi tarafından etkinleştirilmesine izin ver.</message>
+	<message key="admin.settings.siteLanguage">Site Dilleri</message>
+
+	<message key="admin.siteManagement">Site Yönetimi</message>
+	<message key="admin.adminFunctions">Yönetsel Fonksiyonlar</message>
+	<message key="admin.expireSessions">Kullanıcı Oturumlarını Kapat</message>
+	<message key="admin.confirmExpireSessions">Kullanıcı oturumlarını kapatmak istediğinizden emin misniz? Siz de tekrar giriş yapmak zorunda kalacaksınız.</message>
+	<message key="admin.clearTemplateCache">Önbellekeki Şablonları Temizle</message>
+	<message key="admin.clearDataCache">Önbellekteki Verileri Temizle</message>
+	<message key="admin.confirmClearTemplateCache">Düzenlenmiş şablonları temizlemek istediğinizden emin misiniz?</message>
+	<message key="admin.systemInformation">Sistem Bilgisi</message>
+
+	<!-- Users -->
+	<message key="admin.users">Kullanıcılar</message>
+	<message key="admin.people.allUsers">Tüm Kullanıcılar</message>
+	<message key="admin.people.createUser">Kullanıcı Oluştur</message>
+	<message key="admin.people.editUser">Kullanıcı Düzelt</message>
+	<message key="admin.people.enrollExistingUser">Tüm Kayıtlı Kullanıcılar</message>
+	<message key="admin.people.saveAndCreateAnotherUser">Kaydet ve Yenisini Oluştur</message>
+	<message key="admin.people.enrollUserAs">Kullanıcı Yetkileri</message>
+	<message key="admin.people.doNotEnroll">Yetkisiz</message>
+	<message key="admin.people.disable">Pasifleştir</message>
+	<message key="admin.people.enable">Etkinleştir</message>
+	<message key="admin.people.remove">Sil</message>
+	<message key="admin.people.emailUsers.selectTemplate">Bir Şablon Seçiniz</message>
+	<message key="admin.people.emailUsers.selectLocale">Bir dil seçiniz</message>
+
+	<message key="admin.people.editProfile">Profil Düzenle</message>
+
+	<message key="admin.people.signInAsUser">Kullanıcı olarak giriş yap</message>
+	<message key="admin.people.signInAs">Bu Kişi Oalarak</message>
+	
+
+	<!-- Layout -->
+	<message key="admin.setup.layout.leftSidebar">Sol Taraf</message>
+	<message key="admin.setup.layout.unselected">Seçilmedi</message>
+	<message key="admin.setup.layout.rightSidebar">Sağ Taraf</message>
+
+	<!-- Sort Orders -->
+	<message key="admin.sortOrders.name">İsim</message>
+	<message key="admin.sortOrders.type">Tür</message>
+	<message key="admin.sortOrders.status">Durum</message>
+	<message key="admin.sortOrders.type.string">Metin</message>
+	<message key="admin.sortOrders.type.number">Sayı</message>
+	<message key="admin.sortOrders.type.date">Tarih</message>
+	<message key="admin.sortOrders.fields">Alanlar</message>
+	<message key="admin.sortOrders.noneCreated">Hiçbir sıralama düzeni oluşturulmadı.</message>
+	<message key="admin.sortOrders.edit">Sıralama Düzenini Değiştir</message>
+	<message key="admin.sortOrders.create">Sıralama Düzenini Oluştur</message>
+	<message key="admin.sortOrders.confirmDelete">Bu sıralama düzenini silmek istediğinizden emin misiniz?</message>
+	<message key="admin.sortOrders.form.nameRequired">Bu sıralama için bir isim gerekli.</message>
+	<message key="admin.sortOrders.form.typeRequired">Bu sıralama düzeni için geçerli bir tür gereklidir.</message>
+
+	<!-- Archives -->
+	<message key="admin.archives.addArchive">Arşiv Ekle</message>
+	<message key="admin.archives.editArchive">Arşiv Düzenle</message>
+	<message key="admin.archives.manageArchives">Arşivleri Düzenle</message>
+	<message key="admin.archives.noneCreated">Arşiv Oluşturulamadı</message>
+	<message key="admin.archives.form.titleRequired">Bir başlık gerekli.</message>
+	<message key="admin.archives.form.urlRequired">URL alanı gerekli.</message>
+	
+	<!-- Languages -->
+	<message key="admin.languages.languageSettings">Dil Ayarları</message>
+	<message key="admin.languages.installLanguages">Dil Yükle</message>
+	<message key="admin.languages.primaryLocaleInstructions">Bu site için varsayılan dil olacaktır.</message>
+	<message key="admin.languages.supportedLocalesInstructions">Sitede destek için tüm dilleri seçebilirsiniz. Eğer çoklu dil seçili değilse dil seçim menüsü görüntülenmez ve genişletilmiş dil ayarları düzenlemesi kullanılabilir olmaz.</message>
+	<message key="admin.languages.languageOptions">Dil seçenekleri</message>
+	<message key="admin.languages.installedLocales">Yüklenmiş Diller</message>
+	<message key="admin.languages.reload">Dili Yeniden Yükle</message>
+	<message key="admin.languages.confirmReload">Bu dili yeniden yüklemek istediğinizden emin misiniz? Bu özelleştirilmiş e-posta şablonları gibi herhangi bir var olan yerel-sipesifik veriyi silecektir.</message>
+	<message key="admin.languages.uninstall">Dili Kaldır</message>
+	<message key="admin.locale.maybeIncomplete">İşaretlenmiş diller tamamlanmamış olabilir.</message>
+	<message key="admin.languages.confirmUninstall">Bu dili kaldırmak istediğinizden emin misiniz?</message>
+	<message key="admin.languages.installNewLocales">Yeni Dil Yükle</message>
+	<message key="admin.languages.installNewLocalesInstructions">Bu sistemde kurulum desteği için herhangi bir ek dil seçiniz. Yeni ek dil ekleme desteği için Açık Harmanlama Sistemleri dokümantasyonuna bakınız.</message>
+	<message key="admin.languages.noLocalesAvailable">Kurulum için ek dil kullanılabilir değildir.</message>
+	<message key="admin.languages.installLocales">Yükle</message>
+	
+	<!-- System Information -->
+	<message key="admin.systemVersion">Açık Harmanlama Sistemleri Sürümü</message>
+	<message key="admin.systemConfiguration">Açık Harmanlama Sistemleri Konfigürasyonu</message>
+	<message key="admin.serverInformation">Sunucu Bilgisi</message>
+	<message key="admin.currentVersion">Güncel sürüm</message>
+	<message key="admin.versionHistory">Sürüm geçmişi</message>
+	<message key="admin.version">Sürüm</message>
+	<message key="admin.versionMajor">Büyük</message>
+	<message key="admin.versionMinor">Küçük</message>
+	<message key="admin.versionRevision">REvizyon</message>
+	<message key="admin.versionBuild">İnşaa</message>
+	<message key="admin.dateInstalled">Yüklendiği tarih</message>
+	<message key="admin.phpInfo">Genişletilmiş PHP Bilgisi</message>
+	<message key="admin.server.platform">OS platformu</message>
+	<message key="admin.server.phpVersion">PHP sürümü</message>
+	<message key="admin.server.apacheVersion">Apache sürümü</message>
+	<message key="admin.server.dbDriver">Veri Tabanı sürücüsü</message>
+	<message key="admin.server.dbVersion">Veri Tabanı sunucu sürümü</message>
+	<message key="admin.displayNewSystemConfig">Yeni konfigürasyonu görüntüle</message>
+	
+	<!-- Sidebar Messages -->
+	<message key="sidebar.addYourArchive">Arşivinizi Ekleyin</message>
+
+	<!-- Defaults -->
+	<message key="about.harvester">Harmanlama Hakkında</message>
+
+	<!-- Search messages -->
+	<message key="search.syntaxInstructions"><![CDATA[Arama İpuçları: <ul>
+<li>Arama terimlerinde küçük ve büyük harf farkı yoktur.</li>
+<li>Sık kullanılan kelimeler göz ardı edilmiştir.</li>
+<li>Arama sonucunda sadece sorgudaki <i>tüm</i> terimleri içeren makaleler listelenir (yani, VE bağlacı ile bağlananlar).</li>
+<li>İki sözcüğü içeren makaleleri bulmak için kelimeleri veya ile birleştirin; ör., <i>eğitim veya araştırma</i></li>
+<li>Daha kompleks sorgular için parantez kullanın; ör., <i>arşiv ((işletme VEYA yönetim) siyasi DEĞİL)</i></li>
+<li>Doğru deyimi araştırmak için tırnak işareti içinde kullanın; ör., <i>"açık erişim yayıncılık"</i></li>
+<li>Bir kelimeyi hariç tutmak için önüne <b>-</b> işaret koyun veya DEĞİL yazın; ör. <i>çevrimiçi -politika</i> veya <i>çevrimiçi DEĞİL politika</i></li>
+<li>Bir kelime içinde ardışık karakterleri ifade etmek için * sembolünü kullanın; ör., <i>Türk* = "Türkiye", "Türkler", "Türklerin"</i> vb. terimlerinin bulunmasını sağlar.</li>
+</ul>]]></message>
+	<message key="search.operator.not">değil</message>
+	<message key="search.operator.and">ve</message>
+	<message key="search.operator.or">veya</message>
+	<message key="search.select.none">(Hiçbiri)</message>
+	<message key="search.allFields">Tüm Alanlar</message>
+
+	<message key="search.fields.more">Daha Fazla Alan</message>
+	<message key="search.fields.less">Daha Az Alan</message>
+	<message key="search.inAllArchives">tüm arşivde</message>
+	<message key="search.searchResults">Arama Sonuçları</message>
+	<message key="search.noKeywordError">Herhangi bir arama terimi girilmedi. En azından bir arama terimi girmelisiniz.</message>
+	<message key="search.noResults">Sonuç Yok</message>
+	<message key="search.reviseSearch">Aramayı Güncelle</message>
+	<message key="search.allArchives">Tüm Arşivler</message>
+
+	<!-- Browse messages -->
+	<message key="browse.browseAll">Tüm Arşivler</message>
+	<message key="browse.recordCount">({$count} Kayıt)</message>
+	<message key="browse.viewRecord">Kayıt Detayı</message>
+	<message key="browse.viewOriginal">Orijinal Kayıt Detayı</message>
+	<message key="browse.sortBy">Sort By</message>
+	<message key="browse.sortBy.none">None</message>
+	<message key="browse.archiveInfo">Arşiv Bilgisini Göster</message>
+	<message key="browse.browseRecords">Kayıtları Listele</message>
+
+	<message key="record.viewRecord">Kayıt Detayı</message>
+	<message key="record.field">Alan</message>
+	<message key="record.value">Değer</message>
+	<message key="record.records">Kayıtlar</message>
+
+	<!-- Debug messages -->
+	<message key="debug.notes">Notlar:</message>
+
+	<!-- Help messages -->
+	<message key="help.help">Yardım</message>
+	<message key="help.harvesterHelp">{$siteTitle} Yardımı</message>
+	<message key="help.toc">İçindekiler Tablosu</message>	
+	<message key="help.searchResults">Arama Sonucu</message>
+	<message key="help.matchesFound">{$matches} eşleşen kayıt bulundu</message>
+	<message key="help.helpIndex">Yardım İndeksi</message>
+	<message key="help.contents">İçindekiler</message>
+	<message key="help.upALevel">Bir Seviye Yukarı</message>	
+	<message key="help.relatedTopics">İlgili Konular</message>
+	<message key="help.search">Arama Yardımı</message>
+	<message key="help.searchFor">Arama yardımı konuları için</message>
+	<message key="help.searchResultsFor">Sonuçlar için</message>
+
+	<!-- Plugin categories and descriptions -->
+	<message key="plugins.categories.generic">Genel Eklentiler</message>
+
+	<message key="plugins.categories.blocks">Blok Eklentileri</message>
+
+	<message key="plugins.categories.harvesters">Harmanlama Eklentisi</message>
+
+	<message key="plugins.categories.preprocessors">Önişlemci Eklentisi</message>
+
+	<message key="plugins.categories.postprocessors">Önişlemci Eklentisi</message>
+
+	<message key="plugins.categories.schemas">Şema Eklentileri</message>
+
+	<message key="plugins.categories.themes">Tema Eklentileri</message>
+
+	<message key="manager.plugins.disable">Pasifleştir</message>
+	<message key="manager.plugins.enable">Aktifleştir</message>
+	
+	<message key="manager.plugins.doesNotExist">Eklenti açık değil</message>
+	<message key="manager.plugins.delete">Eklenti Sil</message>
+	<message key="manager.plugins.install">Yeni Bir Eklenti Yükle</message>
+	<message key="manager.plugins.installFailed">Yükleme başarısız oldu</message>
+	<message key="manager.plugins.installSuccessful">Sürüm başarıyla yüklendi.</message>
+	<message key="manager.plugins.upgrade">Eklenti Güncelle</message>
+	<message key="manager.plugins.upgradeFailed">Güncelleme başarısız oldu</message>
+	<message key="manager.plugins.upgradeSuccessful">Sürüm başarıyla güncellendi</message>
+	<message key="manager.plugins.uploadError">Yükleme dosyası hatası</message>
+	<message key="manager.plugins.uploadPluginDir">eklenti dosyasını seçiniz</message>
+	<message key="manager.plugins.versionFileInvalid">Eklenti dizininde version.xml geçersiz veri içeriyor.</message>
+	<message key="manager.plugins.versionFileNotFound">Eklenti dizininde version.xml bulunamadı</message>
+
+	<!-- Reading Tools entries -->
+	<message key="rt.readingTools">Okuma Araçları</message>
+
+	<message key="rt.admin.status">Durum</message>
+	<message key="rt.admin.configuration">Konfigürasyon</message>
+	<message key="rt.admin.management">Yönetim</message>
+
+	<!-- RT Settings -->
+
+	<message key="rt.admin.selectedVersion">Seçilmiş Sürüm</message>
+	<message key="rt.admin.rtDisabled">Pasifleştirildi</message>
+
+
+	<message key="rt.admin.options">Seçenekler</message>
+
+	<message key="rt.admin.settings.disable">Okuma Araçlarını Pasifleştir</message>
+
+	<!-- RT Versions -->
+	<message key="rt.admin.versions.edit.editVersion">Sürümü düzelt</message>
+	<message key="rt.admin.versions.metadata">Üst Veri</message>
+	<message key="rt.admin.versions.export">İhraç</message>
+	<message key="rt.admin.versions.importVersion">Sürüü İçe Aktar</message>
+
+	<!-- RT Contexts -->
+	<message key="rt.admin.contexts.edit.editContext">İçeriği Düzelt</message>
+	<message key="rt.admin.contexts.createContext">İçerik Oluştur</message>
+	<message key="rt.admin.contexts.confirmDelete">Are you sure you wish to delete this Context and all associated Searches?</message>
+	<message key="rt.admin.contexts.metadata">Üst Veri</message>
+	<message key="rt.admin.contexts.options">Seçenekler</message>
+
+	<!-- RT Searches -->
+	<message key="rt.admin.searches.edit.editSearch">Aramayı Düzelt</message>
+	<message key="rt.admin.searches.confirmDelete">Bu aramayı silmek istediğinizden emin misiniz?</message>
+	<message key="rt.admin.searches.createSearch">Arama Oluştur</message>
+
+	<message key="rt.admin.validateUrls.validate">Onyala</message>
+	<message key="rt.admin.validateUrls.urlIsInvalid">{$url} adresi geçerli değil.</message>
+	<message key="rt.admin.validateUrls.ok">EVET</message>
+	<message key="rt.admin.validateUrls.complete">Doğrulama tamamlandı.</message>
+	
+	<!-- RT Entities -->
+	<message key="rt.version">Sürüm</message>
+	<message key="rt.versions">Sürümler</message>
+	<message key="rt.version.title">Başlık</message>
+	<message key="rt.version.locale">Dil</message>
+	<message key="rt.version.key">Anahtar</message>
+	<message key="rt.version.description">Açıklama</message>
+
+	<message key="rt.context">Bağlam</message>
+	<message key="rt.contexts">Bağlamlar</message>
+	<message key="rt.context.title">Başlık</message>
+	<message key="rt.context.abbrev">Kısaltma</message>
+	<message key="rt.context.description">Açıklama</message>
+	<message key="rt.context.order">Sıra</message>
+
+	<message key="rt.search">Ara</message>
+	<message key="rt.searches">Aramalar</message>
+	<message key="rt.search.title">Başlık</message>
+	<message key="rt.search.url">URL</message>
+	<message key="rt.search.order">Sıra</message>
+	<message key="rt.search.description">Açıklama</message>
+	<message key="rt.search.searchUrl">URL Ara</message>
+	<message key="rt.search.searchPost">Post data</message>
+
+	<message key="rt.forThisRecord">Bu kayıt için</message>
+	<message key="rt.relatedItems">Arasında ilgili öğeleri bul</message>
+
+	<message key="rt.context.searchTerms">Arama Terimleri</message>
+	<message key="rt.context.termToDefine">Tanımlamak için kelime</message>
+
+	<!-- Profile -->
+	<message key="user.login.registerNewAccount">Kullanıcı değil misiniz? Bu siteye kayıt olunuz.</message>
+	<message key="user.login.resetPasswordInstructions"><![CDATA[For security reasons, this system emails a reset password to registered users, rather than recalling the current password.<br /><br />Enter your email address below to reset your password. A confirmation will be sent to this email address.]]></message>
+	<message key="user.profile.editProfile">Profil Düzenle</message>
+	<message key="user.profile.form.firstNameRequired">Bir ad gerekli.</message>
+	<message key="user.profile.form.lastNameRequired">Bir soyad gerekli.</message>
+	<message key="user.profile.form.emailRequired">Geçerli bir e-posta adresi gerekli.</message>
+	<message key="user.profile.form.profileImage">Profil görseli</message>
+	<message key="user.profile.form.usernameRequired">Bir kullanıcı adı gerekli.</message>
+	<message key="user.profile.form.passwordRequired">bir şifre gerekli.</message>
+	<message key="user.profile.oldPassword">Mevcut Şifre</message>
+	<message key="user.profile.newPassword">Yeni Şifre</message>
+	<message key="user.profile.repeatNewPassword">Yeni Şifre Tekrarı</message>
+	<message key="user.profile.form.oldPasswordInvalid">Girmiş olduğunuz şifre yanlıştır.</message>
+	<message key="user.profile.form.newPasswordRequired">Yeni şifrenizi girmelisiniz.</message>
+	<message key="user.profile.publicProfile">Kullanıcı Profili</message>
+	
+	<!--
+	 *
+	 * MISC - Entries that do not belong in the other sections.
+	 *
+	 -->
+	<message key="icon.small.alt">Küçük</message>
+	<message key="icon.medium.alt">Orta</message>
+	<message key="icon.large.alt">Büyük</message>
+</locale>
