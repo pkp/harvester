@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE locale SYSTEM "../../../../../lib/pkp/dtd/locale.dtd">
+
+<!--
+  * locale.xml
+  *
+  * Copyright (c) 2005-2016 Alec Smecher and John Willinsky
+  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
+  *
+  * Localization strings for the tr_TR (Türkçe) locale.
+  *
+  -->
+ 
+<locale name="tr_TR" full_name="Türkçe">
+	<message key="plugins.generic.mysqlIndex.name">MySQL İndeks Arama Eklentisi</message>
+	<message key="plugins.generic.mysqlIndex.blockDisplayName">MySQL Arama Bloğu</message>
+	<message key="plugins.generic.mysqlIndex.searchForm">Arama Formu</message>
+
+	<!-- Crosswalks -->
+	<message key="plugins.generic.mysqlIndex.crosswalks">Çapraz Geçiş</message>
+	<message key="plugins.generic.mysqlIndex.crosswalk.name">İsim</message>
+	<message key="plugins.generic.mysqlIndex.crosswalk.description">Açıklama</message>
+	<message key="plugins.generic.mysqlIndex.crosswalk.type">Tür</message>
+	<message key="plugins.generic.mysqlIndex.crosswalk.type.string">Metin</message>
+	<message key="plugins.generic.mysqlIndex.crosswalk.type.select">Seç</message>
+	<message key="plugins.generic.mysqlIndex.crosswalk.type.date">Tarih</message>
+	<message key="plugins.generic.mysqlIndex.crosswalks.noneCreated">None Created</message>
+	<message key="plugins.generic.mysqlIndex.addCrosswalk">Çapraz Geçiş Ekle</message>
+	<message key="plugins.generic.mysqlIndex.addCrosswalk">Çapraz Geçiş Ekle</message>
+	<message key="plugins.generic.mysqlIndex.form.nameRequired">Bir İsim gerekli.</message>
+	<message key="plugins.generic.mysqlIndex.schemaFilter">Şema Filitresi</message>
+	<message key="plugins.generic.mysqlIndex.schemaFilter.all">Tüm Şemalar</message>
+	<message key="plugins.generic.mysqlIndex.schema">Şema</message>
+	<message key="plugins.generic.mysqlIndex.sort">Sıra</message>
+	<message key="plugins.generic.mysqlIndex.search">Ara</message>
+</locale>

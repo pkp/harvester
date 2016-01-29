@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE locale SYSTEM "../../../../../lib/pkp/dtd/locale.dtd">
+
+<!--
+  * locale.xml
+  *
+  * Copyright (c) 2005-2016 Alec Smecher and John Willinsky
+  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
+  *
+  * Localization strings for the tr_TR (Türkçe) locale.
+  *
+  -->
+ 
+<locale name="tr_TR" full_name="Türkçe">
+	<message key="plugins.schemas.marc.schemaName">MARC</message>
+	<message key="plugins.schemas.marc.description">Bu şema MARC üst veri biçimini destekler.</message>
+	<message key="plugins.schemas.marc.fields.leader.name">Başlanğıç</message>
+	<message key="plugins.schemas.marc.fields.001.name">Kontrol Numarası</message>
+	<message key="plugins.schemas.marc.fields.003.name">Kontrol Numarası Belirleyicisi</message>
+	<message key="plugins.schemas.marc.fields.005.name">Son İşlem</message>
+	<message key="plugins.schemas.marc.fields.007.name">Fiziksel Tanımlama</message>
+	<message key="plugins.schemas.marc.fields.010.name">Kontrol Numarası</message>
+	<message key="plugins.schemas.marc.fields.020.name">ISBN</message>
+	<message key="plugins.schemas.marc.fields.022.name">ISSN</message>
+	<message key="plugins.schemas.marc.fields.027.name">STRN</message>
+</locale>
