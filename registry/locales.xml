@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--
-  * locales.xml
+  * registry/locales.xml
   *
-  * Copyright (c) 2005-2012 Alec Smecher and John Willinsky
+  * Copyright (c) 2005-2016 Alec Smecher and John Willinsky
   * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
   *
   * Locales registry file.
@@ -15,7 +15,6 @@
 <!DOCTYPE locales SYSTEM "../lib/pkp/dtd/locales.dtd">
 
 <locales>
-<<<<<<< HEAD
 	<locale key="en_US" name="English" iso639-2b="eng" />
 	<locale key="tr_TR" name="Türkçe" iso639-2b="tur"/>
 </locales>
