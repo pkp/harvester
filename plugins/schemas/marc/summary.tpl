@@ -8,7 +8,7 @@
  *
  * $Id$
  *}
-<span class="title">{$record->getTitle()|escape|truncate:90:"...":false:false:false|default:"&mdash"}</span><br />
+<span class="title">{$record->getTitle()|escape|truncate:90:"...":false:false:false|default:"&mdash;"}</span><br />
 <div class="recordContents">
 	<span class="author">{foreach from=$record->getAuthors() name="creators" item=creator}{$creator|escape|default:"&mdash;"}{if !$smarty.foreach.creators.last}</span><br /><span class="author">{/if}{/foreach}</span><br/>
 	{get_marc_element|assign:"date" record=$record id="260" i1=" " i2=" " label="c" firstOnly=true}
