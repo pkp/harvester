@@ -31,7 +31,7 @@
 	</tr>
 	{foreach from=$record->getParsedContents() item=entry key=name name=entries}
 		<tr valign="top">
-			<td>{translate key="plugins.schemas.etdms.fields.$name.name"}</td>
+			<td>{if $name}{translate key="plugins.schemas.etdms.fields.$name.name"}{else}&mdash;{/if}</td>
 			<td>
 				{foreach from=$entry item=value}
 					{if $name == 'identifier'}

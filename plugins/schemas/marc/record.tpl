@@ -31,7 +31,7 @@
 	</tr>
 	{foreach from=$record->getParsedContents() item=entry key=name name=entries}
 		<tr valign="top">
-			<td>{translate key="plugins.schemas.marc.fields.$name.name"}</td>
+			<td>{if $name}{translate key="plugins.schemas.marc.fields.$name.name"}{else}&mdash;{/if}</td>
 			<td>
 				{foreach from=$entry item=i1val key=i1}{foreach from=$i1val item=i2val key=i2}{foreach from=$i2val item=codeval key=code}{foreach from=$codeval item=value}{$value|escape|default:"&mdash;"}<br/>{/foreach}{/foreach}{/foreach}{/foreach}
 			</td>

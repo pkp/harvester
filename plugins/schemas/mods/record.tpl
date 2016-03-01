@@ -33,7 +33,7 @@
 	{foreach from="title"|to_array:"subTitle":"partNumber":"partName":"nonSort" item=nodeName}	
 		{if $contents.$nodeName}
 			<tr valign="top">
-				<td class="label">{translate key="plugins.schemas.mods.fields.$nodeName.name}</td>
+				<td class="label">{if $nodeName}{translate key="plugins.schemas.mods.fields.$nodeName.name"}{else}&mdash;{/if}</td>
 				<td class="value">{$contents.$nodeName|escape|nl2br}</td>
 			</tr>
 		{/if}
@@ -56,7 +56,7 @@
 	{foreach from="typeOfResourceCollection"|to_array:"typeOfResourceManuscript" item=nodeName}	
 		{if $contents.$nodeName}
 			<tr valign="top">
-				<td class="label">{translate key="plugins.schemas.mods.fields.$nodeName.name}</td>
+				<td class="label">{if $nodeName}{translate key="plugins.schemas.mods.fields.$nodeName.name"}{else}&mdash;{/if}</td>
 				<td class="value">{$contents.$nodeName|escape|nl2br}</td>
 			</tr>
 		{/if}
@@ -64,7 +64,7 @@
 	{foreach from="publisher"|to_array:"edition":"issuance":"frequency" item=nodeName}	
 		{if $contents.originInfo.$nodeName}
 			<tr valign="top">
-				<td class="label">{translate key="plugins.schemas.mods.fields.$nodeName.name}</td>
+				<td class="label">{if $nodeName}{translate key="plugins.schemas.mods.fields.$nodeName.name"}{else}&mdash;{/if}</td>
 				<td class="value">{$contents.originInfo.$nodeName|escape|nl2br}</td>
 			</tr>
 		{/if}
@@ -72,7 +72,7 @@
 	{foreach from="dateIssued"|to_array:"dateCreated":"dateCaptured":"dateValid":"dateModified":"copyrightDate":"dateOther" item=nodeName}	
 		{if $contents.originInfo.$nodeName}
 			<tr valign="top">
-				<td class="label">{translate key="plugins.schemas.mods.fields.$nodeName.name}</td>
+				<td class="label">{if $nodeName}{translate key="plugins.schemas.mods.fields.$nodeName.name"}{else}&mdash;{/if}</td>
 				<td class="value">{$contents.originInfo.$nodeName.value|escape|nl2br} ({$contents.originInfo.$nodeName.encoding|escape|nl2br})</td>
 			</tr>
 		{/if}
@@ -92,7 +92,7 @@
 	{foreach from="form"|to_array:"reformattingQuality":"internetMediaType":"extent":"digitalOrigin":"note":"abstract":"genre":"tableOfContents":"targetAudience":"classification":"accessCondition":"extension":"subjectTopic":"subjectGeographic":"subjectTemporal":"subjectGeographicCode":"subjectGenre":"subjectOccupation" item=nodeName}	
 		{if $contents.$nodeName}
 			<tr valign="top">
-				<td class="label">{translate key="plugins.schemas.mods.fields.$nodeName.name}</td>
+				<td class="label">{if $nodeName}{translate key="plugins.schemas.mods.fields.$nodeName.name"}{else}&mdash;{/if}</td>
 				<td class="value">{$contents.$nodeName|escape|nl2br}</td>
 			</tr>
 		{/if}
@@ -107,7 +107,7 @@
 		{foreach from="physicalLocation"|to_array:"shelfLocator":"holdingExternal":"url" item=nodeName}
 			{if $location.$nodeName}
 				<tr valign="top">
-					<td class="label">{translate key="plugins.schemas.mods.fields.$nodeName.name"}</td>
+					<td class="label">{if $nodeName}{translate key="plugins.schemas.mods.fields.$nodeName.name"}{else}&mdash;{/if}</td>
 					<td class="value">{$location.$nodeName|escape|nl2br}</td>
 				</tr>
 			{/if}
