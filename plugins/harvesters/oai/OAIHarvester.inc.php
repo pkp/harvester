@@ -170,9 +170,12 @@ class OAIHarvester extends Harvester {
 		$returner = array();
 		$identifyNode =& $result->getChildByName('Identify');
 
-		$repositoryNameNode =& $identifyNode->getChildByName(array('repositoryName', 'oai:repositoryName')) && $returner['title'] = $repositoryNameNode->getValue();
-		$adminEmailNode =& $identifyNode->getChildByName(array('adminEmail', 'oai:adminEmail')) && $returner['adminEmail'] = $adminEmailNode->getValue();
-		$descriptionNode =& $identifyNode->getChildByName(array('description', 'oai:description')) && $returner['description'] = $descriptionNode->getValue();
+		if ($identifyNode) {
+			$repositoryNameNode =& $identifyNode->getChildByName(array('repositoryName', 'oai:repositoryName')) && $returner['title'] = $repositoryNameNode->getValue();
+			$adminEmailNode =& $identifyNode->getChildByName(array('adminEmail', 'oai:adminEmail')) && $returner['adminEmail'] = $adminEmailNode->getValue();
+			$descriptionNode =& $identifyNode->getChildByName(array('description', 'oai:description')) && $returner['description'] = $descriptionNode->getValue();
+		}
+
 		$parser->destroy();
 		$result->destroy();
 		return $returner;
