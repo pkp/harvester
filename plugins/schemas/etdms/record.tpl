@@ -36,8 +36,10 @@
 				{foreach from=$entry item=value}
 					{if $name == 'identifier'}
 						<a href="{$value|escape}">{$value|escape|default:"&mdash;"}</a>
-					{else}
+					{elseif $name == 'abstract' || $name == 'description'}
 						{$value|trim|nl2br|strip_unsafe_html|default:"&mdash;"}
+					{else}
+						{$value|escape|default:"&mdash;"}
 					{/if}<br/>
 				{/foreach}
 			</td>

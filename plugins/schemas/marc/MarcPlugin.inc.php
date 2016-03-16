@@ -119,7 +119,6 @@ class MarcPlugin extends SchemaPlugin {
 	function getTitle(&$record) {
 		$entries = $record->getParsedContents();
 		if (isset($entries['245']['0']['0']['a'])) return array_shift($entries['245']['0']['0']['a']);
-		if (isset($entries['520'][' '][' ']['a'])) return array_shift($entries['520'][' '][' ']['a']);
 		return null;
 	}
 
