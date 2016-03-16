@@ -13,7 +13,7 @@
 {include file="common/header.tpl"}
 {/strip}
 
-<h3>{$record->getTitle()|escape}</h3>
+<h3>{$record->getTitle()|escape|default:"&mdash;"}</h3>
 <h4>{$archive->getTitle()|escape}</h4>
 
 <a href="{url page="browse" op="archiveInfo" path=$archive->getArchiveId()}" class="action">{translate key="browse.archiveInfo"}</a><br/>&nbsp;
@@ -33,7 +33,7 @@
 		<tr valign="top">
 			<td>{if $name}{translate key="plugins.schemas.marc.fields.$name.name"}{else}&mdash;{/if}</td>
 			<td>
-				{foreach from=$entry item=i1val key=i1}{foreach from=$i1val item=i2val key=i2}{foreach from=$i2val item=codeval key=code}{foreach from=$codeval item=value}{$value|escape|default:"&mdash;"}<br/>{/foreach}{/foreach}{/foreach}{/foreach}
+				{foreach from=$entry item=i1val key=i1}{foreach from=$i1val item=i2val key=i2}{foreach from=$i2val item=codeval key=code}{foreach from=$codeval item=value}{if $name == '520'}{$value|trim|nl2br|strip_unsafe_html|default:"&mdash;"}{else}{$value|escape|default:"&mdash;"}{/if}<br/>{/foreach}{/foreach}{/foreach}{/foreach}
 			</td>
 		</tr>
 		<tr>

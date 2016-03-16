@@ -13,7 +13,7 @@
 {include file="common/header.tpl"}
 {/strip}
 
-<h3>{$record->getTitle()|escape}</h3>
+<h3>{$record->getTitle()|escape|default:"&mdash;"}</h3>
 <h4>{$archive->getTitle()|escape}</h4>
 
 <a href="{url page="browse" op="archiveInfo" path=$archive->getArchiveId()}" class="action">{translate key="browse.archiveInfo"}</a><br/>&nbsp;
@@ -36,8 +36,10 @@
 				{foreach from=$entry item=value}
 					{if $name == 'identifier'}
 						<a href="{$value|escape}">{$value|escape|default:"&mdash;"}</a>
-					{else}
+					{elseif $name == 'abstract' || $name == 'description'}
 						{$value|trim|nl2br|strip_unsafe_html|default:"&mdash;"}
+					{else}
+						{$value|escape|default:"&mdash;"}
 					{/if}<br/>
 				{/foreach}
 			</td>

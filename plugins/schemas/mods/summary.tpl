@@ -9,7 +9,7 @@
  * $Id$
  *}
 {assign var=contents value=$record->getParsedContents()}
-<span class="title">{$contents.title|escape|default:"&mdash;"}</span><br />
+<span class="title">{$contents.title|escape|truncate:90:"...":false:false:false|default:"&mdash;"}</span><br />
 <div class="recordContents">
 	<span class="author">
 	{strip}

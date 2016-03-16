@@ -45,7 +45,7 @@
 		<td class="label">{translate key="plugins.schemas.mods.names"}</td>
 		<td class="value">
 			{foreach from=$contents.names item=name name=names}
-				{$name.namePart}
+				{$name.namePart|escape|nl2br}
 				{foreach from=$name.roles item=role name=roles}
 					{if $smarty.foreach.roles.first}({/if}{$role.term}{if $smarty.foreach.roles.last}){else}, {/if}
 				{/foreach}
@@ -93,7 +93,7 @@
 		{if $contents.$nodeName}
 			<tr valign="top">
 				<td class="label">{if $nodeName}{translate key="plugins.schemas.mods.fields.$nodeName.name"}{else}&mdash;{/if}</td>
-				<td class="value">{$contents.$nodeName|escape|nl2br}</td>
+				<td class="value">{if $nodeName == 'abstract'}{$contents.$nodeName|trim|nl2br|strip_unsafe_html}{else}{$contents.$nodeName|escape|nl2br}{/if}</td>
 			</tr>
 		{/if}
 	{/foreach}
