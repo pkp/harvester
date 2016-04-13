@@ -51,7 +51,7 @@ function sortSearch(heading, direction) {
 
 <h3>{translate key=$roleName}</h3>
 <form name="submit" method="post" action="{url path=$roleSymbolic}">
-	<input type="hidden" name="sort" value="id"/>
+	<input type="hidden" name="sort" value="username"/>
 	<input type="hidden" name="sortDirection" value="ASC"/>
 	<select name="roleSymbolic" class="selectMenu">
 		<option {if $roleSymbolic=='all'}selected="selected" {/if}value="all">{translate key="admin.people.allUsers"}</option>
