@@ -27,7 +27,7 @@ function handleArchiveSelect() {
 {/literal}
 </script>
 
-<form method="post" name="search" action="{url op="results"}">
+<form name="search" action="{url op="results"}">
 <input type="hidden" name="isAdvanced" value="1"/>
 
 <table class="data" width="100%">
