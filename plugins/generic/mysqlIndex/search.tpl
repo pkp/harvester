@@ -104,7 +104,7 @@ function handleArchiveSelect() {
 			</tr>
 			<tr valign="top">
 				<td class="value">{translate key="common.until"}</td>
-				<td class="value"{html_select_date prefix="field-$fieldId-to" time=$fieldValueToVar|get_value|default:"--" all_extra="class=\"selectMenu\"" year_empty="" month_empty="" day_empty="" start_year="1900" end_year="+10"}</td>
+				<td class="value">{html_select_date prefix="field-$fieldId-to" time=$fieldValueToVar|get_value|default:"--" all_extra="class=\"selectMenu\"" year_empty="" month_empty="" day_empty="" start_year="1900" end_year="+10"}</td>
 			</tr>
 		{elseif $fieldType == FIELD_TYPE_SELECT}
 			{assign var=fieldValueVar value=field-$fieldId}
