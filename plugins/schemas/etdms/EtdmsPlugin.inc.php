@@ -181,7 +181,7 @@ class EtdmsPlugin extends SchemaPlugin {
 		foreach ($result->getChildren() as $child) {
 			$name = $child->getName();
 			$value = $child->getValue();
-			if (String::substr($name, 0, 6) == 'etdms:') $name = String::substr($name, 3);
+			if (PKPString::substr($name, 0, 6) == 'etdms:') $name = PKPString::substr($name, 3);
 			$returner[$name][] = $value;
 		}
 

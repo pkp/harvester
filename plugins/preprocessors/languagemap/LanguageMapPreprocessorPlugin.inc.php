@@ -111,7 +111,7 @@ class LanguageMapPreprocessorPlugin extends PreprocessorPlugin {
 	 */
 	function mapLanguage($value) {
 		$cache =& $this->_getMapCache();
-		if ($newValue = $cache->get(String::strtolower(trim($value)))) {
+		if ($newValue = $cache->get(PKPString::strtolower(trim($value)))) {
 			return $newValue;
 		}
 		return $value;

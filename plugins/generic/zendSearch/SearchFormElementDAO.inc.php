@@ -135,8 +135,8 @@ class SearchFormElementDAO extends DAO {
 				(string) $searchFormElement->getSymbolic(),
 				$searchFormElement->getIsClean()?1:0,
 				(int) $searchFormElement->getType(),
-				String::substr($searchFormElement->getRangeStart(), 0, 255),
-				String::substr($searchFormElement->getRangeEnd(), 0, 255)
+				PKPString::substr($searchFormElement->getRangeStart(), 0, 255),
+				PKPString::substr($searchFormElement->getRangeEnd(), 0, 255)
 			)
 		);
 
@@ -165,8 +165,8 @@ class SearchFormElementDAO extends DAO {
 				(string) $searchFormElement->getSymbolic(),
 				$searchFormElement->getIsClean()?1:0,
 				(int) $searchFormElement->getType(),
-				String::substr($searchFormElement->getRangeStart(), 0, 255),
-				String::substr($searchFormElement->getRangeEnd(), 0, 255),
+				PKPString::substr($searchFormElement->getRangeStart(), 0, 255),
+				PKPString::substr($searchFormElement->getRangeEnd(), 0, 255),
 				(int) $searchFormElement->getSearchFormElementId()
 			)
 		);
@@ -278,7 +278,7 @@ class SearchFormElementDAO extends DAO {
 				(?, ?)',
 			array(
 				(int) $searchFormElementId,
-				String::substr($value, 0, 128)
+				PKPString::substr($value, 0, 128)
 			)
 		);
 	}
@@ -293,7 +293,7 @@ class SearchFormElementDAO extends DAO {
 		$result =& $this->retrieve(
 			'SELECT COUNT(*) FROM search_form_element_options WHERE search_form_element_id = ? AND value = ?', array(
 				(int) $searchFormElementId,
-				String::substr($value, 0, 128)
+				PKPString::substr($value, 0, 128)
 			)
 		);
 		$returner = isset($result->fields[0]) && $result->fields[0] == 1 ? true : false;

@@ -144,7 +144,7 @@ class PluginManagementHandler extends AdminHandler {
 			// tar archive basename (less potential version number) must equal plugin directory name
 			// and plugin files must be in a directory named after the plug-in.
 			$matches = array();
-			String::regexp_match_get('/^[a-zA-Z0-9]+/', basename($pluginFile, '.tar.gz'), $matches);
+			PKPString::regexp_match_get('/^[a-zA-Z0-9]+/', basename($pluginFile, '.tar.gz'), $matches);
 			$pluginName = array_pop($matches);
 		} else {
 			$errorMsg = 'manager.plugins.fileSelectError';

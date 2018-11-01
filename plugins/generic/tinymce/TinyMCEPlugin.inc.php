@@ -102,7 +102,7 @@ class TinyMCEPlugin extends GenericPlugin {
 			$allLocales = AppLocale::getAllLocales();
 			$localeList = array();
 			foreach ($allLocales as $key => $locale) {
-				$localeList[] = String::substr($key, 0, 2);
+				$localeList[] = PKPString::substr($key, 0, 2);
 			}
 
 			$tinymceScript = '
@@ -120,7 +120,7 @@ class TinyMCEPlugin extends GenericPlugin {
 				tinyMCE.init({
 					plugins : "paste,jbimages,fullscreen",
 					mode : "exact",
-					language : "' . String::substr(AppLocale::getLocale(), 0, 2) . '",
+					language : "' . PKPString::substr(AppLocale::getLocale(), 0, 2) . '",
 					elements : "' . $enableFields . '",
 					relative_urls : false,
 					forced_root_block : false,

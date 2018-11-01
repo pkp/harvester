@@ -138,13 +138,13 @@ class MarcPlugin extends SchemaPlugin {
 	function parseDate($fieldName, $value, $attributes = null) {
 		switch ($fieldName) {
 			case '005': // YYYYMMDDHHMMSS.0 Date and time of latest transaction
-				if (String::strlen($value) < 14) return null;
-				$year = String::substr($value, 0, 4);
-				$month = String::substr($value, 4, 2);
-				$day = String::substr($value, 6, 2);
-				$hour = String::substr($value, 8, 2);
-				$minute = String::substr($value, 10, 2);
-				$second = String::substr($value, 12);
+				if (PKPString::strlen($value) < 14) return null;
+				$year = PKPString::substr($value, 0, 4);
+				$month = PKPString::substr($value, 4, 2);
+				$day = PKPString::substr($value, 6, 2);
+				$hour = PKPString::substr($value, 8, 2);
+				$minute = PKPString::substr($value, 10, 2);
+				$second = PKPString::substr($value, 12);
 
 				// Make sure the values fetched are all numeric
 				foreach (array('year', 'month', 'day', 'hour', 'minute', 'second') as $var) {
@@ -152,7 +152,7 @@ class MarcPlugin extends SchemaPlugin {
 				}
 				return mktime($hour, $minute, $second, $month, $day, $year);
 			case '008': // YYMMDD[junk] Date entered on file
-				$date = String::substr($value, 0, 6);
+				$date = PKPString::substr($value, 0, 6);
 				$date = strtotime($date);
 				if ($date !== -1 && $date !== false) return $date;
 				break;
