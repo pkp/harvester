@@ -246,11 +246,7 @@ class PeopleHandler extends AdminHandler {
 		import('classes.admin.form.UserManagementForm');
 
 		$templateMgr->assign('currentUrl', Request::url(null, 'people', 'all'));
-		if (checkPhpVersion('5.0.0')) { // WARNING: This form needs $this in constructor
-			$userForm = new UserManagementForm($userId);
-		} else {
-			$userForm =& new UserManagementForm($userId);
-		}
+		$userForm = new UserManagementForm($userId);
 		if ($userForm->isLocaleResubmit()) {
 			$userForm->readInputData();
 		} else {
@@ -357,11 +353,7 @@ class PeopleHandler extends AdminHandler {
 
 		import('classes.admin.form.UserManagementForm');
 
-		if (checkPhpVersion('5.0.0')) { // WARNING: This form needs $this in constructor
-			$userForm = new UserManagementForm($userId);
-		} else {
-			$userForm =& new UserManagementForm($userId);
-		}
+		$userForm = new UserManagementForm($userId);
 		$userForm->readInputData();
 
 		if ($userForm->validate()) {

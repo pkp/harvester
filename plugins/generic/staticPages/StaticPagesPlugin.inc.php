@@ -45,12 +45,8 @@ class StaticPagesPlugin extends GenericPlugin {
 		if (parent::register($category, $path)) {
 			if ($this->getEnabled()) {
 				$this->import('StaticPagesDAO');
-				if (checkPhpVersion('5.0.0')) {
-					$staticPagesDAO = new StaticPagesDAO($this->getName());
-				} else {
-					$staticPagesDAO =& new StaticPagesDAO($this->getName());
-				}
-				$returner =& DAORegistry::registerDAO('StaticPagesDAO', $staticPagesDAO);
+				$staticPagesDAO = new StaticPagesDAO($this->getName());
+				DAORegistry::registerDAO('StaticPagesDAO', $staticPagesDAO);
 
 				HookRegistry::register('LoadHandler', array(&$this, 'callbackHandleContent'));
 			}
