@@ -184,6 +184,7 @@ class SearchDAO extends DAO {
 	function deleteRecordObjects($recordId, $fieldId = null) {
 		switch ($this->getDriver()) {
 			case 'mysql':
+			case 'mysqli':
 				$this->update(
 					'DELETE search_objects, search_object_keywords FROM search_objects LEFT JOIN search_object_keywords ON (search_objects.object_id = search_object_keywords.object_id) WHERE search_objects.record_id = ?' . ($fieldId?' AND search_objects.raw_field_id = ?':''),
 					$fieldId?array($recordId, $fieldId):$recordId
