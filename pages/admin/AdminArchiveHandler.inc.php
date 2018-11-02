@@ -24,7 +24,7 @@ class AdminArchiveHandler extends AdminHandler {
 	 * @param $args array
 	 * @param $request object
 	 */
-	function archives($args, &$request) {
+	function archives($args, $request) {
 		$this->validate();
 		$this->setupTemplate();
 
@@ -76,7 +76,7 @@ class AdminArchiveHandler extends AdminHandler {
 	 * @param $args array
 	 * @param $request object
 	 */
-	function updateArchive($args, &$request) {
+	function updateArchive($args, $request) {
 		$this->validate();
 		$this->setupTemplate();
 
@@ -117,7 +117,7 @@ class AdminArchiveHandler extends AdminHandler {
 	 * @param $args array first parameter is the ID of the archive to delete
 	 * @param $request object
 	 */
-	function deleteArchive($args, &$request) {
+	function deleteArchive($args, $request) {
 		$this->validate();
 
 		$archiveDao =& DAORegistry::getDAO('ArchiveDAO');
@@ -139,7 +139,7 @@ class AdminArchiveHandler extends AdminHandler {
 	 * @param $args array
 	 * @param $request object
 	 */
-	function manage($args, &$request) {
+	function manage($args, $request) {
 		$this->validate();
 		$this->setupTemplate(true);
 
@@ -162,7 +162,7 @@ class AdminArchiveHandler extends AdminHandler {
 	 * @param $args array
 	 * @param $request object
 	 */
-	function updateIndex($args, &$request) {
+	function updateIndex($args, $request) {
 		$this->validate();
 		$this->setupTemplate(true);
 
@@ -214,7 +214,7 @@ class AdminArchiveHandler extends AdminHandler {
 	 * @param $args array
 	 * @param $request object
 	 */
-	function flushIndex($args, &$request) {
+	function flushIndex($args, $request) {
 		$this->validate();
 		$this->setupTemplate(true);
 
