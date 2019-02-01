@@ -96,8 +96,7 @@ class MysqlIndexPlugin extends GenericPlugin {
 	 * Get a list of available management verbs for this plugin
 	 * @return array
 	 */
-	function getManagementVerbs() {
-		$verbs = array();
+	function getManagementVerbs($verbs = array()) {
 		if ($this->getEnabled()) {
 			$verbs[] = array('adminCrosswalks', __('plugins.generic.mysqlIndex.crosswalks'));
 		}
