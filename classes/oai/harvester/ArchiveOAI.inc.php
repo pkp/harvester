@@ -80,7 +80,7 @@ class ArchiveOAI extends OAI {
 	 * @return int
 	 */	
 	function setSpecToArchiveId($setSpec, $archiveId = null) {
-		$tmpArray = split(':', $setSpec);
+		$tmpArray = explode(':', $setSpec);
 		if (count($tmpArray) == 1) {
 			$setSpec = array_shift($tmpArray);
 			$archiveDao =& DAORegistry::getDAO('ArchiveDAO');
