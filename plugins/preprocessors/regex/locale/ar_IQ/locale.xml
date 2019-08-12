@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE locale SYSTEM "../../../../../lib/pkp/dtd/locale.dtd">
+
+<!--
+  * locale.xml
+  *
+  * Copyright (c) 2005-2012 Alec Smecher and John Willinsky
+  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
+  *
+  * Localization strings for the ar_IQ (Arabic) locale.
+  *
+  -->
+ 
+<locale name="ar_IQ" full_name="العربية">
+	<message key="plugins.preprocessors.regex.displayName">المعالج القبلي Regex</message>
+	<message key="plugins.preprocessors.regex.description">تتيح لك هذه الإضافة تطبيق التعبيرات العادية على قيم البيانات الوصفية. لاستعمال هذه الإضافة، يجب عليك إضافة regexes إلى وظيفة preprocessEntry في الملف plugins/preprocessors/regex/RegexPreprocessorPlugin.inc.php. تتوفر أمثلة ومراجع إضافية في ذاك الموقع.</message>
+</locale>

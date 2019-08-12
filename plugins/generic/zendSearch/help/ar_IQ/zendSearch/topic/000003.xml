@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic SYSTEM "../../../../../../../lib/pkp/dtd/helpTopic.dtd">
+
+<!--
+  * 000003.xml
+  *
+  * Copyright (c) 2005-2012 Alec Smecher and John Willinsky
+  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
+  *
+  * Searching Help Page 
+  *
+  -->
+
+<topic id="zendSearch/topic/000002" locale="ar_IQ" title="Searching" toc="zendSearch/toc/000000" key="zendSearch.search">
+	<section>
+		<![CDATA[<p>(لطفاً، لاحظ أن صفحة المساعدة هذه تختص حصرياً بإضافة البحث Zend. المزيد من النصائح عن آلية البحث تتوافر في {help_topic key="index.search" text="صفحة البحث"} الأكثر شمولاً.)</p>
+		<p>إن إضافة البحث Zend توفر حقلاً واحدة بشكلها الإفتراضي، معلم بكلمة "الكل"، والذي يبحث في عموم قاعدة بيانات Zend أو Lucene. The قد يقوم المشرف بتحديد المزيد من حقول البحث لاستعمالها في العثور على المواد ضمن قاعدة البيانات.</p>]]>
+	</section>
+</topic>

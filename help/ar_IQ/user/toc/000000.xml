@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE toc SYSTEM "../../../../lib/pkp/dtd/helpToc.dtd">
+
+<!--
+  * 000000.xml
+  *
+  * Copyright (c) 2005-2012 Alec Smecher and John Willinsky
+  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
+  *
+  * User table of contents for help. 
+  *
+  -->
+
+<toc id="user/toc/000000" locale="ar_IQ" title="Open Harvester Systems Help" parent_topic="index/topic/000000">
+	<topic id="user/topic/000000" title="User Home" />
+	
+</toc>

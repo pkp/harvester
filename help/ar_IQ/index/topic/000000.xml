@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic SYSTEM "../../../../lib/pkp/dtd/helpTopic.dtd">
+
+<!--
+  * 000000.xml
+  *
+  * Copyright (c) 2005-2012 Alec Smecher and John Willinsky
+  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
+  *
+  * Index Help Page 
+  *
+  -->
+
+<topic id="index/topic/000000" locale="ar_IQ" title="Open Harvester Systems Help" toc="index/toc/000000" key="index.index">
+	<section>
+		<![CDATA[<p>وثائق المساعدة لنظام Harvester مصممة لمساعدة المستخدمين في عملية التصفح والبحث عن المحتوى في هذا النظام. هي مصممة أيضاً لتكون بمثابة كراسة تشرح أساسيات عمله.</p><p>نظام المساعدة هذا مبني على أساس موائمة السياق. للتعرف على متعلقات جزء معين من النظام، أنقر رابط "المساعدة" عند الصفحة التي تريد الحصول على مساعدة بشأن محتواها.</p>]]>
+	</section>
+</topic>

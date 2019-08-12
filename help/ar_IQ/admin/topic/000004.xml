@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic SYSTEM "../../../../lib/pkp/dtd/helpTopic.dtd">
+
+<!--
+  * 000004.xml
+  *
+  * Copyright (c) 2005-2012 Alec Smecher and John Willinsky
+  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
+  *
+  * System Information Help Page 
+  *
+  -->
+
+<topic id="admin/topic/000004" locale="ar_IQ" title="System Information" toc="admin/toc/000000" key="admin.systemInformation">
+	<section>
+		<![CDATA[<p>صفحة معلومات النظام تقدم معلومات عن هذا التنصيب من Harvester، ومن ضمنها رقم الإصدار، بيانات التهيئة، وبيانات الملقم. إن رابط "التحقق من وجود التحديثات" يسمح للمشرف بمعرفة فيما إذا كانت نسخته من النظام هي بآخر إصدار؛ من المستحسن أن يبادر المشرف إلى تحديث النظام كلما سنحت له الفرصة ليضمن حصوله على أفضل مواصفات الأمان والخلو من المشاكل والأخطاء. معلومات الإصدارات ستكون متاحة أيضاً على <a href="https://pkp.sfu.ca" target="_new">موقع مشروع المعرفة العامة</a> وموقع <a href="https://pkp.sfu.ca/support/forum" target="_new">منتدى الدعم الفني</a>.</p>]]>
+	</section>
+</topic>

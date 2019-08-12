@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE locale SYSTEM "../../../../../lib/pkp/dtd/locale.dtd">
+
+<!--
+  * locale.xml
+  *
+  * Copyright (c) 2005-2012 Alec Smecher and John Willinsky
+  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
+  * * Edited and modified by Kennedy Onyancha - DoKS (KHK Kempen) (2007)
+  * Localization strings for the ar_IQ (Arabic) locale.
+  *
+  -->
+
+<locale name="ar_IQ" full_name="العربية">
+	<message key="plugins.schemas.etdms.schemaName">ETD-MS</message>
+	<message key="plugins.schemas.etdms.description">هذا المخطط يدعم البيانات الوصفية ETD-MS.</message>
+	<message key="plugins.schemas.etdms.fields.abstract.name">الملخص</message>
+	<message key="plugins.schemas.etdms.fields.abstract.description">ملخص محتويات المورد.</message>
+	<message key="plugins.schemas.etdms.fields.identifier.name">المعرَّف</message>
+	<message key="plugins.schemas.etdms.fields.identifier.description">مرجع صريح إلى المورد.</message>
+	<message key="plugins.schemas.etdms.fields.title.name">العنوان</message>
+	<message key="plugins.schemas.etdms.fields.title.description">الاسم المعطى إلى المورد.</message>
+	<message key="plugins.schemas.etdms.fields.creator.name">المُنشئ</message>
+	<message key="plugins.schemas.etdms.fields.creator.description">الكيان المسؤول أساساً عن إنشاء محتويات المورد.</message>
+	<message key="plugins.schemas.etdms.fields.publisher.name">الناشر</message>
+	<message key="plugins.schemas.etdms.fields.publisher.description">الكيان المسؤول عن إتاحة المورد</message>
+	<message key="plugins.schemas.etdms.fields.contributor.name">المساهم</message>
+	<message key="plugins.schemas.etdms.fields.contributor.description">الكيان المسؤول عن الإسهام في محتوى المورد.</message>
+	<message key="plugins.schemas.etdms.fields.date.name">التأريخ</message>
+	<message key="plugins.schemas.etdms.fields.date.description">التأريخ المرتبط بحدث ما في دورة حياة المورد.</message>
+	<message key="plugins.schemas.etdms.fields.type.name">النوع</message>
+	<message key="plugins.schemas.etdms.fields.type.description">أسلوب أو طبيعة محتوى المورد.</message>
+	<message key="plugins.schemas.etdms.fields.format.name">التنسيق</message>
+	<message key="plugins.schemas.etdms.fields.format.description">التكوين الفيزيائي أو الرقمي للمورد.</message>
+	<message key="plugins.schemas.etdms.fields.language.name">اللغة</message>
+	<message key="plugins.schemas.etdms.fields.language.description">لغة المحتوى الفكري للمورد.</message>
+	<message key="plugins.schemas.etdms.fields.relation.name">العلاقة</message>
+	<message key="plugins.schemas.etdms.fields.relation.description">مرجع إلى مورد ذو صلة.</message>
+	<message key="plugins.schemas.etdms.fields.coverage.name">التغطية</message>
+	<message key="plugins.schemas.etdms.fields.coverage.description">مساحة أو امتداد محتوى المورد.</message>
+	<message key="plugins.schemas.etdms.fields.rights.name">الحقوق</message>
+	<message key="plugins.schemas.etdms.fields.rights.description">معلومات عن الحقوق الخاصة بالمورد أو المترتبة عنه.</message>
+	<message key="plugins.schemas.etdms.fields.subject.name">الموضوع</message>
+	<message key="plugins.schemas.etdms.fields.subject.description">موضوع محتوى المورد.</message>
+	<message key="plugins.schemas.etdms.fields.description.name">الوصف</message>
+	<message key="plugins.schemas.etdms.fields.description.description">حساب لمحتوى المورد.</message>
+	<message key="plugins.schemas.etdms.fields.source.name">المصدر</message>
+	<message key="plugins.schemas.etdms.fields.source.description">مصدر محتويات المورد.</message>
+	<message key="plugins.schemas.etdms.fields.name.name">اسم الدرجة</message>
+	<message key="plugins.schemas.etdms.fields.name.description">اسم الدرجة المتعلقة بالعمل كما تظهر ضمنه.</message>
+	<message key="plugins.schemas.etdms.fields.level.name">مستوى الدرجة</message>
+	<message key="plugins.schemas.etdms.fields.level.description">مستوى التعليم المتعلق بالمورد.</message>
+	<message key="plugins.schemas.etdms.fields.discipline.name">درجة الاختصاص</message>
+	<message key="plugins.schemas.etdms.fields.discipline.description">مجال دراسة المحتوى الفكري للمورد.</message>
+	<message key="plugins.schemas.etdms.fields.grantor.name">مانح الدرجة</message>
+	<message key="plugins.schemas.etdms.fields.grantor.description">المؤسسة المانحة للدرجة المتعلقة بالمورد.</message>
+	<message key="plugins.schemas.etdms.fields.degree.name">الدرجة</message>
+	<message key="plugins.schemas.etdms.fields.degree.description">اسم الدرجة المتعلقة بالمورد.</message>
+</locale>

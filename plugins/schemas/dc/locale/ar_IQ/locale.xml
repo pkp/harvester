@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE locale SYSTEM "../../../../../lib/pkp/dtd/locale.dtd">
+
+<!--
+  * locale.xml
+  *
+  * Copyright (c) 2005-2012 Alec Smecher and John Willinsky
+  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
+  *
+  * Localization strings for the ar_IQ (Arabic) locale.
+  *
+  -->
+ 
+<locale name="ar_IQ" full_name="العربية">
+	<message key="plugins.schemas.dc.schemaName">Dublin Core</message>
+	<message key="plugins.schemas.dc.description">هذا المخطط يدعم تنسيق البيانات الوصفية Dublin Core.</message>
+	<message key="plugins.schemas.dc.fields.abstract.name">الملخص</message>
+	<message key="plugins.schemas.dc.fields.abstract.description">ملخص محتويات المورد.</message>
+	<message key="plugins.schemas.dc.fields.identifier.name">المعرَّف</message>
+	<message key="plugins.schemas.dc.fields.identifier.description">مرجع صريح إلى المورد.</message>
+	<message key="plugins.schemas.dc.fields.title.name">العنوان</message>
+	<message key="plugins.schemas.dc.fields.title.description">الاسم المعطى إلى المورد.</message>
+	<message key="plugins.schemas.dc.fields.creator.name">المُنشئ</message>
+	<message key="plugins.schemas.dc.fields.creator.description">الكيان المسؤول أساساً عن إنشاء محتويات المورد.</message>
+	<message key="plugins.schemas.dc.fields.publisher.name">الناشر</message>
+	<message key="plugins.schemas.dc.fields.publisher.description">الكيان المسؤول عن إتاحة المورد</message>
+	<message key="plugins.schemas.dc.fields.contributor.name">المساهم</message>
+	<message key="plugins.schemas.dc.fields.contributor.description">الكيان المسؤول عن الإسهام في محتوى المورد.</message>
+	<message key="plugins.schemas.dc.fields.date.name">التأريخ</message>
+	<message key="plugins.schemas.dc.fields.date.description">التأريخ المرتبط بحدث ما في دورة حياة المورد.</message>
+	<message key="plugins.schemas.dc.fields.type.name">النوع</message>
+	<message key="plugins.schemas.dc.fields.type.description">أسلوب أو طبيعة محتوى المورد.</message>
+	<message key="plugins.schemas.dc.fields.format.name">التنسيق</message>
+	<message key="plugins.schemas.dc.fields.format.description">التكوين الفيزيائي أو الرقمي للمورد.</message>
+	<message key="plugins.schemas.dc.fields.language.name">اللغة</message>
+	<message key="plugins.schemas.dc.fields.language.description">لغة المحتوى الفكري للمورد.</message>
+	<message key="plugins.schemas.dc.fields.relation.name">العلاقة</message>
+	<message key="plugins.schemas.dc.fields.relation.description">مرجع إلى مورد ذو صلة.</message>
+	<message key="plugins.schemas.dc.fields.coverage.name">التغطية</message>
+	<message key="plugins.schemas.dc.fields.coverage.description">مساحة أو امتداد محتوى المورد.</message>
+	<message key="plugins.schemas.dc.fields.rights.name">الحقوق</message>
+	<message key="plugins.schemas.dc.fields.rights.description">معلومات عن الحقوق الخاصة بالمورد أو المترتبة عنه.</message>
+	<message key="plugins.schemas.dc.fields.subject.name">الموضوع</message>
+	<message key="plugins.schemas.dc.fields.subject.description">موضوع محتوى المورد.</message>
+	<message key="plugins.schemas.dc.fields.description.name">الوصف</message>
+	<message key="plugins.schemas.dc.fields.description.description">حساب لمحتوى المورد.</message>
+	<message key="plugins.schemas.dc.fields.source.name">المصدر</message>
+	<message key="plugins.schemas.dc.fields.source.description">مصدر محتويات المورد.</message>
+</locale>

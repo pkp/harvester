@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE locale SYSTEM "../../../../../lib/pkp/dtd/locale.dtd">
+
+<!--
+  * locale.xml
+  *
+  * Copyright (c) 2005-2012 Alec Smecher and John Willinsky
+  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
+  *
+  * Localization strings for the ar_IQ (Arabic) locale.
+  *
+  -->
+ 
+<locale name="ar_IQ" full_name="العربية">
+	<message key="plugins.generic.zendSearch.name">إضافة إطار البحث ZEND</message>
+	<message key="plugins.generic.zendSearch.description">هذه الإضافة تعطي الدعم لمحرك بحث إطار Zend، والتي هي تطبيق بلغة PHP لمشروع Apache Lucene، أو هي تنصيب مستقل لـ Lucene/Solr.</message>
+	<message key="plugins.generic.zendSearch.solrUrl">رابط Solr</message>
+	<message key="plugins.generic.zendSearch.solrUrl.description">إذا كنت تستعمل تنصيباً خارجياً لـ Solr و Lucene، أدخل رابط تنصيب Solr هنا. سيتم استعماله لأغراض الفهرسة والاستعلامات. إذا تركت هذا الحقل فارغاً، سيتم استعمال التقنية المدمجة للبحث ZendSearch المطبقة لـ Lucene بدلاً من ذلك.</message>
+	<message key="plugins.generic.zendSearch.solrUrl.invalid">رابط Solr غير صحيح.</message>
+	<message key="plugins.generic.zendSearch.blockDisplayName">كتلة البحث ZEND</message>
+	<message key="plugins.generic.zendSearch.blockDescription">هذه الكتلة تسمح بالبحث باستعمال محرك بحث إطار Zend المطبق لتقنية Lucene.</message>
+	<message key="plugins.generic.zendSearch.settings">الإعدادات</message>
+	<message key="plugins.generic.zendSearch.solrMustExist">من أجل استعمال هذه الإضافة مع PHP 4، عليك تحديد رابط Solr.</message>
+	<message key="plugins.generic.zendSearch.searchForm">نموذج البحث</message>
+	<message key="plugins.generic.zendSearch.formElement.confirmDelete">هل أنت متأكد من رغبتك في حذف عنصر البحث هذا؟</message>
+	<message key="plugins.generic.zendSearch.formElement.noneCreated">لم يتم إنشاء عناصر نموذج بحث بعد.</message>
+	<message key="plugins.generic.zendSearch.formElement.create">إنشاء عنصر نموذج بحث</message>
+	<message key="plugins.generic.zendSearch.formElement.edit">تعديل عنصر نموذج بحث</message>
+	<message key="plugins.generic.zendSearch.formElement.status">الحالة</message>
+	<message key="plugins.generic.zendSearch.formElement.title">العنوان</message>
+	<message key="plugins.generic.zendSearch.formElement.title.required">العنوان مطلوب حتماً.</message>
+	<message key="plugins.generic.zendSearch.formElement.symbolic">الاسم الرمزي</message>
+	<message key="plugins.generic.zendSearch.formElement.symbolic.required">لطفاً، تأكد من تحديد اسم رمزي فريد.</message>
+	<message key="plugins.generic.zendSearch.formElement.type">النوع</message>
+	<message key="plugins.generic.zendSearch.formElement.type.required">النوع مطلوب حتماً.</message>
+	<message key="plugins.generic.zendSearch.formElement.type.string">سلسلة محرفية</message>
+	<message key="plugins.generic.zendSearch.formElement.type.select">إختر</message>
+	<message key="plugins.generic.zendSearch.formElement.type.date">التأريخ</message>
+	<message key="plugins.generic.zendSearch.formElement.type.date.rangeStart">التأريخ الأول</message>
+	<message key="plugins.generic.zendSearch.formElement.type.date.rangeEnd">التأريخ الأخير</message>
+	<message key="plugins.generic.zendSearch.formElement.type.date.recalculateRange">أعد حساب المدى</message>
+	<message key="plugins.generic.zendSearch.formElement.type.select.recalculateOptions">أحد حساب خيارات الحقل</message>
+	<message key="plugins.generic.zendSearch.formElement.includeFields">تضمين الحقول</message>
+</locale>

@@ -1,0 +1,728 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE locale SYSTEM "../../lib/pkp/dtd/locale.dtd">
+
+<!--
+  * locale.xml
+  *
+  * Copyright (c) 2005-2012 Alec Smecher and John Willinsky
+  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
+  *
+  * Localization strings for the en_US (U.S. English) locale.
+  -->
+ 
+<locale name="en_US" full_name="U.S. English">
+	<!-- Common Messages -->
+	<message key="common.changesSaved">تعديلاتك تم حفظها بنجاح.</message>
+	<message key="common.language">اللغة</message>
+	<message key="common.languages">اللغات</message>
+	<message key="common.notApplicable">غير متاح</message>
+	<message key="common.country">البلد</message>
+	<message key="common.harvester2">نظام Harvester</message>
+	<message key="common.enabled">ممكَّن</message>
+	<message key="common.disabled">معطل</message>
+	<message key="common.search">البحث</message>
+	<message key="common.refresh">تنشيط</message>
+	<message key="common.saveAndContinue">إحفظ واستمر</message>
+	<message key="common.close">إغلاق</message>
+	<message key="common.delete">حذف</message>
+	<message key="common.yes">نعم</message>
+	<message key="common.no">لا</message>
+	<message key="common.on">شغال</message>
+	<message key="common.add">إضافة</message>
+	<message key="common.off">متوقف</message>
+	<message key="common.upload">رفع</message>
+	<message key="common.fileName">اسم الملف</message>
+	<message key="common.edit">تعديل</message>
+	<message key="common.select">إختر</message>
+	<message key="common.manage">إدارة</message>
+	<message key="common.error.databaseError">حدث الخطأ الآتي في قاعدة البيانات: {$error}</message>
+	<message key="common.mailingAddress">عنوان المراسلة</message>
+	<message key="common.save">حفظ</message>
+	<message key="common.cancel">إلغاء</message>
+	<message key="common.requiredField">* تعطي حقلاً مطلوباً</message>
+	<message key="common.action">إجراء</message>
+	<message key="common.from">من</message>
+	<message key="common.until">حتى</message>
+	<message key="common.none">لا أحد</message>
+	<message key="common.default">الإفتراضي</message>
+	<message key="common.enable">تمكين</message>
+	<message key="common.disable">تعطيل</message>
+	<message key="common.captchaField">التحقق من صحة</message>
+	<message key="common.captchaField.description">لطفاً، أدخل الحروف كما تبدو لك في الصورة أعلاه.</message>
+	<message key="common.captchaField.badCaptcha">الحروف التي أدخلتها لا تطابق ما تعرضه الصورة. لطفاً، تحقق منها وحاول مجدداً.</message>
+
+	<!-- Navigation Messages -->
+	<message key="navigation.home">الرئيسية</message>
+	<message key="navigation.help">المساعدة</message>
+	<message key="navigation.about">عن</message>
+	<message key="navigation.user">المستخدم</message>
+	<message key="navigation.userHome">الرئيسية للمستخدم</message>
+	<message key="navigation.search">البحث</message>
+	<message key="navigation.browse">التصفح</message>
+	<message key="navigation.login">الدخول</message>
+	<message key="navigation.register">التسجيل</message>
+	<message key="navigation.content">المحتوى</message>
+	<message key="navigation.loggedInAs">مسجل دخولك باسم...</message>
+	<message key="navigation.logout">الخروج</message>
+	<message key="navigation.addArchive">إضافة أرشيف</message>
+
+	<message key="navigation.previousPage">&lt;&lt;</message>
+	<message key="navigation.nextPage">&gt;&gt;</message>
+	<message key="navigation.items">{$from} - {$to} من {$total} فقرة</message>
+	<message key="navigation.fontSize">حجم الخط</message>
+
+	<!-- Harvester messages -->
+	<message key="harvester.error.unknownMetadataField">حقل بيانات وصفية مجهول {$name} تمت مصادفته.</message>
+	<!-- Installation Messages -->
+	<message key="installer.harvester2Installation">تنصيب نظام Harvester من مشروع المعرفة العامة</message>
+	<message key="installer.harvester2Upgrade">ترقية نظام Harvester</message>
+	<message key="installer.installationInstructions"><![CDATA[<h4>رقم إصدار نظام Harvester {$version}</h4>
+
+<p>شكراً على تنزيلك لنظام <strong>Harvester</strong> من مشروع المعرفة العامة. قبل المتابعة، لطفاً، إقرأ ملف <a href="{$baseUrl}/docs/README">README</a> المضمن مع هذا البرنامج. للمزيد من المعلومات عن مشروع المعرفة العامة ومشاريعه البرمجية، لطفاً، قم بزيارة <a href="https://pkp.sfu.ca/" target="_blank">موقع مشروع المعرفة العامة</a>. إذا كانت لديك تبليغات بشأن الأخطاء والمشاكل أو استفسارات تقنية عن نظام Harvester، أنظر <a href="https://pkp.sfu.ca/support/forum" target="_blank">منتدى الدعم</a> أو قم بزيارة الموقع <a href="http://pkp.sfu.ca/bugzilla/" target="_blank">نظام التبليغ عن الأخطاء</a>. على الرغم من كون منتدى الدعم هو السبيل الأمثل للتواصل معنا، ولكن يمكنك أيضاً مراسلة فريقنا عبر العنوان <a href="mailto:pkp.contact@gmail.com">pkp.contact@gmail.com</a>.</p>
+
+<h4>المتطلبات الموصى بها لتشغيل النظام</h4>
+
+<ul>
+	<li><a href="http://www.php.net/" target="_blank">PHP</a> >= {$phpVersion} (including PHP 5.x)؛ أنت تستعمل حالياً الإصدار PHP {$phpVersion}{$wrongPhpText}</li>
+	<li><a href="http://www.mysql.com/" target="_blank">MySQL</a> >= 3.23.23 (شاملاً ذلك MySQL 4.x و 5.x)</li>
+	<li><a href="http://httpd.apache.org/" target="_blank">Apache</a> >= 1.3.2x أو >= 2.0.4x أو Microsoft IIS 6</li>
+	<li>Operating system: أي نظام تشغيل يدعم البرامج أعلاه، بضمنها <a href="http://www.linux.org/" target="_blank">Linux</a>، <a href="http://www.bsd.org/" target="_blank">BSD</a>، <a href="http://www.sun.com/" target="_blank">Solaris</a>، <a href="http://www.apple.com/" target="_blank">Mac OS X</a>، <a href="http://www.microsoft.com/">Windows</a></li>
+</ul>
+
+<p>بما أن مشروع المعرفة العامة قد لا تتوفر لديه الموارد لاختبار النظام على كل الاحتمالات الممكنة من أنظمة تشغيل وتطبيقات، لا توجد ضمانات بشأن سلامة التشغيل أو تقديم الدعم.</p>
+
+<p>التعديل على تلك الإعدادات يمكن القيام بها بعيد التنصيب مباشرة عبر تعديل الملف <tt>config.inc.php</tt> المتواجد في المجلد الرئيسي لنظام Harvester، أو عبر استعمال واجهة الإدارة المتاحة عبر الموقع.</p>
+
+<h4>أنظمة قواعد البيانات المدعومة</h4>
+
+<p>لقد تم اختبار نظام Harvester فقط على ملقم قاعدة البيانات MySQL على الرغم من كون أنظمة إدارة قواعد البيانات الأخرى المدعومة من قبل <a href="http://adodb.sourceforge.net/" target="_blank">ADOdb</a> قد تعمل معه (كلياً أو جزئياً). أي تبليغات بشأن التوافقية و/أو مقتطفات النصوص البرمجية لبدائل DBMSs يمكن إرسالها إلى فريق نظام Harvester.</p>
+]]></message>
+	<message key="installer.installationWrongPhp"><![CDATA[<br/><strong>تحذير: نسختك الحالية من PHP لا تلبي الحد الأدنى من متطلبات التنصيب. من الموصى به المبادرة إلى الترقية إلى آخر إصدار من PHP.</strong>]]></message>
+	<message key="installer.upgradeInstructions"><![CDATA[<h4>رقم إصدار Harvester {$version}</h4>
+	
+<p>شكراً على قيامك يتنزيل <strong>نظام Harvester</strong> من مشروع المعرفة العامة. قبل المتابعة، لطفاً، إقرأ ملف <a href="{$baseUrl}/docs/README">README</a> و <a href="{$baseUrl}/docs/UPGRADE">UPGRADE</a> المضمنة مع النظام. للمزيد من المعلومات عن مشروع المعرفة العامة ومشاريعه البرمجية، لطفاً قم بزيارة <a href="http://pkp.sfu.ca/" target="_blank">موقع مشروع المعرفة العامة</a>. إذا كانت لديك تبليغات عن المشاكل أو الأخطاء أو استفسارات للحصول على الدعم الفني عن نظام Harvester، أنظر <a href="http://pkp.sfu.ca/support/forum" target="_blank">منتدى الدعم</a>  أو قم بزيارة الموقع <a href="http://pkp.sfu.ca/bugzilla/" target="_blank">نظام التبليغ عن الأخطاء</a>.  على الرغم من كون منتدى الدعم هو السبيل الأمثل للتواصل معنا، ولكن يمكنك أيضاً مراسلة فريقنا عبر العنوان <a href="mailto:pkp.contact@gmail.com">pkp.contact@gmail.com</a>.</p>
+<p>من <strong>الموصى به بشدة</strong> أن تقوم بإنشاء نسخة احتياطية لقاعدة البيانات، مجلد الملفات ومجلد تنصيب نظام Harvester قبل المتابعة.</p>
+<p>إذا كنت تشغل نظامك <a href="http://www.php.net/features.safe-mode" target="_blank">PHP بنمط التشغيل الآمن</a>، لطفاً، تأكد من أن الإعدادmax_execution_time في ملف php.ini مضبوط على قيمة عالية. إذا كان هذا المحدد أو أي محدد زمني آخر (مثلاً، معيار "Timeout" في Apache) قد تم تجاوزه وعملية الترقية تمت مقاطعتها، فلا بد عندها من التدخل يدوياً لحل الإشكال.</p>]]></message>
+	<message key="installer.localeSettings">الإعدادات المحلية</message>
+	<message key="installer.localeSettingsInstructions"><![CDATA[للحصول على دعم كامل لترميز Unicode (UTF-8)، إختر UTF-8 لكل إعدادات ضبط الأحرف. لاحظ أن هذا الدعم يتطلب حالياً وجود ملقم قاعدة البيانات MySQL >= 4.1.1. لاحظ أيضاً أن الدعم الكامل لترميز Unicode يتطلب PHP >= 4.3.0 مجمعاً مع دعم ميزة المكتبة البرمجية <a href="http://www.php.net/mbstring" target="_blank">mbstring</a> (الممَكنة إفتراضياً في معظم التنصيبات الحديثة من PHP). قد تواجه مشاكل مع أطقم الحروف الموسعة إذا كان ملقمك لا يلبي تلك المتطلبات.
+<br /><br />
+ملقمك حالياً يدعم ميزة mbstring: <strong>{$supportsMBString}</strong>]]></message>
+	<message key="installer.localeInstructions">اللغة الرئيسية المستعملة في هذا النظام. لطفاً، راجع أدبيات نظام Harvester إذا كنت مهتماً بتوفيره بلغة غير مدرجة هنا.</message>
+	<message key="installer.additionalLocales">اللغات الإضافية</message>
+	<message key="installer.additionalLocalesInstructions">إختر أي من اللغات الإضافية ليدعمها النظام. يمكن تنصيب المزيد من اللغات في أي وقت عبر واجهة إدارة الموقع.</message>
+	<message key="installer.clientCharset">حزمة أحرف المستخدم</message>
+	<message key="installer.clientCharsetInstructions">الترميز المستعمل للبيانات المرسلة إلى المستعرض والمتلقاة منه.</message>
+	<message key="installer.connectionCharset">حزمة أحرف الاتصال</message>
+	<message key="installer.connectionCharsetInstructions">الترميز المستعمل للبيانات المرسلة إلى قاعدة البيانات والمتلقاة منها. هذا الترميز يفترض به أن يكون مطابقاً لترميز أحرف المستخدم. لاحظ أن هذه الإمكانية متاحة فقط في MySQL >= 4.1.1. إختر "غير متوافرة" إذا كان ملقم قاعدة البيانات لديك لا يدعم هذه المتطلبات.</message>
+	<message key="installer.databaseCharset">حزمة أحرف قاعدة البيانات</message>
+	<message key="installer.databaseCharsetInstructions">الترميز المستعمل للبيانات المخزنة في قاعدة البيانات. لاحظ أن هذه الإمكانية متاحة فقط في MySQL >= 4.1.1. إختر "غير متوافرة" إذا كان ملقم قاعدة البيانات لديك لا يدعم هذه المتطلبات.</message>
+	<message key="installer.locale">اللغة</message>
+	<message key="installer.securitySettings">إعدادات الأمان</message>
+	<message key="installer.encryption">خوارزمية تشفير قاعدة البيانات</message>
+	<message key="installer.encryptionInstructions">خوارزمية SHA1 موصى بها إذا كان نظامك يدعمها (تتطلب PHP >= 4.3.0).</message>
+	<message key="installer.administratorAccount">حساب المشرف</message>
+	<message key="installer.administratorAccountInstructions">حساب المستخدم هذا سيكون المشرف على الموقع ولديه صلاحيات الوصول المطلقة في النظام. يمكن إنشاء المزيد من حسابات المستخدمين بعد اكتمال التنصيب.</message>
+	<message key="installer.databaseSettings">إعدادات قاعدة البيانات</message>
+	<message key="installer.databaseSettingsInstructions">يتطلب نظام Harvester الوصول إلى قاعدة بيانات SQL لخزن بياناته. أنظر متطلبات النظام أعلاه للوقوف على قائمة بأنظمة قواعد البيانات المدعومة. في الحقل أدناه، إختر كيفية الاتصال بقاعدة البيانات.</message>
+	<message key="installer.databaseDriver">مشغل قاعدة البيانات</message>
+	<message key="installer.databaseHost">المضيف</message>
+	<message key="installer.databaseUsername">اسم المستخدم</message>
+	<message key="installer.databasePassword">كلمة المرور</message>
+	<message key="installer.databaseName">اسم قاعدة البيانات</message>
+	<message key="installer.databaseDriverInstructions"><![CDATA[<strong>مشغلات قواعد البيانات المدرجة والمحصورة بين مربعات لا يبدو أنها تمتلك المكملات المطلوبة لتعمل مع PHP ولذلك من المرجح فشل عملية التنصيب إذا تم اختيارها.</strong><br />أي مشغلات قواعد بيانات غير مدعومة مدرجة أعلاه تم ذكرها لأسباب أكاديمية بحتة ومن المرجح عدم صلاحيتها.]]></message>
+	<message key="installer.databaseHostInstructions">أترك اسم المضيف فارغاً للاتصال عبر مآخذ المجال بدلاً من بروتوكول TCP/IP. هذا ليس ضرورياً مع MySQL، والتي ستستعمل تلقائياً المآخذ إذا تم إدخال "localhost"، ولكنه مطلوب مع بعض ملقمات قواعد البيانات الأخرى، مثل PostgreSQL.</message>
+	<message key="installer.createDatabase">إنشاء قاعدة بيانات جديدة</message>
+	<message key="installer.createDatabaseInstructions">لاستعمال هذا الخيار، على نظام قاعدة البيانات عندك أن يدعم إنشاء قواعد البيانات عن بعد وأن يكون للحساب الذي تستعمله للاتصال بملقم قاعدة البيانات الصلاحيات الكافية لذلك. إذا فشلت عملية التنصيب مع هذا الخيار، قم بإنشاء قاعدة البيانات يدوياً ومن ثم أعد تشغيل صفحة التنصيب مع تعطيل هذا الخيار.</message>
+	<message key="installer.installApplication">تنصيب نظام Harvester</message>
+	<message key="installer.upgradeApplication">ترقية نظام Harvester</message>
+	<message key="installer.form.localeRequired">لا بد من اختيار اللغة.</message>
+	<message key="installer.form.clientCharsetRequired">لا بد من اختيار حزمة أحرف المستخدم.</message>
+	<message key="installer.form.filesDirRequired">المجلد المعني بحفظ الملفات المرفوعة إلى الموقع مطلوب حتماً.</message>
+	<message key="installer.form.encryptionRequired">لا بد من اختيار الخوارزمية الخاصة بتشفير كلمات المرور.</message>
+	<message key="installer.form.databaseDriverRequired">لا بد من اختيار مشغل قاعدة البيانات.</message>
+	<message key="installer.form.databaseNameRequired">اسم قاعدة البيانات مطلوب حتماً.</message>
+	<message key="installer.form.usernameRequired">اسم المستخدم لحساب المشرف مطلوب حتماً.</message>
+	<message key="installer.form.passwordRequired">كلمة المرور لحساب المشرف مطلوب حتماً.</message>
+	<message key="installer.form.usernameAlphaNumeric">اسم المستخدم له أن يتضمن حروفاً، أرقاماً، خطوطاً تحتانية وعلامة الطرح، ولا بد أن يبدأ وينتهي بحرف أو رقم.</message>
+	<message key="installer.form.passwordsDoNotMatch">كلمتا المرور غير متطابقتين.</message>
+	<message key="installer.form.emailRequired">عنوان بريدي صحيح لحساب المشرف مطلوب حتماً.</message>
+	<message key="installer.form.separateMultiple">إفصل ما بين القيم المتعددة بفارزة إنجليزية</message>
+	<message key="installer.installErrorsOccurred">حدثت أخطاء عند التنصيب</message>
+	<message key="installer.installFilesDirError">المجلد المخصص لرفع الملفات غير موجود أو غير قابل للكتابة.</message>
+	<message key="installer.publicFilesDirError">مجلد الملفات العمومي غير موجود أو غير قابل للكتابة.</message>
+	<message key="installer.installFileError"><![CDATA[ملف التنصيب <tt>dbscripts/xml/install.xml</tt> غير موجود أو غير مقروء.]]></message>
+	<message key="installer.installParseDBFileError"><![CDATA[حدث خطأ عند تحليل ملف تنصيب قاعدة البيانات <tt>{$file}</tt>.]]></message>
+	<message key="installer.configFileError"><![CDATA[ملف التهيئة <tt>config.inc.php</tt> غير موجود أو غير مقروء.]]></message>
+	<message key="installer.reinstallAfterDatabaseError"><![CDATA[<b>تحذير:</b> إذا فشلت عملية التنصيب في منتصف مرحلة إنشاء قاعدة البيات، فقد تضطر إلى حذف قاعدة البيانات لنظام Harvester أو حذف جداولها قبل محاولة إعادة تنصيب قاعدة البيانات مرة أخرى.]]></message>
+	<message key="installer.overwriteConfigFileInstructions"><![CDATA[<h4>مهم!</h4>
+<p>تعذر على برنامج التنصيب الكتابة على ملف التهيئة. قبل محاولة استعمال النظام، لطفاً إفتح الملف <tt>config.inc.php</tt> باستعمال محرر نصوص مناسب وقم باستبدال محتوياته بالمحتوى المبين في مربع النص أدناه.</p>]]></message>
+	<message key="installer.contentsOfConfigFile">محتوى ملف التهيئة</message>
+	<message key="installer.installerSQLStatements">عبارات SQL لأغراض التنصيب</message>
+	<message key="installer.installationComplete"><![CDATA[<p>تنصيب نظام Harvester قد اكتمل بنجاح.</p>
+<p>للشروع باستعمال النظام، <a href="{$loginUrl}">سجل دخولك</a> مستعملاً اسم المستخدم وكلمة المرور التي أدخلتها في الصفحة السابقة.</p>]]></message>
+	<message key="installer.upgradeComplete"><![CDATA[<p>ترقية نظام Harvester إلى الإصدار {$version} قد اكتمل بنجاح.</p>
+<p>لا تنسَ ضبط الإعداد "installed" في ملف التهيئة config.inc.php مرة أخرى إلى الوضع <i>On</i>.</p>]]></message>
+	<message key="installer.releaseNotes">ملاحظات الإصدار</message>
+	<message key="installer.checkYes">نعم</message>
+	<message key="installer.checkNo"><![CDATA[<span class="formError">لا</span>]]></message>
+
+	<!-- Locale messages -->
+	<message key="locale.primary">اللغة الرئيسية</message>
+	<message key="locale.supported">اللغات المدعومة</message>
+
+	<!-- Login Messages -->
+	<message key="user.changePassword">تغيير كلمة المرور</message>
+	<message key="user.editMyProfile">تعديل ملفي الشخصي</message>
+	<message key="user.changeMyPassword">تعديل كلمة مروري</message>
+	<message key="user.myAccount">حسابي</message>
+	<message key="user.userHome">الرئيسية للمستخدم</message>
+	<message key="user.profile">ملفي الشخصي</message>
+	<message key="user.register">التسجيل</message>
+	<message key="user.login">تسجيل الدخول</message>
+	<message key="user.logOut">الخروج</message>
+	<message key="user.username">اسم المستخدم</message>
+	<message key="user.password">كلمة المرور</message>
+	<message key="user.sendPassword">التأكيد</message>
+	<message key="user.sendPassword.description">أرسل لي رسالة تأكيد تتضمن اسم المستخدم وكلمة المرور الخاصان بي</message>
+	<message key="user.salutation">عبارة التحية</message>
+	<message key="user.name">الاسم</message>
+	<message key="user.firstName">الاسم الأول</message>
+	<message key="user.middleName">الاسم الأوسط</message>
+	<message key="user.lastName">الاسم الأخير</message>
+	<message key="user.initials">الحروف الأوَل</message>
+	<message key="user.initialsExample">أحمد يوسف عمران = أ ي ع</message>
+	<message key="user.gender">الجنس</message>
+	<message key="user.masculine">ذكر</message>
+	<message key="user.feminine">أنثى</message>
+	<message key="user.title">العنوان</message>
+	<message key="user.signature">التوقيع</message>
+	<message key="user.affiliation">الانتماء</message>
+	<message key="user.affiliations">الانتماءات</message>
+	<message key="user.email">البريد الالكتروني</message>
+	<message key="user.url">الرابط</message>
+	<message key="user.phone">الهاتف</message>
+	<message key="user.fax">الفاكس</message>
+	<message key="user.interests">إهتمامات التحكيم</message>
+	<message key="user.mailingAddress">العنوان البريدي العادي</message>
+	<message key="user.biography">بيان السيرة الشخصية</message>
+	<message key="user.biography.description">(مثلاً، القسم والمنصب)</message>
+	<message key="user.workingLanguages">اللغات المجادة</message>
+	<message key="user.dateRegistered">تأريخ التسجيل</message>
+	<message key="user.dateLastLogin">Last login</message>
+	<message key="user.register.registrationDisabled">هذا الموقع لا يقبل حالياً تسجيل المستخدمين.</message>
+	<message key="user.register.form.passwordLengthTooShort">كلمة المرور التي أدخلتها ليست بالطول الكافي.</message>
+	<message key="user.register.registerAs">التسجيل بمثابة</message>
+	<message key="user.register.completeForm">إملأ حقول هذا النموذج للتسجيل مع هذه المجلة.</message>
+	<message key="user.register.submitterDescription">مدراء الحفظ يمكنهم تقديم المحفوظات للفهرسة.</message>
+	<message key="user.register.repeatPassword">إعادة كلمة المرور</message>
+	<message key="user.register.usernameRestriction">اسم المستخدم ينبغي أن يقتصر على حروف صغيرة، أرقام، خطوط تحتانية وعلامة الطرح.</message>
+	<message key="user.register.passwordLengthRestriction">كلمة المرور ينبغي أن لا تقل عن {$length} حرف/أحرف.</message>
+	<message key="user.register.form.usernameExists">اسم المستخدم الذي أدخلته مستعمل مسبقاً من قبل مستخدم آخر.</message>
+	<message key="user.register.form.usernameAlphaNumeric">اسم المستخدم ينبغي أن يقتصر على حروف صغيرة، أرقام، خطوط تحتانية وعلامة الطرح، وينبغي أن يبدأ وينتهي بحرف أو رقم.</message>
+	<message key="user.register.form.emailExists">البريد الالكتروني الذي أدخلته مستعمل مسبقاً من قبل مستخدم آخر.</message>
+	<message key="user.register.form.passwordsDoNotMatch">كلمتا المرور غير متطابقتين.</message>
+	<message key="user.login.loginError">اسم المستخدم أو كلمة المرور خاطئين. لطفاً، حاول مجدداً.</message>
+	<message key="user.login.rememberMe">تذكرني</message>
+	<message key="user.login.rememberUsernameAndPassword">تذكر حسابي في الموقع</message>
+
+	<!-- Forms -->
+	<message key="form.errorsOccurred">حدثت أخطاء عند معالجة بيانات النموذج</message>
+	<message key="form.postRequired">تعذر تقديم النموذج بشكل صحيح.</message>
+	<message key="form.formLanguage">لغة النموذج</message>
+	<message key="form.formLanguage.description">لإدخال المعلومات أدناه بلغة أخرى، عليك أولاً اختيار تلك اللغة.</message>
+
+	<message key="user.noRoles">ليس لحسابك الحالي أي دور في الموقع. لطفاً، إختر أحد الإجراءات أدناه:</message>
+	<message key="user.noRoles.submitArchive">تقديم أرشيف</message>
+	<message key="user.noRoles.enableSubmitClosed">التسجيل بمثابة مقدم أرشيف إلى الموقع متوقف حالياً.</message>
+
+	<!-- Roles -->
+	<message key="user.role.siteAdmin">المشرف على الموقع</message>
+	<message key="user.role.submitter">مدير الحفظ</message>
+	<message key="user.role.submitters">مدراء الحفظ</message>
+
+	<!-- Archive entity messages -->
+	<message key="archive.archives">المحفوظات</message>
+	<message key="archive.title">العنوان</message>
+	<message key="archive.image">صورة الأرشيف</message>
+	<message key="archive.image.profileImageInvalid">صورة الأرشيف غير صحيحة. الصيغ المقبولة هي GIF، JPG، و PNG.</message>
+	<message key="archive.recordCount">عدد السجلات</message>
+	<message key="archive.url">الرابط</message>
+	<message key="archive.publicArchiveId">الرمز العام</message>
+	<message key="archive.description">الوصف</message>
+	<message key="archive.type">النوع</message>
+	<message key="archive.type.invalid">نوع أرشيف غير صحيح.</message>
+	<message key="archive.lastIndexed">آخر فهرسة</message>
+
+	<!-- Site Administration -->
+	<message key="admin.siteAdmin">إدارة الموقع</message>
+	<message key="admin.siteSettings">إعدادات الموقع</message>
+	<message key="admin.layout">التخطيط</message>
+	<message key="admin.sortOrders">الفرز</message>
+	<message key="admin.archives">المحفوظات</message>
+	<message key="admin.plugins">الإضافات</message>
+	<message key="admin.rtAdmin">أدوات القراءة</message>
+
+	<message key="admin.archives.manage">إدارة الأرشيف</message>
+	<message key="admin.archives.manage.numRecords">عدد الأوراق المفهرسة</message>
+	<message key="admin.archives.manage.updateIndex">تحديث فهرس البيانات الوصفية</message>
+	<message key="admin.archives.manage.flush">تصفير البيانات الوصفية</message>
+	<message key="admin.archives.manage.updateIndex.confirm">هل أنت متأكد من رغبتك في تحديث فهرس البيانات الوصفية؟ هذه العملية قد تستغرق عدة دقائق اعتماداً على حجم الأرشيف.</message>
+	<message key="admin.archives.confirmDelete">هل أنت متأكد من رغبتك في حذف هذا الأرشيف مع كل ما يحتويه من سجلات؟</message>
+	<message key="admin.archive.manage.updateIndex.success">لقد تم تحديث فهرس البيانات الوصفية. {$recordCount} من السجلات قد تمت فهرستها.</message>
+	<message key="admin.archive.manage.updateIndex.failure">تعذر تحديث فهرس البيانات الوصفية. حدثت الأخطاء الأتية:</message>
+	<message key="admin.archive.manage.updateIndex.return">العودة إلى الإدارة</message>
+	<message key="admin.archive.manage.updateIndex.failure.generic">حدث خطأ مجهول.</message>
+
+	<message key="admin.settings.general">الإعدادات العامة</message>
+	<message key="admin.settings.administration">الإدارة</message>
+
+	<message key="admin.settings.siteTitle">عنوان الموقع</message>
+	<message key="admin.settings.introduction">المقدمة</message>
+	<message key="admin.settings.aboutDescription">وصف عن الموقع</message>
+	<message key="admin.settings.form.titleRequired">العنوان مطلوب حتماً.</message>
+	<message key="admin.settings.styleSheet">ملف الأنماط</message>
+	<message key="admin.settings.theme">النمط</message>
+	<message key="admin.settings.styleSheet.invalid">ملف أنماط خاطئ. الصيغة المقبولة هي .css.</message>
+	<message key="admin.settings.customLogo">شعار الموقع</message>
+	<message key="admin.settings.customLogo.invalid">صيغة شعار الموقع غير صحيحة. الصيغ المقبولة هي .gif، .jpg، و .png.</message>
+	<message key="admin.settings.contactName">اسم عنوان الاتصال الرئيسي</message>
+	<message key="admin.settings.contactEmail">البريد الالكتروني لعنوان الاتصال الرئيسي</message>
+	<message key="admin.settings.minPasswordLength">الحد الأدنى لكلمة المرور</message>
+	<message key="admin.settings.form.contactNameRequired">اسم عنوان الاتصال الرئيسي مطلوب حتماً.</message>
+	<message key="admin.settings.form.contactEmailRequired">البريد الالكتروني لعنوان الاتصال الرئيسي مطلوب حتماً.</message>
+	<message key="admin.settings.form.minPasswordLengthRequired">كلمة المرور ينبغي أن لا تقل عن أربعة أحرف.</message>
+	<message key="admin.settings.passwordCharacters">أحرف</message>
+	<message key="admin.settings.options">الخيارات</message>
+	<message key="admin.settings.options.enableSubmit">يمكن لأيٍّ كان التسجيل في الموقع وتقديم محفوظاته للفهرسة.</message>
+	<message key="admin.settings.options.disableSubmissions">طلبات التقديم معطلة إفتراضية ولا بد لتمكينها من تدخل المشرف على الموقع.</message>
+	<message key="admin.settings.siteLanguage">لغة الموقع</message>
+
+	<message key="admin.siteManagement">إدارة الموقع</message>
+	<message key="admin.adminFunctions">الوظائف الإدارية</message>
+	<message key="admin.expireSessions">إنهاء صلاحية جلسات المستخدمين</message>
+	<message key="admin.confirmExpireSessions">هل أنت متأكد من رغبتك في إنهاء صلاحية كل جلسات المستخدمين؟ سكون عليك تسجيل الدخول مجدداً إلى الموقع.</message>
+	<message key="admin.clearTemplateCache">تصفير مخزونات القوالب</message>
+	<message key="admin.clearDataCache">تصفير مخزونات البيانات</message>
+	<message key="admin.confirmClearTemplateCache">هل أنت متأكد من رغبتك في تصفير مخزونات القوالب المجمعة؟</message>
+	<message key="admin.systemInformation">معلومات النظام</message>
+
+	<!-- Users -->
+	<message key="admin.users">المستخدمون</message>
+	<message key="admin.people">الناس</message>
+	<message key="admin.people.allUsers">كل المستخدمين</message>
+	<message key="admin.people.createUser">إنشاء مستخدم</message>
+	<message key="admin.people.noAdministrativeRights"><![CDATA[عفواً، لا تمتلك الصلاحيات الإدارية اللازمة لإدارة هذا المستخدم. قد يكون هذا عائداً للأسباب الآتية:
+		<ul>
+			<li>المستخدم هو المشرف على الموقع</li>
+			<li>المستخدم لديه نشاط في مجلات لا تديرها</li>
+		</ul>
+	هذه المهمة تتطلب صلاحيات المشرف على الموقع.
+	]]></message>
+	<message key="admin.people.mustChooseRole">لطفاً، حدد الدور عند أعلى الصفحة قبل النقر على "تعيين المستخدم".</message>
+	<message key="admin.people.editUser">تعديل المستخدم</message>
+	<message key="admin.people.enrollExistingUser">تعيين مستخدم موجود</message>
+	<message key="admin.people.enroll">تعيين المستخدم</message>
+	<message key="admin.people.enrollment">التعيين</message>
+	<message key="admin.people.roleEnrollment">منح دور {$role}</message>
+	<message key="admin.people.unenroll">إنهاء التعيين</message>
+	<message key="admin.people.confirmUnenroll">أتريد إنهاء تعيين هذا المستخدم؟</message>
+	<message key="admin.people.mergeUsers.confirm">هل أنت متأكد من رغبتك في دمج هذا الحساب ذو اسم المستخدم "{$oldUsername}" مع الحساب ذو اسم المستخدم "{$newUsername}"؟ الحساب ذو اسم المستخدم "{$oldUsername}" لن يعود له وجود بعدها. هذا الإجراء لا يمكن التراجع عنه.</message>
+	<message key="admin.people.confirmRemove">أتريد إزالة هذا المستخدم من هذه المجلة؟ هذا الإجراء سيلغي دور أدوار المستخدم في هذه المجلة.</message>
+	<message key="admin.people.confirmDisable">أتريد تعطيل هذا المستخدم؟ هذا سيمنع المستخدم من تسجيل دخوله إلى النظام.
+
+قد ترغب إختيارياً بشرح أسباب تعطيل الحساب لصاحبه.</message>
+	<message key="admin.people.noneEnrolled">لم يتم تعيين أي مستخدم بعد.</message>
+	<message key="admin.people.enrollSelected">تعيين المستخدمين المنتخبين</message>
+	<message key="admin.people.noMatchingUsers">لا يوجد أحد بهذه المعطيات.</message>
+	<message key="admin.people.saveAndCreateAnotherUser">إحفظ وأنشئ واحداً آخر</message>
+	<message key="admin.people.userCreatedSuccessfully">تم إنشاء المستخدم بنجاح.</message>
+	<message key="admin.people.authSource">مصدر الصلاحيات</message>
+	<message key="admin.people.enrollUserAs">تعيين المستخدم بمثابة</message>
+	<message key="admin.people.doNotEnroll">بلا دور</message>
+	<message key="admin.people.enrollUserAsDescription">يمكن منح المستخدمين أدواراً أو إزالتها منهم في أي وقت.</message>
+	<message key="admin.people.invalidUser">عفواً، المستخدم المقصود غير موجود.</message>
+	<message key="admin.people.createUserGeneratePassword">توليد كلمة مرور عشوائية.</message>
+	<message key="admin.people.createUserSendNotify">إرسل رسالة ترحيبية إلى المستخدم تتضمن اسم المستخدم وكلمة المرور.</message>
+	<message key="admin.people.mustProvideName">لطفاً أعط على الأقل الاسم الأخير للمستخدم.</message>
+	<message key="admin.people.userMustChangePassword">على المستخدم تغيير كلمة مروره عند دخوله إلى الموقع لاحقاً.</message>
+	<message key="admin.people.disable">تعطيل</message>
+	<message key="admin.people.enable">تمكين</message>
+	<message key="admin.people.remove">إزالة</message>
+	<message key="admin.people.emailUsers">مراسلة المستخدمين</message>
+	<message key="admin.people.emailUsers.emailSelectedUsers">مراسلة المستخدمين المنتخبين</message>
+	<message key="admin.people.emailUsers.emailUsersEnrolledAs">مراسلة المستخدمين الممنوحين دور</message>
+	<message key="admin.people.emailUsers.selectUsers">إختر المستخدمين الذين ترغب بمراسلتهم عبر تأشير الخانات المحاذية لأسمائهم</message>
+	<message key="admin.people.emailUsers.selectTemplate">إختر قالباً</message>
+	<message key="admin.people.emailUsers.selectLocale">إختر اللغة</message>
+
+	<message key="admin.people.editProfile">تعديل الملف الشخصي</message>
+
+	<message key="admin.people.signInAsUser">تسجيل الدخول باسمه</message>
+	<message key="admin.people.signInAs">الدخول باسمه</message>
+	
+
+	<!-- Layout -->
+	<message key="admin.setup.layout.leftSidebar">الشريط الجانبي الأيمن</message>
+	<message key="admin.setup.layout.unselected">غير مختارة</message>
+	<message key="admin.setup.layout.rightSidebar">الشريط الجانبي الأيسر</message>
+
+	<!-- Sort Orders -->
+	<message key="admin.sortOrders.name">الاسم</message>
+	<message key="admin.sortOrders.type">النوع</message>
+	<message key="admin.sortOrders.status">الحالة</message>
+	<message key="admin.sortOrders.type.string">نص</message>
+	<message key="admin.sortOrders.type.number">رقم</message>
+	<message key="admin.sortOrders.type.date">التأريخ</message>
+	<message key="admin.sortOrders.fields">الحقول</message>
+	<message key="admin.sortOrders.noneCreated">لم يتم إنشاء الفرز بعد.</message>
+	<message key="admin.sortOrders.edit">تعديل الفرز</message>
+	<message key="admin.sortOrders.create">إنشاء الفرز</message>
+	<message key="admin.sortOrders.confirmDelete">هل أنت متأكد من رغبتك في حذف طريقة الفرز هذه؟</message>
+	<message key="admin.sortOrders.form.nameRequired">الاسم مطلوب لطريقة الفرز هذه.</message>
+	<message key="admin.sortOrders.form.typeRequired">نوع الفرز مطلوب حتماً.</message>
+
+	<!-- Archives -->
+	<message key="admin.archives.addArchive">إضافة أرشيف</message>
+	<message key="admin.archives.editArchive">تعديل الأرشيف</message>
+	<message key="admin.archives.manageArchives">إدارة الأرشيف</message>
+	<message key="admin.archives.noneCreated">لم يتم إنشاء أي أرشيف بعد</message>
+	<message key="admin.archives.form.titleRequired">العنوان مطلوب حتماً.</message>
+	<message key="admin.archives.form.urlRequired">رابط الإنترنت مطلوب حتماً.</message>
+	<message key="admin.archives.form.publicArchiveIdExists">هناك أرشيف آخر موجود سلفاً بنفس الرمز. لطفاً، إختر رمزاً آخر.</message>
+	<message key="admin.archives.form.url.description">مثل: http://www.yourarchive.com</message>
+	<message key="admin.archives.form.publicArchiveId.description">هذا المعرف الفريد يمكن استعماله في عمليات البحث المستندة إلى الروابط للتعرف على هذا الأرشيف.</message>
+	
+	<!-- Languages -->
+	<message key="admin.languages.confirmDisable">هل أنت متأكد من رغبتك في تعطيل هذه اللغة؟</message>
+	<message key="admin.languages.languageSettings">إعدادات اللغة</message>
+	<message key="admin.languages.installLanguages">تنصيب اللغات</message>
+	<message key="admin.languages.primaryLocaleInstructions">هذه ستكون اللغة الافتراضية في الموقع.</message>
+	<message key="admin.languages.supportedLocalesInstructions">إختر كل اللغات التي تريد أن يدعمها الموقع. إذا لم يتم اختيار أكثر من لغة، فإن قائمة تبديل اللغة لن تظهر وكذلك ستكون إعدادات اللغة الموسعة غير متاحة.</message>
+	<message key="admin.languages.languageOptions">خيارات اللغة</message>
+	<message key="admin.languages.installedLocales">اللغات المنصبة</message>
+	<message key="admin.languages.reload">إعادة تحميل اللغة</message>
+	<message key="admin.languages.confirmReload">هل أنت متأكد من رغبتك في إعادة تحميل هذه اللغة؟ هذا من شأنه حذف كل البيانات المخصصة لصالح تلك اللغة، مثل قوالب المراسلات المخصصة.</message>
+	<message key="admin.languages.uninstall">إلغاء تنصيب اللغة</message>
+	<message key="admin.locale.maybeIncomplete">اللغات المؤشرة قد تكون غير مكتملة.</message>
+	<message key="admin.languages.confirmUninstall">هل أنت متأكد من رغبتك في إلغاء تنصيب هذه اللغة؟</message>
+	<message key="admin.languages.installNewLocales">تنصيب لغات جديدة</message>
+	<message key="admin.languages.installNewLocalesInstructions">إختر اللغات الإضافية التي ترغب بتنصيبها ليدعمها الموقع. أنظر أدبيات نظام Harvester للمزيد من المعلومات عن إضافة الدعم للمزيد من اللغات.</message>
+	<message key="admin.languages.noLocalesAvailable">لا تتوفر المزيد من اللغات لغرض التنصيب.</message>
+	<message key="admin.languages.installLocales">تنصيب</message>
+	
+	<!-- System Information -->
+	<message key="admin.systemVersion">رقم إصدار نظام Harvester</message>
+	<message key="admin.systemConfiguration">تهيئة نظام Harvester</message>
+	<message key="admin.serverInformation">معلومات الملقم</message>
+	<message key="admin.currentVersion">رقم الإصدار الحالي</message>
+	<message key="admin.versionHistory">الإصدارات السابقة</message>
+	<message key="admin.version">الإصدار</message>
+	<message key="admin.versionMajor">الرئيسي</message>
+	<message key="admin.versionMinor">الفرعي</message>
+	<message key="admin.versionRevision">التنقيح</message>
+	<message key="admin.versionBuild">البناء</message>
+	<message key="admin.dateInstalled">تأريخ التنصيب</message>
+	<message key="admin.systemConfigurationDescription"><![CDATA[إعدادات تهيئة نظام Harvester عبر الملف <tt>config.inc.php</tt>.]]></message>
+	<message key="admin.serverInformationDescription"><![CDATA[إصدار نظام التشغيل وبرامجيات الملقم. أنقر على <span class="highlight">معلومات PHP الموسعة</span> لمعاينة تفاصيل موسعة عن إعدادات PHP لهذا الملقم.]]></message>
+	<message key="admin.phpInfo">معلومات PHP الموسعة</message>
+	<message key="admin.server.platform">منصة نظام التشغيل</message>
+	<message key="admin.server.phpVersion">رقم إصدار PHP</message>
+	<message key="admin.server.apacheVersion">رقم إصدار Apache</message>
+	<message key="admin.server.dbDriver">مشغل قاعدة البيانات</message>
+	<message key="admin.server.dbVersion">رقم إصدار ملقم قاعدة البيانات</message>
+	<message key="admin.displayNewSystemConfig">عرض الإعدادات الجديدة</message>
+	<message key="admin.systemConfigFileReadError"><![CDATA[ملف التهيئة <tt>config.inc.php</tt> غير موجود، غير قابل للقراءة، أو غير صحيح.]]></message>
+	<message key="admin.overwriteConfigFileInstructions"><![CDATA[<h4>ملاحظة!</div>
+<p>تعذر على النظام التعديل في ملف التهيئة. لتطبيق ما تريده من تعديلات، عليك فتح الملف <tt>config.inc.php</tt> باستعمال محرر نصوص مناسب واستبدال محتوياته بما يظهر في حقل النص أدناه.</p>]]></message>
+	<message key="admin.displayConfigFileInstructions"><![CDATA[محتوى إعداداتك المحدثة معروضة أدناه. لتطبيق هذه التعديلات، عليك فتح الملف <tt>config.inc.php</tt> باستعمال محرر نصوص مناسب واستبدال محتوياته بما يظهر لك في حقل النص أدناه.]]></message>
+	<message key="admin.configFileUpdatedInstructions"><![CDATA[ملف التهيئة قد تم تعديله بنجاح. لطفاً، لاحظ بأنه في حالة أن موقعك لم يعد يعمل بشكل صحيح، قد يترتب عليك القيام بإصلاح المشكلة يدوياً عبر تعديل الملف <tt>config.inc.php</tt> وبشكل مباشر.]]></message>
+	<message key="admin.contentsOfConfigFile">محتويات ملف التهيئة</message>
+	<message key="admin.version.checkForUpdates">التحقق من وجود تحديثات</message>
+	<message key="admin.version.latest">آخر إصدار</message>
+	<message key="admin.version.upToDate">إن نظام يعمل بآخر إصدار</message>
+	<message key="admin.version.updateAvailable">يتوفر إصدار أحدث من النظام</message>
+	<message key="admin.version.downloadPackage">تنزيل</message>
+	<message key="admin.version.downloadPatch">حزمة التنزيل</message>
+	<message key="admin.version.moreInfo">المزيد من المعلومات</message>
+	
+	<!-- Sidebar Messages -->
+	<message key="sidebar.harvesterStats">إحصائيات {$siteTitle}</message>
+	<message key="sidebar.harvesterStats.description"><![CDATA[{$siteTitle} يحتوي حالياً على <strong>{$recordCount}</strong> أوراق مفرسة موزعة على <strong>{$archiveCount}</strong> أرشيف.]]></message>
+	<message key="sidebar.addYourArchive">إضافة أرشيف</message>
+	<message key="sidebar.addYourArchive.description"><![CDATA[<a href="{$addUrl}">أنقر هنا</a> لإضافة نظامك إلى فهرسنا.]]></message>
+
+	<!-- Defaults -->
+	<message key="default.siteIntro"><![CDATA[<strong>مرحباً بك في أرشيف البيانات الوصفية لمشروع المعرفة العامة...</strong>
+	
+	لتحسين دقة البحث ضمن النظام، فقد تمت مطالبة المؤلفين بفهرسة أعمالهم حيما تطلب الأمر عبر؛ الإختصاصات، المواضيع، النوع، الطريقة، التغطية، والنموذج. هذا يسمح لك بالبحث عن دراسات "تجريبية" مقابل "تأريخية"، على سبيل المثال، ضمن "معايير الفهرسة." يمكنك أيضاً معاينة معايير الفهرسة لوثيقة ما عبر اختيار السجل الكامل لها من بين نتائج البحث.]]></message>
+	<message key="default.emailSignature"><![CDATA[________________________________________________________________________
+	نظام Harvester
+	{$indexUrl}
+	]]></message>
+	<message key="default.footer"><![CDATA[&copy; 2005-2009 <a href="http://pkp.sfu.ca/harvester2">Alec Smecher و John Willinsky</a>]]></message>
+
+	<message key="about.harvester">عن نظام Harvester</message>
+	<message key="about.harvester.description"><![CDATA[إن نظام Harvester المقدم من مشروع المعرفة العامة هو نظام فهرسة مجاني للبيانات الوصفية مطور من قبل مشروع المعرفة العامة عبر جهوده الممولة فدرالياً لتوسيع وتحسين الوصول إلى المباحث العلمية. إن نظام Harvester الذي يعمل وفقاً لمبادرة المحفوظات المفتوحة يسمح بإنشاء فهرس قابل للبحث من البيانات الوصفية لأي محفوظات متوافقة مع مبادرة المحفوظات المفتوحة، مثل المواقع العاملة بنظام المجلات المفتوحة أو نظام المؤتمرات المفتوحة.
+	
+	إن هذا النظام متوافق حالياً مع الإصدار 1.1 و 2.0 من بروتوكول مبادرة المحفوظات المفتوحة.]]></message>
+
+	<!-- Search messages -->
+	<message key="search.syntaxInstructions"><![CDATA[تلميحات البحث: <ul>
+<li>عبارات البحث حساسة للحروف الصغيرة والكبيرة</li>
+<li>يتم تجاهل الكلمات الشائعة</li>
+<li>بشكل إفتراضي، المقالات التي تتضمن <em>كل</em> من عبارات الحرف ستظهر في النتائج (أي: <em>AND</em> هي المطبقة)</li>
+<li>إجمع عدة كلمات بواسطة <em>OR</em> للعثور على المقالات التي تضم أياً منها، مثل: <em>education OR research</i></li>
+<li>استعمل الأقواس لإنشاء استعلامات بحث أكثر تعقيداً؛ مثل: <em>archive ((journal AND conference) NOT theses)</i></li>
+<li>إبحث عن جملة كاملة كما هي عبر وضعها بين علامات اقتباس؛ مثل: <em>"open access publishing"</em></li>
+<li>استثن كلمة ما عبر سبقها بعلامة <strong>-</strong> أو <em>NOT</em>؛ مثل: <em>online -politics</em> أو <em>online NOT politics</i></li>
+<li>استعمل <b>*</b> في عبارة البحث بمثابة البدل عن أي سلسلة حروف؛ مثل <i>soci* morality</i> حيث ستطابق المستندات التي تحتوي على "sociological" أو "societal"</li>
+</ul>]]></message>
+	<message key="search.operator.not">not</message>
+	<message key="search.operator.and">and</message>
+	<message key="search.operator.or">or</message>
+	<message key="search.select.none">(لا أحد)</message>
+	<message key="search.allFields">كل الحقول</message>
+
+	<message key="search.fields.more">حقول أكثر</message>
+	<message key="search.fields.less">حقول أقل</message>
+	<message key="search.inAllArchives">في كل المحفوظات</message>
+	<message key="search.searchResults">نتائج البحث</message>
+	<message key="search.noKeywordError">لم يتم إدخال أي عبارة للبحث. عليك إدخال عبارة بحث واحدة على الأقل.</message>
+	<message key="search.noResults">لا نتائج</message>
+	<message key="search.reviseSearch">تنقيح البحث</message>
+	<message key="search.allArchives">كل المحفوظات</message>
+
+	<!-- Browse messages -->
+	<message key="browse.browseAll">كل المحفوظات</message>
+	<message key="browse.recordCount">({$count} سجل/سجلات)</message>
+	<message key="browse.viewRecord">معاينة السجل</message>
+	<message key="browse.viewOriginal">معاينة الأصل</message>
+	<message key="browse.sortBy">الفرز حسب</message>
+	<message key="browse.sortBy.none">بلا فرز</message>
+	<message key="browse.archiveInfo">معاينة معلومات الأرشيف</message>
+	<message key="browse.browseRecords">تصفح السجلات</message>
+
+	<message key="record.viewRecord">تفاصيل السجل</message>
+	<message key="record.field">الحقل</message>
+	<message key="record.value">القيمة</message>
+	<message key="record.records">سجلات</message>
+
+	<!-- Debug messages -->
+	<message key="debug.executionTime">استغرق توليد الصفحة</message>
+	<message key="debug.notes.helpMappingLoad">ملف تعيين مساعدة XML {$filename} عند البحث عن {$id}.</message>
+	<message key="debug.databaseQueries">عدد استعلامات قاعدة البيانات</message>
+	<message key="debug.notes">ملاحظات:</message>
+	<message key="debug.notes.localeLoad">ملف اللغة "{$localeFile}" المحمل من XML</message>
+	<message key="debug.notes.localeListLoad">قائمة ملفات اللغة "{$localeList}" من XML</message>
+	<message key="debug.notes.missingLocaleKey">مفتاح اللغة المفقود "{$key}".</message>
+	<message key="debug.notes.schemaMapLoad">تحميل المخطط "{$schemaMap}" من XML</message>
+
+	<!-- Help messages -->
+	<message key="help.help">المساعدة</message>
+	<message key="help.harvesterHelp">مساعدة {$siteTitle}</message>
+	<message key="help.toc">جدول المحتويات</message>	
+	<message key="help.searchResults">نتائج البحث</message>
+	<message key="help.matchesFound">تم العثور على {$matches} نتيجة</message>
+	<message key="help.noMatchingTopics">لا توجد مواضيع بهذا المعنى في ملفات المساعدة.</message>
+	<message key="help.helpIndex">فهرس المساعدة</message>
+	<message key="help.contents">المحتويات</message>
+	<message key="help.upALevel">مرتبة إلى الأعلى</message>	
+	<message key="help.relatedTopics">المواضيع ذات الصلة</message>
+	<message key="help.search">البحث في المساعدة</message>
+	<message key="help.searchFor">البحث في مواضيع المساعدة عن</message>
+	<message key="help.searchResultsFor">نتائج البحث عن</message>
+
+	<!-- Installation upgrade warnings -->
+	<message key="site.upgradeAvailable.admin"><![CDATA[يتوفر إصدار جديد من نظام Harvester! نظامك يعمل حالياً بإصدار {$currentVersion}. آخر إصدار هو {$latestVersion}. لطفاً، قم بزيارة <a href="http://pkp.sfu.ca/harvester_download" target="_new">هذه الصفحة</a> لتنزيل الإصدار الأحدث ومراجعة تعليمات الترقية.]]></message>
+
+
+	<!-- Plugin categories and descriptions -->
+	<message key="plugins.categories.generic">الإضافات العامة</message>
+	<message key="plugins.categories.generic.description">هذه الفئة تضم الإضافات ذات الغرض العام والتي من غير المناسب وضعها ضمن الفئات الأخرى.</message>
+
+	<message key="plugins.categories.blocks">إضافات الكتل</message>
+	<message key="plugins.categories.blocks.description">هي مكونات واجهة المستخدم المضافة، كما هو حال أدوات الشريط الجانبي المختلفة.</message>
+
+	<message key="plugins.categories.harvesters">إضافات Harvester</message>
+	<message key="plugins.categories.harvesters.description">هذه الفئة تضم الإضافات التي تطبق مختلف بروتوكولات مبادرة المحفوظات المفتوحة.</message>
+
+	<message key="plugins.categories.preprocessors">إضافات ما قبل المعالجة</message>
+	<message key="plugins.categories.preprocessors.description">تضم الإضافات التي تقوم بمعالجة البيانات المحصودة قبل إضافتها إلى مستودع Harvester بصيغته النهائية للبيانات الوصفية.</message>
+
+	<message key="plugins.categories.postprocessors">إضافات ما بعد المعالجة</message>
+	<message key="plugins.categories.postprocessors.description">تضم الإضافات التي تقوم بمعالجة البيانات المحصودة بعد إضافتها إلى مستودع Harvester بصيغته النهائية للبيانات الوصفية ولكن قبل فهرستها لتسهيل البحث.</message>
+
+	<message key="plugins.categories.schemas">إضافات بيانات المخططات</message>
+	<message key="plugins.categories.schemas.description">تضم الإضافات التي تقوم بتطبيق مختلف تنسيقات البيانات الوصفية.</message>
+
+	<message key="plugins.categories.themes">إضافات الأنماط</message>
+	<message key="plugins.categories.themes.description">يمكن استعمالها لتعديل مظهر النظام.</message>
+
+	<message key="manager.plugins.disable">تعطيل</message>
+	<message key="manager.plugins.enable">تمكين</message>
+	
+	<message key="manager.plugins.copyError">تعذر نسخ الإضافة. قد تكون لديك مشكلة في الصلاحيات. لطفاً، تأكد من أن ملقمك يمتلك صلاحية الكتابة في مجلد الإضافات (مع مجلداته الفرعية) ولا تنس تأمينه مرة أخرى لاحقاً.</message>
+	<message key="manager.plugins.doesNotExist">الإضافة غير موجودة</message>
+	<message key="manager.plugins.delete">حذف الإضافة</message>
+	<message key="manager.plugins.deleteConfirm">هل أنت متأكد من رغبتك في حذف هذه الإضافة من النظام؟</message>
+	<message key="manager.plugins.deleteDescription">بعد النقر على حذف، ستزول ملفات الإضافة من نظام ملفات الملقم.</message>
+	<message key="manager.plugins.deleteError">تعذر حذف الإضافة من نظام الملفات. قد تكون لديك مشكلة في الصلاحيات. لطفاً، تأكد من أن ملقمك يمتلك صلاحية الكتابة في مجلد الإضافات (مع مجلداته الفرعية) ولا تنس تأمينه مرة أخرى لاحقاً.</message>
+	<message key="manager.plugins.deleteSuccess">تم حذف الإضافة بنجاح</message>
+	<message key="manager.plugins.description">هذه الصفحة تسمح للمشرف بمعاينة الإضافات المنصبة حالياً وتعديلها. الإضافات موزعة على فئات تبعاً لوظيفتها. الفئات مدرجة أدناه مع الإضافات المختصة بكل منها.</message>
+	<message key="manager.plugins.fileSelectError">لطفاً، إختر الملف أولاً</message>
+	<message key="manager.plugins.install">تنصيب إضافة جديدة</message>
+	<message key="manager.plugins.installDescription">هذا النموذج يسمح لك برفع وتنصيب إضافة جديدة. لطفاً، تأكد من أن الإضافة مضغوطة بشكل ملف بصيغة .tar.gz.</message>
+	<message key="manager.plugins.installedVersionNewer">الإضافة موجودة سلفاً، وهي أحدث من النسخة المنصبة أو تضاهيها</message>
+	<message key="manager.plugins.installedVersionOlder">الإضافة موجودة سلفاً، وهي أقدم من النسخة المنصبة أو تضاهيها</message>
+	<message key="manager.plugins.installFailed">فشلت عملية التنصيب</message>
+	<message key="manager.plugins.installSuccessful">بنجاح تم تنصيب الإصدار</message>
+	<message key="manager.plugins.invalidPluginArchive">ملف الإضافة المرفوع إلى الموقع لا يحتوي مجلداً يتوافق مع تسمية الإضافة.</message>
+	<message key="manager.plugins.wrongCategory">الإضافة المرفوعة إلى الموقع لا تتناسب مع فئة الإضافة المطلوب ترقيتها.</message>
+	<message key="manager.plugins.wrongName">ملف إصدار الإضافة version.xml المضمن معها يحتوي تسمية لها لا تطابق تسمية الإضافة المطلوب ترقيتها.</message>
+	<message key="manager.plugins.pleaseInstall">الإضافة غير موجودة. لطفاً، قم بتنصيبها عوضاً عن ذلك</message>
+	<message key="manager.plugins.pleaseUpgrade">الإضافة موجودة سلفاً، لكنها أحدث من النسخة المنصبة. لطفاً، قم بترقيتها عوضاً عن ذلك</message>
+	<message key="manager.plugins.tarCommandNotFound">أمر فك الضغط غير متوفر. لطفاً، أجر التصحيح المناسب في ملف التهيئة "config.inc.php".</message>
+	<message key="manager.plugins.upgrade">ترقية الإضافة</message>
+	<message key="manager.plugins.upgradeDescription">هذا النموذج يسمح لك بترقية إضافة موجودة في النظام. لطفاً، تأكد من أن الإضافة مضغوطة بشكل ملف بصيغة .tar.gz file.</message>
+	<message key="manager.plugins.upgradeFailed">فشلت عملية الترقية</message>
+	<message key="manager.plugins.upgradeSuccessful">نجحت عملية الترقية إلى الإصدار</message>
+	<message key="manager.plugins.uploadError">حدث خطأ عند رفع الملف</message>
+	<message key="manager.plugins.uploadPluginDir">إختر ملف الإضافة</message>
+	<message key="manager.plugins.versionFileInvalid">ملف version.xml الموجود في مجلد الإضافة يحتوي بيانات غير صحيحة.</message>
+	<message key="manager.plugins.versionFileNotFound">تعذر العثور على الملف version.xml في مجلد الإضافة</message>
+
+	<!-- Reading Tools entries -->
+	<message key="rt.readingTools">أدوات القراءة</message>
+
+	<message key="rt.admin.status">الحالة</message>
+	<message key="rt.admin.configuration">التهيئة</message>
+	<message key="rt.admin.management">الإدارة</message>
+
+	<!-- RT Settings -->
+	<message key="rt.admin.settings">الإعدادات</message>
+	<message key="rt.admin.desc">نظام Harvester يسمح للمشرف بتعيين أدوات القراءة المخصصة لكل أرشيف. فضلاً عن ذلك، يمكن إتاحة مجموعة من أدوات القراءة على مستوى الموقع إفتراضياً. لطفاً، إختر السياق الذي ترغب بتعيين أدوات القراءة له.</message>
+	<message key="rt.admin.default">إختر أدوات القراءة الإفتراضية</message>
+
+	<message key="rt.admin.selectedVersion">الإصدار المختار</message>
+	<message key="rt.admin.rtDisabled">معطلة</message>
+	<message key="rt.admin.rtEnable">أدخل الإعدادات اللازمة لتمكين أداة القراءة أو غيّر الإصدار المختار.</message>
+
+	<message key="rt.admin.versionDescription">لطفاً، إختر رقم إصدار أدوات القراءة التي تحقق أفضل توافق مع متطلبات هذاالأرشيف.</message>
+
+	<message key="rt.admin.options">الخيارات</message>
+
+	<message key="rt.admin.settings.disable">تعطيل أدوات القراءة</message>
+	<message key="rt.admin.settings.bibFormat">التنسيق الخاص بالتقاط الاقتباسات</message>
+	<message key="rt.admin.settings.captureCite">المعلومات المكتباتية (تعرض اقتباسات المقالة بتنسيقها القياسي، والتي تدعم برامج إدارة الاقتباسات الآتية: EndNote، Reference Manager، و ProCite)</message>
+	<message key="rt.admin.settings.viewMetadata">معلومات الفهرسة (تعرض معلومات فهرسة الفقرة والمنشأة من قبل المؤلف فضلاً عن النظام)</message>
+	<message key="rt.admin.settings.supplementaryFiles">معاينة الملفات التكميلية (تعرض قائمة بأي ملفات تكميلية قام المؤلف بتضمينها مع الفقرة)</message>
+	<message key="rt.admin.settings.printerFriendly">الذهاب إلى النسخة المطبوعة (تأخذ القارئ إلى نسخة قابلة للطباعة من الفقرة)</message>
+	<message key="rt.admin.settings.authorBio">عن المؤلف (تعرض بيان السيرة الذي أدخله المؤلف)</message>
+	<message key="rt.admin.settings.defineTerms">تعريف المصطلحات (تمكن القراء من النقر المزدوج على أي كلمة ضمن الفقرة لإرسالها إلى قاموس المعاني)</message>
+	<message key="rt.admin.settings.addComment">إضافة تعليق إلى الفقرة (تمكن القراء من وضع تعليقات). لا بد من تمكين تعليقات القراء في مرحلة التهيئة</message>
+	<message key="rt.admin.settings.emailAuthor">مراسلة المؤلف (تأخذ القراء إلى قالب رسالة محضرة معنونة إلى بريد المؤلف)</message>
+	<message key="rt.admin.settings.emailOthers">مشاركة الفقرة مع زميل (تأخذ القراء إلى قالب رسالة محضرة يكون عنوان الفقرة بمثابة موضوعها)</message>
+
+	<!-- RT Versions -->
+	<message key="rt.admin.versions.restoreVersions">استعادة إفتراضات الإصدارات</message>
+	<message key="rt.admin.versions.createVersion">إنشاء إصدار</message>
+	<message key="rt.admin.versions.confirmRestore">هل أنت متأكد من رغبتك غير القابلة للتراجع في استعادة الوضع الإفتراضي لكل الإصدارات؟ إن كان هذا ما تريده، فعليك اختيار إصدار فعال في صفحة الإعدادات.</message>
+	<message key="rt.admin.versions.confirmDelete">هل أنت متأكد من رغبتك في حذف هذا الإصدار مع كل ما يتعلق به من سياقات وعمليات بحث؟</message>
+	<message key="rt.admin.versions.edit.editVersion">تعديل الإصدار</message>
+	<message key="rt.admin.versions.metadata">البيانات الوصفية</message>
+	<message key="rt.admin.versions.export">تصدير</message>
+	<message key="rt.admin.versions.importVersion">استيراد إصدار</message>
+
+	<!-- RT Contexts -->
+	<message key="rt.admin.contexts.edit.editContext">تعديل السياق</message>
+	<message key="rt.admin.contexts.createContext">إنشاء سياق</message>
+	<message key="rt.admin.contexts.confirmDelete">هل أنت متأكد من رغبتك في حذف هذا السياق مع كل ما يتعلق به من عمليات بحث؟</message>
+	<message key="rt.admin.contexts.metadata">البيانات الوصفية</message>
+	<message key="rt.admin.contexts.options">الخيارات</message>
+	<message key="rt.admin.contexts.options.citedBy">استعمل أسماء المؤلفين بمثابة عبارات البحث الإفتراضية وقم بوصف السياق بمثابة بحث عن اقتباسات المقالة.</message>
+	<message key="rt.admin.contexts.options.authorTerms">استعمل أسماء المؤلفين بمثابة عبارات البحث الإفتراضية لتمكين المستخدمين من العثور على أعمال أخرى لمؤلفي هذه الفقرة (مثلاً، لسياق "أعمال أخرى")</message>
+	<message key="rt.admin.contexts.options.geoTerms">استعمل بيانات الفهرسة الجغرافية بمثابة عبارات البحث الإفتراضية.</message>
+	<message key="rt.admin.contexts.options.defineTerms">استعمل الكلمة المضللة من قبل القارئ بمثابة عبارة البحث الإفتراضية أو لتركها فارغة إذا لم يكن هناك تضليل لأي كلمة في الفقرة (مثل، لسياق "تعريف المصطلحات").</message>
+
+	<!-- RT Searches -->
+	<message key="rt.admin.searches.edit.editSearch">تعديل البحث</message>
+	<message key="rt.admin.searches.confirmDelete">هل أنت متأكد من رغبتك في حذف عملية البحث هذه؟</message>
+	<message key="rt.admin.searches.createSearch">إنشاء عملية بحث</message>
+
+	<message key="rt.admin.validateUrls">التحقق من الروابط</message>
+	<message key="rt.admin.validateUrls.description"><![CDATA[الروابط الخائطة المحتملة لمواقع البحث مدرجة أدناه.<br/>
+عليك التحقق يدوياً من أي روابط مؤشرة على أنها خاطئة، حيث أن هذا الاختبار ليس صائباً 100%.<br/>
+قد تفشل عملية التحقق عند روابط البحث التي تتطلب تقديم البيانات بشكل نماذج.]]></message>
+	<message key="rt.admin.validateUrls.validate">التحقق</message>
+	<message key="rt.admin.validateUrls.urlIsInvalid">الرابط {$url} غير صحيح.</message>
+	<message key="rt.admin.validateUrls.ok">صحيح</message>
+	<message key="rt.admin.validateUrls.complete">عملية التحقق إكتملت.</message>
+	
+	<!-- RT Entities -->
+	<message key="rt.version">الإصدار</message>
+	<message key="rt.versions">الإصدارات</message>
+	<message key="rt.version.title">العنوان</message>
+	<message key="rt.version.locale">اللغة</message>
+	<message key="rt.version.key">المفتاح</message>
+	<message key="rt.version.description">الوصف</message>
+
+	<message key="rt.context">السياق</message>
+	<message key="rt.contexts">السياقات</message>
+	<message key="rt.context.title">العنوان</message>
+	<message key="rt.context.abbrev">المختصر</message>
+	<message key="rt.context.description">الوصف</message>
+	<message key="rt.context.order">الترتيب</message>
+
+	<message key="rt.search">البحث</message>
+	<message key="rt.searches">عمليات البحث</message>
+	<message key="rt.search.title">العنوان</message>
+	<message key="rt.search.url">الرابط</message>
+	<message key="rt.search.order">الترتيب</message>
+	<message key="rt.search.description">الوصف</message>
+	<message key="rt.search.searchUrl">رابط البحث</message>
+	<message key="rt.search.searchPost">إرسال البيانات</message>
+
+	<message key="rt.forThisRecord">لهذا السجل</message>
+	<message key="rt.relatedItems">العثور على الفقرات ذات الصلة من بين</message>
+
+	<message key="rt.context.searchTerms">عبارات البحث</message>
+	<message key="rt.context.termToDefine">تعريف الكلمة</message>
+	<message key="rt.context.searchDescription">عبارات البحث يمكن تعديلهاأو حذفها من قبل القارئ؛ إثنان أو ثلاثة من العبارات أو الجمل الصغيرة والدقيقة التي أرجعت أفضل النتائج، على اعتبار أن العلاقة بين تلك العبارات هي العامل المنطقي (AND). لمعرفة المزيد عن عمليات البحث في الموارد، أنقر على (عن). هذه الموارد قد تم اختيارها لكونها ذات صلة ولأنها متاحة بشكل مفتوح (مجاناً) بالنسبة إلى كل أو بعض محتوياتها.</message>
+	<message key="rt.context.defineTermsDescription">أنقر نقراً مزدوجاً على أي كلمة في النص لتظهر في خانة معاني الكلمات. يمكنك أيضاً لصق الكلمات أو طباعتها مباشرة في الخانة. بعدها استعمل وظيفة البحث للعثور على تعريف للكلمة. لمعرفة المزيد عن عمليات البحث عن الموارد، أنقر على رمز المعلومات. هذه الموارد قد تم اختيارها لكونها ذات صلة ولأنها متاحة بشكل مفتوح (مجاناً) بالنسبة إلى كل أو بعض محتوياتها.</message>
+	<message key="rt.context.authorTermsDescription">للفقرات التي لها أكثر من مؤلف واحد، أترك كل الأسماء مؤشرة للبحث عن الأعمال المشتركة المشابهة، أو البحث عنها بشكل منفرد عبر تأشير اسم واحد في كل مرة. لمعرفة المزيد عن عمليات البحث عن الموارد، أنقر على رمز المعلومات. هذه الموارد قد تم اختيارها لكونها ذات صلة ولأنها متاحة بشكل مفتوح (مجاناً) بالنسبة إلى كل أو بعض محتوياتها.</message>
+	<message key="rt.context.citesContextDescription">إذا كانت المقالة مفهرسة في خدمة الباحث العلمي من Google، فقد يصاحبها رابط "مقتبسة من قبل فلان"، والذي يقود إلى قائمة من الأعمال المقتبسة منه. فضلاً عن ذلك، فإن الباحث العلمي سيدرج كل الفقرات المقتبسة للعنوان واسم المؤلف. للوصول إلى الموارد على الإنترنت المتاحة حصرياً عبر مكتبتك البحثية، قد تحتاج إلى الذهاب إلى إعدادات الباحث العلمي وتفعيل روابط المكتبة التابعة لمؤسستك.</message>
+
+	<message key="rt.context.and">AND</message>
+
+	<!-- Profile -->
+	<message key="user.profile.editProfile">تعديل الملف الشخصي</message>
+	<message key="user.profile.form.firstNameRequired">الاسم الأول مطلوب حتماً.</message>
+	<message key="user.profile.form.lastNameRequired">الاسم الأخير مطلوب حتماً.</message>
+	<message key="user.profile.form.emailRequired">البريد الالكتروني الصحيح مطلوب حتماً.</message>
+	<message key="user.profile.form.profileImageInvalid">صيغة الصورة الشخصية غير صحيحة أو أنها كبيرة الحجم. الصيغ المقبولة هي .gif، .jpg، أو .png، وحجم الصورة يجب أن لا يتجاوز 150 × 150 بكسل.</message>
+	<message key="user.profile.form.profileImage">الصورة الشخصية</message>
+	<message key="user.profile.form.urlInvalid">الرابط المحدد غير صحيح. لطفاً، أعد التحقق من صحة الرابط م حاول مجدداً. (تلميح: حاول إضافة http:// إلى بداية الرابط.)</message>
+	<message key="user.profile.form.usernameRequired">اسم المستخدم مطلوب حتماً.</message>
+	<message key="user.profile.form.passwordRequired">كلمة المرور مطلوبة حتماً.</message>
+	<message key="user.profile.leavePasswordBlank">أترك حقلي كلمة المرور فارغين للابقاء على كلمة المرور الحالية.</message>
+	<message key="user.profile.oldPassword">كلمة المرور الحالية</message>
+	<message key="user.profile.newPassword">كلمة المرور الجديدة</message>
+	<message key="user.profile.repeatNewPassword">أعد كلمة المرور</message>
+	<message key="user.profile.changePasswordInstructions">أدخل كلمة المرور الحالية والجديدة أدناه لتعديل كلمة المرور.</message>
+	<message key="user.profile.form.oldPasswordInvalid">كلمة المرور الحالية التي أدخلتها غير صحيحة.</message>
+	<message key="user.profile.form.newPasswordRequired">عليك إدخال كلمة مرور جديدة.</message>
+	<message key="user.profile.form.publishedNotifications">إشعارات البريد عند نشر عدد جديد</message>
+	<message key="user.profile.form.openAccessNotifications">إشعارات البريد عند إتاحة الوصول المفتوح لعدد جديد</message>
+	<message key="user.profile.publicProfile">الملف التعريفي للمستخدم</message>
+	
+	<!--
+	 *
+	 * MISC - Entries that do not belong in the other sections.
+	 *
+	 -->
+	<message key="icon.checked.alt">مؤشر</message>
+	<message key="icon.unchecked.alt">غير مؤشر</message>
+	<message key="icon.small.alt">صغير</message>
+	<message key="icon.medium.alt">متوسط</message>
+	<message key="icon.large.alt">كبير</message>
+</locale>

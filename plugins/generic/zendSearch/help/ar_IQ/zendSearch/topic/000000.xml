@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic SYSTEM "../../../../../../../lib/pkp/dtd/helpTopic.dtd">
+
+<!--
+  * 000000.xml
+  *
+  * Copyright (c) 2005-2012 Alec Smecher and John Willinsky
+  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
+  *
+  * Index Help Page 
+  *
+  -->
+
+<topic id="zendSearch/topic/000000" locale="ar_IQ" title="Zend Search" toc="zendSearch/toc/000000" key="zendSearch.index">
+	<section>
+		<![CDATA[<p>إن إضافة البحث Zend المقدمة من مشروع المعرفة العامة ضمن نظام Harvester تدعم
+		تقنية Lucene محرك البحث الخاص بـ Apache، إما عبر "بحث Zend" عبر منفذ PHP، والذي يأتي
+		مدمجاً مع الشفرة البرمجية لمشروع المعرفة العامة، أو عبر مشروع Apache SOLR، والذي سيتطلب
+		تنصيباً خارجياً من SOLR. إن الإعداد الموضى به هو SOLR/Lucene، لأنه أسرع ويقدم المزيد من
+		المزايا. مع ذلك، هو يتطلب إجراءات تنصيبية أكثر قد لا تتوفر، كما في بيئة الاستضافة المشتركة.</p>
+		
+		<p>مزيد من المعلومات تتوفر في الملف <em>plugins/generic/zendSearch/README.</em></p>]]>
+	</section>
+</topic>

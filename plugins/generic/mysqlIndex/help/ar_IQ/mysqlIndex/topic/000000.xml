@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic SYSTEM "../../../../../../../lib/pkp/dtd/helpTopic.dtd">
+
+<!--
+  * 000000.xml
+  *
+  * Copyright (c) 2005-2012 Alec Smecher and John Willinsky
+  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
+  *
+  * MySQLIndex Help Page 
+  *
+  -->
+
+<topic id="mysqlIndex/topic/000000" locale="ar_IQ" title="MySQL Index" toc="mysqlIndex/toc/000000" key="mysqlIndex.index">
+	<section>
+		<![CDATA[<p>إن إضافة البحث لمفهرس MySQL تستعمل تقنية بسيطة تستند على مزايا MySQL. عند تمكينها، سيظهر للمستخدمين رابط بحث عند شريط التنقل العلوي فضلاً عن حقل البحث في الشريط الجانبي. حقل البحث هذا يتعامل مع كل ما هو مفهرس من قبل MySQL، بينما النقر على رابط البحث في شريط التنقل العلوي سيقدم للمستخدم صفحة بحث أكثر فعالية، حيث يمكن تنفيذ عمليات البحث على كل الفهارس، أو لبعضها أو على أحدها فقط، وحيث يمكن استعمال كلمات مفتاحية معينة مقابل حقول محددة من مجمل البيانات الوصفية.</p>]]>
+	</section>
+</topic>
