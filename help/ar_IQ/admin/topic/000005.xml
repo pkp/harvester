@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic SYSTEM "../../../../lib/pkp/dtd/helpTopic.dtd">
+
+<!--
+  * 000005.xml
+  *
+  * Copyright (c) 2005-2012 Alec Smecher and John Willinsky
+  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
+  *
+  * Archives List Help Page 
+  *
+  -->
+
+<topic id="admin/topic/000005" locale="ar_IQ" title="Archives" toc="admin/toc/000000" key="admin.archives">
+	<section>
+		<![CDATA[<p>نظام Harvester قادر على فهرسة مستودعات متعددة وبصيغ مختلفة للبيانات الوصفية. كل مستودع مدرج ضمن صفحة "إدارة المحفوظات"، تصاحبه مجموعة من الخيارات الإدارية.</p>
+		<p>يمكن تعديل أي أرشيف موجود باستعمال رابط "التعديل" المجاور لاسمه. على نفس الغرار، يمكن إنشاء محفوظات جديدة باستعمال رابط "إضافة أرشيف" عند أسفل الصفحة. أنظر {help_topic key="admin.archiveForm" text="إدارة الأرشيف"} للمزيد من المعلومات عن هذا النموذج.</p>
+		<p>بمجرد إنشاء الأرشيف وإدخال بياناته، يمكنك استعمال رابط "الإدارة" للوصول إلى بيانات القيود وإجراء وظائف الإدارة المختلفة عليه. أنظر {help_topic key="admin.manage" text="إدارة الأرشيف"} للمزيد من المعلومات.</p>]]>
+	</section>
+</topic>

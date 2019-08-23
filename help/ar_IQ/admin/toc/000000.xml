@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE toc SYSTEM "../../../../lib/pkp/dtd/helpToc.dtd">
+
+<!--
+  * 000000.xml
+  *
+  * Copyright (c) 2005-2012 Alec Smecher and John Willinsky
+  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
+  *
+  * Administration table of contents for help. 
+  *
+  -->
+
+<toc id="admin/toc/000000" locale="ar_IQ" title="Open Harvester Systems Help" parent_topic="index/topic/000000">
+<!-- Administration -->
+  	<topic id="admin/topic/000001" title="Site Settings"/>
+	<topic id="admin/topic/000010" title="Layout"/>
+	<topic id="admin/topic/000002" title="Languages"/>
+	<topic id="admin/topic/000011" title="Plugins"/>
+	<topic id="admin/topic/000012" title="Reading Tools"/>
+	<topic id="admin/topic/000013" title="Sort Orders"/>
+	<topic id="admin/topic/000014" title="Users"/>
+	<topic id="admin/topic/000003" title="Administrative Functions"/>
+</toc>

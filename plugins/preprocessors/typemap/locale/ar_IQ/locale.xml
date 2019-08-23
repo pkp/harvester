@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE locale SYSTEM "../../../../../lib/pkp/dtd/locale.dtd">
+
+<!--
+  * locale.xml
+  *
+  * Copyright (c) 2005-2012 Alec Smecher and John Willinsky
+  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
+  *
+  * Localization strings for the ar_IQ (Arabic) locale.
+  *
+  -->
+ 
+<locale name="ar_IQ" full_name="العربية">
+	<message key="plugins.preprocessors.typemap.displayName">واصف الأنواع لما قبل المعالجة</message>
+	<message key="plugins.preprocessors.typemap.description">هذه الإضافة تصف قيم أنواع البيانات في البيانات الوصفية لمقارنتها بالقيم المفضلة. من أجل أن تقوم الإضافة بعملها، عليك إنشاء معبر ذو رمز عام "النوع"؛ وعند تمكينه، فإن كل حقوله سيتم وصفها كما هو موضح في الملف plugins/preprocessors/typemap/README.txt.</message>
+</locale>

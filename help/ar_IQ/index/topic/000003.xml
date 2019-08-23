@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic SYSTEM "../../../../lib/pkp/dtd/helpTopic.dtd">
+
+<!--
+  * 000003.xml
+  *
+  * Copyright (c) 2005-2012 Alec Smecher and John Willinsky
+  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
+  *
+  * Archive Add Help Page (non-administrators)
+  *
+  -->
+
+<topic id="index/topic/000003" locale="ar_IQ" title="Add Archive" toc="index/toc/000000" key="index.addArchive">
+	<section>
+		<![CDATA[<p>عند إنشاء أرشيف جديد أو تعديل أحدها، سيجد المشرف نفسه أمام نموذج حيث عليه إدخال البيانات الأساسية للمستودع. تلك تشمل العنوان، الوصف، رابط الموقع، نوعية الحاصود، مع بعض الحقول الإضافية اعتماداً على الحاصود المستعمل.</p>
+		<p>عند استعمال حاصود مبادرة المحفوظات المفتوحة (OAI)، تتوفر الحقول الإضافية الآتية:
+		<ul>
+		<li><strong>رابط OAI الأساسي</strong>: هذا هو رابط الإنترنت الرئيسي الذي سيستعمل لحصد معلومات OAI. هذا الرابط عادة ما يقدمه التطبيق المولد لبيانات OAI، مثل <a href="https://pkp.sfu.ca/ojs" target="_new">نظام المجلات المفتوحة</a> لمشروع المعرفة العامة.</li>
+		<li><strong>طريقة الفهرسة</strong>: يمكن للمشرف اختيار فيما لو يتم حصاد مستودع مبادرة المحفوظات المفتوحة باستعمال طريقة ListRecords أو طريقة ListIdentifiers. طريقة ListRecords ستكون عموماً أسرع، لكن ListIdentifiers قد تكون مفيدة في بعض الحالات مع مستودعات غير متوافقة 100%. أنظر <a href="http://www.openarchives.org" target="_new">www.openarchives.org</a> للمزيد من المعلومات.</li>
+		<li><strong>صيغة البيانات الوصفية</strong>: العديد من التطبيقات المتوافقة مع مبادرة المحفوظات المفتوحة يمكنها توليد البيانات الوصفية بعدة صيغ، مثل Dublin Core، MARC، و MODS. بمجرد قيام المشرف بإدخال رابط OAI الأساسي، قائمة بصيغ البيانات الوصفية المتاحة يمكن جلبها باستعمال الزر "تنشيط". أي صيغة للبيانات الوصفية المدعومة من قبل كل من مبادرة المحفوظات المفتوحة وأنظمة Harvester ستندرج في القائمة.</li>
+		</ul></p>]]>
+	</section>
+</topic>

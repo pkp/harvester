@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE locale SYSTEM "../../../../../lib/pkp/dtd/locale.dtd">
+
+<!--
+  * locale.xml
+  *
+  * Copyright (c) 2005-2012 Alec Smecher and John Willinsky
+  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
+  *
+  * Localization strings for the ar_IQ (Arabic) locale.
+  *
+  -->
+ 
+<locale name="ar_IQ" full_name="العربية">
+	<message key="plugins.generic.mysqlIndex.name">إضافة البحث لفهرس MySQL</message>
+	<message key="plugins.generic.mysqlIndex.description">هذه الإضافة تقوم بتنفيذ عملية البحث اعتماداً على الفهرس المبسط لفهرس MySQL.</message>
+	<message key="plugins.generic.mysqlIndex.blockDisplayName">كتلة بحث MySQL</message>
+	<message key="plugins.generic.mysqlIndex.blockDescription">هذه الكتلة تتيح إجراء البحث بواسطة إضافة البحث المعتمد على فهرس MySQL.</message>
+	<message key="plugins.generic.mysqlIndex.searchForm">نموذج البحث</message>
+
+	<!-- Crosswalks -->
+	<message key="plugins.generic.mysqlIndex.crosswalks">المعابر</message>
+	<message key="plugins.generic.mysqlIndex.crosswalk.name">الاسم</message>
+	<message key="plugins.generic.mysqlIndex.crosswalk.publicCrosswalkId">رمز المعبر</message>
+	<message key="plugins.generic.mysqlIndex.crosswalk.description">الوصف</message>
+	<message key="plugins.generic.mysqlIndex.crosswalk.sortableDescription">السماح للمستخدمين بفرز السجلات باستعمال هذا المعبر عند تصفحها</message>
+	<message key="plugins.generic.mysqlIndex.crosswalk.type">النوع</message>
+	<message key="plugins.generic.mysqlIndex.crosswalk.type.string">نص</message>
+	<message key="plugins.generic.mysqlIndex.crosswalk.type.select">إختر</message>
+	<message key="plugins.generic.mysqlIndex.crosswalk.type.date">تأريخ</message>
+	<message key="plugins.generic.mysqlIndex.crosswalks.noneCreated">لم يتم الإنشاء بعد</message>
+	<message key="plugins.generic.mysqlIndex.addCrosswalk">إضافة معبر</message>
+	<message key="plugins.generic.mysqlIndex.reset">استعادة الوضع الإفتراضي</message>
+	<message key="plugins.generic.mysqlIndex.confirmReset">هل أنت متأكد من رغبتك في إعادة المعابر إلى وضعها الإفتراضي؟</message>
+	<message key="plugins.generic.mysqlIndex.confirmDelete">هل أنت متأكد من رغبتك في حذف هذا المعبر؟</message>
+	<message key="plugins.generic.mysqlIndex.addCrosswalk">إضافة معبر</message>
+	<message key="plugins.generic.mysqlIndex.form.nameRequired">الاسم مطلوب حتماً.</message>
+	<message key="plugins.generic.mysqlIndex.form.descriptionRequired">الوصف مطلوب حتماً.</message>
+	<message key="plugins.generic.mysqlIndex.form.publicCrosswalkIdExists">هناك معبر آخر بنفس الرمز. لطفاً، إختر رمزاً آخر وحاول مجدداً.</message>
+	<message key="plugins.generic.mysqlIndex.form.publicCrosswalkId.description">عند تحديده، يمكن استعمال رمز المعبر في عمليات البحث المستندة إلى الروابط.</message>
+	<message key="plugins.generic.mysqlIndex.editCrosswalk">تعديل المعبر</message>
+	<message key="plugins.generic.mysqlIndex.schemaFilter">تصفية المخطط</message>
+	<message key="plugins.generic.mysqlIndex.schemaFilter.all">كل المخططات</message>
+	<message key="plugins.generic.mysqlIndex.schema">المخطط</message>
+	<message key="plugins.generic.mysqlIndex.sort">الفرز</message>
+	<message key="plugins.generic.mysqlIndex.search">إبحث</message>
+	<message key="plugins.generic.mysqlIndex.crosswalks.description">تستعمل المعابر لتحديد الحقول المتماثلة عبر تنسيقات مختلفة من البيانات الوصفية مما يسمح بعمليات البحث الممتدة عبر تلك التنسيقات في نفس الوقت.</message>
+</locale>

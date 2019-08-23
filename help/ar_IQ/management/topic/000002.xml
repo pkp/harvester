@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic SYSTEM "../../../../lib/pkp/dtd/helpTopic.dtd">
+
+<!--
+  * 000007.xml
+  *
+  * Copyright (c) 2005-2012 Alec Smecher and John Willinsky
+  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
+  *
+  * Manage Archives Help Page 
+  *
+  -->
+
+<topic id="management/topic/000002" locale="ar_IQ" title="Manage Archives" toc="management/toc/000000" key="management.manage">
+	<section>
+		<![CDATA[<p>هذه الصفحة تسمح للمشرف على الموقع (وربما مدير الحفظ) بمعاينة ما يختص بآخر مهمة حصد وعدد القيود المفهرسة، فضلاً عن إمكانية تنظيف الأرشيف أو إعادة تشغيل الحاصود فيه.</p><p>من الأفضل أن يتم تشغيل حصاد المحفوظات الضخمة عبر الأوامر النصية (tools/harvest.php)، لأن المستعرضات عادة من تضيع عليها الصفحة لطول فترة الانتظار حتى اكتمال مهمة الحاصود.</p>]]>
+	</section>
+</topic>

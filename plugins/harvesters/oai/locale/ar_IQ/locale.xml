@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE locale SYSTEM "../../../../../lib/pkp/dtd/locale.dtd">
+
+<!--
+  * locale.xml
+  *
+  * Copyright (c) 2005-2012 Alec Smecher and John Willinsky
+  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
+  *
+  * Localization strings for the ar_IQ (Arabic) locale.
+  *
+  -->
+ 
+<locale name="ar_IQ" full_name="العربية">
+	<message key="plugins.harvesters.oai.protocolName">OAI</message>
+	<message key="plugins.harvesters.oai.description">هذا الحاصود يدعم بروتوكول مبادرة المحفوظات المفتوحة (OAI)، الإصدار 1.1 و 2.0.</message>
+	<message key="plugins.harvesters.oai.archive.form.harvesterUrl">رابط OAI الأساسي</message>
+	<message key="plugins.harvesters.oai.archive.form.fetchMetadata">إحضار البيانات الوصفية للأرشيف</message>
+	<message key="plugins.harvesters.oai.archive.form.refreshDescription">أنقر تنشيط لتحديث قائمة التنسيقات المدعومة لهذا الأرشيف.</message>
+	<message key="plugins.harvesters.oai.archive.form.fetchMetadata.warning">هذا النموذج سيتم نشره تلقائياً مع قيم مأخودة من البيانات الوصفية لمستودع OAI. قيم الحقول الحالي سيتم استبدالها. هل أنت متأكد من رغبتك في المتابعة؟</message>
+	<message key="plugins.harvesters.oai.archive.form.harvesterUrlRequired">حقل رابط OAI مطلوب حتماً.</message>
+	<message key="plugins.harvester.oai.archive.form.harvesterUrlInvalid">رابط OAI المعطى غير صحيح. لطفاً، تحقق من صحته وحاول مجدداً.</message>
+	<message key="plugins.harvester.oai.archive.form.harvesterUrlDuplicate">رابط OAI المعطى مستعمل سلفاً من قبل أرشيف آخر.</message>
+	<message key="plugins.harvesters.oai.archive.form.harvesterUrl.description">كما في http://www.yourarchive.com/oai/index.php</message>
+	<message key="plugins.harvesters.oai.archive.form.adminEmail">بريد المشرف</message>
+	<message key="plugins.harvesters.oai.archive.form.adminEmailInvalid">عنوان البريد الالكتروني للمشرف الذي أعطيته غير صحيح.</message>
+	<message key="plugins.harvesters.oai.archive.form.oaiIndexMethod">طريقة الفهرسة</message>
+	<message key="plugins.harvesters.oai.archive.form.metadataFormatting">تنسيق البيانات الوصفية</message>
+	<message key="plugins.harvesters.oai.archive.form.isStatic">هذا مستودع ثابت بتنسيق OAI</message>
+	<message key="plugins.harvesters.oai.archive.form.options">الخيارات</message>
+	<message key="plugins.harvesters.oai.archive.form.sets">المجاميع</message>
+	<message key="plugins.harvesters.oai.archive.form.allSets">كل المجاميع</message>
+	<message key="plugins.harvesters.oai.archive.form.dates">التواريخ السجل</message>
+	<message key="plugins.harvesters.oai.archive.form.oaiIndexMethodRequired">حقل طريقة الفهرسة مطلوب حتماً.</message>
+	<message key="plugins.harvesters.oai.archive.form.metadataFormattingRequired">حقل تنسيق البيانات الوصفية مطلوب حتماً.</message>
+	<message key="plugins.harvesters.oai.archive.form.oaiIndexMethod.ListRecords">سجلات القائمة</message>
+	<message key="plugins.harvesters.oai.archive.form.oaiIndexMethod.ListIdentifiers">معرفات القائمة</message>
+
+	<message key="plugins.harvesters.oai.errors.unknownHeaderTag">علامة رأس غير معروفة قد تم تلقيها من الملقم: {$tag}</message>
+
+	<message key="plugins.harvesters.oai.toolUsage"><![CDATA[الأعلام الإضافية الآتية متوفرة لحاصود OAI:
+	skipExistingEntries: عند ضبطه، لن يتم تحديث السجلات الموجودة
+	dump: عند ضبطه، تفريغ البيانات التي تم حصادها إلى الملفات المحلية لتصحيح الأخطاء
+	from=YYYY-MM-DD: أحصد السجلات التي على الأقل أحدث من التأريخ المحدد (استعمل "now" للتأريخ الحالي، "last" لتأريخ آخر حصاد)
+	until=YYYY-MM-DD: أحصد السجلات التي على الأقل أقدم من التأريخ المحدد (استعمل "now" للتأريخ الحالي)
+	set=setSpec: أحصد السجلات من المجموعة المحددة (قد تكون محددة عدة مرات)
+	useLastSets: أحصد مستعملاً قائمة المجاميع المستعملة في عملية الحصاد الآخيرة
+]]></message>
+</locale>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE locale SYSTEM "../../../../../lib/pkp/dtd/locale.dtd">
+
+<!--
+  * locale.xml
+  *
+  * Copyright (c) 2005-2012 Alec Smecher and John Willinsky
+  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
+  *
+  * Localization strings for the ar_IQ (Arabic) locale.
+  *
+  -->
+ 
+<locale name="ar_IQ" full_name="العربية">
+	<message key="plugins.generic.sehl.name">إضافة SEHL</message>
+	<message key="plugins.generic.sehl.description">هذه الإضافة تنفذ مهمة تضليل محرك البحث (SEHL) بحيث يتمكن محرك البحث عند تحديد سجل ما من تضليل الكلمات المفتاحية التي هي قيد البحث.</message>
+</locale>

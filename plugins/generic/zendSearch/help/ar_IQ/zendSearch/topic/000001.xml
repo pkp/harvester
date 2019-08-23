@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic SYSTEM "../../../../../../../lib/pkp/dtd/helpTopic.dtd">
+
+<!--
+  * 000001.xml
+  *
+  * Copyright (c) 2005-2012 Alec Smecher and John Willinsky
+  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
+  *
+  * Search Form Help Page 
+  *
+  -->
+
+<topic id="zendSearch/topic/000001" locale="ar_IQ" title="Search Form" toc="zendSearch/toc/000000" key="zendSearch.searchForm">
+	<section>
+		<![CDATA[<p>إن إضافة البحث Zend توفر حقلاً واحدة بشكلها الإفتراضي، يتوافر إما في الشريط الجانبي أو بمثابة حقل البحث الأول في صفحة البحث المتقدم: وهو يبحث في عموم قاعدة البيانات.</p>
+		 <p>قد يقوم المشرف على الموقع بتحديد المزيد من عناصر نموذج البحث عبر النقر على رابط نموذج البحث المتواجد في صفحة المشرف الرئيسية (والذي يكون متاحاً بعد تمكين إضافة البحث Zend)، ومن ثم النقر على رابط إنشاء عنصر نموذج بحث.</p>
+		<p>العناصر الجديدة ينبغي تعريفها بعنوان، اسم رمزي (أنظر الملف <em>plugins/generic/zendSearch/README</em> للمزيد من المعلومات)، والنوع (إما سلسلة محرفية، أو تأريخ أو إختيار). يمكن إختيار واحد أو أكثر من تلك الحقول المتوافرة عبر كل المخططات المتوافرة لإنشاء فهرس لهذا العنصر.</p>
+		<p>عند تحديد الحقول المطلوب تضمينها، يمكنك اختيار أكثر من نوع من المخططات عبر الضغط المستمر على مفتاح CTRL (مفتاح الأوامر في الحاسبات العاملة بـ Macintosh).</p>]]>
+	</section>
+</topic>

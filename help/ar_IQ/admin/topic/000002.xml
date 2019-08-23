@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic SYSTEM "../../../../lib/pkp/dtd/helpTopic.dtd">
+
+<!--
+  * 000002.xml
+  *
+  * Copyright (c) 2005-2012 Alec Smecher and John Willinsky
+  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
+  *
+  * Language Administration Help Page 
+  *
+  -->
+
+<topic id="admin/topic/000002" locale="ar_IQ" title="Languages" toc="admin/toc/000000" key="admin.languages">
+	<section>
+		<![CDATA[<p>صفحة اللغات تسمح للمشرف بتعيين اللغات المتاحة لهذا التنصيب من نظام Harvester، بضمنها اللغة الرئيسية وغيرها من اللغات الإضافية. إذا تم تمكين أكثر من لغة، سيقدم النظام لمستخدميه قائمة منسدلة لتبديل اللغة على الشريط الجانبي عند كل صفحة من صفحاته.</p><p>اللغات الظاهرة تحت "إعدادات اللغة" هي اللغات المنصبة، والتي عند تمكينها، ستكون جاهزة للاستعمال. لإضافة المزيد من اللغات إلى تلك القائمة، لا بد من تنصيبها أولاً تحت عنوان "تنصيب اللغات". أنظر ملف README للمزيد من المعلومات عن ترجمات النظام إلى لغات أخرى.</p>]]>
+	</section>
+</topic>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic SYSTEM "../../../../lib/pkp/dtd/helpTopic.dtd">
+
+<!--
+  * 000003.xml
+  *
+  * Copyright (c) 2005-2012 Alec Smecher and John Willinsky
+  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
+  *
+  * Administrative Functions Help Page 
+  *
+  -->
+
+<topic id="admin/topic/000003" locale="ar_IQ" title="Administrative Functions" toc="admin/toc/000000" key="admin.administrativeFunctions">
+	<section title="System Information">
+		<![CDATA[<p>صفحة معلومات النظام تقدم معلومات عن هذا التنصيب من Harvester، ومن ضمنها رقم الإصدار، بيانات التهيئة، وبيانات الملقم. إن رابط "التحقق من وجود التحديثات" يسمح للمشرف بمعرفة فيما إذا كانت نسخته من النظام هي بآخر إصدار؛ من المستحسن أن يبادر المشرف إلى تحديث النظام كلما سنحت له الفرصة ليضمن حصوله على أفضل مواصفات الأمان والخلو من المشاكل والأخطاء. معلومات الإصدارات ستكون متاحة أيضاً على <a href="https://pkp.sfu.ca" target="_new">موقع مشروع المعرفة العامة</a> وموقع <a href="https://pkp.sfu.ca/support/forum" target="_new">منتدى الدعم الفني</a>.</p>
+		<p><strong>تهيئة النظام:</strong> صفحة تهيئة نظام Harvester يمكن الوصول إليها من صفحة معلومات النظام عبر النقر على رابط "التعديل" تحت موضوع تهيئة النظام. هذه الميزة تسمح للمشرف بتعديل محتويات ملف التهيئة، config.inc.php باستعمال نموذج على الإنترنت. إدخال قيم خاطئة قد يؤدي إلى إخراج النظام من وضعية التشغيل الصحيح؛ هذه الميزة يفضل استعمالها من قبل المستخدمين من ذوي الخبرة.</p><p>المزيد من المعلومات عن ملف التهيئة يمكن الوصول إليها عبر أدبيات النظام المرافقة له. أنظر config.TEMPLATE.inc.php و docs/README للمزيد من المعلومات.</p>
+		<p><strong>بيانات الملقم:</strong> معلومات موسعة عن الملقم (منصة نظام التشغيل؛ إصدار PHP؛ إصدار Apache؛ مشغل قاعدة البيانات وإصداره، فضلاً عن رابط إلى مخرجات الدالة phpinfo()) تجده عند أسفل الصفحة.</p>]]>
+	</section>
+	<section title="Expire User Sessions">
+		<![CDATA[<p>النقر على رابط إنهاء جلسات عمل المستخدمين سيلغيها جميعاً، مجبراً حتى المشرف على إعادة الولوج إلى الموقع.</p>]]>
+	</section>
+	<section title="Clear Data Caches">
+		<![CDATA[<p>النقر على رابط تصفير البيانات المخفية سيزيلها جميعاً، بما فيها مخزونات عمليات البحث ومخزونات اللغات.</p>]]>
+	</section>
+	<section title="Clear Template Cache">
+		<![CDATA[<p>النقر على رابط تصفير مخزونات القوالب سيزيل كل مخزونات القوالب المصنعة، مجبراً النظام على إعادة تجميعها عند الاستعمال القادم.</p>]]>
+	</section>
+</topic>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic SYSTEM "../../../../lib/pkp/dtd/helpTopic.dtd">
+
+<!--
+  * 000001.xml
+  *
+  * Copyright (c) 2005-2012 Alec Smecher and John Willinsky
+  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
+  *
+  * Site Settings Help Page 
+  *
+  -->
+
+<topic id="admin/topic/000001" locale="ar_IQ" title="Site Settings" toc="admin/toc/000000" key="admin.siteSettings">
+	<section>
+		<![CDATA[<p>في صفحة إعدادات الموقع، يقوم المشرف بإدخال المعلومات الأساسية بضمنها وصفاً له ومعلومات الاتصال. إعدادات الموقع تنقسم إلى قسمين:</p>]]>
+	</section>
+	<section title="General">
+		<![CDATA[<ul>
+		<li><strong>عنوان الموقع</strong>: هذا هو العنوان الرئيسي لهذه النسخة من نظام Harvester.</li>
+		<li><strong>المقدمة</strong>: هذه الرسالة تعرض على الصفحة الرئيسية للنظام. يمكن استعمال وسوم HTML هنا.</li>
+		<li><strong>عن الموقع</strong>: هذه الرسالة تعرض تحت التبويب "عن".</li>
+		<li><strong>الشعار المخصص</strong>: يمكن رفع صورة لشعار الموقع لتكون بديلاً عن الصورة الإفتراضية لنظام Harvester.</li>
+		<li><strong>أدنى طول لكلمة المرور</strong>: هذا سيحدد أقل طول مقبول لكلمات المرور في الموقع بالنسبة إلى جميع مستخدميه.</li>
+		<li><strong>النمط</strong>: يمكن هنا للمشرف على الموقع اختيار النمط الذي يفضله له من بين مجموعة الأنماط المتاحة. الأنماط تعامل بمثابة إضافات، ويمكن إدارتها عبر صفحة إدارة الإضافات. </li>
+		<li><strong>ملف الأنماط</strong>: يمكن للمشرف على الموقع رفع ملف أنماط مخصص لاستبدال الملف الأصلي styles/common.css.</li>
+	</ul>]]>
+	</section>
+	<section title="Administration">
+		<![CDATA[<ul>
+		<li><strong>اسم عنوان الاتصال الأساسي</strong>: هذا الشخص سيبدو بمثابة المعني بالتراسل لهذا الموقع.</li>
+		<li><strong>البريد الالكتروني لعنوان الاتصال الأساسي</strong>: هذا العنوان سيكون بمثابة طريقة التواصل مع الموقع.</li>
+		<li><strong>الخيارات</strong>: تلك هي خيارات الوصول. يمكن للمشرف على الموقع أن يختار السماح للمستخدمين بتسجيل أنفسهم بمثابة مدراء حفظ أو لا؛ وبالنتيجة، يمكنه أيضاً منحهم صلاحية تمكين المحفوظات المسجلة في الموقع أم يحتفظ بها لنفسه.</li>
+		</ul>]]>
+	</section>
+</topic>
