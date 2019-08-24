@@ -158,7 +158,7 @@
 	<message key="plugins.schemas.marc.fields.258.name">Philatelic Issue Data</message>
 	<message key="plugins.schemas.marc.fields.258.description">(258) Stamps, postal stationery and all other documents created and/or used to signify pre-payment or payment due for postal services; stamps or other labels resembling the material described above, but which have no postal value; cancellations or other marks created and/or used by a postal administration to show evidence of postal usage; material bearing one or more of the items described above</message>
 	<message key="plugins.schemas.marc.fields.260.name">Publication, Distribution, Etc.</message>
-	<message key="plugins.schemas.marc.fields.260.description">(260) Information relating to the publication, printing, distribution, issue, release, or production of a wor</message>
+	<message key="plugins.schemas.marc.fields.260.description">(260) Information relating to the publication, printing, distribution, issue, release, or production of a work</message>
 	<message key="plugins.schemas.marc.fields.263.name">Projected Publication Date</message>
 	<message key="plugins.schemas.marc.fields.263.description">(263) The projected date of publication used in bibliographic records for works that have not yet been published</message>
 	<message key="plugins.schemas.marc.fields.270.name">Address</message>
