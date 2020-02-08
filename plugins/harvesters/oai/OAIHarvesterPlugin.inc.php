@@ -201,7 +201,7 @@ class OAIHarvesterPlugin extends HarvesterPlugin {
 		return false;
 	}
 
-	function manage($verb, $args) {
+	function manage($verb, $args, &$message) {
 		switch ($verb) {
 			case 'fetchArchiveInfo':
 				// The user has requested that the archive form be filled out given

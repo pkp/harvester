@@ -195,11 +195,12 @@ class MysqlIndexPlugin extends GenericPlugin {
 		$schemaPlugin =& $record->getSchemaPlugin();
 		$schemaPluginName = $schemaPlugin->getName();
 		$fieldDao =& DAORegistry::getDAO('FieldDAO');
+		$fields = [];
 		foreach ($schemaPlugin->getFieldList() as $fieldName) {
 			$field =& $fieldDao->buildField($fieldName, $schemaPluginName);
-			$fieldValue = $schemaPlugin->getFieldValue($record, $fieldName, SORT_ORDER_TYPE_STRING);
-			SearchIndex::updateTextIndex($record->getRecordId(), $field->getFieldId(), $fieldValue);
+			$fields[$field->getFieldId()] = $schemaPlugin->getFieldValue($record, $fieldName, SORT_ORDER_TYPE_STRING);
 		}
+		SearchIndex::updateTextIndex($record->getRecordId(), $fields);
 
 		return false;
 	}
