@@ -9,7 +9,7 @@
  * @package rt.harvester2
  * @class HarvesterRTAdmin
  *
- * OJS-specific Reading Tools administration interface.
+ * OHS-specific Reading Tools administration interface.
  *
  * $Id$
  */

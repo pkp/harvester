@@ -19,7 +19,7 @@
 
 import('lib.pkp.classes.core.PKPApplication');
 
-define('PHP_REQUIRED_VERSION', '4.2.0');
+define('PHP_REQUIRED_VERSION', '7.1.0');
 
 class Application extends PKPApplication {
 	function Application() {
@@ -69,7 +69,7 @@ class Application extends PKPApplication {
 	 * @return string
 	 */
 	function getVersionDescriptorUrl() {
-		return('http://pkp.sfu.ca/harvester2/xml/harvester2-version.xml');
+		return('https://pkp.sfu.ca/ohs/xml/ohs-version.xml');
 	}
 
 	/**

@@ -155,7 +155,7 @@ class Harvester {
 
 		$record->setContents($contents);
 		$record->setParsedContents($schemaPlugin->parseContents($contents));
-		$record->setDatestamp(date('Y-m-d\TH:i:sP'));
+		$record->setDatestamp(date('Y-m-d\TH:i:s'));
 
 		$this->recordDao->updateRecord($record);
 		$this->deleteRecordSorting($record);
@@ -178,7 +178,7 @@ class Harvester {
 		HookRegistry::call('Harvester::preprocessRecord', array($record, $this->archive, $schema));
 		$record->setParsedContents($schemaPlugin->parseContents($record->getContents()));
 		$record->setIdentifier($identifier);
-		$record->setDatestamp(date('Y-m-d\TH:i:sP'));
+		$record->setDatestamp(date('Y-m-d\TH:i:s'));
 
 		$this->recordDao->insertRecord($record);
 		$this->indexRecordSorting($record);

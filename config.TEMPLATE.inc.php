@@ -29,7 +29,7 @@
 installed = Off
 
 ; The canonical URL to the harvester installation (excluding the trailing slash)
-base_url = "http://pkp.sfu.ca/harvester2"
+base_url = "https://pkp.sfu.ca/ohs"
 
 ; Path to the registry directory (containing various settings files)
 ; Although the files in this directory generally do not contain any
@@ -86,8 +86,8 @@ username = harvester2
 password = harvester2
 name = harvester2
 
-; Enable persistent connections (recommended)
-persistent = On
+; Enable persistent connections
+persistent = Off
 
 ; Enable database debug output (very verbose!)
 debug = Off
@@ -174,14 +174,9 @@ session_check_ip = On
 
 ; The encryption (hashing) algorithm to use for encrypting user passwords
 ; Valid values are: md5, sha1
-; Note that sha1 requires PHP >= 4.3.0
-encryption = md5
+encryption = sha1
 
 ; Allowed HTML tags for fields that permit restricted HTML.
-; For PHP 5.0.5 and greater, allowed attributes must be specified individually
-; e.g. <img src alt> to allow "src" and "alt" attributes. Unspecified
-; attributes will be stripped. For PHP below 5.0.5 attributes may not be
-; specified in this way.
 allowed_html = "<a> <em> <strong> <cite> <code> <ul> <ol> <li> <dl> <dt> <dd> <b> <i> <u> <img src|alt><sup> <sub> <br> <p>"
 
 ; Prevent VIM from attempting to highlight the rest of the config file
@@ -216,11 +211,11 @@ allowed_html = "<a> <em> <strong> <cite> <code> <ul> <ol> <li> <dl> <dt> <dd> <b
 require_validation = Off
 
 ; Amount of time required between attempts to send non-editorial emails
-; in seconds. This can be used to help prevent email relaying via OJS.
+; in seconds. This can be used to help prevent email relaying via OHS.
 time_between_emails = 3600
 
 ; Maximum number of recipients that can be included in a single email
-; (either as To:, Cc:, or Bcc: addresses) for a non-priveleged user
+; (either as To:, Cc:, or Bcc: addresses) for a non-privileged user
 max_recipients = 10
 
 
@@ -303,14 +298,13 @@ perl = /usr/bin/perl
 ; tar (used in backup plugin, translation packaging)
 tar = /bin/tar
 
-; On systems that do not have PHP4's Sablotron/xsl or PHP5's libxsl/xslt
-; libraries installed, or for those who require a specific XSLT processor,
-; you may enter the complete path to the XSLT renderer tool, with any
-; required arguments. Use %xsl to substitute the location of the XSL
-; stylesheet file, and %xml for the location of the XML source file; eg:
+; On systems that do not have libxsl/xslt libraries installed, or for those who
+; require a specific XSLT processor, you may enter the complete path to the
+; XSLT renderer tool, with any required arguments. Use %xsl to substitute the
+; location of the XSL stylesheet file, and %xml for the location of the XML
+; source file; eg:
 ; /usr/bin/java -jar ~/java/xalan.jar -HTML -IN %xml -XSL %xsl
 xslt_command = ""
-
 
 ;;;;;;;;;;;;;;;;;;
 ; Proxy Settings ;

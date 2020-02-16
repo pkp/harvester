@@ -6,7 +6,7 @@
  * Copyright (c) 2005-2012 Alec Smecher and John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
- * @package rt.ojs.form
+ * @package rt.ohs.form
  * @class SearchForm
  *
  * Form to change metadata information for an RT search.

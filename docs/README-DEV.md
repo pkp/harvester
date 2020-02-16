@@ -1,39 +1,34 @@
-	====================
-	=== Coding Standards
-	====================
+# Coding Standards
 
+## Contributing Code
 
-Contributing Code
-_________________
-
-The PKP team is happy to accept patches in the public "Open Harvester Systems
-Development" forum at <http://pkp.sfu.ca/support/forum/viewforum.php?f=11>. If
-you would like to have your patch included in the Open Harvester Systems
-codebase, we suggest discussing it with the Harvester2 team before
-implementation to ensure that it suits upcoming development plans.
+The PKP team is happy to accept patches in the PKP Community Forum at
+https://forum.pkp.sfu.ca or Github at https://www.github.com/pkp. If you
+would like to have your patch included in the OHS codebase, we suggest
+discussing it with the OHS team before implementation to ensure that it suits
+upcoming development plans.
 
 For code that is intended for inclusion in the main codebase:
-* Patches against a current git clone are preferred; alternately, patches
-  against the most recent release version are acceptable.
+* Pull requests against a current git clone are preferred; alternately, pull
+  requests against the most recent release version are acceptable. Patches will
+  also be accepted.
 * Unless agreed with the development team, users should be able to toggle
   contributed features between enabled and disabled with a single setting; the
   system behavior should not be modified when the feature is disabled.
 * The feature should be suitable for situations where very distinct journals are
   hosted within the same deployment; i.e. settings should generally be journal-
   level, not system-level.
-* The design patterns used in Open Harvester Systems should be understood and
-  adhered to.
+* The design patterns used in OHS should be understood and adhered to.
 * Localization standards should be maintained.
 * Database IDs should be checked as in the current codebase.
 * XSS (cross-site scripting) attacks should be checked as in the current
   codebase.
 * Contributors are responsible for writing code compatible with the primary
   platforms listed in README.
-* Contributions should be delivered to the team via the public "Open Harvester
-  Systems Development" forum as a patch.
-* Open Harvester Systems management features should be kept in mind, such as
-  upgrade and installation; all database schema information should be maintained
-  in the dbscripts/xml/harvester2_schema.xml file; etc.
+* OHS management features should be kept in mind, such as upgrade and
+  installation; database schema information should be maintained in the
+  `dbscripts/xml/harvester2_schema.xml` file for OHS-specific functionality and in
+  `lib/pkp/xml/schema` for functionality that can be shared across PKP apps; etc.
 * The development team is happy to review contributed patches, but we have a
   limited amount of time to spend integrating patches with the codebase or
   modifying contributed code. If aspects of the code need work, we would rather
@@ -41,55 +36,54 @@ For code that is intended for inclusion in the main codebase:
 
 For contributions that are distributed separately as patches or plugins:
 * If contributors haven't met all the conditions above, they are welcome to
-  distribute additional features as patches or plugins. However, the Open
-  Harvester Systems team won't be able to provide support in this case.
+  distribute additional features as patches or plugins. However, the OHS team
+  won't be able to provide support in this case.
 * If the option is available, coding a feature as a plugin is the preferred
-  method.
+  method. The OHS team is continuing to refine the plugin infrastructure and
+  welcomes discussion with plugin developers.
 
 
-General Conventions
-___________________
+## General Conventions
 
+### Editors
 
-Editors
--------
 * Tabs: Configure your editor to use tabs instead of spaces for indentation.
 * Linefeeds: Your editor must save files using UNIX linefeed format (not DOS
   CR/LF or Mac CR format).
-* Ensure your files end with a linefeed if your editor does not automatically
-  add one.
 
 
-Indentation style
--------------
-* In general, include braces even in cases where they are optional.
+### Indentation style
+
 * Use K&R indentation style.
 * For example:
+```
 	if (condition) {
 		...
 	} else {
 		...
 	}
+```
 
 
-Naming Conventions
-------------------
+### Naming Conventions
+
 * Use descriptive names. One character names are only acceptable as index
   variables in for loops.
 * Variable and function/method names (excluding constructors) should start with
   a lowercase letter and capitalize all other words.
-  E.g., $myVariableName; function myMethodName() { }
+  E.g., `$myVariableName; function myMethodName() { }`
 * Class names should start with a capital letter and capitalize all words.
-  E.g., MyClassName
+  E.g., `MyClassName`
 * Constant names should be capitalized with words separated by an underscore. In
   general, constant names should also be prefixed with the package/class name to
-  avoid collisions. E.g., ROLE_ID_EDITOR
+  avoid collisions. E.g., `ROLE_ID_MANAGER`
 
 
-Comments
---------
-* PHPDoc/Javadoc-style commenting is encouraged. See <http://www.phpdoc.de/>
+### Comments
+
+* PHPDoc/Javadoc-style commenting is encouraged. See http://www.phpdoc.de/
 * For example:
+```php
 	/**
 	 * My method.
 	 * @param $foo string
@@ -98,49 +92,47 @@ Comments
 	function myMethod($foo) {
 		...
 	}
+```
 
 
-PHP Tags
---------
-* Use the <?php ?> tags to enclose PHP code instead of the abbreviated <? ?>
-  form.
-* Ensure that each opening "<?php" tag is followed by a closing "?>" tag (i.e.,
-  do not omit a trailing "?>" at the end of a file even though the PHP parser 
-  does not strictly require it).
+### PHP Tags
+
+* Use the `<?php` tag to begin PHP code instead of the abbreviated `<?` form.
+* Omit ending `?>` tags at the end of PHP files, as recommended per modern PHP
+  standards.
 
 
-Quoting Strings
----------------
-* Use single quotes (') instead of double quotes (") to quote strings unless the
+### Quoting Strings
+
+* Use single quotes (`'`) instead of double quotes (`"`) to quote strings unless the
   string contains variables or escape sequences. Single quotes are slightly more
   efficient since PHP does not have to perform variable interpolation.
 
 
-Error Level
------------
+### Error Level
+
 * Code must not produce any error or warning messages with the error_reporting
-  level set to E_ALL (this is the default level set in includes/driver.inc.php).
-* This means using $array['key'] rather than $array[key], not using
+  level set to `E_ALL` (this is the default level set in `includes/driver.inc.php`).
+* This means using `$array['key']` rather than `$array[key]`, not using
   uninitialized variables, etc.
-* Note that this means that "@" should not be used haphazardly to suppress
+* Note that this means that "`@`" should not be used haphazardly to suppress
   error messages.
 
 
-Global Variables
-----------------
+### Global Variables
+
 * Code should not rely on register_globals being enabled.
 * GET/POST/Cookie variables should be accessed through the appropriate helper
   function.
 
 
-Other PHP Conventions
-_____________________
+## Other PHP Conventions
+
 * The inline form of if/else is acceptable for small statements (e.g.,
-  assignments) only. E.g., $foo = $bar ? 1 : 0;
-* Use spaces between tokens. E.g., $foo = 1; $i > 0
-* Compatibility with PHP >= 4.2 (including PHP 5) is required. Appropriate
+  assignments) only. E.g., `$foo = $bar ? 1 : 0;`
+* Compatibility with PHP per the `README.md` document is required. Appropriate
   abstractions should be used around non-backwards compatible code (e.g., using
-  function_exists() to check for an available function and using an alternate
+  `function_exists()` to check for an available function and using an alternate
   implementation if it does not exist).
 * Traditionally we used static access to class methods a lot. These provide
   a relatively easy to implement Singleton-like design pattern. They have two
@@ -150,51 +142,52 @@ _____________________
   where possible.
 
 
-HTML/XML
---------
-* HTML should be XHTML-compliant as much as possible. E.g., use "<br />" instead
-  of "<br>".
+## HTML/XML
+
 * Tag names should be lower case.
 
 
-SQL
----
-* Use spaces between tokens. E.g., "column = ?" instead of "column=?"
-* Uppercase SQL keywords. E.g., INSERT, UPDATE, etc.
+## SQL
+
+* Uppercase SQL keywords. E.g., `INSERT`, `UPDATE`, etc.
 * Long SQL statements should be logically broken up into multiple lines.
 * SQL INSERT statements should always specify the column names.
 * For example:
+```sql
 	INSERT INTO mytable (x, y, z)
 	VALUES (?, ?, ?)
+```
 * All SQL queries should be compatible with at least the versions of MySQL and
   PostgreSQL supported by the application. Although vendor-specific SQL
   expressions should be avoided, a record should be kept of any non-portable SQL
   that does get used (e.g., by filing a bug report).
 
 
-Open Harvester Systems Conventions
-__________________________________
+## OHS Conventions
 
-git
----
-* A web interface to the git repository is located at <http://github.com/pkp>.
+### git
+
+* A web interface to the git repository is located at https://github.com/pkp.
 * A brief log message describing the changes made must be included with all git
   commits.
-* Whenever possible, git commit log messages should include "*BUG_ID_NUMBER*" to
-  reference a Bugzilla report at <http://pkp.sfu.ca/bugzilla/>.
-* Please consult http://pkp.sfu.ca/wiki/index.php/HOW-TO_check_out_PKP_applications_from_git
+* Whenever possible, git commit log messages should be prefixed with
+  `pkp/pkp-lib#ISSUENUM` to reference a git issue; see
+  https://github.com/pkp/pkp-lib#issues.
+* Please consult https://pkp.sfu.ca/wiki/index.php/HOW-TO_check_out_PKP_applications_from_git
   for instructions on setting up a development environment.
 
 
-File Header
------------
+### File Header
+
 * PHP files should begin with a header similar to the following. Non-PHP files
   should begin with a similar header adapted to the appropriate comment style.
 
+```php
 /**
- * @file FILENAME.inc.php
+ * @file /path/to/filename.inc.php
  *
- * Copyright (c) 2005-2012 Alec Smecher and John Willinsky
+ * Copyright (c) 2014-2019 Simon Fraser University
+ * Copyright (c) 2003-2019 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @package PACKAGE
@@ -202,65 +195,60 @@ File Header
  *
  * DESCRIPTION.
  */
+```
 
+### Database Queries
 
-Database Queries
------------
-* SQL queries should use the ADOdb abstraction layer.
+* SQL queries should use the ADOdb or Laravel abstraction layer.
 * SQL should use placeholders for variables.
+* Explicit typecasts should be used where possible in variable replacements.
 * For example:
-	$dbconn = $DBConnection::getConn();
+```
+	$dbconn = DBConnection::getConn();
 	$result = $dbconn->execute('SELECT x FROM mytable WHERE y = ?', array($y));
-	$result = $dbconn->execute('INSERT INTO mytable (x, y) VALUES (?, ?)', array($x, $y));
+	$result = $dbconn->execute('INSERT INTO mytable (x, y) VALUES (?, ?)', array((int) $x, $y));
+```
 * Only portable, standards compliant SQL should be used - compatibility with
-  MySQL >= 3.23 (including 4.x), and PostgreSQL >= 7.3 is required. If database
+  MySQL and PostgreSQL (versions as per README) is required. If database
   specific logic cannot be avoided it should be abstracted into DBConnection or
   ADOdb.
 
 
-Direct Access Objects
----------------------
+### Direct Access Objects
+
 * DAO classes should be used to encapsulate all database calls.
-* Use DAORegistry to retrieve a reference to a DAO object.
 * For example:
-	$sessionDao = &DAORegistry::getDAO('SessionDAO');
+	`$sessionDao = DAORegistry::getDAO('SessionDAO');`
 * DAO classes are expected to handle date/datetime format conversion between the
   database and PHP, and insertion ID retrieval for sequenced records;
   abstractions are provided in the base DAO class.
 
 
-Templates
----------
+### Templates
+
 * HTML output in PHP code should be kept to a minimum.
 * HTML output should come from the Smarty template abstraction layer.
 * The template engine supports basic conditional logic and loops and can access
   objects and arrays, but the complexity of the business logic used in templates
   should be minimized.
 * Basic template skeleton:
-
+```
 	{**
-	 * FILENAME.tpl
+	 * /path/to/filename.tpl
 	 *
-	 * Copyright (c) 2005-2012 Alec Smecher and John Willinsky
+	 * Copyright (c) 2014-2019 Simon Fraser University
+	 * Copyright (c) 2003-2019 John Willinsky
 	 * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
 	 *
 	 * DESCRIPTION.
 	 *}
-	{assign var="pageTitle" value="user.userHome"}
-	{include file="common/header.tpl"}
+	{include file="common/header.tpl" pageTitle="user.userHome"}
 	...
 	{include file="common/footer.tpl"}
+```
 
+### Localization
 
-Authorization
--------------
-* Use methods in Validation class to check user credentials.
-* For example:
-	Validation::isLoggedIn();
-
-
-Localization
-------------
 * i18n strings are defined in locale/<locale_key>/locale.xml.
 * Key names should be in the form "sectionname(.subsectionname)*.name".
   E.g., "manager.setup.journalTitle"
@@ -270,21 +258,35 @@ Localization
   UTF-8 (e.g., user input, parsed user files, etc.).
 
 
-Input Validation
-----------------
+### Input Validation
+
 * User input should be properly validated/escaped (do not rely on
   magic_quotes_gpc being on or off).
 * For example, in template forms:
-	<input type="text" name="title" value="{$title|escape}" />
+	`<input type="text" name="title" value="{$title|escape}" />`
 * Retrieving user input:
-	$foo = $request->getUserVar('foo');
-* Escape output as restrictively as possible to prevent XSS attacks. Only the
-  site administrator should be able to enter unfiltered HTML.
+	`$foo = $request->getUserVar('foo');`
+* Escaping habits in order of precedence:
+  - Manager's setup text fields: No escaping performed
+  - Abstracts, notes, comments, emails: {$field|strip_unsafe_html|nl2br}
+  - Database IDs safely fetched from DB: no escaping necessary.
+  - Mailing Address fields: {$mailingAddress|escape|nl2br}
+  - Biography fields: {$biography|escape|nl2br}
+  - Custom issue or article IDs in URLs: {$pageUrl}/.../{$customId|escape:"url"}
+  - Date fields: Use date_format.
+  - Comment fields: {$comment|strip_unsafe_html}
+  - Multi-line fields inside textarea tags: {$field|escape}
+  - Multi-line input fields that are filled in by the Manager or Site Administrator: {$field|nl2br}
+  - All other fields: {$field|escape}
+
+Note that these should apply to parameters supplied to {translate key="..."} and
+{mailto address="..."} calls, e.g
+{translate key="my.key.takes.parameter" myParam=$myVar|escape}
 
 
-Other Tips
-----------
-* Use $request->redirectUrl(...), or better yet, $request->redirect(...) for
-  HTTP redirects instead of header('Location: ...');
-* For additional coding convention information, see the Open Harvester Systems
-  Design Document at <http://pkp.sfu.ca/harvester2/TechnicalReference.pdf>.
+## Other Tips
+
+* Use `$request->redirectUrl($url)`, or better yet, `$request->redirect(...)` for
+  HTTP redirects instead of `header('Location: ...');`
+* For additional coding convention information, see the OHS Design Document
+  at https://pkp.sfu.ca/wp-content/uploads/2014/04/TechnicalReference.pdf.

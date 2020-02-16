@@ -51,14 +51,14 @@ class Validation {
 				$oldEmail = $user->getEmail();
 				$auth->doGetUserInfo($user);
 				if ($user->getEmail() != $oldEmail) {
-					// FIXME OJS requires email addresses to be unique; if changed email already exists, ignore
+					// FIXME OHS requires email addresses to be unique; if changed email already exists, ignore
 					if ($userDao->userExistsByEmail($user->getEmail())) {
 						$user->setEmail($oldEmail);
 					}
 				}
 			}
 		} else {
-			// Validate against OJS user database
+			// Validate against OHS user database
 			$valid = ($user->getPassword() === Validation::encryptCredentials($username, $password));
 		}
 
