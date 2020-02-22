@@ -20,32 +20,29 @@ class SearchIndex {
 
 	/**
 	 * Index a block of text for an object.
-	 * @param $objectId int
-	 * @param $text string
-	 * @param $position int
+	 * @param $recordId int
+	 * @param $fields array Map of fieldId => fieldValue
 	 */
-	function indexObjectKeywords($objectId, $text, &$position) {
+	static function indexObjectKeywords($recordId, $fields) {
 		$searchDao =& DAORegistry::getDAO('SearchDAO');
-		$keywords =& SearchIndex::filterKeywords($text);
-		for ($i = 0, $count = count($keywords); $i < $count; $i++) {
-			if ($searchDao->insertObjectKeyword($objectId, $keywords[$i], $position) !== null) {
-				$position += 1;
-			}
+		$fieldsKeyword = [];
+		foreach($fields as $fieldId => $text) {
+			$fieldsKeyword[$fieldId] = SearchIndex::filterKeywords($text);
+
 		}
+		$searchDao->insertObjectKeywords($recordId, $fieldsKeyword);
 	}
 
 	/**
 	 * Add a block of text to the search index.
 	 * @param $recordId int
-	 * @param $fieldId int
-	 * @param $text string
+	 * @param $fields array
 	 * @param $flush boolean Whether or not to flush entries for an existing object
 	 */
-	function updateTextIndex($recordId, $fieldId, $text, $flush = true) {
+	static function updateTextIndex($recordId, $fields, $flush = true) {
 		$searchDao =& DAORegistry::getDAO('SearchDAO');
-		$position = 0;
-		$objectId = $searchDao->insertObject($recordId, $fieldId, $position, null, $flush);
-		SearchIndex::indexObjectKeywords($objectId, $text, $position);
+		$searchDao->insertObjects($recordId, array_keys($fields), null, $flush);
+		SearchIndex::indexObjectKeywords($recordId, $fields);
 	}
 
 	/**

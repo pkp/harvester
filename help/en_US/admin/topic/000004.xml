@@ -14,6 +14,6 @@
 
 <topic id="admin/topic/000004" locale="en_US" title="System Information" toc="admin/toc/000000" key="admin.systemInformation">
 	<section>
-		<![CDATA[<p>The System Information page provides information about the Open Harvester Systems installation, including versions, configuration information, and server information. The "Check for updates" link allows the administrator to determine whether their Open Harvester Systems installation is up-to-date; it is recommended that Administrators update the application whenever possible to ensure that their installation is secure and bug-free. Release information will also be made available on the <a href="http://pkp.sfu.ca" target="_new">PKP web site</a> and the <a href="http://pkp.sfu.ca/support/forum" target="_new">support forum</a>.</p>]]>
+		<![CDATA[<p>The System Information page provides information about the Open Harvester Systems installation, including versions, configuration information, and server information. The "Check for updates" link allows the administrator to determine whether their Open Harvester Systems installation is up-to-date; it is recommended that Administrators update the application whenever possible to ensure that their installation is secure and bug-free. Release information will also be made available on the <a href="https://pkp.sfu.ca" target="_new">PKP web site</a> and the <a href="https://forum.pkp.sfu.ca/" target="_new">support forum</a>.</p>]]>
 	</section>
 </topic>

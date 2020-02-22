@@ -93,6 +93,11 @@
 			<col>record_id</col>
 			<col>object_time</col>
 		</index>
+		<index name="search_object_record_field">
+			<col>record_id</col>
+			<col>raw_field_id</col>
+			<UNIQUE/>
+		</index>
 	</table>
 	
 	<!--

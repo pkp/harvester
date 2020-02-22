@@ -80,8 +80,7 @@ class StaticPagesPlugin extends GenericPlugin {
 	 * Display verbs for the management interface.
 	 * @return array
 	 */
-	function getManagementVerbs() {
-		$verbs = array();
+	function getManagementVerbs($verbs = []) {
 		if ($this->getEnabled()) {
 			$verbs[] = array('settings', __('plugins.generic.staticPages.editAddContent'));
 		}

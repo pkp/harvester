@@ -117,7 +117,7 @@ class SchemaPlugin extends Plugin {
 	 * @param $contents string
 	 * @return object
 	 */
-	function &parseContents(&$contents) {
+	function parseContents($contents) {
 		fatalError('ABSTRACT CLASS!');
 	}
 
@@ -211,7 +211,7 @@ class SchemaPlugin extends Plugin {
 		return (join('; ', $this->getAuthors($record)));
 	}
 
- 	/**
+	/**
 	 * Get the field type for the specified field.
 	 * Child classes should probably override this.
 	 */

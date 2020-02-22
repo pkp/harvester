@@ -188,7 +188,7 @@ class MarcPlugin extends SchemaPlugin {
 	 * @param $contents string
 	 * @return object
 	 */
-	function &parseContents(&$contents) {
+	function parseContents($contents) {
 		$xmlParser = new XMLParser();
 		$result =& $xmlParser->parseText($contents);
 

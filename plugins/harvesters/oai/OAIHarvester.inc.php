@@ -75,7 +75,8 @@ class OAIHarvester extends Harvester {
 		$supportedFormats = OAIHarvester::getMetadataFormats($archive->getSetting('harvesterUrl'), $archive->getSetting('isStatic'));
 		// Return the first common format between the aliases for this
 		// plugin and the archive's supported formats.
-		$this->metadataFormat = array_shift(array_intersect((array) $aliases, (array) $supportedFormats));
+		$formats = array_intersect((array) $aliases, (array) $supportedFormats);
+		$this->metadataFormat = array_shift($formats);
 		if (empty($this->metadataFormat)) $this->metadataFormat = $default;
 		return $this->metadataFormat;
 	}
@@ -474,7 +475,8 @@ class OAIHarvester extends Harvester {
 		return $returner;
 	}
 
-	function &getSchemaPlugin() {
+	function getSchemaPlugin() {
+		static $plugins = null;
 		$schemaDao =& DAORegistry::getDAO('SchemaDAO');
 		$aliases = $schemaDao->getSchemaAliases();
 		$metadataFormat = $this->getMetadataFormat();
@@ -483,10 +485,12 @@ class OAIHarvester extends Harvester {
 
 		$pluginName = $aliases[$metadataFormat];
 
-		$plugins =& PluginRegistry::loadCategory('schemas');
+		if ($plugins === null) {
+			$plugins = PluginRegistry::loadCategory('schemas');
+		}
+
 		if (!isset($plugins[$pluginName])) return $returner;
-		$returner =& $plugins[$pluginName];
-		return $returner;
+		return $plugins[$pluginName];
 	}
 
 	/**

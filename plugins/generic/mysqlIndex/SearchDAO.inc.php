@@ -223,8 +223,14 @@ class SearchDAO extends DAO {
 	 * @return int the object ID
 	 */
 	function insertObject($recordId, $fieldId, &$pos, $date = null, $flush = true) {
-		$result =& $this->retrieve(
-			'SELECT o.object_id, COALESCE(max(k.pos), 0) AS pos FROM search_objects o LEFT JOIN search_object_keywords k ON (k.object_id = o.object_id) WHERE o.record_id = ? AND o.raw_field_id = ? GROUP BY o.object_id', array($recordId, $fieldId));
+		$result = $this->retrieve('
+			SELECT o.object_id, COALESCE(max(k.pos), 0) AS pos
+			FROM search_objects o
+			LEFT JOIN search_object_keywords k ON (k.object_id = o.object_id)
+			WHERE o.record_id = ? AND o.raw_field_id = ?
+			GROUP BY o.object_id',
+			array($recordId, $fieldId)
+		);
 		if ($result->RecordCount() == 0) {
 			$this->update(
 				'INSERT INTO search_objects (record_id, raw_field_id, object_time) VALUES (?, ?, ' . $this->dateToDB($date) . ')',
@@ -261,6 +267,40 @@ class SearchDAO extends DAO {
 	}
 
 	/**
+	 * Add many record objects to the index (when existent, indexed keywords are cleared).
+	 * Each search object can contain a single date entry; this is an optimization to
+	 * prevent having a separate indexed table to contain dates. If a date is specified
+	 * here, the object will be guaranteed to have that date regardless of whether it was
+	 * created or already existed.
+	 * @param $recordId int
+	 * @param $fieldIds array
+	 * @param $date string optional
+	 * @param $flush boolean Whether or not to flush values of an existing object
+	 */
+	function insertObjects($recordId, $fieldIds, $date = null, $flush = true) {
+		if (!count($fieldIds)) {
+			return;
+		}
+
+		$this->update('
+			INSERT IGNORE INTO search_objects (record_id, raw_field_id, object_time)
+			VALUES ' . implode(', ', array_map(function ($fieldId) use ($recordId, $date) {
+				return '(' . (int) $recordId . ', ' . (int) $fieldId . ', ' . $this->dateToDB($date) . ')';
+			}, $fieldIds))
+		);
+		
+		if ($flush) {
+			$this->update('
+				DELETE sok FROM search_object_keywords sok 
+				INNER JOIN search_objects so
+					ON so.record_id = ?
+					AND so.object_id = sok.object_id',
+				[$recordId]
+			);
+		}
+	}
+
+	/**
 	 * Index an occurrence of a keyword in an object.
 	 * @param $objectId int
 	 * @param $keyword string
@@ -275,6 +315,45 @@ class SearchDAO extends DAO {
 			array($objectId, $keywordId, $position)
 		);
 		return $keywordId;
+	}
+
+	/**
+	 * Index the keywords of a record.
+	 * @param $recordId int
+	 * @param $fields array
+	 */
+	function insertObjectKeywords($recordId, $fields) {
+		if(!($count = count($fields))) {
+			return;
+		}
+		$uniqueKeywords = [];
+		$objectKeywords = [];
+		foreach ($fields as $fieldId => $keywords) {
+			$position = 0;
+			foreach ($keywords as $keyword) {
+				$uniqueKeywords[$keyword] = 0;
+				$objectKeywords[] = 'SELECT ' . (int) $fieldId . ' f,' . $this->_dataSource->qstr($keyword) . ' v,' . $position++ . ' p';
+			}
+		}
+		foreach (array_chunk(array_keys($uniqueKeywords), 1e3) as $keywords) {
+			$this->update('
+				INSERT IGNORE INTO search_keyword_list (keyword_text)
+				VALUES ' . implode(', ', array_map(function ($keyword) {
+					return '('. $this->_dataSource->qstr($keyword) . ')';
+				}, $keywords))
+			);
+		}
+
+		foreach (array_chunk($objectKeywords, 1e3) as $keywords) {
+			$this->update('
+				INSERT INTO search_object_keywords (object_id, keyword_id, pos)
+				SELECT so.object_id, skl.keyword_id, keyword.p
+				FROM (' . implode(' UNION ALL ', $keywords) . ') AS keyword
+				INNER JOIN search_objects so ON so.record_id = ? AND so.raw_field_id = keyword.f
+				INNER JOIN search_keyword_list skl ON skl.keyword_text = keyword.v',
+				[$recordId]
+			);
+		}
 	}
 
 	function flushIndex() {

@@ -219,28 +219,31 @@ class SchemaDAO extends DAO {
 	 * @param $schemaPluginName string optional
 	 * @return array alias => schema plugin name
 	 */
-	function &getSchemaAliases($schemaPluginName = null) {
+	function getSchemaAliases($schemaPluginName = null) {
+		static $cache = [];
+		$serializedArgs = serialize(func_get_args());
+		if (isset($cache[$serializedArgs])) {
+			return $cache[$serializedArgs];
+		}
 		$params = array();
 		if ($schemaPluginName !== null) $params[] = $schemaPluginName;
 
 		$result =& $this->retrieve(
 			'SELECT	sa.alias, s.schema_plugin
-			FROM	schema_aliases sa,
-				schema_plugins s
-			WHERE	s.schema_plugin_id = sa.schema_plugin_id' .
+			FROM schema_aliases sa, schema_plugins s
+			WHERE s.schema_plugin_id = sa.schema_plugin_id' .
 			($schemaPluginName !== null ? ' AND s.schema_plugin = ?' : ''),
 			$params
 		);
 
 		$returner = array();
 		while (!$result->EOF) {
-			$row =& $result->getRowAssoc(false);
+			$row = $result->getRowAssoc(false);
 			$returner[$row['alias']] = $row['schema_plugin'];
 			$result->MoveNext();
 		}
 		$result->Close();
-
-		return $returner;
+		return $cache[$serializedArgs] = $returner;
 	}
 
 	/**

@@ -116,13 +116,15 @@ class Harvester {
 	 * @param $record object
 	 */
 	function indexRecordSorting(&$record) {
+		static $cache = null;
 		// Deal with sort order indexing
-		$sortOrders =& $this->sortOrderDao->getSortOrders();
-		while ($sortOrder =& $sortOrders->next()) {
-			$this->indexRecordSortingForSortOrder($record, $sortOrder);
-			unset($sortOrder);
+		if ($cache === null) {
+			$cache = $this->sortOrderDao->getSortOrders()->toArray();
 		}
-		
+
+		foreach ($cache as $sortOrder) {
+			$this->indexRecordSortingForSortOrder($record, $sortOrder);
+		}
 	}
 
 	/**
@@ -148,12 +150,12 @@ class Harvester {
 		return true;
 	}
 
-	function _updateRecord(&$record, &$contents) {
-		$schemaPlugin =& $this->getSchemaPlugin();
+	function _updateRecord($record, $contents) {
+		$schemaPlugin = $this->getSchemaPlugin();
 
 		$record->setContents($contents);
 		$record->setParsedContents($schemaPlugin->parseContents($contents));
-		$record->setDatestamp(date('Y-m-d\TH:i:sP'));
+		$record->setDatestamp(date('Y-m-d\TH:i:s'));
 
 		$this->recordDao->updateRecord($record);
 		$this->deleteRecordSorting($record);
@@ -164,25 +166,25 @@ class Harvester {
 		return true;
 	}
 
-	function _insertRecord($identifier, &$contents) {
-		$schemaPlugin =& $this->getSchemaPlugin();
-		$schema =& $this->getSchema();
+	function _insertRecord($identifier, $contents) {
+		$schemaPlugin = $this->getSchemaPlugin();
+		$schema = $this->getSchema();
 		$schemaId = $schema->getSchemaId();
 
 		$record = new Record();
 		$record->setSchemaId($schemaId);
 		$record->setArchiveId($this->archive->getArchiveId());
 		$record->setContents($contents);
-		HookRegistry::call('Harvester::preprocessRecord', array(&$record, &$this->archive, &$schema));
+		HookRegistry::call('Harvester::preprocessRecord', array($record, $this->archive, $schema));
 		$record->setParsedContents($schemaPlugin->parseContents($record->getContents()));
 		$record->setIdentifier($identifier);
-		$record->setDatestamp(date('Y-m-d\TH:i:sP'));
+		$record->setDatestamp(date('Y-m-d\TH:i:s'));
 
 		$this->recordDao->insertRecord($record);
 		$this->indexRecordSorting($record);
 
-		HookRegistry::call('Harvester::insertRecord', array(&$record, &$this->archive, &$schema));
-		HookRegistry::call('Harvester::postprocessRecord', array(&$record, &$this->archive, &$schema));
+		HookRegistry::call('Harvester::insertRecord', array($record, $this->archive, $schema));
+		HookRegistry::call('Harvester::postprocessRecord', array($record, $this->archive, $schema));
 
 		return true;
 	}

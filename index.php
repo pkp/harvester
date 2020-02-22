@@ -38,10 +38,10 @@
  *
  * To learn more about developing with the PKP Harvester, there are several
  * additional resources that may be useful:
- * - The docs/README document
- * - The PKP support forum at http://pkp.sfu.ca/support/forum
+ * - The docs/README.md document
+ * - The PKP support forum at https://forum.pkp.sfu.ca/
  * - The technical reference (and other documents), available at
- *   http://pkp.sfu.ca/harvester_documentation
+ *   https://pkp.sfu.ca/ohs/ohs_documentation/
  *
  * @file index.php
  *

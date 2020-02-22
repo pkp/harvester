@@ -12,7 +12,7 @@
  * @brief Abstract class for authentication plugins.
  *
  * TODO: Error reporting when updating remote source fails.
- * TODO: Support importing user accounts from the authentication source into OJS.
+ * TODO: Support importing user accounts from the authentication source into OHS.
  */
 
 // $Id$
@@ -178,7 +178,7 @@ class AuthPlugin extends Plugin {
 
 	/**
 	 * Retrieve user profile information from the remote source.
-	 * Any unsupported fields (e.g., OJS-specific ones) should not be modified.
+	 * Any unsupported fields (e.g., OHS-specific ones) should not be modified.
 	 * @param $user User to update
 	 * @return boolean true if successful
 	 */
@@ -216,7 +216,7 @@ class AuthPlugin extends Plugin {
 
 	/**
 	 * Delete a user from the remote source.
-	 * This function is currently not used within OJS,
+	 * This function is currently not used within OHS,
 	 * but is reserved for future use.
 	 * @param $username string user to delete
 	 * @return boolean true if successful

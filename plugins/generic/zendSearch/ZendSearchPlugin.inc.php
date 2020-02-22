@@ -107,8 +107,7 @@ class ZendSearchPlugin extends GenericPlugin {
 	 * Get a list of available management verbs for this plugin
 	 * @return array
 	 */
-	function getManagementVerbs() {
-		$verbs = array();
+	function getManagementVerbs($verbs = []) {
 		if ($this->getEnabled()) {
 			$verbs[] = array('adminSearchForm', __('plugins.generic.zendSearch.searchForm'));
 			$verbs[] = array('adminSettings', __('plugins.generic.zendSearch.settings'));
